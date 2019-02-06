@@ -12,6 +12,16 @@ const User = mongoose.model('User', new mongoose.Schema({
     required: true,
     maxlength: 50
   },
+  phone: {
+    type: String,
+    required: false,
+    maxlength: 50
+  },
+  fiscal_id: { // bussines identificator
+    type: String,
+    required: false,
+    maxlength: 50
+  },
   email: {
     type: String,
     required: true,

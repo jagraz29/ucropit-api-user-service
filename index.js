@@ -2,9 +2,11 @@ const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
 const users = require('./routes/users')
+const auth = require('./routes/auth')
 
 app.use(express.json())
 app.use(`/api/v1/users`, users)
+app.use(`/api/v1/auth`, auth)
 
 mongoose.connect('mongodb://localhost/ucropit_users', { 
   useNewUrlParser: true,
