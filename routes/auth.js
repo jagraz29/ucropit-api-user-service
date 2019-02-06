@@ -1,5 +1,5 @@
+const auth = require('../middleware/auth')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 const { pick } = require('lodash')
 const { User } = require('../models/users')
 const Joi = require('joi')
@@ -23,6 +23,11 @@ router.post('/', async (req, res) => {
     user: pick(user, ['firstname', 'lastname', 'email', 'phone', 'cuit']),
     token
   })
+})
+
+router.get('/me', auth, async(req, res) => {
+  const user = await User.findById(req.user._id).select('-password')
+  res.send(user)
 })
 
 function validate(req) {
