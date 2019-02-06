@@ -1,3 +1,4 @@
+const auth = require('../middleware/auth')
 const bcrypt = require('bcrypt')
 const { pick } = require('lodash')
 const { User, validate } = require('../models/users')
@@ -5,7 +6,7 @@ const mongoose = require('mongoose')
 const express = require('express')
 const router = express.Router()
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     const users = await User.find()
     res.send(users)
@@ -14,7 +15,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
     const { error } = validate(req.body)
     if (error) return res.status(400).send(error.details[0].message)
