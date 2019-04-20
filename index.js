@@ -1,12 +1,24 @@
-require('dotenv').config()
-
 const express = require('express')
+const logger = require('morgan')
+const bodyParser = require('body-parser')
+const http = require('http')
+
 const app = express()
 
-require('./startup/log')()
-require('./startup/routes')(app)
-require('./startup/db')()
+app.use(logger('dev'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.listen(process.env.APP_PORT || 3000, () => {
-  console.log(`Server is listen on 3000`)
-})
+app.get('*', (req, res) => res.status(200).send({
+    message: 'Welcome to the beginning of nothingness.',
+}))
+
+const port = process.env.PORT || 8000;
+
+app.set('port', port);
+
+const server = http.createServer(app);
+
+server.listen(port);
+
+module.exports = app;
