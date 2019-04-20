@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "NODE_ENV=development nodemon ./index.js"
   },
   "repository": {
     "type": "git",
@@ -17,9 +18,14 @@
   },
   "homepage": "https://gitlab.com/ucrop-it/ucropit-api-user-service#readme",
   "dependencies": {
+    "app-root-path": "^2.2.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "morgan": "^1.9.1"
+    "express-winston": "^3.1.0",
+    "morgan": "^1.9.1",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.7.1",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.11"

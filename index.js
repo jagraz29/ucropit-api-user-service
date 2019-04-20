@@ -2,16 +2,29 @@ const express = require('express')
 const logger = require('morgan')
 const bodyParser = require('body-parser')
 const http = require('http')
-
+const winston = require('./config/winston')
 const app = express()
 
-app.use(logger('dev'))
+const models = require('./models')
+
+models.sequelize.sync().then(() => {
+    console.log('Nice! Database looks fine')
+}).catch((err) => {
+    console.log(err, 'Something went wrong with the Database Update!')
+})
+
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('*', (req, res) => res.status(200).send({
-    message: 'Welcome to the beginning of nothingness.',
-}))
+app.use(winston.routeLogger)
+
+app.get('/', (req, res) => {
+    return res.send('roberto')
+})
+
+app.use(winston.errorLogger)
+
 
 const port = process.env.PORT || 8000;
 
