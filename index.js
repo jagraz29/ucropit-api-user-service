@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express')
 const logger = require('morgan')
 const bodyParser = require('body-parser')
@@ -6,6 +8,7 @@ const winston = require('./config/winston')
 const app = express()
 
 const models = require('./models')
+const routes = require('./routes')
 
 models.sequelize.sync().then(() => {
     console.log('Nice! Database looks fine')
@@ -19,12 +22,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(winston.routeLogger)
 
-app.get('/', (req, res) => {
-    return res.send('roberto')
-})
+app.use("/v1", routes);
 
 app.use(winston.errorLogger)
-
 
 const port = process.env.PORT || 8000;
 
