@@ -8,10 +8,10 @@ class AuthController {
     }
 
     static async register(data) {
-        
+
         const user = await User.create(data)
 
-        const token = await AuthController.getToken({ name: 'carl' })
+        const token = await AuthController.getToken({ user })
         return { user, token }
     }
 
