@@ -1,11 +1,14 @@
 "use strict";
 
 const Field = require("../models").fields;
+const Lot = require("../models").lots;
 
 class FieldsController {
   static async index() {
     try {
-      return await Field.findAll()
+      return await Field.findAll({
+        include: [{ model: Lot }]
+      })
     } catch (err) {
       console.log(err)
     }
@@ -14,7 +17,8 @@ class FieldsController {
   static async show(id) {
     try {
       return await Field.findOne({
-        where: { id: id }
+        where: { id: id },
+        include: [{ model: Lot }]
       })
     } catch (err) {
       console.log(err)
@@ -23,7 +27,9 @@ class FieldsController {
 
   static async create(data) {
     try {
-      return await Field.create(data)
+      const field = await Field.create(data)
+      //field.setCrops(data.crop_id)
+      return field
     } catch (err) {
       console.log(err)
     }
@@ -49,7 +55,7 @@ class FieldsController {
       })
 
       return await crop.destroy()
-    } catch(err) {
+    } catch (err) {
       console.log(err)
     }
   }

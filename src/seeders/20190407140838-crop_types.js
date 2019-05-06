@@ -6,17 +6,26 @@ module.exports = {
       {
         name: 'Girasol',
         max_tons: 1,
-        min_tons: 3
+        min_tons: 3,
+        image: 'sunflower.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         name: 'Soja',
         max_tons: 1,
-        min_tons: 3
+        min_tons: 3,
+        image: 'soy.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         name: 'Maíz Pisingallo',
         max_tons: 1,
-        min_tons: 3
+        min_tons: 3,
+        image: 'corn.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ], {});
   },

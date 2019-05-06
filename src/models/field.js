@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     lat: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -29,6 +33,16 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true
     }
   )
+
+  Field.associate = function (models) {
+    Field.hasMany(models.lots, { foreignKey: 'field_id' })
+
+    Field.belongsToMany(models.crops, {
+      foreignKey: 'field_id',
+      otherKey: 'crop_id',
+      through: 'crop_field'
+    })
+  }
 
   return Field
 }

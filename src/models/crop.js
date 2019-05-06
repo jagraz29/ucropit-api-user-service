@@ -5,7 +5,11 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    crop_type_id: { 
+    budget: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    crop_type_id: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -14,10 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     quintals: {
-      type: DataTypes.DOUBLE,
-      allowNull: false
-    },
-    tons: {
       type: DataTypes.DOUBLE,
       allowNull: false
     },
@@ -34,6 +34,17 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true
     }
   )
+
+  Crop.associate = function (models) {
+    Crop.belongsTo(models.crop_types, { foreignKey: 'crop_type_id' })
+
+    
+    Crop.belongsToMany(models.fields, {
+      foreignKey: 'crop_id',
+      otherKey: 'field_id',
+      through: 'crop_field'
+    })
+  }
 
   return Crop
 }

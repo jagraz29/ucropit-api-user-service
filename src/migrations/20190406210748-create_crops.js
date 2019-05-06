@@ -8,6 +8,10 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
+      budget: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       crop_type_id: {
         type: Sequelize.INTEGER,
         allowNull: false
@@ -17,10 +21,6 @@ module.exports = {
         allowNull: false
       },
       quintals: {
-        type: Sequelize.DOUBLE,
-        allowNull: false
-      },
-      tons: {
         type: Sequelize.DOUBLE,
         allowNull: false
       },

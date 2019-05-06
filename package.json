@@ -11,11 +11,13 @@
     "migrate:undo": "sequelize db:migrate:undo --migrations-path=src/migrations --config=src/config/config.json"
   },
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
     "console-stamp": "^0.2.7",
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
     "mailgun-js": "^0.22.0",
     "moment": "^2.24.0",
     "mysql2": "^1.6.5",

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const CropTypes = sequelize.define('CropType', {
+  const CropTypes = sequelize.define('crop_types', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     min_tons: {
       type: DataTypes.DOUBLE,
+      allowNull: false,
+    },
+    image: {
+      type: DataTypes.STRING,
       allowNull: false,
     }
   },

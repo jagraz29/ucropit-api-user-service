@@ -15,6 +15,17 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/types', async (req, res) => {
+  try {
+    const crops = await CropsController.types()
+
+    return res.json({ code: 200, error: false, crops })
+  } catch (err) {
+    console.log(err)
+    return res.json({ code: 400, error: false, data: err })
+  }
+})
+
 router.post('/', async (req, res) => {
   try {
     const crop = await CropsController.create(req.body)
