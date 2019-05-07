@@ -4,6 +4,14 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('crop_types', [
       {
+        name: 'Algodón',
+        max_tons: 1,
+        min_tons: 3,
+        image: 'cotton.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
         name: 'Girasol',
         max_tons: 1,
         min_tons: 3,
