@@ -9,7 +9,7 @@ module.exports = {
         autoIncrement: true
       },
       budget: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       crop_type_id: {
