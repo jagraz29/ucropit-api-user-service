@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
+      field_id: {
+        type: Sequelize.INTEGER,
+      },
       name: {
         type: Sequelize.STRING,
         allowNull: true
