@@ -15,10 +15,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      crop_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
       surface: {
         type: Sequelize.DOUBLE,
         allowNull: false

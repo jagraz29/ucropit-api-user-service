@@ -5,10 +5,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    field_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     surface: {
       type: DataTypes.DOUBLE,
       allowNull: false
