@@ -5,7 +5,7 @@ const router = express.Router();
 const CropsController = require("../controllers/CropsController");
 
 router.get('/', (req, res) => {
-  CropsController.index()
+  CropsController.index(req.decoded)
     .then(crops => {
       return res.json({ code: 200, error: false, crops })
     }).catch(err => {
@@ -23,7 +23,7 @@ router.get('/types', async (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  CropsController.create(req.body)
+  CropsController.create(req.body, req.decoded)
     .then(crop => {
       return res.json({ code: 200, error: false, crop })
     }).catch(err => {
