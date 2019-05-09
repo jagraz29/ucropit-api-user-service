@@ -1,4 +1,5 @@
 let jwt = require('jsonwebtoken');
+const User = require('../models').users
 
 let checkToken = (req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
@@ -8,7 +9,7 @@ let checkToken = (req, res, next) => {
   }
 
   if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
       if (err) {
         return res.status(403).json({
           success: false,
@@ -16,6 +17,16 @@ let checkToken = (req, res, next) => {
         });
       } else {
         req.decoded = decoded;
+
+        const user = await User.findOne({ where: { id: decoded.user.id } })
+        
+        if (user === null) {
+          return res.status(401).json({
+            success: false,
+            message: 'Auth token is not supplied'
+          })
+        }
+
         next();
       }
     });
