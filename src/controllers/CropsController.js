@@ -9,7 +9,7 @@ class CropsController {
     try {
       return await Crop.findAll({ include: [{ model: CropTypes }, { model: Fields }] })
     } catch (err) {
-      console.log(err)
+      throw new Error(err)
     }
   }
 
@@ -17,7 +17,7 @@ class CropsController {
     try {
       return await CropTypes.findAll()
     } catch (err) {
-      console.log(err)
+      throw new Error(err)
     }
   }
 
@@ -28,7 +28,7 @@ class CropsController {
         include: [{ model: CropTypes }, { model: Fields }]
       })
     } catch (err) {
-      console.log(err)
+      throw new Error(err)
     }
   }
 
@@ -48,7 +48,7 @@ class CropsController {
         })
       })
     } catch (err) {
-      console.log(err)
+      throw new Error(err)
     }
   }
 
@@ -60,7 +60,7 @@ class CropsController {
 
       return await crop.update(data)
     } catch (err) {
-      console.log(err)
+      throw new Error(err)
     }
   }
 
@@ -73,7 +73,7 @@ class CropsController {
 
       return await crop.destroy()
     } catch (err) {
-      console.log(err)
+      throw new Error(err)
     }
   }
 }
