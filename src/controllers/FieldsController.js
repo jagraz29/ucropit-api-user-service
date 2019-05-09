@@ -10,7 +10,7 @@ class FieldsController {
         include: [{ model: Lot }]
       })
     } catch (err) {
-      console.log(err)
+      throw new Error(err)
     }
   }
 
@@ -21,17 +21,15 @@ class FieldsController {
         include: [{ model: Lot }]
       })
     } catch (err) {
-      console.log(err)
+      throw new Error(err)
     }
   }
 
   static async create(data) {
     try {
-      const field = await Field.create(data)
-      //field.setCrops(data.crop_id)
-      return field
+      return await Field.create(data)
     } catch (err) {
-      console.log(err)
+      throw new Error(err)
     }
   }
 
@@ -43,7 +41,7 @@ class FieldsController {
 
       return await crop.update(data)
     } catch (err) {
-      console.log(err)
+      throw new Error(err)
     }
   }
 
@@ -56,7 +54,7 @@ class FieldsController {
 
       return await crop.destroy()
     } catch (err) {
-      console.log(err)
+      throw new Error(err)
     }
   }
 }

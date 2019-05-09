@@ -4,7 +4,7 @@ const express = require("express");
 const router = express.Router();
 const AuthController = require("../controllers/AuthController");
 const jwt = require('jsonwebtoken')
-
+const authmiddleware = require('../middlewares/auth')
 const createToken = async (user) => await jwt.sign({ user }, process.env.JWT_SECRET)
 
 router.post('/', async (req, res) => {
@@ -51,6 +51,10 @@ router.post('/register', async (req, res) => {
     return res.status(500).json({ error: true, code: 422, message: err })
   }
 })
+
+router.get('/me', authmiddleware.checkToken, async (req, res) => {
+  res.json(req.decoded)
+});
 
 
 module.exports = router

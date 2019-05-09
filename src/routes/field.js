@@ -5,56 +5,46 @@ const router = express.Router();
 const FieldsController = require("../controllers/FieldsController");
 
 router.get('/', async (req, res) => {
-  try {
-    const fields = await FieldsController.index()
-
+  FieldsController.index().then((fields) => {
     return res.json({ code: 200, error: false, fields })
-  } catch (err) {
-    console.log(err)
-    return res.json({ code: 400, error: false, data: err })
-  }
+  }).catch((err) => {
+    return res.status(500).json({ code: 500, error: true, message: err.message })
+  })
 })
 
-router.post('/', async (req, res) => {
-  try {
-    const field = await FieldsController.create(req.body)
-
-    return res.json({ code: 200, error: false, field })
-  } catch (error) {
-    console.log(error)
-    return res.json({ code: 400, error: false, data: err })
-  }
+router.post('/', (req, res) => {
+  FieldsController.create(req.body)
+    .then(data => {
+      return res.json({ code: 200, error: false, data })
+    })
+    .catch(err => {
+      return res.status(500).json({ code: 500, err: true, message: err.message })
+    })
 })
 
 router.get('/:id', async (req, res) => {
-  try {
-    const field = await FieldsController.show(req.params.id)
-
-    return res.json({ code: 200, error: false, field })
-  } catch (error) {
-    console.log(error)
-    return res.json({ code: 400, error: false, data: err })
-  }
+  FieldsController.show(req.params.id)
+    .then((field) => {
+      return res.json({ code: 200, error: false, field })
+    }).catch(err => {
+      return res.status(500).json({ code: 500, error: true, message: err.message })
+    })
 })
 
 router.put('/:id', async (req, res) => {
-  try {
-    const field = await FieldsController.update(req.params.id, req.body)
+  FieldsController.update(req.params.id, req.body).then(field => {
     return res.json({ code: 200, error: false, field })
-  } catch (err) {
-    console.log(error)
-    return res.json({ code: 400, error: false, data: err })
-  }
+  }).catch(err => {
+    return res.status(500).json({ code: 500, error: true, message: err.message })
+  })
 })
 
 router.delete('/:id', async (req, res) => {
-  try {
-    const field = await FieldsController.delete(req.params.id)
+  FieldsController.delete(req.params.id).then(data => {
     return res.json({ code: 200, error: false })
-  } catch (err) {
-    console.log(error)
-    return res.json({ code: 400, error: false, data: err })
-  }
+  }).catch(err => {
+    return res.status(500).json({ code: 500, error: true, message: err.message })
+  })
 })
 
 module.exports = router

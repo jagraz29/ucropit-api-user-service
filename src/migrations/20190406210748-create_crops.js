@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
+      user_id: {
+        type: Sequelize.INTEGER
+      },
       budget: {
         type: Sequelize.TEXT,
         allowNull: false
