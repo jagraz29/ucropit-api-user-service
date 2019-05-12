@@ -45,7 +45,7 @@ class CropsController {
         ...data,
         budget: JSON.stringify({
           items: [
-            { id: 1, name: 'Campo', data: {}, status: 0, form: 'fields' },
+            { id: 1, name: 'Campo', data: {}, status: 'in_progress', form: 'fields' },
             { id: 2, name: 'Pre-Siembra', data: {}, status: 0, form: 'pre-sowing' },
             { id: 3, name: 'Siembra', data: {}, status: 0, form: 'sowing' },
             { id: 4, name: 'Protección de Cultivos', data: {}, status: 0, form: 'protection' },

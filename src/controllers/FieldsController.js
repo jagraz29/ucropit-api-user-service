@@ -1,7 +1,7 @@
 "use strict";
 
-const Field = require("../models").fields;
-const Lot = require("../models").lots;
+const Field = require("../models").fields
+const Lot = require("../models").lots
 
 class FieldsController {
   static async index() {

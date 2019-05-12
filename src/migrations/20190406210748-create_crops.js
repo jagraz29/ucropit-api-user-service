@@ -33,6 +33,14 @@ module.exports = {
         default: 'checking',
         values: ['checking', 'planing', 'accepted']
       },
+      start_at: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      end_at: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
       createdAt: {
         type: Sequelize.DATE
       },

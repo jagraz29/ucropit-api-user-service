@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     type: {
       type: DataTypes.ENUM,
-      defaultValue: 'own',
-      values: ['own', 'third']
+      defaultValue: 'producer',
+      values: ['ucropit', 'producer']
     },
     kmz_path: {
       type: DataTypes.STRING,

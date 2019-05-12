@@ -21,6 +21,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DOUBLE,
       allowNull: false
     },
+    start_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    end_at: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
     reference_price: DataTypes.DOUBLE,
     status: {
       type: DataTypes.ENUM,

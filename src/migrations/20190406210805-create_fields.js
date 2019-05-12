@@ -23,10 +23,10 @@ module.exports = {
         type: Sequelize.DOUBLE,
         allowNull: false,
       },
-      type: {
+      carrier: {
         type: Sequelize.ENUM,
-        default: 'own',
-        values: ['own', 'third']
+        default: 'producer',
+        values: ['ucropit', 'producer']
       },
       kmz_path: {
         type: Sequelize.STRING,
