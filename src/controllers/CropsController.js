@@ -75,6 +75,18 @@ class CropsController {
     }
   }
 
+  static async budget(id, data) {
+    try {
+      const crop = await Crop.findOne({
+        where: { id: id }
+      })
+      console.log(data)
+      return await crop.update({ budget: JSON.stringify(data) })
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
 
   static async delete(id) {
     try {

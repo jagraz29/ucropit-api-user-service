@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DOUBLE,
       allowNull: false,
     },
-    type: {
+    carrier: {
       type: DataTypes.ENUM,
       defaultValue: 'producer',
       values: ['ucropit', 'producer']
