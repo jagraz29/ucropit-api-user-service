@@ -5,7 +5,8 @@ const router = express.Router();
 const FieldsController = require("../controllers/FieldsController");
 
 router.get('/', async (req, res) => {
-  FieldsController.index().then((fields) => {
+  FieldsController.index(req.decoded)
+    .then((fields) => {
     return res.json({ code: 200, error: false, fields })
   }).catch((err) => {
     return res.status(500).json({ code: 500, error: true, message: err.message })
@@ -13,7 +14,7 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  FieldsController.create(req.body)
+  FieldsController.create(req.body, req.decoded)
     .then(data => {
       return res.json({ code: 200, error: false, data })
     })

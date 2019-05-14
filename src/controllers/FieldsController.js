@@ -4,9 +4,10 @@ const Field = require("../models").fields
 const Lot = require("../models").lots
 
 class FieldsController {
-  static async index() {
+  static async index(auth) {
     try {
       return await Field.findAll({
+        where: {user_id: auth.user.id},
         include: [{ model: Lot }]
       })
     } catch (err) {
@@ -25,9 +26,12 @@ class FieldsController {
     }
   }
 
-  static async create(data) {
+  static async create(data, auth) {
     try {
-      return await Field.create(data)
+      return await Field.create({
+        ...data,
+        user_id: auth.user.id
+      })
     } catch (err) {
       throw new Error(err)
     }
