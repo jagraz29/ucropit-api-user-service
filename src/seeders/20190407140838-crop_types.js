@@ -39,6 +39,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('People', null, {});
+    return queryInterface.bulkDelete('crop_types', null, {});
   }
 };
