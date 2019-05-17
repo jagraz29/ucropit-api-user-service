@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
     Crop.belongsToMany(models.users, {
       foreignKey: 'crop_id',
       otherKey: 'user_id',
-      through: 'crop_user'
+      through: 'crop_users'
     })
   }
 

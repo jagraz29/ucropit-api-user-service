@@ -2,13 +2,16 @@
 module.exports = (sequelize, DataTypes) => {
   const services = sequelize.define('services', {
     name: DataTypes.STRING,
-    type: DataTypes.INTEGER,
-    stage: DataTypes.ENUM,
+    type_id: DataTypes.INTEGER,
+    stage: {
+      type: DataTypes.ENUM,
+      values: ['all']
+    },
     keywords: DataTypes.STRING,
     description: DataTypes.STRING
   }, {});
   services.associate = function(models) {
-    // associations can be defined here
+    services.belongsTo(models.service_types, { foreignKey: 'type_id' })
   };
   return services;
 };
