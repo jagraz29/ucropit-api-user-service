@@ -27,6 +27,11 @@ module.exports = {
           "name": "Servicios de labranza de suelos",
           "stage": "all",
           "type_id": 5,
+        },
+        {
+          "name": "Seguro",
+          "stage": "protection",
+          "type_id": 6,
         }
       ]);
   },

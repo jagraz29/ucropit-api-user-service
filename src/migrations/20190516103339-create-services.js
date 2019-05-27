@@ -16,7 +16,7 @@ module.exports = {
       },
       stage: {
         type: Sequelize.ENUM,
-        values: ['all'],
+        values: ['all', 'protection'],
       },
       keywords: {
         type: Sequelize.STRING

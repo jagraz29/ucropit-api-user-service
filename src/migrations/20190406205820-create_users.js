@@ -10,11 +10,11 @@ module.exports = {
       },
       first_name: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       last_name: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       email: {
         type: Sequelize.STRING,
@@ -26,7 +26,7 @@ module.exports = {
       },
       phone: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       fiscal_number: {
         type: Sequelize.STRING,

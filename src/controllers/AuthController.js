@@ -24,14 +24,13 @@ class AuthController {
     }
   }
 
-
   static async register(data) {
     try {
       const user = await User.findOne({
         where: { email: data.email }
       })
 
-      if (user !== null) throw Error('the user already exists')
+      if (user !== null) throw Error('El email ya fue tomado')
 
       return await User.create(data)
 

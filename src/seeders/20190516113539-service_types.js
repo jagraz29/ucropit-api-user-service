@@ -22,6 +22,10 @@ module.exports = {
         {
           name: 'Disco',
           image: 'Tractor.svg'
+        },
+        {
+          name: 'Seguro',
+          image: 'Tractor.svg'
         }
       ]);
   },

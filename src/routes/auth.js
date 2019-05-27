@@ -34,7 +34,7 @@ router.post('/register', async (req, res) => {
     let result = await AuthController.register(req.body)
 
     if (result === null) {
-      return res.status(422).json({ error: true, code: 422, message: 'user already exists' })
+      return res.status(422).json({ error: true, code: 422, message: 'El correo ya fue tomado' })
     }
 
     const token = await createToken(result)
