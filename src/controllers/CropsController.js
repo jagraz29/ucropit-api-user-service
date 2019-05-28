@@ -86,7 +86,7 @@ class CropsController {
         include: [{ model: CropTypes }, { model: Fields }, { model: Users }]
       })
 
-      const cropUsersId = crop.users[0].crop_users.id
+      const cropUsersId = crop.users.find(el => el.id === auth.user.id).crop_users.id
 
       const cropUsers = await CropUsers.findOne({
         where: { id: cropUsersId },
