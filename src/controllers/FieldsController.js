@@ -7,7 +7,7 @@ class FieldsController {
   static async index(auth) {
     try {
       return await Field.findAll({
-        where: {user_id: auth.user.id},
+        where: { user_id: auth.user.id },
         include: [{ model: Lot }]
       })
     } catch (err) {

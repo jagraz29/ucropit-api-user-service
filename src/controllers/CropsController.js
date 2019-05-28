@@ -4,6 +4,9 @@ const Crop = require("../models").crops;
 const CropTypes = require("../models").crop_types;
 const Fields = require("../models").fields;
 const Users = require("../models").users;
+const CropUserPermissions = require("../models").crop_user_permissions;
+const CropPermissions = require("../models").crop_permissions;
+const CropUsers = require("../models").crop_users;
 
 class CropsController {
   static async index(auth) {
@@ -20,6 +23,54 @@ class CropsController {
     }
   }
 
+
+  static async colaborators(cropId, values, auth) {
+    try {
+      let user = await Users.findOne({
+        where: {
+          'email': values.email
+        }
+      })
+
+      if (!user) {
+        user = await Users.create({
+          email: values.email,
+          password: values.email
+        })
+      }
+
+      const crop = await Crop.findOne({
+        where: { id: cropId }
+      })
+
+      await crop.addUsers(user)
+
+      const rel = await CropUsers.findOne({
+        where: { user_id: user.id },
+        where: { crop_id: crop.id }
+      })
+
+
+      if (values.can_edit) {
+        await CropUserPermissions.create({
+          crop_permission_id: 1,
+          crop_user_id: rel.id
+        })
+      }
+
+      if (values.can_sign) {
+        await CropUserPermissions.create({
+          crop_permission_id: 2,
+          crop_user_id: rel.id
+        })
+      }
+ 
+      return crop
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
   static async types() {
     try {
       return await CropTypes.findAll()
@@ -28,12 +79,24 @@ class CropsController {
     }
   }
 
-  static async show(id) {
+  static async show(id, auth) {
     try {
-      return await Crop.findOne({
+      const crop = await Crop.findOne({
         where: { id: id },
-        include: [{ model: CropTypes }, { model: Fields }]
+        include: [{ model: CropTypes }, { model: Fields }, { model: Users }]
       })
+
+      const cropUsersId = crop.users[0].crop_users.id
+
+      const cropUsers = await CropUsers.findOne({
+        where: { id: cropUsersId },
+        include: [{ model: CropPermissions }]
+      })
+
+      return {
+        ...crop.get({ 'plain': true }),
+        permissions: cropUsers.crop_permissions
+      }
     } catch (err) {
       throw new Error(err)
     }
@@ -55,7 +118,18 @@ class CropsController {
         })
       })
 
-      crop.setUsers([auth.user.id])
+      let rel = await crop.setUsers([auth.user.id])
+      rel = rel[0][0]
+
+      await CropUserPermissions.create({
+        crop_permission_id: 1,
+        crop_user_id: rel.id
+      })
+
+      await CropUserPermissions.create({
+        crop_permission_id: 2,
+        crop_user_id: rel.id
+      })
 
       return crop
     } catch (err) {
@@ -86,7 +160,6 @@ class CropsController {
       throw new Error(err)
     }
   }
-
 
   static async delete(id) {
     try {

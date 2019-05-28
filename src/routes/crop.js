@@ -40,8 +40,17 @@ router.post('/', (req, res) => {
   })
 })
 
+router.post('/:id/colaborators', (req, res) => {
+  CropsController.colaborators(req.params.id, req.body)
+    .then(crop => {
+      return res.json({code: 200, error: false, crop})
+    }).catch(err => {
+    return res.status(400).json({code: 400, error: true, message: err.message})
+  })
+})
+
 router.get('/:id', (req, res) => {
-  CropsController.show(req.params.id)
+  CropsController.show(req.params.id, req.decoded)
     .then(crop => {
       return res.json({code: 200, error: false, crop})
     }).catch(err => {

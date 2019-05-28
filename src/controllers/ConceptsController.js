@@ -8,17 +8,17 @@ const ServiceType = require("../models").service_types;
 class ConceptsController {
   static async index() {
     try {
-      const inputs = await Inputs.findAll({include: [{model: InputType}]})
-      const services = await Services.findAll({include: [{model: ServiceType}]})
+      const inputs = await Inputs.findAll({ include: [{ model: InputType }] })
+      const services = await Services.findAll({ include: [{ model: ServiceType }] })
 
       return Promise.resolve([
         ...services.map(el => {
-          const plain = el.get({plain: true})
+          const plain = el.get({ plain: true })
           plain.category = 'service'
           return plain
         }),
         ...inputs.map(el => {
-          const plain = el.get({plain: true})
+          const plain = el.get({ plain: true })
           plain.category = 'input'
           return plain
         })
@@ -32,10 +32,10 @@ class ConceptsController {
     console.log(id, type === 'service')
     try {
       if (type === 'service') {
-        const input = await Services.findOne({where: {id}, include: [{model: ServiceType}]})
+        const input = await Services.findOne({ where: { id }, include: [{ model: ServiceType }] })
         return input
       } else {
-        const services = await Inputs.findOne({where: {id}, include: [{model: InputType}]})
+        const services = await Inputs.findOne({ where: { id }, include: [{ model: InputType }] })
         return services
       }
     } catch (e) {
