@@ -32,17 +32,18 @@ router.post('/register', async (req, res) => {
   try {
     let result = await AuthController.register(req.body)
 
-    if (result === null) {
+    if (result.user === null) {
       return res.status(422).json({ error: true, code: 422, message: 'El correo ya fue tomado' })
     }
 
-    const token = await createToken(result)
+    const token = await createToken(result.user)
 
     res.status(200).json({
       error: false, code: 200, message: 'Success',
       data: {
-        user: { ...result.toJSON() },
-        token
+        user: { ...result.user.toJSON() },
+        token,
+        withoutFirstCrop: result.withoutFirstCrop
       }
     })
 

@@ -7,6 +7,8 @@ const Users = require("../models").users;
 const CropUserPermissions = require("../models").crop_user_permissions;
 const CropPermissions = require("../models").crop_permissions;
 const CropUsers = require("../models").crop_users;
+const Mail = require('../services/Mail')
+const { getShortYear } = require('../helpers')
 
 class CropsController {
   static async index(auth) {
@@ -32,17 +34,24 @@ class CropsController {
         }
       })
 
+      const crop = await Crop.findOne({
+        where: { id: cropId },
+        include: [{ model: CropTypes }]
+      })
+
+      const cropName = `${crop.crop_type.name} ${getShortYear(crop.start_at)}/${getShortYear(crop.end_at)}`
+
       if (!user) {
         user = await Users.create({
           email: values.email,
           password: values.email,
           first_login: 0
         })
-      }
 
-      const crop = await Crop.findOne({
-        where: { id: cropId }
-      })
+        Mail.send({ template: 'new_colaborator', to: user.email, data: { user, cropName } })
+      } else {
+        Mail.send({ template: 'colaborator', to: user.email, data: { user, cropName, owner: auth.user } })
+      }
 
       await crop.addUsers(user)
 
@@ -63,7 +72,7 @@ class CropsController {
           crop_user_id: rel.id
         })
       }
- 
+
       return crop
     } catch (err) {
       throw new Error(err)

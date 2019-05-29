@@ -41,7 +41,7 @@ router.post('/', (req, res) => {
 })
 
 router.post('/:id/colaborators', (req, res) => {
-  CropsController.colaborators(req.params.id, req.body)
+  CropsController.colaborators(req.params.id, req.body, req.decoded)
     .then(crop => {
       return res.json({code: 200, error: false, crop})
     }).catch(err => {

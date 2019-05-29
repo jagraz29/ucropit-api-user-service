@@ -11,7 +11,7 @@ class AuthController {
       })
 
       if (user === null) throw Error(`Credenciales invalidas`)
-      
+
       if (!user.first_login) throw Error(`Si fue invitado a colaborar de una campaña debe registrarse`)
 
       const isValidPassword = await user.validPassword(password)
@@ -30,14 +30,14 @@ class AuthController {
       const user = await User.findOne({
         where: { email: data.email }
       })
-      
+
       if (user && !user.first_login) {
-        return await user.update({...data, first_login: false})
+        return { user: await user.update({ ...data, first_login: 1 }), withoutFirstCrop: true }
       }
 
       if (user !== null) throw Error('El email ya fue tomado')
 
-      return await User.create(data)
+      return { user: await User.create(data), withoutFirstCrop: false }
 
     } catch (err) {
       console.log(err)
