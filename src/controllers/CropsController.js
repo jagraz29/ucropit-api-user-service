@@ -35,7 +35,8 @@ class CropsController {
       if (!user) {
         user = await Users.create({
           email: values.email,
-          password: values.email
+          password: values.email,
+          first_login: 0
         })
       }
 
@@ -46,10 +47,8 @@ class CropsController {
       await crop.addUsers(user)
 
       const rel = await CropUsers.findOne({
-        where: { user_id: user.id },
-        where: { crop_id: crop.id }
+        where: { user_id: user.id, crop_id: crop.id }
       })
-
 
       if (values.can_edit) {
         await CropUserPermissions.create({

@@ -32,6 +32,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
+      first_login: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: 1
+      },
       createdAt: {
         type: Sequelize.DATE
       },

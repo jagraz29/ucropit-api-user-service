@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       allowNull: false
     },
+    first_login: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 1
+    },
     password: {
       type: DataTypes.STRING,
     },

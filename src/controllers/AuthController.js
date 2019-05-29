@@ -10,17 +10,18 @@ class AuthController {
         where: { email: email }
       })
 
-      if (user === null) throw Error(`the user with mail ${email} dont exists`)
+      if (user === null) throw Error(`Credenciales invalidas`)
+      
+      if (!user.first_login) throw Error(`Si fue invitado a colaborar de una campaña debe registrarse`)
 
       const isValidPassword = await user.validPassword(password)
 
-      if (!isValidPassword) throw Error(`invalid password`)
+      if (!isValidPassword) throw Error(`Credenciales invalidas`)
 
-      return user
+      return { user, error: false }
 
     } catch (err) {
-      console.log(err)
-      return null
+      return { error: true, message: err.message }
     }
   }
 
@@ -29,6 +30,10 @@ class AuthController {
       const user = await User.findOne({
         where: { email: data.email }
       })
+      
+      if (user && !user.first_login) {
+        return await user.update({...data, first_login: false})
+      }
 
       if (user !== null) throw Error('El email ya fue tomado')
 

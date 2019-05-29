@@ -11,18 +11,17 @@ router.post('/', async (req, res) => {
   try {
     let result = await AuthController.login(req.body)
 
-    if (result) {
-
-      const token = await createToken(result)
+    if (!result.error) {
+      const token = await createToken(result.user)
 
       return res.status(200).json({
         error: false, code: 200, message: 'Success', data: {
-          user: { ...result.toJSON() },
+          user: { ...result.user.toJSON() },
           token
         }
       })
     } else {
-      return res.status(401).json({ error: true, code: 401, message: 'not allowed' })
+      return res.status(401).json({ error: true, code: 401, message: result.message })
     }
   } catch (err) {
     console.log(err)
