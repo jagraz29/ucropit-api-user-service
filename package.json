@@ -1,0 +1,46 @@
+{
+  "name": "ucropit-api",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate:undo": "cd src/ && sequelize db:migrate:undo:all && cd ..",
+    "migrate:all": "cd src/ && sequelize db:migrate && cd ..",
+    "seed": "cd src/ && sequelize db:seed:all && cd ..",
+    "reset:db": "npm run migrate:undo && npm run migrate:all && npm run seed"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.18.3",
+    "console-stamp": "^0.2.7",
+    "cors": "^2.8.5",
+    "dotenv": "^7.0.0",
+    "email-templates": "^5.1.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
+    "mailgun-js": "^0.22.0",
+    "moment": "^2.24.0",
+    "mysql2": "^1.6.5",
+    "nodemailer": "^5.1.1",
+    "nodemailer-mailgun-transport": "^1.4.0",
+    "pug": "^2.0.3",
+    "sequelize": "^5.1.0",
+    "shortid": "^2.2.14"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/ucrop-it/ucropit-api-user-service.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/ucrop-it/ucropit-api-user-service/issues"
+  },
+  "homepage": "https://gitlab.com/ucrop-it/ucropit-api-user-service#readme"
+}
