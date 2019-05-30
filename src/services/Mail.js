@@ -25,7 +25,7 @@ class Mail {
     email
       .send({
         template: template,
-        message: { to: 'lucasmichailian@gmail.com' },
+        message: { to },
         locals: { ...data }
       })
       .then(console.log)
