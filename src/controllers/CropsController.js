@@ -7,6 +7,7 @@ const Users = require("../models").users;
 const CropUserPermissions = require("../models").crop_user_permissions;
 const CropPermissions = require("../models").crop_permissions;
 const CropUsers = require("../models").crop_users;
+const Signs = require("../models").signs;
 const Mail = require('../services/Mail')
 const { getShortYear } = require('../helpers')
 
@@ -17,7 +18,10 @@ class CropsController {
         include: [
           { model: CropTypes },
           { model: Fields },
-          { model: Users, where: { id: auth.user.id } }
+          {
+            model: Users,
+            where: { id: auth.user.id },
+          }
         ]
       })
     } catch (err) {
@@ -91,7 +95,16 @@ class CropsController {
     try {
       const crop = await Crop.findOne({
         where: { id: id },
-        include: [{ model: CropTypes }, { model: Fields }, { model: Users }]
+        include: [
+          { model: CropTypes },
+          { model: Fields },
+          {
+            model: Users,
+             include: [
+              { model: Signs }
+            ]
+          }
+        ]
       })
 
       const cropUsersId = crop.users.find(el => el.id === auth.user.id).crop_users.id
