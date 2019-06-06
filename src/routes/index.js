@@ -7,6 +7,7 @@ router.use("/api/crops", authMiddleware.checkToken, require("./crop"));
 router.use("/api/fields", authMiddleware.checkToken, require("./field"));
 router.use("/api/concepts",  authMiddleware.checkToken, require("./concept"));
 router.use("/api/lots", require("./lot"));
+router.use("/api/signs", authMiddleware.checkToken, require("./sign"));
 
 
 module.exports = router

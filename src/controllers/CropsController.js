@@ -10,6 +10,7 @@ const CropUsers = require("../models").crop_users;
 const Signs = require("../models").signs;
 const Mail = require('../services/Mail')
 const { getShortYear } = require('../helpers')
+const { map } = require('lodash')
 
 class CropsController {
   static async index(auth) {
@@ -100,8 +101,10 @@ class CropsController {
           { model: Fields },
           {
             model: Users,
-             include: [
-              { model: Signs }
+            include: [
+              {
+                model: Signs
+              }
             ]
           }
         ]
@@ -139,6 +142,7 @@ class CropsController {
         })
       })
 
+
       let rel = await crop.setUsers([auth.user.id])
       rel = rel[0][0]
 
@@ -164,7 +168,27 @@ class CropsController {
         where: { id: id }
       })
 
-      return await crop.update(data)
+      let newBudget = JSON.parse(crop.budget)
+      newBudget = {
+        ...newBudget,
+        items: map(newBudget.items, (el) => {
+          if (el.form === 'other-expenses') {
+            const totalExpenses = el.data.undefined.expenses.reduce((prev, el) => prev + parseFloat(el.cost.replace(/[, ]+/g, '')), 0)
+            const totalIncome = el.data.undefined.income.reduce((prev, el) => prev + parseFloat(el.cost.replace(/[, ]+/g, '')), 0)
+            el.data['undefined'].amount = ((totalIncome - totalExpenses) / data.surface).toFixed(2)
+          }
+          return el
+        })
+      }
+      
+      await Signs.destroy({
+        where: { type_id: id, type: 'crop-budget' }
+      })
+
+      return await crop.update({
+        ...data,
+        budget: JSON.stringify(newBudget)
+      })
     } catch (err) {
       throw new Error(err)
     }
@@ -175,7 +199,11 @@ class CropsController {
       const crop = await Crop.findOne({
         where: { id: id }
       })
-      console.log(data)
+
+      await Signs.destroy({
+        where: { type_id: crop.id, type: 'crop-budget' }
+      })
+
       return await crop.update({ budget: JSON.stringify(data) })
     } catch (err) {
       throw new Error(err)
