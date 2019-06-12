@@ -10,7 +10,8 @@ const CropUsers = require("../models").crop_users;
 const Signs = require("../models").signs;
 const Mail = require('../services/Mail')
 const { getShortYear } = require('../helpers')
-const { map } = require('lodash')
+const { map, isEqual } = require('lodash')
+const { diff } = require('deep-object-diff')
 
 class CropsController {
   static async index(auth) {
@@ -200,9 +201,15 @@ class CropsController {
         where: { id: id }
       })
 
-      await Signs.destroy({
-        where: { type_id: crop.id, type: 'crop-budget' }
-      })
+      const diffBudget = diff(JSON.parse(crop.budget), data).items
+
+      if (diffBudget !== undefined) {
+        if (diffBudget[Object.keys(diffBudget)[0]].data !== undefined) {
+          await Signs.destroy({
+            where: { type_id: crop.id, type: 'crop-budget' }
+          })
+        }
+      }
 
       return await crop.update({ budget: JSON.stringify(data) })
     } catch (err) {
