@@ -11,7 +11,7 @@ const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
   process.env.DB_PASS,
-  { ...config, logging: true },
+  { ...config, logging: false },
 );
 
 const db = {};

@@ -119,6 +119,8 @@ class CropsController {
 
       const plainCrops = crop.get({ plain: true })
 
+      const canSign =  []
+
       crop = {
         ...plainCrops,
         users: await Promise.all(plainCrops.users.map(async el => {
@@ -126,11 +128,19 @@ class CropsController {
             where: { crop_user_id: el.id },
             include: [{ model: CropPermissions }]
           })
+          
+          const signable = permissions.find(el => el.crop_permission.value === 'can_sign')
+
+          if (signable !== undefined) {
+            canSign.push(el)
+          }
 
           return { ...el, permissions }
         }))
       }
-
+      
+      crop.editable = canSign.filter(el => el.signs.length > 0).length !== canSign.length 
+      
       return {
         ...crop,
         permissions: cropUsers.crop_permissions
