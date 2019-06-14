@@ -95,7 +95,7 @@ class CropsController {
 
   static async show(id, auth) {
     try {
-      const crop = await Crop.findOne({
+      let crop = await Crop.findOne({
         where: { id: id },
         include: [
           { model: CropTypes },
@@ -105,24 +105,38 @@ class CropsController {
             include: [
               {
                 model: Signs
-              }
+              },
             ]
           }
         ]
       })
 
       const cropUsersId = crop.users.find(el => el.id === auth.user.id).crop_users.id
-
       const cropUsers = await CropUsers.findOne({
         where: { id: cropUsersId },
         include: [{ model: CropPermissions }]
       })
 
+      const plainCrops = crop.get({ plain: true })
+
+      crop = {
+        ...plainCrops,
+        users: await Promise.all(plainCrops.users.map(async el => {
+          const permissions = await CropUserPermissions.findAll({
+            where: { crop_user_id: el.id },
+            include: [{ model: CropPermissions }]
+          })
+
+          return { ...el, permissions }
+        }))
+      }
+
       return {
-        ...crop.get({ 'plain': true }),
+        ...crop,
         permissions: cropUsers.crop_permissions
       }
     } catch (err) {
+      console.log('CROP_SHOW', err)
       throw new Error(err)
     }
   }
@@ -181,7 +195,7 @@ class CropsController {
           return el
         })
       }
-      
+
       await Signs.destroy({
         where: { type_id: id, type: 'crop-budget' }
       })

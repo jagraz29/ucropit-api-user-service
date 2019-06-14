@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     crop_user_id: DataTypes.INTEGER
   }, {});
   crop_user_permissions.associate = function(models) {
-    // associations can be defined here
+    crop_user_permissions.belongsTo(models.crop_permissions, {
+      foreignKey: 'crop_permission_id',
+      otherKey: 'crop_user_id'
+    })
   };
   return crop_user_permissions;
 };
