@@ -26,6 +26,22 @@ module.exports = {
         {
           name: 'Seguro',
           image: 'Tractor.svg'
+        },
+        {
+          name: 'Cosecha',
+          image: 'Tractor.svg'
+        },
+        {
+          name: 'Flete',
+          image: 'Tractor.svg'
+        },
+        {
+          name: 'Secada',
+          image: 'Tractor.svg'
+        },
+        {
+          name: 'Comisión por Venta',
+          image: 'Tractor.svg'
         }
       ]);
   },

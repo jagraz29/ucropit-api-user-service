@@ -119,7 +119,7 @@ class CropsController {
 
       const plainCrops = crop.get({ plain: true })
 
-      const canSign =  []
+      const canSign = []
 
       crop = {
         ...plainCrops,
@@ -128,7 +128,7 @@ class CropsController {
             where: { crop_user_id: el.id },
             include: [{ model: CropPermissions }]
           })
-          
+
           const signable = permissions.find(el => el.crop_permission.value === 'can_sign')
 
           if (signable !== undefined) {
@@ -138,9 +138,9 @@ class CropsController {
           return { ...el, permissions }
         }))
       }
-      
-      crop.editable = canSign.filter(el => el.signs.length > 0).length !== canSign.length 
-      
+
+      crop.editable = canSign.filter(el => el.signs.length > 0).length !== canSign.length
+
       return {
         ...crop,
         permissions: cropUsers.crop_permissions
@@ -201,6 +201,27 @@ class CropsController {
             const totalExpenses = el.data.undefined.expenses.reduce((prev, el) => prev + parseFloat(el.cost.replace(/[, ]+/g, '')), 0)
             const totalIncome = el.data.undefined.income.reduce((prev, el) => prev + parseFloat(el.cost.replace(/[, ]+/g, '')), 0)
             el.data['undefined'].amount = ((totalIncome - totalExpenses) / data.surface).toFixed(2)
+          } else if ('harvest-and-marketing') {
+            let newData = {}
+            for (let item in el.data) {
+              let total = Number(el.data[item].amount)
+              
+              if (el.data[item].concept.calc_unit === 'ha') {
+                total = total
+              } else if (el.data[item].concept.calc_unit === 'percent') {
+                total = ((crop.reference_price * crop.quintals) * total) / 100
+              } else if (el.data[item].concept.calc_unit === 'ton') {
+                total = total * crop.quintals
+              }
+
+              el.data[item].amount = total
+
+              newData = {
+                ...el.data,
+                [item]: el.data[item]
+              }
+            }
+            el.data = newData
           }
           return el
         })
@@ -215,6 +236,7 @@ class CropsController {
         budget: JSON.stringify(newBudget)
       })
     } catch (err) {
+      console.log(err)
       throw new Error(err)
     }
   }
