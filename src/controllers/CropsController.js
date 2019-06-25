@@ -201,11 +201,10 @@ class CropsController {
             const totalExpenses = el.data.undefined.expenses.reduce((prev, el) => prev + parseFloat(el.cost.replace(/[, ]+/g, '')), 0)
             const totalIncome = el.data.undefined.income.reduce((prev, el) => prev + parseFloat(el.cost.replace(/[, ]+/g, '')), 0)
             el.data['undefined'].amount = ((totalIncome - totalExpenses) / data.surface).toFixed(2)
-          } else if ('harvest-and-marketing') {
+          } else if (el.form === 'harvest-and-marketing') {
             let newData = {}
             for (let item in el.data) {
-              let total = Number(el.data[item].amount)
-              
+              let total = Number(el.data[item].price)
               if (el.data[item].concept.calc_unit === 'ha') {
                 total = total
               } else if (el.data[item].concept.calc_unit === 'percent') {

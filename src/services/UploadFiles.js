@@ -1,6 +1,6 @@
 function filterFile(req, file, cp) {
   const fileType = file.originalname.split('.').pop()
-  if(file.fieldname === 'image'){
+  if (file.fieldname === 'image') {
     switch (fileType) {
       case 'jpg':
         cp(null, true)
@@ -12,7 +12,7 @@ function filterFile(req, file, cp) {
         cp(null, false)
         break
     }
-  }else{
+  } else {
     switch (fileType) {
       case 'pdf':
         cp(null, true)
