@@ -1,113 +1,104 @@
 "use strict";
 
-module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("providers", {
+module.exports = (sequelize, DataTypes) => {
+  const Provider = sequelize.define(
+    "providers",
+    {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: DataTypes.INTEGER
       },
       first_name: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       last_name: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       status: {
-        type: Sequelize.ENUM('Sugerido', 'Completo', 'Validado'),
-        allowNull:false
+        type: DataTypes.ENUM("Sugerido", "Completo", "Validado"),
+        allowNull: false
       },
       phone: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       cellphone: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       email: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true
       },
       address: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       city: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       estate: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       country: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       postal_code: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       taxid: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       cbu: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       photo: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true
       },
       description: {
-        type: Sequelize.TEXT,
+        type: DataTypes.TEXT,
         allowNull: true
       },
       discounts: {
-        type: Sequelize.DOUBLE,
+        type: DataTypes.DOUBLE,
         allowNull: true
       },
       notes: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true
       },
       web: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      latitude: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      longitude: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: DataTypes.DATE,
         defaultValue: new Date()
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: DataTypes.DATE,
         defaultValue: new Date()
       }
-    }, 
+    },
     {
       timestamps: true,
-      underscored: true,
-    });
-  },
+      underscored: true
+    }
+  );
 
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('providers');
-  }
+  return Provider;
 };
