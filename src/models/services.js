@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM,
       values: ['all']
     },
+    calc_unit: {
+      type: DataTypes.STRING,
+      defaultValue: 'ton'
+    },
     keywords: DataTypes.STRING,
     description: DataTypes.STRING
   }, {});
