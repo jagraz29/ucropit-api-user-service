@@ -35,7 +35,10 @@ class ProviderController {
   }
   static async create(data) {
     try {
-      const provider = await Provider.create(data);
+      const provider = await Provider.create({
+        ...data,
+        photo: `${process.env.BASE_URL}/uploads/default.png`
+      });
 
       return provider;
     } catch (err) {

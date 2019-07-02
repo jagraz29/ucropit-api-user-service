@@ -15,6 +15,7 @@ const jwt = require('jsonwebtoken')
 const http = require("http")
 const cors = require("cors")
 const bodyParser = require("body-parser")
+const path = require('path')
 const routes = require("./routes")
 // const config = require("./config")
 const models = require("./models")
@@ -36,10 +37,10 @@ let corsOptions = {
     }
   }
 }
-
 // Middleware express
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(express.static(path.join(__dirname, '../public')))
 //My Middlewares
 app.use(cors(corsOptions))
 app.use("/v1", routes)

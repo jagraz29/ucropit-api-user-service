@@ -10,6 +10,6 @@ router.use("/api/concepts", authMiddleware.checkToken, require("./concept"));
 router.use("/api/lots", require("./lot"));
 router.use("/api/signs", authMiddleware.checkToken, require("./sign"));
 router.use("/api/files", require("./upload"))
-router.use("/api/providers", authMiddleware.checkToken, require("./provider"));
+router.use("/api/providers",authMiddleware.checkToken,require("./provider"));
 
 module.exports = router;
