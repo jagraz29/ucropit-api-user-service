@@ -16,10 +16,14 @@ module.exports = {
       },
       stage: {
         type: Sequelize.ENUM,
-        values: ['all', 'protection'],
+        values: ['all', 'protection', 'harvest-and-marketing'],
       },
       keywords: {
         type: Sequelize.STRING
+      },
+      calc_unit: {
+        type: Sequelize.STRING,
+        defaultValue: 'ha'
       },
       description: {
         type: Sequelize.STRING

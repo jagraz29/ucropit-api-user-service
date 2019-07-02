@@ -7,8 +7,11 @@ const Users = require("../models").users;
 const CropUserPermissions = require("../models").crop_user_permissions;
 const CropPermissions = require("../models").crop_permissions;
 const CropUsers = require("../models").crop_users;
+const Signs = require("../models").signs;
 const Mail = require('../services/Mail')
 const { getShortYear } = require('../helpers')
+const { map, isEqual } = require('lodash')
+const { diff } = require('deep-object-diff')
 
 class CropsController {
   static async index(auth) {
@@ -17,14 +20,16 @@ class CropsController {
         include: [
           { model: CropTypes },
           { model: Fields },
-          { model: Users, where: { id: auth.user.id } }
+          {
+            model: Users,
+            where: { id: auth.user.id },
+          }
         ]
       })
     } catch (err) {
       throw new Error(err)
     }
   }
-
 
   static async colaborators(cropId, values, auth) {
     try {
@@ -89,23 +94,68 @@ class CropsController {
 
   static async show(id, auth) {
     try {
-      const crop = await Crop.findOne({
+      let crop = await Crop.findOne({
         where: { id: id },
-        include: [{ model: CropTypes }, { model: Fields }, { model: Users }]
+        include: [
+          { model: CropTypes },
+          { model: Fields },
+          {
+            model: Users,
+            include: [
+              {
+                model: Signs
+              },
+            ]
+          }
+        ]
       })
 
       const cropUsersId = crop.users.find(el => el.id === auth.user.id).crop_users.id
-
       const cropUsers = await CropUsers.findOne({
         where: { id: cropUsersId },
         include: [{ model: CropPermissions }]
       })
 
+      const plainCrops = crop.get({ plain: true })
+
+      const canSign = []
+
+      // Search users in crop relationship 
+      crop = {
+        ...plainCrops,
+        users: await Promise.all(plainCrops.users.map(async el => {
+          const permissions = await CropUserPermissions.findAll({
+            where: { crop_user_id: el.id },
+            include: [{ model: CropPermissions }]
+          })
+
+          const signable = permissions.find(el => el.crop_permission.value === 'can_sign')
+
+          if (signable !== undefined) {
+            canSign.push(el)
+          }
+
+          return { ...el, permissions }
+        }))
+      }
+
+      // search users that already sign in this crop
+      crop.editable = canSign.filter((el) => {
+        const signers = el.signs.filter(el => {
+          return el.type_id === Number(id)
+        }).length > 0
+        return signers
+      })
+    
+      // compare users that has signs vs user can sing to define editable permission
+      crop.editable = crop.editable.length !== canSign.length
+
       return {
-        ...crop.get({ 'plain': true }),
+        ...crop,
         permissions: cropUsers.crop_permissions
       }
     } catch (err) {
+      console.log('CROP_SHOW', err)
       throw new Error(err)
     }
   }
@@ -125,6 +175,7 @@ class CropsController {
           ]
         })
       })
+
 
       let rel = await crop.setUsers([auth.user.id])
       rel = rel[0][0]
@@ -151,8 +202,49 @@ class CropsController {
         where: { id: id }
       })
 
-      return await crop.update(data)
+      let newBudget = JSON.parse(crop.budget)
+      newBudget = {
+        ...newBudget,
+        items: map(newBudget.items, (el) => {
+          if (el.form === 'other-expenses') {
+            const totalExpenses = el.data.undefined.expenses.reduce((prev, el) => prev + parseFloat(el.cost.replace(/[, ]+/g, '')), 0)
+            const totalIncome = el.data.undefined.income.reduce((prev, el) => prev + parseFloat(el.cost.replace(/[, ]+/g, '')), 0)
+            el.data['undefined'].amount = ((totalIncome - totalExpenses) / data.surface).toFixed(2)
+          } else if (el.form === 'harvest-and-marketing') {
+            let newData = {}
+            for (let item in el.data) {
+              let total = Number(el.data[item].price)
+              if (el.data[item].concept.calc_unit === 'ha') {
+                total = total
+              } else if (el.data[item].concept.calc_unit === 'percent') {
+                total = ((crop.reference_price * crop.quintals) * total) / 100
+              } else if (el.data[item].concept.calc_unit === 'ton') {
+                total = total * crop.quintals
+              }
+
+              el.data[item].amount = total
+
+              newData = {
+                ...el.data,
+                [item]: el.data[item]
+              }
+            }
+            el.data = newData
+          }
+          return el
+        })
+      }
+
+      await Signs.destroy({
+        where: { type_id: id, type: 'crop-budget' }
+      })
+
+      return await crop.update({
+        ...data,
+        budget: JSON.stringify(newBudget)
+      })
     } catch (err) {
+      console.log(err)
       throw new Error(err)
     }
   }
@@ -162,7 +254,17 @@ class CropsController {
       const crop = await Crop.findOne({
         where: { id: id }
       })
-      console.log(data)
+
+      const diffBudget = diff(JSON.parse(crop.budget), data).items
+
+      if (diffBudget !== undefined) {
+        if (diffBudget[Object.keys(diffBudget)[0]].data !== undefined) {
+          await Signs.destroy({
+            where: { type_id: crop.id, type: 'crop-budget' }
+          })
+        }
+      }
+
       return await crop.update({ budget: JSON.stringify(data) })
     } catch (err) {
       throw new Error(err)

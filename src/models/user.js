@@ -41,6 +41,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  User.associate = function(models) {
+    User.hasMany(models.signs, {
+      foreignKey: 'user_id'
+    })
+  }
 
   async function encryptPasswordIfChanged(user, options) {
     if (user.changed('password')) {

@@ -18,7 +18,7 @@ class LotsController {
       })
     } catch (err) {
       console.log(err)
-    }
+    } 
   }
 
   static async create(data) {
