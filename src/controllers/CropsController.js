@@ -31,7 +31,6 @@ class CropsController {
     }
   }
 
-
   static async colaborators(cropId, values, auth) {
     try {
       let user = await Users.findOne({
@@ -121,6 +120,7 @@ class CropsController {
 
       const canSign = []
 
+      // Search users in crop relationship 
       crop = {
         ...plainCrops,
         users: await Promise.all(plainCrops.users.map(async el => {
@@ -139,7 +139,16 @@ class CropsController {
         }))
       }
 
-      crop.editable = canSign.filter(el => el.signs.length > 0).length !== canSign.length
+      // search users that already sign in this crop
+      crop.editable = canSign.filter((el) => {
+        const signers = el.signs.filter(el => {
+          return el.type_id === Number(id)
+        }).length > 0
+        return signers
+      })
+    
+      // compare users that has signs vs user can sing to define editable permission
+      crop.editable = crop.editable.length !== canSign.length
 
       return {
         ...crop,
