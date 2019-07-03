@@ -1,33 +1,19 @@
-function filterFile(req, file, cp) {
-  const fileType = file.originalname.split('.').pop()
-  if (file.fieldname === 'image') {
-    switch (fileType) {
-      case 'jpg':
-        cp(null, true)
-        break
-      case 'png':
-        cp(null, true)
-        break
-      default:
-        cp(null, false)
-        break
-    }
+const path = require("path");
+const validTypes = (req, file, cb, type) => {
+  const fileTypes = type == "images" ? /jpeg|jpg|png/ : /pdf|doc|docx/;
+
+  const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+
+  const mimetype = fileTypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true);
   } else {
-    switch (fileType) {
-      case 'pdf':
-        cp(null, true)
-        break
-      case 'docx':
-        cp(null, true)
-        break
-      case 'doc':
-        cp(null, true)
-        break
-      default:
-        cp(null, false)
-        break
-    }
+    req.fileValidationError = "goes wrong on the mimetype";
+    cb(null, false, new Error("Error: Archivo o imágen no permitido"));
   }
-  cp(null, false)
-}
-module.exports = filterFile
+};
+
+module.exports = {
+  validTypes
+};

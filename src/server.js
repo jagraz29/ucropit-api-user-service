@@ -10,14 +10,26 @@ require("console-stamp")(console, {
   }
 })
 
+const multer = require('multer')
+
+//SET GLOBAL STORAGE
+global.globalStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../public/uploads'))
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  }
+})
+
 const express = require("express")
 const jwt = require('jsonwebtoken')
 const http = require("http")
 const cors = require("cors")
 const bodyParser = require("body-parser")
 const path = require('path')
+
 const routes = require("./routes")
-// const config = require("./config")
 const models = require("./models")
 
 let app = express()
@@ -44,7 +56,6 @@ app.use(express.static(path.join(__dirname, '../public')))
 //My Middlewares
 app.use(cors(corsOptions))
 app.use("/v1", routes)
-
 
 app.use((req, res, next) => {
   const error = new Error('Not found')
