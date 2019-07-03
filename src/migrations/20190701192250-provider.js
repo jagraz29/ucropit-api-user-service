@@ -9,11 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      first_name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      last_name: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -77,6 +73,10 @@ module.exports = {
       notes: {
         type: Sequelize.STRING,
         allowNull: true
+      },
+      workplace: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       web: {
         type: Sequelize.STRING,
