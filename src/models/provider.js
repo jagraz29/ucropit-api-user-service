@@ -10,11 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      first_name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      last_name: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -82,6 +78,10 @@ module.exports = (sequelize, DataTypes) => {
       web: {
         type: DataTypes.STRING,
         allowNull: true
+      },
+      workplace: {
+        type: DataTypes.STRING,
+        allowNull: false
       },
       created_at: {
         allowNull: false,
