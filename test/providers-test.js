@@ -4,7 +4,7 @@ import request from 'supertest';
 const app = request("http://localhost:3001/v1")
 
 test.serial.cb('It should get a one provider when exist provider', t => {
-    app.get(`/api/providers/${2}`)
+    app.get(`/api/providers/${1}`)
     .expect(200)
     .expect('Content-Type', /json/)
     .end((err, res) => {
