@@ -321,7 +321,7 @@ class CropsController {
       });
 
       const diffBudget = diff(JSON.parse(crop.budget), data).items;
-
+      
       if (diffBudget !== undefined) {
         if (diffBudget[Object.keys(diffBudget)[0]].data !== undefined) {
           await Signs.destroy({

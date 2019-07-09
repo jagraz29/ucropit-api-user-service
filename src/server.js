@@ -12,6 +12,8 @@ require("console-stamp")(console, {
 
 const multer = require('multer')
 
+global.__basedir = __dirname;
+
 //SET GLOBAL STORAGE
 global.globalStorage = multer.diskStorage({
   destination: (req, file, cb) => {

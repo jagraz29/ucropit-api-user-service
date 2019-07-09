@@ -28,8 +28,11 @@
     "mysql2": "^1.6.5",
     "nodemailer": "^5.1.1",
     "nodemailer-mailgun-transport": "^1.4.0",
+    "pdfkit": "^0.10.0",
     "pug": "^2.0.3",
+    "puppeteer": "^1.18.1",
     "sequelize": "^5.1.0",
+    "sha256": "^0.2.0",
     "shortid": "^2.2.14"
   },
   "devDependencies": {
