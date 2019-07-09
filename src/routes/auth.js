@@ -8,6 +8,7 @@ const authmiddleware = require('../middlewares/auth')
 const createToken = async (user) => await jwt.sign({ user }, process.env.JWT_SECRET)
 
 router.post('/', async (req, res) => {
+  console.log(req.body);
   try {
     let result = await AuthController.login(req.body)
 
