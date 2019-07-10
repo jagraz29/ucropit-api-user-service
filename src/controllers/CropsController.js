@@ -13,6 +13,8 @@ const Search = require("../services/Search");
 const { getShortYear } = require("../helpers");
 const { map, isEqual } = require("lodash");
 const { diff } = require("deep-object-diff");
+const PDF = require('../services/PDF')
+const Stamp = require('../services/Stamp')
 
 class CropsController {
   static async index(auth) {
@@ -100,6 +102,33 @@ class CropsController {
       return await CropTypes.findAll();
     } catch (err) {
       throw new Error(err);
+    }
+  }
+
+  static async confirmation(id, auth) {
+    try {
+      const crop = await Crop.findOne({ where: { id } })
+      const budget = JSON.parse(crop.budget)
+
+      const { hash, path } = await PDF.generate({
+        data: {},
+        template: 'templates/budget.pug',
+        path: `${__basedir}/../public/budget`,
+        filename: `crop-${id}.pdf`
+      })
+
+      await Signs.create({
+        type: 'full-budget',
+        user_id: auth.user.id,
+        type_id: id,
+        hash,
+        ots: await Stamp.stampHash(hash),
+        meta: JSON.stringify({ path: `budget/crop-${id}.pdf` })
+      })
+
+      return { path: `budget/crop-${id}.pdf` }
+    } catch (err) {
+      throw new Error(err)
     }
   }
 
@@ -321,18 +350,18 @@ class CropsController {
       });
 
       const diffBudget = diff(JSON.parse(crop.budget), data).items;
-      
+
       if (diffBudget !== undefined) {
         if (diffBudget[Object.keys(diffBudget)[0]].data !== undefined) {
           await Signs.destroy({
             where: { type_id: crop.id, type: "crop-budget" }
-          });
+          })
         }
       }
 
       return await crop.update({ budget: JSON.stringify(data) });
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err)
     }
   }
 
