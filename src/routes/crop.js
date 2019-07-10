@@ -64,6 +64,18 @@ router.post("/:id/colaborators", (req, res) => {
     });
 });
 
+router.post("/:id/confirmation", (req, res) => {
+  CropsController.confirmation(req.params.id, req.decoded)
+    .then(data => {
+      return res.json({ code: 200, error: false, data });
+    })
+    .catch(err => {
+      return res
+        .status(400)
+        .json({ code: 400, error: true, message: err.message });
+    });
+});
+
 router.get("/:id", (req, res) => {
   CropsController.show(req.params.id, req.decoded)
     .then(crop => {
