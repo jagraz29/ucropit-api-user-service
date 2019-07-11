@@ -15,7 +15,10 @@ class Firebase {
     return requestsRef.set({ ...data });
   }
 
-  static update(data, child = null) {}
+  static update(data, collection, child = null) {
+    const requestsRef = this.chooseCollection(collection, child);
+    return requestsRef.update(data);
+  }
 
   static delete(collection, id) {
     const requestsRef = this.chooseCollection(collection, id);

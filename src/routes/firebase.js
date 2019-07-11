@@ -16,16 +16,28 @@ router.post("/connect", (req, res) => {
     });
 });
 
-router.post('/disconect', (req, res) => {
-    FirebaseManagerController.disconnect(req)
+router.post("/update", (req, res) => {
+  FirebaseManagerController.update(req)
     .then(result => {
-        return res.json({ code: 200, error: false, result });
-      })
-      .catch(err => {
-        return res
-          .status(500)
-          .json({ code: 500, error: true, message: err.message });
-      }); 
-})
+      return res.json({ code: 200, error: false, result });
+    })
+    .catch(err => {
+      return res
+        .status(500)
+        .json({ code: 500, error: true, message: err.message });
+    });
+});
+
+router.post("/disconnect", (req, res) => {
+  FirebaseManagerController.disconnect(req)
+    .then(result => {
+      return res.json({ code: 200, error: false, result });
+    })
+    .catch(err => {
+      return res
+        .status(500)
+        .json({ code: 500, error: true, message: err.message });
+    });
+});
 
 module.exports = router;
