@@ -39,11 +39,7 @@ class UploadFiles {
     const extname = fileTypes.test(path.extname(file.name).toLowerCase());
     const mimetype = fileTypes.test(file.mimetype);
 
-    if (mimetype && extname) {
-      return true;
-    } else {
-      return false;
-    }
+    return extname && mimetype;
   }
 }
 

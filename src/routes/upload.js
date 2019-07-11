@@ -8,6 +8,7 @@ router.post("/files", (req, res) => {
   upload
     .store()
     .then(result => {
+      console.log(result);
       return res.json({ code: 200, error: false, result });
     })
     .catch(error => {
