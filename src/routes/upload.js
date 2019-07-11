@@ -1,52 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
-const UploadController = require("../controllers/UploadController");
-const { validTypes } = require("../services/UploadFiles");
 
-const uploadImage = multer({
-  storage: globalStorage,
-  fileFilter: function(req, file, cb) {
-    validTypes(req, file, cb, "images");
-  }
-});
+const UploadFile = require("../services/UploadFiles");
 
-const uploadFiles = multer({
-  storage: globalStorage,
-  fileFilter: function(req, file, cb) {
-    validTypes(req, file, cb, "files");
-  }
-});
-
-router.post("/image", uploadImage.single("image"), (req, res) => {
-  if (req.fileValidationError) {
-    return res
-      .status(400)
-      .json({ code: 400, error: true, message: req.fileValidationError });
-  }
-
-  UploadController.create(req.file)
-    .then(path => {
-      return res.json({ code: 200, error: false, path });
+router.post("/files", (req, res) => {
+  const upload = new UploadFile(req.files, "uploads");
+  upload
+    .store()
+    .then(result => {
+      return res.json({ code: 200, error: false, result });
     })
-    .catch(err => {
-      return res.status(500).json({ code: 500, error: true, message: err.message })
-    });
-});
-
-router.post("/file", uploadFiles.single("files"), (req, res) => {
-  if (req.fileValidationError) {
-    return res
-      .status(400)
-      .json({ code: 400, error: true, message: req.fileValidationError });
-  }
-
-  UploadController.create(req.file)
-    .then(path => {
-      return res.json({ code: 200, error: false, path });
-    })
-    .catch(err => {
-      return res.status(500).json({ code: 500, error: true, message: err.message })
+    .catch(error => {
+      return res
+        .status(500)
+        .json({ code: 500, error: true, message: error.message });
     });
 });
 
