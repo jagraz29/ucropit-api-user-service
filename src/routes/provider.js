@@ -24,12 +24,10 @@ router.get("/:id", (req, res) => {
   ProviderController.show(id)
     .then(provider => {
       if (!provider) {
-        return res
-          .status(404)
-          .json({
-            code: 404,
-            error: true,
-            message: "El recurso no existe"
+        return res.status(404).json({
+          code: 404,
+          error: true,
+          message: "El recurso no existe"
         });
       }
       return res.json({ code: 200, error: false, provider });
@@ -45,7 +43,7 @@ router.post("/", (req, res) => {
 
   ProviderController.create(data)
     .then(provider => {
-      return res.json({ code: 201, error: false, provider });
+      return res.status(201).json({ code: 201, error: false, provider });
     })
     .catch(err => {
       return res
