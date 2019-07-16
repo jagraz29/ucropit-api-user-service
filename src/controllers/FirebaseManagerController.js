@@ -19,7 +19,8 @@ class FirebaseManagerControler {
           path,
           page,
           enviroment,
-          pathArray
+          pathArray,
+          online: true
         },
         "connect-users",
         id
@@ -48,9 +49,18 @@ class FirebaseManagerControler {
     try {
       const { id } = request.decoded.user;
 
-      const result = await FirebaseService.delete("connect-users", id);
+      const connected = await FirebaseService.childExist("connect-users", id);
 
-      return result;
+      if (connected) {
+        const result = await FirebaseService.update(
+          { online: false },
+          "connect-users",
+          id
+        );
+        return result;
+      }
+
+      return null;
     } catch (error) {
       throw new Error(err);
     }
