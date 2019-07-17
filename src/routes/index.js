@@ -11,7 +11,8 @@ router.use("/api/lots", require("./lot"));
 router.use("/api/uploads", require("./upload"));
 router.use("/api/signs", authMiddleware.checkToken, require("./sign"));
 router.use("/api/files", require("./upload"))
-router.use("/api/firebase",authMiddleware.checkToken,require("./firebase"));
-router.use("/api/providers",require("./provider"));
+router.use("/api/firebase", authMiddleware.checkToken, require("./firebase"));
+router.use("/api/providers", require("./provider"));
+router.use("/api/productions", require('./production'))
 
 module.exports = router;
