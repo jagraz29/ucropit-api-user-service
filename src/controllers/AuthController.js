@@ -41,6 +41,25 @@ class AuthController {
       return null
     }
   }
+
+  static async adminLogin({ email, password }) {
+    try {
+      const user = await User.findOne({
+        where: { email: email }
+      })
+
+      if (user === null) throw Error(`Credenciales invalidas`)
+
+      const isValidPassword = await user.validPassword(password)
+
+      if (!isValidPassword) throw Error(`Credenciales invalidas`)
+
+      return { user, error: false }
+
+    } catch (err) {
+      return { error: true, message: err.message }
+    }
+  }
 }
 
 module.exports = AuthController
