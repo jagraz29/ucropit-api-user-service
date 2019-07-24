@@ -2,10 +2,22 @@
 
 const Crop = require('../models').crops
 const Production = require('../models').productions
-const ProductionStage = require('../models').production_stage
 const ProductionFactory = require('../factories/ProductionFactory')
 
 class ProductionController {
+  static async index (crop) {
+    try {
+      const production = await Production.findOne({
+        where: { crop_id: crop },
+        include: [{ model: Crop }]
+      })
+
+      return production
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
   static async generate(id) {
     try {
       const crop = await Crop.findOne({ where: { id } })
@@ -14,14 +26,17 @@ class ProductionController {
       const production = await Production.create({ crop_id: id })
 
       const factory = new ProductionFactory(id)
-      
+
       const promises = budget.items.map(async item => {
         factory.stage = item
-        return await production.createStage(factory.generate)
+        return production.createStage(factory.generate)
       })
 
-      return await Promise.all(promises);
+      const stages = await Promise.all(promises)
 
+      await crop.update({ status: 'accepted' })
+
+      return stages
     } catch (error) {
       console.log(error)
       throw new Error(error)

@@ -1,6 +1,7 @@
 'use strict'
 
 const { map } = require('lodash')
+const StageValidator = require('../validators/StageValidator')
 
 class ProductionFactory {
   set stage (item) {
@@ -15,7 +16,9 @@ class ProductionFactory {
       name: name,
       label: form,
       data: JSON.stringify(data),
-      budget
+      budget,
+      display: StageValidator.isActive(form),
+      status: 'in_progress'
     }
   }
 

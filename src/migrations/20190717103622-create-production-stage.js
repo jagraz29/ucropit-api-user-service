@@ -20,6 +20,12 @@ module.exports = {
       label: {
         type: Sequelize.STRING
       },
+      display: {
+        type: Sequelize.BOOLEAN
+      },
+      status: {
+        type: Sequelize.STRING
+      },
       data: {
         type: Sequelize.TEXT
       },
