@@ -1,10 +1,9 @@
-"use strict";
+'use strict'
 
-const User = require("../models").users;
+const User = require('../models').users
 
 class AuthController {
-
-  static async login({ email, password }) {
+  static async login ({ email, password }) {
     try {
       const user = await User.findOne({
         where: { email: email }
@@ -19,13 +18,12 @@ class AuthController {
       if (!isValidPassword) throw Error(`Credenciales invalidas`)
 
       return { user, error: false }
-
     } catch (err) {
       return { error: true, message: err.message }
     }
   }
 
-  static async register(data) {
+  static async register (data) {
     try {
       const user = await User.findOne({
         where: { email: data.email }
@@ -38,10 +36,28 @@ class AuthController {
       if (user !== null) throw Error('El email ya fue tomado')
 
       return { user: await User.create(data), withoutFirstCrop: false }
-
     } catch (err) {
       console.log(err)
       return null
+    }
+  }
+
+  static async adminLogin({ email, password }) {
+    try {
+      const user = await User.findOne({
+        where: { email: email }
+      })
+
+      if (user === null) throw Error(`Credenciales invalidas`)
+
+      const isValidPassword = await user.validPassword(password)
+
+      if (!isValidPassword) throw Error(`Credenciales invalidas`)
+
+      return { user, error: false }
+
+    } catch (err) {
+      return { error: true, message: err.message }
     }
   }
 }

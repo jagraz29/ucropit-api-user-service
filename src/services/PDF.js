@@ -8,6 +8,7 @@ const sha256 = require('sha256')
 
 class PDF {
 
+  // TODO: implement
   static renderHeader({ template, data }) {
     if (!template || !data) return '<p></p>'
     return View.render({ template, data })

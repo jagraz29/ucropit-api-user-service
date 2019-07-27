@@ -1,36 +1,36 @@
-const fs = require("fs");
-const path = require("path");
-const Sequelize = require("sequelize");
-const env = process.env.NODE_ENV || "production";
+const fs = require('fs')
+const path = require('path')
+const Sequelize = require('sequelize')
+const env = process.env.NODE_ENV || 'production'
 
-const config = require(path.join(__dirname, "..", "config", "config.json"))[
+const config = require(path.join(__dirname, '..', 'config', 'config.json'))[
   env
-];
+]
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
   process.env.DB_PASS,
-  { ...config, logging: false },
-);
+  { ...config, logging: false }
+)
 
-const db = {};
+const db = {}
 
 fs.readdirSync(__dirname)
   .filter(function (file) {
-    return file.indexOf(".") !== 0 && file !== "index.js";
+    return file.indexOf('.') !== 0 && file !== 'index.js'
   })
   .forEach(function (file) {
-    var model = sequelize.import(path.join(__dirname, file));
-    db[model.name] = model;
-  });
+    var model = sequelize.import(path.join(__dirname, file))
+    db[model.name] = model
+  })
 
 Object.keys(db).forEach(function (modelName) {
-  if ("associate" in db[modelName]) {
-    db[modelName].associate(db);
+  if ('associate' in db[modelName]) {
+    db[modelName].associate(db)
   }
-});
+})
 
-db.sequelize = sequelize;
+db.sequelize = sequelize
 
-module.exports = db;
+module.exports = db

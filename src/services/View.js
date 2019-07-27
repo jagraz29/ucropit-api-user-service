@@ -8,6 +8,8 @@ class View {
    * 
    * @param {string} template
    * @param {JSON|Object} data
+   
+   * @return {string} html data
    */
   static render({ template, data }) {
     const compiledFunction = pug.compileFile(template)
