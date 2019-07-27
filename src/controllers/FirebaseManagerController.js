@@ -14,7 +14,7 @@ class FirebaseManagerControler {
 
       const result = await FirebaseService.save(
         {
-          user: { first_name, last_name, email },
+          user: { first_name, last_name, email, id },
           stage,
           path,
           page,
