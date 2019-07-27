@@ -39,7 +39,7 @@ app.server = http.createServer(app)
 
 
 let whitelist = process.env.CORS_ENABLED_WHITELIST
-
+console.log(whitelist)
 let corsOptions = {
   exposedHeaders: ["Content-Range"],
   origin: function (origin, callback) {
