@@ -1,21 +1,35 @@
 'use strict'
 
 const Crop = require('../models').crops
+const CropTypes = require('../models').crop_types
 const Production = require('../models').productions
+const ProductionStage = require('../models').production_stage
 const ProductionFactory = require('../factories/ProductionFactory')
 
 class ProductionController {
   static async index (crop) {
     try {
-      const production = await Production.findOne({
+      return await Production.findOne({
         where: { crop_id: crop },
-        include: [{ model: Crop }]
+        include: [{ model: Crop, include: [{ model: CropTypes }] }, { model: ProductionStage, as: 'Stage' }]
       })
-
-      return production
     } catch (error) {
       throw new Error(error)
     }
+  }
+
+  static async storeStageData (crop, stage, data) {
+    const production = await Production.findOne({
+      where: { crop_id: crop }
+    })
+
+    const productionStage = await ProductionStage.findOne({
+      where: { label: stage, production_id: production.id }
+    })
+    
+    await productionStage.update({ data: JSON.stringify(data), status: 'done' })
+
+    return productionStage
   }
 
   static async generate(id) {

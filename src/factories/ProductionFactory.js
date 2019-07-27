@@ -18,7 +18,7 @@ class ProductionFactory {
       data: JSON.stringify(data),
       budget,
       display: StageValidator.isActive(form),
-      status: 'in_progress'
+      status: form === 'fields' ? 'in_progress' : 'pending'
     }
   }
 
