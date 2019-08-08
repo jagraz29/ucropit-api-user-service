@@ -3,14 +3,14 @@
 class StageValidator {
   static getValidStages () {
     return {
-      fields: { label: 'Campo', status: true },
-      'pre-sowing': { label: 'Pre-Siembra', status: true },
-      sowing: { label: 'Siembra', status: true },
-      protection: { label: 'Protección de Cultivos', status: true },
-      'harvest-and-marketing': { label: 'Cosecha y Comercialización', status: false },
-      'other-expenses': { label: 'Gastos administrativos', status: true },
-      monitoring: { label: 'Monitoreo', status: true },
-      deliveries: { label: 'Entregas', status: false }
+      fields: { label: 'Campo', status: true, order: 0 },
+      'pre-sowing': { label: 'Pre-Siembra', status: true, order: 1 },
+      sowing: { label: 'Siembra', status: true, order: 2},
+      protection: { label: 'Protección de Cultivos', status: true, order: 3 },
+      'other-expenses': { label: 'Otros gastos e ingresos', status: true, order: 4 },
+      monitoring: { label: 'Monitoreo', status: true, order: 5 },
+      'harvest-and-marketing': { label: 'Cosecha y Comercialización', status: false, order: 6 },
+      deliveries: { label: 'Entregas', status: false, order: 7 }
     }
   }
 

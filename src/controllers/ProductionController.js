@@ -7,7 +7,7 @@ const ProductionStage = require('../models').production_stage
 const ProductionFactory = require('../factories/ProductionFactory')
 
 class ProductionController {
-  static async index (crop) {
+  static async index(crop) {
     try {
       return await Production.findOne({
         where: { crop_id: crop },
@@ -26,13 +26,13 @@ class ProductionController {
     const productionStage = await ProductionStage.findOne({
       where: { label: stage, production_id: production.id }
     })
-    
+
     await productionStage.update({ data: JSON.stringify(data), status: 'done' })
 
     return productionStage
   }
 
-  static async generate(id) {
+  static async generate (id) {
     try {
       const crop = await Crop.findOne({ where: { id } })
       const budget = JSON.parse(crop.budget)
