@@ -13,8 +13,10 @@
     "reset:db": "npm run migrate:undo && npm run migrate:all && npm run seed"
   },
   "dependencies": {
+    "async": "^3.1.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
+    "child_process": "^1.0.2",
     "console-stamp": "^0.2.7",
     "cors": "^2.8.5",
     "deep-object-diff": "^1.1.0",

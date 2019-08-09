@@ -97,6 +97,27 @@ class CropsController {
     }
   }
 
+  static async removeColaborator (colaborator, crop) {
+    try {
+      const rel = await CropUsers.findOne({
+        where: { user_id: colaborator, crop_id: crop }
+      })
+      const sing = await Signs.findOne({
+        where: { type: crop, user_id: colaborator }
+      })
+
+      rel.destroy()
+
+      if (sing) {
+        sing.destroy()
+      }
+
+      return true
+    } catch (error) {
+      throw new Error(err)
+    }
+  }
+
   static async types () {
     try {
       return await CropTypes.findAll()
@@ -166,8 +187,9 @@ class CropsController {
         ...plainCrops,
         users: await Promise.all(
           plainCrops.users.map(async el => {
+           
             const permissions = await CropUserPermissions.findAll({
-              where: { crop_user_id: el.id },
+              where: { crop_user_id: el.crop_users.id },
               include: [{ model: CropPermissions }]
             })
 
@@ -238,7 +260,14 @@ class CropsController {
               form: 'pre-sowing',
               display: true
             },
-            { id: 3, name: 'Siembra', data: {}, status: 'in_progress', form: 'sowing', display: true },
+            {
+              id: 3,
+              name: 'Siembra',
+              data: {},
+              status: 'in_progress',
+              form: 'sowing',
+              display: true
+            },
             {
               id: 4,
               name: 'Protección de Cultivos',
@@ -263,8 +292,22 @@ class CropsController {
               form: 'other-expenses',
               display: true
             },
-            { id: 7, name: 'Monitoreo', data: {}, status: 'in_progress', form: 'monitoring', display: false },
-            { id: 8, name: 'Entregas', data: {}, status: 'in_progress', form: 'deliveries', display: false }
+            {
+              id: 7,
+              name: 'Monitoreo',
+              data: {},
+              status: 'in_progress',
+              form: 'monitoring',
+              display: false
+            },
+            {
+              id: 8,
+              name: 'Entregas',
+              data: {},
+              status: 'in_progress',
+              form: 'deliveries',
+              display: false
+            }
           ]
         })
       })

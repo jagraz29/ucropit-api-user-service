@@ -22,6 +22,22 @@ const provider = {
   workplace: "Oficina"
 };
 
+const providerSearch = {
+  name: "Una razon social",
+  status: "Sugerido",
+  phone: "23232",
+  cellphone: "32323",
+  email: "email2@email.com",
+  address: "Una direccion de prueba",
+  city: "Una ciudad",
+  estate: "Un estado",
+  country: "Un Pais",
+  postal_code: "322",
+  taxid: "232323233",
+  cbu: "23232323232323",
+  workplace: "Oficina"
+};
+
 const providerUpdate = {
   name: "Una razon social update",
   status: "Sugerido",
@@ -56,15 +72,18 @@ const providerDelete = {
 
 let idDelete = null;
 let idUpdate = null;
+let idSearch = null;
 
 /**
  * Se crea los presents para los test.
  */
 test.before("presets", async t => {
+  const providerSearchObj = await Provider.create(providerSearch);
   const providerDeleteObj = await Provider.create(providerDelete);
   const providerUpdateObj = await Provider.create(providerUpdate);
   idDelete = providerDeleteObj.get("id");
   idUpdate = providerUpdateObj.get("id");
+  idSearch = providerSearchObj.get("id");
 });
 
 /**
@@ -75,8 +94,10 @@ test.after("cleanup", async t => {
     where: { name: "Una razon social" }
   });
   const providerUpdated = await Provider.findOne({ where: { id: idUpdate } });
+  const providerSearch = await Provider.findOne({where: {id: idSearch}});
   await provider.destroy();
   await providerUpdated.destroy();
+  await providerSearch.destroy();
 });
 
 test.serial.cb("It should be a create one provider", t => {
@@ -98,7 +119,7 @@ test.serial.cb("It should be a create one provider", t => {
 
 test.serial.cb("It should get a one provider when exist provider", t => {
   app
-    .get(`/api/providers/${1}`)
+    .get(`/api/providers/${idSearch}`)
     .expect(200)
     .expect("Content-Type", /json/)
     .end((err, res) => {
