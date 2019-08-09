@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
     label: DataTypes.STRING,
     data: DataTypes.TEXT,
     status: DataTypes.STRING,
-    display: DataTypes.STRING
+    display: DataTypes.STRING,
+    order: DataTypes.STRING
   }, {})
 
   production_stage.associate = function (models) {

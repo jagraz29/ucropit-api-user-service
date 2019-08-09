@@ -5,7 +5,7 @@ class StageValidator {
     return {
       fields: { label: 'Campo', status: true, order: 0 },
       'pre-sowing': { label: 'Pre-Siembra', status: true, order: 1 },
-      sowing: { label: 'Siembra', status: true, order: 2},
+      sowing: { label: 'Siembra', status: true, order: 2 },
       protection: { label: 'Protección de Cultivos', status: true, order: 3 },
       'other-expenses': { label: 'Otros gastos e ingresos', status: true, order: 4 },
       monitoring: { label: 'Monitoreo', status: true, order: 5 },
@@ -21,6 +21,15 @@ class StageValidator {
     }
 
     return stages[stage].status
+  }
+
+  static getOrder (stage) {
+    const stages = StageValidator.getValidStages()
+    if (!stages[stage]) {
+      throw new Error(`Invalid Stage ${stage}`)
+    }
+
+    return stages[stage].order
   }
 }
 

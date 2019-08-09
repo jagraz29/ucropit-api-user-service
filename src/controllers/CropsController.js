@@ -189,7 +189,7 @@ class CropsController {
           plainCrops.users.map(async el => {
            
             const permissions = await CropUserPermissions.findAll({
-              where: { crop_user_id: el.id },
+              where: { crop_user_id: el.crop_users.id },
               include: [{ model: CropPermissions }]
             })
 
@@ -317,12 +317,12 @@ class CropsController {
 
       await CropUserPermissions.create({
         crop_permission_id: 1,
-        crop_user_id: rel.user_id
+        crop_user_id: rel.id
       })
 
       await CropUserPermissions.create({
         crop_permission_id: 2,
-        crop_user_id: rel.user_id
+        crop_user_id: rel.id
       })
 
       return crop
