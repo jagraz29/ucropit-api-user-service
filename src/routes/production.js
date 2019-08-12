@@ -34,4 +34,14 @@ router.post('/:idCrop/stages/:stage', async (req, res) => {
     })
 })
 
+router.post('/:idCrop/fields', async (req, res) => {
+  ProductionController.storeField(req.params.idCrop, req.body, req.decoded)
+    .then((field) => {
+      return res.status(200).json({ code: 200, error: false, field })
+    })
+    .catch((err) => {
+      return res.status(500).json({ code: 500, error: true, message: err.message })
+    })
+})
+
 module.exports = router
