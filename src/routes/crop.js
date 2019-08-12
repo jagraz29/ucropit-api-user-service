@@ -2,6 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
+const UploadFile = require("../services/UploadFiles");
 const CropsController = require("../controllers/CropsController");
 
 router.get("/", (req, res) => {
@@ -83,9 +84,9 @@ router.delete("/:id/:user/colaborators", (req, res) => {
     })
     .catch(err => {
       return res
-      .status(400)
-      .json({ code: 400, error: true, message: err.message });
-    })
+        .status(400)
+        .json({ code: 400, error: true, message: err.message });
+    });
 });
 
 router.get("/:id", (req, res) => {
@@ -106,13 +107,11 @@ router.get("/:id/budget/:fields", (req, res) => {
   CropsController.getStageCropByField(id, fields)
     .then(budget => {
       if (!budget) {
-        return res
-          .status(404)
-          .json({
-            code: 404,
-            error: true,
-            message: `No se encontró el budget con el nombre del campo ${fields}`
-          });
+        return res.status(404).json({
+          code: 404,
+          error: true,
+          message: `No se encontró el budget con el nombre del campo ${fields}`
+        });
       }
 
       return res.json({ code: 200, error: false, budget });
@@ -145,6 +144,46 @@ router.delete("/:id", async (req, res) => {
       return res
         .status(400)
         .json({ code: 400, error: true, message: err.message });
+    });
+});
+
+router.post("/croptype", async (req, res) => {
+  CropsController.cropTypesCreate(req.body)
+    .then(croptype => {
+      return res.json({ code: 200, error: false, croptype });
+    })
+    .catch(err => {
+      return res
+        .status(400)
+        .json({ code: 400, error: true, message: err.message });
+    });
+});
+
+router.delete("/croptype/:id", async (req, res) => {
+  const id = req.params.id;
+
+  CropsController.deleteCropType(id)
+    .then(croptype => {
+      return res.json({ code: 200, error: false, croptype });
+    })
+    .then(err => {
+      return res
+        .status(400)
+        .json({ code: 400, error: true, message: err.message });
+    });
+});
+
+router.post("/upload", async (req, res) => {
+  const upload = new UploadFile(req.files, "croptypes");
+  upload
+    .store()
+    .then(result => {
+      return res.json({ code: 200, error: false, result });
+    })
+    .catch(error => {
+      return res
+        .status(500)
+        .json({ code: 500, error: true, message: error.message });
     });
 });
 
