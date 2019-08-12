@@ -7,10 +7,10 @@ const FieldsController = require("../controllers/FieldsController");
 router.get('/', async (req, res) => {
   FieldsController.index(req.decoded)
     .then((fields) => {
-    return res.json({ code: 200, error: false, fields })
-  }).catch((err) => {
-    return res.status(500).json({ code: 500, error: true, message: err.message })
-  })
+      return res.json({ code: 200, error: false, fields })
+    }).catch((err) => {
+      return res.status(500).json({ code: 500, error: true, message: err.message })
+    })
 })
 
 router.post('/', (req, res) => {
