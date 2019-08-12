@@ -147,8 +147,35 @@ router.delete("/:id", async (req, res) => {
     });
 });
 
+router.get("/croptype/:id", async (req, res) => {
+  CropsController.showCropType(req.params.id)
+  .then(croptype => {
+    return res.json({ code: 200, error: false, croptype });
+  })
+  .catch(err => {
+    return res
+      .status(400)
+      .json({ code: 400, error: true, message: err.message });
+  });
+});
+
 router.post("/croptype", async (req, res) => {
   CropsController.cropTypesCreate(req.body)
+    .then(croptype => {
+      return res.json({ code: 200, error: false, croptype });
+    })
+    .catch(err => {
+      return res
+        .status(400)
+        .json({ code: 400, error: true, message: err.message });
+    });
+});
+
+router.put("/croptype/:id", async (req, res) => {
+  const data = req.body;
+  const id = req.params.id;
+
+  CropsController.updateCropType(data, id)
     .then(croptype => {
       return res.json({ code: 200, error: false, croptype });
     })

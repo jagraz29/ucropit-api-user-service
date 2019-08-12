@@ -143,6 +143,24 @@ class CropsController {
     }
   }
 
+  static async showCropType (id) {
+    try {
+      const croptype = await CropTypes.findOne({ where: { id: id } })
+      return await croptype;
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
+  static async updateCropType (data, id) {
+    try {
+      const croptype = await CropTypes.findOne({ where: { id: id } })
+      return await croptype.update(data)
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
   static async confirmation(id, auth) {
     try {
       const crop = await Crop.findOne({ where: { id } });
