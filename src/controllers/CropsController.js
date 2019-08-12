@@ -187,7 +187,6 @@ class CropsController {
         ...plainCrops,
         users: await Promise.all(
           plainCrops.users.map(async el => {
-           
             const permissions = await CropUserPermissions.findAll({
               where: { crop_user_id: el.crop_users.id },
               include: [{ model: CropPermissions }]
