@@ -61,7 +61,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       photo: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
+        get: function() {
+          return `${process.env.BASE_URL}/providers/${this.getDataValue('photo')}`;
+        }
       },
       description: {
         type: DataTypes.TEXT,

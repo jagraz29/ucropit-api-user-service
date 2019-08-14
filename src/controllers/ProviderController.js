@@ -38,8 +38,7 @@ class ProviderController {
   static async create (data) {
     try {
       const provider = await Provider.create({
-        ...data,
-        photo: `${process.env.BASE_URL}/uploads/default.png`
+        ...data
       })
 
       return provider
