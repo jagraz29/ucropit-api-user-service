@@ -2,6 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
+const UploadFile = require("../services/UploadFiles");
 const ProviderController = require("../controllers/ProviderController");
 
 router.get("/", (req, res) => {
@@ -78,6 +79,20 @@ router.delete("/:id", (req, res) => {
       return res
         .status(400)
         .json({ code: 400, error: true, message: err.message });
+    });
+});
+
+router.post("/upload", async (req, res) => {
+  const upload = new UploadFile(req.files, "providers");
+  upload
+    .store()
+    .then(result => {
+      return res.json({ code: 200, error: false, result });
+    })
+    .catch(error => {
+      return res
+        .status(500)
+        .json({ code: 500, error: true, message: error.message });
     });
 });
 
