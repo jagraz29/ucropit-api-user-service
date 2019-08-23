@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     provider_id: DataTypes.INTEGER
   }, {});
   approval.associate = function(models) {
-    // associations can be defined here
+    approval.hasMany(models.approval_register, { foreignKey: 'approval_id', as: 'Register' })
   };
   return approval;
 };

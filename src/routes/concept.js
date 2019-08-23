@@ -29,6 +29,18 @@ router.get("/:id/:type", (req, res) => {
     });
 });
 
+router.get("/input-types", (req, res) => {
+  ConceptsController.inputTypes()
+    .then(types => {
+      return res.json({ code: 200, error: false, types });
+    })
+    .catch(err => {
+      return res
+        .status(400)
+        .json({ code: 400, error: true, message: err.message });
+    });
+});
+
 router.get("/search", (req, res) => {
   const { name } = req.query;
   if (name == "")
