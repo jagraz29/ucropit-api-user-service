@@ -12,10 +12,11 @@ class ProductionController {
     try {
       return await Production.findOne({
         where: { crop_id: crop },
-        orderBy: [
-          ['order', 'ASC']
+        include: [
+          { model: Crop, include: [{ model: CropTypes }] },
+          { model: ProductionStage, as: 'Stage' }
         ],
-        include: [{ model: Crop, include: [{ model: CropTypes }] }, { model: ProductionStage, as: 'Stage' }]
+        order: [[{model: ProductionStage, as: 'Stage'}, 'order', 'ASC']]
       })
     } catch (error) {
       throw new Error(error)

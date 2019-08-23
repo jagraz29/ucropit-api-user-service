@@ -22,20 +22,6 @@ class ApprovalsRegisterController {
     return register
   }
 
-  static async show(crop, stage) {
-    const approval = await Approvals.findOne({ where: { stage: stage, crop_id: crop } })
-
-    const register = ApprovalRegister.findOne({
-      where: { approval_id: approval.id },
-      include: [
-        { model: ApprovalRegisterSigns, as: 'Signs' },
-        { model: ApprovalRegisterFiles, as: 'Files' }
-      ]
-    })
-
-    return register
-  }
-
   static async sign(data, crop, stage, auth) {
     const { hash, path } = await PDF.generate({
       data: {

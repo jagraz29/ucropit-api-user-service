@@ -15,4 +15,15 @@ router.post('/', async (req, res) => {
   }
 })
 
+router.get('/crops/:cropId/stages/:stage/type/:type/:typeId', async (req, res) => {
+  try {
+    const approval = await ApprovalsController.show(req.params)
+
+    return res.json({ code: 200, error: false, approval })
+  } catch (error) {
+    console.log(error)
+    return res.json({ code: 400, error: false, data: error })
+  }
+})
+
 module.exports = router
