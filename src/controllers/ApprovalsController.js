@@ -6,7 +6,6 @@ const ApprovalRegisterSigns = require('../models').approval_register_sign
 
 class ApprovalsController {
   static async show({ cropId, stage, type, typeId }) {
-
     try {
       const approval = await Approvals.findOne({
         where: {

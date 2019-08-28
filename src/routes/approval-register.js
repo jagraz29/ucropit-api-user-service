@@ -16,6 +16,18 @@ router.post('/:approvalId', async (req, res) => {
   }
 })
 
+router.post('/:approvalId', async (req, res) => {
+  try {
+    const { approvalId } = req.params
+    const register = await ApprovalsRegisterController.create(approvalId)
+
+    return res.json({ code: 200, error: false, register })
+  } catch (error) {
+    console.log(error)
+    return res.json({ code: 400, error: false, data: error })
+  }
+})
+
 router.get('/register/:id', async (req, res) => {
   try {
     const { id } = req.params
