@@ -11,6 +11,14 @@ module.exports = {
       approval_id: {
         type: Sequelize.INTEGER
       },
+      data: {
+        allowNull: true,
+        type: Sequelize.TEXT
+      },
+      status: {
+        allowNull: true,
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

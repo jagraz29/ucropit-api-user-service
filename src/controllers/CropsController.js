@@ -134,7 +134,7 @@ class CropsController {
     }
   }
 
-  static async deleteCropType (id) {
+  static async deleteCropType(id) {
     try {
       const croptype = await CropTypes.findOne({ where: { id: id } })
       return await croptype.destroy()
@@ -143,7 +143,7 @@ class CropsController {
     }
   }
 
-  static async showCropType (id) {
+  static async showCropType(id) {
     try {
       const croptype = await CropTypes.findOne({ where: { id: id } })
       return await croptype;
@@ -152,7 +152,7 @@ class CropsController {
     }
   }
 
-  static async updateCropType (data, id) {
+  static async updateCropType(data, id) {
     try {
       const croptype = await CropTypes.findOne({ where: { id: id } })
       return await croptype.update(data)
@@ -239,6 +239,10 @@ class CropsController {
           })
         )
       };
+
+      crop.users_can_sign = crop.users.filter(el => {
+        return el.permissions.filter(el => el.crop_permission.value === 'can_sign').length > 0
+      }).length
 
       // search users that already sign in this crop
       crop.editable = canSign.filter(el => {
