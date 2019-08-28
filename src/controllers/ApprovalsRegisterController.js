@@ -6,9 +6,37 @@ const Approvals = require('../models').approval
 const ApprovalRegister = require('../models').approval_register
 const ApprovalRegisterSigns = require('../models').approval_register_sign
 const ApprovalRegisterFiles = require('../models').approval_register_file
+const ProductionStages = require('../models').production_stage
+const Production = require('../models').productions
 const UploadFile = require("../services/UploadFiles");
 
 class ApprovalsRegisterController {
+  static async complete(id) {
+    const register = await Approvals.findOne({ where: { id } })
+    const type_id = register.service_id || register.input_id
+
+    const production = await Production.findOne({
+      where: { crop_id: register.crop_id },
+      include: [
+        { model: ProductionStages, as: 'Stage', where: { label: register.stage } }
+      ]
+    })
+
+    const stage = production.get({ plain: true }).Stage[0]
+    const data = JSON.parse(stage.data).map(el => {
+      if (el.field_id == type_id) {
+        el.status = 'done'
+      }
+      return el
+    })
+
+    const prodStage = await ProductionStages.findOne({ where: { id: stage.id } })
+
+    await prodStage.update({ data: JSON.stringify(data) })
+
+    return prodStage
+  }
+
   static async create(id) {
     return await ApprovalRegister.create({
       approval_id: id
