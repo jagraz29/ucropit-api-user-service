@@ -2,6 +2,7 @@
 
 const Approvals = require('../models').approval
 const ApprovalRegister = require('../models').approval_register
+const ApprovalRegisterSigns = require('../models').approval_register_sign
 
 class ApprovalsController {
   static async show({ cropId, stage, type, typeId }) {
@@ -15,7 +16,7 @@ class ApprovalsController {
           input_id: type === 'input' ? typeId : null,
         },
         include: [
-          { model: ApprovalRegister, as: 'Register'}
+          { model: ApprovalRegister, as: 'Register', include: [{ model: ApprovalRegisterSigns, as: 'Signs' }] }
         ]
       })
 
