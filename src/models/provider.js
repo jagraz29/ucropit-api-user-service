@@ -103,5 +103,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  Provider.associate = function(models) {
+    Provider.belongsToMany(models.providers_type, {
+      through: 'providers_providers_type',
+      as: 'providers',
+      foreignKey: 'providers_id',
+      otherKey: 'providers_type_id'
+    })
+  }
+
   return Provider;
 };
