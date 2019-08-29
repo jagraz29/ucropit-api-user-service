@@ -34,7 +34,18 @@ class ProviderController {
 
   static async show(id) {
     try {
-      const provider = await Provider.findOne({ where: { id: id } });
+      const provider = await Provider.findOne({
+        where: { id: id },
+        include: [
+          {
+            model: ProviderType,
+            attributes: ["value", "label"],
+            through: {
+              model: TypesProviders
+            }
+          }
+        ]
+      });
 
       if (!provider) {
         return null;
@@ -79,6 +90,18 @@ class ProviderController {
   static async update(data, id) {
     try {
       const provider = await Provider.findOne({ where: { id: id } });
+
+      await TypesProviders.destroy({ where: { providers_id: id } });
+
+      data.types.forEach(async element => {
+        const providersType = await ProviderType.findOne({
+          where: { value: element.value }
+        });
+        await TypesProviders.create({
+          providers_id: provider.get("id"),
+          providers_type_id: providersType.get("id")
+        });
+      });
       return await provider.update(data);
     } catch (err) {
       throw new Error(err);
