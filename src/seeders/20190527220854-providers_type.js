@@ -4,16 +4,16 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('providers_type', [
       {
-        key: 'insures',
-        name: 'Seguros'
+        value: 'insures',
+        label: 'Seguros'
       },
       {
-        key: 'inputs',
-        name: 'Campos'
+        value: 'inputs',
+        label: 'Campos'
       },
       {
-        key: 'services',
-        name: 'Servicios'
+        value: 'services',
+        label: 'Servicios'
       },
     ], {});
   },

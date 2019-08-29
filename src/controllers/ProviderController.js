@@ -63,7 +63,7 @@ class ProviderController {
 
       data.types.forEach(async element => {
         const providersType = await ProviderType.findOne({
-          where: { key: element }
+          where: { value: element }
         });
         await TypesProviders.create({
           providers_id: provider.get("id"),

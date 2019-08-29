@@ -11,11 +11,11 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        key: {
+        value: {
           type: Sequelize.STRING,
           allowNull: false
         },
-        name: {
+        label: {
           type: Sequelize.STRING,
           allowNull: false
         },
