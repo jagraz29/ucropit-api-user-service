@@ -14,7 +14,7 @@ class ProviderController {
             include: [
               {
                 model: ProviderType,
-                attributes: ["key", "name"],
+                attributes: ["value", "label"],
                 through: {
                   model: TypesProviders
                 }
@@ -63,7 +63,7 @@ class ProviderController {
 
       data.types.forEach(async element => {
         const providersType = await ProviderType.findOne({
-          where: { value: element }
+          where: { value: element.value }
         });
         await TypesProviders.create({
           providers_id: provider.get("id"),
