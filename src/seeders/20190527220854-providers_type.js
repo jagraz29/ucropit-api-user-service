@@ -9,12 +9,16 @@ module.exports = {
       },
       {
         value: 'inputs',
-        label: 'Campos'
+        label: 'Insumos'
       },
       {
         value: 'services',
         label: 'Servicios'
       },
+      {
+        value: 'monitoring',
+        label: 'Monitoreo'
+      }
     ], {});
   },
 
