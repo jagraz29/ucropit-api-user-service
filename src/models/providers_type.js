@@ -31,14 +31,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: true,
-      underscored: true
+      underscored: true,
+      tableName: "providers_type"
     }
   );
 
   ProviderType.associate = function (models) {
     ProviderType.belongsToMany(models.providers, {
         through: 'providers_providers_type',
-        as: 'types_providers',
         foreignKey: 'providers_type_id',
         otherKey: 'providers_id'
     })
