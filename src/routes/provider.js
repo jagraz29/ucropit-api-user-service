@@ -19,6 +19,18 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/types", (req, res) => {
+  ProviderController.providersType()
+    .then(providersType => {
+      return res.json({ code: 200, error: false, providersType });
+    })
+    .catch(err => {
+      return res
+        .status(400)
+        .json({ code: 400, error: true, message: err.message });
+    });
+});
+
 router.get("/:id", (req, res) => {
   const id = req.params.id;
 

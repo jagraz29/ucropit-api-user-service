@@ -52,9 +52,18 @@ class ConceptsController {
   }
 
   static async inputTypes(query) {
-    const Op = Sequelize.Op;
     try {
       const results = await InputType.findAll();
+
+      return results;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  static async input() {
+    try {
+      const results = await Inputs.findAll();
 
       return results;
     } catch (e) {
