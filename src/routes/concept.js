@@ -16,6 +16,18 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/inputs", (req, res) => {
+  ConceptsController.input()
+    .then(concepts => {
+      return res.json({ code: 200, error: false, concepts });
+    })
+    .catch(err => {
+      return res
+        .status(400)
+        .json({ code: 400, error: true, message: err.message });
+    });
+});
+
 router.get("/:id/:type", (req, res) => {
   const { id, type } = req.params;
   ConceptsController.show(id, type)
