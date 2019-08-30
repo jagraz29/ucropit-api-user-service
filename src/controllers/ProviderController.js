@@ -32,6 +32,32 @@ class ProviderController {
     }
   }
 
+  static async getByTypes(type) {
+    try {
+      const providers = await Provider.findAll(
+          {
+            include: [
+              {
+                model: ProviderType,
+                attributes: ["value", "label"],
+                through: {
+                  model: TypesProviders
+                },
+                where: {
+                  value: type      
+                }
+              }
+            ],
+            where: {}
+          }
+      );
+
+      return providers;
+    } catch(err) {
+      throw new Error(err);
+    }
+  }
+
   static async show(id) {
     try {
       const provider = await Provider.findOne({
@@ -110,6 +136,8 @@ class ProviderController {
 
   static async delete(id) {
     try {
+      await TypesProviders.destroy({ where: { providers_id: id } });
+
       const provider = await Provider.findOne({ where: { id: id } });
       return await provider.destroy();
     } catch (err) {
