@@ -101,14 +101,15 @@ class ProductionController {
     }
   }
 
-  static async deleteAplicationStage(stage, fieldId, type) {
+  static async deleteAplicationStage(cropId, stage, fieldId, type) {
     try {
       const productionStage = await ProductionStage.findOne({
-        where: { label: stage }
+        where: { label: stage, production_id: cropId }
       });
+
       const data = JSON.parse(productionStage.data);
       const updateData = data.filter(obj => {
-        return obj.field_id != fieldId && obj.type != type;
+        return obj.field_id != fieldId;
       });
 
       await productionStage.update({

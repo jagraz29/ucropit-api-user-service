@@ -44,8 +44,8 @@ router.post('/:idCrop/fields', async (req, res) => {
     })
 })
 
-router.delete('/:stage/:fieldId/:type', async (req, res) => {
-  ProductionController.deleteAplicationStage(req.params.stage, req.params.fieldId, req.params.type)
+router.delete('/:idCrop/:stage/:fieldId/:type', async (req, res) => {
+  ProductionController.deleteAplicationStage(req.params.idCrop, req.params.stage, req.params.fieldId, req.params.type)
     .then((field) => {
       return res.status(200).json({ code: 200, error: false, field })
     })
