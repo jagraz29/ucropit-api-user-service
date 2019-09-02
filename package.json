@@ -28,6 +28,7 @@
     "install": "^0.13.0",
     "javascript-opentimestamps": "^0.4.5",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
     "mailgun-js": "^0.22.0",
     "moment": "^2.24.0",
     "mysql2": "^1.6.5",

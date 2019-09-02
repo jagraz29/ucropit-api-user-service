@@ -6,6 +6,7 @@ const CropTypes = require("../models").crop_types;
 const Production = require("../models").productions;
 const ProductionStage = require("../models").production_stage;
 const ProductionFactory = require("../factories/ProductionFactory");
+const _ = require("lodash");
 
 class ProductionController {
   static async index(crop) {
@@ -61,6 +62,35 @@ class ProductionController {
       return stages;
     } catch (error) {
       console.log(error);
+      throw new Error(error);
+    }
+  }
+
+  static async updateData(request) {
+    let data = request.body;
+    const { idCrop, stage, fieldId, type } = request.params;
+
+    try {
+      const productionStage = await ProductionStage.findOne({
+        where: { label: stage, production_id: idCrop }
+      });
+
+      data.status = "pending";
+      let dataProductionStage = JSON.parse(productionStage.data);
+      dataProductionStage.push(data);
+
+      dataProductionStage = _.orderBy(
+        dataProductionStage,
+        ["field_id"],
+        ["asc"]
+      );
+
+      await productionStage.update({
+        data: JSON.stringify(dataProductionStage)
+      });
+
+      return productionStage;
+    } catch (error) {
       throw new Error(error);
     }
   }
