@@ -138,9 +138,12 @@ class ProductionController {
       });
 
       const data = JSON.parse(productionStage.data);
+
+
       const updateData = data.filter(obj => {
         return obj.field_id != fieldId;
       });
+
 
       await productionStage.update({
         data: JSON.stringify(updateData)
