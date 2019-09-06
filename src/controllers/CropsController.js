@@ -217,6 +217,8 @@ class CropsController {
         include: [{ model: CropPermissions }]
       });
 
+      console.log(cropUsers);
+
       const plainCrops = crop.get({ plain: true });
 
       const canSign = [];
@@ -262,7 +264,8 @@ class CropsController {
 
       return {
         ...crop,
-        permissions: cropUsers.crop_permissions
+        permissions: cropUsers.crop_permissions,
+        owner: cropUsers.is_owner
       };
     } catch (err) {
       console.log("CROP_SHOW", err);
