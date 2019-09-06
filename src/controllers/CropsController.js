@@ -217,8 +217,6 @@ class CropsController {
         include: [{ model: CropPermissions }]
       });
 
-      console.log(cropUsers);
-
       const plainCrops = crop.get({ plain: true });
 
       const canSign = [];
