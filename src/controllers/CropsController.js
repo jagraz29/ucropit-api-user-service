@@ -77,6 +77,10 @@ class CropsController {
         where: { user_id: user.id, crop_id: crop.id }
       });
 
+      await rel.update({
+        is_owner: 0
+      });
+
       if (values.can_edit) {
         await CropUserPermissions.create({
           crop_permission_id: 1,
