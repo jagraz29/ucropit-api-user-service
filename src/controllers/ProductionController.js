@@ -75,19 +75,26 @@ class ProductionController {
         where: { label: stage, production_id: idCrop }
       });
 
-      data.status = "pending";
-      let dataProductionStage = JSON.parse(productionStage.data);
-      dataProductionStage.push(data);
+      if (
+        !JSON.parse(productionStage.data).find(elem => elem.field_id == fieldId)
+      ) {
+        data.status = "pending";
+        let dataProductionStage = JSON.parse(productionStage.data);
 
-      dataProductionStage = _.orderBy(
-        dataProductionStage,
-        ["field_id"],
-        ["asc"]
-      );
+        dataProductionStage.push(data);
 
-      await productionStage.update({
-        data: JSON.stringify(dataProductionStage)
-      });
+        dataProductionStage = _.orderBy(
+          dataProductionStage,
+          ["field_id"],
+          ["asc"]
+        );
+
+        await productionStage.update({
+          data: JSON.stringify(dataProductionStage)
+        });
+      } else {
+        throw new Error("El insumo o servicio ya fué aplicado");
+      }
 
       return productionStage;
     } catch (error) {
@@ -139,11 +146,9 @@ class ProductionController {
 
       const data = JSON.parse(productionStage.data);
 
-
       const updateData = data.filter(obj => {
         return obj.field_id != fieldId;
       });
-
 
       await productionStage.update({
         data: JSON.stringify(updateData)
