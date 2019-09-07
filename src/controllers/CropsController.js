@@ -8,10 +8,13 @@ const CropUserPermissions = require("../models").crop_user_permissions;
 const CropPermissions = require("../models").crop_permissions;
 const CropUsers = require("../models").crop_users;
 const Signs = require("../models").signs;
-const Mail = require('../services/Mail')
-const { getShortYear } = require('../helpers')
-const { map, isEqual } = require('lodash')
-const { diff } = require('deep-object-diff')
+const Mail = require("../services/Mail");
+const Search = require("../services/Search");
+const { getShortYear } = require("../helpers");
+const { map, isEqual } = require("lodash");
+const { diff } = require("deep-object-diff");
+const PDF = require("../services/PDF");
+const Stamp = require("../services/Stamp");
 
 class CropsController {
   static async index(auth) {
@@ -22,74 +25,170 @@ class CropsController {
           { model: Fields },
           {
             model: Users,
-            where: { id: auth.user.id },
+            where: { id: auth.user.id }
           }
         ]
-      })
+      });
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err);
     }
   }
-
 
   static async colaborators(cropId, values, auth) {
     try {
       let user = await Users.findOne({
         where: {
-          'email': values.email
+          email: values.email
         }
-      })
+      });
 
       const crop = await Crop.findOne({
         where: { id: cropId },
         include: [{ model: CropTypes }]
-      })
+      });
 
-      const cropName = `${crop.crop_type.name} ${getShortYear(crop.start_at)}/${getShortYear(crop.end_at)}`
+      const cropName = `${crop.crop_type.name} ${getShortYear(
+        crop.start_at
+      )}/${getShortYear(crop.end_at)}`;
 
       if (!user) {
         user = await Users.create({
           email: values.email,
           password: values.email,
           first_login: 0
-        })
+        });
 
-        Mail.send({ template: 'new_colaborator', to: user.email, data: { user, cropName } })
+        Mail.send({
+          template: "new_colaborator",
+          to: user.email,
+          data: { user, cropName }
+        });
       } else {
-        Mail.send({ template: 'colaborator', to: user.email, data: { user, cropName, owner: auth.user } })
+        Mail.send({
+          template: "colaborator",
+          to: user.email,
+          data: { user, cropName, owner: auth.user }
+        });
       }
 
-      await crop.addUsers(user)
+      await crop.addUsers(user);
 
       const rel = await CropUsers.findOne({
         where: { user_id: user.id, crop_id: crop.id }
-      })
+      });
+
+      await rel.update({
+        is_owner: 0
+      });
 
       if (values.can_edit) {
         await CropUserPermissions.create({
           crop_permission_id: 1,
           crop_user_id: rel.id
-        })
+        });
       }
 
       if (values.can_sign) {
         await CropUserPermissions.create({
           crop_permission_id: 2,
           crop_user_id: rel.id
-        })
+        });
       }
 
-      return crop
+      return crop;
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err);
+    }
+  }
+
+  static async removeColaborator(colaborator, crop) {
+    try {
+      const rel = await CropUsers.findOne({
+        where: { user_id: colaborator, crop_id: crop }
+      });
+      const sing = await Signs.findOne({
+        where: { type: crop, user_id: colaborator }
+      });
+
+      rel.destroy();
+
+      if (sing) {
+        sing.destroy();
+      }
+
+      return true;
+    } catch (error) {
+      throw new Error(err);
     }
   }
 
   static async types() {
     try {
-      return await CropTypes.findAll()
+      return await CropTypes.findAll();
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  static async cropTypesCreate(data) {
+    try {
+      return await CropTypes.create(data);
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  static async deleteCropType(id) {
+    try {
+      const croptype = await CropTypes.findOne({ where: { id: id } })
+      return await croptype.destroy()
     } catch (err) {
       throw new Error(err)
+    }
+  }
+
+  static async showCropType(id) {
+    try {
+      const croptype = await CropTypes.findOne({ where: { id: id } })
+      return await croptype;
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
+  static async updateCropType(data, id) {
+    try {
+      const croptype = await CropTypes.findOne({ where: { id: id } })
+      return await croptype.update(data)
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
+  static async confirmation(id, auth) {
+    try {
+      const crop = await Crop.findOne({ where: { id } });
+      const budget = JSON.parse(crop.budget);
+
+      const { hash, path } = await PDF.generate({
+        data: {},
+        template: "templates/budget.pug",
+        path: `${__basedir}/../public/budget`,
+        filename: `crop-${id}.pdf`
+      });
+
+      await Signs.create({
+        type: "full-budget",
+        user_id: auth.user.id,
+        type_id: id,
+        hash,
+        ots: await Stamp.stampHash(hash),
+        meta: JSON.stringify({ path: `budget/crop-${id}.pdf` })
+      });
+
+      return { path: `budget/crop-${id}.pdf` };
+    } catch (err) {
+      throw new Error(err);
     }
   }
 
@@ -105,49 +204,80 @@ class CropsController {
             include: [
               {
                 model: Signs
-              },
+              }
             ]
           }
         ]
-      })
+      });
 
-      const cropUsersId = crop.users.find(el => el.id === auth.user.id).crop_users.id
+      const cropUsersId = crop.users.find(el => el.id === auth.user.id)
+        .crop_users.id;
       const cropUsers = await CropUsers.findOne({
         where: { id: cropUsersId },
         include: [{ model: CropPermissions }]
-      })
+      });
 
-      const plainCrops = crop.get({ plain: true })
+      const plainCrops = crop.get({ plain: true });
 
-      const canSign = []
+      const canSign = [];
 
+      // Search users in crop relationship
       crop = {
         ...plainCrops,
-        users: await Promise.all(plainCrops.users.map(async el => {
-          const permissions = await CropUserPermissions.findAll({
-            where: { crop_user_id: el.id },
-            include: [{ model: CropPermissions }]
+        users: await Promise.all(
+          plainCrops.users.map(async el => {
+            const permissions = await CropUserPermissions.findAll({
+              where: { crop_user_id: el.crop_users.id },
+              include: [{ model: CropPermissions }]
+            });
+
+            const signable = permissions.find(
+              el => el.crop_permission.value === "can_sign"
+            );
+
+            if (signable !== undefined) {
+              canSign.push(el);
+            }
+
+            return { ...el, permissions };
           })
+        )
+      };
 
-          const signable = permissions.find(el => el.crop_permission.value === 'can_sign')
+      crop.users_can_sign = crop.users.filter(el => {
+        return el.permissions.filter(el => el.crop_permission.value === 'can_sign').length > 0
+      }).length
 
-          if (signable !== undefined) {
-            canSign.push(el)
-          }
+      // search users that already sign in this crop
+      crop.editable = canSign.filter(el => {
+        const signers =
+          el.signs.filter(el => {
+            return el.type_id === Number(id);
+          }).length > 0;
+        return signers;
+      });
 
-          return { ...el, permissions }
-        }))
-      }
-
-      crop.editable = canSign.filter(el => el.signs.length > 0).length !== canSign.length
+      // compare users that has signs vs user can sing to define editable permission
+      crop.editable = crop.editable.length !== canSign.length;
 
       return {
         ...crop,
-        permissions: cropUsers.crop_permissions
-      }
+        permissions: cropUsers.crop_permissions,
+        owner: cropUsers.is_owner
+      };
     } catch (err) {
-      console.log('CROP_SHOW', err)
-      throw new Error(err)
+      console.log("CROP_SHOW", err);
+      throw new Error(err);
+    }
+  }
+
+  static async getStageCropByField(id, field) {
+    try {
+      const crop = await Crop.findOne({ where: { id: id } });
+      if (!crop) throw new Error(`No se encontró crop con id ${id}`);
+      return await Search.getBudgetbyFields({ where: { id: id } }, field);
+    } catch (err) {
+      throw new Error(err);
     }
   }
 
@@ -157,33 +287,90 @@ class CropsController {
         ...data,
         budget: JSON.stringify({
           items: [
-            { id: 1, name: 'Campo', data: {}, status: 'in_progress', form: 'fields' },
-            { id: 2, name: 'Pre-Siembra', data: {}, status: 0, form: 'pre-sowing' },
-            { id: 3, name: 'Siembra', data: {}, status: 0, form: 'sowing' },
-            { id: 4, name: 'Protección de Cultivos', data: {}, status: 0, form: 'protection' },
-            { id: 5, name: 'Cosecha y Comercialización', data: {}, status: 0, form: 'harvest-and-marketing' },
-            { id: 6, name: 'Gastos administrativos', data: {}, status: 0, form: 'other-expenses' },
+            {
+              id: 1,
+              name: "Campo",
+              data: {},
+              status: "in_progress",
+              form: "fields",
+              display: true
+            },
+            {
+              id: 2,
+              name: "Pre-Siembra",
+              data: {},
+              status: "in_progress",
+              form: "pre-sowing",
+              display: true
+            },
+            {
+              id: 3,
+              name: "Siembra",
+              data: {},
+              status: "in_progress",
+              form: "sowing",
+              display: true
+            },
+            {
+              id: 4,
+              name: "Protección de Cultivos",
+              data: {},
+              status: "in_progress",
+              form: "protection",
+              display: true
+            },
+            {
+              id: 5,
+              name: "Cosecha y Comercialización",
+              data: {},
+              status: "in_progress",
+              form: "harvest-and-marketing",
+              display: true
+            },
+            {
+              id: 6,
+              name: "Gastos administrativos",
+              data: {},
+              status: "in_progress",
+              form: "other-expenses",
+              display: true
+            },
+            {
+              id: 7,
+              name: "Monitoreo",
+              data: {},
+              status: "in_progress",
+              form: "monitoring",
+              display: false
+            },
+            {
+              id: 8,
+              name: "Entregas",
+              data: {},
+              status: "in_progress",
+              form: "deliveries",
+              display: false
+            }
           ]
         })
-      })
+      });
 
-
-      let rel = await crop.setUsers([auth.user.id])
-      rel = rel[0][0]
+      let rel = await crop.setUsers([auth.user.id]);
+      rel = rel[0][0];
 
       await CropUserPermissions.create({
         crop_permission_id: 1,
         crop_user_id: rel.id
-      })
+      });
 
       await CropUserPermissions.create({
         crop_permission_id: 2,
         crop_user_id: rel.id
-      })
+      });
 
-      return crop
+      return crop;
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err);
     }
   }
 
@@ -191,53 +378,61 @@ class CropsController {
     try {
       const crop = await Crop.findOne({
         where: { id: id }
-      })
+      });
 
-      let newBudget = JSON.parse(crop.budget)
+      let newBudget = JSON.parse(crop.budget);
       newBudget = {
         ...newBudget,
-        items: map(newBudget.items, (el) => {
-          if (el.form === 'other-expenses') {
-            const totalExpenses = el.data.undefined.expenses.reduce((prev, el) => prev + parseFloat(el.cost.replace(/[, ]+/g, '')), 0)
-            const totalIncome = el.data.undefined.income.reduce((prev, el) => prev + parseFloat(el.cost.replace(/[, ]+/g, '')), 0)
-            el.data['undefined'].amount = ((totalIncome - totalExpenses) / data.surface).toFixed(2)
-          } else if ('harvest-and-marketing') {
-            let newData = {}
-            for (let item in el.data) {
-              let total = Number(el.data[item].amount)
-              
-              if (el.data[item].concept.calc_unit === 'ha') {
-                total = total
-              } else if (el.data[item].concept.calc_unit === 'percent') {
-                total = ((crop.reference_price * crop.quintals) * total) / 100
-              } else if (el.data[item].concept.calc_unit === 'ton') {
-                total = total * crop.quintals
+        items: map(newBudget.items, el => {
+          if (el.form === "other-expenses") {
+            const totalExpenses = el.data.undefined.expenses.reduce(
+              (prev, el) => prev + parseFloat(el.cost.replace(/[, ]+/g, "")),
+              0
+            );
+            const totalIncome = el.data.undefined.income.reduce(
+              (prev, el) => prev + parseFloat(el.cost.replace(/[, ]+/g, "")),
+              0
+            );
+            el.data["undefined"].amount = (
+              (totalIncome - totalExpenses) /
+              data.surface
+            ).toFixed(2);
+          } else if (el.form === "harvest-and-marketing") {
+            let newData = {};
+            for (const item in el.data) {
+              let total = Number(el.data[item].price);
+              if (el.data[item].concept.calc_unit === "ha") {
+                total = total;
+              } else if (el.data[item].concept.calc_unit === "percent") {
+                total = (crop.reference_price * crop.quintals * total) / 100;
+              } else if (el.data[item].concept.calc_unit === "ton") {
+                total = total * crop.quintals;
               }
 
-              el.data[item].amount = total
+              el.data[item].amount = total;
 
               newData = {
                 ...el.data,
                 [item]: el.data[item]
-              }
+              };
             }
-            el.data = newData
+            el.data = newData;
           }
-          return el
+          return el;
         })
-      }
+      };
 
       await Signs.destroy({
-        where: { type_id: id, type: 'crop-budget' }
-      })
+        where: { type_id: id, type: "crop-budget" }
+      });
 
       return await crop.update({
         ...data,
         budget: JSON.stringify(newBudget)
-      })
+      });
     } catch (err) {
-      console.log(err)
-      throw new Error(err)
+      console.log(err);
+      throw new Error(err);
     }
   }
 
@@ -245,21 +440,21 @@ class CropsController {
     try {
       const crop = await Crop.findOne({
         where: { id: id }
-      })
+      });
 
-      const diffBudget = diff(JSON.parse(crop.budget), data).items
+      const diffBudget = diff(JSON.parse(crop.budget), data).items;
 
       if (diffBudget !== undefined) {
         if (diffBudget[Object.keys(diffBudget)[0]].data !== undefined) {
           await Signs.destroy({
-            where: { type_id: crop.id, type: 'crop-budget' }
-          })
+            where: { type_id: crop.id, type: "crop-budget" }
+          });
         }
       }
 
-      return await crop.update({ budget: JSON.stringify(data) })
+      return await crop.update({ budget: JSON.stringify(data) });
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err);
     }
   }
 
@@ -267,14 +462,13 @@ class CropsController {
     try {
       const crop = await Crop.findOne({
         where: { id: id }
-      })
+      });
 
-      return await crop.destroy()
+      return await crop.destroy();
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err);
     }
   }
 }
 
-module.exports = CropsController
-
+module.exports = CropsController;

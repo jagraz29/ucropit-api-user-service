@@ -6,34 +6,47 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ava --verbose",
     "migrate:undo": "cd src/ && sequelize db:migrate:undo:all && cd ..",
     "migrate:all": "cd src/ && sequelize db:migrate && cd ..",
     "seed": "cd src/ && sequelize db:seed:all && cd ..",
     "reset:db": "npm run migrate:undo && npm run migrate:all && npm run seed"
   },
   "dependencies": {
+    "async": "^3.1.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
+    "child_process": "^1.0.2",
     "console-stamp": "^0.2.7",
     "cors": "^2.8.5",
     "deep-object-diff": "^1.1.0",
     "dotenv": "^7.0.0",
     "email-templates": "^5.1.0",
     "express": "^4.16.4",
+    "express-fileupload": "^1.1.5",
+    "firebase": "^6.2.4",
+    "install": "^0.13.0",
+    "javascript-opentimestamps": "^0.4.5",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
     "mailgun-js": "^0.22.0",
     "moment": "^2.24.0",
-    "multer": "^1.4.1",
     "mysql2": "^1.6.5",
     "nodemailer": "^5.1.1",
     "nodemailer-mailgun-transport": "^1.4.0",
+    "npm": "^6.10.1",
+    "pdfkit": "^0.10.0",
     "pug": "^2.0.3",
+    "puppeteer": "^1.18.1",
     "sequelize": "^5.1.0",
-    "shortid": "^2.2.14"
+    "sha256": "^0.2.0",
+    "shortid": "^2.2.14",
+    "standard": "^13.0.2"
   },
   "devDependencies": {
-    "nodemon": "^1.18.10"
+    "ava": "^2.1.0",
+    "nodemon": "^1.18.10",
+    "supertest": "^4.0.2"
   },
   "repository": {
     "type": "git",

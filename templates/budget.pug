@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
+    title Document
+  body
+  div(style='font-size: 16px;font-family: sans-serif; display: flex; justify-content: space-between;')
+    img(src="http://ucrop.it/logo.png", alt="logo" width="100")
+    p El Campo - Grano Campana
+    p A&ntilde;o de la campa&ntilde;a
+  |
+  |
+  .px-4(style='font-size: 16px;font-family: sans-serif;')
+    .row.mt-5.d-flex
+      .col-md-4
+        p
+          b MONEDA:
+          |  D&oacute;lares
+      .col-md-4.text-center
+        p
+          b PRECIO BRUTO/TN: 280,00
+      .col-md-4.text-center
+        p
+          b RENDIMIENTO TN/HA: 4,00
+    .row.mt-5
+      h3
+        b INSUMOS Y APLICACIONES
+      table.table
+        thead
+          tr
+            th MES / ANO
+            th INSUMO/SERVICIO
+            th DOSIS/APLICACION
+            th PRECIO UNITARIO
+            th CONCEPTO
+            th TOTAL X HA
+        tbody
+          tr
+            td(style='font-size: 14px') PRE-SIEMBRA
+          tr
+            td 08/2019
+            td Aplicacion Terrestre
+            td 1
+            td 5.22
+            td APLICACIONES
+            td 5.22
+      div(style='width: 100%')
+        table.table
+          thead(style='width: 100%')
+            tr(colspan='100%')
+              td(style='width:100%')
+                b TOTAL INSUMOS Y APLICACIONES
+              td 161,14
+

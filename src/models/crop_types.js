@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     image: {
       type: DataTypes.STRING,
       allowNull: false,
+      get: function() {
+        return `${process.env.BASE_URL}/croptypes/${this.getDataValue('image')}`;
+      }
     }
   },
     {
