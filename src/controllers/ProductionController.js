@@ -69,14 +69,11 @@ class ProductionController {
   static async updateData(request) {
     let data = request.body;
     const { idCrop, stage, fieldId, type } = request.params;
-    console.log(`Esto son los parametros de updatedata:`, idCrop, stage);
 
     try {
       const productionStage = await ProductionStage.findOne({
         where: { label: stage, production_id: idCrop }
       });
-
-      console.log("Production stage:",productionStage);
 
       if (
         !JSON.parse(productionStage.data).find(elem => elem.field_id == fieldId)
