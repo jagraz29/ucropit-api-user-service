@@ -75,6 +75,8 @@ class ProductionController {
         where: { label: stage, production_id: idCrop }
       });
 
+      console.log(productionStage);
+
       if (
         !JSON.parse(productionStage.data).find(elem => elem.field_id == fieldId)
       ) {
