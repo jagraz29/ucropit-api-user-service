@@ -3,6 +3,8 @@
 const Provider = require("../models").providers;
 const ProviderType = require("../models").providers_type;
 const TypesProviders = require("../models").providers_providers_type;
+const CoverageAreas = require("../models").coverage_areas;
+const CoverageAreaProvider = require("../models").coverage_areas_providers;
 const { paginate } = require("../helpers");
 
 class ProviderController {
@@ -34,26 +36,24 @@ class ProviderController {
 
   static async getByTypes(type) {
     try {
-      const providers = await Provider.findAll(
+      const providers = await Provider.findAll({
+        include: [
           {
-            include: [
-              {
-                model: ProviderType,
-                attributes: ["value", "label"],
-                through: {
-                  model: TypesProviders
-                },
-                where: {
-                  value: type      
-                }
-              }
-            ],
-            where: {}
+            model: ProviderType,
+            attributes: ["value", "label"],
+            through: {
+              model: TypesProviders
+            },
+            where: {
+              value: type
+            }
           }
-      );
+        ],
+        where: {}
+      });
 
       return providers;
-    } catch(err) {
+    } catch (err) {
       throw new Error(err);
     }
   }
@@ -92,6 +92,17 @@ class ProviderController {
     }
   }
 
+  static async coveragesArea() {
+    try {
+      const coverageAreas = await CoverageAreas.findAll({
+        attributes: ["id", ["name", "label"], "value"]
+      });
+      return coverageAreas;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   static async create(data) {
     try {
       const provider = await Provider.create({
@@ -105,6 +116,17 @@ class ProviderController {
         await TypesProviders.create({
           providers_id: provider.get("id"),
           providers_type_id: providersType.get("id")
+        });
+      });
+
+      data.area_cobertura.forEach(async element => {
+        const coverageArea = await CoverageAreas.findOne({
+          where: { value: element.value }
+        });
+
+        await CoverageAreaProvider.create({
+          providers_id: provider.get("id"),
+          coverage_area_id: coverageArea.get("id")
         });
       });
       return provider;

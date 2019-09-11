@@ -5,23 +5,23 @@ module.exports = {
     return queryInterface.bulkInsert('coverage_areas', [
       {
         value: 'junin',
-        zone: 'Junin'
+        name: 'Junin'
       },
       {
         value: 'rosario',
-        zone: 'Rosario'
+        name: 'Rosario'
       },
       {
         value: 'cordoba',
-        zone: 'Cordoba'
+        name: 'Cordoba'
       },
       {
         value: 'chivilcoy',
-        zone: 'Chivilcoy'
+        name: 'Chivilcoy'
       },
       {
         value: 'chacabuco',
-        zone: 'Chacabuco'
+        name: 'Chacabuco'
       }
     ], {});
   },
