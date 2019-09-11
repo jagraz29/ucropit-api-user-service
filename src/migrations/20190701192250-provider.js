@@ -15,7 +15,8 @@ module.exports = {
       },
       status: {
         type: Sequelize.ENUM('Sugerido', 'Completo', 'Validado'),
-        allowNull:false
+        allowNull:false,
+        defaultValue: "Sugerido"
       },
       phone: {
         type: Sequelize.STRING,
@@ -23,7 +24,7 @@ module.exports = {
       },
       cellphone: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       email: {
         type: Sequelize.STRING,
@@ -36,19 +37,19 @@ module.exports = {
       },
       city: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       estate: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       country: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       postal_code: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       taxid: {
         type: Sequelize.STRING,
@@ -64,11 +65,11 @@ module.exports = {
       },
       description: {
         type: Sequelize.TEXT,
-        allowNull: true
+        allowNull: false
       },
       discounts: {
         type: Sequelize.DOUBLE,
-        allowNull: true
+        allowNull: false
       },
       notes: {
         type: Sequelize.STRING,
@@ -76,7 +77,7 @@ module.exports = {
       },
       workplace: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       web: {
         type: Sequelize.STRING,
