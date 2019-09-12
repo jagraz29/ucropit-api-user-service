@@ -71,12 +71,17 @@ class ProductionController {
     const { idCrop, stage, fieldId, type } = request.params;
 
     try {
+      const production = await Production.findOne({
+        where: { crop_id: idCrop }
+      });
       const productionStage = await ProductionStage.findOne({
-        where: { label: stage, production_id: idCrop }
+        where: { label: stage, production_id: production.id }
       });
 
       if (
-        !JSON.parse(productionStage.data).find(elem => elem.field_id == fieldId)
+        !JSON.parse(productionStage.data).find(
+          elem => elem.field_id == fieldId && elem.type == type
+        )
       ) {
         data.status = "pending";
         let dataProductionStage = JSON.parse(productionStage.data);
@@ -92,11 +97,11 @@ class ProductionController {
         await productionStage.update({
           data: JSON.stringify(dataProductionStage)
         });
+
+        return productionStage;
       } else {
         throw new Error("El insumo o servicio ya fué aplicado");
       }
-
-      return productionStage;
     } catch (error) {
       throw new Error(error);
     }
@@ -140,14 +145,18 @@ class ProductionController {
 
   static async deleteAplicationStage(cropId, stage, fieldId, type) {
     try {
+      const production = await Production.findOne({
+        where: { crop_id: cropId }
+      });
+
       const productionStage = await ProductionStage.findOne({
-        where: { label: stage, production_id: cropId }
+        where: { label: stage, production_id: production.id }
       });
 
       const data = JSON.parse(productionStage.data);
 
       const updateData = data.filter(obj => {
-        return obj.field_id != fieldId;
+        return obj.field_id != fieldId || obj.type != type;
       });
 
       await productionStage.update({
