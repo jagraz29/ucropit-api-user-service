@@ -69,6 +69,13 @@ class ProviderController {
             through: {
               model: TypesProviders
             }
+          },
+          {
+            model: CoverageAreas,
+            attributes: ["value", "name"],
+            through: {
+              model: CoverageAreaProvider
+            }
           }
         ]
       });
