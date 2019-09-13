@@ -119,6 +119,10 @@ class ProviderController {
 
   static async create(data) {
     try {
+      const isExistProvider = await Provider.findOne({
+        where: { taxid: data.taxid }
+      });
+      if (isExistProvider) throw new Error("Existe el cuit registrado");
       const provider = await Provider.create({
         ...data
       });
