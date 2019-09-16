@@ -150,7 +150,7 @@ class ProviderController {
         });
       });
 
-      await this.createUser(provider);
+      await this.createUser(provider, data);
 
       return provider;
     } catch (err) {
@@ -190,13 +190,16 @@ class ProviderController {
     }
   }
 
-  static async createUser(provider) {
+  static async createUser(provider, data) {
     try {
-      const { email } = provider;
+      const { email, first_name, last_name, phone } = data;
 
       const user = await Users.create({
         email: email,
         password: email,
+        phone: phone,
+        first_name: first_name,
+        last_name: last_name,
         first_login: 0
       });
 
