@@ -118,6 +118,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "providers_id",
       otherKey: "coverage_area_id"
     });
+
+    Provider.belongsToMany(models.users, {
+      through: "providers_users",
+      foreignKey: "providers_id",
+      otherKey: "user_id"
+    });
   };
 
   return Provider;

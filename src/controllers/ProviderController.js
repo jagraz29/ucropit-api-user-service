@@ -5,6 +5,8 @@ const ProviderType = require("../models").providers_type;
 const TypesProviders = require("../models").providers_providers_type;
 const CoverageAreas = require("../models").coverage_areas;
 const CoverageAreaProvider = require("../models").coverage_areas_providers;
+const Users = require("../models").users;
+const ProvidersUsers = require("../models").providers_users;
 const { paginate } = require("../helpers");
 
 class ProviderController {
@@ -147,6 +149,9 @@ class ProviderController {
           coverage_area_id: coverageArea.get("id")
         });
       });
+
+      await this.createUser(provider);
+
       return provider;
     } catch (err) {
       throw new Error(err);
@@ -181,6 +186,22 @@ class ProviderController {
       const provider = await Provider.findOne({ where: { id: id } });
       return await provider.destroy();
     } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  static async createUser(provider) {
+    try {
+      const { email } = provider;
+
+      const user = await Users.create({
+        email: email,
+        password: email,
+        first_login: 0
+      });
+
+      return await provider.addUsers(user);
+    } catch (error) {
       throw new Error(err);
     }
   }
