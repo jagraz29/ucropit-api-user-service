@@ -3,6 +3,10 @@
 const Provider = require("../models").providers;
 const ProviderType = require("../models").providers_type;
 const TypesProviders = require("../models").providers_providers_type;
+const CoverageAreas = require("../models").coverage_areas;
+const CoverageAreaProvider = require("../models").coverage_areas_providers;
+const Users = require("../models").users;
+const ProvidersUsers = require("../models").providers_users;
 const { paginate } = require("../helpers");
 
 class ProviderController {
@@ -17,6 +21,13 @@ class ProviderController {
                 attributes: ["value", "label"],
                 through: {
                   model: TypesProviders
+                }
+              },
+              {
+                model: CoverageAreas,
+                attributes: ["value", "name"],
+                through: {
+                  model: CoverageAreaProvider
                 }
               }
             ],
@@ -34,26 +45,24 @@ class ProviderController {
 
   static async getByTypes(type) {
     try {
-      const providers = await Provider.findAll(
+      const providers = await Provider.findAll({
+        include: [
           {
-            include: [
-              {
-                model: ProviderType,
-                attributes: ["value", "label"],
-                through: {
-                  model: TypesProviders
-                },
-                where: {
-                  value: type      
-                }
-              }
-            ],
-            where: {}
+            model: ProviderType,
+            attributes: ["value", "label"],
+            through: {
+              model: TypesProviders
+            },
+            where: {
+              value: type
+            }
           }
-      );
+        ],
+        where: {}
+      });
 
       return providers;
-    } catch(err) {
+    } catch (err) {
       throw new Error(err);
     }
   }
@@ -68,6 +77,13 @@ class ProviderController {
             attributes: ["value", "label"],
             through: {
               model: TypesProviders
+            }
+          },
+          {
+            model: CoverageAreas,
+            attributes: ["value", "name"],
+            through: {
+              model: CoverageAreaProvider
             }
           }
         ]
@@ -92,8 +108,23 @@ class ProviderController {
     }
   }
 
+  static async coveragesArea() {
+    try {
+      const coverageAreas = await CoverageAreas.findAll({
+        attributes: ["id", ["name", "label"], "value"]
+      });
+      return coverageAreas;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   static async create(data) {
     try {
+      const isExistProvider = await Provider.findOne({
+        where: { taxid: data.taxid }
+      });
+      if (isExistProvider) throw new Error("Existe el cuit registrado");
       const provider = await Provider.create({
         ...data
       });
@@ -107,6 +138,20 @@ class ProviderController {
           providers_type_id: providersType.get("id")
         });
       });
+
+      data.area_cobertura.forEach(async element => {
+        const coverageArea = await CoverageAreas.findOne({
+          where: { value: element.value }
+        });
+
+        await CoverageAreaProvider.create({
+          providers_id: provider.get("id"),
+          coverage_area_id: coverageArea.get("id")
+        });
+      });
+
+      await this.createUser(provider, data);
+
       return provider;
     } catch (err) {
       throw new Error(err);
@@ -141,6 +186,25 @@ class ProviderController {
       const provider = await Provider.findOne({ where: { id: id } });
       return await provider.destroy();
     } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  static async createUser(provider, data) {
+    try {
+      const { email, first_name, last_name, phone } = data;
+
+      const user = await Users.create({
+        email: email,
+        password: email,
+        phone: phone,
+        first_name: first_name,
+        last_name: last_name,
+        first_login: 0
+      });
+
+      return await provider.addUsers(user);
+    } catch (error) {
       throw new Error(err);
     }
   }

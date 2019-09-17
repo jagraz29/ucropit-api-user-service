@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       status: {
         type: DataTypes.ENUM("Sugerido", "Completo", "Validado"),
-        allowNull: false
+        allowNull: false,
+        defaultValue: "Sugerido"
       },
       phone: {
         type: DataTypes.STRING,
@@ -24,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       cellphone: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       email: {
         type: DataTypes.STRING,
@@ -37,19 +38,19 @@ module.exports = (sequelize, DataTypes) => {
       },
       city: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       estate: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       country: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       postal_code: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       taxid: {
         type: DataTypes.STRING,
@@ -63,16 +64,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
         get: function() {
-          return `${process.env.BASE_URL}/providers/${this.getDataValue('photo')}`;
+          return `${process.env.BASE_URL}/providers/${this.getDataValue(
+            "photo"
+          )}`;
         }
       },
       description: {
         type: DataTypes.TEXT,
-        allowNull: true
+        allowNull: false
       },
       discounts: {
         type: DataTypes.DOUBLE,
-        allowNull: true
+        allowNull: false
       },
       notes: {
         type: DataTypes.STRING,
@@ -84,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       workplace: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       created_at: {
         allowNull: false,
@@ -105,11 +108,23 @@ module.exports = (sequelize, DataTypes) => {
 
   Provider.associate = function(models) {
     Provider.belongsToMany(models.providers_type, {
-      through: 'providers_providers_type',
-      foreignKey: 'providers_id',
-      otherKey: 'providers_type_id'
-    })
-  }
+      through: "providers_providers_type",
+      foreignKey: "providers_id",
+      otherKey: "providers_type_id"
+    });
+
+    Provider.belongsToMany(models.coverage_areas, {
+      through: "coverage_areas_providers",
+      foreignKey: "providers_id",
+      otherKey: "coverage_area_id"
+    });
+
+    Provider.belongsToMany(models.users, {
+      through: "providers_users",
+      foreignKey: "providers_id",
+      otherKey: "user_id"
+    });
+  };
 
   return Provider;
 };
