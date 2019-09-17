@@ -124,7 +124,16 @@ class ProviderController {
       const isExistProvider = await Provider.findOne({
         where: { taxid: data.taxid }
       });
+
+      const isExistUser = await Users.findOne({
+        where: { email: data.email }
+      });
+
+      if (isExistUser)
+        throw new Error("El email ya se encuentra registrado como usuario");
+
       if (isExistProvider) throw new Error("Existe el cuit registrado");
+
       const provider = await Provider.create({
         ...data
       });
@@ -205,7 +214,7 @@ class ProviderController {
 
       return await provider.addUsers(user);
     } catch (error) {
-      throw new Error(err);
+      throw new Error(error);
     }
   }
 }

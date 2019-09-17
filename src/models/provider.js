@@ -30,7 +30,8 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
+        message: 'El email del proveedor ya existe',
       },
       address: {
         type: DataTypes.STRING,
