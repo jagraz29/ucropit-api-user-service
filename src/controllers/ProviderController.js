@@ -81,9 +81,15 @@ class ProviderController {
           },
           {
             model: CoverageAreas,
-            attributes: ["value", "name"],
+            attributes: ["value", ["name", "label"]],
             through: {
               model: CoverageAreaProvider
+            }
+          },
+          {
+            model: Users,
+            through: {
+              model: ProvidersUsers
             }
           }
         ]
@@ -172,6 +178,7 @@ class ProviderController {
       const provider = await Provider.findOne({ where: { id: id } });
 
       await TypesProviders.destroy({ where: { providers_id: id } });
+      await CoverageAreaProvider.destroy({ where: { providers_id: id } });
 
       data.types.forEach(async element => {
         const providersType = await ProviderType.findOne({
@@ -180,6 +187,17 @@ class ProviderController {
         await TypesProviders.create({
           providers_id: provider.get("id"),
           providers_type_id: providersType.get("id")
+        });
+      });
+
+      data.area_cobertura.forEach(async element => {
+        const coverageArea = await CoverageAreas.findOne({
+          where: { value: element.value }
+        });
+
+        await CoverageAreaProvider.create({
+          providers_id: provider.get("id"),
+          coverage_area_id: coverageArea.get("id")
         });
       });
       return await provider.update(data);
@@ -191,7 +209,12 @@ class ProviderController {
   static async delete(id) {
     try {
       await TypesProviders.destroy({ where: { providers_id: id } });
-
+      const userProvider = await ProvidersUsers.findOne({
+        where: { providers_id: id }
+      });
+      const userId = userProvider.user_id;
+      await userProvider.destroy();
+      await this.removeUserToProvider(userId);
       const provider = await Provider.findOne({ where: { id: id } });
       return await provider.destroy();
     } catch (err) {
@@ -215,6 +238,15 @@ class ProviderController {
       return await provider.addUsers(user);
     } catch (error) {
       throw new Error(error);
+    }
+  }
+
+  static async removeUserToProvider(id) {
+    try {
+      const user = await Users.findOne({ where: { id: id } });
+      return user.destroy();
+    } catch (err) {
+      throw new Error(err);
     }
   }
 }
