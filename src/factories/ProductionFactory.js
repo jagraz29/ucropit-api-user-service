@@ -29,7 +29,6 @@ class ProductionFactory {
 
           return el
         } else {
-
           el.status = 'pending'
           return el
         }
@@ -37,7 +36,7 @@ class ProductionFactory {
       budget,
       display: StageValidator.isActive(form),
       order: StageValidator.getOrder(form),
-      status: form === 'fields' ? 'in_progress' : 'pending'
+      status: 'in_progress'
     }
   }
 
