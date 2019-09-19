@@ -106,12 +106,16 @@ class ApprovalsRegisterController {
     })
 
     const production = await Production.findOne({ where: { crop_id: crop } })
-    const stages = await ProductionStages.update({ status: 'in_progress' }, {
-      where: {
-        production_id: production.id,
-        label: { [Op.not]: 'fields' }
-      }
-    })
+    
+    if(ProductionStages.status !== "done") {
+      const stages = await ProductionStages.update({ status: 'in_progress' }, {
+        where: {
+          production_id: production.id,
+          label: { [Op.not]: 'fields' }
+        }
+      })
+    }
+    
 
     return register
   }

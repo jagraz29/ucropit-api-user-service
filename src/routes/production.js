@@ -65,6 +65,16 @@ router.put("/:idCrop/:stage/:fieldId/:type", async (req, res) => {
     })
 })
 
+router.put("/done/stage/:idCrop/stages/:stage", async(req, res) => {
+  ProductionController.updateStatusStage(req)
+    .then((data) => {
+      return res.status(200).json({ code: 200, error: false, data })
+    })
+    .catch((err) => {
+      return res.status(500).json({ code: 500, error: true, message: err.message })
+    })
+})
+
 router.delete('/:idCrop/:stage/:fieldId/:type', async (req, res) => {
   ProductionController.deleteAplicationStage(req.params.idCrop, req.params.stage, req.params.fieldId, req.params.type)
     .then((field) => {

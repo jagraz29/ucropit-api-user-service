@@ -6,7 +6,7 @@ const CropTypes = require("../models").crop_types;
 const Production = require("../models").productions;
 const ProductionStage = require("../models").production_stage;
 const ProductionFactory = require("../factories/ProductionFactory");
-const uuidv1 = require('uuid/v1');
+const uuidv1 = require("uuid/v1");
 const _ = require("lodash");
 
 class ProductionController {
@@ -72,28 +72,28 @@ class ProductionController {
       where: { crop_id: id }
     });
     const productionStage = await ProductionStage.findOne({
-      where: { label: 'monitoring', production_id: production.id }
+      where: { label: "monitoring", production_id: production.id }
     });
 
     let dataProductionStage = JSON.parse(productionStage.data);
-    const newId = uuidv1()
+    const newId = uuidv1();
 
     return await productionStage.update({
       data: JSON.stringify([
         ...dataProductionStage,
         {
           id: newId,
-          type: 'service',
+          type: "service",
           field_id: newId,
           concept: {
-            id:  newId,
-            name: 'Monitoreo',
-            service_type: { id: 11, name: 'Monitoreo' }
+            id: newId,
+            name: "Monitoreo",
+            service_type: { id: 11, name: "Monitoreo" }
           },
-          status: 'pending'
+          status: "pending"
         }
       ])
-    })
+    });
   }
 
   static async updateData(request) {
@@ -132,6 +132,25 @@ class ProductionController {
       } else {
         throw new Error("El insumo o servicio ya fué aplicado");
       }
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  static async updateStatusStage(request) {
+    try {
+      const { idCrop, stage } = request.params;
+      const { status } = request.body;
+
+      const production = await Production.findOne({
+        where: { crop_id: idCrop }
+      });
+
+      const productionStage = await ProductionStage.findOne({
+        where: { label: stage, production_id: production.id }
+      });
+
+      return await productionStage.update({ status });
     } catch (error) {
       throw new Error(error);
     }
