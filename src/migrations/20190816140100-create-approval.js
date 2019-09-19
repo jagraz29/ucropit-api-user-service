@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       type: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       service_id: {
         type: Sequelize.TEXT
