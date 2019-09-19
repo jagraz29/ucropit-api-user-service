@@ -26,7 +26,7 @@ class ApprovalsController {
   }
 
   static async create(data) {
-
+    console.log(data)
     try {
       if (data.stage === 'fields') {
         const exists = await Approvals.findOne({ where: { stage: data.stage, crop_id: data.crop_id } })

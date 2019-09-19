@@ -6,6 +6,7 @@ const CropTypes = require("../models").crop_types;
 const Production = require("../models").productions;
 const ProductionStage = require("../models").production_stage;
 const ProductionFactory = require("../factories/ProductionFactory");
+const uuidv1 = require('uuid/v1');
 const _ = require("lodash");
 
 class ProductionController {
@@ -64,6 +65,35 @@ class ProductionController {
       console.log(error);
       throw new Error(error);
     }
+  }
+
+  static async addMonitoring(id) {
+    const production = await Production.findOne({
+      where: { crop_id: id }
+    });
+    const productionStage = await ProductionStage.findOne({
+      where: { label: 'monitoring', production_id: production.id }
+    });
+
+    let dataProductionStage = JSON.parse(productionStage.data);
+    const newId = uuidv1()
+
+    return await productionStage.update({
+      data: JSON.stringify([
+        ...dataProductionStage,
+        {
+          id: newId,
+          type: 'service',
+          field_id: newId,
+          concept: {
+            id:  newId,
+            name: 'Monitoreo',
+            service_type: { id: 11, name: 'Monitoreo' }
+          },
+          status: 'pending'
+        }
+      ])
+    })
   }
 
   static async updateData(request) {

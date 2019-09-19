@@ -57,6 +57,12 @@ module.exports = {
           "stage": "harvest-and-marketing",
           "type_id": 10,
           "calc_unit":  'percent'
+        },
+        {
+          name: 'Monitoreo',
+          "stage": "monitoring",
+          "type_id": 11,
+          "calc_unit": "ha"
         }
       ]);
   },
