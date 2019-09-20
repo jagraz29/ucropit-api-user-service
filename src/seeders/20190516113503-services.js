@@ -35,31 +35,31 @@ module.exports = {
           "calc_unit":  'ha'
         },
         {
-          name: 'Servicio de cosecha',
+          "name": 'Servicio de cosecha',
           "stage": "harvest-and-marketing",
           "type_id": 7,
           "calc_unit":  'percent'
         },
         {
-          name: 'Flete',
+          "name": 'Flete',
           "stage": "harvest-and-marketing",
           "type_id": 8,
           "calc_unit":  'ton'
         },
         {
-          name: 'Servicio de secada',
+          "name": 'Servicio de secada',
           "stage": "harvest-and-marketing",
           "type_id": 9,
           "calc_unit":  'ton'
         },
         {
-          name: 'Gastos de venta de grano',
+          "name": 'Gastos de venta de grano',
           "stage": "harvest-and-marketing",
           "type_id": 10,
           "calc_unit":  'percent'
         },
         {
-          name: 'Monitoreo',
+          "name": 'Monitoreo',
           "stage": "monitoring",
           "type_id": 11,
           "calc_unit": "ha"
