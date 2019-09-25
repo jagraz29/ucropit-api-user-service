@@ -87,13 +87,33 @@ class ProductionController {
           field_id: newId,
           concept: {
             id: newId,
-            name: "Monitoreo",
-            service_type: { id: 11, name: "Monitoreo" }
+            name: 'Monitoreo',
+            service_type: { id: 11, name: 'Monitoreo' }
           },
           status: "pending"
         }
       ])
     });
+  }
+
+
+  static async addOtherExpenses(id, stage, data) {
+    const production = await Production.findOne({
+      where: { crop_id: id }
+    })
+
+    const productionStage = await ProductionStage.findOne({
+      where: { label: 'other-expenses', production_id: production.id }
+    })
+
+    let dataProductionStage = JSON.parse(productionStage.data);
+
+    return await productionStage.update({
+      data: JSON.stringify([
+        ...dataProductionStage,
+        data
+      ])
+    })
   }
 
   static async updateData(request) {

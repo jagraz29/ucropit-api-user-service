@@ -59,9 +59,26 @@ module.exports = {
           "calc_unit":  'percent'
         },
         {
+<<<<<<< HEAD
           "name": 'Monitoreo',
           "stage": "monitoring",
+=======
+          name: 'Monitoreo',
+          "stage": "other-expenses",
+>>>>>>> d88030fcb24c5607a7fe56ae0eaad857e4b018ca
           "type_id": 11,
+          "calc_unit": "ha"
+        },
+        {
+          name: 'Impuestos',
+          "stage": "other-expenses",
+          "type_id": 12,
+          "calc_unit": "ha"
+        },
+        {
+          name: 'Honorarios',
+          "stage": "other-expenses",
+          "type_id": 12,
           "calc_unit": "ha"
         }
       ]);
