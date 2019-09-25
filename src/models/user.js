@@ -53,6 +53,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "user_id",
       otherKey: "providers_id"
     });
+
+    User.belongsToMany(models.users, {
+      through: "diary_users",
+      as: 'Contacts',
+      foreignKey: "contact_user_id",
+    });
   };
 
   async function encryptPasswordIfChanged(user, options) {
