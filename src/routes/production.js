@@ -44,6 +44,16 @@ router.post('/:idCrop/monitoring/add', async (req, res) => {
     })
 })
 
+router.post('/:idCrop/other-expenses/add', async (req, res) => {
+  ProductionController.addOtherExpenses(req.params.idCrop, req.params.stage, req.body)
+    .then((production) => {
+      return res.status(200).json({ code: 200, error: false, production })
+    })
+    .catch((err) => {
+      return res.status(500).json({ code: 500, error: true, message: err.message })
+    })
+})
+
 
 router.post('/:idCrop/fields', async (req, res) => {
   ProductionController.storeField(req.params.idCrop, req.body, req.decoded)

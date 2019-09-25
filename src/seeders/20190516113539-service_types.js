@@ -47,6 +47,10 @@ module.exports = {
           name: 'Monitoreo',
           image: 'Tractor.svg'
         },
+        {
+          name: 'Gastos e Ingresos',
+          image: 'Tractor.svg'
+        }
       ]);
   },
 

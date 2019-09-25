@@ -60,8 +60,20 @@ module.exports = {
         },
         {
           name: 'Monitoreo',
-          "stage": "monitoring",
+          "stage": "other-expenses",
           "type_id": 11,
+          "calc_unit": "ha"
+        },
+        {
+          name: 'Impuestos',
+          "stage": "other-expenses",
+          "type_id": 12,
+          "calc_unit": "ha"
+        },
+        {
+          name: 'Honorarios',
+          "stage": "other-expenses",
+          "type_id": 12,
           "calc_unit": "ha"
         }
       ]);
