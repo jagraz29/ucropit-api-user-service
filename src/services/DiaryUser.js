@@ -23,7 +23,7 @@ class DiaryUser {
       return;
     } catch (error) {
       throw new Error(
-        `Error al guardar el usuario en la agenda: ${error.message()} `
+        `Error al guardar el usuario en la agenda: ${error.message} `
       );
     }
   }
@@ -42,7 +42,7 @@ class DiaryUser {
       return await contactUser.destroy();
     } catch (error) {
       throw new Error(
-        `Error al eliminar ell usuario en la agenda: ${error.message()} `
+        `Error al eliminar ell usuario en la agenda: ${error.message} `
       );
     }
   }

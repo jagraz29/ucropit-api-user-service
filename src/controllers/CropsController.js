@@ -222,7 +222,6 @@ class CropsController {
       });
 
       const plainCrops = crop.get({ plain: true });
-      console.log(plainCrops);
 
       const canSign = [];
 
