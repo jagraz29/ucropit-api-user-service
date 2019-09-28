@@ -6,10 +6,12 @@ const CropTypes = require("../models").crop_types;
 const Production = require("../models").productions;
 const ProductionStage = require("../models").production_stage;
 const User = require("../models").users;
+const CropUser = require("../models").crop_users;
 const CropUserPermission = require("../models").crop_user_permissions;
 const CropPermission = require("../models").crop_permissions;
 const ProductionFactory = require("../factories/ProductionFactory");
-const ProductionUserPermission = require("../models").productions_users_permissions;
+const ProductionUserPermission = require("../models")
+  .productions_users_permissions;
 const uuidv1 = require("uuid/v1");
 const _ = require("lodash");
 
@@ -62,7 +64,7 @@ class ProductionController {
       //Creamos los permisos de los usuarios que tienen en la etapa de planificación.
       crop.users.map(async user => {
         const permissions = await CropUserPermission.findAll({
-          where: { crop_user_id: user.id },
+          where: { crop_user_id: user.crop_users.id },
           include: [{ model: CropPermission }]
         });
 
