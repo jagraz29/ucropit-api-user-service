@@ -5,7 +5,11 @@ const Field = require("../models").fields;
 const CropTypes = require("../models").crop_types;
 const Production = require("../models").productions;
 const ProductionStage = require("../models").production_stage;
+const User = require("../models").users;
+const CropUserPermission = require("../models").crop_user_permissions;
+const CropPermission = require("../models").crop_permissions;
 const ProductionFactory = require("../factories/ProductionFactory");
+const ProductionUserPermission = require("../models").productions_users_permissions;
 const uuidv1 = require("uuid/v1");
 const _ = require("lodash");
 
@@ -44,12 +48,35 @@ class ProductionController {
 
   static async generate(id) {
     try {
-      const crop = await Crop.findOne({ where: { id } });
+      const crop = await Crop.findOne({
+        where: { id },
+        include: [{ model: User }]
+      });
+
       const budget = JSON.parse(crop.budget);
 
       const production = await Production.create({ crop_id: id });
 
       const factory = new ProductionFactory(id);
+
+      //Creamos los permisos de los usuarios que tienen en la etapa de planificación.
+      crop.users.map(async user => {
+        const permissions = await CropUserPermission.findAll({
+          where: { crop_user_id: user.id },
+          include: [{ model: CropPermission }]
+        });
+
+        factory.stages = budget.items;
+        factory.stages_events = budget.items;
+        factory.permissions = permissions;
+        factory.owner = user.crop_users.is_owner;
+
+        return await ProductionUserPermission.create({
+          user_id: user.id,
+          production_id: id,
+          data: JSON.stringify(factory.generatePermissions)
+        });
+      });
 
       const promises = budget.items.map(async item => {
         factory.stage = item;
@@ -87,8 +114,8 @@ class ProductionController {
           field_id: newId,
           concept: {
             id: newId,
-            name: 'Monitoreo',
-            service_type: { id: 11, name: 'Monitoreo' }
+            name: "Monitoreo",
+            service_type: { id: 11, name: "Monitoreo" }
           },
           status: "pending"
         }
@@ -96,24 +123,20 @@ class ProductionController {
     });
   }
 
-
   static async addOtherExpenses(id, stage, data) {
     const production = await Production.findOne({
       where: { crop_id: id }
-    })
+    });
 
     const productionStage = await ProductionStage.findOne({
-      where: { label: 'other-expenses', production_id: production.id }
-    })
+      where: { label: "other-expenses", production_id: production.id }
+    });
 
     let dataProductionStage = JSON.parse(productionStage.data);
 
     return await productionStage.update({
-      data: JSON.stringify([
-        ...dataProductionStage,
-        data
-      ])
-    })
+      data: JSON.stringify([...dataProductionStage, data])
+    });
   }
 
   static async updateData(request) {

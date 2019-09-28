@@ -32,6 +32,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         defaultValue: new Date()
       }
+    },
+    {
+      timestamps: true,
+      underscored: true,
+      tableName: 'productions_users_permissions',
     }
   );
 
