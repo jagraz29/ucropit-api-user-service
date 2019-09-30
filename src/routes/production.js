@@ -75,9 +75,9 @@ router.put("/:idCrop/:stage/:fieldId/:type", async (req, res) => {
     })
 })
 
-// router.put("/permission/:idCrop/:stage/:fieldId/:type", async (req, res) => {
-
-// });
+router.put("/permission/:idCrop/:stage/:fieldId/:type", async (req, res) => {
+  console.log(req.params);
+});
 
 router.put("/done/stage/:idCrop/stages/:stage", async(req, res) => {
   ProductionController.updateStatusStage(req)

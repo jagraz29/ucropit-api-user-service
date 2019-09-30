@@ -17,5 +17,6 @@ router.use('/api/applications', authMiddleware.checkToken, require('./applicatio
 router.use('/api/approvals', authMiddleware.checkToken, require('./approval'))
 router.use('/api/approvals/registers', authMiddleware.checkToken, require('./approval-register'))
 router.use('/api/contacts', authMiddleware.checkToken, require('./contacts'));
+router.use('/api/colaborators',authMiddleware.checkToken , require('./colaborator'));
 
 module.exports = router
