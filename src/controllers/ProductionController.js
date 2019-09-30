@@ -16,9 +16,9 @@ const uuidv1 = require("uuid/v1");
 const _ = require("lodash");
 
 class ProductionController {
-  static async index(crop) {
+  static async index(crop, auth) {
     try {
-      return await Production.findOne({
+      const production = await Production.findOne({
         where: { crop_id: crop },
         include: [
           { model: Crop, include: [{ model: CropTypes }] },
@@ -26,6 +26,12 @@ class ProductionController {
         ],
         order: [[{ model: ProductionStage, as: "Stage" }, "order", "ASC"]]
       });
+
+      const permissions = await ProductionUserPermission.findOne({
+        where: { user_id: auth.user.id, production_id: crop }
+      });
+
+      return { production, permissions: JSON.parse(permissions.data) };
     } catch (error) {
       throw new Error(error);
     }

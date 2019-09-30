@@ -15,9 +15,9 @@ router.post('/:idCrop/generate', async (req, res) => {
 })
 
 router.get('/:idCrop', async (req, res) => {
-  ProductionController.index(req.params.idCrop)
-    .then((production) => {
-      return res.status(200).json({ code: 200, error: false, production })
+  ProductionController.index(req.params.idCrop, req.decoded)
+    .then((productions) => {
+      return res.status(200).json({ code: 200, error: false, productions })
     })
     .catch((err) => {
       return res.status(500).json({ code: 500, error: true, message: err.message })
@@ -74,6 +74,10 @@ router.put("/:idCrop/:stage/:fieldId/:type", async (req, res) => {
       return res.status(500).json({ code: 500, error: true, message: err.message })
     })
 })
+
+// router.put("/permission/:idCrop/:stage/:fieldId/:type", async (req, res) => {
+
+// });
 
 router.put("/done/stage/:idCrop/stages/:stage", async(req, res) => {
   ProductionController.updateStatusStage(req)
