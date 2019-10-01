@@ -16,7 +16,7 @@ class DiaryUserController {
             }
           }
         ],
-        where: { id: auth.id }
+        where: { id: auth.user.id }
       },
       { plain: true }
     );
