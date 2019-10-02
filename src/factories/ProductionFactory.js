@@ -13,16 +13,6 @@ class ProductionFactory {
     this._stages = items;
   }
 
-  set stages_events(items) {
-    this._stages_events = items.filter(
-      element =>
-        element.id === 2 ||
-        element.id === 3 ||
-        element.id === 4 ||
-        element.id === 5
-    );
-  }
-
   set permissions(permissions) {
     this._permissions = permissions;
   }
@@ -126,36 +116,25 @@ class ProductionFactory {
       }
     });
 
-    const events = this._stages_events.map(stage => {
-        if (this._owner) {
-          return {
-            field_id: "all",
-            type: "all",
-            stage: stage.name,
-            permissions: {
-              can_edit: true,
-              can_sign: true,
-              can_read: true
-            }
-          };
-        } else {
-          if (Array.isArray(stage.data)) {
-            return stage.data.map(element => {
-              return {
-                field_id: element.field_id,
-                type: element.type,
-                stage: stage.name,
-                permissions: {
-                  can_read: true,
-                  can_edit: this._getPermissionUser(1),
-                  can_sign: this._getPermissionUser(2)
-                }
-              };
-            });
-          } else {
+    const events = this._stages.map(stage => {
+      if (this._owner) {
+        return {
+          field_id: "all",
+          type: "all",
+          stage: stage.name,
+          permissions: {
+            can_edit: true,
+            can_sign: true,
+            can_read: true
+          }
+        };
+      } else {
+        return (
+          JSON.parse(stage.data).length > 0 &&
+          JSON.parse(stage.data).map(element => {
             return {
-              field_id: Object.entries(stage.data)[0][1].field_id,
-              type: Object.entries(stage.data)[0][1].type,
+              field_id: element.field_id,
+              type: element.type,
               stage: stage.name,
               permissions: {
                 can_read: true,
@@ -163,8 +142,9 @@ class ProductionFactory {
                 can_sign: this._getPermissionUser(2)
               }
             };
-          }
-        }
+          })
+        )[0];
+      }
     });
     return {
       stages: [...stages],
