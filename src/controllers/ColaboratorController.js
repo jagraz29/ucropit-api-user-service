@@ -141,7 +141,7 @@ class ColaboratorController {
         return newUser;
       }
 
-       Mail.send({
+      Mail.send({
         template: "colaborator",
         to: user.email,
         data: { user, cropName, owner: auth.user }
@@ -176,6 +176,115 @@ class ColaboratorController {
     } catch (error) {
       console.log(error);
       throw new Error(error);
+    }
+  }
+
+  static async remove(userId, cropId) {
+    try {
+      const rel = await CropUsers.findOne({
+        where: { user_id: userId, crop_id: cropId }
+      });
+
+      const productPermission = await ProductionUserPermission.findOne({
+        where: { user_id: userId, production_id: cropId }
+      });
+
+      rel.destroy();
+
+      if (productPermission) {
+        productPermission.destroy();
+      }
+
+      return true;
+    } catch (error) {
+      throw new Error(err);
+    }
+  }
+
+  /**
+   * Delete user to event.
+   *
+   * @param {*} userId
+   * @param {*} cropId
+   * @param {*} stage
+   * @param {*} fieldId
+   * @param {*} type
+   */
+  static async removeEvent(cropId, stage, fieldId, type, userId) {
+    try {
+      const productPermission = await ProductionUserPermission.findOne({
+        where: { user_id: userId, production_id: cropId }
+      });
+
+      const events = JSON.parse(productPermission.data)
+        .events.filter(el => el)
+        .map(el => {
+          if (
+            el.field_id == fieldId &&
+            el.type == type &&
+            el.stage == _getStageName(stage)
+          ) {
+            return {
+              field_id: fieldId,
+              type: type,
+              stage: _getStageName(stage),
+              permissions: {
+                can_edit: true,
+                can_sign: false,
+                can_read: false
+              }
+            };
+          }
+
+          return { ...el };
+        });
+
+      const permissions = {
+        stages: [...JSON.parse(productPermission.data).stages],
+        events: [...events]
+      };
+
+      return await productPermission.update({
+        data: JSON.stringify(permissions)
+      })
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  /**
+   * Delete user to crop.
+   *
+   * @param {*} userId
+   * @param {*} cropId
+   */
+  static async remove(userId, cropId) {
+    try {
+      const rel = await CropUsers.findOne({
+        where: { user_id: userId, crop_id: cropId }
+      });
+
+      const productPermission = await ProductionUserPermission.findOne({
+        where: { user_id: userId, production_id: cropId }
+      });
+
+      const sing = await Signs.findOne({
+        where: { type_id: cropId, user_id: userId }
+      });
+
+      rel.destroy();
+
+      if (productPermission) {
+        productPermission.destroy();
+      }
+
+      if (sing) {
+        sing.destroy();
+      }
+
+      return true;
+    } catch (error) {
+      throw new Error(err);
     }
   }
 }
