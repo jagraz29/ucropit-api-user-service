@@ -31,7 +31,9 @@ const whitelist = process.env.CORS_ENABLED_WHITELIST
 
 const corsOptions = {
   exposedHeaders: ['Content-Range'],
-  origin: '*'
+  origin: process.env.CORS_ENABLED_WHITELIST &&
+    process.env.CORS_ENABLED_WHITELIST.split('')
+}
 // Middleware express
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
