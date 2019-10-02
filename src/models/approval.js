@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     crop_id: DataTypes.INTEGER,
     data: DataTypes.TEXT,
     type: DataTypes.STRING,
-    service_id: DataTypes.INTEGER,
+    service_id: DataTypes.TEXT,
     input_id: DataTypes.INTEGER,
     provider_id: DataTypes.INTEGER
   }, {});
