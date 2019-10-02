@@ -15,6 +15,7 @@ const { map, isEqual } = require("lodash");
 const { diff } = require("deep-object-diff");
 const PDF = require("../services/PDF");
 const Stamp = require("../services/Stamp");
+const DiaryUser = require("../services/DiaryUser");
 
 class CropsController {
   static async index(auth) {
@@ -72,6 +73,9 @@ class CropsController {
       }
 
       await crop.addUsers(user);
+
+      //Agrego el usuario colaborador a la agenda del usuario.
+      await DiaryUser.add(auth.user, user);
 
       const rel = await CropUsers.findOne({
         where: { user_id: user.id, crop_id: crop.id }

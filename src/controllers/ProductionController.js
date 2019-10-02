@@ -5,13 +5,20 @@ const Field = require("../models").fields;
 const CropTypes = require("../models").crop_types;
 const Production = require("../models").productions;
 const ProductionStage = require("../models").production_stage;
+const User = require("../models").users;
+const CropUser = require("../models").crop_users;
+const CropUserPermission = require("../models").crop_user_permissions;
+const CropPermission = require("../models").crop_permissions;
 const ProductionFactory = require("../factories/ProductionFactory");
+const ProductionUserPermission = require("../models")
+  .productions_users_permissions;
+const uuidv1 = require("uuid/v1");
 const _ = require("lodash");
 
 class ProductionController {
-  static async index(crop) {
+  static async index(crop, auth) {
     try {
-      return await Production.findOne({
+      const production = await Production.findOne({
         where: { crop_id: crop },
         include: [
           { model: Crop, include: [{ model: CropTypes }] },
@@ -19,6 +26,12 @@ class ProductionController {
         ],
         order: [[{ model: ProductionStage, as: "Stage" }, "order", "ASC"]]
       });
+
+      const permissions = await ProductionUserPermission.findOne({
+        where: { user_id: auth.user.id, production_id: crop }
+      });
+
+      return { production, permissions: JSON.parse(permissions.data) };
     } catch (error) {
       throw new Error(error);
     }
@@ -43,7 +56,11 @@ class ProductionController {
 
   static async generate(id) {
     try {
-      const crop = await Crop.findOne({ where: { id } });
+      const crop = await Crop.findOne({
+        where: { id },
+        include: [{ model: User }]
+      });
+
       const budget = JSON.parse(crop.budget);
 
       const production = await Production.create({ crop_id: id });
@@ -57,6 +74,24 @@ class ProductionController {
 
       const stages = await Promise.all(promises);
 
+      //Creamos los permisos de los usuarios que tienen en la etapa de planificación.
+      crop.users.map(async user => {
+        const permissions = await CropUserPermission.findAll({
+          where: { crop_user_id: user.crop_users.id },
+          include: [{ model: CropPermission }]
+        });
+
+        factory.stages = stages;
+        factory.permissions = permissions;
+        factory.owner = user.crop_users.is_owner;
+
+        return await ProductionUserPermission.create({
+          user_id: user.id,
+          production_id: id,
+          data: JSON.stringify(factory.generatePermissions)
+        });
+      });
+
       await crop.update({ status: "accepted" });
 
       return stages;
@@ -66,17 +101,67 @@ class ProductionController {
     }
   }
 
+  static async addMonitoring(id) {
+    const production = await Production.findOne({
+      where: { crop_id: id }
+    });
+    const productionStage = await ProductionStage.findOne({
+      where: { label: "monitoring", production_id: production.id }
+    });
+
+    let dataProductionStage = JSON.parse(productionStage.data);
+    const newId = uuidv1();
+
+    return await productionStage.update({
+      data: JSON.stringify([
+        ...dataProductionStage,
+        {
+          id: newId,
+          type: "service",
+          field_id: newId,
+          concept: {
+            id: newId,
+            name: "Monitoreo",
+            service_type: { id: 11, name: "Monitoreo" }
+          },
+          status: "pending"
+        }
+      ])
+    });
+  }
+
+  static async addOtherExpenses(id, stage, data) {
+    const production = await Production.findOne({
+      where: { crop_id: id }
+    });
+
+    const productionStage = await ProductionStage.findOne({
+      where: { label: "other-expenses", production_id: production.id }
+    });
+
+    let dataProductionStage = JSON.parse(productionStage.data);
+
+    return await productionStage.update({
+      data: JSON.stringify([...dataProductionStage, data])
+    });
+  }
+
   static async updateData(request) {
     let data = request.body;
     const { idCrop, stage, fieldId, type } = request.params;
 
     try {
+      const production = await Production.findOne({
+        where: { crop_id: idCrop }
+      });
       const productionStage = await ProductionStage.findOne({
-        where: { label: stage, production_id: idCrop }
+        where: { label: stage, production_id: production.id }
       });
 
       if (
-        !JSON.parse(productionStage.data).find(elem => elem.field_id == fieldId)
+        !JSON.parse(productionStage.data).find(
+          elem => elem.field_id == fieldId && elem.type == type
+        )
       ) {
         data.status = "pending";
         let dataProductionStage = JSON.parse(productionStage.data);
@@ -92,11 +177,30 @@ class ProductionController {
         await productionStage.update({
           data: JSON.stringify(dataProductionStage)
         });
+
+        return productionStage;
       } else {
         throw new Error("El insumo o servicio ya fué aplicado");
       }
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 
-      return productionStage;
+  static async updateStatusStage(request) {
+    try {
+      const { idCrop, stage } = request.params;
+      const { status } = request.body;
+
+      const production = await Production.findOne({
+        where: { crop_id: idCrop }
+      });
+
+      const productionStage = await ProductionStage.findOne({
+        where: { label: stage, production_id: production.id }
+      });
+
+      return await productionStage.update({ status });
     } catch (error) {
       throw new Error(error);
     }
@@ -140,14 +244,18 @@ class ProductionController {
 
   static async deleteAplicationStage(cropId, stage, fieldId, type) {
     try {
+      const production = await Production.findOne({
+        where: { crop_id: cropId }
+      });
+
       const productionStage = await ProductionStage.findOne({
-        where: { label: stage, production_id: cropId }
+        where: { label: stage, production_id: production.id }
       });
 
       const data = JSON.parse(productionStage.data);
 
       const updateData = data.filter(obj => {
-        return obj.field_id != fieldId;
+        return obj.field_id != fieldId || obj.type != type;
       });
 
       await productionStage.update({

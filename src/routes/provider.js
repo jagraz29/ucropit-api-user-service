@@ -31,13 +31,24 @@ router.get("/types/:type", (req, res) => {
         .status(400)
         .json({ code: 400, error: true, message: err.message });
     });
-
 });
 
 router.get("/types", (req, res) => {
   ProviderController.providersType()
     .then(providersType => {
       return res.json({ code: 200, error: false, providersType });
+    })
+    .catch(err => {
+      return res
+        .status(400)
+        .json({ code: 400, error: true, message: err.message });
+    });
+});
+
+router.get("/coverages", (req, res) => {
+  ProviderController.coveragesArea()
+    .then(zones => {
+      return res.json({ code: 200, error: false, zones });
     })
     .catch(err => {
       return res

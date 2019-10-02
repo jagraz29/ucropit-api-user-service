@@ -9,6 +9,9 @@ const ApprovalRegisterFiles = require('../models').approval_register_file
 const ProductionStages = require('../models').production_stage
 const Production = require('../models').productions
 const UploadFile = require("../services/UploadFiles");
+const Sequelize = require('sequelize')
+
+const Op = Sequelize.Op
 
 class ApprovalsRegisterController {
   static async complete(id) {
@@ -92,16 +95,16 @@ class ApprovalsRegisterController {
       where: { id: data.register_id }
     })
 
-    await Register.update({ data: JSON.stringify(data.meta) })
+    const register = await Register.update({ data: JSON.stringify(data.meta) })
 
-    return await ApprovalRegisterSigns.create({
+    await ApprovalRegisterSigns.create({
       approval_register_id: data.register_id,
       hash,
       ots: await Stamp.stampHash(hash),
       meta: JSON.stringify({ path }),
       user_id: auth.user.id
     })
-
+       
     return register
   }
 

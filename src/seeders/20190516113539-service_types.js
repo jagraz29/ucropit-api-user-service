@@ -42,6 +42,14 @@ module.exports = {
         {
           name: 'Comisión por Venta',
           image: 'Tractor.svg'
+        },
+        {
+          name: 'Monitoreo',
+          image: 'Tractor.svg'
+        },
+        {
+          name: 'Gastos e Ingresos',
+          image: 'Tractor.svg'
         }
       ]);
   },

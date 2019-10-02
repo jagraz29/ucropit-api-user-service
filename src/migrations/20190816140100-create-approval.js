@@ -18,10 +18,10 @@ module.exports = {
         type: Sequelize.TEXT
       },
       type: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       service_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.TEXT
       },
       input_id: {
         type: Sequelize.INTEGER

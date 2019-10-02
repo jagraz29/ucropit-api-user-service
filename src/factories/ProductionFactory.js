@@ -1,54 +1,172 @@
-'use strict'
+"use strict";
 
-const { map } = require('lodash')
-const StageValidator = require('../validators/StageValidator')
+const { map } = require("lodash");
+const StageValidator = require("../validators/StageValidator");
+const uuidv1 = require("uuid/v1");
 
 class ProductionFactory {
   set stage(item) {
-    this._stage = item
+    this._stage = item;
+  }
+
+  set stages(items) {
+    this._stages = items;
+  }
+
+  set permissions(permissions) {
+    this._permissions = permissions;
+  }
+
+  set owner(owner) {
+    this._owner = owner;
   }
 
   get generate() {
-    const budget = this._getBudgetAmount()
-    const { name, form, data } = this._stage
+    const budget = this._getBudgetAmount();
+    const { name, form, data } = this._stage;
+
+    const mappedData = map(data, el => {
+      if (form === "other-expenses") {
+        const expenses = el.expenses.map(el => {
+          const id = uuidv1();
+          return {
+            id,
+            field_id: id,
+            type: "service",
+            conceptType: "expenses",
+            price: el.cost,
+            status: "pending",
+            concept: {
+              id,
+              name: el.detail,
+              stage: "other-expenses",
+              type_id: id,
+              service_type: {
+                id: id,
+                name: "Gastos",
+                image: "Tractor.svg"
+              }
+            }
+          };
+        });
+
+        const incomes = el.income.map(el => {
+          const id = uuidv1();
+          return {
+            id,
+            field_id: id,
+            type: "service",
+            conceptType: "incomes",
+            price: el.cost,
+            status: "pending",
+            concept: {
+              id,
+              name: el.detail,
+              stage: "other-expenses",
+              type_id: id,
+              service_type: {
+                id: id,
+                name: "Ingresos",
+                image: "Tractor.svg"
+              }
+            }
+          };
+        });
+
+        return [...expenses, ...incomes];
+      } else {
+        el.status = "pending";
+        return el;
+      }
+    });
 
     return {
       name: name,
       label: form,
-      data: JSON.stringify(map(data, el => {
-        if (form === 'other-expenses') {
-          el.expenses.map(el => {
-            el.status = 'pending'
-            return el
-          })
-
-          el.income.map(el => {
-            el.status = 'pending'
-            return el
-          })
-
-          return el
-        } else {
-
-          el.status = 'pending'
-          return el
-        }
-      })),
+      data: JSON.stringify(
+        form === "other-expenses" ? mappedData[0] : mappedData
+      ),
       budget,
       display: StageValidator.isActive(form),
       order: StageValidator.getOrder(form),
-      status: form === 'fields' ? 'in_progress' : 'pending'
-    }
+      status: "in_progress"
+    };
+  }
+
+  get generatePermissions() {
+    const stages = this._stages.map(stage => {
+      if (this._owner) {
+        return {
+          label: stage.name,
+          permissions: {
+            can_edit: true,
+            can_sign: true,
+            can_read: true
+          }
+        };
+      } else {
+        return {
+          label: stage.name,
+          permissions: {
+            can_read: true,
+            can_edit: this._getPermissionUser(1),
+            can_sign: this._getPermissionUser(2)
+          }
+        };
+      }
+    });
+
+    const events = this._stages.map(stage => {
+      if (this._owner) {
+        return {
+          field_id: "all",
+          type: "all",
+          stage: stage.name,
+          permissions: {
+            can_edit: true,
+            can_sign: true,
+            can_read: true
+          }
+        };
+      } else {
+        return (
+          JSON.parse(stage.data).length > 0 &&
+          JSON.parse(stage.data).map(element => {
+            return {
+              field_id: element.field_id,
+              type: element.type,
+              stage: stage.name,
+              permissions: {
+                can_read: true,
+                can_edit: this._getPermissionUser(1),
+                can_sign: this._getPermissionUser(2)
+              }
+            };
+          })
+        )[0];
+      }
+    });
+    return {
+      stages: [...stages],
+      events: [...events]
+    };
   }
 
   _getBudgetAmount() {
-    const budget = map(this._stage.data)
-      .reduce((prev, { amount, total }) => {
-        return prev + Number(amount)
-      }, 0)
+    const budget = map(this._stage.data).reduce((prev, { amount, total }) => {
+      return prev + Number(amount);
+    }, 0);
 
-    return budget
+    return budget;
+  }
+
+  _getPermissionUser(permission) {
+    const is_permission = this._permissions.find(
+      el => el.crop_permission_id == permission
+    );
+
+    return is_permission ? true : false;
   }
 }
 
-module.exports = ProductionFactory
+module.exports = ProductionFactory;
