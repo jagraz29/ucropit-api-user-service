@@ -67,6 +67,13 @@ class ProductionController {
 
       const factory = new ProductionFactory(id);
 
+      const promises = budget.items.map(async item => {
+        factory.stage = item;
+        return production.createStage(factory.generate);
+      });
+
+      const stages = await Promise.all(promises);
+
       //Creamos los permisos de los usuarios que tienen en la etapa de planificación.
       crop.users.map(async user => {
         const permissions = await CropUserPermission.findAll({
@@ -74,8 +81,7 @@ class ProductionController {
           include: [{ model: CropPermission }]
         });
 
-        factory.stages = budget.items;
-        factory.stages_events = budget.items;
+        factory.stages = stages;
         factory.permissions = permissions;
         factory.owner = user.crop_users.is_owner;
 
@@ -85,13 +91,6 @@ class ProductionController {
           data: JSON.stringify(factory.generatePermissions)
         });
       });
-
-      const promises = budget.items.map(async item => {
-        factory.stage = item;
-        return production.createStage(factory.generate);
-      });
-
-      const stages = await Promise.all(promises);
 
       await crop.update({ status: "accepted" });
 
