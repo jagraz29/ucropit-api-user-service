@@ -179,28 +179,6 @@ class ColaboratorController {
     }
   }
 
-  static async remove(userId, cropId) {
-    try {
-      const rel = await CropUsers.findOne({
-        where: { user_id: userId, crop_id: cropId }
-      });
-
-      const productPermission = await ProductionUserPermission.findOne({
-        where: { user_id: userId, production_id: cropId }
-      });
-
-      rel.destroy();
-
-      if (productPermission) {
-        productPermission.destroy();
-      }
-
-      return true;
-    } catch (error) {
-      throw new Error(err);
-    }
-  }
-
   /**
    * Delete user to event.
    *
