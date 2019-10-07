@@ -114,10 +114,10 @@ class CropsController {
         where: { type: crop, user_id: colaborator }
       });
 
-      rel.destroy();
+      await rel.destroy();
 
       if (sing) {
-        sing.destroy();
+        await sing.destroy();
       }
 
       return true;
