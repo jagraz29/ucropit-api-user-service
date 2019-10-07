@@ -54,6 +54,8 @@ class CropsController {
 
       if (!user) {
         user = await Users.create({
+          first_name: values.first_name,
+          last_name: values.last_name,
           email: values.email,
           password: values.email,
           first_login: 0
