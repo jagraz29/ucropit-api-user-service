@@ -194,28 +194,51 @@ class ColaboratorController {
         where: { user_id: userId, production_id: cropId }
       });
 
-      const events = JSON.parse(productPermission.data)
-        .events.filter(el => el)
-        .map(el => {
+      const events = JSON.parse(productPermission.data).events.map(el => {
+        if (el.length == 1) {
           if (
-            el.field_id == fieldId &&
-            el.type == type &&
-            el.stage == _getStageName(stage)
+            el[0].field_id == fieldId &&
+            el[0].stage == _getStageName(stage) &&
+            el[0].type == type
           ) {
             return {
               field_id: fieldId,
               type: type,
               stage: _getStageName(stage),
               permissions: {
-                can_edit: true,
-                can_sign: false,
-                can_read: false
+                can_read: true,
+                can_edit: false,
+                can_sign: false
               }
             };
+          } else {
+            return { ...el[0] };
           }
-
-          return { ...el };
-        });
+        } else {
+          if (el.length > 1) {
+            return el.map(obj => {
+              if (
+                obj.field_id == fieldId &&
+                obj.stage == _getStageName(stage) &&
+                obj.type == type
+              ) {
+                return {
+                  field_id: fieldId,
+                  type: type,
+                  stage: _getStageName(stage),
+                  permissions: {
+                    can_read: true,
+                    can_edit: false,
+                    can_sign: false
+                  }
+                };
+              } else {
+                return { ...obj };
+              }
+            });
+          }
+        }
+      });
 
       const permissions = {
         stages: [...JSON.parse(productPermission.data).stages],
@@ -224,7 +247,7 @@ class ColaboratorController {
 
       return await productPermission.update({
         data: JSON.stringify(permissions)
-      })
+      });
     } catch (error) {
       throw new Error(error);
     }
