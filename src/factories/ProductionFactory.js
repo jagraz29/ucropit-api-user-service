@@ -116,7 +116,7 @@ class ProductionFactory {
       }
     });
 
-    const events = this._stages.map(stage => {
+    let events = this._stages.map(stage => {
       if (this._owner) {
         return {
           field_id: "all",
@@ -143,9 +143,12 @@ class ProductionFactory {
               }
             };
           })
-        )[0];
+        );
       }
     });
+
+    events = events.filter(element => element);
+
     return {
       stages: [...stages],
       events: [...events]

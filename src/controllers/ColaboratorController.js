@@ -250,14 +250,14 @@ class ColaboratorController {
         where: { type_id: cropId, user_id: userId }
       });
 
-      rel.destroy();
+      await rel.destroy();
 
       if (productPermission) {
-        productPermission.destroy();
+        await productPermission.destroy();
       }
 
       if (sing) {
-        sing.destroy();
+        await sing.destroy();
       }
 
       return true;
