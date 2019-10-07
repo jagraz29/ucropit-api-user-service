@@ -25,9 +25,9 @@ const _createPermissionsToColaborator = async (
         {
           label: _getStageName(stage),
           permissions: {
-            can_edit: true,
+            can_read: true,
             can_sign: parseInt(can_sign) === 1 ? true : false,
-            can_read: parseInt(can_edit) === 1 ? true : false
+            can_edit: parseInt(can_edit) === 1 ? true : false
           }
         }
       ],
@@ -37,9 +37,9 @@ const _createPermissionsToColaborator = async (
           type: type,
           stage: _getStageName(stage),
           permissions: {
-            can_edit: true,
+            can_read: true,
             can_sign: parseInt(can_sign) === 1 ? true : false,
-            can_read: parseInt(can_edit) === 1 ? true : false
+            can_edit: parseInt(can_edit) === 1 ? true : false
           }
         }
       ]
@@ -195,6 +195,19 @@ class ColaboratorController {
       });
 
       const events = JSON.parse(productPermission.data).events.map(el => {
+        if(Object.prototype.toString.call(el) === '[object Object]') {
+          return {
+            field_id: fieldId,
+            type: type,
+            stage: _getStageName(stage),
+            permissions: {
+              can_read: true,
+              can_edit: false,
+              can_sign: false
+            }
+          };
+        }
+
         if (el.length == 1) {
           if (
             el[0].field_id == fieldId &&
