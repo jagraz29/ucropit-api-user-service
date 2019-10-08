@@ -83,7 +83,7 @@ const _getStageName = key => {
 class ColaboratorController {
   static async create(data, cropId, stage, fieldId, type, auth) {
     try {
-      const { email, can_sign, can_edit } = data;
+      const { email, first_name, last_name, can_sign, can_edit } = data;
 
       let user = await Users.findOne({
         where: {
@@ -104,6 +104,8 @@ class ColaboratorController {
       if (!user) {
         const newUser = await Users.create({
           email: email,
+          first_name: first_name,
+          last_name: last_name,
           password: email,
           first_login: 0
         });
