@@ -98,6 +98,7 @@ class ProductionFactory {
       if (this._owner) {
         return {
           label: stage.name,
+          key: stage.label,
           permissions: {
             can_edit: true,
             can_sign: true,
@@ -107,6 +108,7 @@ class ProductionFactory {
       } else {
         return {
           label: stage.name,
+          key: stage.label,
           permissions: {
             can_read: true,
             can_edit: this._getPermissionUser(1),
@@ -121,6 +123,7 @@ class ProductionFactory {
         return {
           field_id: "all",
           type: "all",
+          label: stage.label,
           stage: stage.name,
           permissions: {
             can_edit: true,
@@ -136,6 +139,7 @@ class ProductionFactory {
               field_id: element.field_id,
               type: element.type,
               stage: stage.name,
+              label: stage.label,
               permissions: {
                 can_read: true,
                 can_edit: this._getPermissionUser(1),

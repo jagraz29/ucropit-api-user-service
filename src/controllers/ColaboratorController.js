@@ -24,6 +24,7 @@ const _createPermissionsToColaborator = async (
       stages: [
         {
           label: _getStageName(stage),
+          key: stage,
           permissions: {
             can_read: true,
             can_sign: parseInt(can_sign) === 1 ? true : false,
@@ -35,6 +36,7 @@ const _createPermissionsToColaborator = async (
         {
           field_id: fieldId,
           type: type,
+          label: stage,
           stage: _getStageName(stage),
           permissions: {
             can_read: true,
