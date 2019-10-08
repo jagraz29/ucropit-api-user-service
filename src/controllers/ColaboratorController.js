@@ -91,6 +91,7 @@ class ColaboratorController {
         }
       });
 
+
       const crop = await Crop.findOne({
         where: { id: cropId },
         include: [{ model: CropTypes }]
@@ -156,7 +157,11 @@ class ColaboratorController {
       if (!rel) {
         await crop.addUsers(user);
 
-        await rel.update({
+        const newRel = await CropUsers.findOne({
+          where: { user_id: user.id, crop_id: crop.id }
+        });
+
+        await newRel.update({
           is_owner: 0
         });
       }
