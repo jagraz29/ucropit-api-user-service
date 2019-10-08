@@ -8,6 +8,8 @@ const CropUserPermissions = require("../models").crop_user_permissions;
 const CropPermissions = require("../models").crop_permissions;
 const CropUsers = require("../models").crop_users;
 const Signs = require("../models").signs;
+const ProductionUserPermission = require("../models")
+  .productions_users_permissions;
 const Mail = require("../services/Mail");
 const Search = require("../services/Search");
 const { getShortYear } = require("../helpers");
@@ -146,28 +148,28 @@ class CropsController {
 
   static async deleteCropType(id) {
     try {
-      const croptype = await CropTypes.findOne({ where: { id: id } })
-      return await croptype.destroy()
+      const croptype = await CropTypes.findOne({ where: { id: id } });
+      return await croptype.destroy();
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err);
     }
   }
 
   static async showCropType(id) {
     try {
-      const croptype = await CropTypes.findOne({ where: { id: id } })
+      const croptype = await CropTypes.findOne({ where: { id: id } });
       return await croptype;
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err);
     }
   }
 
   static async updateCropType(data, id) {
     try {
-      const croptype = await CropTypes.findOne({ where: { id: id } })
-      return await croptype.update(data)
+      const croptype = await CropTypes.findOne({ where: { id: id } });
+      return await croptype.update(data);
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err);
     }
   }
 
@@ -223,6 +225,23 @@ class CropsController {
         include: [{ model: CropPermissions }]
       });
 
+      let productionPermissions = crop.users.map(async user => {
+        const cropUserPermissionsProduction = await ProductionUserPermission.findOne(
+          {
+            where: { user_id: user.id, production_id: id }
+          }
+        );
+
+        if (cropUserPermissionsProduction) {
+          return {
+            user_id: user.id,
+            permissions: JSON.parse(cropUserPermissionsProduction.data)
+          };
+        }
+      });
+
+      productionPermissions = await Promise.all(productionPermissions);
+
       const plainCrops = crop.get({ plain: true });
 
       const canSign = [];
@@ -251,8 +270,11 @@ class CropsController {
       };
 
       crop.users_can_sign = crop.users.filter(el => {
-        return el.permissions.filter(el => el.crop_permission.value === 'can_sign').length > 0
-      }).length
+        return (
+          el.permissions.filter(el => el.crop_permission.value === "can_sign")
+            .length > 0
+        );
+      }).length;
 
       // search users that already sign in this crop
       crop.editable = canSign.filter(el => {
@@ -269,7 +291,8 @@ class CropsController {
       return {
         ...crop,
         permissions: cropUsers.crop_permissions,
-        owner: cropUsers.is_owner
+        owner: cropUsers.is_owner,
+        production_permission: productionPermissions.filter(elem => elem)
       };
     } catch (err) {
       console.log("CROP_SHOW", err);
