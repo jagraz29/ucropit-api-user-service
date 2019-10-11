@@ -10,6 +10,11 @@ const { getShortYear } = require("../helpers");
 const DiaryUser = require("../services/DiaryUser");
 const Mail = require("../services/Mail");
 
+
+// const _addEventColaborator = (stages, events) => {
+
+// }
+
 const _createPermissionsToColaborator = async (
   can_sign,
   can_edit,
@@ -152,11 +157,11 @@ class ColaboratorController {
         return newUser;
       }
 
-      Mail.send({
-        template: "colaborator",
-        to: user.email,
-        data: { user, cropName, owner: auth.user }
-      });
+      // Mail.send({
+      //   template: "colaborator",
+      //   to: user.email,
+      //   data: { user, cropName, owner: auth.user }
+      // });
 
       const rel = await CropUsers.findOne({
         where: { user_id: user.id, crop_id: crop.id }
@@ -211,34 +216,35 @@ class ColaboratorController {
 
       const events = JSON.parse(productPermission.data).events.map(el => {
         if (el.events) {
-          const eventsUpdate = el.events.map(event => {
-            if (
-              event.field_id == fieldId &&
-              event.stage == _getStageName(stage) &&
-              event.type == type
-            ) {
-              return {
-                field_id: fieldId,
-                type: type,
-                stage: "Pre-Siembra",
-                label: _getStageName(stage),
-                owner: false,
-                permissions: {
-                  can_read: true,
-                  can_edit: false,
-                  can_sign: false
-                }
-              };
-            } else {
-              return { ...event };
-            }
-          });
-
+          const eventsUpdate = el.events
+            .filter(event => event)
+            .map(event => {
+              if (
+                event.field_id == fieldId &&
+                event.type == type &&
+                event.stage == _getStageName(stage)
+              ) {
+                return {
+                  field_id: fieldId,
+                  type: type,
+                  stage: _getStageName(stage),
+                  permissions: {
+                    can_read: true,
+                    can_edit: false,
+                    can_sign: false
+                  }
+                };
+              } else {
+                return { ...el };
+              }
+            });
           el.events = eventsUpdate;
+          return { ...el };
+        } else {
+          return { ...el };
         }
-
-        return el;
       });
+
 
       const permissions = {
         stages: [...JSON.parse(productPermission.data).stages],
