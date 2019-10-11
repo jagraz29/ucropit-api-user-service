@@ -119,20 +119,21 @@ class ProductionFactory {
     });
 
     let events = this._stages.map(stage => {
+      let eventsPermissions = null;
       if (this._owner) {
-        return {
+        eventsPermissions = {
           field_id: "all",
           type: "all",
-          label: stage.label,
           stage: stage.name,
+          label: stage.label,
           permissions: {
+            can_read: true,
             can_edit: true,
-            can_sign: true,
-            can_read: true
+            can_sign: true
           }
         };
       } else {
-        return (
+        eventsPermissions =
           JSON.parse(stage.data).length > 0 &&
           JSON.parse(stage.data).map(element => {
             return {
@@ -146,9 +147,18 @@ class ProductionFactory {
                 can_sign: this._getPermissionUser(2)
               }
             };
-          })
-        );
+          });
       }
+
+      let data = {
+        label: stage.label,
+        stage: stage.name,
+        owner: this._owner
+      };
+
+      data.events = eventsPermissions;
+
+      return data;
     });
 
     events = events.filter(element => element);

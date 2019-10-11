@@ -85,6 +85,8 @@ class ProductionController {
         factory.permissions = permissions;
         factory.owner = user.crop_users.is_owner;
 
+        factory.generatePermissions;
+
         return await ProductionUserPermission.create({
           user_id: user.id,
           production_id: id,
