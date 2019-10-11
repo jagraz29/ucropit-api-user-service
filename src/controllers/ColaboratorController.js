@@ -34,15 +34,22 @@ const _createPermissionsToColaborator = async (
       ],
       events: [
         {
-          field_id: fieldId,
-          type: type,
           label: stage,
           stage: _getStageName(stage),
-          permissions: {
-            can_read: true,
-            can_sign: parseInt(can_sign) === 1 ? true : false,
-            can_edit: parseInt(can_edit) === 1 ? true : false
-          }
+          owner: false,
+          events: [
+            {
+              field_id: fieldId,
+              type: type,
+              stage: _getStageName(stage),
+              label: stage,
+              permissions: {
+                can_read: true,
+                can_sign: parseInt(can_sign) === 1 ? true : false,
+                can_edit: parseInt(can_edit) === 1 ? true : false
+              }
+            }
+          ]
         }
       ]
     };
@@ -92,7 +99,6 @@ class ColaboratorController {
           email: email
         }
       });
-
 
       const crop = await Crop.findOne({
         where: { id: cropId },
@@ -204,62 +210,34 @@ class ColaboratorController {
       });
 
       const events = JSON.parse(productPermission.data).events.map(el => {
-        if(Object.prototype.toString.call(el) === '[object Object]') {
-          return {
-            field_id: fieldId,
-            type: type,
-            stage: _getStageName(stage),
-            permissions: {
-              can_read: true,
-              can_edit: false,
-              can_sign: false
+        if (el.events) {
+          const eventsUpdate = el.events.map(event => {
+            if (
+              event.field_id == fieldId &&
+              event.stage == _getStageName(stage) &&
+              event.type == type
+            ) {
+              return {
+                field_id: fieldId,
+                type: type,
+                stage: "Pre-Siembra",
+                label: _getStageName(stage),
+                owner: false,
+                permissions: {
+                  can_read: true,
+                  can_edit: false,
+                  can_sign: false
+                }
+              };
+            } else {
+              return { ...event };
             }
-          };
+          });
+
+          el.events = eventsUpdate;
         }
 
-        if (el.length == 1) {
-          if (
-            el[0].field_id == fieldId &&
-            el[0].stage == _getStageName(stage) &&
-            el[0].type == type
-          ) {
-            return {
-              field_id: fieldId,
-              type: type,
-              stage: _getStageName(stage),
-              permissions: {
-                can_read: true,
-                can_edit: false,
-                can_sign: false
-              }
-            };
-          } else {
-            return { ...el[0] };
-          }
-        } else {
-          if (el.length > 1) {
-            return el.map(obj => {
-              if (
-                obj.field_id == fieldId &&
-                obj.stage == _getStageName(stage) &&
-                obj.type == type
-              ) {
-                return {
-                  field_id: fieldId,
-                  type: type,
-                  stage: _getStageName(stage),
-                  permissions: {
-                    can_read: true,
-                    can_edit: false,
-                    can_sign: false
-                  }
-                };
-              } else {
-                return { ...obj };
-              }
-            });
-          }
-        }
+        return el;
       });
 
       const permissions = {
