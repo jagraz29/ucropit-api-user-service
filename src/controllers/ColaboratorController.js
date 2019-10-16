@@ -10,10 +10,32 @@ const { getShortYear } = require("../helpers");
 const DiaryUser = require("../services/DiaryUser");
 const Mail = require("../services/Mail");
 
+const _addEventColaborator = (stages, events, permissions) => {
+  let stagesAdd = [];
+  let isSameEvent = false;
+  if (stages.filter(ele => ele.key == permissions.stages[0].key).length == 0) {
+    stagesAdd = [...stages, ...permissions.stages];
+  } else {
+    stagesAdd = stages;
+  }
 
-// const _addEventColaborator = (stages, events) => {
+  let eventsAdd = events.map(el => {
+      if(el.label == permissions.events[0].label) {
+        const eventsUpdate = [...el.events, permissions.events[0].events[0]];
+        isSameEvent = true;
+        el.events = eventsUpdate;
+        return {...el}
+      } else {
+        return {...el}
+      }
+  });
 
-// }
+  if(!isSameEvent) {
+    eventsAdd = [...eventsAdd, permissions.events[0]]
+  }
+
+  return { stages: stagesAdd, events: eventsAdd };
+};
 
 const _createPermissionsToColaborator = async (
   can_sign,
@@ -68,8 +90,16 @@ const _createPermissionsToColaborator = async (
         data: JSON.stringify(permission)
       });
     }
-
-    return null;
+    //Si existe permisos lo actualiza.
+    const permissionsUpdate = _addEventColaborator(
+      JSON.parse(productPermission.data).stages,
+      JSON.parse(productPermission.data).events,
+      permission
+    );
+    
+    return await productPermission.update({
+      data: JSON.stringify(permissionsUpdate)
+    });
   } catch (error) {
     throw new Error(error);
   }
@@ -157,11 +187,11 @@ class ColaboratorController {
         return newUser;
       }
 
-      // Mail.send({
-      //   template: "colaborator",
-      //   to: user.email,
-      //   data: { user, cropName, owner: auth.user }
-      // });
+      Mail.send({
+        template: "colaborator",
+        to: user.email,
+        data: { user, cropName, owner: auth.user }
+      });
 
       const rel = await CropUsers.findOne({
         where: { user_id: user.id, crop_id: crop.id }
@@ -244,7 +274,6 @@ class ColaboratorController {
           return { ...el };
         }
       });
-
 
       const permissions = {
         stages: [...JSON.parse(productPermission.data).stages],
