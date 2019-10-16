@@ -20,18 +20,18 @@ const _addEventColaborator = (stages, events, permissions) => {
   }
 
   let eventsAdd = events.map(el => {
-      if(el.label == permissions.events[0].label) {
-        const eventsUpdate = [...el.events, permissions.events[0].events[0]];
-        isSameEvent = true;
-        el.events = eventsUpdate;
-        return {...el}
-      } else {
-        return {...el}
-      }
+    if (el.label == permissions.events[0].label) {
+      const eventsUpdate = [...el.events, permissions.events[0].events[0]];
+      isSameEvent = true;
+      el.events = eventsUpdate;
+      return { ...el };
+    } else {
+      return { ...el };
+    }
   });
 
-  if(!isSameEvent) {
-    eventsAdd = [...eventsAdd, permissions.events[0]]
+  if (!isSameEvent) {
+    eventsAdd = [...eventsAdd, permissions.events[0]];
   }
 
   return { stages: stagesAdd, events: eventsAdd };
@@ -96,7 +96,7 @@ const _createPermissionsToColaborator = async (
       JSON.parse(productPermission.data).events,
       permission
     );
-    
+
     return await productPermission.update({
       data: JSON.stringify(permissionsUpdate)
     });
@@ -246,28 +246,27 @@ class ColaboratorController {
 
       const events = JSON.parse(productPermission.data).events.map(el => {
         if (el.events) {
-          const eventsUpdate = el.events
-            .filter(event => event)
-            .map(event => {
-              if (
-                event.field_id == fieldId &&
-                event.type == type &&
-                event.stage == _getStageName(stage)
-              ) {
-                return {
-                  field_id: fieldId,
-                  type: type,
-                  stage: _getStageName(stage),
-                  permissions: {
-                    can_read: true,
-                    can_edit: false,
-                    can_sign: false
-                  }
-                };
-              } else {
-                return { ...el };
-              }
-            });
+          const eventsUpdate = el.events.map(event => {
+            if (
+              event.field_id == fieldId &&
+              event.type == type &&
+              event.label == stage
+            ) {
+              return {
+                field_id: fieldId,
+                type: type,
+                stage: _getStageName(stage),
+                permissions: {
+                  can_read: true,
+                  can_edit: false,
+                  can_sign: false
+                }
+              };
+            } else {
+              return { ...event };
+            }
+          });
+
           el.events = eventsUpdate;
           return { ...el };
         } else {
