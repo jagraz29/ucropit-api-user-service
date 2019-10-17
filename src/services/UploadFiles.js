@@ -40,7 +40,7 @@ class UploadFiles {
   }
 
   validTypes(file) {
-    return file.mimetype.match('text.*|image.*|application/pdf') !== null
+    return file.mimetype.match('text.*|image.*|application/pdf|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document') !== null
   }
 }
 
