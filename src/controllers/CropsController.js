@@ -130,6 +130,34 @@ class CropsController {
     }
   }
 
+  static async removeCropItems({ id, stage, service, serviceId }) {
+    try {
+      const crop = await Crop.findOne({
+        where: { id: id }
+      });
+
+      const budget = JSON.parse(crop.budget)
+
+      budget.items = budget.items.map(item => {
+        if (item.form == stage) {
+          for (let i of Object.keys(item.data)) {
+            if (item.data[i].field_id == serviceId
+              && item.data[i].type === service) {
+                console.log(item.data[i])
+                delete item.data[i]
+            }
+          }
+        }
+        return item
+      })
+
+      await crop.update({budget: JSON.stringify(budget)})
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   static async types() {
     try {
       return await CropTypes.findAll();
