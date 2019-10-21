@@ -4,6 +4,11 @@ const Users = require("../models").users;
 const Crop = require("../models").crops;
 const CropTypes = require("../models").crop_types;
 const CropUsers = require("../models").crop_users;
+const Production = require("../models").productions;
+const ProductionStage = require("../models").production_stage;
+const CropUserPermissions = require("../models").crop_user_permissions;
+const CropPermission = require("../models").crop_permissions;
+const ProductionFactory = require("../factories/ProductionFactory");
 const ProductionUserPermission = require("../models")
   .productions_users_permissions;
 const { getShortYear } = require("../helpers");
@@ -125,6 +130,16 @@ const _getStageName = key => {
 };
 
 class ColaboratorController {
+  /**
+   * Se crea un colaborador y se vincula a un evento específico
+   *
+   * @param {*} data
+   * @param {*} cropId
+   * @param {*} stage
+   * @param {*} fieldId
+   * @param {*} type
+   * @param {*} auth
+   */
   static async create(data, cropId, stage, fieldId, type, auth) {
     try {
       const { email, first_name, last_name, can_sign, can_edit } = data;
@@ -230,7 +245,169 @@ class ColaboratorController {
   }
 
   /**
-   * Delete user to event.
+   * Se agrega colaborador global para la etapa de producción.
+   *
+   * @param {*} data
+   * @param {*} crop
+   * @param {*} auth
+   */
+  static async addColaborator(data, cropId, auth) {
+    try {
+      let user = await Users.findOne({
+        where: {
+          email: data.email
+        }
+      });
+
+      const crop = await Crop.findOne({
+        where: { id: cropId },
+        include: [{ model: CropTypes }]
+      });
+
+      //Aqui debería llegar un email específico
+      const cropName = `${crop.crop_type.name} ${getShortYear(
+        crop.start_at
+      )}/${getShortYear(crop.end_at)}`;
+
+      if (!user) {
+        const newUser = await Users.create({
+          email: data.email,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          password: data.email,
+          first_login: 0
+        });
+
+        Mail.send({
+          template: "new_colaborator",
+          to: newUser.email,
+          data: { newUser, cropName }
+        });
+
+        await crop.addUsers(newUser);
+
+        const rel = await CropUsers.findOne({
+          where: { user_id: newUser.id, crop_id: crop.id }
+        });
+
+        await rel.update({
+          is_owner: 0
+        });
+
+        if (data.can_edit) {
+          await CropUserPermissions.create({
+            crop_permission_id: 1,
+            crop_user_id: rel.id
+          });
+        }
+
+        if (data.can_sign) {
+          await CropUserPermissions.create({
+            crop_permission_id: 2,
+            crop_user_id: rel.id
+          });
+        }
+
+        //Permisos de usuario etapa de producción
+        if (crop.status === "accepted") {
+          await this.permissionStageProduction(rel.id, cropId, newUser);
+        }
+
+        //Agrego el usuario colaborador a la agenda del usuario.
+        await DiaryUser.add(auth.user, newUser);
+
+        return newUser;
+      }
+
+      Mail.send({
+        template: "colaborator",
+        to: user.email,
+        data: { user, cropName, owner: auth.user }
+      });
+
+      const rel = await CropUsers.findOne({
+        where: { user_id: user.id, crop_id: crop.id }
+      });
+
+      if (!rel) {
+        await crop.addUsers(user);
+
+        const newRel = await CropUsers.findOne({
+          where: { user_id: user.id, crop_id: crop.id }
+        });
+
+        await newRel.update({
+          is_owner: 0
+        });
+
+        if (data.can_edit) {
+          await CropUserPermissions.create({
+            crop_permission_id: 1,
+            crop_user_id: rel.id
+          });
+        }
+
+        if (data.can_sign) {
+          await CropUserPermissions.create({
+            crop_permission_id: 2,
+            crop_user_id: rel.id
+          });
+        }
+      }
+
+      //Permisos de usuario etapa de producción
+      if (crop.status === "accepted") {
+        await this.permissionStageProduction(rel.id, cropId, user);
+      }
+
+      //Agrego el usuario colaborador a la agenda del usuario.
+      await DiaryUser.add(auth.user, user);
+
+      return user;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  static async permissionStageProduction(cropUserId, cropId, user) {
+    try {
+      const permissions = await CropUserPermissions.findAll({
+        where: { crop_user_id: cropUserId },
+        include: [{ model: CropPermission }]
+      });
+
+      const production = await Production.findOne({
+        where: { crop_id: cropId },
+        include: [{ model: ProductionStage, as: "Stage" }]
+      });
+
+      const stagesProduction = production.Stage.map(elem => {
+        return {
+          name: elem.name,
+          label: elem.label,
+          data: elem.data
+        };
+      });
+
+      const factory = new ProductionFactory(cropId);
+
+      factory.stages = stagesProduction;
+      factory.permissions = permissions;
+      factory.owner = 0;
+
+      return await ProductionUserPermission.create({
+        user_id: user.id,
+        production_id: cropId,
+        data: JSON.stringify(factory.generatePermissions)
+      });
+
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  /**
+   * Se elimina un colaborador puntual de un evento.
    *
    * @param {*} userId
    * @param {*} cropId
