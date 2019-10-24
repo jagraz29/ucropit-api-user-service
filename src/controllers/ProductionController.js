@@ -9,11 +9,33 @@ const User = require("../models").users;
 const CropUser = require("../models").crop_users;
 const CropUserPermission = require("../models").crop_user_permissions;
 const CropPermission = require("../models").crop_permissions;
+const Approvals = require("../models").approval;
+const ApprovalRegister = require("../models").approval_register;
+const ApprovalRegisterSigns = require("../models").approval_register_sign;
 const ProductionFactory = require("../factories/ProductionFactory");
 const ProductionUserPermission = require("../models")
   .productions_users_permissions;
+const { diff } = require("deep-object-diff");
 const uuidv1 = require("uuid/v1");
 const _ = require("lodash");
+
+const _deleteSigns = async cropId => {
+  try {
+    const approval = await Approvals.findOne({
+      where: { crop_id: cropId }
+    });
+
+    const approvalRegister = await ApprovalRegister.findOne({
+      where: { approval_id: approval.id }
+    });
+
+    return await ApprovalRegisterSigns.destroy({
+      where: { approval_register_id: approvalRegister.id }
+    });
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
 class ProductionController {
   static async index(crop, auth) {
@@ -45,6 +67,13 @@ class ProductionController {
     const productionStage = await ProductionStage.findOne({
       where: { label: stage, production_id: production.id }
     });
+
+    const diffData = diff(JSON.parse(productionStage.data), data);
+
+    if (Object.keys(diffData).length !== 0 && diffData.constructor === Object) {
+      //Se eliminan las firmas
+      await _deleteSigns(crop);
+    }
 
     await productionStage.update({
       data: JSON.stringify(data),
