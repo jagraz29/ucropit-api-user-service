@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const inputs = sequelize.define('inputs', {
     unit_id: DataTypes.INTEGER,
-    code: DataTypes.INTEGER,
+    code: DataTypes.STRING,
     stage: {
       type: DataTypes.ENUM,
       values: ['all']

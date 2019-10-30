@@ -27,6 +27,7 @@ class ConceptsController {
         })
       ]);
     } catch (e) {
+      console.erro(e);
       throw new Error(e);
     }
   }
@@ -47,6 +48,38 @@ class ConceptsController {
         return services;
       }
     } catch (e) {
+      console.erro(e);
+      throw new Error(e);
+    }
+  }
+
+  static async store(data) {
+    try {
+      const input = await Inputs.create(data);
+
+      return input;
+    } catch (e) {
+      console.erro(e);
+      throw new Error(e);
+    }
+  }
+
+  static async update(id, data) {
+    try {
+      const input = await Inputs.findOne({ where: { id: id } });
+      return await input.update(data);
+    } catch (e) {
+      console.error(e);
+      throw new Error(e);
+    }
+  }
+
+  static async delete(id) {
+    try {
+      const input = await Inputs.findOne({where: {id: id}});
+      return await input.destroy();
+    } catch(e) {
+      console.error(e)
       throw new Error(e);
     }
   }
@@ -57,6 +90,7 @@ class ConceptsController {
 
       return results;
     } catch (e) {
+      console.erro(e);
       throw new Error(e);
     }
   }
@@ -67,6 +101,7 @@ class ConceptsController {
 
       return results;
     } catch (e) {
+      console.erro(e);
       throw new Error(e);
     }
   }
@@ -80,6 +115,7 @@ class ConceptsController {
 
       return results;
     } catch (e) {
+      console.erro(e);
       throw new Error(e);
     }
   }
