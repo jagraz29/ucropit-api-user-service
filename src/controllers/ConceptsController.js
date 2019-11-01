@@ -5,6 +5,7 @@ const Inputs = require("../models").inputs;
 const InputType = require("../models").input_types;
 const ServiceType = require("../models").service_types;
 const Sequelize = require("sequelize");
+const { paginate } = require("../helpers");
 
 class ConceptsController {
   static async index() {
@@ -55,7 +56,7 @@ class ConceptsController {
 
   static async store(data) {
     try {
-      const input = await Inputs.create(data);
+      const input = await Inputs.create({ ...data, stage: "all" });
 
       return input;
     } catch (e) {
@@ -76,10 +77,10 @@ class ConceptsController {
 
   static async delete(id) {
     try {
-      const input = await Inputs.findOne({where: {id: id}});
+      const input = await Inputs.findOne({ where: { id: id } });
       return await input.destroy();
-    } catch(e) {
-      console.error(e)
+    } catch (e) {
+      console.error(e);
       throw new Error(e);
     }
   }
@@ -95,15 +96,49 @@ class ConceptsController {
     }
   }
 
-  static async input() {
+  static async inputTypesWithAttribute() {
     try {
-      const results = await Inputs.findAll();
+      const results = await InputType.findAll({
+        attributes: ["id", "name"]
+      });
 
       return results;
     } catch (e) {
       console.erro(e);
       throw new Error(e);
     }
+  }
+
+  static async input() {
+    try {
+      const results = await Inputs.findAll({
+        include: [{ model: InputType }]
+      });
+
+      return results;
+    } catch (e) {
+      console.erro(e);
+      throw new Error(e);
+    }
+  }
+
+  static async inputsPaginate(page, pageSize) {
+    const { count, rows: inputs } = await Inputs.findAndCountAll(
+      paginate(
+        {
+          include: [{ model: InputType }]
+        },
+        { page, pageSize }
+      )
+    );
+
+    return {
+      total: Math.ceil(count / pageSize),
+      perPage: pageSize,
+      currentPage: page,
+      lastPage: Math.ceil(count / pageSize - 1 + 1),
+      data: inputs
+    };
   }
 
   static async searchInpuType(query) {

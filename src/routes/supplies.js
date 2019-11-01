@@ -5,7 +5,8 @@ const router = express.Router();
 const ConceptsController = require("../controllers/ConceptsController");
 
 router.get("/", (req, res) => {
-  ConceptsController.index()
+  const { page = 0, perPage = 10 } = req.query;
+  ConceptsController.inputsPaginate(page, perPage)
     .then(result => {
       return res.json({ code: 200, error: false, result });
     })
@@ -16,8 +17,20 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/:id/:type", (req, res) => {
+  ConceptsController.show(req.params.id, req.params.type)
+    .then(result => {
+      return res.status(200).json({ code: 200, error: false, result });
+    })
+    .catch(error => {
+      return res
+        .status(500)
+        .json({ code: 500, error: true, message: error.message });
+    });
+});
+
 router.get("/input-types", (req, res) => {
-  ConceptsController.inputTypes()
+  ConceptsController.inputTypesWithAttribute()
     .then(result => {
       return res.json({ code: 200, error: false, result });
     })
