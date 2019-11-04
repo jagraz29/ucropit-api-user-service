@@ -10,8 +10,7 @@ const getShortYear = function (date) {
 
 const paginate = (query, { page, pageSize }) => {
   const offset = parseInt(page) * parseInt(pageSize);
-  const limit = parseInt(offset) + parseInt(pageSize);
-
+  const limit = parseInt(pageSize);
   return {
     ...query,
     offset,
