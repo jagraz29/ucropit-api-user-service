@@ -36,6 +36,8 @@ class ApprovalsController {
             crop_id: data.crop_id
           })
 
+          console.log('INFO', data.crop_id)
+
           const register = await ApprovalRegister.create({
             approval_id: approval.id
           })

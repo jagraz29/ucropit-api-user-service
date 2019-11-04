@@ -61,6 +61,7 @@ class ProductionController {
   }
 
   static async storeStageData(crop, stage, data) {
+
     const production = await Production.findOne({
       where: { crop_id: crop }
     });
@@ -69,11 +70,17 @@ class ProductionController {
       where: { label: stage, production_id: production.id }
     });
 
-    const diffData = diff(JSON.parse(productionStage.data), data);
+    const approval = await Approvals.findOne({
+      where: { crop_id: crop }
+    });
 
-    if (Object.keys(diffData).length !== 0 && diffData.constructor === Object) {
-      //Se eliminan las firmas
-      await _deleteSigns(crop);
+    if (approval !== null) {
+      const diffData = diff(JSON.parse(productionStage.data), data);
+
+      if (Object.keys(diffData).length !== 0 && diffData.constructor === Object) {
+        //Se eliminan las firmas
+        await _deleteSigns(crop);
+      }
     }
 
     await productionStage.update({
