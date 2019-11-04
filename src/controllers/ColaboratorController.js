@@ -325,7 +325,7 @@ class ColaboratorController {
         data: { user, cropName, owner: auth.user }
       });
 
-      let rel = await CropUsers.findOne({
+      const rel = await CropUsers.findOne({
         where: { user_id: user.id, crop_id: crop.id }
       });
 
@@ -343,18 +343,16 @@ class ColaboratorController {
         if (data.can_edit) {
           await CropUserPermissions.create({
             crop_permission_id: 1,
-            crop_user_id: newRel.id
+            crop_user_id: rel.id
           });
         }
 
         if (data.can_sign) {
           await CropUserPermissions.create({
             crop_permission_id: 2,
-            crop_user_id: newRel.id
+            crop_user_id: rel.id
           });
         }
-
-        rel = newRel;
       }
 
       //Permisos de usuario etapa de producción
@@ -367,7 +365,6 @@ class ColaboratorController {
 
       return user;
     } catch (error) {
-      console.log(error);
       throw new Error(error);
     }
   }
@@ -403,6 +400,7 @@ class ColaboratorController {
         production_id: cropId,
         data: JSON.stringify(factory.generatePermissions)
       });
+
     } catch (error) {
       throw new Error(error);
     }
