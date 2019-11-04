@@ -49,7 +49,6 @@ class ProductionController {
         order: [[{ model: ProductionStage, as: "Stage" }, "order", "ASC"]]
       });
 
-
       const permissions = await ProductionUserPermission.findOne({
         where: { user_id: auth.user.id, production_id: crop }
       });
