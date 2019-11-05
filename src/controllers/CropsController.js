@@ -153,6 +153,11 @@ class CropsController {
 
       await crop.update({budget: JSON.stringify(budget)})
 
+      await Signs.destroy({where: {
+        type_id: id
+      }})
+
+      await crop.update({ budget: JSON.stringify(budget) });
     } catch (err) {
       console.log(err)
     }
