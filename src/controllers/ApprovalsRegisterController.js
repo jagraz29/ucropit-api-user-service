@@ -117,7 +117,7 @@ class ApprovalsRegisterController {
     return register;
   }
 
-  static async file(id, file, concept) {
+  static async file(id, file, concept, position = null) {
     try {
       const upload = new UploadFile(file, "uploads");
       const res = await upload.store();
@@ -144,8 +144,8 @@ class ApprovalsRegisterController {
         concept,
         path: res.namefile,
         type: res.fileType,
-        latitude: exif.metadata.tags.GPSLatitude,
-        longitude: exif.metadata.tags.GPSLongitude
+        latitude: exif.metadata.tags.GPSLatitude || position.latitude,
+        longitude: exif.metadata.tags.GPSLongitude || position.longitude
       });
     } catch (error) {
       throw new Error(error);
