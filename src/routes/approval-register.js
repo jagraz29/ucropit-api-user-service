@@ -98,6 +98,17 @@ router.post("/crops/:idCrop/stages/:stage/signs", async (req, res) => {
   }
 });
 
+router.get("/:registerId/files", async (req, res) => {
+  try {
+    const { registerId } = req.params;
+    const result = await ApprovalsRegisterController.showFiles(registerId);
+    return res.json({ code: 200, error: false, result });
+  } catch (error) {
+    console.log(error);
+    return res.json({ code: 500, error: true, data: error });
+  }
+});
+
 router.post("/:registerId/files", async (req, res) => {
   try {
     const register = await ApprovalsRegisterController.file(

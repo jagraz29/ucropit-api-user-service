@@ -117,6 +117,16 @@ class ApprovalsRegisterController {
     return register;
   }
 
+  static async showFiles(idRegisterApproval) {
+    const files = await ApprovalRegisterFiles.findAll({
+      where: {
+        approval_register_id: idRegisterApproval
+      }
+    });
+
+    return files;
+  }
+
   static async file(id, file, concept, position = null) {
     try {
       const upload = new UploadFile(file, "uploads");
