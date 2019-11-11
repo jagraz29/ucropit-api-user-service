@@ -10,6 +10,7 @@ const CropUsers = require("../models").crop_users;
 const Signs = require("../models").signs;
 const ProductionUserPermission = require("../models")
   .productions_users_permissions;
+const ApprovalRegisterSigns = require("../models").approval_register_sign;
 const Mail = require("../services/Mail");
 const Search = require("../services/Search");
 const { getShortYear } = require("../helpers");
@@ -118,15 +119,38 @@ class CropsController {
         where: { type: crop, user_id: colaborator }
       });
 
-      await rel.destroy();
+      const cropUserPermission = await CropUserPermissions.findAll({
+        where: { crop_user_id: rel.id }
+      });
+
+      const cropUserPermissionsProduction = await ProductionUserPermission.findOne(
+        {
+          where: { user_id: colaborator, production_id: crop }
+        }
+      );
+
+      await ApprovalRegisterSigns.destroy({
+        where: { user_id: colaborator }
+      });
+
+      if (rel) {
+        for (const index in cropUserPermission) {
+          await cropUserPermission[index].destroy();
+        }
+        await rel.destroy();
+      }
 
       if (sing) {
         await sing.destroy();
       }
 
+      if (cropUserPermissionsProduction) {
+        await cropUserPermissionsProduction.destroy();
+      }
+
       return true;
     } catch (error) {
-      throw new Error(err);
+      throw new Error(error);
     }
   }
 
@@ -136,25 +160,30 @@ class CropsController {
         where: { id: id }
       });
 
-      const budget = JSON.parse(crop.budget)
+      const budget = JSON.parse(crop.budget);
 
       budget.items = budget.items.map(item => {
         if (item.form == stage) {
           for (let i of Object.keys(item.data)) {
-            if (item.data[i].field_id == serviceId
-              && item.data[i].type === service) {
-                console.log(item.data[i])
-                delete item.data[i]
+            if (
+              item.data[i].field_id == serviceId &&
+              item.data[i].type === service
+            ) {
+              console.log(item.data[i]);
+              delete item.data[i];
             }
           }
         }
-        return item
-      })
+        return item;
+      });
 
-      await crop.update({budget: JSON.stringify(budget)})
+      await Signs.destroy({where: {
+        type_id: id
+      }})
 
+      await crop.update({ budget: JSON.stringify(budget) });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
