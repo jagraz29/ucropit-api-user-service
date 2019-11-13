@@ -115,6 +115,7 @@ router.post("/:registerId/files", async (req, res) => {
       req.params.registerId,
       req.files,
       req.body.concept,
+      req.decoded,
       {
         latitude: req.body.latitude || null,
         longitude: req.body.longitude || null

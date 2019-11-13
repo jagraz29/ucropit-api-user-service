@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   approval_register_file.associate = function(models) {
-    // associations can be defined here
+    approval_register_file.belongsTo(models.users, { foreignKey: 'user_id' })
   };
   return approval_register_file;
 };

@@ -2,6 +2,7 @@
 
 const PDF = require("../services/PDF");
 const Stamp = require("../services/Stamp");
+const User = require("../models").users;
 const Approvals = require("../models").approval;
 const ApprovalRegister = require("../models").approval_register;
 const ApprovalRegisterSigns = require("../models").approval_register_sign;
@@ -119,6 +120,7 @@ class ApprovalsRegisterController {
 
   static async showFiles(idRegisterApproval) {
     const files = await ApprovalRegisterFiles.findAll({
+      include: [{ model: User }],
       where: {
         approval_register_id: idRegisterApproval
       }
@@ -127,7 +129,7 @@ class ApprovalsRegisterController {
     return files;
   }
 
-  static async file(id, file, concept, position = null) {
+  static async file(id, file, concept, auth, position = null) {
     try {
       const upload = new UploadFile(file, "uploads");
       const res = await upload.store();
@@ -155,7 +157,8 @@ class ApprovalsRegisterController {
         path: res.namefile,
         type: res.fileType,
         latitude: exif.metadata.tags.GPSLatitude || position.latitude,
-        longitude: exif.metadata.tags.GPSLongitude || position.longitude
+        longitude: exif.metadata.tags.GPSLongitude || position.longitude,
+        user_id: auth.user.id
       });
     } catch (error) {
       throw new Error(error);
