@@ -84,7 +84,11 @@ class ApprovalsRegisterController {
       where: { id },
       include: [
         { model: ApprovalRegisterSigns, as: "Signs" },
-        { model: ApprovalRegisterFiles, as: "Files" }
+        {
+          model: ApprovalRegisterFiles,
+          as: "Files",
+          include: [{ model: User }]
+        }
       ]
     });
 
