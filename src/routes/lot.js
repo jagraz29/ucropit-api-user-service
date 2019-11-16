@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const lot = await LotsController.create(req.body)
+    const lot = await LotsController.create(req.body, req.files)
 
     return res.json({ code: 200, error: false, lot })
   } catch (error) {
@@ -39,7 +39,7 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const lot = await LotsController.update(req.params.id, req.body)
+    const lot = await LotsController.update(req.params.id, req.body, req.files)
     return res.json({ code: 200, error: false, lot })
   } catch (error) {
     console.log(error)

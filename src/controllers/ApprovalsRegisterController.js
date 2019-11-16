@@ -60,19 +60,24 @@ class ApprovalsRegisterController {
       stage === "fields"
         ? await Approvals.findOne({ where: { stage: stage, crop_id: crop } })
         : await Approvals.findOne({
-            where: {
-              stage: stage,
-              crop_id: crop,
-              service_id: type === "service" ? typeId : null,
-              input_id: type === "input" ? typeId : null
-            }
-          });
+          where: {
+            stage: stage,
+            crop_id: crop,
+            service_id: type === "service" ? typeId : null,
+            input_id: type === "input" ? typeId : null
+          }
+        });
 
     const register = ApprovalRegister.findOne({
       where: { approval_id: approval.id },
       include: [
         { model: ApprovalRegisterSigns, as: "Signs" },
-        { model: ApprovalRegisterFiles, as: "Files" }
+        {
+          model: ApprovalRegisterFiles, as: "Files",
+          include: [
+            { model: User }
+          ]
+        }
       ]
     });
 
