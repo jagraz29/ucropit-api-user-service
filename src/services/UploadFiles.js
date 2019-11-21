@@ -39,7 +39,7 @@ class UploadFiles {
   }
 
   validTypes(file) {
-    return file.mimetype.match('text.*|image.*|application/pdf|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/octet-stream') !== null
+    return file.mimetype.match('text.*|image.*|application/pdf|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/octet-stream|application/vnd.google-earth.kmz') !== null
   }
 }
 
