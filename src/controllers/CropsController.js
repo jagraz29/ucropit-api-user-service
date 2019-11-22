@@ -368,6 +368,7 @@ class CropsController {
   }
 
   static async create(data, auth) {
+    console.log(data);
     try {
       const crop = await Crop.create({
         ...data,
