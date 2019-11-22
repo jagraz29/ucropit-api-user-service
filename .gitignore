@@ -82,3 +82,7 @@ typings/
 .dynamodb/
 
 /src/config/config.json
+/public/uploads
+/public/budget
+/public/croptypes
+/public/providers
