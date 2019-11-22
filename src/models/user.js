@@ -58,6 +58,10 @@ module.exports = (sequelize, DataTypes) => {
       through: "diary_users",
       as: 'ContactUser'
     });
+
+    User.hasOne(models.producers, {
+      foreignKey: "user_id"
+    })
   };
 
   async function encryptPasswordIfChanged(user, options) {
