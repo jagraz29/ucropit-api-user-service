@@ -63,6 +63,20 @@ class AuthController {
     }
   }
 
+  static async activate(token) {
+    try {
+      const user = await User.findOne({ where: { activation_token: token } })
+      if (user !== null) {
+        await user.update({ active: 1 })
+        return { success: true }
+      } else {
+        return { success: false }
+      }
+    } catch (err) {
+      throw new Error(err.message)
+    }
+  }
+
   static async adminLogin({ email, password }) {
     try {
       const user = await User.findOne({
