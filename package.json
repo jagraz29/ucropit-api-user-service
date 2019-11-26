@@ -43,7 +43,8 @@
     "sequelize": "^5.1.0",
     "sha256": "^0.2.0",
     "shortid": "^2.2.14",
-    "standard": "^13.0.2"
+    "standard": "^13.0.2",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "ava": "^2.1.0",

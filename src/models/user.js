@@ -34,6 +34,14 @@ module.exports = (sequelize, DataTypes) => {
       fiscal_number: {
         type: DataTypes.STRING,
         allowNull: true
+      },
+      active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true
+      },
+      activation_token: {
+        type: DataTypes.STRING,
+        allowNull: true
       }
     },
     {
