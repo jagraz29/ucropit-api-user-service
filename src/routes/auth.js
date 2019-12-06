@@ -89,6 +89,7 @@ router.post('/register', async (req, res) => {
     })
 
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ error: true, code: 422, message: err })
   }
 })
