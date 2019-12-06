@@ -25,6 +25,14 @@ class AuthController {
     }
   }
 
+  static async reset(token) {
+    try {
+
+    } catch (err) {
+
+    }
+  }
+
   static async register(data) {
     try {
       const activationToken = uuid()
