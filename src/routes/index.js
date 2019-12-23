@@ -15,8 +15,8 @@ router.use('/api/providers', authMiddleware.checkToken, require('./provider'))
 router.use('/api/supplies', require('./supplies'))
 router.use('/api/productions', authMiddleware.checkToken,require('./production'))
 router.use('/api/applications', authMiddleware.checkToken, require('./applications'))
-router.use('/api/approvals', authMiddleware.checkToken, require('./approval'))
-router.use('/api/approvals/registers', authMiddleware.checkToken, require('./approval-register'))
+router.use('/api/approvals',authMiddleware.checkToken, require('./approval'))
+router.use('/api/approvals/registers', require('./approval-register'))
 router.use('/api/contacts', authMiddleware.checkToken, require('./contacts'));
 router.use('/api/colaborators',authMiddleware.checkToken , require('./colaborator'));
 

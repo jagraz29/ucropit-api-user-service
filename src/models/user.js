@@ -34,6 +34,14 @@ module.exports = (sequelize, DataTypes) => {
       fiscal_number: {
         type: DataTypes.STRING,
         allowNull: true
+      },
+      active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true
+      },
+      activation_token: {
+        type: DataTypes.STRING,
+        allowNull: true
       }
     },
     {
@@ -58,6 +66,10 @@ module.exports = (sequelize, DataTypes) => {
       through: "diary_users",
       as: 'ContactUser'
     });
+
+    User.hasOne(models.producers, {
+      foreignKey: "user_id"
+    })
   };
 
   async function encryptPasswordIfChanged(user, options) {

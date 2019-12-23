@@ -28,6 +28,8 @@ router.post('/', async (req, res) => {
   }
 })
 
+
+
 router.post('/admin', async (req, res) => {
   try {
     let result = await AuthController.login(req.body)
@@ -46,6 +48,24 @@ router.post('/admin', async (req, res) => {
     }
   } catch (err) {
     console.log(err)
+  }
+})
+
+router.post('/activate/:token', async (req, res) => {
+  try {
+    let result = await AuthController.activate(req.params.token)
+    return res.json({ error: false, code: 200, data: result })
+  } catch (err) {
+    return res.status(500).json({ error: true, code: 422, message: err })
+  }
+})
+
+router.post('/reset/:token', async (req, res) => {
+  try {
+    let result = await AuthController.reset(req.params.token)
+    return res.json({ error: false, code: 200, data: result })
+  } catch (err) {
+    return res.status(500).json({ error: true, code: 422, message: err })
   }
 })
 
@@ -69,6 +89,7 @@ router.post('/register', async (req, res) => {
     })
 
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ error: true, code: 422, message: err })
   }
 })

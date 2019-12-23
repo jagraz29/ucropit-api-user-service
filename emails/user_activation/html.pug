@@ -1,0 +1,64 @@
+head
+  style(type="text/css").
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    button {
+      background: green;
+      padding: 15px;
+      margin-bottom: 30px;
+      border-radius: 4px;
+      border: 0;
+    }
+    button a { color: white; text-decoration: none; font-size: 18px; }
+    p {
+      font-family: Arial;
+    }
+    p small {
+      margin: 5px 0;
+    }
+    .content {
+      margin-top: 15px;
+    }
+    body {
+      padding: 15px;
+    }
+body
+  p Hola  #{user.first_name},
+
+  p.content Su cuenta de UCROP.IT fue creada exitosamente. Haga click en el botón para activar la misma:
+
+  br
+
+  button
+    a(href=url+'/activate/'+activationToken) Activar cuenta
+
+  br
+
+  p Si tiene alguna duda, por favor, póngase en contacto con nosotros.
+  p Fuerte abrazo,
+  p Equipo Ucrop.it
+
+  br
+  br
+
+  p --
+
+  br
+
+  img(src="http://ucrop.it/logo.png", alt="logo" width="100")
+  br
+  p
+    small Italia, 451, Of #102
+  p
+    small Vicente Lopez, Buenos Aires, Argentina
+  p
+    small Tel: +54911 5654-0777
+  p
+    small Via Whatsapp: +54911 2386-3166
+  p
+    small contacto@ucrop.it
+  p
+    small
+      a(href="www.ucrop.it") www.ucrop.it

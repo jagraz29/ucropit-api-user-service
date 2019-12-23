@@ -2,6 +2,7 @@
 
 const Field = require("../models").fields
 const Lot = require("../models").lots
+const UploadFile = require("../services/UploadFiles")
 
 class FieldsController {
   static async index(auth) {
@@ -10,6 +11,14 @@ class FieldsController {
         where: { user_id: auth.user.id },
         include: [{ model: Lot }]
       })
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
+  static async indexAll(auth) {
+    try {
+      return await Field.findAll()
     } catch (err) {
       throw new Error(err)
     }
@@ -26,29 +35,46 @@ class FieldsController {
     }
   }
 
-  static async create(data, auth) {
+  static async create(data, auth, file) {
     try {
-      return await Field.create({
+      const values = {
         ...data,
         user_id: auth.user.id
-      })
+      }
+
+      if (file) {
+        const upload = new UploadFile(file, "uploads")
+        const res = await upload.store()
+        values.kmz_path = res.namefile
+      }
+
+      return await Field.create(values)
     } catch (err) {
       throw new Error(err)
     }
   }
 
-  static async update(id, data) {
+  static async update(id, data, file) {
     try {
-      const crop = await Field.findOne({
+      const field = await Field.findOne({
         where: { id: id }
       })
 
-      return await crop.update(data)
+      const values = {
+        ...data
+      }
+
+      if (file) {
+        const upload = new UploadFile(file, "uploads")
+        const res = await upload.store()
+        values.kmz_path = res.namefile
+      }
+
+      return await field.update(values)
     } catch (err) {
       throw new Error(err)
     }
   }
-
 
   static async delete(id) {
     try {

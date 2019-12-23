@@ -3,6 +3,7 @@
 const Approvals = require('../models').approval
 const ApprovalRegister = require('../models').approval_register
 const ApprovalRegisterSigns = require('../models').approval_register_sign
+const ApprovalRegisterFiles = require('../models').approval_register_file
 
 class ApprovalsController {
   static async show({ cropId, stage, type, typeId }) {
@@ -16,6 +17,31 @@ class ApprovalsController {
         },
         include: [
           { model: ApprovalRegister, as: 'Register', include: [{ model: ApprovalRegisterSigns, as: 'Signs' }] }
+        ]
+      })
+
+      return approval
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
+  static async index({ cropId, stage }) {
+    try {
+      const approval = await Approvals.findAll({
+        where: {
+          stage: stage,
+          crop_id: cropId
+        },
+        include: [
+          {
+            model: ApprovalRegister,
+            as: 'Register',
+            include: [
+              { model: ApprovalRegisterSigns, as: 'Signs' },
+              { model: ApprovalRegisterFiles, as: 'Files' },
+            ]
+          },
         ]
       })
 

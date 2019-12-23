@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const mg = require('nodemailer-mailgun-transport');
-
+const User = require('../models').users
 const auth = {
   auth: {
     api_key: process.env.MAILGUN_APIKEY || '123123',
@@ -25,11 +25,32 @@ class Mail {
     email
       .send({
         template: template,
-        message: { to },
+        message: { to, from: 'no-reply@ucrop.it' },
         locals: { ...data }
       })
       .then(console.log)
       .catch(console.error);
+  }
+
+  static async sendNotificationMail({ data, usersID = [], type }) {
+    if (usersID === undefined) throw new Error('users not given are required')
+
+    try {
+      const users = await User.findAll({ where: { id: usersID } })
+
+      if (users !== null) {
+        const mails = await Mail.send({
+          template: type,
+          to: users.map(el => el.email),
+          data: {
+            ...data,
+            url: process.env.FRONT_URL
+          }
+        })
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 }
 
