@@ -16,6 +16,14 @@ class FieldsController {
     }
   }
 
+  static async indexAll(auth) {
+    try {
+      return await Field.findAll()
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
   static async show(id) {
     try {
       return await Field.findOne({

@@ -13,6 +13,15 @@ router.get('/', async (req, res) => {
     })
 })
 
+router.get('/all', async (req, res) => {
+  FieldsController.indexAll(req.decoded)
+    .then((fields) => {
+      return res.json({ code: 200, error: false, fields })
+    }).catch((err) => {
+      return res.status(500).json({ code: 500, error: true, message: err.message })
+    })
+})
+
 router.post('/', (req, res) => {
   FieldsController.create(req.body, req.decoded, req.files)
     .then(data => {
