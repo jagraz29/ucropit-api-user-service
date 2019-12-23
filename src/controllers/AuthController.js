@@ -1,10 +1,9 @@
-"use strict";
-
+"use strict"
 
 const User = require('../models').users
 const Mail = require('../services/Mail')
 const uuid = require('uuid/v1')
-const Producer = require("../models").producers;
+const Producer = require("../models").producers
 
 class AuthController {
   static async login({ email, password }) {
@@ -34,22 +33,39 @@ class AuthController {
     try {
       let user = null;
 
+      const activationToken = uuid()
+
       user = await User.findOne({
         where: { email: data.email }
-      });
+      })
 
       if (user && !user.first_login) {
-        return {
-          user: await user.update({ ...data, first_login: 1 }),
-          withoutFirstCrop: true
-        };
+        await Mail.sendNotificationMail({
+          data: {
+            user: user,
+            activationToken
+          },
+          usersID: [user.id],
+          type: 'user_activation',
+          activation_token: activationToken
+        })
+
+        return { user: await user.update({ ...data, first_login: 1, active: 0 }), withoutFirstCrop: true }
       }
 
-      if (user !== null) throw Error("El email ya fue tomado");
+      if (user !== null) throw Error('El email ya fue tomado')
 
-      user = await this.createUser(data);
+      const newUser = await User.create({ ...data, active: 0, activation_token: activationToken })
+      await Mail.sendNotificationMail({
+        data: {
+          user: newUser,
+          activationToken
+        },
+        usersID: [newUser.id],
+        type: 'user_activation'
+      })
+      return { user: newUser, withoutFirstCrop: true }
 
-      return { user: user, withoutFirstCrop: true };
     } catch (err) {
       console.log(err);
       return null;
@@ -97,7 +113,7 @@ class AuthController {
         user_id: user.id
       });
 
-     return await User.findOne({
+      return await User.findOne({
         where: { id: user.id },
         include: [{ model: Producer }]
       });
