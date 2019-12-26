@@ -1,16 +1,16 @@
-"use strict";
+'use strict'
 
-const Provider = require("../models").providers;
-const ProviderType = require("../models").providers_type;
-const TypesProviders = require("../models").providers_providers_type;
-const CoverageAreas = require("../models").coverage_areas;
-const CoverageAreaProvider = require("../models").coverage_areas_providers;
-const Users = require("../models").users;
-const ProvidersUsers = require("../models").providers_users;
-const { paginate } = require("../helpers");
+const Provider = require('../models').providers
+const ProviderType = require('../models').providers_type
+const TypesProviders = require('../models').providers_providers_type
+const CoverageAreas = require('../models').coverage_areas
+const CoverageAreaProvider = require('../models').coverage_areas_providers
+const Users = require('../models').users
+const ProvidersUsers = require('../models').providers_users
+const { paginate } = require('../helpers')
 
 class ProviderController {
-  static async index(page, pageSize) {
+  static async index (page, pageSize) {
     try {
       const providers = await Provider.findAll(
         paginate(
@@ -18,14 +18,14 @@ class ProviderController {
             include: [
               {
                 model: ProviderType,
-                attributes: ["value", "label"],
+                attributes: ['value', 'label'],
                 through: {
                   model: TypesProviders
                 }
               },
               {
                 model: CoverageAreas,
-                attributes: ["value", "name"],
+                attributes: ['value', 'name'],
                 through: {
                   model: CoverageAreaProvider
                 }
@@ -35,21 +35,21 @@ class ProviderController {
           },
           { page, pageSize }
         )
-      );
+      )
 
-      return providers;
+      return providers
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err)
     }
   }
 
-  static async getByTypes(type) {
+  static async getByTypes (type) {
     try {
       const providers = await Provider.findAll({
         include: [
           {
             model: ProviderType,
-            attributes: ["value", "label"],
+            attributes: ['value', 'label'],
             through: {
               model: TypesProviders
             },
@@ -59,29 +59,29 @@ class ProviderController {
           }
         ],
         where: {}
-      });
+      })
 
-      return providers;
+      return providers
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err)
     }
   }
 
-  static async show(id) {
+  static async show (id) {
     try {
       const provider = await Provider.findOne({
         where: { id: id },
         include: [
           {
             model: ProviderType,
-            attributes: ["value", "label"],
+            attributes: ['value', 'label'],
             through: {
               model: TypesProviders
             }
           },
           {
             model: CoverageAreas,
-            attributes: ["value", ["name", "label"]],
+            attributes: ['value', ['name', 'label']],
             through: {
               model: CoverageAreaProvider
             }
@@ -93,138 +93,138 @@ class ProviderController {
             }
           }
         ]
-      });
+      })
 
       if (!provider) {
-        return null;
+        return null
       }
 
-      return provider;
+      return provider
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err)
     }
   }
 
-  static async providersType() {
+  static async providersType () {
     try {
-      const providersType = await ProviderType.findAll({});
-      return providersType;
+      const providersType = await ProviderType.findAll({})
+      return providersType
     } catch (error) {
-      throw new Error(err);
+      throw new Error(err)
     }
   }
 
-  static async coveragesArea() {
+  static async coveragesArea () {
     try {
       const coverageAreas = await CoverageAreas.findAll({
-        attributes: ["id", ["name", "label"], "value"]
-      });
-      return coverageAreas;
+        attributes: ['id', ['name', 'label'], 'value']
+      })
+      return coverageAreas
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error)
     }
   }
 
-  static async create(data) {
+  static async create (data) {
     try {
       const isExistProvider = await Provider.findOne({
         where: { taxid: data.taxid }
-      });
+      })
 
       const isExistUser = await Users.findOne({
         where: { email: data.email }
-      });
+      })
 
       if (isExistUser)
-        throw new Error("El email ya se encuentra registrado como usuario");
+        throw new Error('El email ya se encuentra registrado como usuario')
 
-      if (isExistProvider) throw new Error("Existe el cuit registrado");
+      if (isExistProvider) throw new Error('Existe el cuit registrado')
 
       const provider = await Provider.create({
         ...data
-      });
+      })
 
       data.types.forEach(async element => {
         const providersType = await ProviderType.findOne({
           where: { value: element.value }
-        });
+        })
         await TypesProviders.create({
-          providers_id: provider.get("id"),
-          providers_type_id: providersType.get("id")
-        });
-      });
+          providers_id: provider.get('id'),
+          providers_type_id: providersType.get('id')
+        })
+      })
 
       data.area_cobertura.forEach(async element => {
         const coverageArea = await CoverageAreas.findOne({
           where: { value: element.value }
-        });
+        })
 
         await CoverageAreaProvider.create({
-          providers_id: provider.get("id"),
-          coverage_area_id: coverageArea.get("id")
-        });
-      });
+          providers_id: provider.get('id'),
+          coverage_area_id: coverageArea.get('id')
+        })
+      })
 
-      await this.createUser(provider, data);
+      await this.createUser(provider, data)
 
-      return provider;
+      return provider
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err)
     }
   }
 
-  static async update(data, id) {
+  static async update (data, id) {
     try {
-      const provider = await Provider.findOne({ where: { id: id } });
+      const provider = await Provider.findOne({ where: { id: id } })
 
-      await TypesProviders.destroy({ where: { providers_id: id } });
-      await CoverageAreaProvider.destroy({ where: { providers_id: id } });
+      await TypesProviders.destroy({ where: { providers_id: id } })
+      await CoverageAreaProvider.destroy({ where: { providers_id: id } })
 
       data.types.forEach(async element => {
         const providersType = await ProviderType.findOne({
           where: { value: element.value }
-        });
+        })
         await TypesProviders.create({
-          providers_id: provider.get("id"),
-          providers_type_id: providersType.get("id")
-        });
-      });
+          providers_id: provider.get('id'),
+          providers_type_id: providersType.get('id')
+        })
+      })
 
       data.area_cobertura.forEach(async element => {
         const coverageArea = await CoverageAreas.findOne({
           where: { value: element.value }
-        });
+        })
 
         await CoverageAreaProvider.create({
-          providers_id: provider.get("id"),
-          coverage_area_id: coverageArea.get("id")
-        });
-      });
-      return await provider.update(data);
+          providers_id: provider.get('id'),
+          coverage_area_id: coverageArea.get('id')
+        })
+      })
+      return await provider.update(data)
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err)
     }
   }
 
-  static async delete(id) {
+  static async delete (id) {
     try {
-      await TypesProviders.destroy({ where: { providers_id: id } });
+      await TypesProviders.destroy({ where: { providers_id: id } })
       const userProvider = await ProvidersUsers.findOne({
         where: { providers_id: id }
-      });
-      const userId = userProvider.user_id;
-      await userProvider.destroy();
-      await this.removeUserToProvider(userId);
-      const provider = await Provider.findOne({ where: { id: id } });
-      return await provider.destroy();
+      })
+      const userId = userProvider.user_id
+      await userProvider.destroy()
+      await this.removeUserToProvider(userId)
+      const provider = await Provider.findOne({ where: { id: id } })
+      return await provider.destroy()
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err)
     }
   }
 
-  static async createUser(provider, data) {
+  static async createUser (provider, data) {
     try {
-      const { email, first_name, last_name, phone } = data;
+      const { email, first_name, last_name, phone } = data
 
       const user = await Users.create({
         email: email,
@@ -233,22 +233,22 @@ class ProviderController {
         first_name: first_name,
         last_name: last_name,
         first_login: 0
-      });
+      })
 
-      return await provider.addUsers(user);
+      return await provider.addUsers(user)
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error)
     }
   }
 
-  static async removeUserToProvider(id) {
+  static async removeUserToProvider (id) {
     try {
-      const user = await Users.findOne({ where: { id: id } });
-      return user.destroy();
+      const user = await Users.findOne({ where: { id: id } })
+      return user.destroy()
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err)
     }
   }
 }
 
-module.exports = ProviderController;
+module.exports = ProviderController

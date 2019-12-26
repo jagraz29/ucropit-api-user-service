@@ -1,5 +1,5 @@
-const nodemailer = require('nodemailer');
-const mg = require('nodemailer-mailgun-transport');
+const nodemailer = require('nodemailer')
+const mg = require('nodemailer-mailgun-transport')
 const User = require('../models').users
 const auth = {
   auth: {
@@ -8,7 +8,7 @@ const auth = {
   }
 }
 
-const Email = require('email-templates');
+const Email = require('email-templates')
 
 const email = new Email({
   message: {
@@ -17,11 +17,10 @@ const email = new Email({
   // uncomment below to send emails in development/test env:
   send: true,
   transport: nodemailer.createTransport(mg(auth))
-});
-
+})
 
 class Mail {
-  static async send({ template = '', to = '', data = {} }) {
+  static async send ({ template = '', to = '', data = {} }) {
     email
       .send({
         template: template,
@@ -29,10 +28,10 @@ class Mail {
         locals: { ...data }
       })
       .then(console.log)
-      .catch(console.error);
+      .catch(console.error)
   }
 
-  static async sendNotificationMail({ data, usersID = [], type }) {
+  static async sendNotificationMail ({ data, usersID = [], type }) {
     if (usersID === undefined) throw new Error('users not given are required')
 
     try {
@@ -49,7 +48,7 @@ class Mail {
         })
       }
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error)
     }
   }
 }
