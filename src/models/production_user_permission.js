@@ -1,8 +1,8 @@
-"use_strict";
+'use_strict'
 
 module.exports = (sequelize, DataTypes) => {
   const ProductionUserPermission = sequelize.define(
-    "productions_users_permissions",
+    'productions_users_permissions',
     {
       id: {
         allowNull: false,
@@ -36,9 +36,13 @@ module.exports = (sequelize, DataTypes) => {
     {
       timestamps: true,
       underscored: true,
-      tableName: 'productions_users_permissions',
+      tableName: 'productions_users_permissions'
     }
-  );
+  )
 
-  return ProductionUserPermission;
-};
+  ProductionUserPermission.associate = function (models) {
+    ProductionUserPermission.belongsTo(models.users)
+  }
+
+  return ProductionUserPermission
+}

@@ -1,10 +1,11 @@
-require("dotenv").config()
-import test from "ava"
-import request from "supertest"
+require('dotenv').config()
+
+import test from 'ava'
+import request from 'supertest'
 
 const cropId = 6
 
-const app = request(`${process.env.BASE_URL}/v1`);
+const app = request(`${process.env.BASE_URL}/v1`)
 
 test.serial.cb('it will generate production stage', t => {
   app

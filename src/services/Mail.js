@@ -40,7 +40,6 @@ class Mail {
       if (users !== null) {
         users.map(el => {
           const user = el.get({ plain: true })
-          
           Mail.send({
             template: type,
             to: user.email,

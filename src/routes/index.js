@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const authMiddleware = require('../middlewares/auth')
 
+const ProductionPermissions = require('../services/production/ProductionPermissions')
+
 router.use('/api/auth', require('./auth'))
 router.use('/api/reset', require('./reset'))
 router.use('/api/crops', authMiddleware.checkToken, require('./crop'))

@@ -11,8 +11,10 @@ require('console-stamp')(console, {
 })
 
 const fileUpload = require('express-fileupload')
+const stagesName = require('./helpers').stagesName
 
 global.__basedir = __dirname
+global.stagesName = stagesName
 
 const express = require('express')
 const jwt = require('jsonwebtoken')

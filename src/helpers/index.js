@@ -1,61 +1,72 @@
-const fs = require('fs');
+const fs = require('fs')
 const path = require('path')
 
 const getShortYear = function (date) {
   return new Date(date)
     .getFullYear()
     .toString()
-    .substr(-2);
-};
+    .substr(-2)
+}
 
 const paginate = (query, { page, pageSize }) => {
-  const offset = parseInt(page) * parseInt(pageSize);
-  const limit = parseInt(pageSize);
+  const offset = parseInt(page) * parseInt(pageSize)
+  const limit = parseInt(pageSize)
   return {
     ...query,
     offset,
     limit
-  };
-};
+  }
+}
 
 /**
  * Create if dont exists path
- * @param {*} directoryPath 
+ * @param {*} directoryPath
  */
-function mkdirpath(directoryPath) {
-  const directory = path.normalize(directoryPath);
+function mkdirpath (directoryPath) {
+  const directory = path.normalize(directoryPath)
 
   return new Promise((resolve, reject) => {
-    fs.stat(directory, (error) => {
+    fs.stat(directory, error => {
       if (error) {
         if (error.code === 'ENOENT') {
-          fs.mkdir(directory, { recursive: true }, (error) => {
+          fs.mkdir(directory, { recursive: true }, error => {
             if (error) {
-              reject(error);
+              reject(error)
             } else {
-              resolve(directory);
+              resolve(directory)
             }
-          });
+          })
         } else {
-          reject(error);
+          reject(error)
         }
       } else {
-        resolve(directory);
+        resolve(directory)
       }
-    });
-  });
+    })
+  })
 }
 
-
 /**
-   * Transform a byteArray file to hex representation
-   *
-   * @param {*} byteArray
-   */
-function toHexString(byteArray) {
-  return Array.from(byteArray, (byte) => {
-    return ('0' + (byte & 0xFF).toString(16)).slice(-2)
+ * Transform a byteArray file to hex representation
+ *
+ * @param {*} byteArray
+ */
+function toHexString (byteArray) {
+  return Array.from(byteArray, byte => {
+    return ('0' + (byte & 0xff).toString(16)).slice(-2)
   }).join('')
 }
 
-module.exports = { getShortYear, paginate, mkdirpath, toHexString };
+function stagesName (stage) {
+  const stages = {
+    fields: 'Campo',
+    'pre-sowing': 'Pre-Siembra',
+    sowing: 'Siembra',
+    protection: 'Protección de cultivo',
+    'other-expenses': 'Gastos administrativos'
+  }
+
+  return stages[stage] || ''
+}
+
+module.exports = { getShortYear, paginate, mkdirpath, toHexString, stagesName }

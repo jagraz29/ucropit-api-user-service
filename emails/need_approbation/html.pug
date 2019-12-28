@@ -28,14 +28,14 @@ head
       padding: 15px;
     }
 body
-  p Hola  #{user.first_name},
+  p Hola  #{to.user.first_name},
 
-  p.content Para reiniciar su contraseña, haga click en el siguiente botón:
+  p.content El registro agropecuario ID ##{production.id} de la etapa #{stage} requiere de tu Aprobación. Para acceder a la misma haga click aquí:
 
   br
 
   div
-    a.button(href=url+'/reset/'+token) Reiniciar contraseña
+    a.button(href=url+path) Ver Registro
 
   br
 
