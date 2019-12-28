@@ -38,13 +38,18 @@ class Mail {
       const users = await User.findAll({ where: { id: usersID } })
 
       if (users !== null) {
-        const mails = await Mail.send({
-          template: type,
-          to: users.map(el => el.email),
-          data: {
-            ...data,
-            url: process.env.FRONT_URL
-          }
+        users.map(el => {
+          const user = el.get({ plain: true })
+          console.log('USER_DATA', user)
+          Mail.send({
+            template: type,
+            to: user.email,
+            data: {
+              to: { user },
+              ...data,
+              url: process.env.FRONT_URL
+            }
+          })
         })
       }
     } catch (error) {

@@ -32,5 +32,10 @@ router.use(
   authMiddleware.checkToken,
   require('./colaborator')
 )
+router.use(
+  '/api/notifications',
+  authMiddleware.checkToken,
+  require('./notifications')
+)
 
 module.exports = router

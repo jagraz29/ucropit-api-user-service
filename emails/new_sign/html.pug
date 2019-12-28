@@ -28,14 +28,14 @@ head
       padding: 15px;
     }
 body
-  p Hola  #{to.user.first_name},
+  p Hola  #{user.first_name},
 
-  p.content Su cuenta de UCROP.IT fue creada exitosamente. Haga click en el botón para activar la misma:
+  p.content Para reiniciar su contraseña, haga click en el siguiente botón:
 
   br
 
   div
-    a.button(href=url+'/activate/'+activationToken) Activar cuenta
+    a.button(href=url+'/reset/'+token) Reiniciar contraseña
 
   br
 
