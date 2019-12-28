@@ -40,7 +40,7 @@ class Mail {
       if (users !== null) {
         users.map(el => {
           const user = el.get({ plain: true })
-          console.log('USER_DATA', user)
+          
           Mail.send({
             template: type,
             to: user.email,
