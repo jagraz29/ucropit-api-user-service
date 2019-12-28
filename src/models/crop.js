@@ -5,6 +5,15 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
+    crop_name: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    units: {
+      type: DataTypes.ENUM,
+      defaultValue: 'Toneladas',
+      values: ['Toneladas', 'Kilogramos', 'Bolsas', 'Fardos']
+    },
     budget: {
       type: DataTypes.TEXT,
       allowNull: false
@@ -28,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
     end_at: {
       type: DataTypes.DATE,
       allowNull: false
+    },
+    agronomic_budget: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 0
     },
     reference_price: DataTypes.DOUBLE,
     status: {
