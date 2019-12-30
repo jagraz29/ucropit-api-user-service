@@ -15,7 +15,7 @@ module.exports = {
       queryInterface.addColumn('crops', 'agronomic_budget', {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue: 0
+        defaultValue: 1
       })
     ])
   },

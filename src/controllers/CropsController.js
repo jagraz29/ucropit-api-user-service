@@ -373,6 +373,7 @@ class CropsController {
     try {
       const crop = await Crop.create({
         ...data,
+        status: data.agronomic_budget ? 'checking' : 'accepted',
         budget: JSON.stringify({
           items: [
             {
