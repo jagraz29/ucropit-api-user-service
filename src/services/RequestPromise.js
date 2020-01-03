@@ -24,10 +24,10 @@ class RequestPromise {
     }
 
     return {
-        method: this.method,
-        body: this.data,
-        url: this.path,
-        headers: this.headers
+      method: this.method,
+      body: this.data,
+      url: this.path,
+      headers: this.headers
     };
   }
 }
