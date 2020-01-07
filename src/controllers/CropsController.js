@@ -72,7 +72,10 @@ class CropsController {
           user,
           cropName,
           owner: auth.user,
-          crop,
+          crop_path:
+            crop.status === 'accepted'
+              ? `/productions/${crop.id}`
+              : `/planning/${crop.id}/details`,
           url: process.env.FRONT_URL
         }
       })

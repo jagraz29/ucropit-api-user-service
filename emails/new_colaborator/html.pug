@@ -30,14 +30,15 @@ head
 body
   p Hola  #{user.first_name},
 
-  p.content Te han compartido #{cropName}. Para acceder a la misma haga click aquí:
-    p Recuerde que si no dispone de cuenta debre crear la misma
+  p.content Te han compartido el cultivo #{cropName}.
+    p Recuerde que si no dispone de cuenta debe crear la misma.
+      p Para acceder haga click aqui:
 
   br
   br
 
   div
-    a.button(href=url) Acceder a #{cropName}
+    a.button(href=url+crop_path) Acceder a #{cropName}
 
   br
   br
@@ -53,16 +54,10 @@ body
 
   br
 
-  img(src="http://ucrop.it/logo.png", alt="logo" width="100")
-  br
   p
-    small Italia, 451, Of #102
-  p
-    small Vicente Lopez, Buenos Aires, Argentina
-  p
-    small Tel: +54911 5654-0777
-  p
-    small Via Whatsapp: +54911 2386-3166
+    small Via Whatsapp: 
+    br
+    small +54911 2386-3166
   p
     small contacto@ucrop.it
   p

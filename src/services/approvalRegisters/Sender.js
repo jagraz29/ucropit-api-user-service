@@ -9,21 +9,23 @@ class Sender {
    * Send via mail request approbation register
    * @param {*} param0
    */
-  static async needApprobation ({ approvalRegister, stage, authUser }) {
+  static async needApprobation ({ approvalRegister, stage, authUser, pathname }) {
     try {
       const production = await Common.getProductionBy(approvalRegister)
+
       const usersCanSign = await ProductionPermissions.whoCanSign(
         production.id,
         stage
       )
 
       const filteredUsers = usersCanSign
-        .filter(el => el.id === authUser.id)
+        .filter(el => el !== null)
+        .filter(el => el.id !== authUser.id)
         .map(el => el.id)
-      console.log('filtered', filteredUsers)
+
       await Mail.sendNotificationMail({
         data: {
-          path: `/productions/${production.id}/fields/sign`,
+          path: pathname,
           production,
           stage: stagesName(stage)
         },

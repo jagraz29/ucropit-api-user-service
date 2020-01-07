@@ -120,7 +120,8 @@ router.post('/:registerId/files', async (req, res) => {
         latitude: req.body.latitude || null,
         longitude: req.body.longitude || null
       },
-      req.body.stage
+      req.body.stage,
+      req.body.pathname
     )
 
     return res.json({ code: 200, error: false, register })

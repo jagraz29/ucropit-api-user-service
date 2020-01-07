@@ -139,9 +139,9 @@ class ApprovalsRegisterController {
     return files
   }
 
-  static async file (id, file, concept, auth, position = null, stage) {
+  static async file (id, file, concept, auth, position = null, stage, pathname) {
     try {
-      await Sender.needApprobation({ approvalRegister: id, stage, authUser: auth.user })
+      await Sender.needApprobation({ approvalRegister: id, stage, authUser: auth.user, pathname })
 
       const upload = new UploadFile(file, 'uploads')
       const res = await upload.store()

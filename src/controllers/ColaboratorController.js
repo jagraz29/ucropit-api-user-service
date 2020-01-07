@@ -173,10 +173,11 @@ class ColaboratorController {
           template: 'new_colaborator',
           to: newUser.email,
           data: {
-            user,
+            user: newUser,
             cropName,
             owner: auth.user,
-            crop,
+            crop_path:
+              crop.status === 'accepted' ? `/productions/${crop.id}` : '',
             url: process.env.FRONT_URL
           }
         })
@@ -215,7 +216,10 @@ class ColaboratorController {
           user,
           cropName,
           owner: auth.user,
-          crop,
+          crop_path:
+            crop.status === 'accepted'
+              ? `/productions/${crop.id}`
+              : `/planning/${crop.id}/details`,
           url: process.env.FRONT_URL
         }
       })
@@ -294,10 +298,11 @@ class ColaboratorController {
           template: 'new_colaborator',
           to: newUser.email,
           data: {
-            user,
+            user: newUser,
             cropName,
             owner: auth.user,
-            crop,
+            crop_path:
+              crop.status === 'accepted' ? `/productions/${crop.id}` : '',
             url: process.env.FRONT_URL
           }
         })
@@ -344,7 +349,8 @@ class ColaboratorController {
           user,
           cropName,
           owner: auth.user,
-          crop,
+          crop_path:
+            crop.status === 'accepted' ? `/productions/${crop.id}` : '',
           url: process.env.FRONT_URL
         }
       })
@@ -426,7 +432,7 @@ class ColaboratorController {
       })
       factory.permissions = permissions
       factory.owner = 0
-    
+
       return await ProductionUserPermission.create({
         user_id: user.id,
         production_id: cropId,
