@@ -172,7 +172,13 @@ class ColaboratorController {
         Mail.send({
           template: 'new_colaborator',
           to: newUser.email,
-          data: { user, cropName, owner: auth.user, crop, url: process.env.FRONT_URL }
+          data: {
+            user,
+            cropName,
+            owner: auth.user,
+            crop,
+            url: process.env.FRONT_URL
+          }
         })
 
         await crop.addUsers(newUser)
@@ -205,7 +211,13 @@ class ColaboratorController {
       Mail.send({
         template: 'new_colaborator',
         to: user.email,
-        data: { user, cropName, owner: auth.user, crop, url: process.env.FRONT_URL }
+        data: {
+          user,
+          cropName,
+          owner: auth.user,
+          crop,
+          url: process.env.FRONT_URL
+        }
       })
 
       const rel = await CropUsers.findOne({
@@ -281,7 +293,13 @@ class ColaboratorController {
         Mail.send({
           template: 'new_colaborator',
           to: newUser.email,
-          data: { user, cropName, owner: auth.user, crop, url: process.env.FRONT_URL }
+          data: {
+            user,
+            cropName,
+            owner: auth.user,
+            crop,
+            url: process.env.FRONT_URL
+          }
         })
 
         await crop.addUsers(newUser)
@@ -322,7 +340,13 @@ class ColaboratorController {
       Mail.send({
         template: 'new_colaborator',
         to: user.email,
-        data: { user, cropName, owner: auth.user, crop, url: process.env.FRONT_URL }
+        data: {
+          user,
+          cropName,
+          owner: auth.user,
+          crop,
+          url: process.env.FRONT_URL
+        }
       })
 
       let rel = await CropUsers.findOne({
@@ -394,10 +418,15 @@ class ColaboratorController {
 
       const factory = new ProductionFactory(cropId)
 
-      factory.stages = stagesProduction
+      factory.stages = stagesProduction.map(el => {
+        if (el.label === 'other-expenses') {
+          el.data = el.data === null ? '[]' : el.data
+        }
+        return el
+      })
       factory.permissions = permissions
       factory.owner = 0
-
+    
       return await ProductionUserPermission.create({
         user_id: user.id,
         production_id: cropId,
