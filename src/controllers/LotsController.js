@@ -1,7 +1,7 @@
 'use strict'
 
 const Lot = require('../models').lots
-const UploadFile = require("../services/UploadFiles")
+const UploadFile = require('../services/UploadFiles')
 
 class LotsController {
   static async index () {
@@ -37,7 +37,7 @@ class LotsController {
   static async create (data, file) {
     try {
       if (file) {
-        const upload = new UploadFile(file, "uploads")
+        const upload = new UploadFile(file, 'uploads')
         const res = await upload.store()
         data.kmz_path = res.namefile
       }
@@ -55,7 +55,7 @@ class LotsController {
       })
 
       if (file) {
-        const upload = new UploadFile(file, "uploads")
+        const upload = new UploadFile(file, 'uploads')
         const res = await upload.store()
         data.kmz_path = res.namefile
       }
@@ -66,7 +66,7 @@ class LotsController {
     }
   }
 
-  static async delete(id) {
+  static async delete (id) {
     try {
       const crop = await Lot.findOne({
         where: { id: id }

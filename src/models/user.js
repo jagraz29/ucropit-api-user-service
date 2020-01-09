@@ -42,6 +42,10 @@ module.exports = (sequelize, DataTypes) => {
       activation_token: {
         type: DataTypes.STRING,
         allowNull: true
+      },
+      reset_token: {
+        type: DataTypes.STRING,
+        allowNull: true
       }
     },
     {

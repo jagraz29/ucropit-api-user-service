@@ -1,8 +1,8 @@
-"use strict";
+'use strict'
 
 module.exports = (sequelize, DataTypes) => {
   const Producer = sequelize.define(
-    "producers",
+    'producers',
     {
       id: {
         allowNull: false,
@@ -24,19 +24,19 @@ module.exports = (sequelize, DataTypes) => {
       },
       depto: {
         type: DataTypes.STRING,
-        allowNull: false 
+        allowNull: false
       }
     },
     {
       underscored: true
     }
-  );
+  )
 
-  Producer.associate = function(models) {
+  Producer.associate = function (models) {
     Producer.belongsTo(models.users, {
-      foreignKey: "user_id"
-    });
-  };
+      foreignKey: 'user_id'
+    })
+  }
 
-  return Producer;
-};
+  return Producer
+}

@@ -1,8 +1,8 @@
-"use strict";
+'use strict'
 
-const express = require("express")
+const express = require('express')
 const router = express.Router()
-const ApprovalsController = require("../controllers/ApprovalsController")
+const ApprovalsController = require('../controllers/ApprovalsController')
 
 router.post('/', async (req, res) => {
   try {
@@ -25,15 +25,18 @@ router.get('/crops/:cropId/stages/:stage', async (req, res) => {
   }
 })
 
-router.get('/crops/:cropId/stages/:stage/type/:type/:typeId', async (req, res) => {
-  try {
-    const approval = await ApprovalsController.show(req.params)
+router.get(
+  '/crops/:cropId/stages/:stage/type/:type/:typeId',
+  async (req, res) => {
+    try {
+      const approval = await ApprovalsController.show(req.params)
 
-    return res.json({ code: 200, error: false, approval })
-  } catch (error) {
-    console.log(error)
-    return res.json({ code: 400, error: false, data: error })
+      return res.json({ code: 200, error: false, approval })
+    } catch (error) {
+      console.log(error)
+      return res.json({ code: 400, error: false, data: error })
+    }
   }
-})
+)
 
 module.exports = router

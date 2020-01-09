@@ -1,41 +1,56 @@
 module.exports = (sequelize, DataTypes) => {
-  const Crop = sequelize.define('crops', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
+  const Crop = sequelize.define(
+    'crops',
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      crop_name: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      units: {
+        type: DataTypes.ENUM,
+        defaultValue: 'Toneladas',
+        values: ['Toneladas', 'Kilogramos', 'Bolsas', 'Fardos']
+      },
+      budget: {
+        type: DataTypes.TEXT,
+        allowNull: false
+      },
+      crop_type_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      surface: {
+        type: DataTypes.DOUBLE,
+        allowNull: false
+      },
+      quintals: {
+        type: DataTypes.DOUBLE,
+        allowNull: false
+      },
+      start_at: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      end_at: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      agronomic_budget: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: 0
+      },
+      reference_price: DataTypes.DOUBLE,
+      status: {
+        type: DataTypes.ENUM,
+        defaultValue: 'checking',
+        values: ['checking', 'planing', 'accepted']
+      }
     },
-    budget: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    crop_type_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    surface: {
-      type: DataTypes.DOUBLE,
-      allowNull: false
-    },
-    quintals: {
-      type: DataTypes.DOUBLE,
-      allowNull: false
-    },
-    start_at: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    end_at: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    reference_price: DataTypes.DOUBLE,
-    status: {
-      type: DataTypes.ENUM,
-      defaultValue: 'checking',
-      values: ['checking', 'planing', 'accepted']
-    }
-  },
     {
       freezeTableName: true,
       tableName: 'crops',
@@ -46,7 +61,6 @@ module.exports = (sequelize, DataTypes) => {
   Crop.associate = function (models) {
     Crop.belongsTo(models.crop_types, { foreignKey: 'crop_type_id' })
 
-    
     Crop.belongsToMany(models.fields, {
       foreignKey: 'crop_id',
       otherKey: 'field_id',
