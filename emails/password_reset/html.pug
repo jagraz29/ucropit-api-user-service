@@ -28,17 +28,15 @@ head
       padding: 15px;
     }
 body
-  p Hola  #{user.first_name},
+  p Hola  #{to.user.first_name},
 
-  p.content Te han compartido el cultivo #{cropName}.
-    p Recuerde que si no dispone de cuenta debe crear la misma.
-      p Para acceder haga click aqui:
+  p.content Para reiniciar su contraseña, haga click en el siguiente botón:
 
   br
   br
 
   div
-    a.button(href=url+crop_path) Acceder a #{cropName}
+    a.button(href=url+'/reset/'+token) Reiniciar contraseña
 
   br
   br

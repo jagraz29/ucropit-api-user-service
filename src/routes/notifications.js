@@ -2,10 +2,10 @@
 
 const express = require('express')
 const router = express.Router()
-const DiaryUserController = require('../controllers/DiaryUserController')
+const NotificationsController = require('../controllers/NotificationsController')
 
-router.get('/', (req, res) => {
-  DiaryUserController.index(req.decoded)
+router.get('/email', (req, res) => {
+  NotificationsController.sendNotificationMail(req.body)
     .then(result => {
       return res.json({ code: 200, error: false, result })
     })
