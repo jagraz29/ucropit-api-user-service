@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     kmz_path: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   },
     {
