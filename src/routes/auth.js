@@ -60,7 +60,7 @@ router.post("/admin", async (req, res) => {
   }
 });
 
-router.post("/activate/:token", async (req, res) => {
+router.get("/activate/:token", async (req, res) => {
   try {
     const result = await AuthController.activate(req.params.token);
     return res.json({ error: false, code: 200, data: result });
@@ -100,6 +100,16 @@ router.post("/register", async (req, res) => {
 router.get("/activation/users/:id", async (req, res) => {
   try {
     await AuthController.requestActivationUser(req.params.id);
+    res.status(200).json({ status: "Ok", result: user });
+  } catch (error) {
+    console.error(err);
+    return res.status(500).json({ error: true, code: 422, message: err });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const user = await AuthController.getUser(req.params.id);
     res.status(200).json({ status: "Ok", result: user });
   } catch (error) {
     console.error(err);

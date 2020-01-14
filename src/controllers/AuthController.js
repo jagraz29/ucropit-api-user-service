@@ -73,7 +73,6 @@ class AuthController {
       await user.update({ activation_token: activationToken });
 
       return await this.sendActivationEmail(user, activationToken);
-
     } catch (error) {
       console.log(error);
     }
@@ -85,7 +84,7 @@ class AuthController {
         data: {
           user: user,
           activationToken: token,
-          url: `${process.env.BASE_URL}/api/auth`
+          baseUrl: `${process.env.BASE_URL}/v1/api/auth`
         },
         usersID: [user.id],
         type: "user_activation"
@@ -125,6 +124,15 @@ class AuthController {
     } catch (err) {
       console.error(err);
       return { error: true, message: err.message };
+    }
+  }
+
+  static async getUser(id) {
+    try {
+      return await User.findOne({ where: { id: id } });
+    } catch (error) {
+      console.error(error);
+      return null;
     }
   }
 
