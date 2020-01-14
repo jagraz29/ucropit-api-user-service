@@ -100,7 +100,7 @@ router.post("/register", async (req, res) => {
 router.get("/activation/users/:id", async (req, res) => {
   try {
     await AuthController.requestActivationUser(req.params.id);
-    res.status(200).json({ status: "Ok", result: user });
+    res.status(200).json({ status: "Ok" });
   } catch (error) {
     console.error(err);
     return res.status(500).json({ error: true, code: 422, message: err });

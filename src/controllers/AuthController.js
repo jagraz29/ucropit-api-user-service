@@ -72,7 +72,9 @@ class AuthController {
 
       await user.update({ activation_token: activationToken });
 
-      return await this.sendActivationEmail(user, activationToken);
+      await this.sendActivationEmail(user, activationToken);
+
+      return { activate: true };
     } catch (error) {
       console.log(error);
     }
