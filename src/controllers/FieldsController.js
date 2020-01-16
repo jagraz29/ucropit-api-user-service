@@ -4,6 +4,7 @@ const Field = require("../models").fields;
 const Lot = require("../models").lots;
 const UploadFile = require("../services/UploadFiles");
 const GoogleGeoCoding = require("../services/GoogleGeoCoding");
+const CropType = require("../models").crop_types;
 
 class FieldsController {
   static async index(auth) {
@@ -29,7 +30,13 @@ class FieldsController {
     try {
       return await Field.findOne({
         where: { id: id },
-        include: [{ model: Lot }]
+        include: [
+          { model: Lot },
+          {
+            model: CropType,
+            attributes: ["id", ["name", "label"], ["id", "value"]]
+          }
+        ]
       });
     } catch (err) {
       throw new Error(err);
@@ -37,6 +44,7 @@ class FieldsController {
   }
 
   static async create(data, auth, file) {
+    console.log(data);
     try {
       const resultGeocode = await GoogleGeoCoding.getGeocoding(
         data.lat,
@@ -73,12 +81,12 @@ class FieldsController {
         data.lat,
         data.lng
       );
-      
+
       const values = {
         ...data,
         address: !resultGeocode.error
-        ? resultGeocode.data[1].formatted_address
-        : null
+          ? resultGeocode.data[1].formatted_address
+          : null
       };
 
       if (file) {
