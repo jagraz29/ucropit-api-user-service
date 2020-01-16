@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
       crop_type_id: {
         type: DataTypes.INTEGER,
         allowNull: true
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: true
       }
     },
     {

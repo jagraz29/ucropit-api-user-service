@@ -44,7 +44,6 @@ class FieldsController {
   }
 
   static async create(data, auth, file) {
-    console.log(data);
     try {
       const resultGeocode = await GoogleGeoCoding.getGeocoding(
         data.lat,
