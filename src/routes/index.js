@@ -25,7 +25,7 @@ router.use(
   require('./applications')
 )
 router.use('/api/approvals', authMiddleware.checkToken, require('./approval'))
-router.use('/api/approvals/registers', require('./approval-register'))
+router.use('/api/approvals/registers', authMiddleware.checkToken, require('./approval-register'))
 router.use('/api/contacts', authMiddleware.checkToken, require('./contacts'))
 router.use(
   '/api/colaborators',
