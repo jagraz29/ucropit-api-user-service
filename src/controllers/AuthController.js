@@ -86,7 +86,7 @@ class AuthController {
         data: {
           user: user,
           activationToken: token,
-          baseUrl: `${process.env.BASE_URL}/v1/api/auth`
+          baseUrl: `${process.env.FRONT_URL}`
         },
         usersID: [user.id],
         type: "user_activation"
