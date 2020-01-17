@@ -58,6 +58,7 @@ function toHexString (byteArray) {
 }
 
 function stagesName (stage) {
+  console.log('STAGE', stage)
   const stages = {
     fields: 'Campo',
     'pre-sowing': 'Pre-Siembra',

@@ -19,8 +19,10 @@ class ProductionPermissions {
         include: [{ model: Users }]
       })
 
-      const transformed = Transformer.getPermissionsParsed(data)
+      console.log(data)
 
+      const transformed = Transformer.getPermissionsParsed(data)
+      
       const result = transformed.filter(el => {
         const stageFound = el.stages.find(el => {
           return el.key === stage
