@@ -14,7 +14,7 @@ class Sender {
       const production = await Common.getProductionBy(approvalRegister)
 
       const usersCanSign = await ProductionPermissions.whoCanSign(
-        production.id,
+        production.crop_id,
         stage
       )
 
