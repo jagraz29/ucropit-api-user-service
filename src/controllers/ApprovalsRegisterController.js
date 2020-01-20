@@ -178,9 +178,6 @@ class ApprovalsRegisterController {
         path.join(__dirname, `../../public/uploads/${res.namefile}`)
       );
 
-      console.log(exif.metadata.tags);
-      console.log(moment.unix(exif.metadata.tags.DateTimeOriginal).format("MM/DD/YYYY"))
-
       return await ApprovalRegisterFiles.create({
         approval_register_id: id,
         concept,
@@ -188,6 +185,11 @@ class ApprovalsRegisterController {
         type: res.fileType,
         latitude: exif.metadata.tags.GPSLatitude || position.latitude,
         longitude: exif.metadata.tags.GPSLongitude || position.longitude,
+        date_created_file: exif.metadata.tags.DateTimeOriginal
+          ? moment
+              .unix(exif.metadata.tags.DateTimeOriginal)
+              .format("MM/DD/YYYY HH:mm:ss")
+          : null,
         user_id: auth.user.id
       });
     } catch (error) {
