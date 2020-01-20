@@ -60,7 +60,7 @@ class ApprovalsRegisterController {
 
   static async show(cropId, stage, type, typeId) {
     try {
-      const signers = await Signers.getSigners(stage, cropId,typeId, type);
+      const signers = await Signers.getSigners(stage, cropId, typeId, type);
 
       const approval =
         stage === "fields"

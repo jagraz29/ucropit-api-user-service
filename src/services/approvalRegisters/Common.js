@@ -31,8 +31,8 @@ class Common {
 
   /**
    * Get all users to stage production by cropId filter.
-   * 
-   * @param {*} cropId 
+   *
+   * @param {*} cropId
    */
   static async getProductionPermisionsByCropId(cropId) {
     let crop = await Crop.findOne({

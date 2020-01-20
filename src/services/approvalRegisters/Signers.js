@@ -5,11 +5,11 @@ const Common = require("./Common");
 class Signers {
   /**
    * Get all signers to event.
-   * 
-   * @param {*} stage 
-   * @param {*} cropId 
-   * @param {*} typeId 
-   * @param {*} type 
+   *
+   * @param {*} stage
+   * @param {*} cropId
+   * @param {*} typeId
+   * @param {*} type
    */
   static async getSigners(stage, cropId, typeId, type) {
     const permissions = await Common.getProductionPermisionsByCropId(cropId);
@@ -23,7 +23,7 @@ class Signers {
         };
       })
       .filter(el => el.events !== undefined);
- 
+
     if (stage !== "fields") {
       canSignUsers = canSignUsers
         .filter(el => el.events.events !== false)
@@ -45,7 +45,7 @@ class Signers {
         return el.stages.permissions.can_sign === true;
       });
     }
-    
+
     return canSignUsers;
   }
 }
