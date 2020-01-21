@@ -355,7 +355,7 @@ class ColaboratorController {
         }
       })
 
-      const rel = await CropUsers.findOne({
+      let rel = await CropUsers.findOne({
         where: { user_id: user.id, crop_id: crop.id }
       })
 
