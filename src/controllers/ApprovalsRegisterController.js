@@ -14,6 +14,7 @@ const ExifFile = require("../services/ExifFile");
 const Signers = require("../services/approvalRegisters/Signers");
 const Sequelize = require("sequelize");
 const path = require("path");
+const moment = require("moment");
 
 const Sender = require("../services/approvalRegisters/Sender");
 
@@ -150,12 +151,12 @@ class ApprovalsRegisterController {
 
   static async file(id, file, concept, auth, position = null, stage, pathname) {
     try {
-      await Sender.needApprobation({
-        approvalRegister: id,
-        stage,
-        authUser: auth.user,
-        pathname
-      });
+      // await Sender.needApprobation({
+      //   approvalRegister: id,
+      //   stage,
+      //   authUser: auth.user,
+      //   pathname
+      // });
 
       const upload = new UploadFile(file, "uploads");
       const res = await upload.store();
@@ -184,6 +185,11 @@ class ApprovalsRegisterController {
         type: res.fileType,
         latitude: exif.metadata.tags.GPSLatitude || position.latitude,
         longitude: exif.metadata.tags.GPSLongitude || position.longitude,
+        date_created_file: exif.metadata.tags.DateTimeOriginal
+          ? moment
+              .unix(exif.metadata.tags.DateTimeOriginal)
+              .format("MM/DD/YYYY HH:mm:ss")
+          : null,
         user_id: auth.user.id
       });
     } catch (error) {

@@ -7,20 +7,19 @@ module.exports = (sequelize, DataTypes) => {
       path: {
         type: DataTypes.STRING,
         get: function() {
-          return `${process.env.BASE_URL}/uploads/${this.getDataValue(
-            "path"
-          )}`;
+          return `${process.env.BASE_URL}/uploads/${this.getDataValue("path")}`;
         }
       },
       concept: DataTypes.STRING,
       type: DataTypes.STRING,
       latitude: DataTypes.STRING,
-      longitude: DataTypes.STRING
+      longitude: DataTypes.STRING,
+      date_created_file: { type: DataTypes.DATE, allowNull: true }
     },
     {}
   );
   approval_register_file.associate = function(models) {
-    approval_register_file.belongsTo(models.users, { foreignKey: 'user_id' })
+    approval_register_file.belongsTo(models.users, { foreignKey: "user_id" });
   };
   return approval_register_file;
 };
