@@ -32,8 +32,13 @@ class FieldsController {
         where: { id: id },
         include: [
           {
-            model: CropType,
-            attributes: ["id", ["name", "label"], ["id", "value"]]
+            model: Lot,
+            include: [
+              {
+                model: CropType,
+                attributes: ["id", ["name", "label"], ["id", "value"]]
+              }
+            ]
           }
         ]
       });
