@@ -31,7 +31,6 @@ class FieldsController {
       return await Field.findOne({
         where: { id: id },
         include: [
-          { model: Lot },
           {
             model: CropType,
             attributes: ["id", ["name", "label"], ["id", "value"]]

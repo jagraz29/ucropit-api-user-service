@@ -31,10 +31,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true
       },
-      crop_type_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-      },
       address: {
         type: DataTypes.STRING,
         allowNull: true
@@ -49,8 +45,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Field.associate = function(models) {
     Field.hasMany(models.lots, { foreignKey: "field_id" });
-
-    Field.belongsTo(models.crop_types, { foreignKey: "crop_type_id" });
 
     Field.belongsToMany(models.crops, {
       foreignKey: "field_id",
