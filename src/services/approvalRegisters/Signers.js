@@ -49,7 +49,7 @@ class Signers {
       })
     }
 
-    return [...canSignUsers, aux]
+    return [...canSignUsers, ...aux]
   }
 }
 
