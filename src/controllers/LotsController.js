@@ -1,6 +1,7 @@
 'use strict'
 
 const Lot = require('../models').lots
+const CropType = require('../models').crop_types
 const UploadFile = require('../services/UploadFiles')
 
 class LotsController {
@@ -26,9 +27,17 @@ class LotsController {
 
   static async show (id) {
     try {
-      return await Lot.findOne({
+      const result = await Lot.findOne({
+        include:[
+          {
+            model: CropType,
+            attributes: ["id", ["name", "label"], ["id", "value"]]
+          }
+        ],
         where: { id: id }
       })
+      console.log(result)
+      return result
     } catch (err) {
       console.log(err)
     }
