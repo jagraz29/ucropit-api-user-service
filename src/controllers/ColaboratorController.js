@@ -511,7 +511,7 @@ class ColaboratorController {
       let stages = JSON.parse(productPermission.data).stages
 
       stages = stages.map((el) => {
-        if (el.key === 'fields') {
+        if (stage === 'fields') {
           el.permissions = {
             can_read: false,
             can_edit: false,
