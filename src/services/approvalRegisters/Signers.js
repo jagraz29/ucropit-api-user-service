@@ -16,16 +16,26 @@ class Signers {
   static async getSigners(stage, cropId, typeId, type) {
     const permissions = await Common.getProductionPermisionsByCropId(cropId)
     let aux = []
-    let canSignUsers = permissions.map((el) => {
-      return {
-        id: el.user_id,
-        events: el.permissions.events.find((el) => stage === el.label),
-        stages: el.permissions.stages.find((el) => stage === el.key),
-        allStages: el.permissions.stages.filter((el) => el.permissions.can_sign === true).length === TOTAL_STAGES
-      }
-    }).filter((el) => el.events !== undefined)
-    
-    aux = canSignUsers.filter(el => el.allStages)
+    let canSignUsers = permissions
+      .map((el) => {
+        return {
+          id: el.user_id,
+          events: el.permissions.events.find((el) => stage === el.label),
+          stages: el.permissions.stages.find((el) => stage === el.key),
+          withoutEvents:
+            el.permissions.events.filter((el) => el.events !== false).length ===
+            0,
+          allStages:
+            el.permissions.stages.filter(
+              (el) => el.permissions.can_sign === true
+            ).length === TOTAL_STAGES
+        }
+      })
+      .filter((el) => el.events !== undefined)
+      
+    aux = canSignUsers.filter((el) => {
+      return el.allStages
+    })
 
     if (stage !== 'fields') {
       canSignUsers = canSignUsers
