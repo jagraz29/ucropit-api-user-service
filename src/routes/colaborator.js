@@ -6,7 +6,7 @@ const ColaboratorController = require('../controllers/ColaboratorController')
 
 router.post('/productions/:cropId/:stage/:fieldId/:type', (req, res) => {
   const { cropId, stage, fieldId, type } = req.params
-  ColaboratorController.create(
+  ColaboratorController.addColaboratorEvent(
     req.body,
     cropId,
     stage,
@@ -26,7 +26,7 @@ router.post('/productions/:cropId/:stage/:fieldId/:type', (req, res) => {
 
 router.post('/:cropId/add', (req, res) => {
   const { cropId } = req.params
-  ColaboratorController.addColaborator(req.body, cropId, req.decoded)
+  ColaboratorController.addColaboratorGlobal(req.body, cropId, req.decoded)
     .then((result) => {
       return res.json({ code: 201, error: false, result })
     })

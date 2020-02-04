@@ -142,7 +142,7 @@ class ColaboratorController {
    * @param {*} type
    * @param {*} auth
    */
-  static async create(data, cropId, stage, fieldId, type, auth) {
+  static async addColaboratorEvent(data, cropId, stage, fieldId, type, auth) {
     try {
       const { email, first_name, last_name, can_sign, can_edit } = data
 
@@ -269,7 +269,7 @@ class ColaboratorController {
    * @param {*} crop
    * @param {*} auth
    */
-  static async addColaborator(data, cropId, auth) {
+  static async addColaboratorGlobal(data, cropId, auth) {
     try {
       let user = await Users.findOne({
         where: {
