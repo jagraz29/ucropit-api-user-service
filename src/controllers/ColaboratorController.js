@@ -446,8 +446,50 @@ class ColaboratorController {
     }
   }
 
+  /**
+   * Quitar permisos a un colaborador para firmar a los eventos dentro de una etapa.
+   * 
+   * @param {*} cropId 
+   * @param {*} stage 
+   * @param {*} userId 
+   */
   static async removeStage(cropId, stage, userId) {
-    //TODO: Implementar
+    try {
+      const productPermission = await ProductionUserPermission.findOne({
+        where: { user_id: userId, production_id: cropId }
+      })
+
+      const stages = JSON.parse(productPermission.data)
+        .stages.filter((el) => Object.keys(el).length > 0)
+        .map((el) => {
+          if (el.key === stage) {
+            return {
+              label: el.label,
+              key: el.key,
+              permissions: {
+                can_read: true,
+                can_edit: true,
+                can_sign: false
+              }
+            }
+          } else {
+            return { ...el }
+          }
+        })
+
+      const events = JSON.parse(productPermission.data).events
+
+      const permissions = {
+        stages: [...stages],
+        events: [...events]
+      }
+
+      return await productPermission.update({
+        data: JSON.stringify(permissions)
+      })
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 
   /**
@@ -512,7 +554,6 @@ class ColaboratorController {
         })
 
       let stages = JSON.parse(productPermission.data).stages
-
 
       const permissions = {
         stages: [...stages],
