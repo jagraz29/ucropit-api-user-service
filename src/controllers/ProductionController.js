@@ -123,6 +123,8 @@ class ProductionController {
         factory.permissions = permissions
         factory.owner = user.crop_users.is_owner
 
+        factory.state = 'planing'
+
         factory.generatePermissions
 
         return ProductionUserPermission.create({

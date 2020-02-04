@@ -5,29 +5,33 @@ const StageValidator = require('../validators/StageValidator')
 const uuidv1 = require('uuid/v1')
 
 class ProductionFactory {
-  set stage (item) {
+  set stage(item) {
     this._stage = item
   }
 
-  set stages (items) {
+  set stages(items) {
     this._stages = items
   }
 
-  set permissions (permissions) {
+  set permissions(permissions) {
     this._permissions = permissions
   }
 
-  set owner (owner) {
+  set owner(owner) {
     this._owner = owner
   }
 
-  get generate () {
+  set stateCrop(state) {
+    this._state = state
+  }
+
+  get generate() {
     const budget = this._getBudgetAmount()
     const { name, form, data } = this._stage
 
-    const mappedData = map(data, el => {
+    const mappedData = map(data, (el) => {
       if (form === 'other-expenses') {
-        const expenses = el.expenses.map(el => {
+        const expenses = el.expenses.map((el) => {
           const id = uuidv1()
           return {
             id,
@@ -50,7 +54,7 @@ class ProductionFactory {
           }
         })
 
-        const incomes = el.income.map(el => {
+        const incomes = el.income.map((el) => {
           const id = uuidv1()
           return {
             id,
@@ -93,8 +97,9 @@ class ProductionFactory {
     }
   }
 
-  get generatePermissions () {
-    const stages = this._stages.map(stage => {
+  get generatePermissions() {
+    let events = []
+    const stages = this._stages.map((stage) => {
       if (this._owner) {
         return {
           label: stage.name,
@@ -118,7 +123,7 @@ class ProductionFactory {
       }
     })
 
-    let events = this._stages.map(stage => {
+    events = this._stages.map((stage) => {
       let eventsPermissions = null
       if (this._owner) {
         eventsPermissions = {
@@ -133,21 +138,7 @@ class ProductionFactory {
           }
         }
       } else {
-        eventsPermissions =
-          JSON.parse(stage.data).length > 0 &&
-          JSON.parse(stage.data).map(element => {
-            return {
-              field_id: element.field_id,
-              type: element.type,
-              stage: stage.name,
-              label: stage.label,
-              permissions: {
-                can_read: true,
-                can_edit: this._getPermissionUser(1),
-                can_sign: this._getPermissionUser(2)
-              }
-            }
-          })
+        eventsPermissions = this._getPermissionsEvent(stage)
       }
 
       let data = {
@@ -161,7 +152,7 @@ class ProductionFactory {
       return data
     })
 
-    events = events.filter(element => element)
+    events = events.filter((element) => element)
 
     return {
       stages: [...stages],
@@ -169,7 +160,30 @@ class ProductionFactory {
     }
   }
 
-  _getBudgetAmount () {
+  _getPermissionsEvent(stage) {
+    let event = false
+    if (this._state === 'planing') {
+      event =
+        JSON.parse(stage.data).length > 0 &&
+        JSON.parse(stage.data).map((element) => {
+          return {
+            field_id: element.field_id,
+            type: element.type,
+            stage: stage.name,
+            label: stage.label,
+            permissions: {
+              can_read: true,
+              can_edit: this._getPermissionUser(1),
+              can_sign: this._getPermissionUser(2)
+            }
+          }
+        })
+    }
+
+    return event
+  }
+
+  _getBudgetAmount() {
     const budget = map(this._stage.data).reduce((prev, { amount, total }) => {
       return prev + Number(amount)
     }, 0)
@@ -177,9 +191,9 @@ class ProductionFactory {
     return budget
   }
 
-  _getPermissionUser (permission) {
+  _getPermissionUser(permission) {
     const is_permission = this._permissions.find(
-      el => el.crop_permission_id == permission
+      (el) => el.crop_permission_id == permission
     )
 
     return is_permission ? true : false

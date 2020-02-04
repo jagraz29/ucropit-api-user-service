@@ -425,6 +425,7 @@ class ColaboratorController {
       })
 
       const factory = new ProductionFactory(cropId)
+      factory.state = 'accepted'
 
       factory.stages = stagesProduction.map((el) => {
         if (el.label === 'other-expenses') {
@@ -445,6 +446,10 @@ class ColaboratorController {
     }
   }
 
+  static async removeStage(cropId, stage, userId) {
+    //TODO: Implementar
+  }
+
   /**
    * Se elimina un colaborador puntual de un evento.
    *
@@ -459,8 +464,6 @@ class ColaboratorController {
       const productPermission = await ProductionUserPermission.findOne({
         where: { user_id: userId, production_id: cropId }
       })
-
-      console.log(productPermission)
 
       const events = JSON.parse(productPermission.data)
         .events.filter((el) => Object.keys(el).length > 0)
@@ -477,8 +480,8 @@ class ColaboratorController {
                   type: type,
                   stage: _getStageName(stage),
                   permissions: {
-                    can_read: false,
-                    can_edit: false,
+                    can_read: true,
+                    can_edit: true,
                     can_sign: false
                   }
                 }
@@ -497,8 +500,8 @@ class ColaboratorController {
           ) {
             const eventsObj = { ...el.events }
             eventsObj.permissions = {
-              can_read: false,
-              can_edit: false,
+              can_read: true,
+              can_edit: true,
               can_sign: false
             }
 
@@ -510,16 +513,6 @@ class ColaboratorController {
 
       let stages = JSON.parse(productPermission.data).stages
 
-      stages = stages.map((el) => {
-        if (stage === 'fields') {
-          el.permissions = {
-            can_read: false,
-            can_edit: false,
-            can_sign: false
-          }
-        }
-        return el
-      })
 
       const permissions = {
         stages: [...stages],
