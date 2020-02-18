@@ -37,6 +37,9 @@ router.post('/:cropId/add', (req, res) => {
     })
 })
 
+/**
+ * Quitar priviegios de firmar para todo los eventos de un stage en particular.
+ */
 router.delete('/productions/:cropId/stage/:stage/users/:userId', (req, res) => {
   const { cropId, stage, userId } = req.params
 
@@ -51,6 +54,10 @@ router.delete('/productions/:cropId/stage/:stage/users/:userId', (req, res) => {
     })
 })
 
+
+/**
+ * Quitar privilegios de firma de colaboradores en un evento especifico.
+ */
 router.delete(
   '/productions/:cropId/:stage/:fieldId/:type/users/:userId',
   (req, res) => {

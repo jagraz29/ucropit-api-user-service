@@ -448,10 +448,10 @@ class ColaboratorController {
 
   /**
    * Quitar permisos a un colaborador para firmar a los eventos dentro de una etapa.
-   * 
-   * @param {*} cropId 
-   * @param {*} stage 
-   * @param {*} userId 
+   *
+   * @param {*} cropId
+   * @param {*} stage
+   * @param {*} userId
    */
   static async removeStage(cropId, stage, userId) {
     try {
@@ -494,7 +494,8 @@ class ColaboratorController {
 
   /**
    * Se elimina un colaborador puntual de un evento.
-   *
+   * Se le quita el privilegio de firmar un evento.
+   * 
    * @param {*} userId
    * @param {*} cropId
    * @param {*} stage
@@ -502,6 +503,7 @@ class ColaboratorController {
    * @param {*} type
    */
   static async removeEvent(cropId, stage, fieldId, type, userId) {
+    let notFound = true
     try {
       const productPermission = await ProductionUserPermission.findOne({
         where: { user_id: userId, production_id: cropId }
@@ -517,6 +519,7 @@ class ColaboratorController {
                 event.type == type &&
                 event.label == stage
               ) {
+                notFound = false
                 return {
                   field_id: fieldId,
                   type: type,
@@ -531,25 +534,72 @@ class ColaboratorController {
                 return { ...event }
               }
             })
-            el.events = eventsUpdate
-            return { ...el }
-          }
 
-          if (
-            el.events.field_id == fieldId &&
-            el.events.type == type &&
-            el.events.label == stage
-          ) {
-            const eventsObj = { ...el.events }
-            eventsObj.permissions = {
-              can_read: true,
-              can_edit: true,
-              can_sign: false
+            //Si no encuentra el evento en el array de eventos lo agrega al final del array
+            //Esto solo se aplica cuando eliminamos un usuario global de un evento en un stage
+            if (notFound) {
+              const eventExist = eventsUpdate.filter(
+                (el) =>
+                  el.field_id == fieldId &&
+                  el.type == type &&
+                  el.stage == _getStageName(stage)
+              )
+              if (eventExist.length === 0) {
+                eventsUpdate.push({
+                  field_id: fieldId,
+                  type: type,
+                  stage: _getStageName(stage),
+                  permissions: {
+                    can_read: true,
+                    can_edit: true,
+                    can_sign: false
+                  }
+                })
+              }
             }
 
-            return { ...eventsObj }
+            el.events = eventsUpdate
+            return { ...el }
           } else {
-            return { ...el.events }
+            if (el.label === stage) {
+              if (!el.events) {
+                const events = []
+                const permission = {
+                  field_id: fieldId,
+                  type: type,
+                  stage: _getStageName(stage),
+                  permissions: {
+                    can_read: true,
+                    can_edit: true,
+                    can_sign: false
+                  }
+                }
+
+                events.push(permission)
+                el.events = events
+
+                return { ...el }
+              }
+            } else {
+              return { ...el }
+            }
+
+            if (
+              el.events.field_id == fieldId &&
+              el.events.type == type &&
+              el.events.label == stage
+            ) {
+              const eventsObj = { ...el.events }
+              eventsObj.permissions = {
+                can_read: true,
+                can_edit: true,
+                can_sign: false
+              }
+
+              return { ...eventsObj }
+            } else {
+              return { ...el.events }
+            }
           }
         })
 
