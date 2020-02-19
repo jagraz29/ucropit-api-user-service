@@ -535,8 +535,8 @@ class ColaboratorController {
               }
             })
 
-            //Si no encuentra el evento en el array de eventos lo agrega al final del array
-            //Esto solo se aplica cuando eliminamos un usuario global de un evento en un stage
+            // Si no encuentra el evento en el array de eventos lo agrega al final del array
+            // Esto solo se aplica cuando eliminamos un usuario global de un evento en un stage
             if (notFound) {
               const eventExist = eventsUpdate.filter(
                 (el) =>
