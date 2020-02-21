@@ -12,30 +12,25 @@ const { paginate } = require('../helpers')
 class ProviderController {
   static async index (page, pageSize) {
     try {
-      const providers = await Provider.findAll(
-        paginate(
+      const providers = await Provider.findAll({
+        include: [
           {
-            include: [
-              {
-                model: ProviderType,
-                attributes: ['value', 'label'],
-                through: {
-                  model: TypesProviders
-                }
-              },
-              {
-                model: CoverageAreas,
-                attributes: ['value', 'name'],
-                through: {
-                  model: CoverageAreaProvider
-                }
-              }
-            ],
-            where: {}
+            model: ProviderType,
+            attributes: ['value', 'label'],
+            through: {
+              model: TypesProviders
+            }
           },
-          { page, pageSize }
-        )
-      )
+          {
+            model: CoverageAreas,
+            attributes: ['value', 'name'],
+            through: {
+              model: CoverageAreaProvider
+            }
+          }
+        ],
+        where: {}
+      })
 
       return providers
     } catch (err) {
