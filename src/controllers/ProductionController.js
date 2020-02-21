@@ -172,6 +172,35 @@ class ProductionController {
     })
   }
 
+  static async addHarvest(id) {
+    const production = await Production.findOne({
+      where: { crop_id: id }
+    })
+    const productionStage = await ProductionStage.findOne({
+      where: { label: 'harvest-and-marketing', production_id: production.id }
+    })
+
+    const dataProductionStage = JSON.parse(productionStage.data)
+    const newId = uuidv1()
+
+    return productionStage.update({
+      data: JSON.stringify([
+        ...dataProductionStage,
+        {
+          id: newId,
+          type: 'service',
+          field_id: newId,
+          concept: {
+            id: newId,
+            name: 'Cosecha ',
+            service_type: { id: 13, name: 'Cosecha' }
+          },
+          status: 'pending'
+        }
+      ])
+    })
+  }
+
   static async addOtherExpenses(id, stage, data) {
     const production = await Production.findOne({
       where: { crop_id: id }

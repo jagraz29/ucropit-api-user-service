@@ -9,7 +9,7 @@ class StageValidator {
       protection: { label: 'Protección de Cultivos', status: true, order: 3 },
       'other-expenses': { label: 'Otros gastos e ingresos', status: true, order: 4 },
       monitoring: { label: 'Monitoreo', status: true, order: 5 },
-      'harvest-and-marketing': { label: 'Cosecha y Comercialización', status: false, order: 6 },
+      'harvest-and-marketing': { label: 'Cosecha y Comercialización', status: true, order: 6 },
       deliveries: { label: 'Entregas', status: false, order: 7 }
     }
   }
