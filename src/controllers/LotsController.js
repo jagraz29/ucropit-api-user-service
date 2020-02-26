@@ -5,7 +5,7 @@ const CropType = require('../models').crop_types
 const UploadFile = require('../services/UploadFiles')
 
 class LotsController {
-  static async index () {
+  static async index() {
     try {
       return await Lot.findAll()
     } catch (err) {
@@ -13,7 +13,7 @@ class LotsController {
     }
   }
 
-  static async byField (id) {
+  static async byField(id) {
     try {
       return await Lot.findAll({
         where: {
@@ -25,13 +25,13 @@ class LotsController {
     }
   }
 
-  static async show (id) {
+  static async show(id) {
     try {
       const result = await Lot.findOne({
-        include:[
+        include: [
           {
             model: CropType,
-            attributes: ["id", ["name", "label"], ["id", "value"]]
+            attributes: ['id', ['name', 'label'], ['id', 'value']]
           }
         ],
         where: { id: id }
@@ -43,7 +43,8 @@ class LotsController {
     }
   }
 
-  static async create (data, file) {
+  static async create(data, file) {
+    data.crop_type_id = JSON.parse(data.crop_type_id)
     try {
       if (file) {
         const upload = new UploadFile(file, 'uploads')
@@ -57,7 +58,7 @@ class LotsController {
     }
   }
 
-  static async update (id, data, file) {
+  static async update(id, data, file) {
     try {
       const crop = await Lot.findOne({
         where: { id: id }
@@ -75,7 +76,7 @@ class LotsController {
     }
   }
 
-  static async delete (id) {
+  static async delete(id) {
     try {
       const crop = await Lot.findOne({
         where: { id: id }
