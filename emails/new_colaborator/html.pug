@@ -4,6 +4,17 @@ head
       padding: 0;
       margin: 0;
     }
+    a.button {
+      background: green;
+      padding: 15px;
+      margin-bottom: 30px;
+      border-radius: 4px;
+      border: 0;
+      color: white; 
+      text-decoration: none; 
+      font-size: 18px;
+      font-family: Arial;
+    }
     p {
       font-family: Arial;
     }
@@ -17,38 +28,38 @@ head
       padding: 15px;
     }
 body
-  p Hola  #Nombre#,
+  p Hola  #{user.first_name},
 
-  p.content #Nombre y Apellido Socio# le compartió una campaña de producción agropecuaria para trabajar en conjunto. 
-  p Cliquee en el link de abajo para acceder a la misma:
-  
+  p.content Te han compartido el cultivo #{cropName}.
+    p Recuerde que si no dispone de cuenta debe crear la misma.
+      p Para acceder haga click aqui:
+
   br
-  
-  a(href="#") #{cropName}
+  br
 
+  div
+    a.button(href=url+crop_path) Acceder a #{cropName}
+
+  br
   br
 
   p Si tiene alguna duda, por favor, póngase en contacto con nosotros.
   p Fuerte abrazo,
   p Equipo Ucrop.it
-  
+
   br
   br
-  
+
   p --
-  
+
   br
-  
-  img(src="http://ucrop.it/logo.png", alt="logo" width="100")
-  br
+
   p
-    small Italia, 451, Of #102 
-  p 
-    small Vicente Lopez, Buenos Aires, Argentina
-  p 
-    small Tel: +54911 56540777 
-  p 
-    small contacto@ucrop.it 
-  p 
+    small Via Whatsapp: 
+    br
+    small +54911 2386-3166
+  p
+    small contacto@ucrop.it
+  p
     small
       a(href="www.ucrop.it") www.ucrop.it

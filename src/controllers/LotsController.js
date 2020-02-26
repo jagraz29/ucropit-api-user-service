@@ -1,6 +1,8 @@
 'use strict'
 
 const Lot = require('../models').lots
+const CropType = require('../models').crop_types
+const UploadFile = require('../services/UploadFiles')
 
 class LotsController {
   static async index () {
@@ -25,27 +27,47 @@ class LotsController {
 
   static async show (id) {
     try {
-      return await Lot.findOne({
+      const result = await Lot.findOne({
+        include:[
+          {
+            model: CropType,
+            attributes: ["id", ["name", "label"], ["id", "value"]]
+          }
+        ],
         where: { id: id }
       })
+      console.log(result)
+      return result
     } catch (err) {
       console.log(err)
     }
   }
 
-  static async create (data) {
+  static async create (data, file) {
     try {
+      if (file) {
+        const upload = new UploadFile(file, 'uploads')
+        const res = await upload.store()
+        data.kmz_path = res.namefile
+      }
+
       return await Lot.create(data)
     } catch (err) {
       console.log(err)
     }
   }
 
-  static async update (id, data) {
+  static async update (id, data, file) {
     try {
       const crop = await Lot.findOne({
         where: { id: id }
       })
+
+      if (file) {
+        const upload = new UploadFile(file, 'uploads')
+        const res = await upload.store()
+        data.kmz_path = res.namefile
+      }
 
       return await crop.update(data)
     } catch (err) {
@@ -53,7 +75,7 @@ class LotsController {
     }
   }
 
-  static async delete(id) {
+  static async delete (id) {
     try {
       const crop = await Lot.findOne({
         where: { id: id }

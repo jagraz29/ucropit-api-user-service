@@ -1,0 +1,63 @@
+head
+  style(type="text/css").
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    a.button {
+      background: green;
+      padding: 15px;
+      margin-bottom: 30px;
+      border-radius: 4px;
+      border: 0;
+      color: white; 
+      text-decoration: none; 
+      font-size: 18px;
+      font-family: Arial;
+    }
+    p {
+      font-family: Arial;
+    }
+    p small {
+      margin: 5px 0;
+    }
+    .content {
+      margin-top: 15px;
+    }
+    body {
+      padding: 15px;
+    }
+body
+  p Hola  #{to.user.first_name},
+
+  p.content El registro agropecuario ID ##{production.id} de la etapa #{stage} requiere de tu Aprobación. Para acceder a la misma haga click aquí:
+
+  br
+  br
+  div
+    a.button(href=url+path) Ver Registro
+
+  br
+  br
+
+  p Si tiene alguna duda, por favor, póngase en contacto con nosotros.
+  p Fuerte abrazo,
+  p Equipo Ucrop.it
+
+  br
+  br
+
+  p --
+
+  br
+
+
+  p
+    small Via Whatsapp: 
+    br
+    small +54911 2386-3166
+  p
+    small contacto@ucrop.it
+  p
+    small
+      a(href="www.ucrop.it") www.ucrop.it

@@ -1,12 +1,12 @@
-"use strict";
+'use strict'
 
-const express = require("express");
-const router = express.Router();
-const ColaboratorController = require("../controllers/ColaboratorController");
+const express = require('express')
+const router = express.Router()
+const ColaboratorController = require('../controllers/ColaboratorController')
 
-router.post("/productions/:cropId/:stage/:fieldId/:type", (req, res) => {
-  const { cropId, stage, fieldId, type } = req.params;
-  ColaboratorController.create(
+router.post('/productions/:cropId/:stage/:fieldId/:type', (req, res) => {
+  const { cropId, stage, fieldId, type } = req.params
+  ColaboratorController.addColaboratorEvent(
     req.body,
     cropId,
     stage,
@@ -14,43 +14,57 @@ router.post("/productions/:cropId/:stage/:fieldId/:type", (req, res) => {
     type,
     req.decoded
   )
-    .then(result => {
-      return res.json({ code: 200, error: false, result });
+    .then((result) => {
+      return res.json({ code: 200, error: false, result })
     })
-    .catch(err => {
+    .catch((err) => {
       return res
         .status(400)
-        .json({ code: 400, error: true, message: err.message });
-    });
-});
+        .json({ code: 400, error: true, message: err.message })
+    })
+})
 
-router.post("/:cropId/add", (req, res) => {
-  const { cropId } = req.params;
-  ColaboratorController.addColaborator(req.body, cropId, req.decoded)
-    .then(result => {
-      return res.json({ code: 201, error: false, result });
+router.post('/:cropId/add', (req, res) => {
+  const { cropId } = req.params
+  ColaboratorController.addColaboratorGlobal(req.body, cropId, req.decoded)
+    .then((result) => {
+      return res.json({ code: 201, error: false, result })
     })
-    .catch(error => {
+    .catch((error) => {
       return res
         .status(400)
-        .json({ code: 400, error: true, message: err.message });
-    });
-});
+        .json({ code: 400, error: true, message: error.message })
+    })
+})
+
+router.delete('/productions/:cropId/stage/:stage/users/:userId', (req, res) => {
+  const { cropId, stage, userId } = req.params
+
+  ColaboratorController.removeStage(cropId, stage, userId)
+    .then((result) => {
+      return res.json({ code: 200, error: false, result })
+    })
+    .catch((error) => {
+      return res
+        .status(400)
+        .json({ code: 400, error: true, message: error.message })
+    })
+})
 
 router.delete(
-  "/productions/:cropId/:stage/:fieldId/:type/users/:userId",
+  '/productions/:cropId/:stage/:fieldId/:type/users/:userId',
   (req, res) => {
-    const { cropId, stage, fieldId, type, userId } = req.params;
+    const { cropId, stage, fieldId, type, userId } = req.params
     ColaboratorController.removeEvent(cropId, stage, fieldId, type, userId)
-      .then(result => {
-        return res.json({ code: 200, error: false, result });
+      .then((result) => {
+        return res.json({ code: 200, error: false, result })
       })
-      .catch(err => {
+      .catch((err) => {
         return res
           .status(400)
-          .json({ code: 400, error: true, message: err.message });
-      });
+          .json({ code: 400, error: true, message: err.message })
+      })
   }
-);
+)
 
-module.exports = router;
+module.exports = router
