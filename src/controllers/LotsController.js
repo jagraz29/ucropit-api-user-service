@@ -44,6 +44,7 @@ class LotsController {
   }
 
   static async create (data, file) {
+    data.crop_type_id = JSON.parse(data.crop_type_id)
     try {
       if (file) {
         const upload = new UploadFile(file, 'uploads')
