@@ -79,7 +79,7 @@ class ProductionController {
         Object.keys(diffData).length !== 0 &&
         diffData.constructor === Object
       ) {
-        //Se eliminan las firmas
+        // Se eliminan las firmas
         await _deleteSigns(crop)
       }
     }
