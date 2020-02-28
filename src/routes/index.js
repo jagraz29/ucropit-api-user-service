@@ -37,5 +37,9 @@ router.use(
   authMiddleware.checkToken,
   require('./notifications')
 )
+router.use(
+  '/api/users',
+  require('./users')
+)
 
 module.exports = router
