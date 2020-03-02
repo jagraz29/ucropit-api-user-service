@@ -5,12 +5,21 @@ const ApprovalRegister = require('../../models').approval_register
 const ApprovalRegisterSign = require('../../models').approval_register_sign
 
 class AggregationUsers {
+  /**
+   * Envia un array con los elementos encontrados, los arrays vacíos se descartan.
+   * @param {*} usersWhithApprovals
+   *
+   * @return Array
+   */
   static async getUsersWithApprovalsAggregation(usersWhithApprovals) {
     usersWhithApprovals = await Promise.all(usersWhithApprovals)
     return usersWhithApprovals.filter((elem) => elem.approvals.length > 0)
   }
 
   /**
+   * Busca todo los approvals de un usuario por el parámetro cropId.
+   * Por cada approval cuenta la cantidad de ApprovalRegister y Sings
+   * del usuario.
    *
    * @param Crop crops
    * @param User user
@@ -48,10 +57,15 @@ class AggregationUsers {
 
       return await Promise.all(approvalsWithSigns)
     } catch (error) {
-      reject(error)
+      throw new Error(error)
     }
   }
 
+  /**
+   * Cuenta la cantidad de ApprovalRegister y ApprovalRegisterSings.
+   *
+   * @param {*} approvals
+   */
   static async countApprovalsRegisters(approvals) {
     const result = approvals.map((approval) => {
       return {
