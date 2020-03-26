@@ -38,4 +38,7 @@ router.use(
   require('./notifications')
 )
 
+//Dashboard
+router.use('/api/dashboard', require('./dashboard'))
+
 module.exports = router
