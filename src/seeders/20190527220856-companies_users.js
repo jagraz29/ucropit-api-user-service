@@ -76,6 +76,7 @@ module.exports = {
             id: 1,
             user_id: 2,
             company_id: 1,
+            default_login: 1,
             created_at: new Date(),
             updated_at: new Date()
           },
@@ -83,6 +84,7 @@ module.exports = {
             id: 2,
             user_id: 2,
             company_id: 2,
+            default_login: 0,
             created_at: new Date(),
             updated_at: new Date()
           },
@@ -90,6 +92,7 @@ module.exports = {
             id: 3,
             user_id: 2,
             company_id: 3,
+            default_login: 0,
             created_at: new Date(),
             updated_at: new Date()
           },
@@ -97,6 +100,7 @@ module.exports = {
             id: 4,
             user_id: 3,
             company_id: 3,
+            default_login: 1,
             created_at: new Date(),
             updated_at: new Date()
           }
