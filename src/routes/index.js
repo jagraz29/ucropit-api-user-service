@@ -39,6 +39,6 @@ router.use(
 )
 
 //Dashboard
-router.use('/api/dashboard', require('./dashboard'))
+router.use('/api/dashboard/auth', require('./dashboard/auth'))
 
 module.exports = router
