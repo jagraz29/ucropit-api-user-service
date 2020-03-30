@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false
       },
+      default_login: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        default: 0
+      },
       created_at: {
         allowNull: false,
         type: DataTypes.DATE,
