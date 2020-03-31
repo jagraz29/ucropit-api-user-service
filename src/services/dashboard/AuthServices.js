@@ -16,6 +16,7 @@ class AuthService {
    * @param {*} password
    */
   static async auth(email, password) {
+    console.log('here')
     try {
       const user = await User.findOne({
         where: { email: email },
@@ -30,13 +31,13 @@ class AuthService {
       })
 
       if (user === null) {
-        return { user: null, error: true, msg: 'No existe el usuario' }
+        return { user: null, error: true, msg: 'Credenciales invalidas' }
       }
 
       const isValidPassword = await user.validPassword(password)
 
       if (!isValidPassword) {
-        return { user: null, error: true, msg: 'Password Invalido' }
+        return { user: null, error: true, msg: 'Credenciales invalidas' }
       }
 
       const token = await this.token(user)

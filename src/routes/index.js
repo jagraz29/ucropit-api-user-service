@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const authMiddleware = require('../middlewares/auth')
+const map = require('lodash/map')
+const ProductionStage = require('../models').production_stage
 
 router.use('/api/auth', require('./auth'))
 router.use('/api/reset', require('./reset'))
@@ -44,5 +46,16 @@ router.use(
 
 //Dashboard
 router.use('/api/dashboard/auth', require('./dashboard/auth'))
+
+router.get('/api/reformatData', async (req, res) => {
+  const response = await ProductionStage.findAll({ where: { label: 'fields' } })
+
+  for (const item of response) {
+    const stage = await ProductionStage.findOne({ where: { id: item.id } })
+    stage.update({ data: JSON.stringify(map(JSON.parse(stage.data))) })
+  }
+
+  res.json(response)
+})
 
 module.exports = router
