@@ -25,7 +25,11 @@ router.use(
   require('./applications')
 )
 router.use('/api/approvals', authMiddleware.checkToken, require('./approval'))
-router.use('/api/approvals/registers', authMiddleware.checkToken, require('./approval-register'))
+router.use(
+  '/api/approvals/registers',
+  authMiddleware.checkToken,
+  require('./approval-register')
+)
 router.use('/api/contacts', authMiddleware.checkToken, require('./contacts'))
 router.use(
   '/api/colaborators',
@@ -40,5 +44,10 @@ router.use(
 
 //Dashboard
 router.use('/api/dashboard/auth', require('./dashboard/auth'))
+router.use(
+  '/api/dashboard/profile',
+  authMiddleware.checkTokenDashboard,
+  require('./dashboard/profile')
+)
 
 module.exports = router
