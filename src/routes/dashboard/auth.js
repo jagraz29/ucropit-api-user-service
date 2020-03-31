@@ -6,10 +6,11 @@ const AuthController = require('../../controllers/dashboard/Auth/AuthController'
 router.post('/login', (req, res) => {
   AuthController.login(req.body)
     .then((result) => {
-      if (result.error)
+      if (result.error) {
         return res
           .status(401)
           .json({ error: true, code: 401, message: result.msg })
+      }
 
       return res.status(200).json({
         error: false,
@@ -23,7 +24,7 @@ router.post('/login', (req, res) => {
     })
     .catch((error) => {
       console.log(error)
-      return res.status(500).json({ error: true, code: 500, message: error });
+      return res.status(500).json({ error: true, code: 500, message: error })
     })
 })
 

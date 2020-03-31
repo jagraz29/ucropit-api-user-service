@@ -11,9 +11,9 @@ const createToken = async (user) =>
 class AuthService {
   /**
    * Authenticate users to Dashboard.
-   * 
-   * @param {*} email 
-   * @param {*} password 
+   *
+   * @param {*} email
+   * @param {*} password
    */
   static async auth(email, password) {
     try {
@@ -29,13 +29,15 @@ class AuthService {
         ]
       })
 
-      if (user === null)
+      if (user === null) {
         return { user: null, error: true, msg: 'No existe el usuario' }
+      }
 
       const isValidPassword = await user.validPassword(password)
 
-      if (!isValidPassword)
+      if (!isValidPassword) {
         return { user: null, error: true, msg: 'Password Invalido' }
+      }
 
       const token = await this.token(user)
 
@@ -51,8 +53,8 @@ class AuthService {
 
   /**
    * Create Token Login.
-   * 
-   * @param {*} user 
+   *
+   * @param {*} user
    */
   static async token(user) {
     try {

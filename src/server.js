@@ -22,6 +22,7 @@ const http = require('http')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const path = require('path')
+const morgan = require('morgan')
 
 const routes = require('./routes')
 const models = require('./models')
@@ -35,6 +36,9 @@ const corsOptions = {
   exposedHeaders: ['Content-Range'],
   origin: '*'
 }
+
+app.use(morgan('tiny'))
+
 // Middleware express
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
