@@ -1,8 +1,8 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcrypt')
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    "users",
+    'users',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -50,45 +50,51 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       freezeTableName: true,
-      tableName: "users",
+      tableName: 'users',
       timestamps: true
     }
-  );
+  )
 
   User.associate = function(models) {
     User.hasMany(models.signs, {
-      foreignKey: "user_id"
-    });
+      foreignKey: 'user_id'
+    })
 
     User.belongsToMany(models.providers, {
-      through: "providers_users",
-      foreignKey: "user_id",
-      otherKey: "providers_id"
-    });
+      through: 'providers_users',
+      foreignKey: 'user_id',
+      otherKey: 'providers_id'
+    })
 
     User.belongsToMany(models.users, {
-      through: "diary_users",
+      through: 'diary_users',
       as: 'ContactUser'
-    });
+    })
 
     User.hasOne(models.producers, {
-      foreignKey: "user_id"
+      foreignKey: 'user_id'
     })
-  };
+
+    User.belongsToMany(models.companies, {
+      through: 'companies_users_profiles',
+      foreignKey: 'user_id',
+      otherKey: 'company_id'
+    })
+  }
 
   async function encryptPasswordIfChanged(user, options) {
-    if (user.changed("password")) {
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(user.password, salt);
+    if (user.changed('password')) {
+      const salt = await bcrypt.genSalt(10)
+      user.password = await bcrypt.hash(user.password, salt)
     }
   }
 
   User.prototype.validPassword = async function(password) {
-    return await bcrypt.compare(password, this.password);
-  };
+    return await bcrypt.compare(password, this.password)
+  }
 
-  User.beforeCreate(encryptPasswordIfChanged);
-  User.beforeUpdate(encryptPasswordIfChanged);
+  User.beforeCreate(encryptPasswordIfChanged)
+  User.beforeUpdate(encryptPasswordIfChanged)
 
-  return User;
-};
+  return User
+}
