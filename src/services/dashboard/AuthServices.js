@@ -19,15 +19,7 @@ class AuthService {
     console.log('here')
     try {
       const user = await User.findOne({
-        where: { email: email },
-        include: [
-          {
-            model: Company,
-            through: {
-              model: CompanyUserProfile
-            }
-          }
-        ]
+        where: { email: email }
       })
 
       if (user === null) {
