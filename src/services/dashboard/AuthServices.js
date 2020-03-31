@@ -18,15 +18,7 @@ class AuthService {
   static async auth(email, password) {
     try {
       const user = await User.findOne({
-        where: { email: email },
-        include: [
-          {
-            model: Company,
-            through: {
-              model: CompanyUserProfile
-            }
-          }
-        ]
+        where: { email: email }
       })
 
       if (user === null)
