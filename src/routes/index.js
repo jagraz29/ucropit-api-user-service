@@ -43,6 +43,10 @@ router.use(
   authMiddleware.checkToken,
   require('./notifications')
 )
+router.use(
+  '/api/users',
+  require('./users')
+)
 
 //Dashboard
 router.use('/api/dashboard/auth', require('./dashboard/auth'))
