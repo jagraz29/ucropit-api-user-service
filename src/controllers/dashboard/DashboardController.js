@@ -1,22 +1,28 @@
 'use strict'
 
-const User = require('../../models').users
-const Company = require('../../models').companies
-const CompanyUserProfile = require('../../models').companies_users_profiles
+const CompanyService = require('../../services/dashboard/company/CompanyService')
+const AggregationUsers = require('../../services/approvalRegisters/AggregationUsers')
 
 class DashboardController {
-  static async index(userId) {
-    return  await User.findOne({
-      where: { id: userId },
-      include: [
-        {
-          model: Company,
-          through: {
-            model: CompanyUserProfile
-          }
-        }
-      ]
-    })
+  static async statisticSings(croptypeId, companyId) {
+    try {
+      const productors = await CompanyService.getCompaniesProductors(
+        croptypeId,
+        companyId
+      )
+
+      const cropsWithUsers = await CompanyService.cropsWithUsersCompany(
+        productors
+      )
+
+      const aggregationSign = await AggregationUsers.getCropAggregationWithApprovals(
+        cropsWithUsers
+      )
+
+      return aggregationSign
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 }
 

@@ -1,14 +1,14 @@
 'use strict'
 
-const User = require('../../models').users
-const Company = require('../../models').companies
-const CompanyUserProfile = require('../../models').companies_users_profiles
-const ContractCompany = require('../../models').contract_companies
-const CompanyCrop = require('../../models').companies_crops
-const Crop = require('../../models').crops
-const CropType = require('../../models').crop_types
-const Production = require('../../models').productions
-const ProductionStage = require('../../models').production_stage
+const User = require('../../../models').users
+const Company = require('../../../models').companies
+const CompanyUserProfile = require('../../../models').companies_users_profiles
+const ContractCompany = require('../../../models').contract_companies
+const CompanyCrop = require('../../../models').companies_crops
+const Crop = require('../../../models').crops
+const CropType = require('../../../models').crop_types
+const Production = require('../../../models').productions
+const ProductionStage = require('../../../models').production_stage
 
 class ProfileService {
 

@@ -1,6 +1,6 @@
 'use strict'
 
-const ProfileService = require('../../../services/dashboard/ProfileService')
+const ProfileService = require('../../../services/dashboard/auth/ProfileService')
 
 class ProfileController {
   static async index(user) {

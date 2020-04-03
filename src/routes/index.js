@@ -43,10 +43,7 @@ router.use(
   authMiddleware.checkToken,
   require('./notifications')
 )
-router.use(
-  '/api/users',
-  require('./users')
-)
+router.use('/api/users', require('./users'))
 
 //Dashboard
 router.use('/api/dashboard/auth', require('./dashboard/auth'))
@@ -54,6 +51,11 @@ router.use(
   '/api/dashboard/profile',
   authMiddleware.checkTokenDashboard,
   require('./dashboard/profile')
+)
+router.use(
+  '/api/dashboard/statistic',
+  authMiddleware.checkTokenDashboard,
+  require('./dashboard/statistic')
 )
 
 router.get('/api/reformatData', async (req, res) => {

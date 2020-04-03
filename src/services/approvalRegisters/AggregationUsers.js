@@ -11,9 +11,27 @@ class AggregationUsers {
    *
    * @return Array
    */
-  static async getUsersWithApprovalsAggregation(usersWhithApprovals) {
-    usersWhithApprovals = await Promise.all(usersWhithApprovals)
-    return usersWhithApprovals.filter((elem) => elem.approvals.length > 0)
+  static async getCropAggregationWithApprovals(crops) {
+    const signAggregation = crops.map(async (crop) => {
+      const result = crop.users.map(async (user) => {
+        const usersApprovals = await this.userWithApprovals(crop, user)
+        return {
+          user: {
+            id: user.id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+          },
+          usersApprovals,
+        }
+      })
+
+      return {
+        crop: { id: crop.id, name: crop.crop_name },
+        crop_aggregations: await Promise.all(result),
+      }
+    })
+
+    return await Promise.all(signAggregation)
   }
 
   /**
@@ -26,36 +44,25 @@ class AggregationUsers {
    *
    * @return Array
    */
-  static async userWithApprovals(crops, user) {
+  static async userWithApprovals(crop, user) {
     try {
-      const approvalsWithSigns = crops.map(async (crop) => {
-        const approvals = await Approval.findAll({
-          where: { crop_id: crop.id },
-          include: [
-            {
-              model: ApprovalRegister,
-              as: 'Register',
-              include: [
-                {
-                  model: ApprovalRegisterSign,
-                  as: 'Signs'
-                }
-              ]
-            }
-          ]
-        })
-
-        const approvalsAggregation = await this.countApprovalsRegisters(
-          approvals
-        )
-
-        return {
-          user: user,
-          aggregations: approvalsAggregation
-        }
+      const approvals = await Approval.findAll({
+        where: { crop_id: crop.id },
+        include: [
+          {
+            model: ApprovalRegister,
+            as: 'Register',
+            include: [
+              {
+                model: ApprovalRegisterSign,
+                as: 'Signs',
+                where: { user_id: user.id },
+              },
+            ],
+          },
+        ],
       })
-
-      return await Promise.all(approvalsWithSigns)
+      return await this.countApprovalsRegisters(approvals)
     } catch (error) {
       throw new Error(error)
     }
@@ -70,13 +77,14 @@ class AggregationUsers {
     const result = approvals.map((approval) => {
       return {
         registers: approval.Register,
-        signs: approval.Register[0].Signs.length
+        signs:
+          approval.Register.length > 0 ? approval.Register[0].Signs.length : 0,
       }
     })
 
     return {
       cantRegister: result.length,
-      cantSigns: result.reduce((a, b) => a + (b['signs'] || 0), 0)
+      cantSigns: result.reduce((a, b) => a + (b['signs'] || 0), 0),
     }
   }
 }

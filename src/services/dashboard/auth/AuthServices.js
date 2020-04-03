@@ -1,9 +1,7 @@
 'use strict'
 
-const User = require('../../models').users
+const User = require('../../../models').users
 const jwt = require('jsonwebtoken')
-const Company = require('../../models').companies
-const CompanyUserProfile = require('../../models').companies_users_profiles
 
 const createToken = async (user) =>
   jwt.sign({ user }, process.env.JWT_SECRET_DASHBOARD)
