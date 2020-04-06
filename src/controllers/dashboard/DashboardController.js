@@ -15,7 +15,7 @@ class DashboardController {
         productors
       )
 
-      const aggregationSign = await AggregationUsers.getCropAggregationWithApprovals(
+      const aggregationSign = await AggregationUsers.totalAggregationUsersApprovalByCrops(
         cropsWithUsers
       )
 

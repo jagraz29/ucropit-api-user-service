@@ -9,6 +9,12 @@ const CropType = require('../../../models').crop_types
 const CropUser = require('../../../models').crop_users
 
 class CompanyService {
+  /**
+   * Get Companies Productors, with crop associate and users 
+   * 
+   * @param {*} companyId 
+   * @param {*} cropTypeId 
+   */
   static async getCompaniesProductors(companyId, cropTypeId = null) {
     let queryCropType = {}
     if (cropTypeId) queryCropType = { id: cropTypeId }
@@ -55,6 +61,11 @@ class CompanyService {
     return result.toJSON().productors;
   }
 
+  /**
+   * Get companies productos.
+   * 
+   * @param {*} companies 
+   */
   static async cropsWithUsersCompany(companies) {
     const result = companies.map(item => {
       const productors = item.productors_to.map(productor => {

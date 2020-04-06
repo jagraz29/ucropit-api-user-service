@@ -13,7 +13,8 @@ const ProductionStage = require('../../../models').production_stage
 class ProfileService {
 
   /**
-   * Get Profile User, companies associate 
+   * Get Profile User, companies associate.
+   * 
    * @param {*} user 
    * 
    * @return Object

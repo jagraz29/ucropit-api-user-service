@@ -6,8 +6,66 @@ const ApprovalRegisterSign = require('../../models').approval_register_sign
 
 class AggregationUsers {
   /**
-   * Envia un array con los elementos encontrados, los arrays vacíos se descartan.
-   * @param {*} usersWhithApprovals
+   * Total user sign and records to be signed are calculated.
+   * 
+   * @param {*} crops 
+   */
+  static async totalAggregationUsersApprovalByCrops(crops) {
+    const aggregations = await this.getCropAggregationWithApprovals(crops)
+    let auxCropId = null
+    let auxIdUser = null
+    let arrayUsers = []
+
+    for (const i in aggregations) {
+      if (auxCropId !== aggregations[i].crop.id) {
+        auxCropId = aggregations[i].crop.id
+
+        for (const index in aggregations[i].crop_aggregations) {
+          if (auxIdUser !== aggregations[i].crop_aggregations[index].user.id) {
+            auxIdUser = aggregations[i].crop_aggregations[index].user.id
+            if (
+              arrayUsers.filter(
+                (item) =>
+                  item.user.id ===
+                  aggregations[i].crop_aggregations[index].user.id
+              ).length > 0
+            ) {
+              const objIndex = arrayUsers.findIndex(
+                (obj) =>
+                  obj.user.id ===
+                  aggregations[i].crop_aggregations[index].user.id
+              )
+              arrayUsers[objIndex].total_register +=
+                aggregations[i].crop_aggregations[
+                  index
+                ].usersApprovals.cantRegister
+              arrayUsers[objIndex].total_signs +=
+                aggregations[i].crop_aggregations[
+                  index
+                ].usersApprovals.cantSigns
+            } else {
+              const resum = {
+                user: aggregations[i].crop_aggregations[index].user,
+                total_register:
+                  aggregations[i].crop_aggregations[index].usersApprovals
+                    .cantRegister,
+                total_signs:
+                  aggregations[i].crop_aggregations[index].usersApprovals
+                    .cantSigns,
+              }
+              arrayUsers.push(resum)
+            }
+          }
+        }
+      }
+    }
+
+    return arrayUsers
+  }
+  /**
+   * The total number of signs per crop is obtained from a user.
+   * 
+   * @param {*} crops
    *
    * @return Array
    */
@@ -35,9 +93,8 @@ class AggregationUsers {
   }
 
   /**
-   * Busca todo los approvals de un usuario por el parámetro cropId.
-   * Por cada approval cuenta la cantidad de ApprovalRegister y Sings
-   * del usuario.
+   * Search all the approvals of a user by the parameter cropId. 
+   * For each approval counts the amount of User ApprovalRegister and Sings.
    *
    * @param Crop crops
    * @param User user
@@ -62,6 +119,7 @@ class AggregationUsers {
           },
         ],
       })
+
       return await this.countApprovalsRegisters(approvals)
     } catch (error) {
       throw new Error(error)
@@ -69,7 +127,7 @@ class AggregationUsers {
   }
 
   /**
-   * Cuenta la cantidad de ApprovalRegister y ApprovalRegisterSings.
+   * Count the amount of ApprovalRegister and ApprovalRegisterSings.
    *
    * @param {*} approvals
    */
