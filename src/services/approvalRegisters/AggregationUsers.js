@@ -1,17 +1,17 @@
 'use strict'
 
-const Approval = require('../../models').approval
-const ApprovalRegister = require('../../models').approval_register
-const ApprovalRegisterSign = require('../../models').approval_register_sign
+const moment = require('moment')
+const CommonService = require('./Common')
 
 class AggregationUsers {
   /**
    * Total user sign and records to be signed are calculated.
-   * 
-   * @param {*} crops 
+   *
+   * @param {*} crops
    */
   static async totalAggregationUsersApprovalByCrops(crops) {
     const aggregations = await this.getCropAggregationWithApprovals(crops)
+    console.log(aggregations)
     let auxCropId = null
     let auxIdUser = null
     let arrayUsers = []
@@ -43,6 +43,8 @@ class AggregationUsers {
                 aggregations[i].crop_aggregations[
                   index
                 ].usersApprovals.cantSigns
+              arrayUsers[objIndex].total_prom_diff_time +=
+                aggregations[i].crop_aggregations[index].diffTimes.time_diff
             } else {
               const resum = {
                 user: aggregations[i].crop_aggregations[index].user,
@@ -52,6 +54,8 @@ class AggregationUsers {
                 total_signs:
                   aggregations[i].crop_aggregations[index].usersApprovals
                     .cantSigns,
+                total_prom_diff_time:
+                  aggregations[i].crop_aggregations[index].diffTimes.time_diff,
               }
               arrayUsers.push(resum)
             }
@@ -60,11 +64,76 @@ class AggregationUsers {
       }
     }
 
-    return arrayUsers
+    return arrayUsers.map((item) => {
+      return {
+        user: item.user,
+        total_register: item.total_register,
+        total_signs: item.total_signs,
+        total_prom_diff_time:
+          item.total_prom_diff_time > 0
+            ? item.total_prom_diff_time / item.total_signs
+            : 0,
+      }
+    })
+  }
+
+  /**
+   * Calculate prom diff between date to create register and date sign user.
+   * 
+   * @param {*} crop 
+   * @param {*} user 
+   */
+  static async getPromTotalTimeDiffSingByUser(crop, user) {
+    const approvals = await CommonService.getApprovalWithSingFiterUser(
+      crop,
+      user
+    )
+    const result = approvals.map((item) => {
+      let timeDiff = 0
+      if (item.Register.length > 0) {
+        timeDiff = this.calculateDiffTime(
+          item.Register[0],
+          item.Register[0].Signs
+        )
+      }
+
+      return {
+        timeDiff: timeDiff,
+        cantSign: item.Register.length > 0 ? item.Register[0].Signs.length : 0,
+      }
+    })
+
+    const filterTimeDiff = result.find((item) => item.timeDiff > 0)
+      ? result.find((item) => item.timeDiff > 0)
+      : null
+
+    return {
+      time_diff: filterTimeDiff
+        ? filterTimeDiff.timeDiff / filterTimeDiff.cantSign
+        : 0,
+    }
+  }
+
+  /**
+   * Sum diff to date register with all signs to register.
+   * 
+   * @param {*} register 
+   * @param {*} signs 
+   */
+  static calculateDiffTime(register, signs) {
+    const timeRegister = moment(register.createdAt)
+    const result = signs.reduce(
+      (a, b) =>
+        a +
+        (Math.abs(timeRegister.diff(moment(b['createdAt']), 'minutes')) || 0),
+      0
+    )
+
+    return result
   }
   /**
    * The total number of signs per crop is obtained from a user.
-   * 
+   *
    * @param {*} crops
    *
    * @return Array
@@ -73,6 +142,8 @@ class AggregationUsers {
     const signAggregation = crops.map(async (crop) => {
       const result = crop.users.map(async (user) => {
         const usersApprovals = await this.userWithApprovals(crop, user)
+        const diffTimes = await this.getPromTotalTimeDiffSingByUser(crop, user)
+
         return {
           user: {
             id: user.id,
@@ -80,6 +151,7 @@ class AggregationUsers {
             last_name: user.last_name,
           },
           usersApprovals,
+          diffTimes,
         }
       })
 
@@ -93,7 +165,7 @@ class AggregationUsers {
   }
 
   /**
-   * Search all the approvals of a user by the parameter cropId. 
+   * Search all the approvals of a user by the parameter cropId.
    * For each approval counts the amount of User ApprovalRegister and Sings.
    *
    * @param Crop crops
@@ -103,22 +175,10 @@ class AggregationUsers {
    */
   static async userWithApprovals(crop, user) {
     try {
-      const approvals = await Approval.findAll({
-        where: { crop_id: crop.id },
-        include: [
-          {
-            model: ApprovalRegister,
-            as: 'Register',
-            include: [
-              {
-                model: ApprovalRegisterSign,
-                as: 'Signs',
-                where: { user_id: user.id },
-              },
-            ],
-          },
-        ],
-      })
+      const approvals = await CommonService.getApprovalWithSingFiterUser(
+        crop,
+        user
+      )
 
       return await this.countApprovalsRegisters(approvals)
     } catch (error) {
