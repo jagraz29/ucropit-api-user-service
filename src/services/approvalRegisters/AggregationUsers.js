@@ -10,7 +10,8 @@ class AggregationUsers {
    * @param {*} crops
    */
   static async totalAggregationUsersApprovalByCrops(crops) {
-    const aggregations = await this.getCropAggregationWithApprovals(crops)
+    try {
+      const aggregations = await this.getCropAggregationWithApprovals(crops)
     console.log(aggregations)
     let auxCropId = null
     let auxIdUser = null
@@ -75,6 +76,10 @@ class AggregationUsers {
             : 0,
       }
     })
+    }catch(error) {
+      throw new Error(error)
+    }
+    
   }
 
   /**
@@ -84,34 +89,39 @@ class AggregationUsers {
    * @param {*} user 
    */
   static async getPromTotalTimeDiffSingByUser(crop, user) {
-    const approvals = await CommonService.getApprovalWithSingFiterUser(
-      crop,
-      user
-    )
-    const result = approvals.map((item) => {
-      let timeDiff = 0
-      if (item.Register.length > 0) {
-        timeDiff = this.calculateDiffTime(
-          item.Register[0],
-          item.Register[0].Signs
-        )
-      }
-
+    try {
+      const approvals = await CommonService.getApprovalWithSingFiterUser(
+        crop,
+        user
+      )
+      const result = approvals.map((item) => {
+        let timeDiff = 0
+        if (item.Register.length > 0) {
+          timeDiff = this.calculateDiffTime(
+            item.Register[0],
+            item.Register[0].Signs
+          )
+        }
+  
+        return {
+          timeDiff: timeDiff,
+          cantSign: item.Register.length > 0 ? item.Register[0].Signs.length : 0,
+        }
+      })
+  
+      const filterTimeDiff = result.find((item) => item.timeDiff > 0)
+        ? result.find((item) => item.timeDiff > 0)
+        : null
+  
       return {
-        timeDiff: timeDiff,
-        cantSign: item.Register.length > 0 ? item.Register[0].Signs.length : 0,
+        time_diff: filterTimeDiff
+          ? filterTimeDiff.timeDiff / filterTimeDiff.cantSign
+          : 0,
       }
-    })
-
-    const filterTimeDiff = result.find((item) => item.timeDiff > 0)
-      ? result.find((item) => item.timeDiff > 0)
-      : null
-
-    return {
-      time_diff: filterTimeDiff
-        ? filterTimeDiff.timeDiff / filterTimeDiff.cantSign
-        : 0,
+    }catch(error) {
+      throw new Error(error)
     }
+    
   }
 
   /**
@@ -139,29 +149,34 @@ class AggregationUsers {
    * @return Array
    */
   static async getCropAggregationWithApprovals(crops) {
-    const signAggregation = crops.map(async (crop) => {
-      const result = crop.users.map(async (user) => {
-        const usersApprovals = await this.userWithApprovals(crop, user)
-        const diffTimes = await this.getPromTotalTimeDiffSingByUser(crop, user)
-
+    try {
+      const signAggregation = crops.map(async (crop) => {
+        const result = crop.users.map(async (user) => {
+          const usersApprovals = await this.userWithApprovals(crop, user)
+          const diffTimes = await this.getPromTotalTimeDiffSingByUser(crop, user)
+  
+          return {
+            user: {
+              id: user.id,
+              first_name: user.first_name,
+              last_name: user.last_name,
+            },
+            usersApprovals,
+            diffTimes,
+          }
+        })
+  
         return {
-          user: {
-            id: user.id,
-            first_name: user.first_name,
-            last_name: user.last_name,
-          },
-          usersApprovals,
-          diffTimes,
+          crop: { id: crop.id, name: crop.crop_name },
+          crop_aggregations: await Promise.all(result),
         }
       })
-
-      return {
-        crop: { id: crop.id, name: crop.crop_name },
-        crop_aggregations: await Promise.all(result),
-      }
-    })
-
-    return await Promise.all(signAggregation)
+  
+      return await Promise.all(signAggregation)
+    }catch(error) {
+      throw new Error(error)
+    }
+    
   }
 
   /**
