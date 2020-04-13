@@ -55,6 +55,8 @@ class PDF {
 
       const hash = sha256(pdfBuffer)
 
+      browser.close()
+
       return Promise.resolve({ hash, path: `${filename}` })
     } catch (err) {
       throw err
