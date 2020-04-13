@@ -45,7 +45,6 @@ router.use(
 )
 
 //Dashboard
-router.use('/api/dashboard/auth', require('./dashboard/auth'))
 
 router.get('/api/reformatData', async (req, res) => {
   const response = await ProductionStage.findAll({ where: { label: 'fields' } })
