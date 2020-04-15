@@ -63,6 +63,24 @@ class Common {
     return await Promise.all(productionPermissions)
   }
 
+  static async getApprovalWithRegisters(filter) {
+    return await Approval.findAll({
+      where: filter,
+      include: [
+        {
+          model: ApprovalRegister,
+          as: 'Register',
+          include: [
+            {
+              model: ApprovalRegisterSign,
+              as: 'Signs',
+            },
+          ],
+        },
+      ],
+    })
+  }
+
   static async getApprovalWithSingFiterUser(crop, user) {
     return await Approval.findAll({
       where: { crop_id: crop.id },

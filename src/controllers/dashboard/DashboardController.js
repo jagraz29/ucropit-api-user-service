@@ -2,8 +2,18 @@
 
 const CompanyService = require('../../services/dashboard/company/CompanyService')
 const AggregationUsers = require('../../services/approvalRegisters/AggregationUsers')
+const StatusService = require('../../services/dashboard/status/StatusService')
 
 class DashboardController {
+  static async statusCrop(cropId, companyId) {
+    try {
+      return await StatusService.getStatusByCrop(cropId, companyId) 
+
+    }catch(error){
+      console.log(error)
+    } 
+  }
+
   static async statisticSings(croptypeId, companyId) {
     try {
       const productors = await CompanyService.getCompaniesProductors(
