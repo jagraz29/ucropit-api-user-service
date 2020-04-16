@@ -7,7 +7,6 @@ const { mkdirpath } = require('../helpers')
 const sha256 = require('sha256')
 
 class PDF {
-
   // TODO: implement
   static renderHeader({ template, data }) {
     if (!template || !data) return '<p></p>'
@@ -15,9 +14,9 @@ class PDF {
   }
 
   /**
-   * Generate pdf with puppeteer screenshoot on 
+   * Generate pdf with puppeteer screenshoot on
    * on a pug template
-   * 
+   *
    * @return hash|string, path|string
    */
   static async generate({ path, filename, template, data, header }) {
@@ -35,23 +34,23 @@ class PDF {
           top: '10mm',
           bottom: '20mm',
           left: '8mm',
-          right: '8mm'
+          right: '8mm',
         },
         path: `${pdfPath}/${filename}`,
       }
 
       const browser = await puppeteer.launch({
         args: ['--no-sandbox'],
-        headless: true
+        headless: true,
       })
 
-      var page = await browser.newPage();
+      var page = await browser.newPage()
 
       await page.goto(`data:text/html;charset=UTF-8,${html}`, {
-        waitUntil: 'networkidle0'
+        waitUntil: 'networkidle0',
       })
 
-      const pdfBuffer = await page.pdf(options);
+      const pdfBuffer = await page.pdf(options)
 
       const hash = sha256(pdfBuffer)
 
