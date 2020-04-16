@@ -5,7 +5,7 @@ const AggregationUsers = require('../../services/approvalRegisters/AggregationUs
 const StatusService = require('../../services/dashboard/status/StatusService')
 
 class DashboardController {
-  static async statusCropsByCompany(companyId) {
+  static async statusCompany(companyId) {
     try {
       let status = {}
       const company = await CompanyService.getCompany(companyId)

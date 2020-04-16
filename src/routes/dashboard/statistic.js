@@ -6,7 +6,7 @@ const DashboardController = require('../../controllers/dashboard/DashboardContro
 router.get('/states/companies/:companyId', (req, res) => {
   const { companyId } = req.params
 
-  DashboardController.statusCropsByCompany(companyId)
+  DashboardController.statusCompany(companyId)
     .then((result) => {
       console.log(result)
       return res.status(200).json({ error: false, code: 200, result })
