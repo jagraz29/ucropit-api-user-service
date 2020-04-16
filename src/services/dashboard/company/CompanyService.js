@@ -122,6 +122,22 @@ class CompanyService {
     return result.toJSON().productors
   }
 
+  static async getCompany(companyId) {
+    return await Company.findOne({
+      where: { id: companyId },
+      include: [
+        {
+          model: Crop,
+          where: { status: 'accepted' },
+          as: 'productors_to',
+          through: {
+            model: CompanyCrop,
+          },
+        },
+      ],
+    })
+  }
+
   /**
    * Get companies productos.
    *

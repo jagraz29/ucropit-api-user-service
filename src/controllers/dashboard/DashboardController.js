@@ -5,13 +5,46 @@ const AggregationUsers = require('../../services/approvalRegisters/AggregationUs
 const StatusService = require('../../services/dashboard/status/StatusService')
 
 class DashboardController {
-  static async statusCrop(cropId, companyId) {
+  static async statusCropsByCompany(companyId) {
     try {
-      return await StatusService.getStatusByCrop(cropId, companyId) 
+      let status = {}
+      const company = await CompanyService.getCompany(companyId)
+      const percent = await StatusService.weightedAverageStatus(company)
+      
+      if(percent > 0 && percent <= 0.3333) {
+        status = {
+          percent,
+          status: 'danger'
+        }
+      }
 
-    }catch(error){
+      if(percent > 0.3333 && percent <= 0.6666) {
+        status = {
+          percent,
+          status: 'warning'
+        }
+      }
+
+      if(percent > 0.6666 && percent <= 100) {
+        status = {
+          percent,
+          status: 'finish'
+        }
+      }
+
+      return status
+    } catch (error) {
       console.log(error)
-    } 
+      throw new Error(error)
+    }
+  }
+  static async statusCropByCompanyCrop(cropId, companyId) {
+    try {
+      return await StatusService.getStatusByCrop(cropId, companyId)
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
   }
 
   static async statisticSings(croptypeId, companyId) {
@@ -31,6 +64,7 @@ class DashboardController {
 
       return aggregationSign
     } catch (error) {
+      console.log(error)
       throw new Error(error)
     }
   }

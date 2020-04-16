@@ -19,7 +19,7 @@ class StatusService {
       // del cultivo
       const statusDay = this.decideDaySowing(cropProductor)
 
-      const result = await CommonService.getApprovalWithRegisters({
+      const approval = await CommonService.getApprovalWithRegisters({
         crop_id: cropId,
         stage: 'sowing',
       })
@@ -33,30 +33,34 @@ class StatusService {
       // Luego calculamos el procentaje de avance de la siembra del cultivo.
 
       if (statusDay.xy) {
-        statusCrop = this.statusBeforeDayConfigSowing(result[0], cropsAndUsers)
+        statusCrop = this.statusBeforeDayConfigSowing(
+          approval[0],
+          cropsAndUsers
+        )
       }
 
       if (statusDay.y) {
-        statusCrop = this.statusbetweenDaySowing(result[0], cropsAndUsers)
+        statusCrop = this.statusbetweenDaySowing(approval[0], cropsAndUsers)
       }
 
       if (statusDay.z) {
-        statusCrop = this.statusbetweenDaySowing(result[0], cropsAndUsers)
+        statusCrop = this.statusbetweenDaySowing(approval[0], cropsAndUsers)
       }
 
       if (statusDay.zx) {
-        statusCrop = this.statusAfterDaySowing(result[0], cropsAndUsers)
+        statusCrop = this.statusAfterDaySowing(approval[0], cropsAndUsers)
       }
 
       return statusCrop
     } catch (error) {
       console.log(error)
+      throw new Error(error)
     }
   }
 
   //estoy en XY
   static statusBeforeDayConfigSowing(approval, crop) {
-    if (approval.Register.length === 0) {
+    if (!approval || approval.Register.length === 0) {
       return {
         percent: 0,
         status: 'created',
@@ -83,7 +87,7 @@ class StatusService {
 
   //estoy en Y o en Z
   static statusbetweenDaySowing(approval, crop) {
-    if (approval.Register.length === 0) {
+    if (!approval || approval.Register.length === 0) {
       return {
         percent: 0,
         status: 'warning',
@@ -108,7 +112,7 @@ class StatusService {
   }
 
   static statusAfterDaySowing(approval, crop) {
-    if (approval.Register.length === 0) {
+    if (!approval || approval.Register.length === 0) {
       return {
         percent: 0,
         status: 'danger',
@@ -202,6 +206,33 @@ class StatusService {
       }
     }
     return complete
+  }
+
+  static async weightedAverageStatus(company) {
+    try {
+      let progress = await company.toJSON().productors_to.map(async (crop) => {
+        const result = await this.getStatusByCrop(crop.id, company.id)
+
+        return {
+          ...result,
+          crop_id: crop.id,
+          surface: crop.surface,
+        }
+      })
+
+      progress = await Promise.all(progress)
+
+      const sumweighted = progress.reduce(
+        (a, b) => a + (b['percent'] * b['surface'] || 0),
+        0
+      )
+      const sumsurface = progress.reduce((a, b) => a + (b['surface'] || 0), 0)
+
+      return sumweighted / sumsurface
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
   }
 }
 
