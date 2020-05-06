@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface) => {
     return queryInterface.bulkInsert('input_types', [
       {
         'id': 60,
@@ -84,7 +84,7 @@ module.exports = {
     ], {});
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.bulkDelete('input_types', null, {});
   }
 };

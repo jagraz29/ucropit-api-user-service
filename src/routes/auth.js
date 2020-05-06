@@ -21,8 +21,8 @@ router.post('/', async (req, res) => {
         message: 'Success',
         data: {
           user: { ...result.user.toJSON() },
-          token
-        }
+          token,
+        },
       })
     } else {
       return res
@@ -47,8 +47,8 @@ router.post('/admin', async (req, res) => {
         message: 'Success',
         data: {
           user: { ...result.user.toJSON() },
-          token
-        }
+          token,
+        },
       })
     } else {
       return res
@@ -88,8 +88,8 @@ router.post('/register', async (req, res) => {
       data: {
         user: { ...result.user.toJSON() },
         token,
-        withoutFirstCrop: result.withoutFirstCrop
-      }
+        withoutFirstCrop: result.withoutFirstCrop,
+      },
     })
   } catch (err) {
     console.error(err)
@@ -101,7 +101,7 @@ router.get('/activation/users/:id', async (req, res) => {
   try {
     await AuthController.requestActivationUser(req.params.id)
     res.status(200).json({ status: 'Ok' })
-  } catch (error) {
+  } catch (err) {
     console.error(err)
     return res.status(500).json({ error: true, code: 422, message: err })
   }
@@ -111,7 +111,7 @@ router.get('/:id', async (req, res) => {
   try {
     const user = await AuthController.getUser(req.params.id)
     res.status(200).json({ status: 'Ok', result: user })
-  } catch (error) {
+  } catch (err) {
     console.error(err)
     return res.status(500).json({ error: true, code: 422, message: err })
   }

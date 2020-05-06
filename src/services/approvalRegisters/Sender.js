@@ -27,6 +27,8 @@ class Sender {
         data: {
           path: pathname,
           production,
+          // its global
+          // eslint-disable-next-line no-undef
           stage: stagesName(stage)
         },
         usersID: filteredUsers,

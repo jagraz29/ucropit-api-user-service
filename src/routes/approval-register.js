@@ -1,121 +1,121 @@
-"use strict";
+'use strict'
 
-const express = require("express");
-const router = express.Router();
-const ApprovalsRegisterController = require("../controllers/ApprovalsRegisterController");
+const express = require('express')
+const router = express.Router()
+const ApprovalsRegisterController = require('../controllers/ApprovalsRegisterController')
 
-router.post("/:approvalId", async (req, res) => {
+router.post('/:approvalId', async (req, res) => {
   try {
-    const { approvalId } = req.params;
-    const register = await ApprovalsRegisterController.create(approvalId);
+    const { approvalId } = req.params
+    const register = await ApprovalsRegisterController.create(approvalId)
 
-    return res.json({ code: 200, error: false, register });
+    return res.json({ code: 200, error: false, register })
   } catch (error) {
-    console.log(error);
-    return res.json({ code: 400, error: false, data: error });
+    console.log(error)
+    return res.json({ code: 400, error: false, data: error })
   }
-});
+})
 
-router.post("/:approvalId/complete", async (req, res) => {
+router.post('/:approvalId/complete', async (req, res) => {
   try {
-    const { approvalId } = req.params;
-    const register = await ApprovalsRegisterController.complete(approvalId);
+    const { approvalId } = req.params
+    const register = await ApprovalsRegisterController.complete(approvalId)
 
-    return res.json({ code: 200, error: false, register });
+    return res.json({ code: 200, error: false, register })
   } catch (error) {
-    console.log(error);
-    return res.json({ code: 400, error: false, data: error });
+    console.log(error)
+    return res.json({ code: 400, error: false, data: error })
   }
-});
+})
 
-router.post("/:approvalId", async (req, res) => {
+router.post('/:approvalId', async (req, res) => {
   try {
-    const { approvalId } = req.params;
-    const register = await ApprovalsRegisterController.create(approvalId);
+    const { approvalId } = req.params
+    const register = await ApprovalsRegisterController.create(approvalId)
 
-    return res.json({ code: 200, error: false, register });
+    return res.json({ code: 200, error: false, register })
   } catch (error) {
-    console.log(error);
-    return res.json({ code: 400, error: false, data: error });
+    console.log(error)
+    return res.json({ code: 400, error: false, data: error })
   }
-});
+})
 
-router.get("/register/:id", async (req, res) => {
+router.get('/register/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const register = await ApprovalsRegisterController.showRegister(id);
+    const { id } = req.params
+    const register = await ApprovalsRegisterController.showRegister(id)
 
-    return res.json({ code: 200, error: false, register });
+    return res.json({ code: 200, error: false, register })
   } catch (error) {
-    console.log(error);
-    return res.json({ code: 400, error: false, data: error });
+    console.log(error)
+    return res.json({ code: 400, error: false, data: error })
   }
-});
+})
 
-router.get("/crops/:idCrop/stages/:stage", async (req, res) => {
+router.get('/crops/:idCrop/stages/:stage', async (req, res) => {
   try {
-    const { idCrop, stage } = req.params;
+    const { idCrop, stage } = req.params
 
-    const data = await ApprovalsRegisterController.show(idCrop, stage);
+    const data = await ApprovalsRegisterController.show(idCrop, stage)
 
     return res.json({
       code: 200,
       error: false,
       register: data.register,
-      signers: data.signers
-    });
+      signers: data.signers,
+    })
   } catch (error) {
-    console.log(error);
-    return res.json({ code: 400, error: false, data: error });
+    console.log(error)
+    return res.json({ code: 400, error: false, data: error })
   }
-});
+})
 
-router.get("/crops/:idCrop/stages/:stage/:type/:typeId", async (req, res) => {
+router.get('/crops/:idCrop/stages/:stage/:type/:typeId', async (req, res) => {
   try {
-    const { idCrop, stage, type, typeId } = req.params;
+    const { idCrop, stage, type, typeId } = req.params
     const register = await ApprovalsRegisterController.show(
       idCrop,
       stage,
       type,
       typeId
-    );
+    )
 
-    return res.json({ code: 200, error: false, register });
+    return res.json({ code: 200, error: false, register })
   } catch (error) {
-    console.log(error);
-    return res.json({ code: 400, error: false, data: error });
+    console.log(error)
+    return res.json({ code: 400, error: false, data: error })
   }
-});
+})
 
-router.post("/crops/:idCrop/stages/:stage/signs", async (req, res) => {
+router.post('/crops/:idCrop/stages/:stage/signs', async (req, res) => {
   try {
-    const { idCrop, stage } = req.params;
+    const { idCrop, stage } = req.params
     const register = await ApprovalsRegisterController.sign(
       req.body,
       idCrop,
       stage,
       req.decoded
-    );
+    )
 
-    return res.json({ code: 200, error: false, register });
+    return res.json({ code: 200, error: false, register })
   } catch (error) {
-    console.log(error);
-    return res.json({ code: 400, error: false, data: error });
+    console.log(error)
+    return res.json({ code: 400, error: false, data: error })
   }
-});
+})
 
-router.get("/:registerId/files", async (req, res) => {
+router.get('/:registerId/files', async (req, res) => {
   try {
-    const { registerId } = req.params;
-    const result = await ApprovalsRegisterController.showFiles(registerId);
-    return res.json({ code: 200, error: false, result });
+    const { registerId } = req.params
+    const result = await ApprovalsRegisterController.showFiles(registerId)
+    return res.json({ code: 200, error: false, result })
   } catch (error) {
-    console.log(error);
-    return res.json({ code: 500, error: true, data: error });
+    console.log(error)
+    return res.json({ code: 500, error: true, data: error })
   }
-});
+})
 
-router.post("/:registerId/files", async (req, res) => {
+router.post('/:registerId/files', async (req, res) => {
   try {
     const register = await ApprovalsRegisterController.file(
       req.params.registerId,
@@ -124,17 +124,17 @@ router.post("/:registerId/files", async (req, res) => {
       req.decoded,
       {
         latitude: req.body.latitude || null,
-        longitude: req.body.longitude || null
+        longitude: req.body.longitude || null,
       },
       req.body.stage,
       req.body.pathname
-    );
+    )
 
-    return res.json({ code: 200, error: false, register });
+    return res.json({ code: 200, error: false, register })
   } catch (error) {
-    console.log(error);
-    return res.json({ code: 400, error: false, data: error });
+    console.log(error)
+    return res.json({ code: 400, error: false, data: error })
   }
-});
+})
 
-module.exports = router;
+module.exports = router

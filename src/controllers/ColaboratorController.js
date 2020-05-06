@@ -62,9 +62,9 @@ const _createPermissionsToColaborator = async (
           permissions: {
             can_read: true,
             can_sign: parseInt(can_sign) === 1 ? true : false,
-            can_edit: parseInt(can_edit) === 1 ? true : false
-          }
-        }
+            can_edit: parseInt(can_edit) === 1 ? true : false,
+          },
+        },
       ],
       events: [
         {
@@ -80,21 +80,21 @@ const _createPermissionsToColaborator = async (
               permissions: {
                 can_read: true,
                 can_sign: parseInt(can_sign) === 1 ? true : false,
-                can_edit: parseInt(can_edit) === 1 ? true : false
-              }
-            }
-          ]
-        }
-      ]
+                can_edit: parseInt(can_edit) === 1 ? true : false,
+              },
+            },
+          ],
+        },
+      ],
     }
     const productPermission = await ProductionUserPermission.findOne({
-      where: { user_id: user.id, production_id: cropId }
+      where: { user_id: user.id, production_id: cropId },
     })
     if (!productPermission) {
       return await ProductionUserPermission.create({
         user_id: user.id,
         production_id: cropId,
-        data: JSON.stringify(permission)
+        data: JSON.stringify(permission),
       })
     }
     // Si existe permisos lo actualiza.
@@ -105,7 +105,7 @@ const _createPermissionsToColaborator = async (
     )
 
     return await productPermission.update({
-      data: JSON.stringify(permissionsUpdate)
+      data: JSON.stringify(permissionsUpdate),
     })
   } catch (error) {
     throw new Error(error)
@@ -148,13 +148,13 @@ class ColaboratorController {
 
       let user = await Users.findOne({
         where: {
-          email: email
-        }
+          email: email,
+        },
       })
 
       const crop = await Crop.findOne({
         where: { id: cropId },
-        include: [{ model: CropTypes }]
+        include: [{ model: CropTypes }],
       })
 
       // Aqui debería llegar un email específico
@@ -168,7 +168,7 @@ class ColaboratorController {
           first_name: first_name,
           last_name: last_name,
           password: email,
-          first_login: 0
+          first_login: 0,
         })
 
         Mail.send({
@@ -180,18 +180,18 @@ class ColaboratorController {
             owner: auth.user,
             crop_path:
               crop.status === 'accepted' ? `/productions/${crop.id}` : '',
-            url: process.env.FRONT_URL
-          }
+            url: process.env.FRONT_URL,
+          },
         })
 
         await crop.addUsers(newUser)
 
         const rel = await CropUsers.findOne({
-          where: { user_id: newUser.id, crop_id: crop.id }
+          where: { user_id: newUser.id, crop_id: crop.id },
         })
 
         await rel.update({
-          is_owner: 0
+          is_owner: 0,
         })
 
         // Se agrega los permisos
@@ -222,23 +222,23 @@ class ColaboratorController {
             crop.status === 'accepted'
               ? `/productions/${crop.id}`
               : `/planning/${crop.id}/details`,
-          url: process.env.FRONT_URL
-        }
+          url: process.env.FRONT_URL,
+        },
       })
 
       const rel = await CropUsers.findOne({
-        where: { user_id: user.id, crop_id: crop.id }
+        where: { user_id: user.id, crop_id: crop.id },
       })
 
       if (!rel) {
         await crop.addUsers(user)
 
         const newRel = await CropUsers.findOne({
-          where: { user_id: user.id, crop_id: crop.id }
+          where: { user_id: user.id, crop_id: crop.id },
         })
 
         await newRel.update({
-          is_owner: 0
+          is_owner: 0,
         })
       }
 
@@ -273,13 +273,13 @@ class ColaboratorController {
     try {
       let user = await Users.findOne({
         where: {
-          email: data.email
-        }
+          email: data.email,
+        },
       })
 
       const crop = await Crop.findOne({
         where: { id: cropId },
-        include: [{ model: CropTypes }]
+        include: [{ model: CropTypes }],
       })
 
       // Aqui debería llegar un email específico
@@ -293,7 +293,7 @@ class ColaboratorController {
           first_name: data.first_name,
           last_name: data.last_name,
           password: data.email,
-          first_login: 0
+          first_login: 0,
         })
 
         Mail.send({
@@ -305,31 +305,31 @@ class ColaboratorController {
             owner: auth.user,
             crop_path:
               crop.status === 'accepted' ? `/productions/${crop.id}` : '',
-            url: process.env.FRONT_URL
-          }
+            url: process.env.FRONT_URL,
+          },
         })
 
         await crop.addUsers(newUser)
 
         const rel = await CropUsers.findOne({
-          where: { user_id: newUser.id, crop_id: crop.id }
+          where: { user_id: newUser.id, crop_id: crop.id },
         })
 
         await rel.update({
-          is_owner: 0
+          is_owner: 0,
         })
 
         if (data.can_edit) {
           await CropUserPermissions.create({
             crop_permission_id: 1,
-            crop_user_id: rel.id
+            crop_user_id: rel.id,
           })
         }
 
         if (data.can_sign) {
           await CropUserPermissions.create({
             crop_permission_id: 2,
-            crop_user_id: rel.id
+            crop_user_id: rel.id,
           })
         }
 
@@ -353,36 +353,36 @@ class ColaboratorController {
           owner: auth.user,
           crop_path:
             crop.status === 'accepted' ? `/productions/${crop.id}` : '',
-          url: process.env.FRONT_URL
-        }
+          url: process.env.FRONT_URL,
+        },
       })
 
       let rel = await CropUsers.findOne({
-        where: { user_id: user.id, crop_id: crop.id }
+        where: { user_id: user.id, crop_id: crop.id },
       })
 
       if (!rel) {
         await crop.addUsers(user)
 
         const newRel = await CropUsers.findOne({
-          where: { user_id: user.id, crop_id: crop.id }
+          where: { user_id: user.id, crop_id: crop.id },
         })
 
         await newRel.update({
-          is_owner: 0
+          is_owner: 0,
         })
 
         if (data.can_edit) {
           await CropUserPermissions.create({
             crop_permission_id: 1,
-            crop_user_id: newRel.id
+            crop_user_id: newRel.id,
           })
         }
 
         if (data.can_sign) {
           await CropUserPermissions.create({
             crop_permission_id: 2,
-            crop_user_id: newRel.id
+            crop_user_id: newRel.id,
           })
         }
 
@@ -408,19 +408,19 @@ class ColaboratorController {
     try {
       const permissions = await CropUserPermissions.findAll({
         where: { crop_user_id: cropUserId },
-        include: [{ model: CropPermission }]
+        include: [{ model: CropPermission }],
       })
 
       const production = await Production.findOne({
         where: { crop_id: cropId },
-        include: [{ model: ProductionStage, as: 'Stage' }]
+        include: [{ model: ProductionStage, as: 'Stage' }],
       })
 
       const stagesProduction = production.Stage.map((elem) => {
         return {
           name: elem.name,
           label: elem.label,
-          data: elem.data
+          data: elem.data,
         }
       })
 
@@ -439,7 +439,7 @@ class ColaboratorController {
       return await ProductionUserPermission.create({
         user_id: user.id,
         production_id: cropId,
-        data: JSON.stringify(factory.generatePermissions)
+        data: JSON.stringify(factory.generatePermissions),
       })
     } catch (error) {
       throw new Error(error)
@@ -456,7 +456,7 @@ class ColaboratorController {
   static async removeStage(cropId, stage, userId) {
     try {
       const productPermission = await ProductionUserPermission.findOne({
-        where: { user_id: userId, production_id: cropId }
+        where: { user_id: userId, production_id: cropId },
       })
 
       const stages = JSON.parse(productPermission.data)
@@ -469,8 +469,8 @@ class ColaboratorController {
               permissions: {
                 can_read: true,
                 can_edit: true,
-                can_sign: false
-              }
+                can_sign: false,
+              },
             }
           } else {
             return { ...el }
@@ -481,11 +481,11 @@ class ColaboratorController {
 
       const permissions = {
         stages: [...stages],
-        events: [...events]
+        events: [...events],
       }
 
       return await productPermission.update({
-        data: JSON.stringify(permissions)
+        data: JSON.stringify(permissions),
       })
     } catch (error) {
       throw new Error(error)
@@ -495,7 +495,7 @@ class ColaboratorController {
   /**
    * Se elimina un colaborador puntual de un evento.
    * Se le quita el privilegio de firmar un evento.
-   * 
+   *
    * @param {*} userId
    * @param {*} cropId
    * @param {*} stage
@@ -506,7 +506,7 @@ class ColaboratorController {
     let notFound = true
     try {
       const productPermission = await ProductionUserPermission.findOne({
-        where: { user_id: userId, production_id: cropId }
+        where: { user_id: userId, production_id: cropId },
       })
 
       const events = JSON.parse(productPermission.data)
@@ -527,8 +527,8 @@ class ColaboratorController {
                   permissions: {
                     can_read: true,
                     can_edit: true,
-                    can_sign: false
-                  }
+                    can_sign: false,
+                  },
                 }
               } else {
                 return { ...event }
@@ -552,8 +552,8 @@ class ColaboratorController {
                   permissions: {
                     can_read: true,
                     can_edit: true,
-                    can_sign: false
-                  }
+                    can_sign: false,
+                  },
                 })
               }
             }
@@ -571,8 +571,8 @@ class ColaboratorController {
                   permissions: {
                     can_read: true,
                     can_edit: true,
-                    can_sign: false
-                  }
+                    can_sign: false,
+                  },
                 }
 
                 events.push(permission)
@@ -593,7 +593,7 @@ class ColaboratorController {
               eventsObj.permissions = {
                 can_read: true,
                 can_edit: true,
-                can_sign: false
+                can_sign: false,
               }
 
               return { ...eventsObj }
@@ -607,11 +607,11 @@ class ColaboratorController {
 
       const permissions = {
         stages: [...stages],
-        events: [...events]
+        events: [...events],
       }
 
       return await productPermission.update({
-        data: JSON.stringify(permissions)
+        data: JSON.stringify(permissions),
       })
     } catch (error) {
       throw new Error(error)
@@ -627,15 +627,15 @@ class ColaboratorController {
   static async remove(userId, cropId) {
     try {
       const rel = await CropUsers.findOne({
-        where: { user_id: userId, crop_id: cropId }
+        where: { user_id: userId, crop_id: cropId },
       })
 
       const productPermission = await ProductionUserPermission.findOne({
-        where: { user_id: userId, production_id: cropId }
+        where: { user_id: userId, production_id: cropId },
       })
 
       const sing = await Signs.findOne({
-        where: { type_id: cropId, user_id: userId }
+        where: { type_id: cropId, user_id: userId },
       })
 
       await rel.destroy()

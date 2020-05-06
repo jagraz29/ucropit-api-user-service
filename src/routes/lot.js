@@ -1,8 +1,8 @@
-"use strict";
+'use strict'
 
-const express = require("express")
+const express = require('express')
 const router = express.Router()
-const LotsController = require("../controllers/LotsController")
+const LotsController = require('../controllers/LotsController')
 
 router.get('/', async (req, res) => {
   try {

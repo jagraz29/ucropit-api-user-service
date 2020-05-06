@@ -12,7 +12,7 @@ class ConceptsController {
     try {
       const inputs = await Inputs.findAll({ include: [{ model: InputType }] })
       const services = await Services.findAll({
-        include: [{ model: ServiceType }]
+        include: [{ model: ServiceType }],
       })
 
       return Promise.resolve([
@@ -25,7 +25,7 @@ class ConceptsController {
           const plain = el.get({ plain: true })
           plain.category = 'input'
           return plain
-        })
+        }),
       ])
     } catch (e) {
       console.erro(e)
@@ -38,13 +38,13 @@ class ConceptsController {
       if (type === 'service') {
         const input = await Services.findOne({
           where: { id },
-          include: [{ model: ServiceType }]
+          include: [{ model: ServiceType }],
         })
         return input
       } else {
         const services = await Inputs.findOne({
           where: { id },
-          include: [{ model: InputType }]
+          include: [{ model: InputType }],
         })
         return services
       }
@@ -99,7 +99,7 @@ class ConceptsController {
   static async inputTypesWithAttribute() {
     try {
       const results = await InputType.findAll({
-        attributes: ['id', 'name']
+        attributes: ['id', 'name'],
       })
 
       return results
@@ -113,7 +113,7 @@ class ConceptsController {
     try {
       const results = await Inputs.findAll({
         order: [['name', 'ASC']],
-        include: [{ model: InputType }]
+        include: [{ model: InputType }],
       })
 
       return results
@@ -127,7 +127,7 @@ class ConceptsController {
     const { count, rows: inputs } = await Inputs.findAndCountAll(
       paginate(
         {
-          include: [{ model: InputType }]
+          include: [{ model: InputType }],
         },
         { page, pageSize }
       )
@@ -138,7 +138,7 @@ class ConceptsController {
       perPage: pageSize,
       currentPage: page,
       lastPage: Math.ceil(count / pageSize - 1 + 1),
-      data: inputs
+      data: inputs,
     }
   }
 
@@ -146,7 +146,7 @@ class ConceptsController {
     const Op = Sequelize.Op
     try {
       const results = await InputType.findAll({
-        where: { name: { [Op.like]: `%${query}%` } }
+        where: { name: { [Op.like]: `%${query}%` } },
       })
 
       return results
