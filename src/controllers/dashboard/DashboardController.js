@@ -11,24 +11,31 @@ class DashboardController {
       const company = await CompanyService.getCompany(companyId)
       const percent = await StatusService.weightedAverageStatus(company)
 
-      if (percent > 0 && percent <= 0.3333) {
+      if (percent >= 0 && percent <= 0.35) {
         status = {
           percent,
-          status: 'danger',
+          status: 'error',
         }
       }
 
-      if (percent > 0.3333 && percent <= 0.6666) {
+      if (percent > 0.35 && percent <= 0.75) {
         status = {
           percent,
           status: 'warning',
         }
       }
 
-      if (percent > 0.6666 && percent <= 100) {
+      if(percent >= 75 && percent <= 100) {
         status = {
           percent,
-          status: 'finish',
+          status: 'on_progress',
+        }
+      }
+
+      if (percent == 100) {
+        status = {
+          percent,
+          status: 'done',
         }
       }
 

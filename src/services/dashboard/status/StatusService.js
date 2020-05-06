@@ -17,7 +17,7 @@ class StatusService {
       const cropProductor = company.toJSON().productors_to[0]
       // Obtenemos una posición del punto donde nos encontramos con respecto a la fecha actual y la fecha de siembra
       // del cultivo
-      const statusDay = this.decideDaySowing(cropProductor)
+      const statusDay = this.decideDaySowing(cropProductor);
 
       const approval = await CommonService.getApprovalWithRegisters({
         crop_id: cropId,
@@ -75,13 +75,13 @@ class StatusService {
     ) {
       return {
         percent: progressCrop,
-        status: 'complete',
+        status: 'done',
       }
     }
 
     return {
       percent: progressCrop,
-      status: 'in_progress',
+      status: 'on_progress',
     }
   }
 
@@ -101,13 +101,13 @@ class StatusService {
     ) {
       return {
         percent: progressCrop,
-        status: 'complete',
+        status: 'done',
       }
     }
 
     return {
       percent: progressCrop,
-      status: 'in_progress',
+      status: 'on_progress',
     }
   }
 
@@ -115,7 +115,7 @@ class StatusService {
     if (!approval || approval.Register.length === 0) {
       return {
         percent: 0,
-        status: 'danger',
+        status: 'error',
       }
     }
 
@@ -127,13 +127,13 @@ class StatusService {
     ) {
       return {
         percent: progressCrop,
-        status: 'complete',
+        status: 'done',
       }
     }
 
     return {
       percent: progressCrop,
-      status: 'danger',
+      status: 'error',
     }
   }
   static decideDaySowing(crop) {
