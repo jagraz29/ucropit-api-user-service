@@ -10,7 +10,7 @@ const CropUser = require('../../../models').crop_users
 
 class CompanyService {
   static async getCompanyWithCropAndUsersBy(companyId, cropId) {
-    return await Company.findOne({
+    return Company.findOne({
       where: { id: companyId },
       include: [
         {
@@ -38,6 +38,7 @@ class CompanyService {
       ],
     })
   }
+
   static async getCompanyWithCrops(
     companyId,
     cropId = null,
@@ -47,7 +48,7 @@ class CompanyService {
       ? { status: 'accepted', id: cropId }
       : { status: 'accepted' }
 
-    return await Company.findOne({
+    return Company.findOne({
       where: { id: companyId },
       include: [
         {
@@ -70,6 +71,7 @@ class CompanyService {
       ],
     })
   }
+
   /**
    * Get Companies Productors, with crop associate and users
    *
@@ -79,6 +81,7 @@ class CompanyService {
   static async getCompaniesProductors(companyId, cropTypeId = null) {
     let queryCropType = {}
     if (cropTypeId) queryCropType = { id: cropTypeId }
+
     const result = await Company.findOne({
       where: { id: companyId },
       include: [
