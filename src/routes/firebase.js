@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const FirebaseManagerController = require("../controllers/FirebaseManagerController");
+const FirebaseManagerController = require('../controllers/FirebaseManagerController');
 
-router.post("/connect", (req, res) => {
+router.post('/connect', (req, res) => {
   FirebaseManagerController.connect(req)
     .then(result => {
       return res.json({ code: 200, error: false, result });
@@ -16,7 +16,7 @@ router.post("/connect", (req, res) => {
     });
 });
 
-router.post("/update", (req, res) => {
+router.post('/update', (req, res) => {
   FirebaseManagerController.update(req)
     .then(result => {
       return res.json({ code: 200, error: false, result });
@@ -28,7 +28,7 @@ router.post("/update", (req, res) => {
     });
 });
 
-router.post("/disconnect", (req, res) => {
+router.post('/disconnect', (req, res) => {
   FirebaseManagerController.disconnect(req)
     .then(result => {
       return res.json({ code: 200, error: false, result });

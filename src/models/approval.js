@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = (sequelize, DataTypes) => {
   const approval = sequelize.define(
-    "approval",
+    'approval',
     {
       stage: DataTypes.STRING,
       crop_id: DataTypes.INTEGER,
@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
   );
   approval.associate = function(models) {
     approval.hasMany(models.approval_register, {
-      foreignKey: "approval_id",
-      as: "Register"
+      foreignKey: 'approval_id',
+      as: 'Register'
     });
   };
   return approval;

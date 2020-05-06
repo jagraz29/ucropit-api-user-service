@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Lot = sequelize.define(
-    "lots",
+    'lots',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -26,13 +26,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       freezeTableName: true,
-      tableName: "lots",
+      tableName: 'lots',
       timestamps: true
     }
   );
 
   Lot.associate = function(models) {
-    Lot.belongsTo(models.crop_types, { foreignKey: "crop_type_id" });
+    Lot.belongsTo(models.crop_types, { foreignKey: 'crop_type_id' });
   };
 
   return Lot;

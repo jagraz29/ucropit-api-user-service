@@ -1,10 +1,10 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const UploadFile = require("../services/UploadFiles");
+const UploadFile = require('../services/UploadFiles');
 
-router.post("/files", (req, res) => {
-  const upload = new UploadFile(req.files, "uploads");
+router.post('/files', (req, res) => {
+  const upload = new UploadFile(req.files, 'uploads');
   upload
     .store()
     .then(result => {

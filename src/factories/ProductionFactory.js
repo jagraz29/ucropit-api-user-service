@@ -48,9 +48,9 @@ class ProductionFactory {
               service_type: {
                 id: id,
                 name: 'Gastos',
-                image: 'Tractor.svg'
-              }
-            }
+                image: 'Tractor.svg',
+              },
+            },
           }
         })
 
@@ -71,9 +71,9 @@ class ProductionFactory {
               service_type: {
                 id: id,
                 name: 'Ingresos',
-                image: 'Tractor.svg'
-              }
-            }
+                image: 'Tractor.svg',
+              },
+            },
           }
         })
 
@@ -93,7 +93,7 @@ class ProductionFactory {
       budget,
       display: StageValidator.isActive(form),
       order: StageValidator.getOrder(form),
-      status: 'in_progress'
+      status: 'in_progress',
     }
   }
 
@@ -107,8 +107,8 @@ class ProductionFactory {
           permissions: {
             can_edit: true,
             can_sign: true,
-            can_read: true
-          }
+            can_read: true,
+          },
         }
       } else {
         return {
@@ -117,8 +117,8 @@ class ProductionFactory {
           permissions: {
             can_read: true,
             can_edit: this._getPermissionUser(1),
-            can_sign: this._getPermissionUser(2)
-          }
+            can_sign: this._getPermissionUser(2),
+          },
         }
       }
     })
@@ -134,8 +134,8 @@ class ProductionFactory {
           permissions: {
             can_read: true,
             can_edit: true,
-            can_sign: true
-          }
+            can_sign: true,
+          },
         }
       } else {
         eventsPermissions = this._getPermissionsEvent(stage)
@@ -144,7 +144,7 @@ class ProductionFactory {
       let data = {
         label: stage.label,
         stage: stage.name,
-        owner: this._owner
+        owner: this._owner,
       }
 
       data.events = eventsPermissions
@@ -156,7 +156,7 @@ class ProductionFactory {
 
     return {
       stages: [...stages],
-      events: [...events]
+      events: [...events],
     }
   }
 
@@ -174,8 +174,8 @@ class ProductionFactory {
             permissions: {
               can_read: true,
               can_edit: this._getPermissionUser(1),
-              can_sign: this._getPermissionUser(2)
-            }
+              can_sign: this._getPermissionUser(2),
+            },
           }
         })
     }
@@ -184,7 +184,7 @@ class ProductionFactory {
   }
 
   _getBudgetAmount() {
-    const budget = map(this._stage.data).reduce((prev, { amount, total }) => {
+    const budget = map(this._stage.data).reduce((prev, { amount }) => {
       return prev + Number(amount)
     }, 0)
 

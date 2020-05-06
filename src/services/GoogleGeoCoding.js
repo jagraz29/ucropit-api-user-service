@@ -1,25 +1,25 @@
-"use strict";
+'use strict'
 
-const RequestPromise = require("../services/RequestPromise");
-const geocodingApi = process.env.GOOGLE_API_GEOCODING;
-const apiKey = process.env.GOOGLE_API_KEY;
+const RequestPromise = require('../services/RequestPromise')
+const geocodingApi = process.env.GOOGLE_API_GEOCODING
+const apiKey = process.env.GOOGLE_API_KEY
 
 class GoogleGeoCoding {
   static async getGeocoding(latitude, longitude) {
     try {
       const request = new RequestPromise(
         `${geocodingApi}?latlng=${latitude},${longitude}&key=${apiKey}`,
-        "GET"
-      );
+        'GET'
+      )
 
-      let result = await request.send();
-      result = JSON.parse(result);
+      let result = await request.send()
+      result = JSON.parse(result)
 
-      return {error: false, data: result.results};
+      return { error: false, data: result.results }
     } catch (error) {
-      return { erro: true, data: null };
+      return { erro: true, data: null }
     }
   }
 }
 
-module.exports = GoogleGeoCoding;
+module.exports = GoogleGeoCoding

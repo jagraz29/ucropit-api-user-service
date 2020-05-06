@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface) => {
     return queryInterface.bulkInsert(
       'contract_companies',
       [
@@ -13,7 +13,7 @@ module.exports = {
           updated_at: new Date(),
           before_day_sowing: 5,
           after_day_sowing: 5,
-          expected_surface_percent: 0.6
+          expected_surface_percent: 0.6,
         },
         {
           id: 2,
@@ -23,7 +23,7 @@ module.exports = {
           updated_at: new Date(),
           before_day_sowing: 5,
           after_day_sowing: 5,
-          expected_surface_percent: 0.6
+          expected_surface_percent: 0.6,
         },
         {
           id: 3,
@@ -33,7 +33,7 @@ module.exports = {
           updated_at: new Date(),
           before_day_sowing: 5,
           after_day_sowing: 5,
-          expected_surface_percent: 0.6
+          expected_surface_percent: 0.6,
         },
         {
           id: 4,
@@ -43,16 +43,16 @@ module.exports = {
           updated_at: new Date(),
           before_day_sowing: 5,
           after_day_sowing: 5,
-          expected_surface_percent: 0.6
-        }
+          expected_surface_percent: 0.6,
+        },
       ],
       {}
     )
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return Promise.all([
-      queryInterface.bulkDelete('contract_companies', null, {})
+      queryInterface.bulkDelete('contract_companies', null, {}),
     ])
-  }
+  },
 }

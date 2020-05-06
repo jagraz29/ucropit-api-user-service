@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 module.exports = (sequelize, DataTypes) => {
   const CoverageArea = sequelize.define(
-    "coverage_areas",
+    'coverage_areas',
     {
       id: {
         allowNull: false,
@@ -32,15 +32,15 @@ module.exports = (sequelize, DataTypes) => {
     {
       timestamps: true,
       underscored: true,
-      tableName: "coverage_areas"
+      tableName: 'coverage_areas'
     }
   );
 
   CoverageArea.associate = function (models) {
     CoverageArea.belongsToMany(models.providers, {
-        through: 'coverage_areas_providers',
-        foreignKey: 'coverage_area_id',
-        otherKey: 'providers_id'
+      through: 'coverage_areas_providers',
+      foreignKey: 'coverage_area_id',
+      otherKey: 'providers_id'
     })
   }
 

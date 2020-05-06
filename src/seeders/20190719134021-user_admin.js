@@ -2,14 +2,15 @@
 
 const bcrypt = require('bcrypt')
 
-async function encryptPassword (password) {
+async function encryptPassword(password) {
   const salt = await bcrypt.genSalt(10)
   return await bcrypt.hash(password, salt)
 }
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return new Promise(async (resolve, reject) => {
+  up: (queryInterface) => {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async () => {
       return queryInterface.bulkInsert(
         'users',
         [
@@ -17,15 +18,15 @@ module.exports = {
             first_name: 'John',
             last_name: 'Doe',
             email: 'admin@ucropit.com',
-            password: await encryptPassword('secret')
-          }
+            password: await encryptPassword('secret'),
+          },
         ],
         {}
       )
     })
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.bulkDelete('users', null, {})
-  }
+  },
 }

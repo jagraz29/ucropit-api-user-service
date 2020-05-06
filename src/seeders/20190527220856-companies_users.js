@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface) => {
     return Promise.all([
       queryInterface.bulkInsert(
         'companies',
@@ -110,7 +110,7 @@ module.exports = {
     ])
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return Promise.all([
       queryInterface.bulkDelete('companies_users_profiles', null, {}),
       queryInterface.bulkDelete('companies', null, {})

@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 module.exports = (sequelize, DataTypes) => {
   const DiaryUser = sequelize.define(
-    "diary_users",
+    'diary_users',
     {
       id: {
         allowNull: false,

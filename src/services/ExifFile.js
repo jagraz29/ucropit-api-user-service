@@ -1,5 +1,5 @@
-const exif = require("exif-parser");
-const fs = require("fs");
+const exif = require('exif-parser');
+const fs = require('fs');
 
 class ExifFile {
   constructor(pathFile) {
@@ -7,7 +7,7 @@ class ExifFile {
   }
 
   get metadata() {
-    if (!this.pathFile) throw new Error("Path file must set.");
+    if (!this.pathFile) throw new Error('Path file must set.');
 
     const buffer = fs.readFileSync(this.pathFile);
     const parser = exif.create(buffer);

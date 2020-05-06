@@ -19,7 +19,7 @@ const provider = {
   postal_code: '322',
   taxid: '232323233',
   cbu: '23232323232323',
-  workplace: 'Oficina'
+  workplace: 'Oficina',
 }
 
 const providerSearch = {
@@ -35,7 +35,7 @@ const providerSearch = {
   postal_code: '322',
   taxid: '232323233',
   cbu: '23232323232323',
-  workplace: 'Oficina'
+  workplace: 'Oficina',
 }
 
 const providerUpdate = {
@@ -51,7 +51,7 @@ const providerUpdate = {
   postal_code: '322',
   taxid: '232323233',
   cbu: '23232323232323',
-  workplace: 'Oficina'
+  workplace: 'Oficina',
 }
 
 const providerDelete = {
@@ -67,7 +67,7 @@ const providerDelete = {
   postal_code: '322',
   taxid: '232323233',
   cbu: '23232323232323',
-  workplace: 'Oficina'
+  workplace: 'Oficina',
 }
 
 let idDelete = null
@@ -77,7 +77,7 @@ let idSearch = null
 /**
  * Se crea los presents para los test.
  */
-test.before('presets', async t => {
+test.before('presets', async () => {
   const providerSearchObj = await Provider.create(providerSearch)
   const providerDeleteObj = await Provider.create(providerDelete)
   const providerUpdateObj = await Provider.create(providerUpdate)
@@ -89,9 +89,9 @@ test.before('presets', async t => {
 /**
  * Se limpia las pruebas creadas en la BD.
  */
-test.after('cleanup', async t => {
+test.after('cleanup', async () => {
   const provider = await Provider.findOne({
-    where: { name: 'Una razon social' }
+    where: { name: 'Una razon social' },
   })
   const providerUpdated = await Provider.findOne({ where: { id: idUpdate } })
   const providerSearch = await Provider.findOne({ where: { id: idSearch } })
@@ -100,9 +100,9 @@ test.after('cleanup', async t => {
   await providerSearch.destroy()
 })
 
-test.serial.cb('It should be a create one provider', t => {
+test.serial.cb('It should be a create one provider', (t) => {
   app
-    .post(`/api/providers`)
+    .post('/api/providers')
     .send(provider)
     .set('accept', 'json')
     .expect(201)
@@ -117,7 +117,7 @@ test.serial.cb('It should be a create one provider', t => {
     })
 })
 
-test.serial.cb('It should get a one provider when exist provider', t => {
+test.serial.cb('It should get a one provider when exist provider', (t) => {
   app
     .get(`/api/providers/${idSearch}`)
     .expect(200)
@@ -133,7 +133,7 @@ test.serial.cb('It should get a one provider when exist provider', t => {
     })
 })
 
-test.serial.cb('It should get an error 404 when send id not exist', t => {
+test.serial.cb('It should get an error 404 when send id not exist', (t) => {
   app
     .get(`/api/providers/${100}`)
     .expect(404)
@@ -148,7 +148,7 @@ test.serial.cb('It should get an error 404 when send id not exist', t => {
     })
 })
 
-test.serial.cb('It should update a provider', t => {
+test.serial.cb('It should update a provider', (t) => {
   app
     .put(`/api/providers/${idUpdate}`)
     .send({ status: 'Completo', name: 'Nombre test' })
@@ -165,7 +165,7 @@ test.serial.cb('It should update a provider', t => {
     })
 })
 
-test.serial.cb('It should delete a provider when to send id', t => {
+test.serial.cb('It should delete a provider when to send id', (t) => {
   app
     .delete(`/api/providers/${idDelete}`)
     .expect(200)

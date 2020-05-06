@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface) => {
     return queryInterface.bulkInsert('providers_type', [
       {
         value: 'insures',
@@ -22,7 +22,7 @@ module.exports = {
     ], {});
   },
 
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete("providers_type", null, {});
+  down: (queryInterface) => {
+    return queryInterface.bulkDelete('providers_type', null, {});
   }
 };

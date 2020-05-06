@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface) => {
     return queryInterface.bulkInsert('crop_permissions', [
       {
         name: 'Puede editar',
@@ -14,7 +14,7 @@ module.exports = {
     ], {});
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.bulkDelete('crop_permissions', null, {});
   }
 };

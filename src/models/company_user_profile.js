@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 module.exports = (sequelize, DataTypes) => {
   const CompanyUserProfile = sequelize.define(
-    "companies_users_profiles",
+    'companies_users_profiles',
     {
       id: {
         allowNull: false,

@@ -7,89 +7,90 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
       },
       first_name: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       last_name: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       phone: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       email: {
         type: DataTypes.STRING,
         unique: true,
         message: 'El email del usuario ya existe',
-        allowNull: false
+        allowNull: false,
       },
       first_login: {
         type: DataTypes.BOOLEAN,
-        defaultValue: 1
+        defaultValue: 1,
       },
       password: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       fiscal_number: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
       },
       active: {
         type: DataTypes.BOOLEAN,
-        allowNull: true
+        allowNull: true,
       },
       activation_token: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
       },
       reset_token: {
         type: DataTypes.STRING,
-        allowNull: true
-      }
+        allowNull: true,
+      },
     },
     {
       freezeTableName: true,
       tableName: 'users',
-      timestamps: true
+      timestamps: true,
     }
   )
 
-  User.associate = function(models) {
+  User.associate = function (models) {
     User.hasMany(models.signs, {
-      foreignKey: 'user_id'
+      foreignKey: 'user_id',
     })
 
     User.belongsToMany(models.providers, {
       through: 'providers_users',
       foreignKey: 'user_id',
-      otherKey: 'providers_id'
+      otherKey: 'providers_id',
     })
 
     User.belongsToMany(models.users, {
       through: 'diary_users',
-      as: 'ContactUser'
+      as: 'ContactUser',
     })
 
     User.hasOne(models.producers, {
-      foreignKey: 'user_id'
+      foreignKey: 'user_id',
     })
 
     User.belongsToMany(models.companies, {
       through: 'companies_users_profiles',
       foreignKey: 'user_id',
-      otherKey: 'company_id'
+      otherKey: 'company_id',
     })
   }
 
-  async function encryptPasswordIfChanged(user, options) {
+  async function encryptPasswordIfChanged(user) {
     if (user.changed('password')) {
       const salt = await bcrypt.genSalt(10)
+      // eslint-disable-next-line require-atomic-updates
       user.password = await bcrypt.hash(user.password, salt)
     }
   }
 
-  User.prototype.validPassword = async function(password) {
+  User.prototype.validPassword = async function (password) {
     return await bcrypt.compare(password, this.password)
   }
 

@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 module.exports = (sequelize, DataTypes) => {
   const ProvidersProvidersType = sequelize.define(
-    "providers_providers_type",
+    'providers_providers_type',
     {
       id: {
         allowNull: false,

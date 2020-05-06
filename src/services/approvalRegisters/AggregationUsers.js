@@ -12,81 +12,83 @@ class AggregationUsers {
   static async totalAggregationUsersApprovalByCrops(crops) {
     try {
       const aggregations = await this.getCropAggregationWithApprovals(crops)
-    console.log(aggregations)
-    let auxCropId = null
-    let auxIdUser = null
-    let arrayUsers = []
+      
+      let auxCropId = null
+      let auxIdUser = null
+      let arrayUsers = []
 
-    for (const i in aggregations) {
-      if (auxCropId !== aggregations[i].crop.id) {
-        auxCropId = aggregations[i].crop.id
+      for (const i in aggregations) {
+        if (auxCropId !== aggregations[i].crop.id) {
+          auxCropId = aggregations[i].crop.id
 
-        for (const index in aggregations[i].crop_aggregations) {
-          if (auxIdUser !== aggregations[i].crop_aggregations[index].user.id) {
-            auxIdUser = aggregations[i].crop_aggregations[index].user.id
+          for (const index in aggregations[i].crop_aggregations) {
             if (
-              arrayUsers.filter(
-                (item) =>
-                  item.user.id ===
-                  aggregations[i].crop_aggregations[index].user.id
-              ).length > 0
+              auxIdUser !== aggregations[i].crop_aggregations[index].user.id
             ) {
-              const objIndex = arrayUsers.findIndex(
-                (obj) =>
-                  obj.user.id ===
-                  aggregations[i].crop_aggregations[index].user.id
-              )
-              arrayUsers[objIndex].total_register +=
-                aggregations[i].crop_aggregations[
-                  index
-                ].usersApprovals.cantRegister
-              arrayUsers[objIndex].total_signs +=
-                aggregations[i].crop_aggregations[
-                  index
-                ].usersApprovals.cantSigns
-              arrayUsers[objIndex].total_prom_diff_time +=
-                aggregations[i].crop_aggregations[index].diffTimes.time_diff
-            } else {
-              const resum = {
-                user: aggregations[i].crop_aggregations[index].user,
-                total_register:
-                  aggregations[i].crop_aggregations[index].usersApprovals
-                    .cantRegister,
-                total_signs:
-                  aggregations[i].crop_aggregations[index].usersApprovals
-                    .cantSigns,
-                total_prom_diff_time:
-                  aggregations[i].crop_aggregations[index].diffTimes.time_diff,
+              auxIdUser = aggregations[i].crop_aggregations[index].user.id
+              if (
+                arrayUsers.filter(
+                  (item) =>
+                    item.user.id ===
+                    aggregations[i].crop_aggregations[index].user.id
+                ).length > 0
+              ) {
+                const objIndex = arrayUsers.findIndex(
+                  (obj) =>
+                    obj.user.id ===
+                    aggregations[i].crop_aggregations[index].user.id
+                )
+                arrayUsers[objIndex].total_register +=
+                  aggregations[i].crop_aggregations[
+                    index
+                  ].usersApprovals.cantRegister
+                arrayUsers[objIndex].total_signs +=
+                  aggregations[i].crop_aggregations[
+                    index
+                  ].usersApprovals.cantSigns
+                arrayUsers[objIndex].total_prom_diff_time +=
+                  aggregations[i].crop_aggregations[index].diffTimes.time_diff
+              } else {
+                const resum = {
+                  user: aggregations[i].crop_aggregations[index].user,
+                  total_register:
+                    aggregations[i].crop_aggregations[index].usersApprovals
+                      .cantRegister,
+                  total_signs:
+                    aggregations[i].crop_aggregations[index].usersApprovals
+                      .cantSigns,
+                  total_prom_diff_time:
+                    aggregations[i].crop_aggregations[index].diffTimes
+                      .time_diff,
+                }
+                arrayUsers.push(resum)
               }
-              arrayUsers.push(resum)
             }
           }
         }
       }
-    }
 
-    return arrayUsers.map((item) => {
-      return {
-        user: item.user,
-        total_register: item.total_register,
-        total_signs: item.total_signs,
-        total_prom_diff_time:
-          item.total_prom_diff_time > 0
-            ? item.total_prom_diff_time / item.total_signs
-            : 0,
-      }
-    })
-    }catch(error) {
+      return arrayUsers.map((item) => {
+        return {
+          user: item.user,
+          total_register: item.total_register,
+          total_signs: item.total_signs,
+          total_prom_diff_time:
+            item.total_prom_diff_time > 0
+              ? item.total_prom_diff_time / item.total_signs
+              : 0,
+        }
+      })
+    } catch (error) {
       throw new Error(error)
     }
-    
   }
 
   /**
    * Calculate prom diff between date to create register and date sign user.
-   * 
-   * @param {*} crop 
-   * @param {*} user 
+   *
+   * @param {*} crop
+   * @param {*} user
    */
   static async getPromTotalTimeDiffSingByUser(crop, user) {
     try {
@@ -102,33 +104,33 @@ class AggregationUsers {
             item.Register[0].Signs
           )
         }
-  
+
         return {
           timeDiff: timeDiff,
-          cantSign: item.Register.length > 0 ? item.Register[0].Signs.length : 0,
+          cantSign:
+            item.Register.length > 0 ? item.Register[0].Signs.length : 0,
         }
       })
-  
+
       const filterTimeDiff = result.find((item) => item.timeDiff > 0)
         ? result.find((item) => item.timeDiff > 0)
         : null
-  
+
       return {
         time_diff: filterTimeDiff
           ? filterTimeDiff.timeDiff / filterTimeDiff.cantSign
           : 0,
       }
-    }catch(error) {
+    } catch (error) {
       throw new Error(error)
     }
-    
   }
 
   /**
    * Sum diff to date register with all signs to register.
-   * 
-   * @param {*} register 
-   * @param {*} signs 
+   *
+   * @param {*} register
+   * @param {*} signs
    */
   static calculateDiffTime(register, signs) {
     const timeRegister = moment(register.createdAt)
@@ -153,8 +155,11 @@ class AggregationUsers {
       const signAggregation = crops.map(async (crop) => {
         const result = crop.users.map(async (user) => {
           const usersApprovals = await this.userWithApprovals(crop, user)
-          const diffTimes = await this.getPromTotalTimeDiffSingByUser(crop, user)
-  
+          const diffTimes = await this.getPromTotalTimeDiffSingByUser(
+            crop,
+            user
+          )
+
           return {
             user: {
               id: user.id,
@@ -165,18 +170,17 @@ class AggregationUsers {
             diffTimes,
           }
         })
-  
+
         return {
           crop: { id: crop.id, name: crop.crop_name },
           crop_aggregations: await Promise.all(result),
         }
       })
-  
+
       return await Promise.all(signAggregation)
-    }catch(error) {
+    } catch (error) {
       throw new Error(error)
     }
-    
   }
 
   /**

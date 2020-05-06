@@ -25,11 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   },
-    {
-      freezeTableName: true,
-      tableName: 'crop_types',
-      timestamps: true
-    }
+  {
+    freezeTableName: true,
+    tableName: 'crop_types',
+    timestamps: true
+  }
   )
 
   return CropTypes

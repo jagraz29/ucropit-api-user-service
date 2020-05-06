@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("providers", {
+    return queryInterface.createTable('providers', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -16,7 +16,7 @@ module.exports = {
       status: {
         type: Sequelize.ENUM('Sugerido', 'Completo', 'Validado'),
         allowNull:false,
-        defaultValue: "Sugerido"
+        defaultValue: 'Sugerido'
       },
       phone: {
         type: Sequelize.STRING,

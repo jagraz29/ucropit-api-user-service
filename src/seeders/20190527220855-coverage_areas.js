@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface) => {
     return queryInterface.bulkInsert('coverage_areas', [
       {
         value: 'junin',
@@ -26,7 +26,7 @@ module.exports = {
     ], {});
   },
 
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete("coverage_areas", null, {});
+  down: (queryInterface) => {
+    return queryInterface.bulkDelete('coverage_areas', null, {});
   }
 };

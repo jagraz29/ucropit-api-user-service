@@ -9,20 +9,20 @@ class AuthController {
   static async login({ email, password }) {
     try {
       const user = await User.findOne({
-        where: { email: email }
+        where: { email: email },
       })
 
-      if (user === null) throw Error(`Credenciales invalidas`)
+      if (user === null) throw Error('Credenciales invalidas')
 
       if (!user.first_login) {
         throw Error(
-          `Si fue invitado a colaborar de una campaña debe registrarse`
+          'Si fue invitado a colaborar de una campaña debe registrarse'
         )
       }
 
       const isValidPassword = await user.validPassword(password)
 
-      if (!isValidPassword) throw Error(`Credenciales invalidas`)
+      if (!isValidPassword) throw Error('Credenciales invalidas')
 
       return { user, error: false }
     } catch (err) {
@@ -37,7 +37,7 @@ class AuthController {
       const activationToken = uuid()
 
       user = await User.findOne({
-        where: { email: data.email }
+        where: { email: data.email },
       })
 
       if (user && !user.first_login) {
@@ -45,7 +45,7 @@ class AuthController {
 
         return {
           user: await user.update({ ...data, first_login: 1, active: 0 }),
-          withoutFirstCrop: true
+          withoutFirstCrop: true,
         }
       }
 
@@ -54,7 +54,7 @@ class AuthController {
       const newUser = await User.create({
         ...data,
         active: 0,
-        activation_token: activationToken
+        activation_token: activationToken,
       })
       await this.sendActivationEmail(newUser, activationToken)
 
@@ -86,10 +86,10 @@ class AuthController {
         data: {
           user: user,
           activationToken: token,
-          baseUrl: `${process.env.FRONT_URL}`
+          baseUrl: `${process.env.FRONT_URL}`,
         },
         usersID: [user.id],
-        type: 'user_activation'
+        type: 'user_activation',
       })
     } catch (error) {
       console.error(error)
@@ -113,7 +113,7 @@ class AuthController {
   static async adminLogin({ email, password }) {
     try {
       const user = await User.findOne({
-        where: { email: email }
+        where: { email: email },
       })
 
       if (user === null) throw Error(`Credenciales invalidas`)
@@ -143,12 +143,12 @@ class AuthController {
       const user = await User.create(data)
       await Producer.create({
         ...data,
-        user_id: user.id
+        user_id: user.id,
       })
 
       return await User.findOne({
         where: { id: user.id },
-        include: [{ model: Producer }]
+        include: [{ model: Producer }],
       })
     } catch (error) {
       console.error(error)

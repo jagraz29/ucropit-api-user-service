@@ -1,7 +1,7 @@
-"use strict";
+'use strict'
 
-const User = require("../models").users;
-const DiaryUser = require("../models").diary_users;
+const User = require('../models').users
+const DiaryUser = require('../models').diary_users
 
 class DiaryUserController {
   static async index(auth) {
@@ -11,19 +11,19 @@ class DiaryUserController {
           {
             model: User,
             where: {
-              first_login: 1
+              first_login: 1,
             },
-            as: "ContactUser",
+            as: 'ContactUser',
             through: {
-              model: DiaryUser
-            }
-          }
+              model: DiaryUser,
+            },
+          },
         ],
-        where: { id: auth.user.id }
+        where: { id: auth.user.id },
       },
       { plain: true }
-    );
+    )
   }
 }
 
-module.exports = DiaryUserController;
+module.exports = DiaryUserController

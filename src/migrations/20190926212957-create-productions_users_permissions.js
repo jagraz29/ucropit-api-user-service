@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      "productions_users_permissions",
+      'productions_users_permissions',
       {
         id: {
           allowNull: false,
@@ -42,6 +42,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("productions_users_permissions");
+    return queryInterface.dropTable('productions_users_permissions');
   }
 };

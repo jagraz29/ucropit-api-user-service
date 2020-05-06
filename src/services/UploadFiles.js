@@ -1,4 +1,4 @@
-const path = require("path")
+const path = require('path')
 
 class UploadFiles {
   constructor(files, destination) {
@@ -8,17 +8,17 @@ class UploadFiles {
 
   store() {
     if (Object.keys(this.files).length == 0) {
-      throw new Error("No files were uploaded.")
+      throw new Error('No files were uploaded.')
     }
 
     if (!this.validTypes(this.files.file)) {
-      throw new Error("File's extension is rejected")
+      throw new Error('File\'s extension is rejected')
     }
 
     //Ranem filename for md5 name file.
 
     let sampleFile = this.files.file
-    const fileNameArray = sampleFile.name.split(".")
+    const fileNameArray = sampleFile.name.split('.')
 
     const renameFile = `${sampleFile.md5}.${fileNameArray[1]}`
 
@@ -26,7 +26,7 @@ class UploadFiles {
       sampleFile.mv(
         path.join(__dirname, `../../public/${this.destination}/${renameFile}`),
         err => {
-          if (err) reject(new Error(err, "File's extension is rejected"))
+          if (err) reject(new Error(err, 'File\'s extension is rejected'))
 
           resolve({
             path: `${process.env.BASE_URL}/${this.destination}/${renameFile}`,

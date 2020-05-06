@@ -14,14 +14,14 @@ const ApprovalRegisterSigns = require('../models').approval_register_sign
 const Mail = require('../services/Mail')
 const Search = require('../services/Search')
 const { getShortYear } = require('../helpers')
-const { map, isEqual } = require('lodash')
+const { map } = require('lodash')
 const { diff } = require('deep-object-diff')
 const PDF = require('../services/PDF')
 const Stamp = require('../services/Stamp')
 const DiaryUser = require('../services/DiaryUser')
 
 class CropsController {
-  static async index (auth) {
+  static async index(auth) {
     try {
       return await Crop.findAll({
         include: [
@@ -29,26 +29,26 @@ class CropsController {
           { model: Fields },
           {
             model: Users,
-            where: { id: auth.user.id }
-          }
-        ]
+            where: { id: auth.user.id },
+          },
+        ],
       })
     } catch (err) {
       throw new Error(err)
     }
   }
 
-  static async colaborators (cropId, values, auth) {
+  static async colaborators(cropId, values, auth) {
     try {
       let user = await Users.findOne({
         where: {
-          email: values.email
-        }
+          email: values.email,
+        },
       })
 
       const crop = await Crop.findOne({
         where: { id: cropId },
-        include: [{ model: CropTypes }]
+        include: [{ model: CropTypes }],
       })
 
       const cropName = `${crop.crop_type.name} ${getShortYear(
@@ -61,7 +61,7 @@ class CropsController {
           last_name: values.last_name,
           email: values.email,
           password: values.email,
-          first_login: 0
+          first_login: 0,
         })
       }
 
@@ -76,8 +76,8 @@ class CropsController {
             crop.status === 'accepted'
               ? `/productions/${crop.id}`
               : `/planning/${crop.id}/details`,
-          url: process.env.FRONT_URL
-        }
+          url: process.env.FRONT_URL,
+        },
       })
 
       await crop.addUsers(user)
@@ -86,24 +86,24 @@ class CropsController {
       await DiaryUser.add(auth.user, user)
 
       const rel = await CropUsers.findOne({
-        where: { user_id: user.id, crop_id: crop.id }
+        where: { user_id: user.id, crop_id: crop.id },
       })
 
       await rel.update({
-        is_owner: 0
+        is_owner: 0,
       })
 
       if (values.can_edit) {
         await CropUserPermissions.create({
           crop_permission_id: 1,
-          crop_user_id: rel.id
+          crop_user_id: rel.id,
         })
       }
 
       if (values.can_sign) {
         await CropUserPermissions.create({
           crop_permission_id: 2,
-          crop_user_id: rel.id
+          crop_user_id: rel.id,
         })
       }
 
@@ -113,27 +113,27 @@ class CropsController {
     }
   }
 
-  static async removeColaborator (colaborator, crop) {
+  static async removeColaborator(colaborator, crop) {
     try {
       const rel = await CropUsers.findOne({
-        where: { user_id: colaborator, crop_id: crop }
+        where: { user_id: colaborator, crop_id: crop },
       })
       const sing = await Signs.findOne({
-        where: { type: crop, user_id: colaborator }
+        where: { type: crop, user_id: colaborator },
       })
 
       const cropUserPermission = await CropUserPermissions.findAll({
-        where: { crop_user_id: rel.id }
+        where: { crop_user_id: rel.id },
       })
 
       const cropUserPermissionsProduction = await ProductionUserPermission.findOne(
         {
-          where: { user_id: colaborator, production_id: crop }
+          where: { user_id: colaborator, production_id: crop },
         }
       )
 
       await ApprovalRegisterSigns.destroy({
-        where: { user_id: colaborator }
+        where: { user_id: colaborator },
       })
 
       if (rel) {
@@ -157,15 +157,15 @@ class CropsController {
     }
   }
 
-  static async removeCropItems ({ id, stage, service, serviceId }) {
+  static async removeCropItems({ id, stage, service, serviceId }) {
     try {
       const crop = await Crop.findOne({
-        where: { id: id }
+        where: { id: id },
       })
 
       const budget = JSON.parse(crop.budget)
 
-      budget.items = budget.items.map(item => {
+      budget.items = budget.items.map((item) => {
         if (item.form == stage) {
           for (let i of Object.keys(item.data)) {
             if (
@@ -182,8 +182,8 @@ class CropsController {
 
       await Signs.destroy({
         where: {
-          type_id: id
-        }
+          type_id: id,
+        },
       })
 
       await crop.update({ budget: JSON.stringify(budget) })
@@ -192,7 +192,7 @@ class CropsController {
     }
   }
 
-  static async types () {
+  static async types() {
     try {
       return await CropTypes.findAll()
     } catch (err) {
@@ -200,7 +200,7 @@ class CropsController {
     }
   }
 
-  static async cropTypesCreate (data) {
+  static async cropTypesCreate(data) {
     try {
       return await CropTypes.create(data)
     } catch (err) {
@@ -208,7 +208,7 @@ class CropsController {
     }
   }
 
-  static async deleteCropType (id) {
+  static async deleteCropType(id) {
     try {
       const croptype = await CropTypes.findOne({ where: { id: id } })
       return await croptype.destroy()
@@ -217,7 +217,7 @@ class CropsController {
     }
   }
 
-  static async showCropType (id) {
+  static async showCropType(id) {
     try {
       const croptype = await CropTypes.findOne({ where: { id: id } })
       return await croptype
@@ -226,7 +226,7 @@ class CropsController {
     }
   }
 
-  static async updateCropType (data, id) {
+  static async updateCropType(data, id) {
     try {
       const croptype = await CropTypes.findOne({ where: { id: id } })
       return await croptype.update(data)
@@ -235,7 +235,7 @@ class CropsController {
     }
   }
 
-  static async confirmation (id, auth) {
+  static async confirmation(id, auth) {
     try {
       const crop = await Crop.findOne({ where: { id } })
       const budget = JSON.parse(crop.budget)
@@ -244,7 +244,7 @@ class CropsController {
         data: {},
         template: 'templates/budget.pug',
         path: `${__basedir}/../public/budget`,
-        filename: `crop-${id}.pdf`
+        filename: `crop-${id}.pdf`,
       })
 
       await Signs.create({
@@ -253,7 +253,7 @@ class CropsController {
         type_id: id,
         hash,
         ots: await Stamp.stampHash(hash),
-        meta: JSON.stringify({ path: `budget/crop-${id}.pdf` })
+        meta: JSON.stringify({ path: `budget/crop-${id}.pdf` }),
       })
 
       return { path: `budget/crop-${id}.pdf` }
@@ -262,7 +262,7 @@ class CropsController {
     }
   }
 
-  static async show (id, auth) {
+  static async show(id, auth) {
     try {
       let crop = await Crop.findOne({
         where: { id: id },
@@ -273,31 +273,31 @@ class CropsController {
             model: Users,
             include: [
               {
-                model: Signs
-              }
-            ]
-          }
-        ]
+                model: Signs,
+              },
+            ],
+          },
+        ],
       })
 
-      const cropUsersId = crop.users.find(el => el.id === auth.user.id)
+      const cropUsersId = crop.users.find((el) => el.id === auth.user.id)
         .crop_users.id
       const cropUsers = await CropUsers.findOne({
         where: { id: cropUsersId },
-        include: [{ model: CropPermissions }]
+        include: [{ model: CropPermissions }],
       })
 
-      let productionPermissions = crop.users.map(async user => {
+      let productionPermissions = crop.users.map(async (user) => {
         const cropUserPermissionsProduction = await ProductionUserPermission.findOne(
           {
-            where: { user_id: user.id, production_id: id }
+            where: { user_id: user.id, production_id: id },
           }
         )
 
         if (cropUserPermissionsProduction) {
           return {
             user_id: user.id,
-            permissions: JSON.parse(cropUserPermissionsProduction.data)
+            permissions: JSON.parse(cropUserPermissionsProduction.data),
           }
         }
       })
@@ -312,14 +312,14 @@ class CropsController {
       crop = {
         ...plainCrops,
         users: await Promise.all(
-          plainCrops.users.map(async el => {
+          plainCrops.users.map(async (el) => {
             const permissions = await CropUserPermissions.findAll({
               where: { crop_user_id: el.crop_users.id },
-              include: [{ model: CropPermissions }]
+              include: [{ model: CropPermissions }],
             })
 
             const signable = permissions.find(
-              el => el.crop_permission.value === 'can_sign'
+              (el) => el.crop_permission.value === 'can_sign'
             )
 
             if (signable !== undefined) {
@@ -328,20 +328,20 @@ class CropsController {
 
             return { ...el, permissions }
           })
-        )
+        ),
       }
 
-      crop.users_can_sign = crop.users.filter(el => {
+      crop.users_can_sign = crop.users.filter((el) => {
         return (
-          el.permissions.filter(el => el.crop_permission.value === 'can_sign')
+          el.permissions.filter((el) => el.crop_permission.value === 'can_sign')
             .length > 0
         )
       }).length
 
       // search users that already sign in this crop
-      crop.editable = canSign.filter(el => {
+      crop.editable = canSign.filter((el) => {
         const signers =
-          el.signs.filter(el => {
+          el.signs.filter((el) => {
             return el.type_id === Number(id)
           }).length > 0
         return signers
@@ -354,7 +354,7 @@ class CropsController {
         ...crop,
         permissions: cropUsers.crop_permissions,
         owner: cropUsers.is_owner,
-        production_permission: productionPermissions.filter(elem => elem)
+        production_permission: productionPermissions.filter((elem) => elem),
       }
     } catch (err) {
       console.log('CROP_SHOW', err)
@@ -362,7 +362,7 @@ class CropsController {
     }
   }
 
-  static async getStageCropByField (id, field) {
+  static async getStageCropByField(id, field) {
     try {
       const crop = await Crop.findOne({ where: { id: id } })
       if (!crop) throw new Error(`No se encontró crop con id ${id}`)
@@ -372,7 +372,7 @@ class CropsController {
     }
   }
 
-  static async create (data, auth) {
+  static async create(data, auth) {
     try {
       const crop = await Crop.create({
         ...data,
@@ -385,7 +385,7 @@ class CropsController {
               data: {},
               status: 'in_progress',
               form: 'fields',
-              display: true
+              display: true,
             },
             {
               id: 2,
@@ -393,7 +393,7 @@ class CropsController {
               data: {},
               status: 'in_progress',
               form: 'pre-sowing',
-              display: true
+              display: true,
             },
             {
               id: 3,
@@ -401,7 +401,7 @@ class CropsController {
               data: {},
               status: 'in_progress',
               form: 'sowing',
-              display: true
+              display: true,
             },
             {
               id: 4,
@@ -409,7 +409,7 @@ class CropsController {
               data: {},
               status: 'in_progress',
               form: 'protection',
-              display: true
+              display: true,
             },
             {
               id: 5,
@@ -417,7 +417,7 @@ class CropsController {
               data: {},
               status: 'in_progress',
               form: 'harvest-and-marketing',
-              display: true
+              display: true,
             },
             {
               id: 6,
@@ -425,7 +425,7 @@ class CropsController {
               data: {},
               status: 'in_progress',
               form: 'other-expenses',
-              display: true
+              display: true,
             },
             {
               id: 7,
@@ -433,7 +433,7 @@ class CropsController {
               data: {},
               status: 'in_progress',
               form: 'monitoring',
-              display: false
+              display: false,
             },
             {
               id: 8,
@@ -441,10 +441,10 @@ class CropsController {
               data: {},
               status: 'in_progress',
               form: 'deliveries',
-              display: false
-            }
-          ]
-        })
+              display: false,
+            },
+          ],
+        }),
       })
 
       let rel = await crop.setUsers([auth.user.id])
@@ -452,12 +452,12 @@ class CropsController {
 
       await CropUserPermissions.create({
         crop_permission_id: 1,
-        crop_user_id: rel.id
+        crop_user_id: rel.id,
       })
 
       await CropUserPermissions.create({
         crop_permission_id: 2,
-        crop_user_id: rel.id
+        crop_user_id: rel.id,
       })
 
       return crop
@@ -466,16 +466,16 @@ class CropsController {
     }
   }
 
-  static async update (id, data) {
+  static async update(id, data) {
     try {
       const crop = await Crop.findOne({
-        where: { id: id }
+        where: { id: id },
       })
 
       let newBudget = JSON.parse(crop.budget)
       newBudget = {
         ...newBudget,
-        items: map(newBudget.items, el => {
+        items: map(newBudget.items, (el) => {
           if (el.form === 'other-expenses') {
             const totalExpenses = el.data.undefined.expenses.reduce(
               (prev, el) => prev + parseFloat(el.cost.replace(/[, ]+/g, '')),
@@ -505,22 +505,22 @@ class CropsController {
 
               newData = {
                 ...el.data,
-                [item]: el.data[item]
+                [item]: el.data[item],
               }
             }
             el.data = newData
           }
           return el
-        })
+        }),
       }
 
       await Signs.destroy({
-        where: { type_id: id, type: 'crop-budget' }
+        where: { type_id: id, type: 'crop-budget' },
       })
 
       return await crop.update({
         ...data,
-        budget: JSON.stringify(newBudget)
+        budget: JSON.stringify(newBudget),
       })
     } catch (err) {
       console.log(err)
@@ -528,10 +528,10 @@ class CropsController {
     }
   }
 
-  static async budget (id, data) {
+  static async budget(id, data) {
     try {
       const crop = await Crop.findOne({
-        where: { id: id }
+        where: { id: id },
       })
 
       const diffBudget = diff(JSON.parse(crop.budget), data).items
@@ -539,7 +539,7 @@ class CropsController {
       if (diffBudget !== undefined) {
         if (diffBudget[Object.keys(diffBudget)[0]].data !== undefined) {
           await Signs.destroy({
-            where: { type_id: crop.id, type: 'crop-budget' }
+            where: { type_id: crop.id, type: 'crop-budget' },
           })
         }
       }
@@ -550,10 +550,10 @@ class CropsController {
     }
   }
 
-  static async delete (id) {
+  static async delete(id) {
     try {
       const crop = await Crop.findOne({
-        where: { id: id }
+        where: { id: id },
       })
 
       return await crop.destroy()

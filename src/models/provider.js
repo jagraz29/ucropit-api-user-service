@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 module.exports = (sequelize, DataTypes) => {
   const Provider = sequelize.define(
-    "providers",
+    'providers',
     {
       id: {
         allowNull: false,
@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       status: {
-        type: DataTypes.ENUM("Sugerido", "Completo", "Validado"),
+        type: DataTypes.ENUM('Sugerido', 'Completo', 'Validado'),
         allowNull: false,
-        defaultValue: "Sugerido"
+        defaultValue: 'Sugerido'
       },
       phone: {
         type: DataTypes.STRING,
@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         get: function() {
           return `${process.env.BASE_URL}/providers/${this.getDataValue(
-            "photo"
+            'photo'
           )}`;
         }
       },
@@ -109,21 +109,21 @@ module.exports = (sequelize, DataTypes) => {
 
   Provider.associate = function(models) {
     Provider.belongsToMany(models.providers_type, {
-      through: "providers_providers_type",
-      foreignKey: "providers_id",
-      otherKey: "providers_type_id"
+      through: 'providers_providers_type',
+      foreignKey: 'providers_id',
+      otherKey: 'providers_type_id'
     });
 
     Provider.belongsToMany(models.coverage_areas, {
-      through: "coverage_areas_providers",
-      foreignKey: "providers_id",
-      otherKey: "coverage_area_id"
+      through: 'coverage_areas_providers',
+      foreignKey: 'providers_id',
+      otherKey: 'coverage_area_id'
     });
 
     Provider.belongsToMany(models.users, {
-      through: "providers_users",
-      foreignKey: "providers_id",
-      otherKey: "user_id"
+      through: 'providers_users',
+      foreignKey: 'providers_id',
+      otherKey: 'user_id'
     });
   };
 
