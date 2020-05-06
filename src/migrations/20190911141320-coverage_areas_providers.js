@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      "coverage_areas_providers",
+      'coverage_areas_providers',
       {
         id: {
           allowNull: false,
@@ -38,6 +38,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("coverage_areas_providers");
+    return queryInterface.dropTable('coverage_areas_providers');
   }
 };

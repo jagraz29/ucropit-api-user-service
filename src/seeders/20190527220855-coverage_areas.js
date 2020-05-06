@@ -27,6 +27,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete("coverage_areas", null, {});
+    return queryInterface.bulkDelete('coverage_areas', null, {});
   }
 };

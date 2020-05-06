@@ -12,7 +12,7 @@ class ProductionPermissions {
    * @param {*} production
    * @param {*} stage
    */
-  static async whoCanSign (production, stage) {
+  static async whoCanSign(production, stage) {
     try {
       const data = await ProdUsersPermissions.findAll({
         where: { production_id: production },

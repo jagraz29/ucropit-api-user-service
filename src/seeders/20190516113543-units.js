@@ -2,31 +2,31 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-      return queryInterface.bulkInsert('units', [
-        {
-          value: "bolsa",
-          label_long: "Bolsa",
-          label_short: "Bol."
-        },
-        {
-          value: "kilo",
-          label_long: "Kilo",
-          label_short: "Kg."
-        },
-        {
-          value: "litro",
-          label_long: "Litro",
-          label_short: "Lts."
-        },
-        {
-          value: "packs",
-          label_long: "Pack",
-          label_short: "Pack"
-        }
-      ]);
+    return queryInterface.bulkInsert('units', [
+      {
+        value: 'bolsa',
+        label_long: 'Bolsa',
+        label_short: 'Bol.'
+      },
+      {
+        value: 'kilo',
+        label_long: 'Kilo',
+        label_short: 'Kg.'
+      },
+      {
+        value: 'litro',
+        label_long: 'Litro',
+        label_short: 'Lts.'
+      },
+      {
+        value: 'packs',
+        label_long: 'Pack',
+        label_short: 'Pack'
+      }
+    ]);
   },
 
   down: (queryInterface, Sequelize) => {
-      return queryInterface.bulkDelete('units', null, {})
+    return queryInterface.bulkDelete('units', null, {})
   }
 };

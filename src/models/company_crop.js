@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 module.exports = (sequelize, DataTypes) => {
   const CompanyCrop = sequelize.define(
-    "companies_crops",
+    'companies_crops',
     {
       id: {
         allowNull: false,

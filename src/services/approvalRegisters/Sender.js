@@ -9,7 +9,7 @@ class Sender {
    * Send via mail request approbation register
    * @param {*} param0
    */
-  static async needApprobation ({ approvalRegister, stage, authUser, pathname }) {
+  static async needApprobation({ approvalRegister, stage, authUser, pathname }) {
     try {
       const production = await Common.getProductionBy(approvalRegister)
 

@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
     crop_id: DataTypes.INTEGER,
     field_id: DataTypes.INTEGER
   }, {
-      freezeTableName: true,
-      tableName: 'crop_field',
-      timestamps: true
-    });
+    freezeTableName: true,
+    tableName: 'crop_field',
+    timestamps: true
+  });
   return CropField;
 };

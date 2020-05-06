@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 module.exports = (sequelize, DataTypes) => {
   const CoverageAreaProvider = sequelize.define(
-    "coverage_areas_providers",
+    'coverage_areas_providers',
     {
       id: {
         allowNull: false,

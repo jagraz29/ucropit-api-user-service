@@ -23,6 +23,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete("providers_type", null, {});
+    return queryInterface.bulkDelete('providers_type', null, {});
   }
 };

@@ -17,13 +17,13 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date()
       },
-    {
-      id: 3,
-      company_id: 6,
-      crop_id: 1,
-      created_at: new Date(),
-      updated_at: new Date()
-    }
+      {
+        id: 3,
+        company_id: 6,
+        crop_id: 1,
+        created_at: new Date(),
+        updated_at: new Date()
+      }
     ], {})
   },
 

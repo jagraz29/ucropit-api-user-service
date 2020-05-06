@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const ConceptsController = require("../controllers/ConceptsController");
+const ConceptsController = require('../controllers/ConceptsController');
 
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   ConceptsController.index()
     .then(concepts => {
       return res.json({ code: 200, error: false, concepts });
@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/inputs", (req, res) => {
+router.get('/inputs', (req, res) => {
   ConceptsController.input()
     .then(concepts => {
       return res.json({ code: 200, error: false, concepts });
@@ -28,7 +28,7 @@ router.get("/inputs", (req, res) => {
     });
 });
 
-router.get("/:id/:type", (req, res) => {
+router.get('/:id/:type', (req, res) => {
   const { id, type } = req.params;
   ConceptsController.show(id, type)
     .then(concepts => {
@@ -41,7 +41,7 @@ router.get("/:id/:type", (req, res) => {
     });
 });
 
-router.get("/input-types", (req, res) => {
+router.get('/input-types', (req, res) => {
   ConceptsController.inputTypes()
     .then(types => {
       return res.json({ code: 200, error: false, types });
@@ -53,15 +53,15 @@ router.get("/input-types", (req, res) => {
     });
 });
 
-router.get("/search", (req, res) => {
+router.get('/search', (req, res) => {
   const { name } = req.query;
-  if (name == "")
+  if (name == '')
     return res
       .status(400)
       .json({
         code: 400,
         error: true,
-        message: "No puede ser vacio el valor name"
+        message: 'No puede ser vacio el valor name'
       });
   ConceptsController.searchInpuType(name)
     .then(results => {

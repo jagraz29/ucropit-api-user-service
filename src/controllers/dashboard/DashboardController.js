@@ -6,7 +6,6 @@ const StatusService = require('../../services/dashboard/status/StatusService')
 
 class DashboardController {
   static async statusCompany(companyId) {
-    
     try {
       let status = {}
       const company = await CompanyService.getCompany(companyId)

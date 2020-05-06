@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Field = sequelize.define(
-    "fields",
+    'fields',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       carrier: {
         type: DataTypes.ENUM,
-        defaultValue: "producer",
-        values: ["ucropit", "producer"]
+        defaultValue: 'producer',
+        values: ['ucropit', 'producer']
       },
       kmz_path: {
         type: DataTypes.STRING,
@@ -38,18 +38,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       freezeTableName: true,
-      tableName: "fields",
+      tableName: 'fields',
       timestamps: true
     }
   );
 
   Field.associate = function(models) {
-    Field.hasMany(models.lots, { foreignKey: "field_id" });
+    Field.hasMany(models.lots, { foreignKey: 'field_id' });
 
     Field.belongsToMany(models.crops, {
-      foreignKey: "field_id",
-      otherKey: "crop_id",
-      through: "crop_field"
+      foreignKey: 'field_id',
+      otherKey: 'crop_id',
+      through: 'crop_field'
     });
   };
 
