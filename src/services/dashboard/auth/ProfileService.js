@@ -28,7 +28,7 @@ class ProfileService {
             model: Company,
             through: {
               model: CompanyUserProfile,
-              attributes: []
+              attributes: ['default_login']
             },
             include: [
               {
