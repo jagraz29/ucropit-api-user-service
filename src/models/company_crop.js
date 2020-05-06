@@ -18,6 +18,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false
       },
+      before_day_sowing: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      after_day_sowing: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      expected_surface_percent: {
+        type: DataTypes.DOUBLE,
+        allowNull: true
+      },
       created_at: {
         allowNull: false,
         type: DataTypes.DATE,

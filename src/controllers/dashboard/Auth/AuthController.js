@@ -1,6 +1,6 @@
 'use strict'
 
-const AuthService = require('../../../services/dashboard/AuthServices')
+const AuthService = require('../../../services/dashboard/auth/AuthServices')
 
 class AuthController {
   static async login({ email, password }) {
