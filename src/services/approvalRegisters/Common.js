@@ -1,12 +1,13 @@
-"use strict";
+'use strict'
 
-const ApprovalRegister = require("../../models").approval_register;
-const Approval = require("../../models").approval;
-const Production = require("../../models").productions;
-const Crop = require("../../models").crops;
-const User = require("../../models").users;
-const UserPermissionsProduction = require("../../models")
-  .productions_users_permissions;
+const Production = require('../../models').productions
+const Crop = require('../../models').crops
+const User = require('../../models').users
+const Approval = require('../../models').approval
+const ApprovalRegister = require('../../models').approval_register
+const ApprovalRegisterSign = require('../../models').approval_register_sign
+const UserPermissionsProduction = require('../../models')
+  .productions_users_permissions
 
 class Common {
   /**
@@ -18,14 +19,14 @@ class Common {
     try {
       const result = await ApprovalRegister.findOne({
         where: { id: approvalRegisterId },
-        include: [{ model: Approval }]
-      });
+        include: [{ model: Approval }],
+      })
 
-      const approval = result.approval;
+      const approval = result.approval
 
-      return Production.findOne({ where: { crop_id: approval.crop_id } });
+      return Production.findOne({ where: { crop_id: approval.crop_id } })
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error)
     }
   }
 
@@ -39,28 +40,65 @@ class Common {
       where: { id: cropId },
       include: [
         {
-          model: User
-        }
-      ]
-    });
+          model: User,
+        },
+      ],
+    })
 
-    let productionPermissions = crop.users.map(async user => {
+    let productionPermissions = crop.users.map(async (user) => {
       const cropUserPermissionsProduction = await UserPermissionsProduction.findOne(
         {
-          where: { user_id: user.id, production_id: cropId }
+          where: { user_id: user.id, production_id: cropId },
         }
-      );
+      )
 
       if (cropUserPermissionsProduction) {
         return {
           user_id: user.id,
-          permissions: JSON.parse(cropUserPermissionsProduction.data)
-        };
+          permissions: JSON.parse(cropUserPermissionsProduction.data),
+        }
       }
-    });
+    })
 
-    return await Promise.all(productionPermissions);
+    return await Promise.all(productionPermissions)
+  }
+
+  static async getApprovalWithRegisters(filter) {
+    return await Approval.findAll({
+      where: filter,
+      include: [
+        {
+          model: ApprovalRegister,
+          as: 'Register',
+          include: [
+            {
+              model: ApprovalRegisterSign,
+              as: 'Signs',
+            },
+          ],
+        },
+      ],
+    })
+  }
+
+  static async getApprovalWithSingFiterUser(crop, user) {
+    return await Approval.findAll({
+      where: { crop_id: crop.id },
+      include: [
+        {
+          model: ApprovalRegister,
+          as: 'Register',
+          include: [
+            {
+              model: ApprovalRegisterSign,
+              as: 'Signs',
+              where: { user_id: user.id },
+            },
+          ],
+        },
+      ],
+    })
   }
 }
 
-module.exports = Common;
+module.exports = Common

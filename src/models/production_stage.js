@@ -6,6 +6,12 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     label: DataTypes.STRING,
     data: DataTypes.TEXT,
+    data_formatter: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return this.data ? JSON.parse(this.data) : []
+      }
+    },
     status: DataTypes.STRING,
     display: DataTypes.STRING,
     order: DataTypes.STRING

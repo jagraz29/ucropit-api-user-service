@@ -98,10 +98,17 @@ module.exports = (sequelize, DataTypes) => {
     })
 
     Company.belongsToMany(models.companies, {
-      as: 'Productor',
+      as: 'productors',
       through: 'contract_companies',
-      foreignKey: 'productor_id',
-      otherKey: 'locator_id'
+      foreignKey: 'locator_id',
+      otherKey: 'productor_id'
+    })
+
+    Company.belongsToMany(models.crops, {
+      as: 'productors_to',
+      through: 'roles_companies_crops',
+      foreignKey: 'company_id',
+      otherKey: 'crop_id'
     })
   }
 

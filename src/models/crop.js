@@ -58,8 +58,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   )
 
-  Crop.associate = function (models) {
+  Crop.associate = function(models) {
     Crop.belongsTo(models.crop_types, { foreignKey: 'crop_type_id' })
+
+    Crop.hasOne(models.productions, { foreignKey: 'crop_id' })
 
     Crop.belongsToMany(models.fields, {
       foreignKey: 'crop_id',
@@ -71,6 +73,13 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'crop_id',
       otherKey: 'user_id',
       through: 'crop_users'
+    })
+
+    Crop.belongsToMany(models.companies, {
+      as: 'productors',
+      through: 'roles_companies_crops',
+      foreignKey: 'crop_id',
+      otherKey: 'company_id'
     })
   }
 
