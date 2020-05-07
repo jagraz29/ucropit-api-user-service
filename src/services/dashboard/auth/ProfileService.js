@@ -8,7 +8,6 @@ const CompanyCrop = require('../../../models').companies_crops
 const Crop = require('../../../models').crops
 const CropType = require('../../../models').crop_types
 const Production = require('../../../models').productions
-const ProductionStage = require('../../../models').production_stage
 
 const StatusService = require('../../../services/dashboard/status/StatusService')
 const CompanyService = require('../../../services/dashboard/company/CompanyService')
@@ -20,11 +19,13 @@ class ProfileService {
 
       let listProfilesCompany = profileUserCompany.companies.map(
         async (company) => {
+          
           const productors = company.productors.map(async (productor) => {
+            const companyObj = await StatusService.statusPerCrops(productor)
             const percent = await StatusService.weightedAverageStatus(productor)
             const statusGlobal = CompanyService.statusCompany(percent)
             return {
-              ...productor.toJSON(),
+              ...companyObj,
               statusGlobal
             }
           })
@@ -40,7 +41,7 @@ class ProfileService {
 
       listProfilesCompany = await Promise.all(listProfilesCompany)
 
-      return { error: false, profile: listProfilesCompany[0] }
+      return { error: false, profile: listProfilesCompany }
     } catch (error) {
       return { error: true, msg: `${error}` }
     }
