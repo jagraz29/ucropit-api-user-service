@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const { stringify, parse } = require('flatted/cjs')
 
 const ProfileController = require('../../controllers/dashboard/Auth/ProfileController')
 
@@ -12,12 +13,7 @@ router.get('/me', (req, res) => {
         return res
           .status(401)
           .json({ error: true, code: 401, message: result.msg })
-      return res.status(200).json({
-        error: false,
-        code: 200,
-        message: 'Success',
-        data: result.user
-      })
+      return res.status(200).json(result)
     })
     .catch((error) => {
       console.log(error)

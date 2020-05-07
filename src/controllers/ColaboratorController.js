@@ -114,20 +114,20 @@ const _createPermissionsToColaborator = async (
 
 const _getStageName = (key) => {
   switch (key) {
-    case 'pre-sowing':
-      return 'Pre-Siembra'
-    case 'sowing':
-      return 'Siembra'
-    case 'protection':
-      return 'Protección de Cultivos'
-    case 'harvest-and-marketing':
-      return 'Cosecha y Comercialización'
-    case 'other-expenses':
-      return 'Gastos administrativos'
-    case 'monitoring':
-      return 'Monitoreo'
-    default:
-      return 'Entregas'
+  case 'pre-sowing':
+    return 'Pre-Siembra'
+  case 'sowing':
+    return 'Siembra'
+  case 'protection':
+    return 'Protección de Cultivos'
+  case 'harvest-and-marketing':
+    return 'Cosecha y Comercialización'
+  case 'other-expenses':
+    return 'Gastos administrativos'
+  case 'monitoring':
+    return 'Monitoreo'
+  default:
+    return 'Entregas'
   }
 }
 

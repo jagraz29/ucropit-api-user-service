@@ -157,6 +157,39 @@ class CompanyService {
 
     return result.reduce((acc, val) => acc.concat(val), [])
   }
+
+  static statusCompany(percent) {
+    let status = {}
+    if (percent >= 0 && percent <= 0.35) {
+      status = {
+        percent,
+        status: 'error',
+      }
+    }
+
+    if (percent > 0.35 && percent <= 0.75) {
+      status = {
+        percent,
+        status: 'warning',
+      }
+    }
+
+    if (percent >= 75 && percent <= 100) {
+      status = {
+        percent,
+        status: 'on_progress',
+      }
+    }
+
+    if (percent == 100) {
+      status = {
+        percent,
+        status: 'done',
+      }
+    }
+
+    return status
+  }
 }
 
 module.exports = CompanyService
