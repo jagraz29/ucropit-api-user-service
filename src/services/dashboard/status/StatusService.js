@@ -208,6 +208,29 @@ class StatusService {
     return complete
   }
 
+  static async statusPerCrops(company) {
+    console.log(company)
+    try {
+      let listCropsPromise = await company.toJSON().productors_to.map(async (crop) => {
+        const result = await this.getStatusByCrop(crop.id, company.id)
+        return {
+          ...crop,
+          status: result
+        }
+      })
+
+      const listCrops = await Promise.all(listCropsPromise)
+
+      return {
+        ...company.toJSON(),
+        productors_to: listCrops
+      }
+    }catch(error) {
+      console.log(error)
+      throw new Error(error)
+    }
+  }
+
   static async weightedAverageStatus(company) {
     try {
       let progress = await company.toJSON().productors_to.map(async (crop) => {
