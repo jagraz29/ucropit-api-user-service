@@ -5,47 +5,7 @@ const AggregationUsers = require('../../services/approvalRegisters/AggregationUs
 const StatusService = require('../../services/dashboard/status/StatusService')
 
 class DashboardController {
-  static async statusCompany(companyId) {
-    try {
-      let status = {}
-      const company = await CompanyService.getCompany(companyId)
-      const percent = await StatusService.weightedAverageStatus(company)
-
-      if (percent >= 0 && percent <= 0.35) {
-        status = {
-          percent,
-          status: 'error',
-        }
-      }
-
-      if (percent > 0.35 && percent <= 0.75) {
-        status = {
-          percent,
-          status: 'warning',
-        }
-      }
-
-      if(percent >= 75 && percent <= 100) {
-        status = {
-          percent,
-          status: 'on_progress',
-        }
-      }
-
-      if (percent == 100) {
-        status = {
-          percent,
-          status: 'done',
-        }
-      }
-
-      return status
-    } catch (error) {
-      console.log(error)
-      throw new Error(error)
-    }
-  }
-
+  
   static async statusCropByCompanyCrop(cropId, companyId) {
     try {
       return await StatusService.getStatusByCrop(cropId, companyId)

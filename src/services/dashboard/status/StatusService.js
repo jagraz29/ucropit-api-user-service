@@ -222,7 +222,9 @@ class StatusService {
 
       progress = await Promise.all(progress)
 
-      const sumweighted = progress.reduce(
+      if(!progress) return 0
+
+      const sumweighted = progress.filter(item => item).reduce(
         (a, b) => a + (b['percent'] * b['surface'] || 0),
         0
       )

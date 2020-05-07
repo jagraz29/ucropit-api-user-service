@@ -10,13 +10,47 @@ const CropType = require('../../../models').crop_types
 const Production = require('../../../models').productions
 const ProductionStage = require('../../../models').production_stage
 
+const StatusService = require('../../../services/dashboard/status/StatusService')
+const CompanyService = require('../../../services/dashboard/company/CompanyService')
+
 class ProfileService {
+  static async profile(user) {
+    try {
+      let profileUserCompany = await this.getProfileCompany(user)
+
+      let listProfilesCompany = profileUserCompany.companies.map(
+        async (company) => {
+          const productors = company.productors.map(async (productor) => {
+            const percent = await StatusService.weightedAverageStatus(productor)
+            const statusGlobal = CompanyService.statusCompany(percent)
+            return {
+              ...productor.toJSON(),
+              statusGlobal
+            }
+          })
+
+          const productorsList = await Promise.all(productors)
+
+          return {
+            ...company.toJSON(),
+            productors: productorsList
+          }
+        }
+      )
+
+      listProfilesCompany = await Promise.all(listProfilesCompany)
+
+      return { error: false, profile: listProfilesCompany[0] }
+    } catch (error) {
+      return { error: true, msg: `${error}` }
+    }
+  }
 
   /**
    * Get Profile User, companies associate.
-   * 
-   * @param {*} user 
-   * 
+   *
+   * @param {*} user
+   *
    * @return Object
    */
   static async getProfileCompany(user) {
@@ -28,7 +62,7 @@ class ProfileService {
             model: Company,
             through: {
               model: CompanyUserProfile,
-              attributes: ['default_login']
+              attributes: ['default_login'],
             },
             include: [
               {
@@ -36,41 +70,35 @@ class ProfileService {
                 as: 'productors',
                 through: {
                   model: ContractCompany,
-                  attributes: []
+                  attributes: [],
                 },
                 include: [
                   {
                     model: Crop,
                     where: { status: 'accepted' },
-                    attributes: ['id', 'crop_name', 'units'],
+                    attributes: ['id', 'crop_name', 'units', 'surface', 'quintals', 'reference_price'],
                     as: 'productors_to',
                     through: {
                       model: CompanyCrop,
-                      attributes: []
+                      attributes: [],
                     },
                     include: [
                       {
                         model: CropType,
-                        attributes: ['id', 'name']
+                        attributes: ['id', 'name'],
                       },
                       {
                         model: Production,
-                        include:[
-                          {
-                            model: ProductionStage,
-                            as: 'Stage'
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       })
-      return { error: false, userProfile }
+      return userProfile
     } catch (error) {
       console.log(
         `Error al realizar la query del user profile: ${error.message}`

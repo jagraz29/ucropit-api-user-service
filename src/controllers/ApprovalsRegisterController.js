@@ -61,16 +61,16 @@ class ApprovalsRegisterController {
       const approval =
         stage === 'fields'
           ? await Approvals.findOne({
-              where: { stage: stage, crop_id: cropId },
-            })
+            where: { stage: stage, crop_id: cropId },
+          })
           : await Approvals.findOne({
-              where: {
-                stage: stage,
-                crop_id: cropId,
-                service_id: type === 'service' ? typeId : null,
-                input_id: type === 'input' ? typeId : null,
-              },
-            })
+            where: {
+              stage: stage,
+              crop_id: cropId,
+              service_id: type === 'service' ? typeId : null,
+              input_id: type === 'input' ? typeId : null,
+            },
+          })
 
       const register = await ApprovalRegister.findOne({
         where: { approval_id: approval.id },
@@ -113,7 +113,7 @@ class ApprovalsRegisterController {
       },
       template: 'templates/sign-receipt.pug',
       path: `${__basedir}/../public/crop-${data.type_id}`,
-      filename: `fields.pdf`,
+      filename: 'fields.pdf',
     })
 
     const Register = await ApprovalRegister.findOne({
@@ -182,8 +182,8 @@ class ApprovalsRegisterController {
         longitude: exif.metadata.tags.GPSLongitude || position.longitude,
         date_created_file: exif.metadata.tags.DateTimeOriginal
           ? moment
-              .unix(exif.metadata.tags.DateTimeOriginal)
-              .format('MM/DD/YYYY HH:mm:ss')
+            .unix(exif.metadata.tags.DateTimeOriginal)
+            .format('MM/DD/YYYY HH:mm:ss')
           : null,
         user_id: auth.user.id,
       })

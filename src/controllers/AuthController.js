@@ -116,11 +116,11 @@ class AuthController {
         where: { email: email },
       })
 
-      if (user === null) throw Error(`Credenciales invalidas`)
+      if (user === null) throw Error('Credenciales invalidas')
 
       const isValidPassword = await user.validPassword(password)
 
-      if (!isValidPassword) throw Error(`Credenciales invalidas`)
+      if (!isValidPassword) throw Error('Credenciales invalidas')
 
       return { user, error: false }
     } catch (err) {
