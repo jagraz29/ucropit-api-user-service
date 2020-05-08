@@ -70,6 +70,7 @@ class AggregationUsers {
 
       return arrayUsers.map((item) => {
         return {
+          // TODO: AGREGAR EL ESTADO EN BASE AL PERCENT
           user: item.user,
           total_register: item.total_register,
           total_signs: item.total_signs,

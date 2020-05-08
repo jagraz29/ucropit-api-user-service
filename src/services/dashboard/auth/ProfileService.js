@@ -19,14 +19,13 @@ class ProfileService {
 
       let listProfilesCompany = profileUserCompany.companies.map(
         async (company) => {
-          
           const productors = company.productors.map(async (productor) => {
             const companyObj = await StatusService.statusPerCrops(productor)
             const percent = await StatusService.weightedAverageStatus(productor)
             const statusGlobal = CompanyService.statusCompany(percent)
             return {
               ...companyObj,
-              statusGlobal
+              statusGlobal,
             }
           })
 
@@ -34,7 +33,7 @@ class ProfileService {
 
           return {
             ...company.toJSON(),
-            productors: productorsList
+            productors: productorsList,
           }
         }
       )
@@ -77,7 +76,16 @@ class ProfileService {
                   {
                     model: Crop,
                     where: { status: 'accepted' },
-                    attributes: ['id', 'crop_name', 'units', 'surface', 'quintals', 'reference_price'],
+                    attributes: [
+                      'id',
+                      'crop_name',
+                      'units',
+                      'surface',
+                      'quintals',
+                      'reference_price',
+                      'start_at',
+                      'end_at',
+                    ],
                     as: 'productors_to',
                     through: {
                       model: CompanyCrop,
