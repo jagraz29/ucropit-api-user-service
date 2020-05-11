@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const { stringify, parse } = require('flatted/cjs')
 
 const ProfileController = require('../../controllers/dashboard/Auth/ProfileController')
 

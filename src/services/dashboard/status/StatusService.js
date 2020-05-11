@@ -2,6 +2,7 @@
 
 const moment = require('moment')
 const CompanyService = require('../company/CompanyService')
+const CropService = require('../crops/CropService');
 const CommonService = require('../../approvalRegisters/Common')
 
 class StatusService {
@@ -136,6 +137,7 @@ class StatusService {
       status: 'error',
     }
   }
+
   static decideDaySowing(crop) {
     const decide = {
       xy: false,
@@ -209,12 +211,14 @@ class StatusService {
   }
 
   static async statusPerCrops(company) {
-    console.log(company)
     try {
       let listCropsPromise = await company.toJSON().productors_to.map(async (crop) => {
         const result = await this.getStatusByCrop(crop.id, company.id)
+        const stageCrop = await CropService.getStageSowing(crop.id, company.id, result.percent)
+
         return {
           ...crop,
+          stage_now: stageCrop,
           status: result
         }
       })
