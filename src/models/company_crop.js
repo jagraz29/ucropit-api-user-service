@@ -26,6 +26,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true
       },
+      before_day_harvest: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      after_day_harvest: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
       expected_surface_percent: {
         type: DataTypes.DOUBLE,
         allowNull: true
