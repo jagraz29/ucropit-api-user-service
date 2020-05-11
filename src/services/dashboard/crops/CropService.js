@@ -4,20 +4,20 @@ const CompanyCrop = require('../../../models').companies_crops
 const moment = require('moment')
 
 class CropService {
-  static async getStageSowing(cropId, companyId, percentCrop) {
+  static async getStageCrop(cropId, companyId, percentCrop) {
     try {
       const crop = await this.getCrop(cropId, companyId)
 
       if (!crop)
         throw new Error('Error al obtener el crop y calcular su etapa actual')
 
-      return this.stageSowing(crop, percentCrop)
+      return this.stageCrop(crop, percentCrop)
     } catch (error) {
       throw new Error(error)
     }
   }
 
-  static stageSowing(crop, percent) {
+  static stageCrop(crop, percent) {
     const statusCrop = { stage: 'sowing' }
     const {
       expected_surface_percent,

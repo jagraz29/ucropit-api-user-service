@@ -214,7 +214,7 @@ class StatusService {
     try {
       let listCropsPromise = await company.toJSON().productors_to.map(async (crop) => {
         const result = await this.getStatusByCrop(crop.id, company.id)
-        const stageCrop = await CropService.getStageSowing(crop.id, company.id, result.percent)
+        const stageCrop = await CropService.getStageCrop(crop.id, company.id, result.percent)
 
         return {
           ...crop,
