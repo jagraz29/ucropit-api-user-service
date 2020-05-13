@@ -122,6 +122,12 @@ class ApprovalsRegisterController {
 
     const register = await Register.update({ data: JSON.stringify(data.meta) })
 
+    if (data.hasDiff) {
+      await ApprovalRegisterSigns.destroy({
+        where: { approval_register_id: data.register_id },
+      })
+    }
+
     await ApprovalRegisterSigns.create({
       approval_register_id: data.register_id,
       hash,
