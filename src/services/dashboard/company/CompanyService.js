@@ -23,6 +23,8 @@ class CompanyService {
               'expected_surface_percent',
               'before_day_sowing',
               'after_day_sowing',
+              'before_day_harvest',
+              'after_day_harvest'
             ],
           },
           include: [

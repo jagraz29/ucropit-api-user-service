@@ -13,7 +13,9 @@ module.exports = {
           updated_at: new Date(),
           before_day_sowing: 5,
           after_day_sowing: 5,
-          expected_surface_percent: 0.6,
+          before_day_harvest: 5,
+          after_day_harvest: 5,
+          expected_surface_percent: 0.9,
         },
         {
           id: 2,
@@ -23,7 +25,9 @@ module.exports = {
           updated_at: new Date(),
           before_day_sowing: 5,
           after_day_sowing: 5,
-          expected_surface_percent: 0.6,
+          before_day_harvest: 5,
+          after_day_harvest: 5,
+          expected_surface_percent: 0.9,
         },
         {
           id: 3,
@@ -33,7 +37,9 @@ module.exports = {
           updated_at: new Date(),
           before_day_sowing: 5,
           after_day_sowing: 5,
-          expected_surface_percent: 0.6,
+          before_day_harvest: 5,
+          after_day_harvest: 5,
+          expected_surface_percent: 0.9,
         },
         {
           id: 4,
@@ -43,7 +49,9 @@ module.exports = {
           updated_at: new Date(),
           before_day_sowing: 5,
           after_day_sowing: 5,
-          expected_surface_percent: 0.6,
+          before_day_harvest: 5,
+          after_day_harvest: 5,
+          expected_surface_percent: 0.9,
         },
       ],
       {}
