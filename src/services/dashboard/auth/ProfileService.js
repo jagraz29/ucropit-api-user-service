@@ -14,6 +14,7 @@ const CompanyService = require('../../../services/dashboard/company/CompanyServi
 
 class ProfileService {
   static async profile(user) {
+    console.log()
     try {
       let profileUserCompany = await this.getProfileCompany(user)
 
@@ -54,6 +55,7 @@ class ProfileService {
    * @return Object
    */
   static async getProfileCompany(user) {
+    console.log(user.id)
     try {
       const userProfile = await User.findOne({
         where: { id: user.id },

@@ -23,7 +23,7 @@ class UserController {
         usersWhithApprovals
       )
     } catch (error) {
-      throw new Error(err)
+      throw new Error(error)
     }
   }
 }

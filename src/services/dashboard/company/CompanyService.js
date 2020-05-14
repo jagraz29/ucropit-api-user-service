@@ -176,14 +176,14 @@ class CompanyService {
       }
     }
 
-    if (percent >= 75 && percent <= 100) {
+    if (percent >= 0.75 && percent <= 0.99) {
       status = {
         percent,
         status: 'on_progress',
       }
     }
 
-    if (percent == 100) {
+    if (percent == 0.99) {
       status = {
         percent,
         status: 'done',
