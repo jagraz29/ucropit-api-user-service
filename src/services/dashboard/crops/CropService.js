@@ -46,6 +46,8 @@ class CropService {
 
     if (percent < expected_surface_percent) {
       statusCrop.stage = 'sowing'
+
+      return statusCrop
     }
 
     if (now >= startMinusDateSowing && now <= startAddDateSowing) {
@@ -60,9 +62,10 @@ class CropService {
     }
 
     if (
-      now >= startMinusDateHarvest &&
-      now <= startAddDateHarvest &&
-      percent >= expected_surface_percent
+      (now >= startMinusDateHarvest &&
+        now <= startAddDateHarvest &&
+        percent >= expected_surface_percent) ||
+      (now > startAddDateHarvest && percent >= expected_surface_percent)
     ) {
       statusCrop.stage = 'harvest'
     }
