@@ -2,27 +2,48 @@
 
 const moment = require('moment')
 const CompanyService = require('../company/CompanyService')
-const CropService = require('../crops/CropService');
+const CropService = require('../crops/CropService')
 const CommonService = require('../../approvalRegisters/Common')
 
 class StatusService {
-  static async getStatusByCrop(cropId, companyId) {
+  static async getStatusByCrop(cropId, companyId, stage = 'sowing') {
     let statusCrop = {}
+    let daysCrops = {}
     try {
       const company = await CompanyService.getCompanyWithCrops(
         companyId,
         cropId,
-        ['after_day_sowing', 'before_day_sowing', 'before_day_sowing']
+        [
+          'after_day_sowing',
+          'before_day_sowing',
+          'before_day_sowing',
+          'before_day_harvest',
+          'after_day_harvest',
+        ]
       )
 
       const cropProductor = company.toJSON().productors_to[0]
-      // Obtenemos una posición del punto donde nos encontramos con respecto a la fecha actual y la fecha de siembra
+
+      if (stage === 'harvest') {
+        daysCrops = {
+          date: cropProductor.end_at,
+          dayIni: cropProductor.before_day_harvest,
+          dayEnd: cropProductor.after_day_harvest,
+        }
+      } else {
+        daysCrops = {
+          date: cropProductor.start_at,
+          dayIni: cropProductor.before_day_sowing,
+          dayEnd: cropProductor.after_day_sowing,
+        }
+      }
+      // Obtenemos una posición del punto donde nos encontramos con respecto a la fecha actual y la fecha de siembra o cosecha
       // del cultivo
-      const statusDay = this.decideDaySowing(cropProductor);
+      const statusDay = this.decideDayCrop(daysCrops)
 
       const approval = await CommonService.getApprovalWithRegisters({
         crop_id: cropId,
-        stage: 'sowing',
+        stage: stage,
       })
 
       const cropsAndUsers = await CompanyService.getCompanyWithCropAndUsersBy(
@@ -34,22 +55,22 @@ class StatusService {
       // Luego calculamos el procentaje de avance de la siembra del cultivo.
 
       if (statusDay.xy) {
-        statusCrop = this.statusBeforeDayConfigSowing(
+        statusCrop = this.statusBeforeDayConfig(
           approval[0],
           cropsAndUsers
         )
       }
 
       if (statusDay.y) {
-        statusCrop = this.statusbetweenDaySowing(approval[0], cropsAndUsers)
+        statusCrop = this.statusbetweenDay(approval[0], cropsAndUsers)
       }
 
       if (statusDay.z) {
-        statusCrop = this.statusbetweenDaySowing(approval[0], cropsAndUsers)
+        statusCrop = this.statusbetweenDay(approval[0], cropsAndUsers)
       }
 
       if (statusDay.zx) {
-        statusCrop = this.statusAfterDaySowing(approval[0], cropsAndUsers)
+        statusCrop = this.statusAfterDay(approval[0], cropsAndUsers)
       }
 
       return statusCrop
@@ -60,7 +81,7 @@ class StatusService {
   }
 
   //estoy en XY
-  static statusBeforeDayConfigSowing(approval, crop) {
+  static statusBeforeDayConfig(approval, crop) {
     if (!approval || approval.Register.length === 0) {
       return {
         percent: 0,
@@ -87,7 +108,7 @@ class StatusService {
   }
 
   //estoy en Y o en Z
-  static statusbetweenDaySowing(approval, crop) {
+  static statusbetweenDay(approval, crop) {
     if (!approval || approval.Register.length === 0) {
       return {
         percent: 0,
@@ -112,7 +133,7 @@ class StatusService {
     }
   }
 
-  static statusAfterDaySowing(approval, crop) {
+  static statusAfterDay(approval, crop) {
     if (!approval || approval.Register.length === 0) {
       return {
         percent: 0,
@@ -138,7 +159,14 @@ class StatusService {
     }
   }
 
-  static decideDaySowing(crop) {
+  /**
+   * Devuelve un objeto con la coordenada en donde se encuentra el cultivo.
+   * Utilizando la fecha de inicio de siembra y la fecha de cosecha más las 
+   * Fechas de configuración configuradas.
+   * 
+   * @param {*} param0 
+   */
+  static decideDayCrop({ date, dateIni, dateEnd }) {
     const decide = {
       xy: false,
       y: false,
@@ -146,35 +174,36 @@ class StatusService {
       zx: false,
     }
     const now = moment()
-    const startMinusDateSowing = moment(crop.start_at).subtract(
-      crop.roles_companies_crops.before_day_sowing,
-      'days'
-    )
-    const startDateSowign = moment(crop.start_at)
-    const startAddDateSowing = moment(crop.start_at).add(
-      crop.roles_companies_crops.after_day_sowing,
-      'days'
-    )
+    const startMinusDate = moment(date).subtract(dateIni, 'days')
+    const startDate = moment(date)
+    const startAddDate = moment(date).add(dateEnd, 'days')
 
-    if (now <= startMinusDateSowing) {
+    if (now <= startMinusDate) {
       decide.xy = true
     }
 
-    if (now > startMinusDateSowing && now <= startDateSowign) {
+    if (now > startMinusDate && now <= startDate) {
       decide.y = true
     }
 
-    if (now >= startDateSowign && now < startAddDateSowing) {
+    if (now >= startDate && now < startAddDate) {
       decide.z = true
     }
 
-    if (now >= startAddDateSowing) {
+    if (now >= startAddDate) {
       decide.zx = true
     }
 
     return decide
   }
 
+  /**
+   * Se calcula el progreso del crop por medio de las aplicaciones firmadas.
+   * retorna un valor expresado en porcentaje
+   * 
+   * @param {*} approval 
+   * @param {*} crop 
+   */
   static calculateProgress(approval, crop) {
     const progress = approval.Register.map((item) => {
       const complete = this.registerComplete(
@@ -199,6 +228,13 @@ class StatusService {
     return progress
   }
 
+  /**
+   * Verifica si la aplicacion tiene toda las firmas de los usuarios
+   * Si tiene toda las firmas en una aplicaciíon completa.
+   * 
+   * @param {*} signs 
+   * @param {*} users 
+   */
   static registerComplete(signs, users) {
     let complete = true
     for (const user of users) {
@@ -210,35 +246,79 @@ class StatusService {
     return complete
   }
 
+  /**
+   * Consulta el estado de cada cultivo de cada compañia productora, 
+   * Verifica el estado si esta en siembra o en cosecha.
+   * 
+   * @param {*} company 
+   */
   static async statusPerCrops(company) {
     try {
-      let listCropsPromise = await company.toJSON().productors_to.map(async (crop) => {
-        const result = await this.getStatusByCrop(crop.id, company.id)
-        const stageCrop = await CropService.getStageCrop(crop.id, company.id, result.percent)
+      let resultSowing = {}
+      let resultHarvest = {}
+      let listCropsPromise = await company
+        .toJSON()
+        .productors_to.map(async (crop) => {
+          resultSowing = await this.getStatusByCrop(crop.id, company.id)
+          const stageCrop = await CropService.getStageCrop(
+            crop.id,
+            company.id,
+            resultSowing.percent
+          )
 
-        return {
-          ...crop,
-          stage_now: stageCrop,
-          status: result
-        }
-      })
+          if (stageCrop.stage === 'harvest') {
+            resultHarvest = await this.getStatusByCrop(
+              crop.id,
+              company.id,
+              'harvest'
+            )
+          }
+
+          const resultCrop =
+            stageCrop.stage === 'harvest' ? resultHarvest : resultSowing
+
+          return {
+            ...crop,
+            stage_now: stageCrop,
+            status: resultCrop,
+          }
+        })
 
       const listCrops = await Promise.all(listCropsPromise)
 
       return {
         ...company.toJSON(),
-        productors_to: listCrops
+        productors_to: listCrops,
       }
-    }catch(error) {
+    } catch (error) {
       console.log(error)
       throw new Error(error)
     }
   }
 
+  /**
+   * Realiza el promedio ponderado de cada porcentaje de avance de los cultivos.
+   * 
+   * @param {*} company 
+   */
   static async weightedAverageStatus(company) {
     try {
       let progress = await company.toJSON().productors_to.map(async (crop) => {
-        const result = await this.getStatusByCrop(crop.id, company.id)
+        let result = await this.getStatusByCrop(crop.id, company.id)
+
+        const stageCrop = await CropService.getStageCrop(
+          crop.id,
+          company.id,
+          result.percent
+        )
+
+        if (stageCrop.stage === 'harvest') {
+          result = await this.getStatusByCrop(
+            crop.id,
+            company.id,
+            'harvest'
+          )
+        }
 
         return {
           ...result,
@@ -249,12 +329,11 @@ class StatusService {
 
       progress = await Promise.all(progress)
 
-      if(!progress) return 0
+      if (!progress) return 0
 
-      const sumweighted = progress.filter(item => item).reduce(
-        (a, b) => a + (b['percent'] * b['surface'] || 0),
-        0
-      )
+      const sumweighted = progress
+        .filter((item) => item)
+        .reduce((a, b) => a + (b['percent'] * b['surface'] || 0), 0)
       const sumsurface = progress.reduce((a, b) => a + (b['surface'] || 0), 0)
 
       return sumweighted / sumsurface
