@@ -33,6 +33,7 @@ router.get('/sign/:companyId/:cropTypeId*?', (req, res) => {
 
   DashboardController.statisticSings(companyId, cropTypeId)
     .then((result) => {
+      console.log(result)
       res.status(200).json({ error: false, code: 200, result })
     })
     .catch((error) => {

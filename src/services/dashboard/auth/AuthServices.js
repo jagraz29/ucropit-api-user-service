@@ -14,7 +14,6 @@ class AuthService {
    * @param {*} password
    */
   static async auth(email, password) {
-    console.log('here')
     try {
       const user = await User.findOne({
         where: { email: email }

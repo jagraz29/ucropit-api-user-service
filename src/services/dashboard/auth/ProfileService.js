@@ -55,7 +55,6 @@ class ProfileService {
    * @return Object
    */
   static async getProfileCompany(user) {
-    console.log(user.id)
     try {
       const userProfile = await User.findOne({
         where: { id: user.id },

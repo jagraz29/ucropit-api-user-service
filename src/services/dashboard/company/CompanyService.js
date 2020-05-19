@@ -8,6 +8,19 @@ const User = require('../../../models').users
 const CropType = require('../../../models').crop_types
 const CropUser = require('../../../models').crop_users
 
+const unique = (list) => {
+  let aux = []
+  return list.filter((value) => {
+    if (
+      aux.length === 0 ||
+      aux.filter((item) => item === value.id).length === 0
+    ) {
+      aux.push(value.id)
+      return value
+    }
+  })
+}
+
 class CompanyService {
   static async getCompanyWithCropAndUsersBy(companyId, cropId) {
     return Company.findOne({
@@ -24,7 +37,7 @@ class CompanyService {
               'before_day_sowing',
               'after_day_sowing',
               'before_day_harvest',
-              'after_day_harvest'
+              'after_day_harvest',
             ],
           },
           include: [
@@ -157,7 +170,9 @@ class CompanyService {
       return productors
     })
 
-    return result.reduce((acc, val) => acc.concat(val), [])
+    const resultConcant = result.reduce((acc, val) => acc.concat(val), [])
+
+    return unique(resultConcant)
   }
 
   static statusCompany(percent) {
