@@ -144,6 +144,7 @@ class AggregationUsers {
 
     return result
   }
+  
   /**
    * The total number of signs per crop is obtained from a user.
    *

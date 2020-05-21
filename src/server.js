@@ -6,8 +6,8 @@ require('console-stamp')(console, {
   colors: {
     stamp: 'yellow',
     label: 'white',
-    metadata: 'green'
-  }
+    metadata: 'green',
+  },
 })
 
 const fileUpload = require('express-fileupload')
@@ -31,7 +31,7 @@ app.server = http.createServer(app)
 
 const corsOptions = {
   exposedHeaders: ['Content-Range'],
-  origin: '*'
+  origin: '*',
 }
 
 app.use(morgan('tiny'))
@@ -41,23 +41,24 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, '../public')))
 app.use(fileUpload())
-//My Middlewares
 app.use(cors(corsOptions))
+
 app.use('/v1', routes)
 
-app.use((req, res, next) => {
-  const error = new Error('Not found')
-  error.status = 404
-  next(error)
+app.use(function (err, req, res, next) {
+  if (!err) return next()
+
+  res.locals.message = err.message
+  res.locals.error = err
+
+  res.status(err.status || 500)
+  res.json(err)
 })
 
-app.use((error, req, res) => {
-  res.status(error.status || 500)
-  res.json({
-    error: {
-      message: error.message
-    }
-  })
+// catch 404. 404 should be consider as a default behavior, not a system error.
+app.use(function (req, res, next) {
+  res.status(404)
+  res.json('Not Found')
 })
 
 models.sequelize

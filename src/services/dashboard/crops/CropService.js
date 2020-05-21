@@ -1,6 +1,8 @@
 const Crop = require('../../../models').crops
 const Company = require('../../../models').companies
 const CompanyCrop = require('../../../models').companies_crops
+const CompanyService = require('../company/CompanyService')
+const _ = require('lodash')
 const moment = require('moment')
 
 class CropService {
@@ -101,6 +103,50 @@ class CropService {
       console.log(error)
       return null
     }
+  }
+
+  /**
+   * Gets a sum of crop's surfaces grouped by crop type
+   *
+   * @param {company} Integer id
+   */
+  static async getCropRegisteredSurfacesBy({ company }) {
+    const companiesProductors = await CompanyService.getCompaniesProductors(
+      company
+    )
+
+    const crops = {}
+
+    companiesProductors.forEach((el) => {
+      el.productors_to.forEach((el) => {
+        crops[el.id] = el
+      })
+    })
+
+    return _(crops)
+      .map(({ id, crop_type, surface }) => {
+        return {
+          id,
+          typeId: crop_type.id,
+          name: crop_type.name,
+          surface,
+        }
+      })
+      .groupBy('typeId')
+      .map((el) =>
+        _.reduce(
+          el,
+          (prev, curr) => {
+            return {
+              ...prev,
+              typeId: curr.typeId,
+              name: curr.name,
+              surface: prev.surface + curr.surface,
+            }
+          },
+          { surface: 0 }
+        )
+      )
   }
 }
 

@@ -58,6 +58,11 @@ router.use(
   require('./dashboard/statistic')
 )
 
+router.use(
+  '/api/dashboard/graphs',
+  require('./dashboard/graphs')
+)
+
 router.get('/api/reformatData', async (req, res) => {
   const response = await ProductionStage.findAll({ where: { label: 'fields' } })
 

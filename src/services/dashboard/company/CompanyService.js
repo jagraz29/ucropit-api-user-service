@@ -112,7 +112,7 @@ class CompanyService {
             {
               model: Crop,
               where: { status: 'accepted' },
-              attributes: ['id', 'crop_name', 'units'],
+              attributes: ['id', 'crop_name', 'units', 'surface'],
               as: 'productors_to',
               through: {
                 model: CompanyCrop,
