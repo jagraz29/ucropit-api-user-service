@@ -8,6 +8,7 @@ const User = require('../../../models').users
 const CropType = require('../../../models').crop_types
 const CropUser = require('../../../models').crop_users
 
+
 const unique = (list) => {
   let aux = []
   return list.filter((value) => {
@@ -46,7 +47,7 @@ class CompanyService {
               through: {
                 model: CropUser,
                 attributes: ['id', 'first_name', 'last_name'],
-              },
+              }
             },
           ],
         },
@@ -198,7 +199,7 @@ class CompanyService {
       }
     }
 
-    if (percent == 0.99) {
+    if (percent >= 0.99) {
       status = {
         percent,
         status: 'done',

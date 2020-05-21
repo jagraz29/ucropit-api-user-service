@@ -5,6 +5,9 @@ const CompanyService = require('../company/CompanyService')
 const CropService = require('../crops/CropService')
 const CommonService = require('../../approvalRegisters/Common')
 
+const ProductionUserPermission = require('../../../models')
+  .productions_users_permissions
+
 class StatusService {
   static async getStatusByCrop(cropId, companyId, stage = 'sowing') {
     let statusCrop = {}
@@ -24,7 +27,7 @@ class StatusService {
 
       const cropProductor = company.toJSON().productors_to[0]
 
-      if (stage === 'harvest') {
+      if (stage === 'harvest-and-marketing') {
         daysCrops = {
           date: cropProductor.end_at,
           dayIni: cropProductor.before_day_harvest,
@@ -55,10 +58,7 @@ class StatusService {
       // Luego calculamos el procentaje de avance de la siembra del cultivo.
 
       if (statusDay.xy) {
-        statusCrop = this.statusBeforeDayConfig(
-          approval[0],
-          cropsAndUsers
-        )
+        statusCrop = this.statusBeforeDayConfig(approval[0], cropsAndUsers)
       }
 
       if (statusDay.y) {
@@ -81,90 +81,105 @@ class StatusService {
   }
 
   //estoy en XY
-  static statusBeforeDayConfig(approval, crop) {
-    if (!approval || approval.Register.length === 0) {
-      return {
-        percent: 0,
-        status: 'created',
+  static async statusBeforeDayConfig(approval, crop) {
+    try {
+      if (!approval || approval.Register.length === 0) {
+        return {
+          percent: 0,
+          status: 'created',
+        }
       }
-    }
 
-    const progressCrop = this.calculateProgress(approval, crop)
+      const progressCrop = await this.calculateProgress(approval, crop)
 
-    if (
-      progressCrop >=
-      crop.productors_to[0].roles_companies_crops.expected_surface_percent
-    ) {
+      if (
+        progressCrop >=
+        crop.productors_to[0].roles_companies_crops.expected_surface_percent
+      ) {
+        return {
+          percent: progressCrop,
+          status: 'done',
+        }
+      }
+
       return {
         percent: progressCrop,
-        status: 'done',
+        status: 'on_progress',
       }
-    }
-
-    return {
-      percent: progressCrop,
-      status: 'on_progress',
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
     }
   }
 
   //estoy en Y o en Z
-  static statusbetweenDay(approval, crop) {
-    if (!approval || approval.Register.length === 0) {
-      return {
-        percent: 0,
-        status: 'warning',
+  static async statusbetweenDay(approval, crop) {
+    try {
+      if (!approval || approval.Register.length === 0) {
+        return {
+          percent: 0,
+          status: 'warning',
+        }
       }
-    }
-    const progressCrop = this.calculateProgress(approval, crop)
+      const progressCrop = await this.calculateProgress(approval, crop)
 
-    if (
-      progressCrop >=
-      crop.productors_to[0].roles_companies_crops.expected_surface_percent
-    ) {
+      if (
+        progressCrop >=
+        crop.productors_to[0].roles_companies_crops.expected_surface_percent
+      ) {
+        return {
+          percent: progressCrop,
+          status: 'done',
+        }
+      }
+
       return {
         percent: progressCrop,
-        status: 'done',
+        status: 'on_progress',
       }
-    }
-
-    return {
-      percent: progressCrop,
-      status: 'on_progress',
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
     }
   }
 
-  static statusAfterDay(approval, crop) {
-    if (!approval || approval.Register.length === 0) {
-      return {
-        percent: 0,
-        status: 'error',
+  static async statusAfterDay(approval, crop) {
+    try {
+      if (!approval || approval.Register.length === 0) {
+        return {
+          percent: 0,
+          status: 'error',
+        }
       }
-    }
 
-    const progressCrop = this.calculateProgress(approval, crop)
+      const progressCrop = await this.calculateProgress(approval, crop)
 
-    if (
-      progressCrop >=
-      crop.productors_to[0].roles_companies_crops.expected_surface_percent
-    ) {
+      if (
+        progressCrop >=
+        crop.productors_to[0].roles_companies_crops.expected_surface_percent
+      ) {
+        return {
+          percent: progressCrop,
+          status: 'done',
+        }
+      }
+
       return {
         percent: progressCrop,
-        status: 'done',
+        status: 'error',
       }
-    }
-
-    return {
-      percent: progressCrop,
-      status: 'error',
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
     }
   }
 
   /**
    * Devuelve un objeto con la coordenada en donde se encuentra el cultivo.
-   * Utilizando la fecha de inicio de siembra y la fecha de cosecha más las 
+   * Utilizando la fecha de inicio de siembra y la fecha de cosecha más las
    * Fechas de configuración configuradas.
-   * 
-   * @param {*} param0 
+   *
+   * @param {*} param0
    */
   static decideDayCrop({ date, dateIni, dateEnd }) {
     const decide = {
@@ -200,57 +215,106 @@ class StatusService {
   /**
    * Se calcula el progreso del crop por medio de las aplicaciones firmadas.
    * retorna un valor expresado en porcentaje
-   * 
-   * @param {*} approval 
-   * @param {*} crop 
+   *
+   * @param {*} approval
+   * @param {*} crop
    */
-  static calculateProgress(approval, crop) {
-    const progress = approval.Register.map((item) => {
-      const complete = this.registerComplete(
-        item.Signs,
-        crop.productors_to[0].users
-      )
+  static async calculateProgress(approval, crop) {
+    try {
+      let progress = approval.Register.map(async (item) => {
+        const complete = await this.registerComplete(
+          item.Signs,
+          crop.productors_to[0].users,
+          approval
+        )
 
-      if (complete) {
-        return {
-          percent:
-            Math.round(
-              (parseInt(JSON.parse(item.data).units) /
-                crop.productors_to[0].surface) *
-                100
-            ) / 100,
+        if (complete) {
+          return {
+            percent:
+              Math.round(
+                (parseInt(JSON.parse(item.data).units) /
+                  crop.productors_to[0].surface) *
+                  100
+              ) / 100,
+          }
         }
-      }
-    })
-      .filter((item) => item)
-      .reduce((a, b) => a + (b['percent'] || 0), 0)
+      })
 
-    return progress
+      progress = await Promise.all(progress)
+      progress = progress
+        .filter((item) => item)
+        .reduce((a, b) => a + (b['percent'] || 0), 0)
+
+      return progress
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
   }
 
   /**
    * Verifica si la aplicacion tiene toda las firmas de los usuarios
    * Si tiene toda las firmas en una aplicaciíon completa.
-   * 
-   * @param {*} signs 
-   * @param {*} users 
+   *
+   * @param {*} signs
+   * @param {*} users
    */
-  static registerComplete(signs, users) {
-    let complete = true
-    for (const user of users) {
-      if (signs.filter((item) => item.user_id === user.id).length === 0) {
-        complete = false
-        return complete
+  static async registerComplete(signs, users, approval) {
+    try {
+      let complete = true
+      for (const user of users) {
+        if (
+          signs.filter((item) => item.user_id === user.id).length === 0 &&
+          (await this.checkUserHavePermission(
+            approval.stage,
+            approval.crop_id,
+            user
+          ))
+        ) {
+          complete = false
+          return complete
+        }
       }
+      return complete
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
     }
-    return complete
+  }
+
+  static async checkUserHavePermission(stage, cropId, user) {
+    try {
+      const permission = await ProductionUserPermission.findOne({
+        where: { production_id: cropId, user_id: user.id },
+      })
+      const data = JSON.parse(permission.toJSON().data)
+
+      const permissionsStage = data.stages
+      const permissionsEvent = data.events
+
+      const stageObj = permissionsStage.filter((item) => item.key === stage)
+      const eventObj = permissionsEvent.filter((item) => item.label === stage)
+
+      if (stageObj.length > 0) {
+        return stageObj[0].permissions.can_edit
+      }
+
+      if (stageObj.length === 0 && eventObj.length > 0) {
+        return eventObj[0].events[0].permissions.can_edit
+      }
+
+      return false
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
   }
 
   /**
-   * Consulta el estado de cada cultivo de cada compañia productora, 
+   * Consulta el estado de cada cultivo de cada compañia productora,
    * Verifica el estado si esta en siembra o en cosecha.
-   * 
-   * @param {*} company 
+   *
+   * @param {*} company
    */
   static async statusPerCrops(company) {
     try {
@@ -270,7 +334,7 @@ class StatusService {
             resultHarvest = await this.getStatusByCrop(
               crop.id,
               company.id,
-              'harvest'
+              'harvest-and-marketing'
             )
           }
 
@@ -298,13 +362,16 @@ class StatusService {
 
   /**
    * Realiza el promedio ponderado de cada porcentaje de avance de los cultivos.
-   * 
-   * @param {*} company 
+   *
+   * @param {*} company
    */
   static async weightedAverageStatus(company) {
     try {
       let progress = await company.toJSON().productors_to.map(async (crop) => {
         let result = await this.getStatusByCrop(crop.id, company.id)
+
+        // console.log('weightedAverageStatus')
+        // console.log(result)
 
         const stageCrop = await CropService.getStageCrop(
           crop.id,
@@ -316,7 +383,7 @@ class StatusService {
           result = await this.getStatusByCrop(
             crop.id,
             company.id,
-            'harvest'
+            'harvest-and-marketing'
           )
         }
 
