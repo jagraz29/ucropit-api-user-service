@@ -23,16 +23,11 @@ const TO_REGISTER_OPTS = {
   stack: '2',
 }
 
-
 class GraphsController {
   static async surfacePerCrop(req, res) {
     const registeredSurfaces = await CropService.getCropRegisteredSurfacesBy({
       company: req.params.companyId,
     })
-
-    console.log(
-      await ProductionPermission.whoCanSign('field')
-    )
 
     res.json({
       labels: registeredSurfaces.map((el) => el.name),
