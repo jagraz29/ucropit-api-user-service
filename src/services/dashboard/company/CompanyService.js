@@ -178,28 +178,35 @@ class CompanyService {
 
   static statusCompany(percent) {
     let status = {}
-    if (percent >= 0 && percent <= 0.35) {
+    if(percent === 0) {
+      status = {
+        percent,
+        status: 'default',
+      }
+    }
+
+    if (percent > 0 && percent <= 0.3333) {
       status = {
         percent,
         status: 'error',
       }
     }
 
-    if (percent > 0.35 && percent <= 0.75) {
+    if (percent > 0.3334 && percent <= 0.6666) {
       status = {
         percent,
         status: 'warning',
       }
     }
 
-    if (percent >= 0.75 && percent <= 0.99) {
+    if (percent > 0.6666 && percent <= 0.99) {
       status = {
         percent,
         status: 'on_progress',
       }
     }
 
-    if (percent >= 0.99) {
+    if (percent > 0.99) {
       status = {
         percent,
         status: 'done',
