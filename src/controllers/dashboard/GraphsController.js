@@ -12,7 +12,7 @@ const SINGNED_OPTS = {
 }
 
 const REGISTERED_OPTS = {
-  label: 'Registradas',
+  label: 'A Registrar',
   backgroundColor: '#ccc',
   stack: '1',
 }
