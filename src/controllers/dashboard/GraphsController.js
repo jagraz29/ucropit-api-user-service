@@ -1,20 +1,26 @@
 'use static'
 
 const _ = require('lodash')
-const Common = require('../../services/approvalRegisters/Common')
+const ProductionPermission = require('../../services/production/ProductionPermissions')
 const CropService = require('../../services/dashboard/crops/CropService')
 const CropTypes = require('../../models').crop_types
 
 const SINGNED_OPTS = {
-  label: 'Firmadas',
+  label: 'Firmado',
   backgroundColor: '#5FD856',
   stack: '1',
 }
 
 const REGISTERED_OPTS = {
+  label: 'Registrado',
+  backgroundColor: '#FFD101',
+  stack: '1',
+}
+
+const TO_REGISTER_OPTS = {
   label: 'A Registrar',
   backgroundColor: '#ccc',
-  stack: '1',
+  stack: '2',
 }
 
 class GraphsController {
@@ -31,7 +37,7 @@ class GraphsController {
           data: [30, 50, 20, 40],
         },
         {
-          ...REGISTERED_OPTS,
+          ...TO_REGISTER_OPTS,
           data: registeredSurfaces.map((el) => el.surface),
         },
       ],
