@@ -7,7 +7,7 @@ router.get('/surfacePerCrop/:companyId', (req, res) => {
   return GraphsController.surfacePerCrop(req, res)
 })
 
-router.get('/signatures/comapies/:companyId', (req, res) => {
+router.get('/signatures/companies/:companyId', (req, res) => {
   const { companyId } = req.params
   GraphsController.percentSignature(companyId)
     .then((result) => {
