@@ -1,6 +1,7 @@
 'use strict'
 
 const moment = require('moment')
+
 const CommonService = require('./Common')
 
 class AggregationUsers {
@@ -201,7 +202,9 @@ class AggregationUsers {
         user
       )
 
-      return await this.countApprovalsRegisters(approvals)
+      const result =  this.countApprovalsRegisters(approvals)
+
+      return result
     } catch (error) {
       throw new Error(error)
     }
@@ -212,19 +215,27 @@ class AggregationUsers {
    *
    * @param {*} approvals
    */
-  static async countApprovalsRegisters(approvals) {
+  static countApprovalsRegisters(approvals) {
     const result = approvals.map((approval) => {
       return {
-        registers: approval.Register,
+        registers: approval.Register.length,
         signs:
-          approval.Register.length > 0 ? approval.Register[0].Signs.length : 0,
+          approval.Register.length > 0 ? this.sumSigns(approval.Register) : 0,
       }
     })
 
     return {
-      cantRegister: result.length,
+      cantRegister: result.reduce((a, b) => a + (b['registers'] || 0), 0),
       cantSigns: result.reduce((a, b) => a + (b['signs'] || 0), 0),
     }
+  }
+
+  static sumSigns(registers) {
+    const registersSing =  registers.map(register => {
+      return  register.Signs.length
+    }).filter(item => item).reduce((a, b) =>  a + b, 0)
+
+    return registersSing
   }
 }
 

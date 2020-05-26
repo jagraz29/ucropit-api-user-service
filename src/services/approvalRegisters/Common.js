@@ -1,5 +1,4 @@
 'use strict'
-
 const Production = require('../../models').productions
 const Crop = require('../../models').crops
 const User = require('../../models').users
@@ -81,9 +80,16 @@ class Common {
     })
   }
 
-  static async getApprovalWithSingFiterUser(crop, user) {
+  static async getApprovalWithSingFiterUser(
+    crop,
+    user,
+  ) {
+    const query = {
+      crop_id: crop.id,
+    }
+
     return await Approval.findAll({
-      where: { crop_id: crop.id },
+      where: query,
       include: [
         {
           model: ApprovalRegister,

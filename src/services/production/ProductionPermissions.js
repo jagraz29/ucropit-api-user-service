@@ -19,8 +19,6 @@ class ProductionPermissions {
         include: [{ model: Users }]
       })
 
-      console.log(data)
-
       const transformed = Transformer.getPermissionsParsed(data)
       
       const result = transformed.filter(el => {

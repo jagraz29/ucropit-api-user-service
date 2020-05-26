@@ -370,10 +370,6 @@ class StatusService {
       let progress = await company.toJSON().productors_to.map(async (crop) => {
         let result = await this.getStatusByCrop(crop.id, company.id)
 
-        console.log(`CROP: ${crop.id}`)
-        console.log(`Compañia Productora ${company.name}`)
-        console.log(result)
-
         const stageCrop = await CropService.getStageCrop(
           crop.id,
           company.id,

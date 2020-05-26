@@ -23,7 +23,7 @@ class DashboardController {
         companyId,
         cropTypeId
       )
-
+      
       const cropsWithUsers = await CompanyService.cropsWithUsersCompany(
         productors
       )
