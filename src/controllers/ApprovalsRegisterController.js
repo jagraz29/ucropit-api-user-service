@@ -56,33 +56,12 @@ class ApprovalsRegisterController {
 
   static async show(cropId, stage, type, typeId) {
     try {
-      const signers = await Signers.getSigners(stage, cropId, typeId, type)
-
-      const approval =
-        stage === 'fields'
-          ? await Approvals.findOne({
-            where: { stage: stage, crop_id: cropId },
-          })
-          : await Approvals.findOne({
-            where: {
-              stage: stage,
-              crop_id: cropId,
-              service_id: type === 'service' ? typeId : null,
-              input_id: type === 'input' ? typeId : null,
-            },
-          })
-
-      const register = await ApprovalRegister.findOne({
-        where: { approval_id: approval.id },
-        include: [
-          { model: ApprovalRegisterSigns, as: 'Signs' },
-          {
-            model: ApprovalRegisterFiles,
-            as: 'Files',
-            include: [{ model: User }],
-          },
-        ],
-      })
+      const { register, signers } = await Signers.getSigners(
+        stage,
+        cropId,
+        typeId,
+        type
+      )
 
       return { register, signers }
     } catch (error) {
@@ -188,8 +167,8 @@ class ApprovalsRegisterController {
         longitude: exif.metadata.tags.GPSLongitude || position.longitude,
         date_created_file: exif.metadata.tags.DateTimeOriginal
           ? moment
-            .unix(exif.metadata.tags.DateTimeOriginal)
-            .format('MM/DD/YYYY HH:mm:ss')
+              .unix(exif.metadata.tags.DateTimeOriginal)
+              .format('MM/DD/YYYY HH:mm:ss')
           : null,
         user_id: auth.user.id,
       })

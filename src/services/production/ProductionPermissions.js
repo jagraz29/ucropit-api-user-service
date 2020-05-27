@@ -20,8 +20,9 @@ class ProductionPermissions {
       })
 
       const transformed = Transformer.getPermissionsParsed(data)
-      
+      console.log(transformed)
       const result = transformed.filter(el => {
+        console.log(el.key, stage)
         const stageFound = el.stages.find(el => {
           return el.key === stage
         })

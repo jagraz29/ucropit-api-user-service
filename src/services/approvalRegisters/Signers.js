@@ -1,6 +1,12 @@
 'use strict'
 
 const Common = require('./Common')
+const User = require('../../models').users
+const Crops = require('../../models').crops
+const Approvals = require('../../models').approval
+const ApprovalRegister = require('../../models').approval_register
+const ApprovalRegisterSigns = require('../../models').approval_register_sign
+const ApprovalRegisterFiles = require('../../models').approval_register_file
 
 const TOTAL_STAGES = 8
 
@@ -28,11 +34,11 @@ class Signers {
           allStages:
             el.permissions.stages.filter(
               (el) => el.permissions.can_sign === true
-            ).length === TOTAL_STAGES
+            ).length === TOTAL_STAGES,
         }
       })
       .filter((el) => el.events !== undefined)
-      
+
     aux = canSignUsers.filter((el) => {
       return el.allStages
     })
@@ -59,7 +65,39 @@ class Signers {
       })
     }
 
-    return [...canSignUsers, ...aux]
+    const signers = [...canSignUsers, ...aux]
+    const approval =
+      stage === 'fields'
+        ? await Approvals.findOne({
+            where: { stage: stage, crop_id: cropId },
+          })
+        : await Approvals.findOne({
+            where: {
+              stage: stage,
+              crop_id: cropId,
+              service_id: type === 'service' ? typeId : null,
+              input_id: type === 'input' ? typeId : null,
+            },
+          })
+
+    const register = await ApprovalRegister.findOne({
+      where: { approval_id: approval.id },
+      include: [
+        { model: ApprovalRegisterSigns, as: 'Signs' },
+        {
+          model: ApprovalRegisterFiles,
+          as: 'Files',
+          include: [{ model: User }],
+        },
+      ],
+    })
+
+    return { signers, register }
+  }
+
+  static async checkIfCompleted({ stage, cropId }) {
+    const crop = await Crops.findOne({ where: { id: cropId } })
+    return crop
   }
 }
 
