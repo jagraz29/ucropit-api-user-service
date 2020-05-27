@@ -13,58 +13,32 @@ class AggregationUsers {
   static async totalAggregationUsersApprovalByCrops(crops) {
     try {
       const aggregations = await this.getCropAggregationWithApprovals(crops)
-      
-      let auxCropId = null
-      let auxIdUser = null
+
       let arrayUsers = []
 
-      for (const i in aggregations) {
-        if (auxCropId !== aggregations[i].crop.id) {
-          auxCropId = aggregations[i].crop.id
-
-          for (const index in aggregations[i].crop_aggregations) {
-            if (
-              auxIdUser !== aggregations[i].crop_aggregations[index].user.id
-            ) {
-              auxIdUser = aggregations[i].crop_aggregations[index].user.id
-              if (
-                arrayUsers.filter(
-                  (item) =>
-                    item.user.id ===
-                    aggregations[i].crop_aggregations[index].user.id
-                ).length > 0
-              ) {
-                const objIndex = arrayUsers.findIndex(
-                  (obj) =>
-                    obj.user.id ===
-                    aggregations[i].crop_aggregations[index].user.id
-                )
-                arrayUsers[objIndex].total_register +=
-                  aggregations[i].crop_aggregations[
-                    index
-                  ].usersApprovals.cantRegister
-                arrayUsers[objIndex].total_signs +=
-                  aggregations[i].crop_aggregations[
-                    index
-                  ].usersApprovals.cantSigns
-                arrayUsers[objIndex].total_prom_diff_time +=
-                  aggregations[i].crop_aggregations[index].diffTimes.time_diff
-              } else {
-                const resum = {
-                  user: aggregations[i].crop_aggregations[index].user,
-                  total_register:
-                    aggregations[i].crop_aggregations[index].usersApprovals
-                      .cantRegister,
-                  total_signs:
-                    aggregations[i].crop_aggregations[index].usersApprovals
-                      .cantSigns,
-                  total_prom_diff_time:
-                    aggregations[i].crop_aggregations[index].diffTimes
-                      .time_diff,
-                }
-                arrayUsers.push(resum)
-              }
+      for (let crop of aggregations) {
+        for (let aggregation of crop.crop_aggregations) {
+          if (
+            arrayUsers.filter((item) => item.user.id === aggregation.user.id)
+              .length > 0
+          ) {
+            const objIndex = arrayUsers.findIndex(
+              (obj) => obj.user.id === aggregation.user.id
+            )
+            arrayUsers[objIndex].total_register +=
+              aggregation.usersApprovals.cantRegister
+            arrayUsers[objIndex].total_signs +=
+              aggregation.usersApprovals.cantSigns
+            arrayUsers[objIndex].total_prom_diff_time +=
+              aggregation.diffTimes.time_diff
+          } else {
+            const resum = {
+              user: aggregation.user,
+              total_register: aggregation.usersApprovals.cantRegister,
+              total_signs: aggregation.usersApprovals.cantSigns,
+              total_prom_diff_time: aggregation.diffTimes.time_diff,
             }
+            arrayUsers.push(resum)
           }
         }
       }
@@ -145,7 +119,7 @@ class AggregationUsers {
 
     return result
   }
-  
+
   /**
    * The total number of signs per crop is obtained from a user.
    *
@@ -202,7 +176,7 @@ class AggregationUsers {
         user
       )
 
-      const result =  this.countApprovalsRegisters(approvals)
+      const result = this.countApprovalsRegisters(approvals)
 
       return result
     } catch (error) {
@@ -231,9 +205,12 @@ class AggregationUsers {
   }
 
   static sumSigns(registers) {
-    const registersSing =  registers.map(register => {
-      return  register.Signs.length
-    }).filter(item => item).reduce((a, b) =>  a + b, 0)
+    const registersSing = registers
+      .map((register) => {
+        return register.Signs.length
+      })
+      .filter((item) => item)
+      .reduce((a, b) => a + b, 0)
 
     return registersSing
   }
