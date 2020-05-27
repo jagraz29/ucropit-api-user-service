@@ -162,7 +162,7 @@ class AggregationUsers {
 
   /**
    * Search all the approvals of a user by the parameter cropId.
-   * For each approval counts the amount of User ApprovalRegister and Sings.
+   * For each approval counts the amount of User ApprovalRegister and Signs.
    *
    * @param Crop crops
    * @param User user

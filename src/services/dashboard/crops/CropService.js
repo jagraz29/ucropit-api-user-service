@@ -122,7 +122,7 @@ class CropService {
         crops[el.id] = el
       })
     })
-    
+
     return _(crops)
       .map(({ id, crop_type, surface }) => {
         return {
