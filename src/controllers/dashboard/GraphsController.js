@@ -7,6 +7,7 @@ const CropService = require('../../services/dashboard/crops/CropService')
 const CompanyService = require('../../services/dashboard/company/CompanyService')
 const Productions = require('../../models').productions
 const ProductionStage = require('../../models').production_stage
+const SignService = require('../../services/dashboard/signs/SignService')
 
 const SINGNED_OPTS = {
   label: 'Firmado',
@@ -151,6 +152,45 @@ class GraphsController {
         },
       ],
     })
+  }
+
+  static async percentSignature(companyId) {
+    try {
+      const customers = await CompanyService.getCompaniesProductors(companyId)
+
+      const progressRegister = await SignService.summaryRegister(customers)
+      const progressSign = await SignService.summarySigned(customers)
+
+      const labels = customers.map((company) => {
+        return company.name
+      })
+
+      const dataSigns = progressSign.map((result) => {
+        return result.totalSigns[0] * 100
+      })
+
+      const dataRegister = progressRegister.map((result) => {
+        return result.totalRegister[0] * 100
+      })
+
+      return {
+        labels: labels,
+        datasets: [
+          {
+            ...SINGNED_OPTS,
+            data: dataSigns,
+          },
+          {
+            ...REGISTERED_OPTS,
+            stack: '2',
+            data: dataRegister,
+          },
+        ],
+      }
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
   }
 }
 
