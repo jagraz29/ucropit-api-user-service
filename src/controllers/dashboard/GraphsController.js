@@ -168,11 +168,11 @@ class GraphsController {
       })
 
       const dataSigns = progressSign.map((result) => {
-        return result.totalSigns[0] * 100
+        return Number((result.totalSigns[0] * 100).toFixed(2))
       })
 
       const dataRegister = progressRegister.map((result) => {
-        return result.totalRegister[0] * 100
+        return Number((result.totalRegister[0] * 100).toFixed(2))
       })
 
       //Se resta el porcentaje registrado - porcentaje firmado
