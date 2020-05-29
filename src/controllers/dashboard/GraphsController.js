@@ -221,7 +221,7 @@ class GraphsController {
         },
         {
           ...REGISTERED_OPTS,
-          stack: '2',
+          stack: '1',
           data: dataRegister,
         },
       ],
