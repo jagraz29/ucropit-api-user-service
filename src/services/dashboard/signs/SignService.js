@@ -15,14 +15,8 @@ class SignService {
             stage: 'harvest-and-marketing',
           })
 
-          const sumApprovalsSowing = this.sumPercentApprovals(
-            approvalsSowing,
-            crop.surface
-          )
-          const sumApprovalsHarvest = this.sumPercentApprovals(
-            approvalHarvest,
-            crop.surface
-          )
+          const sumApprovalsSowing = this.sumPercentApprovals(approvalsSowing)
+          const sumApprovalsHarvest = this.sumPercentApprovals(approvalHarvest)
 
           return this.weightedAverage(
             sumApprovalsSowing,
@@ -95,6 +89,7 @@ class SignService {
   static async sumPercentSignsApprovals(approvals, crop) {
     try {
       const sumApprovals = approvals.map(async (approval) => {
+        let sumSurfaceSigned = 0
         const result = approval.Register.map(async (item) => {
           const complete = await StatusService.registerComplete(
             item.Signs,
@@ -104,10 +99,9 @@ class SignService {
 
           if (complete) {
             return {
-              percent:
-                Math.round(
-                  (parseInt(JSON.parse(item.data).units) / crop.surface) * 100
-                ) / 100,
+              percent: (sumSurfaceSigned += parseInt(
+                JSON.parse(item.data).units
+              )),
             }
           }
         })
@@ -129,7 +123,7 @@ class SignService {
     }
   }
 
-  static sumPercentApprovals(approvals, surface) {
+  static sumPercentApprovals(approvals) {
     const totalPercentApprovals = approvals.map((approval) => {
       let sumSurfaceRegister = 0
       if (approval && approval.Register.length > 0) {
@@ -138,17 +132,14 @@ class SignService {
         }
       }
 
-      return (sumSurfaceRegister * 100) / surface / 100
+      return sumSurfaceRegister
     })
 
     return totalPercentApprovals.length > 0 ? totalPercentApprovals[0] : 0
   }
 
   static weightedAverage(totalSowing, totalHarvest, surfaces, cantSatages) {
-    return (
-      (totalSowing * surfaces + totalHarvest * surfaces) /
-      (surfaces * cantSatages)
-    )
+    return (totalSowing + totalHarvest) / (surfaces * cantSatages)
   }
 
   static async cantRegisters(crop, stage) {
