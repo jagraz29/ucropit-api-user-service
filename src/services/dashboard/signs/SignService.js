@@ -138,8 +138,8 @@ class SignService {
     return totalPercentApprovals.length > 0 ? totalPercentApprovals[0] : 0
   }
 
-  static weightedAverage(totalSowing, totalHarvest, surfaces, cantSatages) {
-    return (totalSowing + totalHarvest) / (surfaces * cantSatages)
+  static weightedAverage(totalSowing, totalHarvest, surfaces, cantStages) {
+    return (totalSowing + totalHarvest) / (surfaces * cantStages)
   }
 
   static async cantRegisters(crop, stage) {

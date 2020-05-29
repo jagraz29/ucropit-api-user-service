@@ -161,6 +161,8 @@ class GraphsController {
       const progressRegister = await SignService.summaryRegister(customers)
       const progressSign = await SignService.summarySigned(customers)
 
+      let customersProgress = []
+
       const labels = customers.map((company) => {
         return company.name
       })
@@ -173,23 +175,56 @@ class GraphsController {
         return result.totalRegister[0] * 100
       })
 
-      return {
-        labels: labels,
-        datasets: [
-          {
-            ...SINGNED_OPTS,
-            data: dataSigns,
-          },
-          {
-            ...REGISTERED_OPTS,
-            stack: '2',
-            data: dataRegister,
-          },
-        ],
+      //Se resta el porcentaje registrado - porcentaje firmado
+      for (let index in dataRegister) {
+        dataRegister[index] = dataRegister[index] - dataSigns[index]
+
+        customersProgress.push({
+          label: labels[index],
+          percentRegister: dataRegister[index],
+          percentSigned: dataSigns[index]
+        })
       }
+
+      //Se ordena la lista de progresos por cliente
+      customersProgress = customersProgress.sort(function (a, b) {
+        if (b.percentSigned > a.percentSigned) {
+          return 1;
+        }
+        if (b.percentSigned < a.percentSigned) {
+          return -1;
+        }
+        // a must be equal to b
+        return 0;
+      });
+
+    
+      return this.presentDataGraph(customersProgress)
+      
     } catch (error) {
       console.log(error)
       throw new Error(error)
+    }
+  }
+
+  static presentDataGraph(list) {
+    const labels = list.map(customer => customer.label)
+    const dataSigns = list.map(customer => customer.percentSigned)
+    const dataRegister = list.map(customer => customer.percentRegister)
+
+    return {
+      labels: labels,
+      datasets: [
+        {
+          ...SINGNED_OPTS,
+          data: dataSigns,
+        },
+        {
+          ...REGISTERED_OPTS,
+          stack: '2',
+          data: dataRegister,
+        },
+      ],
     }
   }
 }
