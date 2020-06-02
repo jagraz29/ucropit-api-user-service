@@ -19,7 +19,7 @@ router.get('/signatures/companies/:companyId', (req, res) => {
 })
 
 router.get(
-  '/registers/companies/:companyId/croptypes/:cropTypeId*?',
+  '/registers/companies/:companyId/croptypes/:cropTypeId?',
   (req, res) => {
     const { companyId, cropTypeId } = req.params
     GraphsController.cantRegisterPerStage(companyId, cropTypeId)
