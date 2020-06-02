@@ -9,7 +9,7 @@ const Productions = require('../../models').productions
 const ProductionStage = require('../../models').production_stage
 const SignService = require('../../services/dashboard/signs/SignService')
 
-const SINGNED_OPTS = {
+const SIGNED_OPTS = {
   label: 'Firmado',
   backgroundColor: '#5FD856',
   stack: '1',
@@ -32,12 +32,7 @@ class GraphsController {
     const registeredSurfaces = await CropService.getCropRegisteredSurfacesBy({
       company: req.params.companyId,
     })
-
-    /*    return res.json(
-      await Signers.checkIfCompleted({ stage: 'fields', cropId: 25 })
-    ) */
-
-    // separar los cultivos por id que correspondan a la compania
+    
     const companiesProductors = await CompanyService.getCompaniesProductors(
       req.params.companyId
     )
@@ -143,7 +138,7 @@ class GraphsController {
       labels: registeredSurfaces.map((el) => el.name),
       datasets: [
         {
-          ...SINGNED_OPTS,
+          ...SIGNED_OPTS,
           data: signedSurfaces.map((el) => el.completed),
         },
         {
@@ -199,7 +194,7 @@ class GraphsController {
       });
 
     
-      return this.presentDataGraph(customersProgress)
+      return this.percentDataGraph(customersProgress)
       
     } catch (error) {
       console.log(error)
@@ -207,7 +202,7 @@ class GraphsController {
     }
   }
 
-  static presentDataGraph(list) {
+  static percentDataGraph(list) {
     const labels = list.map(customer => customer.label)
     const dataSigns = list.map(customer => customer.percentSigned)
     const dataRegister = list.map(customer => customer.percentRegister)
@@ -216,7 +211,7 @@ class GraphsController {
       labels: labels,
       datasets: [
         {
-          ...SINGNED_OPTS,
+          ...SIGNED_OPTS,
           data: dataSigns,
         },
         {
