@@ -154,9 +154,9 @@ class GraphsController {
     })
   }
 
-  static async percentSignature(companyId) {
+  static async percentSignature(companyId, cropTypeId = null) {
     try {
-      const customers = await CompanyService.getCompaniesProductors(companyId)
+      const customers = await CompanyService.getCompaniesProductors(companyId, cropTypeId)
 
       const progressRegister = await SignService.summaryRegister(customers)
       const progressSign = await SignService.summarySigned(customers)
