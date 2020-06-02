@@ -105,6 +105,7 @@ class CropService {
     }
   }
 
+
   /**
    * Gets a sum of crop's surfaces grouped by crop type
    *

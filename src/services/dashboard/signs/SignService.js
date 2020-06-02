@@ -142,6 +142,74 @@ class SignService {
     return (totalSowing + totalHarvest) / (surfaces * cantStages)
   }
 
+  static async totalCanRegisterByStage(listCompanies) {
+    let listStage = [
+      {
+        stage: 'fields',
+        name: 'Campo',
+        cant: 0,
+      },
+      {
+        stage: 'pre-sowing',
+        name: 'Pre-Siembra',
+        cant: 0,
+      },
+      {
+        stage: 'sowing',
+        name: 'Siembra',
+        cant: 0,
+      },
+      {
+        stage: 'protection',
+        name: 'Protección de Cultivos',
+        cant: 0,
+      },
+      {
+        stage: 'harvest-and-marketing',
+        name: 'Cosecha y Comercialización',
+        cant: 0,
+      },
+      {
+        stage: 'other-expenses',
+        name: 'Gastos administrativos',
+        cant: 0,
+      },
+      {
+        stage: 'monitoring',
+        name: 'Monitoreo',
+        cant: 0,
+      },
+      {
+        stage: 'deliveries',
+        name: 'Entregas',
+        cant: 0,
+      },
+    ]
+
+    for(let company of listCompanies) {
+      for(let crop of company.productors_to) {
+        for(let item of listStage) {
+          const result = await this.cantRegisters(crop, item.stage)
+          if(result) {
+            listStage = this.sumRegisterByStages(listStage, result)
+          }
+        }
+      }
+    }
+
+    return listStage
+  }
+
+  static sumRegisterByStages(listStage, registerStage) {
+    for(let index in listStage) {
+      if(listStage[index].stage === registerStage.stage) {
+        listStage[index].cant += registerStage.register
+      }
+    }
+
+    return listStage;
+  }
+
   static async cantRegisters(crop, stage) {
     try {
       const approvals = await CommonService.getApprovalWithRegisters({
@@ -149,9 +217,35 @@ class SignService {
         stage: stage,
       })
 
-      return approvals
-        .map((item) => item.Register.length)
-        .reduce((a, b) => a + b, 0)
+      let registerWithApprovals = approvals.map(async (approval) => {
+        let resultRegister = approval.Register.map(async (item) => {
+          const complete = await StatusService.registerComplete(
+            item.Signs,
+            crop.users,
+            approval
+          )
+
+          if (complete) {
+            return {
+              stage: stage,
+              register: 1,
+            }
+          }
+
+          return {
+            stage: stage,
+            register: 0,
+          }
+        })
+
+        resultRegister = await Promise.all(resultRegister)
+        return resultRegister[0]
+      })
+
+      
+
+      registerWithApprovals = await Promise.all(registerWithApprovals)
+      return registerWithApprovals[0]
     } catch (error) {
       console.log(error)
     }

@@ -177,35 +177,65 @@ class GraphsController {
         customersProgress.push({
           label: labels[index],
           percentRegister: dataRegister[index],
-          percentSigned: dataSigns[index]
+          percentSigned: dataSigns[index],
         })
       }
 
       //Se ordena la lista de progresos por cliente
       customersProgress = customersProgress.sort(function (a, b) {
         if (b.percentSigned > a.percentSigned) {
-          return 1;
+          return 1
         }
         if (b.percentSigned < a.percentSigned) {
-          return -1;
+          return -1
         }
         // a must be equal to b
-        return 0;
-      });
+        return 0
+      })
 
-    
-      return this.percentDataGraph(customersProgress)
-      
+      return this.presentDataGraph(customersProgress)
     } catch (error) {
       console.log(error)
       throw new Error(error)
     }
   }
 
-  static percentDataGraph(list) {
-    const labels = list.map(customer => customer.label)
-    const dataSigns = list.map(customer => customer.percentSigned)
-    const dataRegister = list.map(customer => customer.percentRegister)
+  static async cantRegisterPerStage(companyId, typeCropId = null) {
+    try {
+      const customers = await CompanyService.getCompaniesProductors(
+        companyId,
+        typeCropId
+      )
+    
+      const result = await SignService.totalCanRegisterByStage(customers)
+
+      const labels = result.map((item) => {
+        return item.name
+      })
+
+      const dataSet = result.map((item) => {
+        return item.cant
+      })
+
+      return {
+        labels: labels,
+        datasets: [
+          {
+            ...SIGNED_OPTS,
+            data: dataSet,
+          },
+        ],
+      }
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
+  }
+
+  static presentDataGraph(list) {
+    const labels = list.map((customer) => customer.label)
+    const dataSigns = list.map((customer) => customer.percentSigned)
+    const dataRegister = list.map((customer) => customer.percentRegister)
 
     return {
       labels: labels,
