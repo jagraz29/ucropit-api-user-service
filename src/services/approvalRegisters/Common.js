@@ -99,6 +99,7 @@ class Common {
               model: ApprovalRegisterSign,
               as: 'Signs',
               where: { user_id: user.id },
+              required: false
             },
           ],
         },
