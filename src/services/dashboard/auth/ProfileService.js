@@ -10,7 +10,6 @@ const CropType = require('../../../models').crop_types
 const Production = require('../../../models').productions
 
 const StatusService = require('../../../services/dashboard/status/StatusService')
-const CompanyService = require('../../../services/dashboard/company/CompanyService')
 
 class ProfileService {
   static async profile(user) {
@@ -22,10 +21,12 @@ class ProfileService {
           const productors = company.productors.map(async (productor) => {
             const companyObj = await StatusService.statusPerCrops(productor)
             const percent = await StatusService.weightedAverageStatus(productor)
-            const statusGlobal = CompanyService.statusCompany(percent)
             return {
               ...companyObj,
-              statusGlobal,
+              statusGlobal : {
+                status: companyObj.statusGlobal.status,
+                percent
+              },
             }
           })
 

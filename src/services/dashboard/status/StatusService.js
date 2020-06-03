@@ -87,6 +87,7 @@ class StatusService {
         return {
           percent: 0,
           status: 'created',
+          weight: 0,
         }
       }
 
@@ -99,12 +100,14 @@ class StatusService {
         return {
           percent: progressCrop,
           status: 'done',
+          weight: 1,
         }
       }
 
       return {
         percent: progressCrop,
         status: 'on_progress',
+        weight: 2,
       }
     } catch (error) {
       console.log(error)
@@ -119,6 +122,7 @@ class StatusService {
         return {
           percent: 0,
           status: 'warning',
+          weight: 3,
         }
       }
       const progressCrop = await this.calculateProgress(approval, crop)
@@ -130,12 +134,14 @@ class StatusService {
         return {
           percent: progressCrop,
           status: 'done',
+          weight: 1,
         }
       }
 
       return {
         percent: progressCrop,
         status: 'on_progress',
+        weight: 2,
       }
     } catch (error) {
       console.log(error)
@@ -149,6 +155,7 @@ class StatusService {
         return {
           percent: 0,
           status: 'error',
+          weight: 5,
         }
       }
 
@@ -161,12 +168,14 @@ class StatusService {
         return {
           percent: progressCrop,
           status: 'done',
+          weight: 1,
         }
       }
 
       return {
         percent: progressCrop,
         status: 'error',
+        weight: 5,
       }
     } catch (error) {
       console.log(error)
@@ -353,11 +362,33 @@ class StatusService {
       return {
         ...company.toJSON(),
         productors_to: listCrops,
+        statusGlobal: {
+          status: this.getWorstStatusCompany(listCrops)
+        }
       }
     } catch (error) {
       console.log(error)
       throw new Error(error)
     }
+  }
+
+  static getWorstStatusCompany(list) {
+    let worst = list.reduce((result, item) => {
+      let minRest = result.length ? result[0].status.weight : item.status.weight
+
+      if (item.status.weight < minRest) {
+        minRest = item.status.weight
+        result.length = 0
+      }
+
+      if (item.status.weight === minRest) {
+        result.push(item)
+      }
+
+      return result
+    }, [])
+
+    return worst[0].status.status
   }
 
   /**
