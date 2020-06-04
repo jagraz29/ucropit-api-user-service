@@ -99,9 +99,9 @@ class SignService {
 
           if (complete) {
             return {
-              percent: (sumSurfaceSigned += parseInt(
-                JSON.parse(item.data).units
-              )),
+              percent: (sumSurfaceSigned += item.data
+                ? parseInt(JSON.parse(item.data).units)
+                : 0),
             }
           }
         })
