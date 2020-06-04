@@ -128,7 +128,9 @@ class SignService {
       let sumSurfaceRegister = 0
       if (approval && approval.Register.length > 0) {
         for (let register of approval.Register) {
-          sumSurfaceRegister += parseInt(JSON.parse(register.data).units)
+          sumSurfaceRegister += register.data
+            ? parseInt(JSON.parse(register.data).units)
+            : 0
         }
       }
 
@@ -179,18 +181,13 @@ class SignService {
         name: 'Monitoreo',
         cant: 0,
       },
-      {
-        stage: 'deliveries',
-        name: 'Entregas',
-        cant: 0,
-      },
     ]
 
-    for(let company of listCompanies) {
-      for(let crop of company.productors_to) {
-        for(let item of listStage) {
+    for (let company of listCompanies) {
+      for (let crop of company.productors_to) {
+        for (let item of listStage) {
           const result = await this.cantRegisters(crop, item.stage)
-          if(result) {
+          if (result) {
             listStage = this.sumRegisterByStages(listStage, result)
           }
         }
@@ -201,13 +198,13 @@ class SignService {
   }
 
   static sumRegisterByStages(listStage, registerStage) {
-    for(let index in listStage) {
-      if(listStage[index].stage === registerStage.stage) {
+    for (let index in listStage) {
+      if (listStage[index].stage === registerStage.stage) {
         listStage[index].cant += registerStage.register
       }
     }
 
-    return listStage;
+    return listStage
   }
 
   static async cantRegisters(crop, stage) {
@@ -241,8 +238,6 @@ class SignService {
         resultRegister = await Promise.all(resultRegister)
         return resultRegister[0]
       })
-
-      
 
       registerWithApprovals = await Promise.all(registerWithApprovals)
       return registerWithApprovals[0]
