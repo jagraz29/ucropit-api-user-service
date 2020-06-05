@@ -8,7 +8,6 @@ const User = require('../../../models').users
 const CropType = require('../../../models').crop_types
 const CropUser = require('../../../models').crop_users
 
-
 const unique = (list) => {
   let aux = []
   return list.filter((value) => {
@@ -47,7 +46,7 @@ class CompanyService {
               through: {
                 model: CropUser,
                 attributes: ['id', 'first_name', 'last_name'],
-              }
+              },
             },
           ],
         },
@@ -176,9 +175,56 @@ class CompanyService {
     return unique(resultConcant)
   }
 
+  static async cropTypesGroup(companies) {
+    let listCropTypes = []
+    try {
+      const crops = await this.cropsWithUsersCompany(companies)
+
+      for (const crop of crops) {
+        if (
+          listCropTypes.length === 0 ||
+          listCropTypes.filter((item) => item.id === crop.crop_type.id)
+            .length === 0
+        ) {
+          const cropType = {
+            ...crop.crop_type,
+            crops: [],
+          }
+
+          cropType.crops.push({
+            id: crop.id,
+            name: crop.crop_name,
+            units: crop.units,
+            surface: crop.surface,
+            users: crop.users,
+          })
+
+          listCropTypes.push(cropType)
+        } else {
+          const objIndex = listCropTypes.findIndex(
+            (obj) => obj.id === crop.crop_type.id
+          )
+
+          listCropTypes[objIndex].crops.push({
+            id: crop.id,
+            name: crop.crop_name,
+            units: crop.units,
+            surface: crop.surface,
+            users: crop.users,
+          })
+        }
+      }
+
+      return listCropTypes
+    } catch (error) {
+      console.log(error)
+      return null
+    }
+  }
+
   static statusCompany(percent) {
     let status = {}
-    if(percent === 0) {
+    if (percent === 0) {
       status = {
         percent,
         status: 'default',

@@ -32,7 +32,7 @@ class GraphsController {
     const registeredSurfaces = await CropService.getCropRegisteredSurfacesBy({
       company: req.params.companyId,
     })
-    
+
     const companiesProductors = await CompanyService.getCompaniesProductors(
       req.params.companyId
     )
@@ -206,7 +206,7 @@ class GraphsController {
         companyId,
         typeCropId
       )
-    
+
       const result = await SignService.totalCanRegisterByStage(customers)
 
       const labels = result.map((item) => {
@@ -227,6 +227,18 @@ class GraphsController {
         ],
       }
     } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
+  }
+
+  static async percentSignaturePerCropType(companyId) {
+    try {
+      const productors = await CompanyService.getCompaniesProductors(companyId)
+      
+      await SignService.summaryRegisterByCropTypes(productors)
+      
+    }catch(error) {
       console.log(error)
       throw new Error(error)
     }

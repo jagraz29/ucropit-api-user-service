@@ -1,5 +1,6 @@
 const CommonService = require('../../approvalRegisters/Common')
 const StatusService = require('../../dashboard/status/StatusService')
+const CompanyService = require('../../dashboard/company/CompanyService')
 class SignService {
   static async summaryRegister(companies) {
     try {
@@ -83,6 +84,70 @@ class SignService {
     } catch (error) {
       console.log(error)
       throw new Error(error)
+    }
+  }
+
+  static async summaryRegisterByCropTypes(productors) {
+    try {
+      const cropsGroupByCropTypes = await CompanyService.cropTypesGroup(
+        productors
+      )
+
+      const percentsRegisters = cropsGroupByCropTypes.map(async (cropType) => {
+        const weightCrops = cropType.crops.map(async (crop) => {
+          const approvalsSowing = await CommonService.getApprovalWithRegisters({
+            crop_id: crop.id,
+            stage: 'sowing',
+          })
+
+          const approvalHarvest = await CommonService.getApprovalWithRegisters({
+            crop_id: crop.id,
+            stage: 'harvest-and-marketing',
+          })
+
+          const sumApprovalsSowing = this.sumPercentApprovals(approvalsSowing)
+          const sumApprovalsHarvest = this.sumPercentApprovals(approvalHarvest)
+
+          return {
+            ...crop,
+            weight: this.weightedAverage(
+              sumApprovalsSowing,
+              sumApprovalsHarvest,
+              crop.surface,
+              2
+            ),
+          }
+        })
+
+        const weightCropsSync = await Promise.all(weightCrops)
+
+        console.log(weightCropsSync)
+
+        return {
+          ...cropType,
+          sumPercentRegisters: weightCropsSync.reduce(
+            (a, b) => a + (b['weight'] || 0),
+            0
+          ),
+        }
+      })
+
+      
+
+      console.log(await Promise.all(percentsRegisters))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  static async summarySignedByCropTypes(productors) {
+    try {
+      const cropsGroupByCropTypes = await CompanyService.cropTypesGroup(
+        productors
+      )
+      console.log(cropsGroupByCropTypes)
+    } catch (error) {
+      console.log(error)
     }
   }
 
