@@ -325,39 +325,45 @@ class StatusService {
    *
    * @param {*} company
    */
-  static async statusPerCrops(company) {
+  static async statusPerCrops(company, locator) {
     try {
       let resultSowing = {}
       let resultHarvest = {}
       let listCropsPromise = await company
         .toJSON()
         .productors_to.map(async (crop) => {
-          resultSowing = await this.getStatusByCrop(crop.id, company.id)
-          const stageCrop = await CropService.getStageCrop(
-            crop.id,
-            company.id,
-            resultSowing.percent
-          )
-
-          if (stageCrop.stage === 'harvest') {
-            resultHarvest = await this.getStatusByCrop(
+          if(crop.roles_companies_crops.locator_id === locator.id) {
+            resultSowing = await this.getStatusByCrop(crop.id, company.id)
+            const stageCrop = await CropService.getStageCrop(
               crop.id,
               company.id,
-              'harvest-and-marketing'
+              resultSowing.percent
             )
-          }
 
-          const resultCrop =
+            if (stageCrop.stage === 'harvest') {
+              resultHarvest = await this.getStatusByCrop(
+                crop.id,
+                company.id,
+                'harvest-and-marketing'
+              )
+            }
+
+            const resultCrop =
             stageCrop.stage === 'harvest' ? resultHarvest : resultSowing
 
-          return {
-            ...crop,
-            stage_now: stageCrop,
-            status: resultCrop,
+            return {
+              ...crop,
+              stage_now: stageCrop,
+              status: resultCrop,
+            }
           }
+          
+          return null
         })
 
-      const listCrops = await Promise.all(listCropsPromise)
+      let listCrops = await Promise.all(listCropsPromise)
+
+      listCrops = listCrops.filter(item => item)
 
       return {
         ...company.toJSON(),
@@ -396,33 +402,38 @@ class StatusService {
    *
    * @param {*} company
    */
-  static async weightedAverageStatus(company) {
+  static async weightedAverageStatus(company, locator) {
     try {
       let progress = await company.toJSON().productors_to.map(async (crop) => {
-        let result = await this.getStatusByCrop(crop.id, company.id)
+        if(crop.roles_companies_crops.locator_id === locator.id) {
+          let result = await this.getStatusByCrop(crop.id, company.id)
 
-        const stageCrop = await CropService.getStageCrop(
-          crop.id,
-          company.id,
-          result.percent
-        )
-
-        if (stageCrop.stage === 'harvest') {
-          result = await this.getStatusByCrop(
+          const stageCrop = await CropService.getStageCrop(
             crop.id,
             company.id,
-            'harvest-and-marketing'
+            result.percent
           )
-        }
 
-        return {
-          ...result,
-          crop_id: crop.id,
-          surface: crop.surface,
+          if (stageCrop.stage === 'harvest') {
+            result = await this.getStatusByCrop(
+              crop.id,
+              company.id,
+              'harvest-and-marketing'
+            )
+          }
+
+          return {
+            ...result,
+            crop_id: crop.id,
+            surface: crop.surface,
+          }
         }
+        
+        return null
       })
 
       progress = await Promise.all(progress)
+      progress = progress.filter(item => item)
 
       if (!progress) return 0
 
