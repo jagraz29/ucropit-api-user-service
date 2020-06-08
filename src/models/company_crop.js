@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false
       },
+      locator_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
       before_day_sowing: {
         type: DataTypes.INTEGER,
         allowNull: true
@@ -55,6 +59,13 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'roles_companies_crops',
     }
   );
+
+  CompanyCrop.associate = function(models) {
+    CompanyCrop.belongsTo(models.companies, {
+      as: 'CompanyLocator',
+      foreignKey: 'locator_id',
+    })
+  }
 
   return CompanyCrop;
 };
