@@ -5,8 +5,7 @@ module.exports = {
     return Promise.all([
       queryInterface.addColumn('roles_companies_crops', 'locator_id', {
         type: Sequelize.INTEGER,
-        allowNull: true,
-        defaultValue: 1
+        allowNull: true
       })
     ])
   },
