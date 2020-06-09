@@ -5,6 +5,7 @@ const User = require('../../models').users
 const Approval = require('../../models').approval
 const ApprovalRegister = require('../../models').approval_register
 const ApprovalRegisterSign = require('../../models').approval_register_sign
+const ApprovalRegisterFile = require('../../models').approval_register_file
 const UserPermissionsProduction = require('../../models')
   .productions_users_permissions
 
@@ -74,6 +75,10 @@ class Common {
               model: ApprovalRegisterSign,
               as: 'Signs',
             },
+            {
+              model: ApprovalRegisterFile,
+              as: 'Files',
+            }
           ],
         },
       ],
