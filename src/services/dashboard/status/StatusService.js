@@ -305,11 +305,11 @@ class StatusService {
       const eventObj = permissionsEvent.filter((item) => item.label === stage)
 
       if (stageObj.length > 0) {
-        return stageObj[0].permissions.can_edit
+        return stageObj[0].permissions.can_sign
       }
 
       if (stageObj.length === 0 && eventObj.length > 0) {
-        return eventObj[0].events[0].permissions.can_edit
+        return eventObj[0].events[0].permissions.can_sign
       }
 
       return false
