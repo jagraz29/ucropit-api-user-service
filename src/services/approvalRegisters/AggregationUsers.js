@@ -176,10 +176,6 @@ class AggregationUsers {
         user
       )
 
-      console.log(`USER ID: ${user.id}`)
-      console.log(`CROP ID: ${crop.id}`)
-      console.log('CANTIDAD DE APPROVALS')
-
       const result = this.countApprovalsRegisters(approvals)
 
       return result
@@ -195,9 +191,6 @@ class AggregationUsers {
    */
   static countApprovalsRegisters(approvals) {
     const result = approvals.map((approval) => {
-      console.log(`APPROVAL ID: ${approval.id}`)
-      console.log('CANTIDAD DE REGISTROS:')
-      console.log(approval.Register.length)
       return {
         registers: approval.Register.length,
         signs:

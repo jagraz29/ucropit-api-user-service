@@ -1,5 +1,6 @@
 const CommonService = require('../../approvalRegisters/Common')
 const StatusService = require('../../dashboard/status/StatusService')
+const CompanyService = require('../../dashboard/company/CompanyService')
 class SignService {
   static async summaryRegister(companies) {
     try {
@@ -183,16 +184,17 @@ class SignService {
       },
     ]
 
-    for (let company of listCompanies) {
-      for (let crop of company.productors_to) {
-        for (let item of listStage) {
-          const result = await this.cantRegisters(crop, item.stage)
-          if (result) {
-            listStage = this.sumRegisterByStages(listStage, result)
-          }
+    const cropWithUsers = await CompanyService.cropsWithUsersCompany(listCompanies)
+    
+    for (let crop of cropWithUsers) {
+      for (let item of listStage) {
+        const result = await this.cantRegisters(crop, item.stage)
+        if (result) {
+          listStage = this.sumRegisterByStages(listStage, result)
         }
       }
     }
+    
 
     return listStage
   }
@@ -221,11 +223,10 @@ class SignService {
             crop.users,
             approval
           )
-
           if (complete) {
             return {
               stage: stage,
-              register: 1,
+              register: item.Files.length,
             }
           }
 
@@ -236,6 +237,8 @@ class SignService {
         })
 
         resultRegister = await Promise.all(resultRegister)
+
+        console.log(resultRegister)
         return resultRegister[0]
       })
 
