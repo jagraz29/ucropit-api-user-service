@@ -110,33 +110,35 @@ class SignService {
 
           return {
             ...crop,
-            weight: this.weightedAverage(
-              sumApprovalsSowing,
-              sumApprovalsHarvest,
-              crop.surface,
-              2
-            ),
+            surfaceCrop: crop.surface,
+            surfaceRegiterSowing: sumApprovalsSowing,
+            surfaceRegisterHarvest: sumApprovalsHarvest,
           }
         })
 
         const weightCropsSync = await Promise.all(weightCrops)
 
-        console.log(weightCropsSync)
-
         return {
           ...cropType,
-          sumPercentRegisters: weightCropsSync.reduce(
-            (a, b) => a + (b['weight'] || 0),
+          totalSurfaceCropType: weightCropsSync.reduce(
+            (a, b) => a + (b['surfaceCrop'] || 0),
+            0
+          ) * 2,
+          totalSurfaceSowing: weightCropsSync.reduce(
+            (a, b) => a + (b['surfaceRegiterSowing'] || 0),
+            0
+          ),
+          totalSurfaceHarvest: weightCropsSync.reduce(
+            (a, b) => a + (b['surfaceRegisterHarvest'] || 0),
             0
           ),
         }
       })
 
-      
-
-      console.log(await Promise.all(percentsRegisters))
+      return await Promise.all(percentsRegisters)
     } catch (error) {
       console.log(error)
+      throw new Error(error)
     }
   }
 
@@ -145,9 +147,53 @@ class SignService {
       const cropsGroupByCropTypes = await CompanyService.cropTypesGroup(
         productors
       )
-      console.log(cropsGroupByCropTypes)
+
+      const percentsRegisters = cropsGroupByCropTypes.map(async (cropType) => {
+        const weightCrops = cropType.crops.map(async (crop) => {
+          const approvalsSowing = await CommonService.getApprovalWithRegisters({
+            crop_id: crop.id,
+            stage: 'sowing',
+          })
+
+          const approvalHarvest = await CommonService.getApprovalWithRegisters({
+            crop_id: crop.id,
+            stage: 'harvest-and-marketing',
+          })
+
+          const sumApprovalsSowing = await this.sumPercentSignsApprovals(approvalsSowing, crop)
+          const sumApprovalsHarvest = await this.sumPercentSignsApprovals(approvalHarvest, crop)
+
+          return {
+            ...crop,
+            surfaceCrop: crop.surface,
+            surfaceSignedSowing: sumApprovalsSowing,
+            surfaceSignedHarvest: sumApprovalsHarvest,
+          }
+        })
+
+        const weightCropsSync = await Promise.all(weightCrops)
+
+        return {
+          ...cropType,
+          totalSurfaceCropType: weightCropsSync.reduce(
+            (a, b) => a + (b['surfaceCrop'] || 0),
+            0
+          ) * 2,
+          totalSurfaceSowing: weightCropsSync.reduce(
+            (a, b) => a + (b['surfaceSignedSowing'] || 0),
+            0
+          ),
+          totalSurfaceHarvest: weightCropsSync.reduce(
+            (a, b) => a + (b['surfaceSignedHarvest'] || 0),
+            0
+          ),
+        }
+      })
+
+      return await Promise.all(percentsRegisters)
     } catch (error) {
       console.log(error)
+      throw new Error(error)
     }
   }
 
@@ -248,8 +294,10 @@ class SignService {
       },
     ]
 
-    const cropWithUsers = await CompanyService.cropsWithUsersCompany(listCompanies)
-    
+    const cropWithUsers = await CompanyService.cropsWithUsersCompany(
+      listCompanies
+    )
+
     for (let crop of cropWithUsers) {
       for (let item of listStage) {
         const result = await this.cantRegisters(crop, item.stage)
@@ -258,7 +306,6 @@ class SignService {
         }
       }
     }
-    
 
     return listStage
   }
@@ -302,7 +349,6 @@ class SignService {
 
         resultRegister = await Promise.all(resultRegister)
 
-        console.log(resultRegister)
         return resultRegister[0]
       })
 
