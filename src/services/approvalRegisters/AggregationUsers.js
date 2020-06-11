@@ -3,6 +3,7 @@
 const moment = require('moment')
 
 const CommonService = require('./Common')
+const StatusService = require('../dashboard/status/StatusService')
 
 class AggregationUsers {
   /**
@@ -176,7 +177,7 @@ class AggregationUsers {
         user
       )
 
-      const result = this.countApprovalsRegisters(approvals)
+      const result = await this.countApprovalsRegisters(approvals, user)
 
       return result
     } catch (error) {
@@ -189,20 +190,34 @@ class AggregationUsers {
    *
    * @param {*} approvals
    */
-  static countApprovalsRegisters(approvals) {
-    const result = approvals.map((approval) => {
+  static async countApprovalsRegisters(approvals, user) {
+    const result = approvals.map(async (approval) => {
+      //Verifica que el usuario en ese approval tenga permisos de firmas
+      const resultPermission = await StatusService.checkUserHavePermission(
+        approval.stage,
+        approval.crop_id,
+        user
+      )
+
       return {
-        registers: approval.Register.length,
+        registers: resultPermission ? approval.Register.length : 0,
         signs:
-          approval.Register.length > 0 ? this.sumSigns(approval.Register) : 0,
+          approval.Register.length > 0
+            ? resultPermission
+              ? this.sumSigns(approval.Register)
+              : 0
+            : 0,
       }
     })
 
+    const resultAsync = await Promise.all(result)
+
     return {
-      cantRegister: result.reduce((a, b) => a + (b['registers'] || 0), 0),
-      cantSigns: result.reduce((a, b) => a + (b['signs'] || 0), 0),
+      cantRegister: resultAsync.reduce((a, b) => a + (b['registers'] || 0), 0),
+      cantSigns: resultAsync.reduce((a, b) => a + (b['signs'] || 0), 0),
     }
   }
+
 
   static sumSigns(registers) {
     const registersSing = registers
