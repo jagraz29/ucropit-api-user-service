@@ -214,7 +214,10 @@ class GraphsController {
       })
 
       const dataSet = result.map((item) => {
-        return item.cant
+        console.log(item)
+        if(item.cantRegisters === 0 && item.cantFiles === 0) return 0
+        if(item.cantRegisters !== 0 && item.cantFiles === 0) return 0
+        return item.cantRegisters/item.cantFiles
       })
 
       return {

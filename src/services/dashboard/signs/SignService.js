@@ -150,42 +150,51 @@ class SignService {
       {
         stage: 'fields',
         name: 'Campo',
-        cant: 0,
+        cantRegisters: 0,
+        cantFiles: 0
       },
       {
         stage: 'pre-sowing',
         name: 'Pre-Siembra',
-        cant: 0,
+        cantRegisters: 0,
+        cantFiles: 0
       },
       {
         stage: 'sowing',
         name: 'Siembra',
-        cant: 0,
+        cantRegisters: 0,
+        cantFiles: 0
       },
       {
         stage: 'protection',
         name: 'Protección de Cultivos',
-        cant: 0,
+        cantRegisters: 0,
+        cantFiles: 0,
       },
       {
         stage: 'harvest-and-marketing',
         name: 'Cosecha y Comercialización',
-        cant: 0,
+        cantRegisters: 0,
+        cantFiles: 0,
       },
       {
         stage: 'other-expenses',
         name: 'Gastos administrativos',
-        cant: 0,
+        cantRegisters: 0,
+        cantFiles: 0,
       },
       {
         stage: 'monitoring',
         name: 'Monitoreo',
-        cant: 0,
+        cantRegisters: 0,
+        cantFiles: 0,
       },
     ]
 
-    const cropWithUsers = await CompanyService.cropsWithUsersCompany(listCompanies)
-    
+    const cropWithUsers = await CompanyService.cropsWithUsersCompany(
+      listCompanies
+    )
+
     for (let crop of cropWithUsers) {
       for (let item of listStage) {
         const result = await this.cantRegisters(crop, item.stage)
@@ -194,7 +203,7 @@ class SignService {
         }
       }
     }
-    
+
 
     return listStage
   }
@@ -202,7 +211,8 @@ class SignService {
   static sumRegisterByStages(listStage, registerStage) {
     for (let index in listStage) {
       if (listStage[index].stage === registerStage.stage) {
-        listStage[index].cant += registerStage.register
+        listStage[index].cantRegisters += registerStage.register
+        listStage[index].cantFiles += registerStage.files
       }
     }
 
@@ -226,23 +236,32 @@ class SignService {
           if (complete) {
             return {
               stage: stage,
-              register: item.Files.length,
+              register: 1,
+              files: item.Files.length,
             }
           }
 
           return {
             stage: stage,
             register: 0,
+            files: 0,
           }
         })
 
         resultRegister = await Promise.all(resultRegister)
 
-        console.log(resultRegister)
-        return resultRegister[0]
+        return {
+          stage: resultRegister[0].stage,
+          register: resultRegister.reduce(
+            (a, b) => a + (b['register'] || 0),
+            0
+          ),
+          files: resultRegister.reduce((a, b) => a + (b['files'] || 0), 0),
+        }
       })
 
       registerWithApprovals = await Promise.all(registerWithApprovals)
+
       return registerWithApprovals[0]
     } catch (error) {
       console.log(error)
