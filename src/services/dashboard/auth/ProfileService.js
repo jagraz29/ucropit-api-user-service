@@ -16,16 +16,17 @@ class ProfileService {
     try {
       let profileUserCompany = await this.getProfileCompany(user)
 
+
       let listProfilesCompany = profileUserCompany.companies.map(
         async (company) => {
           const productors = company.productors.map(async (productor) => {
-            const companyObj = await StatusService.statusPerCrops(productor)
-            const percent = await StatusService.weightedAverageStatus(productor)
+            const companyObj = await StatusService.statusPerCrops(productor, company)
+            const percent = await StatusService.weightedAverageStatus(productor, company)
             return {
               ...companyObj,
-              statusGlobal : {
+              statusGlobal: {
                 status: companyObj.statusGlobal.status,
-                percent
+                percent,
               },
             }
           })
@@ -41,7 +42,25 @@ class ProfileService {
 
       listProfilesCompany = await Promise.all(listProfilesCompany)
 
-      return { error: false, profile: listProfilesCompany }
+      const filterCompanies = listProfilesCompany.map((item) => {
+        const filterCompaniesCrops = item.productors.map((company) => {
+          const filterCrops = company.productors_to.filter(
+            (crop) => crop.roles_companies_crops.locator_id === item.id
+          )
+
+          return {
+            ...company,
+            productors_to: filterCrops
+          }
+        })
+
+        return {
+          ...item,
+          productors: filterCompaniesCrops
+        }
+      })
+
+      return { error: false, profile: filterCompanies }
     } catch (error) {
       return { error: true, msg: `${error}` }
     }
@@ -90,7 +109,7 @@ class ProfileService {
                     as: 'productors_to',
                     through: {
                       model: CompanyCrop,
-                      attributes: [],
+                      attributes: ['locator_id'],
                     },
                     include: [
                       {
