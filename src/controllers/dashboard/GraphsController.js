@@ -214,10 +214,9 @@ class GraphsController {
       })
 
       const dataSet = result.map((item) => {
-        console.log(item)
         if(item.cantRegisters === 0 && item.cantFiles === 0) return 0
         if(item.cantRegisters !== 0 && item.cantFiles === 0) return 0
-        return item.cantRegisters/item.cantFiles
+        return parseFloat(Number(item.cantRegisters/item.cantFiles).toFixed(2))
       })
 
       return {
