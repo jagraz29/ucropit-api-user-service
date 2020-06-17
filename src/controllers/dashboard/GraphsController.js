@@ -293,7 +293,7 @@ class GraphsController {
           {
             ...SIGNED_OPTS,
             data: dataSigned,
-            stack: '2',
+            stack: '1',
           },
           {
             ...REGISTERED_OPTS,
@@ -302,7 +302,7 @@ class GraphsController {
           },
           {
             ...TO_REGISTER_OPTS,
-            stack: '3',
+            stack: '1',
             data: dataTotal
           }
         ],
