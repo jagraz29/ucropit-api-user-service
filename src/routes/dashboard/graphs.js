@@ -32,4 +32,16 @@ router.get(
   }
 )
 
+router.get('/signatures/companies/:companyId/croptypes', (req, res) => {
+  const { companyId } = req.params
+
+  GraphsController.percentSignaturePerCropType(companyId)
+    .then((result) => {
+      res.status(200).json({ result, error: false })
+    })
+    .catch((error) => {
+      res.status(500).json({ error: true, message: error })
+    })
+})
+
 module.exports = router

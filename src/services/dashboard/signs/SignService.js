@@ -1,6 +1,7 @@
 const CommonService = require('../../approvalRegisters/Common')
 const StatusService = require('../../dashboard/status/StatusService')
 const CompanyService = require('../../dashboard/company/CompanyService')
+
 class SignService {
   static async summaryRegister(companies) {
     try {
@@ -81,6 +82,116 @@ class SignService {
       })
 
       return await Promise.all(totalSignsProgress)
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
+  }
+
+  static async summaryRegisterByCropTypes(productors) {
+    try {
+      const cropsGroupByCropTypes = await CompanyService.cropTypesGroup(
+        productors
+      )
+
+      const percentsRegisters = cropsGroupByCropTypes.map(async (cropType) => {
+        const weightCrops = cropType.crops.map(async (crop) => {
+          const approvalsSowing = await CommonService.getApprovalWithRegisters({
+            crop_id: crop.id,
+            stage: 'sowing',
+          })
+
+          const approvalHarvest = await CommonService.getApprovalWithRegisters({
+            crop_id: crop.id,
+            stage: 'harvest-and-marketing',
+          })
+
+          const sumApprovalsSowing = this.sumPercentApprovals(approvalsSowing)
+          const sumApprovalsHarvest = this.sumPercentApprovals(approvalHarvest)
+
+          return {
+            ...crop,
+            surfaceCrop: crop.surface,
+            surfaceRegiterSowing: sumApprovalsSowing,
+            surfaceRegisterHarvest: sumApprovalsHarvest,
+          }
+        })
+
+        const weightCropsSync = await Promise.all(weightCrops)
+
+        return {
+          ...cropType,
+          totalSurfaceCropType: weightCropsSync.reduce(
+            (a, b) => a + (b['surfaceCrop'] || 0),
+            0
+          ) * 2,
+          totalSurfaceSowing: weightCropsSync.reduce(
+            (a, b) => a + (b['surfaceRegiterSowing'] || 0),
+            0
+          ),
+          totalSurfaceHarvest: weightCropsSync.reduce(
+            (a, b) => a + (b['surfaceRegisterHarvest'] || 0),
+            0
+          ),
+        }
+      })
+
+      return await Promise.all(percentsRegisters)
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
+  }
+
+  static async summarySignedByCropTypes(productors) {
+    try {
+      const cropsGroupByCropTypes = await CompanyService.cropTypesGroup(
+        productors
+      )
+
+      const percentsRegisters = cropsGroupByCropTypes.map(async (cropType) => {
+        const weightCrops = cropType.crops.map(async (crop) => {
+          const approvalsSowing = await CommonService.getApprovalWithRegisters({
+            crop_id: crop.id,
+            stage: 'sowing',
+          })
+
+          const approvalHarvest = await CommonService.getApprovalWithRegisters({
+            crop_id: crop.id,
+            stage: 'harvest-and-marketing',
+          })
+
+          const sumApprovalsSowing = await this.sumPercentSignsApprovals(approvalsSowing, crop)
+          const sumApprovalsHarvest = await this.sumPercentSignsApprovals(approvalHarvest, crop)
+
+          return {
+            ...crop,
+            surfaceCrop: crop.surface,
+            surfaceSignedSowing: sumApprovalsSowing,
+            surfaceSignedHarvest: sumApprovalsHarvest,
+          }
+        })
+
+        const weightCropsSync = await Promise.all(weightCrops)
+
+        return {
+          ...cropType,
+          totalSurfaceCropType: weightCropsSync.reduce(
+            (a, b) => a + (b['surfaceCrop'] || 0),
+            0
+          ) * 2,
+          totalSurfaceSowing: weightCropsSync.reduce(
+            (a, b) => a + (b['surfaceSignedSowing'] || 0),
+            0
+          ),
+          totalSurfaceHarvest: weightCropsSync.reduce(
+            (a, b) => a + (b['surfaceSignedHarvest'] || 0),
+            0
+          ),
+        }
+      })
+
+      return await Promise.all(percentsRegisters)
     } catch (error) {
       console.log(error)
       throw new Error(error)
@@ -203,7 +314,6 @@ class SignService {
         }
       }
     }
-
 
     return listStage
   }

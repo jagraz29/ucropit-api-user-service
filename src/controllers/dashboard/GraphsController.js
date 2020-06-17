@@ -32,7 +32,7 @@ class GraphsController {
     const registeredSurfaces = await CropService.getCropRegisteredSurfacesBy({
       company: req.params.companyId,
     })
-    
+
     const companiesProductors = await CompanyService.getCompaniesProductors(
       req.params.companyId
     )
@@ -206,7 +206,7 @@ class GraphsController {
         companyId,
         typeCropId
       )
-    
+
       const result = await SignService.totalCanRegisterByStage(customers)
 
       const labels = result.map((item) => {
@@ -226,6 +226,85 @@ class GraphsController {
             ...SIGNED_OPTS,
             data: dataSet,
           },
+        ],
+      }
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
+  }
+
+  static async percentSignaturePerCropType(companyId) {
+    try {
+      const productors = await CompanyService.getCompaniesProductors(companyId)
+
+      const aggregationsRegistration = await SignService.summaryRegisterByCropTypes(
+        productors
+      )
+      const aggregationSigned = await SignService.summarySignedByCropTypes(
+        productors
+      )
+
+      const percentTotalRegistered = aggregationsRegistration.map((item) => {
+        return {
+          id: item.id,
+          name: item.name,
+          surface: item.totalSurfaceCropType,
+          percentRegister: parseFloat(Number(
+            ((item.totalSurfaceSowing + item.totalSurfaceHarvest) /
+              item.totalSurfaceCropType) *
+              100
+          ).toFixed(2)),
+        }
+      })
+
+      const percentTotalSigned = aggregationSigned.map((item) => {
+        return {
+          id: item.id,
+          name: item.name,
+          surface: item.totalSurfaceCropType,
+          percentSigned: parseFloat(Number(
+            ((item.totalSurfaceSowing + item.totalSurfaceHarvest) /
+              item.totalSurfaceCropType) *
+              100
+          ).toFixed(2)),
+        }
+      })
+
+      const labels = percentTotalRegistered.map((item) => {
+        return item.name
+      })
+
+      const dataRegister = percentTotalRegistered.map((item) => {
+        return item.percentRegister
+      })
+
+      const dataSigned = percentTotalSigned.map((item) => {
+        return item.percentSigned
+      })
+
+      const dataTotal = percentTotalRegistered.map((item) => {
+        return (item.surface/item.surface) * 100
+      })
+
+      return {
+        labels: labels,
+        datasets: [
+          {
+            ...SIGNED_OPTS,
+            data: dataSigned,
+            stack: '2',
+          },
+          {
+            ...REGISTERED_OPTS,
+            stack: '1',
+            data: dataRegister,
+          },
+          {
+            ...TO_REGISTER_OPTS,
+            stack: '3',
+            data: dataTotal
+          }
         ],
       }
     } catch (error) {

@@ -176,6 +176,53 @@ class CompanyService {
     return unique(resultConcant)
   }
 
+  static async cropTypesGroup(companies) {
+    let listCropTypes = []
+    try {
+      const crops = await this.cropsWithUsersCompany(companies)
+
+      for (const crop of crops) {
+        if (
+          listCropTypes.length === 0 ||
+          listCropTypes.filter((item) => item.id === crop.crop_type.id)
+            .length === 0
+        ) {
+          const cropType = {
+            ...crop.crop_type,
+            crops: [],
+          }
+
+          cropType.crops.push({
+            id: crop.id,
+            name: crop.crop_name,
+            units: crop.units,
+            surface: crop.surface,
+            users: crop.users,
+          })
+
+          listCropTypes.push(cropType)
+        } else {
+          const objIndex = listCropTypes.findIndex(
+            (obj) => obj.id === crop.crop_type.id
+          )
+
+          listCropTypes[objIndex].crops.push({
+            id: crop.id,
+            name: crop.crop_name,
+            units: crop.units,
+            surface: crop.surface,
+            users: crop.users,
+          })
+        }
+      }
+
+      return listCropTypes
+    } catch (error) {
+      console.log(error)
+      return null
+    }
+  }
+
   static statusCompany(percent) {
     let status = {}
     if (percent === 0) {
