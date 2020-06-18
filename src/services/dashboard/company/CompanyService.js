@@ -1,3 +1,4 @@
+/* global logger */
 'use strict'
 
 const Company = require('../../../models').companies
@@ -94,51 +95,64 @@ class CompanyService {
    * @param {*} cropTypeId
    */
   static async getCompaniesProductors(companyId, cropTypeId = null) {
-    let queryCropType = {}
-    if (cropTypeId) queryCropType = { id: cropTypeId }
+    try {
+      let queryCropType = {}
+      if (cropTypeId) queryCropType = { id: cropTypeId }
 
-    const result = await Company.findOne({
-      where: { id: companyId },
-      include: [
-        {
-          model: Company,
-          as: 'productors',
-          through: {
-            model: ContractCompany,
-            attributes: [],
-          },
-          include: [
-            {
-              model: Crop,
-              where: { status: 'accepted' },
-              attributes: ['id', 'crop_name', 'units', 'surface'],
-              as: 'productors_to',
-              through: {
-                model: CompanyCrop,
-                where: { locator_id: companyId },
-                attributes: [],
-              },
-              include: [
-                {
-                  model: CropType,
-                  where: queryCropType,
-                  attributes: ['id', 'name'],
-                },
-                {
-                  model: User,
-                  through: {
-                    model: CropUser,
-                    attributes: ['id', 'first_name', 'last_name'],
-                  },
-                },
-              ],
+      const result = await Company.findOne({
+        where: { id: companyId },
+        include: [
+          {
+            model: Company,
+            as: 'productors',
+            through: {
+              model: ContractCompany,
+              attributes: [],
             },
-          ],
-        },
-      ],
-    })
+            include: [
+              {
+                model: Crop,
+                where: { status: 'accepted' },
+                attributes: ['id', 'crop_name', 'units', 'surface'],
+                as: 'productors_to',
+                through: {
+                  model: CompanyCrop,
+                  where: { locator_id: companyId },
+                  attributes: [],
+                },
+                include: [
+                  {
+                    model: CropType,
+                    where: queryCropType,
+                    attributes: ['id', 'name'],
+                  },
+                  {
+                    model: User,
+                    through: {
+                      model: CropUser,
+                      attributes: ['id', 'first_name', 'last_name'],
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      })
 
-    return result.toJSON().productors
+      return result.toJSON().productors
+    }catch(error) {
+      logger.log({
+        level: 'error',
+        defaultMeta: {
+          application: 'CompanyService Error',
+          method: 'getCompaniesProductors'
+        },
+        message: `${error.message}`,
+        Date: new Date()
+      })
+    }
+    
   }
 
   static async getCompany(companyId) {

@@ -1,3 +1,4 @@
+/* global logger */
 'use strict'
 
 const User = require('../../../models').users
@@ -10,7 +11,6 @@ const CropType = require('../../../models').crop_types
 const Production = require('../../../models').productions
 
 const StatusService = require('../../../services/dashboard/status/StatusService')
-const { loggers } = require('winston')
 
 class ProfileService {
   static async profile(user) {
@@ -63,6 +63,15 @@ class ProfileService {
 
       return { error: false, profile: filterCompanies }
     } catch (error) {
+      logger.log({
+        level: 'error',
+        defaultMeta: {
+          application: 'ProfileService Error',
+          method: 'profile'
+        },
+        message: `Error al realizar la query del user profile: ${error.message}`,
+        Date: new Date()
+      })
       return { error: true, msg: `${error}` }
     }
   }
@@ -130,8 +139,12 @@ class ProfileService {
       })
       return userProfile
     } catch (error) {
-      loggers.log({
+      logger.log({
         level: 'error',
+        defaultMeta: {
+          application: 'ProfileService Error',
+          method: 'getProfileCompany'
+        },
         message: `Error al realizar la query del user profile: ${error.message}`,
         Date: new Date()
       })
