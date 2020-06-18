@@ -1,3 +1,4 @@
+/* global logger */
 const express = require('express')
 const router = express.Router()
 
@@ -16,6 +17,11 @@ router.get('/me', (req, res) => {
     })
     .catch((error) => {
       console.log(error)
+      logger.log({
+        level: 'error',
+        message: error.message,
+        Date: new Date()
+      })
       return res.status(500).json({ error: true, code: 500, message: error })
     })
 })

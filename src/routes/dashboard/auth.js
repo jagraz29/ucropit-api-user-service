@@ -1,3 +1,4 @@
+/* global logger */
 const express = require('express')
 const router = express.Router()
 
@@ -23,6 +24,11 @@ router.post('/login', (req, res) => {
       })
     })
     .catch((error) => {
+      logger.log({
+        level: 'error',
+        message: error.message,
+        Date: new Date()
+      })
       console.log(error)
       return res.status(500).json({ error: true, code: 500, message: error })
     })

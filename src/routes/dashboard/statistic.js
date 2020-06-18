@@ -1,3 +1,4 @@
+/* global logger */
 const express = require('express')
 const router = express.Router()
 
@@ -12,6 +13,11 @@ router.get('/states/companies/:companyId', (req, res) => {
       return res.status(200).json({ error: false, code: 200, result })
     })
     .catch((error) => {
+      logger.log({
+        level: 'error',
+        message: error.message,
+        Date: new Date()
+      })
       return res.status(500).json({ error: true, code: 500, message: error })
     })
 })
@@ -24,6 +30,11 @@ router.get('/states/companies/:companyId/crops/:cropId', (req, res) => {
       res.status(200).json({ error: false, code: 200, result })
     })
     .catch((error) => {
+      logger.log({
+        level: 'error',
+        message: error.message,
+        Date: new Date()
+      })
       return res.status(500).json({ error: true, code: 500, message: error })
     })
 })
@@ -38,6 +49,11 @@ router.get('/sign/:companyId/:cropTypeId*?', (req, res) => {
     })
     .catch((error) => {
       console.log(error)
+      logger.log({
+        level: 'error',
+        message: error.message,
+        Date: new Date()
+      })
       return res.status(500).json({ error: true, code: 500, message: error })
     })
 })

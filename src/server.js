@@ -1,3 +1,4 @@
+/* global logger */
 require('dotenv').config()
 require('console-stamp')(console, {
   metadata: function () {
@@ -36,6 +37,9 @@ const corsOptions = {
 
 app.use(morgan('tiny'))
 
+//Loggers instance
+require('./loggers')();
+
 // Middleware express
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -67,6 +71,11 @@ models.sequelize
     console.log('Nice! Database looks fine')
   })
   .catch(function (err) {
+    logger.log({
+      level: 'error',
+      message: err.message,
+      Date: new Date()
+    });
     console.log(err, 'Something went wrong with the Database Update!')
   })
 

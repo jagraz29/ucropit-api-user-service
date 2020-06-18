@@ -10,6 +10,7 @@ const CropType = require('../../../models').crop_types
 const Production = require('../../../models').productions
 
 const StatusService = require('../../../services/dashboard/status/StatusService')
+const { loggers } = require('winston')
 
 class ProfileService {
   static async profile(user) {
@@ -129,6 +130,11 @@ class ProfileService {
       })
       return userProfile
     } catch (error) {
+      loggers.log({
+        level: 'error',
+        message: `Error al realizar la query del user profile: ${error.message}`,
+        Date: new Date()
+      })
       console.log(
         `Error al realizar la query del user profile: ${error.message}`
       )
