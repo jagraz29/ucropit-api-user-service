@@ -43,11 +43,12 @@ router.get(
   }
 )
 
-router.get('/signatures/companies/:companyId/croptypes', (req, res) => {
+router.get('/signatures/companies/:companyId/croptypes/percent', (req, res) => {
   const { companyId } = req.params
 
   GraphsController.percentSignaturePerCropType(companyId)
     .then((result) => {
+      console.log('RESULT', result)
       res.status(200).json({ result, error: false })
     })
     .catch((error) => {

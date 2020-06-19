@@ -303,6 +303,8 @@ class GraphsController {
         return (item.surface / item.surface) * 100
       })
 
+      console.log('DATASIGNED', dataSigned)
+
       return {
         labels: labels,
         datasets: [
@@ -333,7 +335,7 @@ class GraphsController {
     const labels = list.map((customer) => customer.label)
     const dataSigns = list.map((customer) => customer.percentSigned)
     const dataRegister = list.map((customer) => customer.percentRegister)
-
+    
     return {
       labels: labels,
       datasets: [
