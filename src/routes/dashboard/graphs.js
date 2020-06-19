@@ -8,9 +8,9 @@ router.get('/surfacePerCrop/:companyId', (req, res) => {
   return GraphsController.surfacePerCrop(req, res)
 })
 
-router.get('/signatures/companies/:companyId', (req, res) => {
-  const { companyId } = req.params
-  GraphsController.percentSignature(companyId)
+router.get('/signatures/companies/:companyId/:cropTypeId?', (req, res) => {
+  const { companyId, cropTypeId } = req.params
+  GraphsController.percentSignature(companyId, cropTypeId)
     .then((result) => {
       res.status(200).json({ result, error: false })
     })

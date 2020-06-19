@@ -39,7 +39,7 @@ router.get('/states/companies/:companyId/crops/:cropId', (req, res) => {
     })
 })
 
-router.get('/sign/:companyId/:cropTypeId*?', (req, res) => {
+router.get('/sign/:companyId/:cropTypeId?', (req, res) => {
   const { companyId, cropTypeId } = req.params
 
   DashboardController.statisticSings(companyId, cropTypeId)
