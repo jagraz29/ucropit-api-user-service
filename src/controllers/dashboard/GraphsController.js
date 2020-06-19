@@ -89,16 +89,24 @@ class GraphsController {
     }))
 
     // eslint-disable-next-line require-atomic-updates
-    crops = _.map(crops, (crop) => {
+    crops = _.map(crops, async (crop) => {
       const reg = register.find((el) => el.crop_id === crop.id)
+      const permissions = await Common.getProductionPermisionsByCropId(crop.id)
+
+      const usersCount = permissions.filter((el) => {
+        return el.permissions.stages.find((el) => el.key === 'fields')
+      }).length
+
       return {
         crop_id: crop.id,
         crop_type_id: crop.crop_type.id,
         surfaceSelected: crop.production ? crop.production.surfaceSelected : 0,
-        usersCount: crop.users.length,
-        completed: reg ? reg.signs.length === crop.users.length : false,
+        usersCount,
+        completed: reg ? reg.signs.length === usersCount : false,
       }
     })
+
+    crops = await Promise.all(crops)
 
     // eslint-disable-next-line require-atomic-updates
     crops = _(crops)
@@ -214,9 +222,11 @@ class GraphsController {
       })
 
       const dataSet = result.map((item) => {
-        if(item.cantRegisters === 0 && item.cantFiles === 0) return 0
-        if(item.cantRegisters !== 0 && item.cantFiles === 0) return 0
-        return parseFloat(Number(item.cantRegisters/item.cantFiles).toFixed(2))
+        if (item.cantRegisters === 0 && item.cantFiles === 0) return 0
+        if (item.cantRegisters !== 0 && item.cantFiles === 0) return 0
+        return parseFloat(
+          Number(item.cantRegisters / item.cantFiles).toFixed(2)
+        )
       })
 
       return {
@@ -250,11 +260,13 @@ class GraphsController {
           id: item.id,
           name: item.name,
           surface: item.totalSurfaceCropType,
-          percentRegister: parseFloat(Number(
-            ((item.totalSurfaceSowing + item.totalSurfaceHarvest) /
-              item.totalSurfaceCropType) *
-              100
-          ).toFixed(2)),
+          percentRegister: parseFloat(
+            Number(
+              ((item.totalSurfaceSowing + item.totalSurfaceHarvest) /
+                item.totalSurfaceCropType) *
+                100
+            ).toFixed(2)
+          ),
         }
       })
 
@@ -263,11 +275,13 @@ class GraphsController {
           id: item.id,
           name: item.name,
           surface: item.totalSurfaceCropType,
-          percentSigned: parseFloat(Number(
-            ((item.totalSurfaceSowing + item.totalSurfaceHarvest) /
-              item.totalSurfaceCropType) *
-              100
-          ).toFixed(2)),
+          percentSigned: parseFloat(
+            Number(
+              ((item.totalSurfaceSowing + item.totalSurfaceHarvest) /
+                item.totalSurfaceCropType) *
+                100
+            ).toFixed(2)
+          ),
         }
       })
 
@@ -284,7 +298,7 @@ class GraphsController {
       })
 
       const dataTotal = percentTotalRegistered.map((item) => {
-        return (item.surface/item.surface) * 100
+        return (item.surface / item.surface) * 100
       })
 
       return {
@@ -303,8 +317,8 @@ class GraphsController {
           {
             ...TO_REGISTER_OPTS,
             stack: '1',
-            data: dataTotal
-          }
+            data: dataTotal,
+          },
         ],
       }
     } catch (error) {
