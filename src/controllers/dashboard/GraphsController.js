@@ -147,10 +147,12 @@ class GraphsController {
       datasets: [
         {
           ...SIGNED_OPTS,
+          stack: 1,
           data: signedSurfaces.map((el) => el.completed),
         },
         {
           ...TO_REGISTER_OPTS,
+          stack: 1,
           data: registeredSurfaces.map((el) => el.surface),
         },
       ],
