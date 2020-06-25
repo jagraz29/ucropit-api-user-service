@@ -76,4 +76,20 @@ router.delete('/:id', async (req, res) => {
     })
 })
 
+router.post('/kmz/files', async (req, res) => {
+  FieldsController.parseKmzFile(req.files)
+    .then((result) => {
+      if(result)
+        return res.status(200).json({result, error: false, code: 200})
+
+      return res.status(400).json({error: true, message: 'No se pudo leer el archivo'})
+    })
+    .catch((error) => {
+      console.log(error)
+      return res
+        .status(500)
+        .json({ code: 500, error: true, message: error.message })
+    })
+})
+
 module.exports = router
