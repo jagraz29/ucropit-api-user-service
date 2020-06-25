@@ -201,8 +201,8 @@ class SignService {
   static async sumPercentSignsApprovals(approvals, crop) {
     try {
       const sumApprovals = approvals.map(async (approval) => {
-        let sumSurfaceSigned = 0
         const result = approval.Register.map(async (item) => {
+          let sumSurfaceSigned = 0
           const complete = await StatusService.registerComplete(
             item.Signs,
             crop.users,
