@@ -7,6 +7,7 @@ const GoogleGeoCoding = require('../services/GoogleGeoCoding')
 const CropType = require('../models').crop_types
 const path = require('path')
 const parseKMZ = require('parse-kmz')
+const parseKML = require('parse-kml')
 const fs = require('fs')
 
 class FieldsController {
@@ -119,14 +120,18 @@ class FieldsController {
     }
   }
 
-  static async parseKmzFile(file) {
+  static async parseFile(file) {
+    let result = null
     try {
       const upload = new UploadFile(file, 'tmp')
       const res = await upload.store()
 
       const pathFile = path.join(__dirname, `../../public/tmp/${res.namefile}`)
-    
-      const result = await parseKMZ.toJson(pathFile)
+  
+      if(res.namefile.split('.')[1] === 'kmz')
+        result = await parseKMZ.toJson(pathFile)
+      else
+        result = await parseKML.toJson(pathFile)
 
       const lotsNames = result.features.map(item => {
         return item.properties.name

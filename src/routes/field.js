@@ -76,8 +76,8 @@ router.delete('/:id', async (req, res) => {
     })
 })
 
-router.post('/kmz/files', async (req, res) => {
-  FieldsController.parseKmzFile(req.files)
+router.post('/files/parser', async (req, res) => {
+  FieldsController.parseFile(req.files)
     .then((result) => {
       if(result)
         return res.status(200).json({result, error: false, code: 200})

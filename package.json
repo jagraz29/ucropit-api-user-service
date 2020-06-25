@@ -40,6 +40,7 @@
     "nodemailer": "^5.1.1",
     "nodemailer-mailgun-transport": "^1.4.0",
     "npm": "^6.12.1",
+    "parse-kml": "^1.0.1",
     "parse-kmz": "^1.0.0",
     "pdfkit": "^0.10.0",
     "pug": "^2.0.3",
