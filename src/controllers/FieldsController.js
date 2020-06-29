@@ -5,10 +5,11 @@ const Lot = require('../models').lots
 const UploadFile = require('../services/UploadFiles')
 const GoogleGeoCoding = require('../services/GoogleGeoCoding')
 const CropType = require('../models').crop_types
-const path = require('path')
-const parseKMZ = require('parse-kmz')
-const parseKML = require('parse-kml')
-const fs = require('fs')
+const FieldService = require('../services/fields/FieldService')
+const {
+  handleFileConvertJSON,
+  kmlJsonToArrayNames,
+} = require('../services/ParseFileKml')
 
 class FieldsController {
   static async index(auth) {
@@ -22,7 +23,7 @@ class FieldsController {
     }
   }
 
-  static async indexAll(auth) {
+  static async indexAll() {
     try {
       return await Field.findAll()
     } catch (err) {
@@ -53,26 +54,27 @@ class FieldsController {
 
   static async create(data, auth, file) {
     try {
-      const resultGeocode = await GoogleGeoCoding.getGeocoding(
-        data.lat,
-        data.lng
-      )
+      const result = await FieldService.createField(data, auth, file)
 
-      const values = {
-        ...data,
-        user_id: auth.user.id,
-        address: !resultGeocode.error
-          ? resultGeocode.data[1].formatted_address
-          : null,
+      if (result.error)
+        return { error: result.error, message: 'Error al crear el campo' }
+
+      if (data.lots) {
+        const resultLots = await FieldService.createLots(
+          data.lots,
+          file,
+          result.field,
+          data.crop_type_id
+        )
+
+        if (resultLots.error)
+          return {
+            error: result.error,
+            message: 'Error al crear lotes',
+          }
       }
 
-      if (file) {
-        const upload = new UploadFile(file, 'uploads')
-        const res = await upload.store()
-        values.kmz_path = res.namefile
-      }
-
-      return await Field.create(values)
+      return result
     } catch (err) {
       throw new Error(err)
     }
@@ -121,26 +123,11 @@ class FieldsController {
   }
 
   static async parseFile(file) {
-    let result = null
     try {
-      const upload = new UploadFile(file, 'tmp')
-      const res = await upload.store()
+      const formatJson = await handleFileConvertJSON(file)
 
-      const pathFile = path.join(__dirname, `../../public/tmp/${res.namefile}`)
-  
-      if(res.namefile.split('.')[1] === 'kmz')
-        result = await parseKMZ.toJson(pathFile)
-      else
-        result = await parseKML.toJson(pathFile)
-
-      const lotsNames = result.features.map(item => {
-        return item.properties.name
-      })
-
-      fs.unlinkSync(pathFile)
-
-      return lotsNames
-    }catch(error) {
+      return kmlJsonToArrayNames(formatJson)
+    } catch (error) {
       console.log(error)
       return null
     }

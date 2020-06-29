@@ -31,6 +31,13 @@ router.get('/all', async (req, res) => {
 router.post('/', (req, res) => {
   FieldsController.create(req.body, req.decoded, req.files)
     .then((data) => {
+      if (data.error)
+        return res.json({
+          code: 400,
+          error: true,
+          message: data.message,
+        })
+
       return res.json({ code: 200, error: false, data })
     })
     .catch((err) => {
@@ -79,10 +86,12 @@ router.delete('/:id', async (req, res) => {
 router.post('/files/parser', async (req, res) => {
   FieldsController.parseFile(req.files)
     .then((result) => {
-      if(result)
-        return res.status(200).json({result, error: false, code: 200})
+      if (result)
+        return res.status(200).json({ result, error: false, code: 200 })
 
-      return res.status(400).json({error: true, message: 'No se pudo leer el archivo'})
+      return res
+        .status(400)
+        .json({ error: true, message: 'No se pudo leer el archivo' })
     })
     .catch((error) => {
       console.log(error)
