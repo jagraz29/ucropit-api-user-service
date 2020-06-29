@@ -11,6 +11,11 @@ const _ = require('lodash')
 const geolib = require('geolib')
 
 class FieldService {
+  /**
+   * Get address for way latitude and longitude.
+   * 
+   * @param {Object} {lat, lng}
+   */
   static async getGeocoding({ lat, lng }) {
     try {
       return await GoogleGeoCoding.getGeocoding(lat, lng)
@@ -20,6 +25,15 @@ class FieldService {
     }
   }
 
+  /**
+   * Create a field.
+   * 
+   * @param {*} data 
+   * @param {*} auth 
+   * @param {*} file 
+   * 
+   * @return {Object}
+   */
   static async createField(data, auth, file) {
     try {
       const resultGeocode = await this.getGeocoding({
@@ -61,6 +75,15 @@ class FieldService {
     }
   }
 
+  /**
+   * Create lots by name of lots, calculate surface and area 
+   * return list lots created.
+   * 
+   * @param {*} nameLots 
+   * @param {*} file 
+   * @param {*} field 
+   * @param {*} cropTypeId 
+   */
   static async createLots(nameLots, file, field, cropTypeId) {
     const resultAsync = []
     try {
