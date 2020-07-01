@@ -303,8 +303,6 @@ class GraphsController {
         return (item.surface / item.surface) * 100
       })
 
-      console.log('DATASIGNED', dataSigned)
-
       return {
         labels: labels,
         datasets: [

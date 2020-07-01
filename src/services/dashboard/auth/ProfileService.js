@@ -21,6 +21,7 @@ class ProfileService {
       let listProfilesCompany = profileUserCompany.companies.map(
         async (company) => {
           const productors = company.productors.map(async (productor) => {
+           
             const companyObj = await StatusService.statusPerCrops(productor, company)
             const percent = await StatusService.weightedAverageStatus(productor, company)
             return {

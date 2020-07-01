@@ -30,19 +30,21 @@ class StatusService {
       if (stage === 'harvest-and-marketing') {
         daysCrops = {
           date: cropProductor.end_at,
-          dayIni: cropProductor.before_day_harvest,
-          dayEnd: cropProductor.after_day_harvest,
+          dayIni: cropProductor.roles_companies_crops.before_day_harvest,
+          dayEnd: cropProductor.roles_companies_crops.after_day_harvest,
         }
       } else {
         daysCrops = {
           date: cropProductor.start_at,
-          dayIni: cropProductor.before_day_sowing,
-          dayEnd: cropProductor.after_day_sowing,
+          dayIni: cropProductor.roles_companies_crops.before_day_sowing,
+          dayEnd: cropProductor.roles_companies_crops.after_day_sowing,
         }
       }
+
+      
       // Obtenemos una posición del punto donde nos encontramos con respecto a la fecha actual y la fecha de siembra o cosecha
       // del cultivo
-      const statusDay = this.decideDayCrop(daysCrops)
+      const statusDay = this.decideDayCrop(daysCrops, cropId, companyId)
 
       const approval = await CommonService.getApprovalWithRegisters({
         crop_id: cropId,
@@ -190,7 +192,7 @@ class StatusService {
    *
    * @param {*} param0
    */
-  static decideDayCrop({ date, dateIni, dateEnd }) {
+  static decideDayCrop({ date, dayIni, dayEnd }) {
     const decide = {
       xy: false,
       y: false,
@@ -198,9 +200,9 @@ class StatusService {
       zx: false,
     }
     const now = moment()
-    const startMinusDate = moment(date).subtract(dateIni, 'days')
+    const startMinusDate = moment(date).subtract(dayIni, 'days')
     const startDate = moment(date)
-    const startAddDate = moment(date).add(dateEnd, 'days')
+    const startAddDate = moment(date).add(dayEnd, 'days')    
 
     if (now <= startMinusDate) {
       decide.xy = true
@@ -332,7 +334,7 @@ class StatusService {
       let listCropsPromise = await company
         .toJSON()
         .productors_to.map(async (crop) => {
-          if(crop.roles_companies_crops.locator_id === locator.id) {
+          if (crop.roles_companies_crops.locator_id === locator.id) {
             resultSowing = await this.getStatusByCrop(crop.id, company.id)
             const stageCrop = await CropService.getStageCrop(
               crop.id,
@@ -349,7 +351,7 @@ class StatusService {
             }
 
             const resultCrop =
-            stageCrop.stage === 'harvest' ? resultHarvest : resultSowing
+              stageCrop.stage === 'harvest' ? resultHarvest : resultSowing
 
             return {
               ...crop,
@@ -357,20 +359,20 @@ class StatusService {
               status: resultCrop,
             }
           }
-          
+
           return null
         })
 
       let listCrops = await Promise.all(listCropsPromise)
 
-      listCrops = listCrops.filter(item => item)
+      listCrops = listCrops.filter((item) => item)
 
       return {
         ...company.toJSON(),
         productors_to: listCrops,
         statusGlobal: {
-          status: this.getWorstStatusCompany(listCrops)
-        }
+          status: this.getWorstStatusCompany(listCrops),
+        },
       }
     } catch (error) {
       console.log(error)
@@ -405,7 +407,7 @@ class StatusService {
   static async weightedAverageStatus(company, locator) {
     try {
       let progress = await company.toJSON().productors_to.map(async (crop) => {
-        if(crop.roles_companies_crops.locator_id === locator.id) {
+        if (crop.roles_companies_crops.locator_id === locator.id) {
           let result = await this.getStatusByCrop(crop.id, company.id)
 
           const stageCrop = await CropService.getStageCrop(
@@ -428,12 +430,12 @@ class StatusService {
             surface: crop.surface,
           }
         }
-        
+
         return null
       })
 
       progress = await Promise.all(progress)
-      progress = progress.filter(item => item)
+      progress = progress.filter((item) => item)
 
       if (!progress) return 0
 
