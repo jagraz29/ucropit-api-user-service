@@ -58,10 +58,10 @@ class FieldsController {
 
       if (result.error)
         return { error: result.error, message: 'Error al crear el campo' }
-
+      
       if (data.lots) {
         const resultLots = await FieldService.createLots(
-          data.lots,
+          JSON.parse(data.lots),
           file,
           result.field,
           data.crop_type_id
