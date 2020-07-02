@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true
       },
+      area: {
+        type: DataTypes.DOUBLE,
+        allowNull: true
+      },
       crop_type_id: {
         type: DataTypes.INTEGER,
         allowNull: true
