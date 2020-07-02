@@ -44,9 +44,9 @@ class CompanyService {
           include: [
             {
               model: User,
+              attributes: ['id', 'first_name', 'last_name'],
               through: {
-                model: CropUser,
-                attributes: ['id', 'first_name', 'last_name'],
+                model: CropUser,     
               },
             },
           ],
@@ -128,9 +128,9 @@ class CompanyService {
                   },
                   {
                     model: User,
+                    attributes: ['id', 'first_name', 'last_name'],
                     through: {
-                      model: CropUser,
-                      attributes: ['id', 'first_name', 'last_name'],
+                      model: CropUser
                     },
                   },
                 ],
