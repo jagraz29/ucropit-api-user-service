@@ -1,7 +1,7 @@
 import express = require('express')
 import swaggerUI from 'swagger-ui-express'
 import { swaggerDocs } from './config/swagger'
-
+ 
 import routes from './src/routes/v1'
 
 const app: express.Application = express()
