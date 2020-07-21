@@ -22,7 +22,12 @@ app.use('/v1', routes)
 
 app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
   if (!errorHandler.isTrustedError(err)) {
-    next(err)
+    res.status(500).json({
+      err: {
+        message: err.message,
+        stack: err.stack
+      }
+    })
   }
   await errorHandler.handleError(err)
 })

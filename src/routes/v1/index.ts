@@ -1,4 +1,5 @@
 import express from 'express'
+import 'express-async-errors'
 import users from './users'
 
 const router: express.Router = express.Router()
