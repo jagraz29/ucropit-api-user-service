@@ -1,32 +1,38 @@
 import { Request, Response } from 'express'
 import models from '../models'
+import UserService from '../services/UserService'
 
 const User = models.User
 
 class UsersController {
-  public static async index (req: Request, res: Response) {
+  public async index (req: Request, res: Response) {
     const users = await User.find({})
     res.status(200).json({ users })
   }
 
-  public static async show (req: Request, res: Response) {
+  public async show (req: Request, res: Response) {
     const user = await User.findById(req.params.id)
     res.json({ user })
   }
 
-  public static async create (req: Request, res: Response) {
-    const user = await User.create(req.body)
+  public async create (req: Request, res: Response) {
+    const user = await UserService.store(req.body)
     res.json(user)
   }
 
-  public static async update (req: Request, res: Response) {
+  public async update (req: Request, res: Response) {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true
     })
-    res.json(user)
+
+    if (!user) {
+      res.status(404).json({ error: 'ERR_NOT_FOUND' })
+    } else {
+      res.json(user)
+    }
   }
 
-  public static async destroy (req: Request, res: Response) {
+  public async destroy (req: Request, res: Response) {
     const user = await User.findByIdAndDelete(req.params.id)
     res.json({
       message: 'deleted successfully'
@@ -34,4 +40,4 @@ class UsersController {
   }
 }
 
-export default UsersController
+export default new UsersController()

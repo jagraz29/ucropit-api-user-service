@@ -63,11 +63,14 @@ const userSchema = new mongoose.Schema(
 userSchema.pre('save', function (next) {
   const user = this
 
-  if (!user.isModified('pin') || !user.isModified('verifyToken')) {
+  if (!user.isModified('pin') && !user.isModified('verifyToken')) {
     return next()
   }
-
   const fieldChanged: string = user.isModified('pin') ? 'pin' : 'verifyToken'
+  console.log('here', fieldChanged)
+  if (user[fieldChanged] === null) {
+    next()
+  }
 
   bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt: string) {
     if (err) return next(err)
@@ -85,6 +88,8 @@ userSchema.methods.comparePassword = function (
   field: string,
   cb: Function
 ) {
+  if (!this[field]) return cb(null, false)
+
   const fieldToCompare: string = this[field]
   bcrypt.compare(candidatePassword, fieldToCompare, function (
     err,

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "start": "tsc -w & nodemon -q -w dist dist/server.js",
+    "dev": "DEBUG=email-templates tsc -w & nodemon -q -w dist dist/server.js",
+    "start": "nodemon -q -w dist dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,11 +24,15 @@
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
+    "email-templates": "^7.1.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "express-openapi-validator": "^3.16.7",
     "mongoose": "^5.9.25",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.4.11",
+    "nodemailer-mailgun-transport": "^2.0.0",
+    "pug": "^3.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.6.1",

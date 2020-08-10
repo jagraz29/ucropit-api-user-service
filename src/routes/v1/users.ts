@@ -1,5 +1,5 @@
 import express from 'express'
-import UsersController from '../../controllers/UsersController'
+import usersController from '../../controllers/UsersController'
 
 const router: express.Router = express.Router()
 
@@ -17,7 +17,7 @@ const router: express.Router = express.Router()
  *    '200':
  *      description: Get all users
  */
-router.get('/', UsersController.index)
+router.get('/', usersController.index)
 
 /**
  * @swagger
@@ -33,7 +33,7 @@ router.get('/', UsersController.index)
  *        "200":
  *          description: Show success
  */
-router.get('/:id', UsersController.show)
+router.get('/:id', usersController.show)
 
 /**
  * @swagger
@@ -56,7 +56,7 @@ router.get('/:id', UsersController.show)
  *              schema:
  *                $ref: '#/components/schemas/User'
  */
-router.post('/', UsersController.create)
+router.post('/', usersController.create)
 
 /**
  * @swagger
@@ -82,7 +82,7 @@ router.post('/', UsersController.create)
  *              schema:
  *                $ref: '#/components/schemas/User'
  */
-router.put('/:id', UsersController.update)
+router.put('/:id', usersController.update)
 
 /**
  * @swagger
@@ -98,6 +98,6 @@ router.put('/:id', UsersController.update)
  *        "200":
  *          description: Delete success
  */
-router.delete('/:id', UsersController.destroy)
+router.delete('/:id', usersController.destroy)
 
 export default router
