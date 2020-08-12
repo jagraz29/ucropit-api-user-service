@@ -1,4 +1,4 @@
-import { FileArray, UploadedFile } from 'express-fileupload'
+import { UploadedFile } from 'express-fileupload'
 import path from 'path'
 
 interface IStore {
@@ -8,10 +8,10 @@ interface IStore {
 }
 
 class FileUpload {
-  files: FileArray
+  files: UploadedFile[]
   destination: string
 
-  constructor (files: FileArray, destination: string) {
+  constructor (files: UploadedFile[], destination: string) {
     this.files = files
     this.destination = destination
   }
@@ -21,13 +21,10 @@ class FileUpload {
       throw new Error('No files were uploaded.')
     }
 
-    if (!this.validTypes(this.files.files)) {
+    if (!this.validTypes(this.files[0])) {
       throw new Error('File extension is rejected')
     }
-
-    console.log(this.files.files)
-
-    const sampleFile: UploadedFile = this.files.files
+    const sampleFile: UploadedFile = this.files[0]
 
     const fileNameArray = sampleFile.name.trim().split('.')
 
