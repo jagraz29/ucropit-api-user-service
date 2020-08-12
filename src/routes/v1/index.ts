@@ -1,19 +1,23 @@
-import express from "express";
-import "express-async-errors";
-import users from "./users";
-import auth from "./auth";
-import test from "./test";
+import express from 'express'
+import 'express-async-errors'
+import users from './users'
+import auth from './auth'
+import lost from './lots'
 
-const router: express.Router = express.Router();
+import test from './test'
 
-router.get("/", (req, res) => {
-  res.send("v1 APP OK");
-});
+const router: express.Router = express.Router()
 
-router.use("/auth", auth);
+router.get('/', (req, res) => {
+  res.send('v1 APP OK')
+})
 
-router.use("/users", users);
+router.use('/auth', auth)
 
-router.use("/test", test);
+router.use('/users', users)
 
-export default router;
+router.use('/lots', lost)
+
+router.use('/test', test)
+
+export default router
