@@ -1,4 +1,4 @@
-import { FileArray, UploadedFile } from 'express-fileupload'
+import { UploadedFile } from 'express-fileupload'
 import path from 'path'
 
 interface IStore {
