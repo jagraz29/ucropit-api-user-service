@@ -1,6 +1,12 @@
 import { FileArray, UploadedFile } from "express-fileupload";
 import path from "path";
 
+interface IStore {
+  path: string;
+  namefile: string;
+  fileType: string;
+}
+
 class FileUpload {
   files: FileArray;
   destination: string;
@@ -10,7 +16,7 @@ class FileUpload {
     this.destination = destination;
   }
 
-  store() {
+  store(): Promise<IStore> {
     if (Object.keys(this.files).length === 0) {
       throw new Error("No files were uploaded.");
     }
