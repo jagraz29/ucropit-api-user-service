@@ -4,6 +4,43 @@ import lotController from '../../controllers/LotController'
 
 const router: express.Router = express.Router()
 
+/**
+ * @swagger
+ * path:
+ *  /v1/lots:
+ *    post:
+ *      summary: Store Lot
+ *      tags: [Lots]
+ *      requestBody:
+ *        content:
+ *          multipart/form-data:
+ *              schema:
+ *               type: object
+ *               properties:
+ *                  selectedLots:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                       example: ["str1", "str2", "str3"]
+ *                  tag:
+ *                       type: string
+ *                       description: Name tag for lots
+ *                  files:
+ *                       type: string
+ *                       format: binary
+ *      responses:
+ *       '201':
+ *         description: List lots persists.
+ *         content:
+ *          application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Lot'
+ *       '500':
+ *         description: Error to Server.
+ *
+ */
 router.post('/', lotController.store)
 
 /**

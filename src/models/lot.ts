@@ -1,3 +1,33 @@
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *      Lot:
+ *        type: object
+ *        required:
+ *          - name
+ *          - area
+ *          - status
+ *          - surface
+ *          - tag
+ *        properties:
+ *          name:
+ *            type: string
+ *          area:
+ *            type: array
+ *          status:
+ *           type: boolean
+ *          surface:
+ *            type: double
+ *          tag:
+ *            type: string
+ *        example:
+ *           name: Lote 1
+ *           area: []
+ *           status: 0
+ *           surface: 45.5
+ *           tag: Pepito
+ */
 import mongoose from 'mongoose'
 
 const { Schema } = mongoose
@@ -13,7 +43,8 @@ const LotSchema = new Schema({
   },
   status: {
     type: Boolean,
-    require: true
+    require: true,
+    default: 0
   },
   surface: {
     type: Number,
@@ -25,6 +56,4 @@ const LotSchema = new Schema({
   }
 })
 
-const Lot = mongoose.model('Lot', LotSchema)
-
-export default Lot
+export default mongoose.model('Lot', LotSchema)
