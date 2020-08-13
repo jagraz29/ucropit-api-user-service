@@ -7,6 +7,8 @@ interface IStore {
   fileType: string
 }
 
+const VALID_FORMATS_FILES = `text.*|image.*|application/pdf|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/octet-stream|application/vnd.google-earth.kmz|application/vnd.google-earth.kml`
+
 class FileUpload {
   private files: FileArray
   private destination: string
@@ -50,11 +52,7 @@ class FileUpload {
   }
 
   validTypes (file) {
-    return (
-      file.mimetype.match(
-        'text.*|image.*|application/pdf|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/octet-stream|application/vnd.google-earth.kmz|application/vnd.google-earth.kml'
-      ) !== null
-    )
+    return file.mimetype.match(VALID_FORMATS_FILES) !== null
   }
 }
 
