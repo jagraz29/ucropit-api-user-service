@@ -23,6 +23,14 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use('/v1', routes)
 
 app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
+  if (errorHandler.isCastErrorMongoose(err)) {
+    res.status(404).json({
+      err: {
+        message: 'Not Found Resources'
+      }
+    })
+  }
+
   if (!errorHandler.isTrustedError(err)) {
     res.status(500).json({
       err: {
