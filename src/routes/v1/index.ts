@@ -4,8 +4,6 @@ import users from './users'
 import auth from './auth'
 import lost from './lots'
 
-import test from './test'
-
 const router: express.Router = express.Router()
 
 router.get('/', (req, res) => {
@@ -17,7 +15,5 @@ router.use('/auth', auth)
 router.use('/users', users)
 
 router.use('/lots', lost)
-
-router.use('/test', test)
 
 export default router
