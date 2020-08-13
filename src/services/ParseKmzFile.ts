@@ -19,7 +19,10 @@ export const handleFileConvertJSON = async function (file: FileArray) {
   const upload = new FileUpload(file, 'tmp')
   const stored = await upload.store()
 
-  const pathFile = path.join(process.cwd(), `/public/tmp/${stored.namefile}`)
+  const pathFile = path.join(
+    process.cwd(),
+    `/${process.env.DIR_TMP}/${stored.namefile}`
+  )
 
   if (stored.namefile.split('.')[1] === 'kmz') {
     result = await parseKMZ.toJson(pathFile)

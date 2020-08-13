@@ -36,7 +36,10 @@ class FileUpload {
 
     return new Promise((resolve, reject) => {
       toUploadFile.mv(
-        path.join(process.cwd(), `/public/${this.destination}/${renameFile}`),
+        path.join(
+          process.cwd(),
+          `/${process.env.DIR_STORAGE}/${this.destination}/${renameFile}`
+        ),
         (err) => {
           console.log(err)
           if (err) reject(new Error("File's extension is rejected"))
