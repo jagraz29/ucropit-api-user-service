@@ -8,15 +8,15 @@ interface IStore {
 }
 
 class FileUpload {
-  files: FileArray
-  destination: string
+  private files: FileArray
+  private destination: string
 
   constructor (files: FileArray, destination: string) {
     this.files = files
     this.destination = destination
   }
 
-  store (): Promise<IStore> {
+  public store (): Promise<IStore> {
     if (Object.keys(this.files).length === 0) {
       throw new Error('No files were uploaded.')
     }
@@ -26,14 +26,14 @@ class FileUpload {
     }
 
     // Check this line
-    const sampleFile: UploadedFile = this.files.files
+    const toUploadFile: UploadedFile = this.files.files
 
-    const fileNameArray = sampleFile.name.trim().split('.')
+    const fileNameArray = toUploadFile.name.trim().split('.')
 
-    const renameFile = `${sampleFile.md5}.${fileNameArray.pop()}`
+    const renameFile = `${toUploadFile.md5}.${fileNameArray.pop()}`
 
     return new Promise((resolve, reject) => {
-      sampleFile.mv(
+      toUploadFile.mv(
         path.join(process.cwd(), `/public/${this.destination}/${renameFile}`),
         (err) => {
           console.log(err)
@@ -42,7 +42,7 @@ class FileUpload {
           resolve({
             path: `${process.env.BASE_URL}/${this.destination}/${renameFile}`,
             namefile: renameFile,
-            fileType: sampleFile.mimetype
+            fileType: toUploadFile.mimetype
           })
         }
       )
