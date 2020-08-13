@@ -26,7 +26,7 @@
  *            area: []
  *            status: 0
  *            surface: 45.5
- *            tag: Pepito
+ *            tag: Tag Name
  */
 import mongoose from 'mongoose'
 
@@ -44,7 +44,7 @@ const LotSchema = new Schema({
   status: {
     type: Boolean,
     require: true,
-    default: 0
+    default: 1
   },
   surface: {
     type: Number,
