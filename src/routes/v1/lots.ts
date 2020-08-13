@@ -4,6 +4,8 @@ import lotController from '../../controllers/LotController'
 
 const router: express.Router = express.Router()
 
+router.post('/', lotController.store)
+
 /**
  * @swagger
  * path:

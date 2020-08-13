@@ -4,7 +4,37 @@ import {
   mapArraySurfacesAndArea
 } from '../services/ParseKmzFile'
 
+import LotService from '../services/LotService'
+
 class LotController {
+  /**
+   * Store Lot.
+   *
+   * @param req
+   * @param res
+   */
+  public async store (req: Request, res: Response) {
+    const { selectedLots, tag } = req.body
+
+    const jsonParserKmz = await handleFileConvertJSON(req.files)
+
+    const filteringItem = jsonParserKmz.features.filter((item) => {
+      return (
+        selectedLots.filter((select) => select === item.properties.name)
+          .length > 0
+      )
+    })
+
+    const lots = await LotService.storeLots(filteringItem, tag)
+
+    res.status(201).json(lots)
+  }
+  /**
+   * Get List names and areas to Lots. Given Kmz/Kml file.
+   *
+   * @param req
+   * @param res
+   */
   public async surfaces (req: Request, res: Response) {
     const result = await handleFileConvertJSON(req.files)
 
