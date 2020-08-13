@@ -6,6 +6,22 @@ const router: express.Router = express.Router()
 
 /**
  * @swagger
+ * /v1/lots:
+ *  get:
+ *   summary: Get all lots
+ *   tags:
+ *      - Lots
+ *   description: Lots
+ *   produces:
+ *     - application/json
+ *   responses:
+ *    '200':
+ *      description: Get all lots
+ */
+router.get('/', lotController.index)
+
+/**
+ * @swagger
  * path:
  *  /v1/lots:
  *    post:

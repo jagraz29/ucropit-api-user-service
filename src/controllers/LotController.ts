@@ -4,9 +4,22 @@ import {
   mapArraySurfacesAndArea
 } from '../services/ParseKmzFile'
 
+import models from '../models'
 import LotService from '../services/LotService'
 
+const Lot = models.Lot
+
 class LotController {
+  /**
+   *
+   * @param req
+   * @param res
+   */
+  public async index (req: Request, res: Response) {
+    const lots = await Lot.find({})
+
+    res.status(200).json(lots)
+  }
   /**
    * Store Lot.
    *
