@@ -23,6 +23,26 @@ router.get('/', lotController.index)
 /**
  * @swagger
  * path:
+ *  /v1/lots/{id}:
+ *    get:
+ *      summary: Show a lot
+ *      tags: [Lots]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.get('/:id', lotController.show)
+
+/**
+ * @swagger
+ * path:
  *  /v1/lots:
  *    post:
  *      summary: Store Lot
@@ -52,12 +72,22 @@ router.get('/', lotController.index)
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Lot'
+ *                 schema:
+ *                   type: object
+ *                   properties:
+ *                      status:
+ *                        type: boolean
+ *                      name:
+ *                        type: string
+ *                      area:
+ *                        type: array
+ *                      tag:
+ *                        type: string
  *       '500':
  *         description: Error to Server.
  *
  */
-router.post('/', lotController.store)
+router.post('/', lotController.create)
 
 /**
  * @swagger
@@ -98,5 +128,71 @@ router.post('/', lotController.store)
  *
  */
 router.post('/surfaces', lotController.surfaces)
+
+/**
+ * @swagger
+ * path:
+ *  /v1/lots/{id}:
+ *    put:
+ *      summary: Update a lot
+ *      tags: [Lots]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                 surface:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 tag:
+ *                   type: string
+ *      responses:
+ *        "200":
+ *          description: A lot schema
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  status:
+ *                    type: boolean
+ *                  name:
+ *                    type: string
+ *                  tag:
+ *                    type: string
+ *                  surface:
+ *                    type: integer
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.put('/:id', lotController.update)
+
+/**
+ * @swagger
+ * path:
+ *  /v1/lots/{id}:
+ *    delete:
+ *      summary: Delete a lot
+ *      tags: [Lots]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      responses:
+ *        "200":
+ *          description: Delete success
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.delete('/:id', lotController.delete)
 
 export default router

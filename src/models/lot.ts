@@ -2,31 +2,31 @@
  * @swagger
  *  components:
  *    schemas:
- *      Lot:
- *        type: object
- *        required:
- *          - name
- *          - area
- *          - status
- *          - surface
- *          - tag
- *        properties:
- *          name:
- *            type: string
- *          area:
- *            type: array
- *          status:
- *           type: boolean
- *          surface:
- *            type: double
- *          tag:
- *            type: string
- *        example:
- *           name: Lote 1
- *           area: []
- *           status: 0
- *           surface: 45.5
- *           tag: Pepito
+ *       Lot:
+ *         type: object
+ *         required:
+ *           - name
+ *           - area
+ *           - status
+ *           - surface
+ *           - tag
+ *         properties:
+ *           name:
+ *             type: string
+ *           area:
+ *             type: array
+ *           status:
+ *             type: boolean
+ *           surface:
+ *             type: double
+ *           tag:
+ *             type: string
+ *         example:
+ *            name: Lote 1
+ *            area: []
+ *            status: 0
+ *            surface: 45.5
+ *            tag: Pepito
  */
 import mongoose from 'mongoose'
 
