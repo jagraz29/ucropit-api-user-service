@@ -33,6 +33,10 @@ router.get('/', lotController.index)
  *      responses:
  *        "200":
  *          description: Show success
+ *          content:
+ *            application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Lot'
  *        "404":
  *          description: Not Found Resources
  *        "500":
@@ -73,16 +77,7 @@ router.get('/:id', lotController.show)
  *               type: array
  *               items:
  *                 schema:
- *                   type: object
- *                   properties:
- *                      status:
- *                        type: boolean
- *                      name:
- *                        type: string
- *                      area:
- *                        type: array
- *                      tag:
- *                        type: string
+ *                    $ref: '#/components/schemas/Lot'
  *       '500':
  *         description: Error to Server.
  *
@@ -157,17 +152,8 @@ router.post('/surfaces', lotController.surfaces)
  *          description: A lot schema
  *          content:
  *            application/json:
- *              schema:
- *                type: object
- *                properties:
- *                  status:
- *                    type: boolean
- *                  name:
- *                    type: string
- *                  tag:
- *                    type: string
- *                  surface:
- *                    type: integer
+ *             schema:
+ *                $ref: '#/components/schemas/Lot'
  *        "404":
  *          description: Not Found Resources
  *        "500":
