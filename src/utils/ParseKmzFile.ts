@@ -6,7 +6,7 @@ import _ from 'lodash'
 import path from 'path'
 import fs from 'fs'
 
-import FileUpload from './FileUpload'
+import FileUpload from '../services/FileUpload'
 
 /**
  * File convert KMZ or KML to JSON.
