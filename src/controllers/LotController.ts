@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import {
   handleFileConvertJSON,
   mapArraySurfacesAndArea
-} from '../services/ParseKmzFile'
+} from '../utils/ParseKmzFile'
 
 import models from '../models'
 import LotService from '../services/LotService'
