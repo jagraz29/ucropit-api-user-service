@@ -9,6 +9,7 @@ import morgan from 'morgan'
 
 import { connectDb } from './src/models'
 import routes from './src/routes/v1'
+import fileUpload from 'express-fileupload'
 
 const port = process.env.NODE_PORT || 3000
 const app: Application = express()
@@ -16,11 +17,20 @@ const app: Application = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(morgan('tiny'))
+app.use(fileUpload())
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use('/v1', routes)
 
 app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
+  if (errorHandler.isCastErrorMongoose(err)) {
+    res.status(404).json({
+      err: {
+        message: 'Not Found Resources'
+      }
+    })
+  }
+
   if (!errorHandler.isTrustedError(err)) {
     res.status(500).json({
       err: {

@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+    api:
+        container_name: ucropitapp
+        restart: always
+        build: .
+        ports: 
+            - "3000:3000"
+        links:
+            - database
+    database:
+        container_name: mongodb
+        image: mongo
+        ports:
+            - "27018:27017"
