@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import {
   handleFileConvertJSON,
   mapArraySurfacesAndArea
-} from '../services/ParseKmzFile'
+} from '../utils/ParseKmzFile'
 
 import models from '../models'
 import LotService from '../services/LotService'
@@ -37,6 +37,7 @@ class LotController {
 
     res.status(200).json(lot)
   }
+
   /**
    * Store Lot.
    *
@@ -50,10 +51,10 @@ class LotController {
 
     const jsonParserKmz = await handleFileConvertJSON(req.files)
 
-    const filteringItem = jsonParserKmz.features.filter((item) => {
+    const filteringItem = jsonParserKmz.features.filter(item => {
       return (
-        selectedLots.filter((select) => select === item.properties.name)
-          .length > 0
+        selectedLots.filter(select => select === item.properties.name).length >
+        0
       )
     })
 
@@ -74,6 +75,7 @@ class LotController {
 
     res.status(200).json(lot)
   }
+
   /**
    * Get List names and areas to Lots. Given Kmz/Kml file.
    *
