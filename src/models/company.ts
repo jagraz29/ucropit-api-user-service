@@ -1,3 +1,25 @@
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *       Company:
+ *         type: object
+ *         required:
+ *           - identifier
+ *           - typePerson
+ *           - name
+ *           - address
+ *           - addressFloor
+ *         properties:
+ *           name:
+ *             type: string
+ *           typePerson:
+ *             type: string
+ *           address:
+ *             type: string
+ *           addressFloor:
+ *             type: string
+ */
 import mongoose from 'mongoose'
 
 const { Schema } = mongoose

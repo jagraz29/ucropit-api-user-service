@@ -1,28 +1,47 @@
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *       Crop:
+ *         type: object
+ *         required:
+ *           - name
+ *         properties:
+ *           name:
+ *             type: string
+ *           status:
+ *             type: string
+ *           pay:
+ *             type: number
+ *             format: double
+ *           dateCrop:
+ *             type: string
+ *             format: date
+ *           dateHarvest:
+ *             type: string
+ *             format: date
+ *           surface:
+ *             type: number
+ *             format: double
+ *           cropType:
+ *             type: object
+ *             schema:
+ *                $ref: '#/components/schemas/CropType'
+ *           unitType:
+ *             type: object
+ *             schema:
+ *                $ref: '#/components/schemas/UnitType'
+ *           company:
+ *              schema:
+ *                $ref: '#/components/schemas/Company'
+ *
+ */
 import mongoose from 'mongoose'
 
 const { Schema } = mongoose
 
-const CropTypeSchema = new Schema({
-  name: {
-    type: String,
-    require: true
-  }
-})
-
-const UnitTypeSchema = new Schema({
-  name: {
-    type: String,
-    require: true
-  },
-  key: {
-    type: String,
-    require: true
-  },
-  unit: {
-    type: Number,
-    require: true
-  }
-})
+import { CropTypeSchema } from './cropType'
+import { UnitTypeSchema } from './unitType'
 
 const CropSchema = new Schema({
   name: {
@@ -46,11 +65,15 @@ const CropSchema = new Schema({
     type: Date,
     require: false
   },
+  surface: {
+    type: Number,
+    require: true
+  },
   cropType: {
-    type: [CropTypeSchema]
+    type: CropTypeSchema
   },
   unitType: {
-    type: [UnitTypeSchema]
+    type: UnitTypeSchema
   },
   company: {
     type: Schema.Types.ObjectId,
@@ -58,6 +81,4 @@ const CropSchema = new Schema({
   }
 })
 
-exports.CropType = mongoose.model('CropType', CropTypeSchema)
-exports.UnitType = mongoose.model('UnitType', UnitTypeSchema)
-exports.Crop = mongoose.model('Crop', CropSchema)
+export default mongoose.model('Crop', CropSchema)
