@@ -78,7 +78,8 @@ const CropSchema = new Schema({
   company: {
     type: Schema.Types.ObjectId,
     ref: 'Company'
-  }
+  },
+  lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }]
 })
 
 export default mongoose.model('Crop', CropSchema)
