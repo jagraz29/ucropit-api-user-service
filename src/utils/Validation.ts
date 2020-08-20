@@ -20,3 +20,15 @@ export const validateCropStore = async (crop) => {
 
   return schema.validateAsync(crop)
 }
+
+export const validateCompanyStore = async (company) => {
+  const schema = Joi.object({
+    identifier: Joi.string().required(),
+    typePerson: Joi.string().optional(),
+    name: Joi.string().required(),
+    address: Joi.string().required(),
+    addressFloor: Joi.string().optional()
+  })
+
+  return schema.validateAsync(company)
+}

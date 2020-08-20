@@ -27,7 +27,8 @@ const { Schema } = mongoose
 const CompanySchema = new Schema({
   identifier: {
     type: String,
-    require: true
+    require: true,
+    unique: true
   },
   typePerson: {
     type: String,

@@ -4,6 +4,7 @@ import users from './users'
 import auth from './auth'
 import lost from './lots'
 import crop from './crop'
+import company from './company'
 
 const router: express.Router = express.Router()
 
@@ -18,5 +19,7 @@ router.use('/users', users)
 router.use('/lots', lost)
 
 router.use('/crops', crop)
+
+router.use('/companies', company)
 
 export default router
