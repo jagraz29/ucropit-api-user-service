@@ -10,6 +10,7 @@ interface ICrop {
   dateHarvest: string
   cropType: Object
   unitType: Object
+  lots: Array<String>
 }
 
 class CropService {

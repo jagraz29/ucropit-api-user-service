@@ -3,6 +3,8 @@ import models from '../models'
 import _ from 'lodash'
 import CropService from '../services/CropService'
 
+import { validateCropStore } from '../utils/Validation'
+
 const Crop = models.Crop
 
 class CropController {
@@ -16,7 +18,7 @@ class CropController {
    * @return Response
    */
   public async index (req: Request, res: Response) {
-    const crops = await Crop.find({})
+    const crops = await Crop.find({}).populate('lots')
 
     res.status(200).json(crops)
   }
@@ -30,7 +32,7 @@ class CropController {
    * @return Response
    */
   public async show (req: Request, res: Response) {
-    const crop = await Crop.findById(req.params.id)
+    const crop = await Crop.findById(req.params.id).populate('lots')
 
     res.status(200).json(crop)
   }
@@ -44,7 +46,9 @@ class CropController {
    * @return Response
    */
   public async create (req: Request, res: Response) {
-    const crop = await CropService.store(req.body)
+    await validateCropStore(req.body)
+
+    let crop = await CropService.store(req.body)
 
     res.status(201).json(crop)
   }

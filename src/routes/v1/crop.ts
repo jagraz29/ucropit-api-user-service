@@ -79,6 +79,10 @@ router.get('/:id', cropController.show)
  *                      name:
  *                        type: string
  *                        description: Soja
+ *                  lots:
+ *                      type: array
+ *                      items:
+ *                         type: string
  *                  unitType:
  *                    type: object
  *                    properties:

@@ -23,6 +23,10 @@
  *           surface:
  *             type: number
  *             format: double
+ *           lots:
+ *             type: array
+ *             items:
+ *                type: string
  *           cropType:
  *             type: object
  *             schema:
