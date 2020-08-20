@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import models from '../models'
+import _ from 'lodash'
 import CropService from '../services/CropService'
 
 const Crop = models.Crop
@@ -57,7 +58,10 @@ class CropController {
    * @return Response
    */
   public async update (req: Request, res: Response) {
-    // TODO: Implement
+    await Crop.findByIdAndUpdate(req.params.id, req.body)
+    const crop = await Crop.findById(req.params.id)
+
+    res.status(200).json(crop)
   }
 
   /**

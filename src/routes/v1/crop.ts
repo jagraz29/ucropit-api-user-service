@@ -103,6 +103,66 @@ router.get('/:id', cropController.show)
  */
 router.post('/', cropController.create)
 
+/**
+ * @swagger
+ * path:
+ *  /v1/crops/{id}:
+ *    put:
+ *      summary: Update a crop
+ *      tags: [Crops]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      requestBody:
+ *        content:
+ *          application/json:
+ *              schema:
+ *               type: object
+ *               properties:
+ *                  name:
+ *                    type: string
+ *                  pay:
+ *                    type: number
+ *                    format: double
+ *                  surface:
+ *                    type: number
+ *                    format: double
+ *                  dateCrop:
+ *                    type: string
+ *                    format: date
+ *                    description: 2020-05-01
+ *                  dateHarvest:
+ *                    type: string
+ *                    format: date
+ *                    description: 2020-05-01
+ *                  cropType:
+ *                    type: object
+ *                    properties:
+ *                      name:
+ *                        type: string
+ *                        description: Soja
+ *                  unitType:
+ *                    type: object
+ *                    properties:
+ *                       name:
+ *                          type: string
+ *                       key:
+ *                          type: string
+ *                          description: kg
+ *
+ *
+ *      responses:
+ *       '201':
+ *         description: Create success a crop.
+ *         content:
+ *            application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Crop'
+ *
+ *       '500':
+ *         description: Error to Server.
+ *
+ */
 router.put('/:id', cropController.update)
 
 /**
