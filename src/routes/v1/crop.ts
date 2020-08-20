@@ -153,6 +153,10 @@ router.post('/', cropController.create)
  *                       key:
  *                          type: string
  *                          description: kg
+ *                  lots:
+ *                    type: array
+ *                    items:
+ *                         type: string
  *
  *
  *      responses:
