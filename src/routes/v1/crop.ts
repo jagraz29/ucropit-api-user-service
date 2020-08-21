@@ -74,23 +74,13 @@ router.get('/:id', cropController.show)
  *                    format: date
  *                    description: 2020-05-01
  *                  cropType:
- *                    type: object
- *                    properties:
- *                      name:
- *                        type: string
- *                        description: Soja
+ *                    type: string
  *                  lots:
  *                      type: array
  *                      items:
  *                         type: string
  *                  unitType:
- *                    type: object
- *                    properties:
- *                       name:
- *                          type: string
- *                       key:
- *                          type: string
- *                          description: kg
+ *                    type: string
  *
  *
  *      responses:
@@ -140,19 +130,9 @@ router.post('/', cropController.create)
  *                    format: date
  *                    description: 2020-05-01
  *                  cropType:
- *                    type: object
- *                    properties:
- *                      name:
- *                        type: string
- *                        description: Soja
+ *                    type: string
  *                  unitType:
- *                    type: object
- *                    properties:
- *                       name:
- *                          type: string
- *                       key:
- *                          type: string
- *                          description: kg
+ *                    type: string
  *                  lots:
  *                    type: array
  *                    items:

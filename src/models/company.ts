@@ -32,8 +32,8 @@ const CompanySchema = new Schema({
   },
   typePerson: {
     type: String,
-    enum: ['Física', 'Jurídica'],
-    default: 'Física'
+    enum: ['PHYSICAL_PERSON', 'LEGAL_PERSON'],
+    default: 'PHYSICAL_PERSON'
   },
   name: {
     type: String,

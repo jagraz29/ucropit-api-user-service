@@ -7,13 +7,8 @@ export const validateCropStore = async (crop) => {
     surface: Joi.number().required(),
     dateCrop: Joi.date().optional().required(),
     dateHarvest: Joi.date().greater(Joi.ref('dateCrop')).required(),
-    cropType: Joi.object({
-      name: Joi.string().required()
-    }).required(),
-    unitType: Joi.object({
-      name: Joi.string().required(),
-      key: Joi.string().required()
-    }).required(),
+    cropType: Joi.string().optional(),
+    unitType: Joi.string().optional(),
     lots: Joi.array().items(Joi.string()).optional(),
     company: Joi.string().optional()
   })

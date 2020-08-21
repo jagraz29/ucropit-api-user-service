@@ -5,6 +5,7 @@ import auth from './auth'
 import lost from './lots'
 import crop from './crop'
 import company from './company'
+import common from './common'
 
 const router: express.Router = express.Router()
 
@@ -17,6 +18,8 @@ router.use('/auth', auth)
 router.use('/users', users)
 
 router.use('/lots', lost)
+
+router.use('/commons', common)
 
 router.use('/crops', crop)
 

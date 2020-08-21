@@ -44,9 +44,6 @@ import mongoose from 'mongoose'
 
 const { Schema } = mongoose
 
-import { CropTypeSchema } from './cropType'
-import { UnitTypeSchema } from './unitType'
-
 const CropSchema = new Schema({
   name: {
     type: String,
@@ -74,10 +71,12 @@ const CropSchema = new Schema({
     require: true
   },
   cropType: {
-    type: CropTypeSchema
+    type: Schema.Types.ObjectId,
+    ref: 'CropType'
   },
   unitType: {
-    type: UnitTypeSchema
+    type: Schema.Types.ObjectId,
+    ref: 'UnitType'
   },
   company: {
     type: Schema.Types.ObjectId,

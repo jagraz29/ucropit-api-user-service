@@ -18,7 +18,10 @@ class CropController {
    * @return Response
    */
   public async index (req: Request, res: Response) {
-    const crops = await Crop.find({}).populate('lots')
+    const crops = await Crop.find({})
+      .populate('lots')
+      .populate('cropType')
+      .populate('unitType')
 
     res.status(200).json(crops)
   }
@@ -32,7 +35,10 @@ class CropController {
    * @return Response
    */
   public async show (req: Request, res: Response) {
-    const crop = await Crop.findById(req.params.id).populate('lots')
+    const crop = await Crop.findById(req.params.id)
+      .populate('lots')
+      .populate('cropType')
+      .populate('unitType')
 
     res.status(200).json(crop)
   }
