@@ -5,7 +5,7 @@ import { validateCompanyStore } from '../utils/Validation'
 
 const Company = models.Company
 
-class CompanyController {
+class CompaniesController {
   /**
    * Get all companies
    *
@@ -81,4 +81,4 @@ class CompanyController {
   }
 }
 
-export default new CompanyController()
+export default new CompaniesController()

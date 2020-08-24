@@ -9,7 +9,7 @@ import LotService from '../services/LotService'
 
 const Lot = models.Lot
 
-class LotController {
+class LotsController {
   /**
    * Get all lots.
    *
@@ -109,4 +109,4 @@ class LotController {
   }
 }
 
-export default new LotController()
+export default new LotsController()
