@@ -1,6 +1,6 @@
 import express from 'express'
 
-import lotController from '../../controllers/LotController'
+import lotsController from '../../controllers/LotsController'
 
 const router: express.Router = express.Router()
 
@@ -18,7 +18,7 @@ const router: express.Router = express.Router()
  *    '200':
  *      description: Get all lots
  */
-router.get('/', lotController.index)
+router.get('/', lotsController.index)
 
 /**
  * @swagger
@@ -42,7 +42,7 @@ router.get('/', lotController.index)
  *        "500":
  *          description: Server error
  */
-router.get('/:id', lotController.show)
+router.get('/:id', lotsController.show)
 
 /**
  * @swagger
@@ -82,7 +82,7 @@ router.get('/:id', lotController.show)
  *         description: Error to Server.
  *
  */
-router.post('/', lotController.create)
+router.post('/', lotsController.create)
 
 /**
  * @swagger
@@ -122,7 +122,7 @@ router.post('/', lotController.create)
  *         description: Error to Server.
  *
  */
-router.post('/surfaces', lotController.surfaces)
+router.post('/surfaces', lotsController.surfaces)
 
 /**
  * @swagger
@@ -159,7 +159,7 @@ router.post('/surfaces', lotController.surfaces)
  *        "500":
  *          description: Server error
  */
-router.put('/:id', lotController.update)
+router.put('/:id', lotsController.update)
 
 /**
  * @swagger
@@ -179,6 +179,6 @@ router.put('/:id', lotController.update)
  *        "500":
  *          description: Server error
  */
-router.delete('/:id', lotController.delete)
+router.delete('/:id', lotsController.delete)
 
 export default router
