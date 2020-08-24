@@ -14,10 +14,11 @@ const seedersCropType = async () => {
 
   await CropType.deleteMany({})
 
-  for await (const cropType of cropTypes) {
-    CropType.create(cropType)
+  for (const cropType of cropTypes) {
+    await CropType.create(cropType)
   }
   console.log(`${chalk.green('=====Registered CropTypes====')}`)
+  return true
 }
 
 /**
@@ -28,15 +29,20 @@ const seedersUnitType = async () => {
 
   await UnitType.deleteMany({})
 
-  for await (const unitType of unitTypes) {
-    UnitType.create(unitType)
+  for (const unitType of unitTypes) {
+    await UnitType.create(unitType)
   }
+
   console.log(`${chalk.green('=====Registered UnitType====')}`)
+  return true
 }
 
-(() => {
-  connectDb().then(async () => {
-    await seedersCropType()
+(async () => {
+  const connected = await connectDb()
+
+  if (connected) {
     await seedersUnitType()
-  })
+    await seedersCropType()
+  }
+  process.exit()
 })()
