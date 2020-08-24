@@ -7,7 +7,7 @@
     "tsc": "tsc",
     "dev": "DEBUG=email-templates tsc -w & nodemon -q -w dist dist/server.js",
     "start": "nodemon -q -w dist dist/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose",
     "preinstall": "npx npm-force-resolutions",
     "seed": "node dist/src/seeders/index.js"
   },
@@ -50,14 +50,19 @@
     "pug": "^3.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
     "@typescript-eslint/eslint-plugin": "^3.6.1",
     "@typescript-eslint/parser": "^3.6.1",
+    "babel-jest": "^26.3.0",
     "eslint": "^7.5.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "jest": "^26.4.2",
     "nodemon": "^2.0.4",
     "standard": "^14.3.4",
     "swagger-jsdoc": "^4.0.0",

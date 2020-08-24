@@ -3,6 +3,7 @@ import User from './user'
 import Lot from './lot'
 import Crop from './crop'
 import Company from './company'
+import UserConfig from './userConfig'
 
 import { CropType } from './cropType'
 import { UnitType } from './unitType'
@@ -15,7 +16,7 @@ const connectDb = function () {
   })
 }
 
-const models = { User, Lot, Crop, Company, CropType, UnitType }
+const models = { User, Lot, Crop, Company, CropType, UnitType, UserConfig }
 
 export { connectDb }
 
