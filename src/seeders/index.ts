@@ -10,28 +10,28 @@ const UnitType = models.UnitType
  * Seeders CropType
  */
 const seedersCropType = async () => {
-  console.log(`${chalk.green('=====Registrando CropTypes====')}`)
+  console.log(`${chalk.green('=====Registering CropTypes====')}`)
 
   await CropType.deleteMany({})
 
   for await (const cropType of cropTypes) {
     CropType.create(cropType)
   }
-  console.log(`${chalk.green('=====CropTypes Registrados====')}`)
+  console.log(`${chalk.green('=====Registered CropTypes====')}`)
 }
 
 /**
  * Seeder UnitType
  */
 const seedersUnitType = async () => {
-  console.log(`${chalk.green('=====Registrando UnitType====')}`)
+  console.log(`${chalk.green('=====Registering UnitType====')}`)
 
   await UnitType.deleteMany({})
 
   for await (const unitType of unitTypes) {
     UnitType.create(unitType)
   }
-  console.log(`${chalk.green('=====UnitTypes Registrados====')}`)
+  console.log(`${chalk.green('=====Registered UnitType====')}`)
 }
 
 (() => {
