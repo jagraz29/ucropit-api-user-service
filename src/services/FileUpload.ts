@@ -10,10 +10,10 @@ interface IStore {
 const VALID_FORMATS_FILES = `text.*|image.*|application/pdf|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/octet-stream|application/vnd.google-earth.kmz|application/vnd.google-earth.kml`
 
 class FileUpload {
-  private files: FileArray
+  private files
   private destination: string
 
-  constructor (files: FileArray, destination: string) {
+  constructor (files, destination: string) {
     this.files = files
     this.destination = destination
   }
@@ -40,7 +40,7 @@ class FileUpload {
           process.cwd(),
           `/${process.env.DIR_STORAGE}/${this.destination}/${renameFile}`
         ),
-        (err) => {
+        err => {
           console.log(err)
           if (err) reject(new Error("File's extension is rejected"))
 

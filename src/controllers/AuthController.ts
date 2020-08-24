@@ -8,13 +8,13 @@ const User = models.User
 
 class AuthController {
   public async auth (req: Request, res: Response) {
-    const code = numbers.getRandom()
     let user = await User.findOne({ email: req.body.email })
 
-    user.verifyToken = code
-    await user.save()
-
     if (user) {
+      const code = numbers.getRandom()
+
+      user.verifyToken = code
+      await user.save()
       await EmailService.send({
         template: 'send-code',
         to: user.email,
@@ -23,7 +23,7 @@ class AuthController {
 
       res.json({ user })
     } else {
-      res.status(404).json({ error: 'ERR_NOT_FOUND' })
+      res.status(404).json({ error: 'ERR_USER_NOT_FOUND' })
     }
   }
 

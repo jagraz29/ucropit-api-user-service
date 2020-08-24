@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 import express, { Application, Request, Response, NextFunction } from 'express'
-import bodyParser from 'body-parser'
+import cors from 'cors'
 import swaggerUI from 'swagger-ui-express'
 import { swaggerDocs } from './config/swagger'
 import { errorHandler } from './src/loggin/error-handler'
@@ -14,6 +14,7 @@ import fileUpload from 'express-fileupload'
 const port = process.env.NODE_PORT || 3000
 const app: Application = express()
 
+app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(morgan('tiny'))
