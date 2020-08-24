@@ -1,6 +1,6 @@
 import express from 'express'
 
-import companyController from '../../controllers/CompanyController'
+import companiesController from '../../controllers/CompaniesController'
 
 const router: express.Router = express.Router()
 
@@ -18,7 +18,7 @@ const router: express.Router = express.Router()
  *    '200':
  *      description: Get all Crops
  */
-router.get('/', companyController.index)
+router.get('/', companiesController.index)
 
 /**
  * @swagger
@@ -42,7 +42,7 @@ router.get('/', companyController.index)
  *        "500":
  *          description: Server error
  */
-router.get('/:id', companyController.show)
+router.get('/:id', companiesController.show)
 
 /**
  * @swagger
@@ -83,7 +83,7 @@ router.get('/:id', companyController.show)
  *         description: Error to Server.
  *
  */
-router.post('/', companyController.create)
+router.post('/', companiesController.create)
 
 /**
  * @swagger
@@ -127,7 +127,7 @@ router.post('/', companyController.create)
  *         description: Error to Server.
  *
  */
-router.put('/:id', companyController.update)
+router.put('/:id', companiesController.update)
 
 /**
  * @swagger
@@ -147,6 +147,6 @@ router.put('/:id', companyController.update)
  *        "500":
  *          description: Server error
  */
-router.delete('/:id', companyController.delete)
+router.delete('/:id', companiesController.delete)
 
 export default router

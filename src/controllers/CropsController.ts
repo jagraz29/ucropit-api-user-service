@@ -7,7 +7,7 @@ import { validateCropStore } from '../utils/Validation'
 
 const Crop = models.Crop
 
-class CropController {
+class CropsController {
   /**
    *
    * Get all crops.
@@ -91,4 +91,4 @@ class CropController {
   }
 }
 
-export default new CropController()
+export default new CropsController()
