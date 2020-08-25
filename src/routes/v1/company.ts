@@ -11,6 +11,9 @@ const router: express.Router = express.Router()
  *   summary: Get all companies
  *   tags:
  *      - Companies
+ *   parameters:
+ *        - in: query
+ *          name: identifier
  *   description: Companies
  *   produces:
  *     - application/json
