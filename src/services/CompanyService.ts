@@ -21,7 +21,17 @@ class CompanyService {
   }
 
   public static async store (company: ICompany) {
-    return Company.create(company)
+    let companyObject = (
+      await this.search({
+        identifier: company.identifier
+      })
+    )[0]
+
+    if (!companyObject) {
+      return Company.create(company)
+    }
+
+    return companyObject
   }
 }
 

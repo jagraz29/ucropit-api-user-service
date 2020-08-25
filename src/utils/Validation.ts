@@ -9,8 +9,17 @@ export const validateCropStore = async (crop) => {
     dateHarvest: Joi.date().greater(Joi.ref('dateCrop')).required(),
     cropType: Joi.string().optional(),
     unitType: Joi.string().optional(),
-    lots: Joi.array().items(Joi.string()).optional(),
-    company: Joi.string().optional()
+    lots: Joi.object({
+      names: Joi.array().items(Joi.string()).required(),
+      tag: Joi.string().required()
+    }).required(),
+    company: Joi.object({
+      identifier: Joi.string().required(),
+      typePerson: Joi.string().required(),
+      name: Joi.string().required(),
+      address: Joi.string().required(),
+      addressFloor: Joi.string().optional()
+    })
   })
 
   return schema.validateAsync(crop)

@@ -1,6 +1,9 @@
+import { Request } from 'express'
 import Lot from '../models/lot'
 import _ from 'lodash'
 import * as geolib from 'geolib'
+
+import { handleFileConvertJSON } from '../utils/ParseKmzFile'
 
 interface ILot {
   name: String
@@ -10,6 +13,19 @@ interface ILot {
 }
 
 class LotService {
+  public static async store (req: Request, { names, tag }) {
+    const jsonParserKmz = await handleFileConvertJSON(req.files)
+
+    const filteringItem = jsonParserKmz.features.filter((item) => {
+      return (
+        names.filter((select) => select === item.properties.name).length > 0
+      )
+    })
+
+    const lots = await LotService.storeLots(filteringItem, tag)
+
+    return lots
+  }
   /**
    * To create a Lots when given items filter to Kmz/Kml file and lots are selected.
    *
@@ -27,7 +43,7 @@ class LotService {
         tag: tag
       }
 
-      const asyncLot = this.store(lot)
+      const asyncLot = this.create(lot)
 
       toStored.push(asyncLot)
 
@@ -72,7 +88,7 @@ class LotService {
    *
    * @param lot
    */
-  public static async store (lot: ILot) {
+  public static async create (lot: ILot) {
     return Lot.create(lot)
   }
 }

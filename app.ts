@@ -10,7 +10,6 @@ import morgan from 'morgan'
 import routes from './src/routes/v1'
 import fileUpload from 'express-fileupload'
 
-const port = process.env.NODE_PORT || 3000
 const app: Application = express()
 
 app.use(express.urlencoded({ extended: true }))
