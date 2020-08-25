@@ -1,7 +1,8 @@
 require("dotenv").config();
 
+import mongoose from 'mongoose'
 import request from "supertest";
-import models, { connectDb } from "../../src/models";
+import models from "../../src/models";
 import fs from "fs";
 import FormData from "form-data";
 import path from "path";
@@ -11,12 +12,18 @@ const Crop = models.Crop;
 const Company = models.Company;
 const Lot = models.Lot;
 
+mongoose.connect(process.env.DATABASE_URL_TEST, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+});
+
 let server;
 
 describe("Crop Test", () => {
   beforeAll(async () => {
     try {
-      await connectDb();
       server = app.listen(3002)
     } catch (error) {
       console.log(error)
@@ -29,6 +36,7 @@ describe("Crop Test", () => {
       await Lot.deleteMany({})
       await Crop.deleteMany({})
       await server.close(done)
+      await mongoose.connection.close();
     } catch (error) {
       console.log(error)
     }
