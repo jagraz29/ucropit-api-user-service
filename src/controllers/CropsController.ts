@@ -24,6 +24,7 @@ class CropsController {
       .populate('lots')
       .populate('cropType')
       .populate('unitType')
+      .populate('company')
 
     res.status(200).json(crops)
   }
@@ -41,6 +42,7 @@ class CropsController {
       .populate('lots')
       .populate('cropType')
       .populate('unitType')
+      .populate('company')
 
     res.status(200).json(crop)
   }
