@@ -3,6 +3,8 @@ import models from '../models'
 
 import { validateCompanyStore } from '../utils/Validation'
 
+import CompanyService from '../services/CompanyService'
+
 const Company = models.Company
 
 class CompaniesController {
@@ -12,10 +14,12 @@ class CompaniesController {
    * @param req
    * @param res
    *
-   * @return Response
+   * @return {Response}
    */
   public async index (req: Request, res: Response) {
-    const companies = await Company.find({})
+    const { query } = req
+
+    const companies = await CompanyService.search(query)
 
     res.status(200).json(companies)
   }
@@ -27,7 +31,7 @@ class CompaniesController {
    * @param req
    * @param res
    *
-   * @return Response
+   * @return {Response}
    */
   public async show (req: Request, res: Response) {
     const company = await Company.findById(req.params.id)
@@ -41,11 +45,11 @@ class CompaniesController {
    * @param req
    * @param res
    *
-   * @return Response
+   * @return {Response}
    */
   public async create (req: Request, res: Response) {
     await validateCompanyStore(req.body)
-    let company = await Company.create(req.body)
+    let company = await CompanyService.store(req.body)
 
     res.status(201).json(company)
   }
@@ -56,7 +60,7 @@ class CompaniesController {
    * @param req
    * @param res
    *
-   * @return Response
+   * @return {Response}
    */
   public async update (req: Request, res: Response) {
     await Company.findByIdAndUpdate(req.params.id, req.body)
@@ -70,7 +74,7 @@ class CompaniesController {
    * @param req
    * @param res
    *
-   * @return Response
+   * @return {Response}
    */
   public async delete (req: Request, res: Response) {
     const company = await Company.findByIdAndDelete(req.params.id)

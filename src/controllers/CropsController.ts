@@ -2,6 +2,8 @@ import { Request, Response } from 'express'
 import models from '../models'
 import _ from 'lodash'
 import CropService from '../services/CropService'
+import CompanyService from '../services/CompanyService'
+import LotService from '../services/LotService'
 
 import { validateCropStore } from '../utils/Validation'
 
@@ -22,6 +24,7 @@ class CropsController {
       .populate('lots')
       .populate('cropType')
       .populate('unitType')
+      .populate('company')
 
     res.status(200).json(crops)
   }
@@ -39,6 +42,7 @@ class CropsController {
       .populate('lots')
       .populate('cropType')
       .populate('unitType')
+      .populate('company')
 
     res.status(200).json(crop)
   }
@@ -52,9 +56,16 @@ class CropsController {
    * @return Response
    */
   public async create (req: Request, res: Response) {
-    await validateCropStore(req.body)
+    const data = JSON.parse(req.body.data)
+    await validateCropStore(data)
 
-    let crop = await CropService.store(req.body)
+    const company = await CompanyService.store(data.company)
+    const lots = await LotService.store(req, {
+      names: data.lots.names,
+      tag: data.lots.tag
+    })
+
+    const crop = await CropService.handleDataCrop(data, company, lots)
 
     res.status(201).json(crop)
   }
