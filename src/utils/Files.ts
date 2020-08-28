@@ -17,7 +17,7 @@ function publicPath () {
 }
 
 function basePath (): string {
-  return join(__dirname, '../')
+  return join(__dirname, '../../../')
 }
 
 export function removeFile (dir: string) {

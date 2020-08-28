@@ -1,5 +1,6 @@
 import { FileArray, UploadedFile } from 'express-fileupload'
 import path from 'path'
+import { getFullPath, makeDirIfNotExists } from '../utils/Files'
 
 interface IStore {
   path: string
@@ -18,7 +19,7 @@ class FileUpload {
     this.destination = destination
   }
 
-  public store (): Promise<IStore> {
+  public async store (): Promise<IStore> {
     if (Object.keys(this.files).length === 0) {
       throw new Error('No files were uploaded.')
     }
@@ -33,6 +34,8 @@ class FileUpload {
     const fileNameArray = toUploadFile.name.trim().split('.')
 
     const renameFile = `${toUploadFile.md5}.${fileNameArray.pop()}`
+
+    await makeDirIfNotExists(getFullPath(`${this.destination}`))
 
     return new Promise((resolve, reject) => {
       toUploadFile.mv(
