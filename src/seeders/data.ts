@@ -1,4 +1,4 @@
-export const cropTypes = [
+export const cropTypesData = [
   {
     name: 'Soja'
   },
@@ -10,7 +10,7 @@ export const cropTypes = [
   }
 ]
 
-export const unitTypes = [
+export const unitTypesData = [
   {
     name: 'Kilogramos',
     key: 'kg'
