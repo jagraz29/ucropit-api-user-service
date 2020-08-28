@@ -70,6 +70,10 @@ const CropSchema = new Schema({
     type: Number,
     require: true
   },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   cropType: {
     type: Schema.Types.ObjectId,
     ref: 'CropType'
