@@ -47,18 +47,9 @@ class LotsController {
    * @return Response
    */
   public async create (req: Request, res: Response) {
-    const { selectedLots, tag } = req.body
+    const { names, tag } = req.body
 
-    const jsonParserKmz = await handleFileConvertJSON(req.files)
-
-    const filteringItem = jsonParserKmz.features.filter(item => {
-      return (
-        selectedLots.filter(select => select === item.properties.name).length >
-        0
-      )
-    })
-
-    const lots = await LotService.storeLots(filteringItem, tag)
+    const lots = await LotService.store(req, { names, tag })
 
     res.status(201).json(lots)
   }

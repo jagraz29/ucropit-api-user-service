@@ -57,7 +57,7 @@ router.get('/:id', lotsController.show)
  *              schema:
  *               type: object
  *               properties:
- *                  selectedLots:
+ *                  names:
  *                       type: array
  *                       items:
  *                         type: string

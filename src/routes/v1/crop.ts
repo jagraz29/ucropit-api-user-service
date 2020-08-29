@@ -76,11 +76,28 @@ router.get('/:id', cropsController.show)
  *                  cropType:
  *                    type: string
  *                  lots:
- *                      type: array
- *                      items:
- *                         type: string
+ *                    type: object
+ *                    properties:
+ *                         names:
+ *                            items:
+ *                              type: string
+ *                         tag:
+ *                           type: string
  *                  unitType:
  *                    type: string
+ *                  company:
+ *                    type: object
+ *                    properties:
+ *                         identifier:
+ *                            type: string
+ *                         typePerson:
+ *                            type: string
+ *                         name:
+ *                            type: string
+ *                         address:
+ *                            type: string
+ *                         addressFloor:
+ *                            type: string
  *
  *
  *      responses:
@@ -134,9 +151,13 @@ router.post('/', cropsController.create)
  *                  unitType:
  *                    type: string
  *                  lots:
- *                    type: array
- *                    items:
- *                         type: string
+ *                    type: object
+ *                    properties:
+ *                         names:
+ *                            items:
+ *                              type: string
+ *                         tag:
+ *                           type: string
  *
  *
  *      responses:
