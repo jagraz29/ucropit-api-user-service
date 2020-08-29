@@ -1,14 +1,14 @@
-require("dotenv").config();
-import path from "path";
-import request from "supertest";
-import fs from "fs";
+require('dotenv').config();
+import path from 'path';
+import request from 'supertest';
+import fs from 'fs';
 
-import { connect } from "./utils/server";
+import {connect} from './utils/server';
 
 let server;
 let file;
 
-describe("File Upload KMZ or KML Test", () => {
+describe('File Upload KMZ or KML Test', () => {
   beforeAll(async () => {
     try {
       server = connect(3003);
@@ -32,10 +32,10 @@ describe("File Upload KMZ or KML Test", () => {
     try {
       const response = await request(server)
         .post(`/v1/lots/surfaces`)
-        .attach("files", file);
+        .attach('files', file);
 
-        expect(response.status).toEqual(200)
-        expect(response.body).toEqual(expect.any(Array))
+      expect(response.status).toEqual(200);
+      expect(response.body).toEqual(expect.any(Array));
     } catch (error) {
       console.log(error);
     }

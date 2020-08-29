@@ -1,5 +1,6 @@
 import express from 'express'
 import authController from '../../controllers/AuthController'
+import passport from '../../utils/auth/strategies/jwt'
 
 const router: express.Router = express.Router()
 
@@ -7,6 +8,7 @@ const router: express.Router = express.Router()
  * @swagger
  * /v1/auth:
  *  post:
+ *   security: []
  *   summary: Auth a user
  *   tags: [Auth]
  *   description: Auth a user
@@ -30,6 +32,7 @@ router.post('/', authController.auth)
  * @swagger
  * /v1/auth/register:
  *  post:
+ *   security: []
  *   summary: Register a user
  *   tags: [Auth]
  *   description: Register a user
@@ -57,6 +60,7 @@ router.post('/register', authController.register)
  * @swagger
  * /v1/auth/validate:
  *  post:
+ *   security: []
  *   summary: Validate user
  *   tags: [Auth]
  *   description: Validate user
@@ -84,6 +88,8 @@ router.post('/validate', authController.validate)
  * @swagger
  * /v1/auth/pin:
  *  post:
+ *   security:
+ *   - bearerAuth: []
  *   summary: Store pin
  *   tags: [Auth]
  *   description: Store pin
@@ -103,6 +109,10 @@ router.post('/validate', authController.validate)
  *            email:
  *              type: string
  */
-router.post('/pin', authController.pin)
+router.post(
+  '/pin',
+  passport.authenticate('jwt', { session: false }),
+  authController.pin
+)
 
 export default router

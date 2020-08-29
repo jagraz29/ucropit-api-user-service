@@ -2,7 +2,7 @@ import swaggerJsDoc from 'swagger-jsdoc'
 
 const swaggerOptions = {
   swaggerDefinition: {
-    openapi: '3.0.0',
+    openapi: '3.0.1',
     info: {
       title: 'UCROP.IT CORE API',
       description: 'UCROP.IT main API information',
@@ -10,7 +10,22 @@ const swaggerOptions = {
         name: 'Lucas Michailian'
       },
       servers: ['https://localhost:3000']
-    }
+    },
+    basePath: '/',
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT'
+        }
+      }
+    },
+    security: [
+      {
+        bearerAuth: []
+      }
+    ]
   },
   apis: ['./dist/src/models/**/*.js', './dist/src/routes/**/*.js']
 }
