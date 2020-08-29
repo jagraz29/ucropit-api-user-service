@@ -31,6 +31,8 @@ import bcrypt from 'bcrypt'
 
 const SALT_WORK_FACTOR: number = 10
 
+const { Schema } = mongoose
+
 const userSchema = new mongoose.Schema(
   {
     firstName: {
@@ -55,7 +57,8 @@ const userSchema = new mongoose.Schema(
     },
     verifyToken: {
       type: String
-    }
+    },
+    companies: [{ type: Schema.Types.ObjectId, ref: 'Company' }]
   },
   { timestamps: true }
 )

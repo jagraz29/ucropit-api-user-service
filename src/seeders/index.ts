@@ -1,7 +1,7 @@
 require('dotenv').config()
 import models, { connectDb } from '../models'
 import chalk from 'chalk'
-import { cropTypes, unitTypes } from './data'
+import { cropTypesData, unitTypesData } from './data'
 
 const CropType = models.CropType
 const UnitType = models.UnitType
@@ -12,9 +12,13 @@ const UnitType = models.UnitType
 const seedersCropType = async () => {
   console.log(`${chalk.green('=====Registering CropTypes====')}`)
 
-  await CropType.deleteMany({})
+  const cropTypes = await CropType.find({})
 
-  for (const cropType of cropTypes) {
+  const cropTypesSeed = cropTypesData.filter(
+    (item) => !cropTypes.find((element) => item.name === element.name)
+  )
+
+  for (const cropType of cropTypesSeed) {
     await CropType.create(cropType)
   }
   console.log(`${chalk.green('=====Registered CropTypes====')}`)
@@ -27,9 +31,13 @@ const seedersCropType = async () => {
 const seedersUnitType = async () => {
   console.log(`${chalk.green('=====Registering UnitType====')}`)
 
-  await UnitType.deleteMany({})
+  const unitTypes = await UnitType.find({})
 
-  for (const unitType of unitTypes) {
+  const unitTypeSeed = unitTypesData.filter(
+    (item) => !unitTypes.find((element) => item.name === element.name)
+  )
+
+  for (const unitType of unitTypeSeed) {
     await UnitType.create(unitType)
   }
 
