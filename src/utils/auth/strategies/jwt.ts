@@ -1,3 +1,4 @@
+require('dotenv').config()
 const passport = require('passport')
 const passportJWT = require('passport-jwt')
 const JWTStrategy = passportJWT.Strategy
@@ -15,7 +16,6 @@ const opts = {
 const strategy = new JWTStrategy(opts, async (payload, next) => {
   try {
     const user = await User.findById(payload.id)
-    console.log(user)
     next(null, user)
   } catch (error) {
     console.log(error)
