@@ -1,6 +1,7 @@
 import express from 'express'
 
 import cropsController from '../../controllers/CropsController'
+import passport from '../../utils/auth/strategies/jwt'
 
 const router: express.Router = express.Router()
 

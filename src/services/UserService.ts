@@ -9,11 +9,16 @@ interface IUser {
   email: string
   pin?: string
   verifyToken?: string
+  companies?: Array<any>
 }
 
 class UserService {
   public static async store (user: IUser) {
     return User.create(user)
+  }
+
+  public static async update (filter, data) {
+    return User.findOneAndUpdate(filter, data)
   }
 }
 

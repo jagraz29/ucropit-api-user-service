@@ -4,8 +4,11 @@ import _ from 'lodash'
 import CropService from '../services/CropService'
 import CompanyService from '../services/CompanyService'
 import LotService from '../services/LotService'
+import UserService from '../services/UserService'
 
 import { validateCropStore } from '../utils/Validation'
+
+import { UserSchema } from '../models/user'
 
 const Crop = models.Crop
 
@@ -56,16 +59,25 @@ class CropsController {
    * @return Response
    */
   public async create (req: Request, res: Response) {
+    const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     await validateCropStore(data)
 
     const company = await CompanyService.store(data.company)
+
+    await UserService.update(
+      { email: user.email },
+      {
+        companies: [company._id]
+      }
+    )
+
     const lots = await LotService.store(req, {
       names: data.lots.names,
       tag: data.lots.tag
     })
 
-    const crop = await CropService.handleDataCrop(data, company, lots)
+    const crop = await CropService.handleDataCrop(data, company, lots, user)
 
     res.status(201).json(crop)
   }
