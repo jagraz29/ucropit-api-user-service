@@ -3,7 +3,6 @@ import models from '../models'
 import UserService from '../services/UserService'
 import numbers from '../utils/numbers'
 import EmailService from '../services/EmailService'
-import jwt from 'jsonwebtoken'
 
 const User = models.User
 
@@ -55,8 +54,7 @@ class AuthController {
         await user.save()
 
         if (isMatch) {
-          const payload = { id: user._id }
-          const token = jwt.sign(payload, process.env.AUTH_KEY_JWT)
+          const token = user.generateAuthToken()
           res.json({ user, token })
         } else {
           res.status(401).json({ error: 'ERR_CODE_NOT_VALID' })

@@ -15,7 +15,7 @@ interface ICrop {
 }
 
 class CropService {
-  public static async handleDataCrop (data, company, lots) {
+  public static async handleDataCrop (data, company, lots, user) {
     const lotsIds = []
 
     for (const lot of lots) {
@@ -24,6 +24,7 @@ class CropService {
 
     data.lots = lotsIds
     data.company = company._id
+    data.owner = user._id
 
     return this.store(data)
   }
