@@ -8,6 +8,8 @@ import UserConfig from './userConfig'
 import { CropType } from './cropType'
 import { UnitType } from './unitType'
 
+import FileDocument from './documentFile'
+
 const connectDb = function () {
   return mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
@@ -16,7 +18,16 @@ const connectDb = function () {
   })
 }
 
-const models = { User, Lot, Crop, Company, CropType, UnitType, UserConfig }
+const models = {
+  User,
+  Lot,
+  Crop,
+  Company,
+  CropType,
+  UnitType,
+  UserConfig,
+  FileDocument
+}
 
 export { connectDb }
 
