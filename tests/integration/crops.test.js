@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import request from "supertest";
 import models from "../../src/models";
 import fs from "fs";
-import FormData from "form-data";
 import path from "path";
 import { connect } from "./utils/server";
 
@@ -70,7 +69,6 @@ describe("Crop Test", () => {
   });
 
   it("Should be a create a new Crop", async () => {
-    const form = new FormData();
     const data = {
       name: "Nombre del crop",
       pay: "12345",
@@ -115,8 +113,9 @@ describe("Crop Test", () => {
           )
         );
 
-      // expect(response.body.status).toEqual("IN_PROGRESS");
-      // expect(response.body.name).toEqual(data.name);
+      expect(response.status).toEqual(201);
+      expect(response.body.status).toEqual("IN_PROGRESS");
+      expect(response.body.name).toEqual(data.name);
     } catch (error) {
       console.log(error);
     }

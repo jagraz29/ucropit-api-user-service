@@ -95,7 +95,6 @@ class FileUpload {
           `/${process.env.DIR_STORAGE}/${this.destination}/${renameFile}`
         ),
         (err) => {
-          console.log(err)
           if (err) reject(new Error("File's extension is rejected"))
 
           resolve([
@@ -111,7 +110,6 @@ class FileUpload {
   }
 
   validTypes (file) {
-    console.log(file)
     return file.mimetype.match(VALID_FORMATS_FILES) !== null
   }
 }
