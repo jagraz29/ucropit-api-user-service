@@ -10,10 +10,6 @@ export const UserConfigSchema = new Schema({
   hasPin: {
     type: Boolean,
     default: false
-  },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
   }
 })
 

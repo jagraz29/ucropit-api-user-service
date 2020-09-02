@@ -1,11 +1,8 @@
-import models from '../models'
-
-const UserConfig = models.UserConfig
+import UserConfig from '../models/UserConfig'
 
 interface IUserConfig {
   fromInvitation?: boolean
   hasPin?: boolean
-  userId?: string
 }
 
 class UserConfigService {

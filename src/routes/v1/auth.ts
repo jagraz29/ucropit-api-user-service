@@ -6,6 +6,23 @@ const router: express.Router = express.Router()
 
 /**
  * @swagger
+ * path:
+ *  /v1/auth/me:
+ *    get:
+ *      summary: Show authenticated user
+ *      tags: [Users]
+ *      responses:
+ *        "200":
+ *          description: Show success
+ */
+router.get(
+  '/me',
+  passport.authenticate('jwt', { session: false }),
+  authController.me
+)
+
+/**
+ * @swagger
  * /v1/auth:
  *  post:
  *   security: []

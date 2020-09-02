@@ -1,6 +1,5 @@
-import models from '../models'
-
-const User = models.User
+import UserConfigService from './UserConfigService'
+import User from '../models/user'
 
 interface IUser {
   firstName: string
@@ -9,11 +8,21 @@ interface IUser {
   email: string
   pin?: string
   verifyToken?: string
+  companies?: Array<any>
+  config: string
 }
 
 class UserService {
   public static async store (user: IUser) {
+    const config = await UserConfigService.create({ fromInvitation: false })
+
+    user.config = config._id
+
     return User.create(user)
+  }
+
+  public static async update (filter, data) {
+    return User.findOneAndUpdate(filter, data)
   }
 }
 

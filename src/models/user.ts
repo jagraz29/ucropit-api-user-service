@@ -28,10 +28,21 @@
  */
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 const SALT_WORK_FACTOR: number = 10
 
 const { Schema } = mongoose
+
+export interface UserSchema extends mongoose.Document {
+  firstName?: string
+  lastName?: string
+  phone?: string
+  email?: string
+  pin?: string
+  verifyToken?: string
+  companies?: Array<any>
+}
 
 const userSchema = new mongoose.Schema(
   {
@@ -58,12 +69,13 @@ const userSchema = new mongoose.Schema(
     verifyToken: {
       type: String
     },
-    companies: [{ type: Schema.Types.ObjectId, ref: 'Company' }]
+    companies: [{ type: Schema.Types.ObjectId, ref: 'Company' }],
+    config: { type: Schema.Types.ObjectId, ref: 'UserConfig' }
   },
   { timestamps: true }
 )
 
-userSchema.pre('save', function (next) {
+userSchema.pre('save', async function (next) {
   const user = this
 
   if (!user.isModified('pin') && !user.isModified('verifyToken')) {
@@ -103,4 +115,11 @@ userSchema.methods.comparePassword = function (
   })
 }
 
-export default mongoose.model('User', userSchema)
+userSchema.methods.generateAuthToken = function (): string {
+  const payload = { id: this._id }
+  const token = jwt.sign(payload, process.env.AUTH_KEY_JWT)
+
+  return token
+}
+
+export default mongoose.model<UserSchema>('User', userSchema)
