@@ -29,6 +29,7 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { hashPassword } from '../utils/auth'
 
 const SALT_WORK_FACTOR: number = 10
 
@@ -87,15 +88,15 @@ userSchema.pre('save', async function (next) {
     next()
   }
 
-  bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt: string) {
-    if (err) return next(err)
-
-    bcrypt.hash(user[fieldChanged], salt, function (err, hash: string) {
-      if (err) return next(err)
-      user[fieldChanged] = hash
-      next()
-    })
-  })
+  try {
+    user[fieldChanged] = await hashPassword(
+      user[fieldChanged],
+      SALT_WORK_FACTOR
+    )
+    return next()
+  } catch (error) {
+    return next(error)
+  }
 })
 
 userSchema.methods.comparePassword = function (
