@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import request from "supertest";
 import models from "../../src/models";
 import fs from "fs";
-import FormData from "form-data";
 import path from "path";
 import { connect } from "./utils/server";
 
@@ -27,7 +26,7 @@ describe("Crop Test", () => {
   beforeAll(async () => {
     try {
       server = connect(3002);
-      await User.deleteMany({})
+      await User.deleteMany({});
       const user = new User({
         _id: new mongoose.Types.ObjectId().toHexString(),
         firstName: "Test",
@@ -70,7 +69,6 @@ describe("Crop Test", () => {
   });
 
   it("Should be a create a new Crop", async () => {
-    const form = new FormData();
     const data = {
       name: "Nombre del crop",
       pay: "12345",
@@ -101,8 +99,21 @@ describe("Crop Test", () => {
           fs.createReadStream(
             path.join(process.cwd(), `/tests/files/Potreros_El_Desvelo.kmz`)
           )
+        )
+        .attach(
+          "documents",
+          fs.createReadStream(
+            path.join(process.cwd(), `/tests/files/file1.pdf`)
+          )
+        )
+        .attach(
+          "documents",
+          fs.createReadStream(
+            path.join(process.cwd(), `/tests/files/file2.pdf`)
+          )
         );
-  
+
+      expect(response.status).toEqual(201);
       expect(response.body.status).toEqual("IN_PROGRESS");
       expect(response.body.name).toEqual(data.name);
     } catch (error) {
