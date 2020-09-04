@@ -7,9 +7,12 @@ export const FileDocumentSchema = new Schema({
     type: String,
     required: true
   },
-
   date: {
     type: Date,
+    required: true
+  },
+  path: {
+    type: String,
     required: true
   },
   user: {
