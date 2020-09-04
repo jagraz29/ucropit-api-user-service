@@ -21,8 +21,8 @@ class UserConfigService {
    *
    * @param user
    */
-  public static async update (user: IUserConfig) {
-    return UserConfig.update(user)
+  public static async update (id, user: IUserConfig) {
+    return UserConfig.findByIdAndUpdate({ _id: id }, user)
   }
 }
 

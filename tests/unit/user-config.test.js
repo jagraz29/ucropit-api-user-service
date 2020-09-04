@@ -44,11 +44,18 @@ describe("Config User Test", () => {
       user: new mongoose.Types.ObjectId().toHexString(),
     }
 
-    await UserConfigService.update(config)
+    const configUpdate = {
+      hasPin: false,
+      fromInvitation: false
+    }
 
-    const configUser = await UserConfig.findOne({user: config.user})
+    const configUser = await UserConfigService.create(config)
 
-    expect(configUser.hasPin).toEqual(config.hasPin)
-    expect(configUser.fromInvitation).toEqual(config.fromInvitation)
+    await UserConfigService.update(configUser._id, configUpdate)
+
+    const configUserUpdated = await UserConfig.findOne({user: config.user})
+
+    expect(configUserUpdated.hasPin).toEqual(false)
+    expect(configUserUpdated.fromInvitation).toEqual(false)
   })
 });
