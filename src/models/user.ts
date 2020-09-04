@@ -83,7 +83,7 @@ userSchema.pre('save', async function (next) {
     return next()
   }
   const fieldChanged: string = user.isModified('pin') ? 'pin' : 'verifyToken'
-  console.log('here', fieldChanged)
+
   if (user[fieldChanged] === null) {
     next()
   }

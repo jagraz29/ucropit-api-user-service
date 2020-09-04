@@ -8,7 +8,9 @@ const User = models.User
 
 class AuthController {
   public async me (req, res: Response) {
-    res.json(req.user)
+    const user = await User.findById(req.user._id).populate('config')
+
+    res.json(user)
   }
 
   public async auth (req: Request, res: Response) {

@@ -18,7 +18,9 @@ class UserService {
 
     user.config = config._id
 
-    return User.create(user)
+    const newUser = new User(user)
+
+    return newUser.save()
   }
 
   public static async update (filter, data) {
