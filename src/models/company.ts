@@ -21,6 +21,7 @@
  *             type: string
  */
 import mongoose from 'mongoose'
+import { FileDocumentSchema } from './documentFile'
 
 const { Schema } = mongoose
 
@@ -46,6 +47,13 @@ const CompanySchema = new Schema({
   addressFloor: {
     type: String,
     require: false
+  },
+  status: {
+    type: Boolean,
+    default: 0
+  },
+  files: {
+    type: [FileDocumentSchema]
   }
 })
 

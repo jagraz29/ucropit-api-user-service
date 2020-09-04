@@ -1,6 +1,8 @@
+import FileUpload from './FileUpload'
 import models from '../models'
 
 const Company = models.Company
+const FileDocument = models.FileDocument
 
 interface ICompany {
   identifier: string
@@ -20,7 +22,7 @@ class CompanyService {
     return Company.find(query)
   }
 
-  public static async store (company: ICompany) {
+  public static async store (company: ICompany, files, user) {
     let companies = await this.search({
       identifier: company.identifier
     })
@@ -29,7 +31,28 @@ class CompanyService {
       return Company.create(company)
     }
 
-    return companies[0]
+    return this.addFiles(files, companies[0], user)
+  }
+
+  private static async addFiles (files, company, user) {
+    const store = new FileUpload(
+      files,
+      `uploads/companies/${company.identifier}`
+    )
+
+    const filesUploaded = await store.save()
+
+    const documents = filesUploaded.map((item) => {
+      return {
+        ...item,
+        date: new Date(),
+        user: user._id
+      }
+    })
+
+    company.files = documents
+
+    return company.save()
   }
 }
 
