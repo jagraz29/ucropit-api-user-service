@@ -77,7 +77,7 @@ class AuthController {
     if (!user) return res.status(404).json({ error: 'ERR_NOT_FOUND' })
 
     user.pin = req.body.pin
-    await user.save()
+    await user.save().populate('config')
 
     res.json({ user })
   }
