@@ -3,6 +3,10 @@ import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 const ActivitySchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
   dateStart: {
     type: Date,
     required: true
@@ -17,6 +21,10 @@ const ActivitySchema = new Schema({
   },
   type: {
     type: Schema.Types.ObjectId,
+    ref: 'ActivityType'
+  },
+  typeAgreement: {
+    type: Schema.Types.ObjectId,
     ref: 'TypeAgreement'
   },
   crop: {
@@ -24,10 +32,28 @@ const ActivitySchema = new Schema({
     ref: 'Crop'
   },
   lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
-  supplies: {
-    type: Schema.Types.Mixed
-  },
-  evidence: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }]
+  supplies: [
+    {
+      name: {
+        type: String
+      },
+      unit: {
+        type: String
+      },
+      quantity: {
+        type: Number
+      },
+      total: Number
+    }
+  ],
+  evidence: [
+    {
+      name: { type: String, required: true },
+      description: { type: String, required: true },
+      date: { type: Date, required: true },
+      file: { type: Schema.Types.ObjectId, ref: 'FileDocument' }
+    }
+  ]
 })
 
 export default mongoose.model('Activity', ActivitySchema)
