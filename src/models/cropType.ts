@@ -18,8 +18,15 @@ const { Schema } = mongoose
 
 export const CropTypeSchema = new Schema({
   name: {
-    type: String,
-    require: true
+    en: {
+      type: String
+    },
+    es: {
+      type: String
+    }
+  },
+  key: {
+    type: String
   }
 })
 

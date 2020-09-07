@@ -4,7 +4,18 @@ const { Schema } = mongoose
 
 const TypeAgreementSchema = new Schema({
   name: {
-    type: String
+    en: {
+      type: String,
+      required: true
+    },
+    es: {
+      type: String,
+      required: true
+    }
+  },
+  key: {
+    type: String,
+    required: true
   }
 })
 

@@ -4,8 +4,14 @@ const { Schema } = mongoose
 
 const ActivityTypeSchema = new Schema({
   name: {
-    type: String,
-    required: true
+    en: {
+      type: String,
+      required: true
+    },
+    es: {
+      type: String,
+      required: true
+    }
   },
   tag: {
     type: String,

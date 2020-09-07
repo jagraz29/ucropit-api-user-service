@@ -23,8 +23,14 @@ const { Schema } = mongoose
 
 export const UnitTypeSchema = new Schema({
   name: {
-    type: String,
-    require: true
+    en: {
+      type: String,
+      required: true
+    },
+    es: {
+      type: String,
+      required: true
+    }
   },
   key: {
     type: String,
