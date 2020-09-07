@@ -32,6 +32,6 @@ router.use('/commons', authMiddleware, common)
 router.use('/crops', authMiddleware, crop)
 
 // COMPANIES
-router.use('/companies', company)
+router.use('/companies', authMiddleware, company)
 
 export default router

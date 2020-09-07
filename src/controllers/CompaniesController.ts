@@ -48,8 +48,10 @@ class CompaniesController {
    * @return {Response}
    */
   public async create (req: Request, res: Response) {
+    const user = req.user
+
     await validateCompanyStore(req.body)
-    let company = await CompanyService.store(req.body)
+    let company = await CompanyService.store(req.body, req.files, user)
 
     res.status(201).json(company)
   }
