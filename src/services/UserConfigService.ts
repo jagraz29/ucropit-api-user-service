@@ -1,4 +1,4 @@
-import UserConfig from '../models/UserConfig'
+import UserConfig from '../models/userConfig'
 
 interface IUserConfig {
   fromInvitation?: boolean

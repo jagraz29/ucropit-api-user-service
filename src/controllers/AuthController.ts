@@ -3,12 +3,16 @@ import models from '../models'
 import UserService from '../services/UserService'
 import numbers from '../utils/numbers'
 import EmailService from '../services/EmailService'
+import UserConfigService from '../services/UserConfigService'
 
 const User = models.User
+const UserConfig = models.UserConfig
 
 class AuthController {
   public async me (req, res: Response) {
-    res.json(req.user)
+    const user = await User.findById(req.user._id).populate('config')
+
+    res.json(user)
   }
 
   public async auth (req: Request, res: Response) {
@@ -75,9 +79,11 @@ class AuthController {
     if (!user) return res.status(404).json({ error: 'ERR_NOT_FOUND' })
 
     user.pin = req.body.pin
-    await user.save()
+    user = await user.save()
 
-    res.json({ user })
+    await UserConfigService.update(user.config, { hasPin: true })
+
+    res.json({ user: await user.populate('config').execPopulate() })
   }
 }
 
