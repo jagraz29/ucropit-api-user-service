@@ -9,16 +9,31 @@ const ActivitySchema = new Schema({
   },
   dateStart: {
     type: Date,
-    required: true
+    required: false
   },
   dateEnd: {
     type: Date,
-    required: true
+    required: false
+  },
+  dateLimitValidation: {
+    type: Date,
+    required: false
   },
   surface: {
     type: Number,
-    required: true
+    required: false
   },
+  status: {
+    type: String,
+    enum: ['PLANNED', 'PENDING', 'FINISHED'],
+    default: 'PLANNED'
+  },
+  collaborators: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
   type: {
     type: Schema.Types.ObjectId,
     ref: 'ActivityType'
@@ -43,17 +58,19 @@ const ActivitySchema = new Schema({
       quantity: {
         type: Number
       },
-      total: Number
+      total: {
+        type: Number
+      }
     }
   ],
   evidence: [
     {
       name: { type: String, required: true },
       description: { type: String, required: true },
-      date: { type: Date, required: true },
-      file: { type: Schema.Types.ObjectId, ref: 'FileDocument' }
+      date: { type: Date, required: true }
     }
-  ]
+  ],
+  files: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }]
 })
 
 export default mongoose.model('Activity', ActivitySchema)

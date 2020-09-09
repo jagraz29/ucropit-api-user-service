@@ -25,6 +25,41 @@ export const validateCropStore = async (crop) => {
   return schema.validateAsync(crop)
 }
 
+export const validateActivityStore = async (activity) => {
+  const schema = Joi.object({
+    name: Joi.string().required(),
+    dateStart: Joi.date().optional(),
+    dateEnd: Joi.date().greater(Joi.ref('dateStart')).optional(),
+    dateLimitValidation: Joi.date().optional(),
+    surface: Joi.string().required(),
+    type: Joi.string().required(),
+    crop: Joi.string().required(),
+    typeAgreement: Joi.string().optional(),
+    lots: Joi.array().items(Joi.string()).optional(),
+    supplies: Joi.array()
+      .items(
+        Joi.object().keys({
+          name: Joi.string().required(),
+          unit: Joi.string().required(),
+          quantity: Joi.number().required(),
+          total: Joi.number().required()
+        })
+      )
+      .optional(),
+    evidence: Joi.array()
+      .items(
+        Joi.object().keys({
+          name: Joi.string().required(),
+          description: Joi.string().required(),
+          date: Joi.date().required()
+        })
+      )
+      .optional()
+  })
+
+  return schema.validateAsync(activity)
+}
+
 export const validateCompanyStore = async (company) => {
   const schema = Joi.object({
     identifier: Joi.string().required(),

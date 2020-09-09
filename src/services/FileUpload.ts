@@ -4,7 +4,7 @@ import { getFullPath, makeDirIfNotExists } from '../utils/Files'
 
 interface IStore {
   path: string
-  namefile: string
+  nameFile: string
   fileType: string
 }
 
@@ -75,6 +75,8 @@ class FileUpload {
       throw new Error('No files were uploaded.')
     }
 
+    console.log(this.files.files)
+
     if (!this.validTypes(this.files.files)) {
       throw new Error('File extension is rejected')
     }
@@ -100,7 +102,7 @@ class FileUpload {
           resolve([
             {
               path: `${process.env.BASE_URL}/${this.destination}/${renameFile}`,
-              namefile: renameFile,
+              nameFile: renameFile,
               fileType: toUploadFile.mimetype
             }
           ])

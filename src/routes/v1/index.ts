@@ -4,6 +4,7 @@ import users from './users'
 import auth from './auth'
 import lots from './lots'
 import crop from './crop'
+import activities from './activities'
 import company from './company'
 import common from './common'
 import passport from '../../utils/auth/strategies/jwt'
@@ -30,6 +31,9 @@ router.use('/commons', authMiddleware, common)
 
 // CROPS
 router.use('/crops', authMiddleware, crop)
+
+// ACTIVITIES
+router.use('/activities', authMiddleware, activities)
 
 // COMPANIES
 router.use('/companies', authMiddleware, company)
