@@ -40,25 +40,25 @@ class FileUpload {
       throw new Error('No files were uploaded.')
     }
 
+    // If documents is object, cast to array
+    if (!this.files.documents.length) {
+      this.files.documents = [this.files.documents]
+    }
+
     if (
       this.files.documents.filter((file) => !this.validTypes(file)).length > 0
     ) {
       throw new Error('File extension is rejected')
     }
 
-    for await (const file of this.files.documents) {
+    for (const file of this.files.documents) {
       const fileNameArray = file.name.trim().split('.')
 
       const renameFile = `${file.md5}.${fileNameArray.pop()}`
 
-      makeDirIfNotExists(getFullPath(`${this.destination}`))
+      const path = await makeDirIfNotExists(getFullPath(`${this.destination}`))
 
-      file.mv(
-        path.join(
-          process.cwd(),
-          `/${process.env.DIR_STORAGE}/${this.destination}/${renameFile}`
-        )
-      )
+      await file.mv(`${path}/${renameFile}`)
 
       filesStore.push({
         path: `${process.env.BASE_URL}/${this.destination}/${renameFile}`,
@@ -75,8 +75,6 @@ class FileUpload {
       throw new Error('No files were uploaded.')
     }
 
-    console.log(this.files.files)
-
     if (!this.validTypes(this.files.files)) {
       throw new Error('File extension is rejected')
     }
@@ -88,26 +86,20 @@ class FileUpload {
 
     const renameFile = `${toUploadFile.md5}.${fileNameArray.pop()}`
 
-    await makeDirIfNotExists(getFullPath(`${this.destination}`))
+    const path = await makeDirIfNotExists(getFullPath(`${this.destination}`))
 
     return new Promise((resolve, reject) => {
-      toUploadFile.mv(
-        path.join(
-          process.cwd(),
-          `/${process.env.DIR_STORAGE}/${this.destination}/${renameFile}`
-        ),
-        (err) => {
-          if (err) reject(new Error("File's extension is rejected"))
+      toUploadFile.mv(`${path}/${renameFile}`, (err) => {
+        if (err) reject(new Error("File's extension is rejected"))
 
-          resolve([
-            {
-              path: `${process.env.BASE_URL}/${this.destination}/${renameFile}`,
-              nameFile: renameFile,
-              fileType: toUploadFile.mimetype
-            }
-          ])
-        }
-      )
+        resolve([
+          {
+            path: `${process.env.BASE_URL}/${this.destination}/${renameFile}`,
+            nameFile: renameFile,
+            fileType: toUploadFile.mimetype
+          }
+        ])
+      })
     })
   }
 

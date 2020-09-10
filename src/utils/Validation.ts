@@ -19,7 +19,7 @@ export const validateCropStore = async (crop) => {
       name: Joi.string().required(),
       address: Joi.string().required(),
       addressFloor: Joi.string().optional()
-    })
+    }).required()
   })
 
   return schema.validateAsync(crop)

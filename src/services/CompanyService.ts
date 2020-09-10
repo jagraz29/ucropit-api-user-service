@@ -42,15 +42,17 @@ class CompanyService {
 
     const filesUploaded = await store.save()
 
-    const documents = filesUploaded.map((item) => {
-      return {
+    const documents = filesUploaded.map(async (item) => {
+      const file = await FileDocument.create({
         ...item,
         date: new Date(),
         user: user._id
-      }
+      })
+
+      return file._id
     })
 
-    company.files = documents
+    company.files = await Promise.all(documents)
 
     return company.save()
   }
