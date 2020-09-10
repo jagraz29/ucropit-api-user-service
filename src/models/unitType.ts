@@ -7,15 +7,16 @@
  *         required:
  *           - name
  *           - key
- *           - unit
  *         properties:
  *           name:
- *             type: string
+ *             type: object
+ *             properties:
+ *                  en:
+ *                    type: string
+ *                  es:
+ *                    type: string
  *           key:
  *             type: string
- *         example:
- *            name: Kilogramos
- *            key: kg
  */
 import mongoose from 'mongoose'
 

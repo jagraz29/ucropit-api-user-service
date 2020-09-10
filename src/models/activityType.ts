@@ -1,3 +1,24 @@
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *       ActivityType:
+ *         type: object
+ *         required:
+ *           - name
+ *           - tag
+ *         properties:
+ *           name:
+ *             type: object
+ *             properties:
+ *                  en:
+ *                    type: string
+ *                  es:
+ *                    type: string
+ *           tag:
+ *             type: string
+ */
+
 import mongoose from 'mongoose'
 
 const { Schema } = mongoose

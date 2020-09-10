@@ -1,3 +1,26 @@
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *      FileDocument:
+ *        type: object
+ *        required:
+ *          - nameFile
+ *          - date
+ *          - path
+ *          - user
+ *        properties:
+ *          nameFile:
+ *            type: string
+ *          date:
+ *            type: string
+ *            format: date
+ *          path:
+ *            type: string
+ *          user:
+ *            schema:
+ *                $ref: '#/components/schemas/User'
+ */
 import mongoose from 'mongoose'
 
 const { Schema } = mongoose

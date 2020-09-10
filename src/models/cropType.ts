@@ -6,11 +6,17 @@
  *         type: object
  *         required:
  *           - name
+ *           - key
  *         properties:
  *           name:
+ *             type: object
+ *             properties:
+ *                  en:
+ *                    type: string
+ *                  es:
+ *                    type: string
+ *           key:
  *             type: string
- *         example:
- *            name: Soja
  */
 import mongoose from 'mongoose'
 

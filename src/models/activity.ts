@@ -1,3 +1,51 @@
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *       Activity:
+ *         type: object
+ *         required:
+ *           - name
+ *         properties:
+ *           name:
+ *             type: string
+ *           dateStart:
+ *             type: string
+ *             format: date
+ *           dateEnd:
+ *             type: string
+ *             format: date
+ *           dateLimitValidation:
+ *             type: string
+ *             format: date
+ *           surface:
+ *              type: number
+ *           status:
+ *              type: string
+ *           collaborators:
+ *              type: array
+ *           type:
+ *              type: object
+ *              schema:
+ *                $ref: '#/components/schemas/ActivityType'
+ *           typeAgreement:
+ *              type: object
+ *              schema:
+ *                $ref: '#/components/schemas/TypeAgreement'
+ *           crop:
+ *              type: object
+ *              schema:
+ *                $ref: '#/components/schemas/Crop'
+ *           lots:
+ *              type: array
+ *           supplies:
+ *              type: array
+ *           evidence:
+ *              type: array
+ *           files:
+ *              type: array
+ *
+ */
 import mongoose from 'mongoose'
 
 const { Schema } = mongoose
