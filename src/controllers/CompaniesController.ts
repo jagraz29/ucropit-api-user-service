@@ -47,7 +47,7 @@ class CompaniesController {
    *
    * @return {Response}
    */
-  public async create (req: Request, res: Response) {
+  public async create (req, res: Response) {
     const user = req.user
 
     await validateCompanyStore(req.body)

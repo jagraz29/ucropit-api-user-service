@@ -1,0 +1,11 @@
+{
+    "apps": [
+      {
+        "name": "ucropit_dev_app",
+        "script": "npx",
+        "interpreter": "none",
+        "args": "tsc && node dist/server.js -p 3001",
+        "bundledWebRuntime": true
+      }
+    ]
+  }
