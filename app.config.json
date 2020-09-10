@@ -1,7 +1,7 @@
 {
     "apps": [
       {
-        "name": "ucropit_dev_app",
+        "name": "ucropdevapi",
         "script": "npx",
         "interpreter": "none",
         "args": "tsc && node dist/server.js -p 3001",
