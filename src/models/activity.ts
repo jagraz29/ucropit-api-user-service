@@ -44,7 +44,6 @@
  *              type: array
  *           files:
  *              type: array
- *
  */
 import mongoose from 'mongoose'
 
