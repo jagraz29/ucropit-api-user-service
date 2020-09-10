@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 import models from '../models'
 import UserService from '../services/UserService'
-import numbers from '../utils/numbers'
 import EmailService from '../services/EmailService'
 import UserConfigService from '../services/UserConfigService'
+import numbers from '../utils/Numbers'
 
 const User = models.User
 const UserConfig = models.UserConfig
