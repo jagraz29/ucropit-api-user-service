@@ -37,7 +37,7 @@ class CompanyService {
   private static async addFiles (files, company, user) {
     const store = new FileUpload(
       files,
-      `uploads/companies/${company.identifier}`
+      `${process.env.DIR_UPLOADS}/${process.env.DIR_FILES_COMPANY}/${company.identifier}`
     )
 
     const filesUploaded = await store.save()

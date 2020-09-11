@@ -23,7 +23,9 @@ class ActivityService {
   public static async addFiles (activity, files, user) {
     const store = new FileUpload(
       files,
-      `uploads/activities/${_.kebabCase(activity.name)}`
+      `${process.env.DIR_UPLOADS}/${
+        process.env.DIR_FILES_ACTIVITIES
+      }/${_.kebabCase(activity.name)}`
     )
 
     const filesUploaded = await store.save()
