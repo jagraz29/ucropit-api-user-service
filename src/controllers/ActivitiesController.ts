@@ -1,5 +1,8 @@
 import { Request, Response } from 'express'
-import { validateActivityStore } from '../utils/Validation'
+import {
+  validateActivityStore,
+  validateActivityUpdate
+} from '../utils/Validation'
 
 import ActivityService from '../services/ActivityService'
 import models from '../models'
@@ -80,13 +83,25 @@ class ActivitiesController {
 
   /**
    * Update one activity.
+   *
    * @param Request req
    * @param Response res
    *
    * @return Response
    */
   public async update (req: Request, res: Response) {
-    // TODO: Implement
+    const user: UserSchema = req.user
+    const { id } = req.params
+    const data = JSON.parse(req.body.data)
+    await validateActivityUpdate(data)
+
+    let activity = await ActivityService.update(id, data)
+
+    if (req.files) {
+      activity = await ActivityService.addFiles(activity, req.files, user)
+    }
+
+    res.status(201).json(activity)
   }
 
   /**
@@ -108,8 +123,8 @@ class ActivitiesController {
   /**
    * Delete File to company.
    *
-   * @param req
-   * @param res
+   * @param Request req
+   * @param Response res
    *
    * @return {Response}
    */

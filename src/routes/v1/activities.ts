@@ -88,6 +88,46 @@ router.post('/', activitiesController.store)
 /**
  * @swagger
  * path:
+ *  /v1/activities:
+ *    put:
+ *      summary: Update a Activity
+ *      tags: [Activity]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      requestBody:
+ *        content:
+ *          multipart/form-data:
+ *              schema:
+ *               type: object
+ *               properties:
+ *                  data:
+ *                     type: string
+ *                     required: true
+ *                     description: Data in JSON to convert in String
+ *                  documents:
+ *                       type: string
+ *                       format: binary
+ *                       required: false
+ *                       description: Documents File
+ *
+ *      responses:
+ *       '200':
+ *         description: Create a new Activity.
+ *         content:
+ *         application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Activity'
+ *
+ *       '500':
+ *         description: Error to Server.
+ *
+ */
+router.put('/:id', activitiesController.update)
+
+/**
+ * @swagger
+ * path:
  *  /v1/activities/{id}:
  *    delete:
  *      summary: Delete activity

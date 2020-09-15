@@ -21,6 +21,12 @@ class ActivityService {
     return Activity.create(activity)
   }
 
+  public static async update (id, activity: IActivity) {
+    await Activity.findByIdAndUpdate(id, activity)
+
+    return Activity.findOne({ _id: id })
+  }
+
   public static async addFiles (activity, files, user) {
     const store = new FileUpload(
       files,
