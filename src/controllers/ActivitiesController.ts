@@ -4,7 +4,12 @@ import { validateActivityStore } from '../utils/Validation'
 import ActivityService from '../services/ActivityService'
 import models from '../models'
 
+import _ from 'lodash'
+
+import { getPathFileByType, getFullPath } from '../utils/Files'
+
 const Activity = models.Activity
+const FileDocument = models.FileDocument
 
 import { UserSchema } from '../models/user'
 
@@ -97,6 +102,39 @@ class ActivitiesController {
 
     res.status(200).json({
       message: 'deleted successfully'
+    })
+  }
+
+  /**
+   * Delete File to company.
+   *
+   * @param req
+   * @param res
+   *
+   * @return {Response}
+   */
+  public async removeFile (req: Request, res: Response) {
+    const { id, fileId } = req.params
+
+    const activity = await Activity.findOne({ _id: id })
+    const document = await FileDocument.findOne({ _id: fileId })
+
+    const fileRemove = await ActivityService.removeFiles(
+      fileId,
+      activity,
+      `${getFullPath(getPathFileByType('activity'))}/${_.kebabCase(
+        activity.name
+      )}/${document.nameFile}`
+    )
+
+    if (!fileRemove) {
+      return res
+        .status(404)
+        .json({ error: true, message: 'Not Found File to delete' })
+    }
+
+    res.status(200).json({
+      message: 'deleted file successfully'
     })
   }
 }

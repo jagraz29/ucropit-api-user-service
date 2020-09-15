@@ -105,4 +105,26 @@ router.post('/', activitiesController.store)
  */
 router.delete('/:id', activitiesController.delete)
 
+/**
+ * @swagger
+ * path:
+ *  /v1/activities/{id}/files/{fileId}:
+ *    delete:
+ *      summary: Delete file to activity
+ *      tags: [Activity]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *        - in: path
+ *          name: fileId
+ *      responses:
+ *        "200":
+ *          description: deleted file successfully
+ *        "404":
+ *          description: Not Found File to delete
+ *        "500":
+ *          description: Server error
+ */
+router.delete('/:id/files/:fileId', activitiesController.removeFile)
+
 export default router

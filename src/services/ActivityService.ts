@@ -1,5 +1,6 @@
 import models from '../models'
 import FileUpload from './FileUpload'
+import { fileExist, removeFile } from '../utils/Files'
 import _ from 'lodash'
 
 const Activity = models.Activity
@@ -43,6 +44,27 @@ class ActivityService {
     activity.files = await Promise.all(documents)
 
     return activity.save()
+  }
+
+  public static async removeFiles (fileId: string, activity, filePath: string) {
+    if (fileExist(filePath)) {
+      removeFile(filePath)
+
+      const fileRemove = await FileDocument.findByIdAndDelete(fileId)
+
+      if (fileRemove) {
+        const files = _.remove(activity.files, function (item) {
+          return item === fileId
+        })
+
+        activity.files = files
+
+        await activity.save()
+      }
+      return true
+    }
+
+    return false
   }
 }
 

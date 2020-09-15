@@ -16,12 +16,25 @@ function publicPath () {
   return join(basePath(), `public`)
 }
 
-function basePath (): string {
+export function basePath (): string {
   return join(__dirname, '../../../')
 }
 
 export function removeFile (dir: string) {
   fs.unlinkSync(dir)
+}
+
+export function getPathFileByType (type): string {
+  let dir = ''
+  switch (type) {
+    case 'company':
+      dir = `${process.env.DIR_UPLOADS}/${process.env.DIR_FILES_COMPANY}`
+      break
+    case 'activity':
+      dir = `${process.env.DIR_UPLOADS}/${process.env.DIR_FILES_ACTIVITIES}`
+  }
+
+  return dir
 }
 
 export function fileExist (dir: string) {
