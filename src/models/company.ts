@@ -21,7 +21,6 @@
  *             type: string
  */
 import mongoose from 'mongoose'
-import { FileDocumentSchema } from './documentFile'
 
 const { Schema } = mongoose
 
@@ -53,7 +52,7 @@ const CompanySchema = new Schema({
     default: 0
   },
   files: {
-    type: [FileDocumentSchema]
+    type: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }]
   }
 })
 

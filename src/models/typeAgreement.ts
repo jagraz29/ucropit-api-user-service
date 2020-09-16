@@ -2,7 +2,7 @@
  * @swagger
  *  components:
  *    schemas:
- *       CropType:
+ *       TypeAgreement:
  *         type: object
  *         required:
  *           - name
@@ -22,18 +22,21 @@ import mongoose from 'mongoose'
 
 const { Schema } = mongoose
 
-export const CropTypeSchema = new Schema({
+const TypeAgreementSchema = new Schema({
   name: {
     en: {
-      type: String
+      type: String,
+      required: true
     },
     es: {
-      type: String
+      type: String,
+      required: true
     }
   },
   key: {
-    type: String
+    type: String,
+    required: true
   }
 })
 
-export const CropType = mongoose.model('CropType', CropTypeSchema)
+export default mongoose.model('TypeAgreement', TypeAgreementSchema)

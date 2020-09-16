@@ -1,10 +1,17 @@
 require('dotenv').config()
 import models, { connectDb } from '../models'
 import chalk from 'chalk'
-import { cropTypesData, unitTypesData } from './data'
+import {
+  cropTypesData,
+  unitTypesData,
+  activitiesTypesData,
+  agreementTypesData
+} from './data'
 
 const CropType = models.CropType
 const UnitType = models.UnitType
+const ActivityType = models.ActivityType
+const TypeAgreement = models.TypeAgreement
 
 /**
  * Seeders CropType
@@ -15,7 +22,7 @@ const seedersCropType = async () => {
   const cropTypes = await CropType.find({})
 
   const cropTypesSeed = cropTypesData.filter(
-    (item) => !cropTypes.find((element) => item.name === element.name)
+    (item) => !cropTypes.find((element) => item.key === element.key)
   )
 
   for (const cropType of cropTypesSeed) {
@@ -34,7 +41,7 @@ const seedersUnitType = async () => {
   const unitTypes = await UnitType.find({})
 
   const unitTypeSeed = unitTypesData.filter(
-    (item) => !unitTypes.find((element) => item.name === element.name)
+    (item) => !unitTypes.find((element) => item.key === element.key)
   )
 
   for (const unitType of unitTypeSeed) {
@@ -45,12 +52,48 @@ const seedersUnitType = async () => {
   return true
 }
 
+const seedersActivitiesType = async () => {
+  console.log(`${chalk.green('=====Registering ActivityType====')}`)
+
+  const activities = await ActivityType.find({})
+
+  const activityTypeSeed = activitiesTypesData.filter(
+    (item) => !activities.find((element) => item.tag === element.tag)
+  )
+
+  for (const activityType of activityTypeSeed) {
+    await ActivityType.create(activityType)
+  }
+
+  console.log(`${chalk.green('=====Registered ActivityType====')}`)
+  return true
+}
+
+const seedersTypeAgreement = async () => {
+  console.log(`${chalk.green('=====Registering TypeAgreement====')}`)
+
+  const agreementTypes = await TypeAgreement.find({})
+
+  const agreementTypeSeed = agreementTypesData.filter(
+    (item) => !agreementTypes.find((element) => item.key === element.key)
+  )
+
+  for (const agreementType of agreementTypeSeed) {
+    await TypeAgreement.create(agreementType)
+  }
+
+  console.log(`${chalk.green('=====Registered TypeAgreement====')}`)
+  return true
+}
+
 (async () => {
   const connected = await connectDb()
 
   if (connected) {
     await seedersUnitType()
     await seedersCropType()
+    await seedersActivitiesType()
+    await seedersTypeAgreement()
   }
   process.exit()
 })()

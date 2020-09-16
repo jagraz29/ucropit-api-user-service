@@ -1,5 +1,7 @@
 import FileUpload from './FileUpload'
 import models from '../models'
+import { fileExist, removeFile } from '../utils/Files'
+import _ from 'lodash'
 
 const Company = models.Company
 const FileDocument = models.FileDocument
@@ -37,22 +39,45 @@ class CompanyService {
   private static async addFiles (files, company, user) {
     const store = new FileUpload(
       files,
-      `uploads/companies/${company.identifier}`
+      `${process.env.DIR_UPLOADS}/${process.env.DIR_FILES_COMPANY}/${company.identifier}`
     )
 
     const filesUploaded = await store.save()
 
-    const documents = filesUploaded.map((item) => {
-      return {
+    const documents = filesUploaded.map(async (item) => {
+      const file = await FileDocument.create({
         ...item,
         date: new Date(),
         user: user._id
-      }
+      })
+
+      return file._id
     })
 
-    company.files = documents
+    company.files = await Promise.all(documents)
 
     return company.save()
+  }
+
+  public static async removeFiles (fileId: string, company, filePath: string) {
+    if (fileExist(filePath)) {
+      removeFile(filePath)
+
+      const fileRemove = await FileDocument.findByIdAndDelete(fileId)
+
+      if (fileRemove) {
+        const files = _.remove(company.files, function (item) {
+          return item === fileId
+        })
+
+        company.files = files
+
+        await company.save()
+      }
+      return true
+    }
+
+    return false
   }
 }
 

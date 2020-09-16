@@ -21,10 +21,10 @@ export const handleFileConvertJSON = async function (file: FileArray) {
 
   const pathFile = path.join(
     process.cwd(),
-    `/${process.env.DIR_TMP}/${stored.namefile}`
+    `/${process.env.DIR_TMP}/${stored.nameFile}`
   )
 
-  if (stored.namefile.split('.')[1] === 'kmz') {
+  if (stored.nameFile.split('.')[1] === 'kmz') {
     result = await parseKMZ.toJson(pathFile)
   } else result = await parseKML.toJson(pathFile)
 

@@ -2,11 +2,11 @@
  * @swagger
  *  components:
  *    schemas:
- *       CropType:
+ *       ActivityType:
  *         type: object
  *         required:
  *           - name
- *           - key
+ *           - tag
  *         properties:
  *           name:
  *             type: object
@@ -15,25 +15,29 @@
  *                    type: string
  *                  es:
  *                    type: string
- *           key:
+ *           tag:
  *             type: string
  */
+
 import mongoose from 'mongoose'
 
 const { Schema } = mongoose
 
-export const CropTypeSchema = new Schema({
+const ActivityTypeSchema = new Schema({
   name: {
     en: {
-      type: String
+      type: String,
+      required: true
     },
     es: {
-      type: String
+      type: String,
+      required: true
     }
   },
-  key: {
-    type: String
+  tag: {
+    type: String,
+    required: true
   }
 })
 
-export const CropType = mongoose.model('CropType', CropTypeSchema)
+export default mongoose.model('ActivityType', ActivityTypeSchema)
