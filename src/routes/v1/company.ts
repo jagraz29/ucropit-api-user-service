@@ -152,4 +152,26 @@ router.put('/:id', companiesController.update)
  */
 router.delete('/:id', companiesController.delete)
 
+/**
+ * @swagger
+ * path:
+ *  /v1/companies/{id}/files/{fileId}:
+ *    delete:
+ *      summary: Delete file to company
+ *      tags: [Companies]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *        - in: path
+ *          name: fileId
+ *      responses:
+ *        "200":
+ *          description: deleted file successfully
+ *        "404":
+ *          description: Not Found File to delete
+ *        "500":
+ *          description: Server error
+ */
+router.delete('/:id/files/:fileId', companiesController.removeFile)
+
 export default router

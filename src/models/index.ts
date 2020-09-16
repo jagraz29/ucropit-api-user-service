@@ -4,6 +4,10 @@ import Lot from './lot'
 import Crop from './crop'
 import Company from './company'
 import UserConfig from './userConfig'
+import Supplies from './supplies'
+import ActivityType from './activityType'
+import TypeAgreement from './typeAgreement'
+import Activity from './activity'
 
 import { CropType } from './cropType'
 import { UnitType } from './unitType'
@@ -27,7 +31,11 @@ const models = {
   CropType,
   UnitType,
   UserConfig,
-  FileDocument
+  FileDocument,
+  Supplies,
+  TypeAgreement,
+  ActivityType,
+  Activity
 }
 
 export { connectDb }
