@@ -1,7 +1,8 @@
 import models from '../models'
 import FileUpload from './FileUpload'
 import { fileExist, removeFile } from '../utils/Files'
-import _ from 'lodash'
+import kebabCase from 'lodash/kebabCase'
+import remove from 'lodash/remove'
 
 const Activity = models.Activity
 const FileDocument = models.FileDocument
@@ -30,14 +31,12 @@ class ActivityService {
   public static async addFiles (activity, files, user) {
     const store = new FileUpload(
       files,
-      `${process.env.DIR_UPLOADS}/${
-        process.env.DIR_FILES_ACTIVITIES
-      }/${_.kebabCase(activity.name)}`
+      `${process.env.DIR_UPLOADS}/activities/${kebabCase(activity.name)}`
     )
 
     const filesUploaded = await store.save()
 
-    const documents = filesUploaded.map(async (item) => {
+    const documents = filesUploaded.map(async item => {
       const file = await FileDocument.create({
         ...item,
         date: new Date(),
@@ -59,7 +58,7 @@ class ActivityService {
       const fileRemove = await FileDocument.findByIdAndDelete(fileId)
 
       if (fileRemove) {
-        const files = _.remove(activity.files, function (item) {
+        const files = remove(activity.files, function (item) {
           return item === fileId
         })
 
