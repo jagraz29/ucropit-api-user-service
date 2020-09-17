@@ -61,7 +61,7 @@ class FileUpload {
       await file.mv(`${path}/${renameFile}`)
 
       filesStore.push({
-        path: `${process.env.BASE_URL}/${this.destination}/${renameFile}`,
+        path: `/${process.env.DIR_UPLOADS}/${this.destination}/${renameFile}`,
         nameFile: renameFile,
         fileType: file.mimetype
       })
@@ -86,7 +86,7 @@ class FileUpload {
 
     const renameFile = `${toUploadFile.md5}.${fileNameArray.pop()}`
 
-    const path = await makeDirIfNotExists(getFullPath(`${this.destination}`))
+    const path = await makeDirIfNotExists(getFullPath(`${process.env.DIR_UPLOADS}/${this.destination}`))
 
     return new Promise((resolve, reject) => {
       toUploadFile.mv(`${path}/${renameFile}`, (err) => {
@@ -94,7 +94,7 @@ class FileUpload {
 
         resolve([
           {
-            path: `${process.env.BASE_URL}/${this.destination}/${renameFile}`,
+            path: `${process.env.DIR_UPLOADS}/${this.destination}/${renameFile}`,
             nameFile: renameFile,
             fileType: toUploadFile.mimetype
           }
