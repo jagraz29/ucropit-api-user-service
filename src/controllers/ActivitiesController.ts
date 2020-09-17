@@ -33,7 +33,15 @@ class ActivitiesController {
     const activities = await Activity.find(filter)
       .populate('type')
       .populate('typeAgreement')
-      .populate('crop')
+      .populate({
+        path: 'crop',
+        populate: [
+          { path: 'cropType' },
+          { path: 'unitType' },
+          { path: 'company' },
+          { path: 'owner' }
+        ]
+      })
       .populate('lots')
       .populate('files')
 
@@ -52,7 +60,15 @@ class ActivitiesController {
     const activity = await Activity.findById(req.params.id)
       .populate('type')
       .populate('typeAgreement')
-      .populate('crop')
+      .populate({
+        path: 'crop',
+        populate: [
+          { path: 'cropType' },
+          { path: 'unitType' },
+          { path: 'company' },
+          { path: 'owner' }
+        ]
+      })
       .populate('lots')
       .populate('files')
 
@@ -137,9 +153,9 @@ class ActivitiesController {
     const fileRemove = await ActivityService.removeFiles(
       fileId,
       activity,
-      `${getFullPath(getPathFileByType('activity'))}/${_.kebabCase(
-        activity.name
-      )}/${document.nameFile}`
+      `${getFullPath(getPathFileByType('activity'))}/${activity.key}/${
+        document.nameFile
+      }`
     )
 
     if (!fileRemove) {
