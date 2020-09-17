@@ -8,7 +8,7 @@ const router: express.Router = express.Router()
  * @swagger
  * path:
  *  /v1/profile/{id}/image:
- *    get:
+ *    post:
  *      summary: Store a image
  *      tags: [Profile]
  *      parameters:
@@ -27,6 +27,6 @@ const router: express.Router = express.Router()
  *        "500":
  *          description: Server error
  */
-router.get('/:id/image', profileController.image)
+router.post('/:id/image', profileController.image)
 
 export default router
