@@ -1,6 +1,7 @@
 import express from 'express'
 import 'express-async-errors'
 import users from './users'
+import profile from './profile'
 import auth from './auth'
 import lots from './lots'
 import crop from './crop'
@@ -22,6 +23,9 @@ router.use('/auth', auth)
 
 // USERS
 router.use('/users', authMiddleware, users)
+
+// PROFILE
+router.use('/profile', authMiddleware, profile)
 
 // LOTS
 router.use('/lots', authMiddleware, lots)

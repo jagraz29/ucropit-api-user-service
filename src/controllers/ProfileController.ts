@@ -13,7 +13,10 @@ class ProfileController {
    * @return Response
    */
   public async image (req: Request, res: Response) {
-    const users = await User.find({})
+    const users = await User.find({ email: req.body.email })
+
+    console.log(req.files)
+
     res.status(200).json(users)
   }
 }
