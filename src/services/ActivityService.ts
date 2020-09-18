@@ -35,7 +35,7 @@ class ActivityService {
 
     const documents = filesUploaded.map(async (item) => {
       const file = await FileDocument.create({
-        ...item,
+        ...(item as object),
         date: new Date(),
         user: user._id
       })

@@ -83,7 +83,7 @@ class ActivitiesController {
    *
    * @return Response
    */
-  public async store (req: Request, res: Response) {
+  public async create (req: Request, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     await validateActivityStore(data)
