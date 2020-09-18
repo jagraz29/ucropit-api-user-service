@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import models from '../models'
-import _ from 'lodash'
 import CropService from '../services/CropService'
 import CompanyService from '../services/CompanyService'
 import LotService from '../services/LotService'

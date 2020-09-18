@@ -1,7 +1,7 @@
 import UploadService from './UploadService'
 import models from '../models'
 import { fileExist, removeFile } from '../utils/Files'
-import _ from 'lodash'
+import remove from 'lodash/remove'
 
 const Company = models.Company
 const FileDocument = models.FileDocument
@@ -64,7 +64,7 @@ class CompanyService {
       const fileRemove = await FileDocument.findByIdAndDelete(fileId)
 
       if (fileRemove) {
-        const files = _.remove(company.files, function (item) {
+        const files = remove(company.files, function (item) {
           return item === fileId
         })
 

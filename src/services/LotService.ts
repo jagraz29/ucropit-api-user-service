@@ -1,6 +1,6 @@
 import { Request } from 'express'
 import Lot from '../models/lot'
-import _ from 'lodash'
+import flatten from 'lodash/flatten'
 import * as geolib from 'geolib'
 
 import { handleFileConvertJSON } from '../utils/ParseKmzFile'
@@ -59,7 +59,7 @@ class LotService {
    * @param coordinates
    */
   public static getArrayAreas (coordinates) {
-    return _.flatten(coordinates)
+    return flatten(coordinates)
   }
 
   /**

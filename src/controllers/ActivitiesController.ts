@@ -7,8 +7,6 @@ import {
 import ActivityService from '../services/ActivityService'
 import models from '../models'
 
-import _ from 'lodash'
-
 import { getPathFileByType, getFullPath } from '../utils/Files'
 
 const Activity = models.Activity
