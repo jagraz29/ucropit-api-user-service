@@ -21,7 +21,7 @@ export const handleFileConvertJSON = async function (file: FileArray) {
 
   const pathFile = path.join(
     process.cwd(),
-    `/${process.env.DIR_TMP}/${stored.nameFile}`
+    `${process.env.DIR_TMP}/${stored.nameFile}`
   )
 
   if (stored.nameFile.split('.')[1] === 'kmz') {

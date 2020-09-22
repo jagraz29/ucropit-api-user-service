@@ -83,7 +83,7 @@ router.get('/:id', activitiesController.show)
  *         description: Error to Server.
  *
  */
-router.post('/', activitiesController.store)
+router.post('/', activitiesController.create)
 
 /**
  * @swagger

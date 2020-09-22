@@ -46,10 +46,15 @@
  *              type: array
  */
 import mongoose from 'mongoose'
+import shortid from 'shortid'
 
 const { Schema } = mongoose
 
 const ActivitySchema = new Schema({
+  key: {
+    type: String,
+    required: false
+  },
   name: {
     type: String,
     required: true
@@ -118,6 +123,12 @@ const ActivitySchema = new Schema({
     }
   ],
   files: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }]
+})
+
+ActivitySchema.pre('save', async function (next) {
+  const activity = this
+
+  activity.key = shortid.generate()
 })
 
 export default mongoose.model('Activity', ActivitySchema)

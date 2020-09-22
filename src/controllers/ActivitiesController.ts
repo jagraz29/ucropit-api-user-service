@@ -7,8 +7,6 @@ import {
 import ActivityService from '../services/ActivityService'
 import models from '../models'
 
-import _ from 'lodash'
-
 import { getPathFileByType, getFullPath } from '../utils/Files'
 
 const Activity = models.Activity
@@ -33,7 +31,15 @@ class ActivitiesController {
     const activities = await Activity.find(filter)
       .populate('type')
       .populate('typeAgreement')
-      .populate('crop')
+      .populate({
+        path: 'crop',
+        populate: [
+          { path: 'cropType' },
+          { path: 'unitType' },
+          { path: 'company' },
+          { path: 'owner' }
+        ]
+      })
       .populate('lots')
       .populate('files')
 
@@ -52,7 +58,15 @@ class ActivitiesController {
     const activity = await Activity.findById(req.params.id)
       .populate('type')
       .populate('typeAgreement')
-      .populate('crop')
+      .populate({
+        path: 'crop',
+        populate: [
+          { path: 'cropType' },
+          { path: 'unitType' },
+          { path: 'company' },
+          { path: 'owner' }
+        ]
+      })
       .populate('lots')
       .populate('files')
 
@@ -67,7 +81,7 @@ class ActivitiesController {
    *
    * @return Response
    */
-  public async store (req: Request, res: Response) {
+  public async create (req: Request, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     await validateActivityStore(data)
@@ -137,9 +151,9 @@ class ActivitiesController {
     const fileRemove = await ActivityService.removeFiles(
       fileId,
       activity,
-      `${getFullPath(getPathFileByType('activity'))}/${_.kebabCase(
-        activity.name
-      )}/${document.nameFile}`
+      `${getFullPath(getPathFileByType('activity'))}/${activity.key}/${
+        document.nameFile
+      }`
     )
 
     if (!fileRemove) {
