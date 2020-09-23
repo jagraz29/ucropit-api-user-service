@@ -31,7 +31,7 @@ class CompanyService {
    * @param files
    * @param user
    */
-  public static async store (company: ICompany, files, user) {
+  public static async store (company: ICompany, files, evidences, user) {
     let companies = await this.search({
       identifier: company.identifier
     })
@@ -44,9 +44,9 @@ class CompanyService {
       return Company.create(company)
     }
 
-    const companyCreated = Company.create(company)
+    const companyCreated = await Company.create(company)
 
-    return this.addFiles(files, companyCreated, user)
+    return this.addFiles(files, evidences, companyCreated, user)
   }
 
   /**
@@ -56,16 +56,16 @@ class CompanyService {
    * @param company
    * @param user
    */
-  private static async addFiles (files, company, user) {
+  private static async addFiles (files, evidences, company, user) {
     const filesUploaded = await UploadService.upload(
       files,
       `${process.env.DIR_FILES_COMPANY}/${company.identifier}`
     )
 
-    const documents = filesUploaded.map(async (item) => {
+    const documents = filesUploaded.map(async (item, index) => {
       const file = await FileDocument.create({
         ...item,
-        date: new Date(),
+        ...evidences[index],
         user: user._id
       })
 

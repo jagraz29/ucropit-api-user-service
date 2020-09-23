@@ -13,13 +13,7 @@ export const validateCropStore = async (crop) => {
       names: Joi.array().items(Joi.string()).required(),
       tag: Joi.string().required()
     }).required(),
-    company: Joi.object({
-      identifier: Joi.string().required(),
-      typePerson: Joi.string().required(),
-      name: Joi.string().required(),
-      address: Joi.string().required(),
-      addressFloor: Joi.string().optional()
-    }).required()
+    company: Joi.string().required()
   })
 
   return schema.validateAsync(crop)
@@ -101,7 +95,16 @@ export const validateCompanyStore = async (company) => {
     typePerson: Joi.string().optional(),
     name: Joi.string().required(),
     address: Joi.string().required(),
-    addressFloor: Joi.string().optional()
+    addressFloor: Joi.string().optional(),
+    evidences: Joi.array()
+      .items(
+        Joi.object().keys({
+          name: Joi.string().required(),
+          description: Joi.string().required(),
+          date: Joi.date().required()
+        })
+      )
+      .optional()
   })
 
   return schema.validateAsync(company)

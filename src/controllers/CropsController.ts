@@ -143,7 +143,9 @@ class CropsController {
     const data = JSON.parse(req.body.data)
     await validateCropStore(data)
 
-    const company = await CompanyService.store(data.company, req.files, user)
+    const company = (
+      await CompanyService.search({ identifier: data.company })
+    )[0]
 
     await UserService.update(
       { email: user.email },
