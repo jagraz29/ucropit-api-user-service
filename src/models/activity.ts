@@ -75,11 +75,20 @@ const ActivitySchema = new Schema({
     type: Number,
     required: false
   },
-  status: {
-    type: String,
-    enum: ['PLANNED', 'PENDING', 'FINISHED'],
-    default: 'PLANNED'
-  },
+  status: [
+    {
+      name: {
+        en: {
+          type: String,
+          default: 'TO_COMPLETE'
+        },
+        es: {
+          type: String,
+          default: 'COMPLETAR'
+        }
+      }
+    }
+  ],
   collaborators: [
     {
       type: Schema.Types.ObjectId,
@@ -93,10 +102,6 @@ const ActivitySchema = new Schema({
   typeAgreement: {
     type: Schema.Types.ObjectId,
     ref: 'TypeAgreement'
-  },
-  crop: {
-    type: Schema.Types.ObjectId,
-    ref: 'Crop'
   },
   lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
   supplies: [
