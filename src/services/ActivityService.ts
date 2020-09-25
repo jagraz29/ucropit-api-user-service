@@ -4,17 +4,19 @@ import { fileExist, removeFile } from '../utils/Files'
 import remove from 'lodash/remove'
 
 const Activity = models.Activity
+const ActivityType = models.ActivityType
 const FileDocument = models.FileDocument
 
 interface IActivity {
-  name: String
-  dateStart: String
-  dateEnd: String
-  surface: Number
-  type: String
-  crop: String
+  name?: String
+  dateStart?: String
+  dateEnd?: String
+  surface?: Number
+  type?: String
+  crop?: String
   lots?: Array<any>
   supplies?: Array<any>
+  status?: Array<any>
 }
 class ActivityService {
   public static async store (activity: IActivity) {
@@ -25,6 +27,35 @@ class ActivityService {
     await Activity.findByIdAndUpdate(id, activity)
 
     return Activity.findOne({ _id: id })
+  }
+
+  public static async getByTag (tag: string) {
+    return ActivityType.findOne({ tag })
+  }
+
+  public static createDefault (surface: number, name: string) {
+    const typesActivity = ['ACT_SOWING', 'ACT_HARVEST', 'ACT_AGREEMENTS']
+
+    const activities = typesActivity.map(async (item) => {
+      const type = await this.getByTag(item)
+      const activity = await this.store({
+        name,
+        surface,
+        type: type._id,
+        status: [
+          {
+            name: {
+              en: 'TO_COMPLETE',
+              es: 'COMPLETAR'
+            }
+          }
+        ]
+      })
+
+      return activity._id
+    })
+
+    return Promise.all(activities)
   }
 
   public static async addFiles (activity, files, user) {

@@ -24,28 +24,48 @@ class CompanyService {
     return Company.find(query)
   }
 
-  public static async store (company: ICompany, files, user) {
+  /**
+   * Search or create a new company
+   *
+   * @param ICompany company
+   * @param files
+   * @param user
+   */
+  public static async store (company: ICompany, files, evidences, user) {
     let companies = await this.search({
       identifier: company.identifier
     })
 
-    if (!companies[0]) {
+    if (companies[0]) {
+      return companies[0]
+    }
+
+    if (!files) {
       return Company.create(company)
     }
 
-    return this.addFiles(files, companies[0], user)
+    const companyCreated = await Company.create(company)
+
+    return this.addFiles(files, evidences, companyCreated, user)
   }
 
-  private static async addFiles (files, company, user) {
+  /**
+   * Add file to company
+   *
+   * @param files
+   * @param company
+   * @param user
+   */
+  private static async addFiles (files, evidences, company, user) {
     const filesUploaded = await UploadService.upload(
       files,
       `${process.env.DIR_FILES_COMPANY}/${company.identifier}`
     )
 
-    const documents = filesUploaded.map(async (item) => {
+    const documents = filesUploaded.map(async (item, index) => {
       const file = await FileDocument.create({
         ...item,
-        date: new Date(),
+        ...evidences[index],
         user: user._id
       })
 

@@ -4,6 +4,7 @@ import CropService from '../services/CropService'
 import CompanyService from '../services/CompanyService'
 import LotService from '../services/LotService'
 import UserService from '../services/UserService'
+import ActivityService from '../services/ActivityService'
 
 import { validateCropStore } from '../utils/Validation'
 
@@ -27,6 +28,46 @@ class CropsController {
       .populate('cropType')
       .populate('unitType')
       .populate('company')
+      .populate({
+        path: 'pending',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'toMake',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
 
     res.status(200).json(crops)
   }
@@ -45,6 +86,46 @@ class CropsController {
       .populate('cropType')
       .populate('unitType')
       .populate('company')
+      .populate({
+        path: 'pending',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'toMake',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
 
     res.status(200).json(crop)
   }
@@ -62,7 +143,9 @@ class CropsController {
     const data = JSON.parse(req.body.data)
     await validateCropStore(data)
 
-    const company = await CompanyService.store(data.company, req.files, user)
+    const company = (
+      await CompanyService.search({ identifier: data.company })
+    )[0]
 
     await UserService.update(
       { email: user.email },
@@ -76,7 +159,18 @@ class CropsController {
       tag: data.lots.tag
     })
 
-    const crop = await CropService.handleDataCrop(data, company, lots, user)
+    const activities = await ActivityService.createDefault(
+      data.surface,
+      data.name
+    )
+
+    const crop = await CropService.handleDataCrop(
+      data,
+      company,
+      lots,
+      activities,
+      user
+    )
 
     res.status(201).json(crop)
   }

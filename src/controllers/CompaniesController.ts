@@ -51,9 +51,15 @@ class CompaniesController {
    */
   public async create (req, res: Response) {
     const user = req.user
+    const data = JSON.parse(req.body.data)
 
-    await validateCompanyStore(req.body)
-    let company = await CompanyService.store(req.body, req.files, user)
+    await validateCompanyStore(data)
+    let company = await CompanyService.store(
+      data,
+      req.files,
+      data.evidences,
+      user
+    )
 
     res.status(201).json(company)
   }

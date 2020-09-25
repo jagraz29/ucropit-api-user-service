@@ -95,6 +95,13 @@ export const activitiesTypesData = [
       es: 'Cosecha'
     },
     tag: 'ACT_HARVEST'
+  },
+  {
+    name: {
+      en: 'Agreements',
+      es: 'Acuerdos'
+    },
+    tag: 'ACT_AGREEMENTS'
   }
 ]
 

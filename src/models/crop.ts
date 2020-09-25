@@ -49,11 +49,6 @@ const CropSchema = new Schema({
     type: String,
     require: true
   },
-  status: {
-    type: String,
-    enum: ['IN_PROGRESS', 'DONE', 'ARCHIVED'],
-    default: 'IN_PROGRESS'
-  },
   pay: {
     type: Number,
     require: false
@@ -70,6 +65,7 @@ const CropSchema = new Schema({
     type: Number,
     require: true
   },
+
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'User'
@@ -86,7 +82,11 @@ const CropSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Company'
   },
-  lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }]
+  lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
+  pending: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
+  toMake: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
+  done: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
+  finished: [{ type: Schema.Types.ObjectId, ref: 'Activity' }]
 })
 
 export default mongoose.model('Crop', CropSchema)

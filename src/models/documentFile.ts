@@ -38,6 +38,12 @@ export const FileDocumentSchema = new Schema({
     type: String,
     required: true
   },
+  name: {
+    type: String
+  },
+  description: {
+    type: String
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
