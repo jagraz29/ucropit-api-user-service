@@ -18,7 +18,7 @@ interface IActivity {
   crop?: String
   lots?: Array<any>
   supplies?: Array<any>
-  status?: Array<any>
+  status?: String | Array<any>
 }
 
 class ActivityService {
@@ -37,7 +37,17 @@ class ActivityService {
     return Activity.create(activity)
   }
 
-  public static async update (id, activity: IActivity) {
+  public static async update (id: string, activity: IActivity) {
+    let statusActivity: Array<any> = []
+    if (!this.existStatus(activity)) {
+      statusActivity = this.createStatus('COMPLETAR')
+      activity.status = statusActivity
+    }
+
+    if (this.existStatus(activity)) {
+      statusActivity = this.createStatus(activity.status)
+      activity.status = statusActivity
+    }
     await Activity.findByIdAndUpdate(id, activity)
 
     return Activity.findOne({ _id: id })

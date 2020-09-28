@@ -14,6 +14,8 @@ const Activity = models.Activity
 const FileDocument = models.FileDocument
 const Crop = models.Crop
 
+import remove from 'lodash/remove'
+
 import { UserSchema } from '../models/user'
 
 class ActivitiesController {
@@ -113,9 +115,11 @@ class ActivitiesController {
    * @return Response
    */
   public async update (req: Request, res: Response) {
+    const { id, cropId } = req.params
+    const crop = await Crop.findOne({ _id: cropId })
     const user: UserSchema = req.user
-    const { id } = req.params
     const data = JSON.parse(req.body.data)
+    console.log(data)
     await validateActivityUpdate(data)
 
     let activity = await ActivityService.update(id, data)
@@ -129,7 +133,11 @@ class ActivitiesController {
       )
     }
 
-    res.status(201).json(activity)
+    await CropService.removeActivities(activity, crop)
+
+    await CropService.addActivities(activity, crop)
+
+    res.status(200).json(activity)
   }
 
   /**

@@ -1,4 +1,5 @@
 import models from '../models'
+import remove from 'lodash/remove'
 
 const Crop = models.Crop
 
@@ -51,6 +52,12 @@ class CropService {
 
   public static async store (crop: ICrop) {
     return Crop.create(crop)
+  }
+
+  public static async removeActivities (activity, crop, statusCrop = 'pending') {
+    crop[statusCrop].pull(activity._id)
+
+    return crop.save()
   }
 
   public static async addActivities (activity, crop) {

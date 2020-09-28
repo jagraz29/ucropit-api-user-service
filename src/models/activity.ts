@@ -127,7 +127,9 @@ ActivitySchema.pre('save', async function (next) {
   const activity = this
 
   /** Generate unique key */
-  activity.key = shortid.generate()
+  if (!activity.key) {
+    activity.key = shortid.generate()
+  }
 })
 
 export default mongoose.model('Activity', ActivitySchema)

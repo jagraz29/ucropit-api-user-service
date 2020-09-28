@@ -123,7 +123,7 @@ router.post('/crops/:cropId', activitiesController.create)
  *         description: Error to Server.
  *
  */
-router.put('/:id', activitiesController.update)
+router.put('/:id/crops/:cropId', activitiesController.update)
 
 /**
  * @swagger
