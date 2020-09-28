@@ -120,19 +120,13 @@ const ActivitySchema = new Schema({
       }
     }
   ],
-  evidence: [
-    {
-      name: { type: String, required: true },
-      description: { type: String, required: true },
-      date: { type: Date, required: true }
-    }
-  ],
   files: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }]
 })
 
 ActivitySchema.pre('save', async function (next) {
   const activity = this
 
+  /** Generate unique key */
   activity.key = shortid.generate()
 })
 

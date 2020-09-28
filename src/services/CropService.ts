@@ -14,6 +14,25 @@ interface ICrop {
   company: string
 }
 
+const statusActivities: Array<any> = [
+  {
+    name: 'COMPLETAR',
+    cropStatus: 'pending'
+  },
+  {
+    name: 'PLANIFICADA',
+    cropStatus: 'toMake'
+  },
+  {
+    name: 'REALIZADA',
+    cropStatus: 'done'
+  },
+  {
+    name: 'TERMINADA',
+    cropStatus: 'finished'
+  }
+]
+
 class CropService {
   public static async handleDataCrop (data, company, lots, activities, user) {
     const lotsIds = []
@@ -29,8 +48,19 @@ class CropService {
 
     return this.store(data)
   }
+
   public static async store (crop: ICrop) {
     return Crop.create(crop)
+  }
+
+  public static async addActivities (activity, crop) {
+    const status = statusActivities.find(
+      (item) => item.name === activity.status[0].name.es
+    )
+
+    const statusCrop = status.cropStatus
+    crop[statusCrop].push(activity._id)
+    return crop.save()
   }
 }
 

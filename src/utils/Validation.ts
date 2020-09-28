@@ -27,8 +27,8 @@ export const validateActivityStore = async (activity) => {
     dateLimitValidation: Joi.date().optional(),
     surface: Joi.string().required(),
     type: Joi.string().required(),
-    crop: Joi.string().required(),
     typeAgreement: Joi.string().optional(),
+    status: Joi.string().optional(),
     lots: Joi.array().items(Joi.string()).optional(),
     supplies: Joi.array()
       .items(
@@ -40,7 +40,7 @@ export const validateActivityStore = async (activity) => {
         })
       )
       .optional(),
-    evidence: Joi.array()
+    evidences: Joi.array()
       .items(
         Joi.object().keys({
           name: Joi.string().required(),

@@ -3,6 +3,8 @@ import UploadService from './UploadService'
 import { fileExist, removeFile } from '../utils/Files'
 import remove from 'lodash/remove'
 
+import { statusActivities } from '../utils/Status'
+
 const Activity = models.Activity
 const ActivityType = models.ActivityType
 const FileDocument = models.FileDocument
@@ -18,8 +20,20 @@ interface IActivity {
   supplies?: Array<any>
   status?: Array<any>
 }
+
 class ActivityService {
   public static async store (activity: IActivity) {
+    let statusActivity: Array<any> = []
+    if (!this.existStatus(activity)) {
+      statusActivity = this.createStatus('COMPLETAR')
+      activity.status = statusActivity
+    }
+
+    if (this.existStatus(activity)) {
+      statusActivity = this.createStatus(activity.status)
+      activity.status = statusActivity
+    }
+
     return Activity.create(activity)
   }
 
@@ -41,15 +55,7 @@ class ActivityService {
       const activity = await this.store({
         name,
         surface,
-        type: type._id,
-        status: [
-          {
-            name: {
-              en: 'TO_COMPLETE',
-              es: 'COMPLETAR'
-            }
-          }
-        ]
+        type: type._id
       })
 
       return activity._id
@@ -58,16 +64,16 @@ class ActivityService {
     return Promise.all(activities)
   }
 
-  public static async addFiles (activity, files, user) {
+  public static async addFiles (activity, evidences, files, user) {
     const filesUploaded = await UploadService.upload(
       files,
       `${process.env.DIR_FILES_ACTIVITIES}/${activity.key}`
     )
 
-    const documents = filesUploaded.map(async (item) => {
+    const documents = filesUploaded.map(async (item, index) => {
       const file = await FileDocument.create({
         ...(item as object),
-        date: new Date(),
+        ...evidences[index],
         user: user._id
       })
 
@@ -98,6 +104,14 @@ class ActivityService {
     }
 
     return false
+  }
+
+  private static existStatus (activity) {
+    return activity.status
+  }
+
+  private static createStatus (status) {
+    return statusActivities(status)
   }
 }
 

@@ -5,12 +5,14 @@ import {
 } from '../utils/Validation'
 
 import ActivityService from '../services/ActivityService'
+import CropService from '../services/CropService'
 import models from '../models'
 
 import { getPathFileByType, getFullPath } from '../utils/Files'
 
 const Activity = models.Activity
 const FileDocument = models.FileDocument
+const Crop = models.Crop
 
 import { UserSchema } from '../models/user'
 
@@ -25,10 +27,7 @@ class ActivitiesController {
    * @return Response
    */
   public async index (req: Request, res: Response) {
-    const { crop } = req.query
-    const filter = crop ? { crop } : {}
-
-    const activities = await Activity.find(filter)
+    const activities = await Activity.find()
       .populate('type')
       .populate('typeAgreement')
       .populate({
@@ -82,15 +81,25 @@ class ActivitiesController {
    * @return Response
    */
   public async create (req: Request, res: Response) {
+    const { cropId } = req.params
+    const crop = await Crop.findOne({ _id: cropId })
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
+
     await validateActivityStore(data)
 
     let activity = await ActivityService.store(data)
 
     if (req.files) {
-      activity = await ActivityService.addFiles(activity, req.files, user)
+      activity = await ActivityService.addFiles(
+        activity,
+        data.evidences,
+        req.files,
+        user
+      )
     }
+
+    await CropService.addActivities(activity, crop)
 
     res.status(201).json(activity)
   }
@@ -112,7 +121,12 @@ class ActivitiesController {
     let activity = await ActivityService.update(id, data)
 
     if (req.files) {
-      activity = await ActivityService.addFiles(activity, req.files, user)
+      activity = await ActivityService.addFiles(
+        activity,
+        data.evidences,
+        req.files,
+        user
+      )
     }
 
     res.status(201).json(activity)
