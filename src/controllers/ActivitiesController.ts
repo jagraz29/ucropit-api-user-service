@@ -139,13 +139,6 @@ class ActivitiesController {
     res.status(200).json(activity)
   }
 
-  public async changeStatus (req: Request, res: Response) {
-    const { id, cropId } = req.params
-    const { status } = req.query
-
-    console.log(id, cropId)
-  }
-
   /**
    * Delete one activity.
    *
