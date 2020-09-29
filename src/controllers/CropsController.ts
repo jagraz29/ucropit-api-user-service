@@ -85,7 +85,7 @@ class CropsController {
       .populate('lots')
       .populate('cropType')
       .populate('unitType')
-      .populate('company')
+      .populate({ path: 'company', populate: [{ path: 'files' }] })
       .populate({
         path: 'pending',
         populate: [
@@ -161,7 +161,8 @@ class CropsController {
 
     const activities = await ActivityService.createDefault(
       data.surface,
-      data.name
+      data.name,
+      data.dateCrop
     )
 
     const crop = await CropService.handleDataCrop(

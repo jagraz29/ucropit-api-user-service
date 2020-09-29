@@ -7,6 +7,7 @@ import { statusActivities } from '../utils/Status'
 
 const Activity = models.Activity
 const ActivityType = models.ActivityType
+const TypeAgreement = models.TypeAgreement
 const FileDocument = models.FileDocument
 
 interface IActivity {
@@ -17,6 +18,8 @@ interface IActivity {
   type?: String
   crop?: String
   lots?: Array<any>
+  dateLimitValidation?: String
+  typeAgreement?: String
   supplies?: Array<any>
   status?: String | Array<any>
 }
@@ -57,14 +60,17 @@ class ActivityService {
     return ActivityType.findOne({ tag })
   }
 
-  public static createDefault (surface: number, name: string) {
+  public static createDefault (surface: number, name: string, date: string) {
     const typesActivity = ['ACT_SOWING', 'ACT_HARVEST', 'ACT_AGREEMENTS']
 
     const activities = typesActivity.map(async (item) => {
       const type = await this.getByTag(item)
+      const typeAgreement = await TypeAgreement.findOne({ key: 'EXPLO' })
       const activity = await this.store({
         name,
         surface,
+        dateLimitValidation: item === 'ACT_AGREEMENTS' ? date : null,
+        typeAgreement: item === 'ACT_AGREEMENTS' ? typeAgreement._id : null,
         type: type._id
       })
 

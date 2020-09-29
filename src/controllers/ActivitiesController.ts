@@ -119,7 +119,6 @@ class ActivitiesController {
     const crop = await Crop.findOne({ _id: cropId })
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
-    console.log(data)
     await validateActivityUpdate(data)
 
     let activity = await ActivityService.update(id, data)
@@ -138,6 +137,13 @@ class ActivitiesController {
     await CropService.addActivities(activity, crop)
 
     res.status(200).json(activity)
+  }
+
+  public async changeStatus (req: Request, res: Response) {
+    const { id, cropId } = req.params
+    const { status } = req.query
+
+    console.log(id, cropId)
   }
 
   /**
