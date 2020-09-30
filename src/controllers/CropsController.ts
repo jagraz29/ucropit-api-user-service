@@ -23,7 +23,7 @@ class CropsController {
    * @return Response
    */
   public async index (req: Request, res: Response) {
-    const crops = await Crop.find({})
+    const crops = await Crop.find({ cancelled: false })
       .populate('lots')
       .populate('cropType')
       .populate('unitType')
@@ -169,8 +169,7 @@ class CropsController {
       data,
       company,
       lots,
-      activities,
-      user
+      activities
     )
 
     res.status(201).json(crop)
@@ -200,7 +199,14 @@ class CropsController {
    * @return Response
    */
   public async delete (req: Request, res: Response) {
-    const crop = await Crop.findByIdAndDelete(req.params.id)
+    const isCancelled = await CropService.cancelled(req.params.id)
+
+    if (!isCancelled) {
+      return res.status(400).json({
+        error: true,
+        message: 'deleted not allowed'
+      })
+    }
 
     res.status(200).json({
       message: 'deleted successfully'

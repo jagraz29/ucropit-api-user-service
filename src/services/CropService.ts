@@ -35,7 +35,7 @@ const statusActivities: Array<any> = [
 ]
 
 class CropService {
-  public static async handleDataCrop (data, company, lots, activities, user) {
+  public static async handleDataCrop (data, company, lots, activities) {
     const lotsIds = []
 
     for (const lot of lots) {
@@ -44,7 +44,6 @@ class CropService {
 
     data.lots = lotsIds
     data.company = company._id
-    data.owner = user._id
     data.pending = activities
 
     return this.store(data)
@@ -68,6 +67,24 @@ class CropService {
     const statusCrop = status.cropStatus
     crop[statusCrop].push(activity._id)
     return crop.save()
+  }
+
+  public static async cancelled (cropId) {
+    const crop = await Crop.findById(cropId)
+
+    if (
+      crop.toMake.length === 0 &&
+      crop.done.length === 0 &&
+      crop.finished.length === 0
+    ) {
+      crop.cancelled = true
+
+      await crop.save()
+
+      return true
+    }
+
+    return false
   }
 }
 

@@ -65,16 +65,16 @@ const CropSchema = new Schema({
     type: Number,
     require: true
   },
+  cancelled: {
+    type: Boolean,
+    default: false
+  },
   collaborators: [
     {
       type: Schema.Types.ObjectId,
       ref: 'User'
     }
   ],
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  },
   cropType: {
     type: Schema.Types.ObjectId,
     ref: 'CropType'
