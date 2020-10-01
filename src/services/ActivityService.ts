@@ -61,7 +61,7 @@ class ActivityService {
   public static async addFiles (activity, files, user) {
     const filesUploaded = await UploadService.upload(
       files,
-      `${process.env.DIR_FILES_ACTIVITIES}/${activity.key}`
+      `activities/${activity.key}`
     )
 
     const documents = filesUploaded.map(async (item) => {

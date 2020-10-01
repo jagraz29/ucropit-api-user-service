@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import models from '../models'
+import UploadService from '../services/UploadService'
 
 const User = models.User
 
@@ -13,11 +14,22 @@ class ProfileController {
    * @return Response
    */
   public async image (req: Request, res: Response) {
-    const users = await User.find({ email: req.body.email })
+    const user = await User.findById(req.params.id)
 
-    console.log(req.files)
+    if (!user) {
+      return res.status(404).json({ error: 'ERR_NOT_FOUND' })
+    }
 
-    res.status(200).json(users)
+    const fileSaved = await UploadService.upload(
+      req.files,
+      `profile/${user._id}`
+    )
+
+    user.avatar = fileSaved[0].path
+
+    await user.save()
+
+    res.status(200).json(user)
   }
 }
 

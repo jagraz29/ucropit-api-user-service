@@ -70,11 +70,19 @@ const userSchema = new mongoose.Schema(
     verifyToken: {
       type: String
     },
+    avatar: { type: String, required: false },
     companies: [{ type: Schema.Types.ObjectId, ref: 'Company' }],
     config: { type: Schema.Types.ObjectId, ref: 'UserConfig' }
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
+
+userSchema.virtual('avatarPath').get(function () {
+  if (this.avatar) {
+    return `${process.env.APP_URL}/${this.avatar}`
+  }
+  return ''
+})
 
 userSchema.pre('save', async function (next) {
   const user = this

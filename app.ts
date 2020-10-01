@@ -8,6 +8,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import routes from './src/routes/v1'
 import fileUpload from 'express-fileupload'
+import path from 'path'
 
 const app: Application = express()
 
@@ -25,6 +26,8 @@ app.use(
   swaggerUI.serve,
   swaggerUI.setup(swaggerDocs, { explorer: true })
 )
+
+app.use(express.static('public'))
 
 app.use('/v1', routes)
 
