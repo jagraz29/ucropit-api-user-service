@@ -91,8 +91,19 @@ const ActivitySchema = new Schema({
   ],
   collaborators: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
+      fullName: {
+        type: String
+      },
+      email: {
+        type: String
+      },
+      type: {
+        type: String
+      },
+      signed: {
+        type: Boolean,
+        default: false
+      }
     }
   ],
   type: {

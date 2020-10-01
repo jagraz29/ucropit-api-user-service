@@ -21,6 +21,7 @@ interface IActivity {
   dateLimitValidation?: String
   typeAgreement?: String
   supplies?: Array<any>
+  evidences?: Array<any>
   status?: String | Array<any>
 }
 
@@ -41,6 +42,7 @@ class ActivityService {
   }
 
   public static async update (id: string, activity: IActivity) {
+    console.log(id)
     let statusActivity: Array<any> = []
     if (!this.existStatus(activity)) {
       statusActivity = this.createStatus('COMPLETAR')
@@ -51,6 +53,7 @@ class ActivityService {
       statusActivity = this.createStatus(activity.status)
       activity.status = statusActivity
     }
+
     await Activity.findByIdAndUpdate(id, activity)
 
     return Activity.findOne({ _id: id })

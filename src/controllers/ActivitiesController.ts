@@ -1,7 +1,8 @@
 import { Request, Response } from 'express'
 import {
   validateActivityStore,
-  validateActivityUpdate
+  validateActivityUpdate,
+  validateFilesWithEvidences
 } from '../utils/Validation'
 
 import ActivityService from '../services/ActivityService'
@@ -13,8 +14,6 @@ import { getPathFileByType, getFullPath } from '../utils/Files'
 const Activity = models.Activity
 const FileDocument = models.FileDocument
 const Crop = models.Crop
-
-import remove from 'lodash/remove'
 
 import { UserSchema } from '../models/user'
 
@@ -83,12 +82,19 @@ class ActivitiesController {
    * @return Response
    */
   public async create (req: Request, res: Response) {
-    const { cropId } = req.params
-    const crop = await Crop.findOne({ _id: cropId })
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
 
     await validateActivityStore(data)
+
+    const validationFiles = validateFilesWithEvidences(
+      req.files,
+      data.evidences
+    )
+
+    if (validationFiles.error) {
+      res.status(400).json(validationFiles)
+    }
 
     let activity = await ActivityService.store(data)
 
@@ -100,6 +106,8 @@ class ActivitiesController {
         user
       )
     }
+
+    const crop = await Crop.findById(data.crop)
 
     await CropService.addActivities(activity, crop)
 
@@ -115,11 +123,18 @@ class ActivitiesController {
    * @return Response
    */
   public async update (req: Request, res: Response) {
-    const { id, cropId } = req.params
-    const crop = await Crop.findOne({ _id: cropId })
+    const { id } = req.params
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     await validateActivityUpdate(data)
+    const validationFiles = validateFilesWithEvidences(
+      req.files,
+      data.evidences
+    )
+
+    if (validationFiles.error) {
+      res.status(400).json(validationFiles)
+    }
 
     let activity = await ActivityService.update(id, data)
 
@@ -132,9 +147,14 @@ class ActivitiesController {
       )
     }
 
-    await CropService.removeActivities(activity, crop)
+    if (data.status) {
+      const crop = await Crop.findById(data.crop)
 
-    await CropService.addActivities(activity, crop)
+      const statusCropRemove =
+        data.status === 'PLANIFICADA' ? 'pending' : 'toMake'
+      await CropService.removeActivities(activity, crop, statusCropRemove)
+      await CropService.addActivities(activity, crop)
+    }
 
     res.status(200).json(activity)
   }
