@@ -30,7 +30,7 @@ export const validateActivityStore = async (activity) => {
     typeAgreement: Joi.string().optional(),
     status: Joi.string().optional(),
     lots: Joi.array().items(Joi.string()).optional(),
-    crop: Joi.string().required(),
+    crop: Joi.string().optional(),
     supplies: Joi.array()
       .items(
         Joi.object().keys({
@@ -73,7 +73,7 @@ export const validateActivityUpdate = async (activity) => {
     typeAgreement: Joi.string().optional(),
     status: Joi.string().optional(),
     lots: Joi.array().items(Joi.string()).optional(),
-    crop: Joi.string().required(),
+    crop: Joi.string().optional(),
     supplies: Joi.array()
       .items(
         Joi.object().keys({
