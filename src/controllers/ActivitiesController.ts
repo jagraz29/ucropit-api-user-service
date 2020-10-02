@@ -126,6 +126,7 @@ class ActivitiesController {
     const { id } = req.params
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
+    const { status } = data
     await validateActivityUpdate(data)
     const validationFiles = validateFilesWithEvidences(
       req.files,
@@ -147,11 +148,11 @@ class ActivitiesController {
       )
     }
 
-    if (data.status) {
+    if (status) {
       const crop = await Crop.findById(data.crop)
 
-      const statusCropRemove =
-        data.status === 'PLANIFICADA' ? 'pending' : 'toMake'
+      const statusCropRemove = status === 'PLANIFICADA' ? 'pending' : 'toMake'
+
       await CropService.removeActivities(activity, crop, statusCropRemove)
       await CropService.addActivities(activity, crop)
     }

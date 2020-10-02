@@ -30,7 +30,7 @@ export const validateActivityStore = async (activity) => {
     typeAgreement: Joi.string().optional(),
     status: Joi.string().optional(),
     lots: Joi.array().items(Joi.string()).optional(),
-    crop: Joi.string().optional(),
+    crop: Joi.string().required(),
     supplies: Joi.array()
       .items(
         Joi.object().keys({
@@ -73,7 +73,7 @@ export const validateActivityUpdate = async (activity) => {
     typeAgreement: Joi.string().optional(),
     status: Joi.string().optional(),
     lots: Joi.array().items(Joi.string()).optional(),
-    crop: Joi.string().optional(),
+    crop: Joi.string().required(),
     supplies: Joi.array()
       .items(
         Joi.object().keys({
@@ -127,6 +127,10 @@ export const validateCompanyStore = async (company) => {
 }
 
 export const validateFilesWithEvidences = (files, evidences) => {
+  if (!files && !evidences) {
+    return { error: false }
+  }
+
   if ((files && !evidences) || (!files && evidences)) {
     return { error: true, message: 'Not complete evidences' }
   }

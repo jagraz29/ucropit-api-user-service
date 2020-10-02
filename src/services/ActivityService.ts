@@ -42,7 +42,6 @@ class ActivityService {
   }
 
   public static async update (id: string, activity: IActivity) {
-    console.log(id)
     let statusActivity: Array<any> = []
     if (!this.existStatus(activity)) {
       statusActivity = this.createStatus('COMPLETAR')
