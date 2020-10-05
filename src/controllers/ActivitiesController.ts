@@ -1,16 +1,19 @@
 import { Request, Response } from 'express'
 import {
   validateActivityStore,
-  validateActivityUpdate
+  validateActivityUpdate,
+  validateFilesWithEvidences
 } from '../utils/Validation'
 
 import ActivityService from '../services/ActivityService'
+import CropService from '../services/CropService'
 import models from '../models'
 
 import { getPathFileByType, getFullPath } from '../utils/Files'
 
 const Activity = models.Activity
 const FileDocument = models.FileDocument
+const Crop = models.Crop
 
 import { UserSchema } from '../models/user'
 
@@ -25,10 +28,7 @@ class ActivitiesController {
    * @return Response
    */
   public async index (req: Request, res: Response) {
-    const { crop } = req.query
-    const filter = crop ? { crop } : {}
-
-    const activities = await Activity.find(filter)
+    const activities = await Activity.find()
       .populate('type')
       .populate('typeAgreement')
       .populate({
@@ -84,13 +84,32 @@ class ActivitiesController {
   public async create (req: Request, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
+
     await validateActivityStore(data)
+
+    const validationFiles = validateFilesWithEvidences(
+      req.files,
+      data.evidences
+    )
+
+    if (validationFiles.error) {
+      res.status(400).json(validationFiles)
+    }
 
     let activity = await ActivityService.store(data)
 
     if (req.files) {
-      activity = await ActivityService.addFiles(activity, req.files, user)
+      activity = await ActivityService.addFiles(
+        activity,
+        data.evidences,
+        req.files,
+        user
+      )
     }
+
+    const crop = await Crop.findById(data.crop)
+
+    await CropService.addActivities(activity, crop)
 
     res.status(201).json(activity)
   }
@@ -104,18 +123,41 @@ class ActivitiesController {
    * @return Response
    */
   public async update (req: Request, res: Response) {
-    const user: UserSchema = req.user
     const { id } = req.params
+    const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
+    const { status } = data
     await validateActivityUpdate(data)
+    const validationFiles = validateFilesWithEvidences(
+      req.files,
+      data.evidences
+    )
+
+    if (validationFiles.error) {
+      res.status(400).json(validationFiles)
+    }
 
     let activity = await ActivityService.update(id, data)
 
     if (req.files) {
-      activity = await ActivityService.addFiles(activity, req.files, user)
+      activity = await ActivityService.addFiles(
+        activity,
+        data.evidences,
+        req.files,
+        user
+      )
     }
 
-    res.status(201).json(activity)
+    if (status) {
+      const crop = await Crop.findById(data.crop)
+
+      const statusCropRemove = status === 'PLANNED' ? 'pending' : 'toMake'
+
+      await CropService.removeActivities(activity, crop, statusCropRemove)
+      await CropService.addActivities(activity, crop)
+    }
+
+    res.status(200).json(activity)
   }
 
   /**

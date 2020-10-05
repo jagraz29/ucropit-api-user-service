@@ -1,7 +1,10 @@
 import { Request, Response } from 'express'
 import models from '../models'
 
-import { validateCompanyStore } from '../utils/Validation'
+import {
+  validateCompanyStore,
+  validateFilesWithEvidences
+} from '../utils/Validation'
 import { getPathFileByType, getFullPath } from '../utils/Files'
 
 import CompanyService from '../services/CompanyService'
@@ -54,6 +57,15 @@ class CompaniesController {
     const data = JSON.parse(req.body.data)
 
     await validateCompanyStore(data)
+    const validationFiles = validateFilesWithEvidences(
+      req.files,
+      data.evidences
+    )
+
+    if (validationFiles.error) {
+      res.status(400).json(validationFiles)
+    }
+
     let company = await CompanyService.store(
       data,
       req.files,

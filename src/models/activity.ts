@@ -91,8 +91,19 @@ const ActivitySchema = new Schema({
   ],
   collaborators: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
+      fullName: {
+        type: String
+      },
+      email: {
+        type: String
+      },
+      type: {
+        type: String
+      },
+      signed: {
+        type: Boolean,
+        default: false
+      }
     }
   ],
   type: {
@@ -120,20 +131,16 @@ const ActivitySchema = new Schema({
       }
     }
   ],
-  evidence: [
-    {
-      name: { type: String, required: true },
-      description: { type: String, required: true },
-      date: { type: Date, required: true }
-    }
-  ],
   files: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }]
 })
 
 ActivitySchema.pre('save', async function (next) {
   const activity = this
 
-  activity.key = shortid.generate()
+  /** Generate unique key */
+  if (!activity.key) {
+    activity.key = shortid.generate()
+  }
 })
 
 export default mongoose.model('Activity', ActivitySchema)

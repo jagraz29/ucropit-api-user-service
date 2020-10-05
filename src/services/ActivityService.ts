@@ -3,8 +3,11 @@ import UploadService from './UploadService'
 import { fileExist, removeFile } from '../utils/Files'
 import remove from 'lodash/remove'
 
+import { statusActivities } from '../utils/Status'
+
 const Activity = models.Activity
 const ActivityType = models.ActivityType
+const TypeAgreement = models.TypeAgreement
 const FileDocument = models.FileDocument
 
 interface IActivity {
@@ -15,15 +18,41 @@ interface IActivity {
   type?: String
   crop?: String
   lots?: Array<any>
+  dateLimitValidation?: String
+  typeAgreement?: String
   supplies?: Array<any>
-  status?: Array<any>
+  evidences?: Array<any>
+  status?: String | Array<any>
 }
+
 class ActivityService {
   public static async store (activity: IActivity) {
+    let statusActivity: Array<any> = []
+    if (!this.existStatus(activity)) {
+      statusActivity = this.createStatus('COMPLETAR')
+      activity.status = statusActivity
+    }
+
+    if (this.existStatus(activity)) {
+      statusActivity = this.createStatus(activity.status)
+      activity.status = statusActivity
+    }
+
     return Activity.create(activity)
   }
 
-  public static async update (id, activity: IActivity) {
+  public static async update (id: string, activity: IActivity) {
+    let statusActivity: Array<any> = []
+    if (!this.existStatus(activity)) {
+      statusActivity = this.createStatus('COMPLETAR')
+      activity.status = statusActivity
+    }
+
+    if (this.existStatus(activity)) {
+      statusActivity = this.createStatus(activity.status)
+      activity.status = statusActivity
+    }
+
     await Activity.findByIdAndUpdate(id, activity)
 
     return Activity.findOne({ _id: id })
@@ -33,23 +62,18 @@ class ActivityService {
     return ActivityType.findOne({ tag })
   }
 
-  public static createDefault (surface: number, name: string) {
+  public static createDefault (surface: number, name: string, date: string) {
     const typesActivity = ['ACT_SOWING', 'ACT_HARVEST', 'ACT_AGREEMENTS']
 
     const activities = typesActivity.map(async (item) => {
       const type = await this.getByTag(item)
+      const typeAgreement = await TypeAgreement.findOne({ key: 'EXPLO' })
       const activity = await this.store({
         name,
         surface,
-        type: type._id,
-        status: [
-          {
-            name: {
-              en: 'TO_COMPLETE',
-              es: 'COMPLETAR'
-            }
-          }
-        ]
+        dateLimitValidation: item === 'ACT_AGREEMENTS' ? date : null,
+        typeAgreement: item === 'ACT_AGREEMENTS' ? typeAgreement._id : null,
+        type: type._id
       })
 
       return activity._id
@@ -58,16 +82,16 @@ class ActivityService {
     return Promise.all(activities)
   }
 
-  public static async addFiles (activity, files, user) {
+  public static async addFiles (activity, evidences, files, user) {
     const filesUploaded = await UploadService.upload(
       files,
       `activities/${activity.key}`
     )
 
-    const documents = filesUploaded.map(async (item) => {
+    const documents = filesUploaded.map(async (item, index) => {
       const file = await FileDocument.create({
         ...(item as object),
-        date: new Date(),
+        ...evidences[index],
         user: user._id
       })
 
@@ -98,6 +122,14 @@ class ActivityService {
     }
 
     return false
+  }
+
+  private static existStatus (activity) {
+    return activity.status
+  }
+
+  private static createStatus (status) {
+    return statusActivities(status)
   }
 }
 

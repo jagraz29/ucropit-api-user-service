@@ -27,9 +27,10 @@ export const validateActivityStore = async (activity) => {
     dateLimitValidation: Joi.date().optional(),
     surface: Joi.string().required(),
     type: Joi.string().required(),
-    crop: Joi.string().required(),
     typeAgreement: Joi.string().optional(),
+    status: Joi.string().optional(),
     lots: Joi.array().items(Joi.string()).optional(),
+    crop: Joi.string().optional(),
     supplies: Joi.array()
       .items(
         Joi.object().keys({
@@ -40,7 +41,7 @@ export const validateActivityStore = async (activity) => {
         })
       )
       .optional(),
-    evidence: Joi.array()
+    evidences: Joi.array()
       .items(
         Joi.object().keys({
           name: Joi.string().required(),
@@ -48,7 +49,14 @@ export const validateActivityStore = async (activity) => {
           date: Joi.date().required()
         })
       )
-      .optional()
+      .optional(),
+    collaborators: Joi.array().items(
+      Joi.object().keys({
+        fullName: Joi.string().required(),
+        email: Joi.string().required(),
+        type: Joi.string().required()
+      })
+    )
   })
 
   return schema.validateAsync(activity)
@@ -62,9 +70,10 @@ export const validateActivityUpdate = async (activity) => {
     dateLimitValidation: Joi.date().optional(),
     surface: Joi.string().optional(),
     type: Joi.string().optional(),
-    crop: Joi.string().optional(),
     typeAgreement: Joi.string().optional(),
+    status: Joi.string().optional(),
     lots: Joi.array().items(Joi.string()).optional(),
+    crop: Joi.string().optional(),
     supplies: Joi.array()
       .items(
         Joi.object().keys({
@@ -75,7 +84,7 @@ export const validateActivityUpdate = async (activity) => {
         })
       )
       .optional(),
-    evidence: Joi.array()
+    evidences: Joi.array()
       .items(
         Joi.object().keys({
           name: Joi.string().required(),
@@ -83,7 +92,14 @@ export const validateActivityUpdate = async (activity) => {
           date: Joi.date().required()
         })
       )
-      .optional()
+      .optional(),
+    collaborators: Joi.array().items(
+      Joi.object().keys({
+        fullName: Joi.string().required(),
+        email: Joi.string().required(),
+        type: Joi.string().required()
+      })
+    )
   })
 
   return schema.validateAsync(activity)
@@ -108,4 +124,24 @@ export const validateCompanyStore = async (company) => {
   })
 
   return schema.validateAsync(company)
+}
+
+export const validateFilesWithEvidences = (files, evidences) => {
+  if (!files && !evidences) {
+    return { error: false }
+  }
+
+  if ((files && !evidences) || (!files && evidences)) {
+    return { error: true, message: 'Not complete evidences' }
+  }
+
+  if (!Array.isArray(files.files)) {
+    files.files = [files.files]
+  }
+
+  if (files.files.length !== evidences.length) {
+    return { error: true, message: 'Length files and evidences must equal' }
+  }
+
+  return { error: false }
 }
