@@ -26,7 +26,9 @@ export const handleFileConvertJSON = async function (file: FileArray) {
 
   if (stored.nameFile.split('.')[1] === 'kmz') {
     result = await parseKMZ.toJson(pathFile)
-  } else result = await parseKML.toJson(pathFile)
+  } else {
+    result = await parseKML.toJson(pathFile)
+  }
 
   fs.unlinkSync(pathFile)
 

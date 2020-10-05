@@ -142,17 +142,18 @@ class CropsController {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     await validateCropStore(data)
+    let company = null
 
-    const company = (
-      await CompanyService.search({ identifier: data.company })
-    )[0]
+    company = (await CompanyService.search({ identifier: data.identifier }))[0]
 
-    await UserService.update(
-      { email: user.email },
-      {
-        companies: [company._id]
-      }
-    )
+    if (company) {
+      await UserService.update(
+        { email: user.email },
+        {
+          companies: [company._id]
+        }
+      )
+    }
 
     const lots = await LotService.store(req, {
       names: data.lots.names,
@@ -184,8 +185,25 @@ class CropsController {
    * @return Response
    */
   public async update (req: Request, res: Response) {
-    await Crop.findByIdAndUpdate(req.params.id, req.body)
+    const user: UserSchema = req.user
+    const data = JSON.parse(req.body.data)
+    let company = null
+
+    company = (await CompanyService.search({ identifier: data.identifier }))[0]
+
+    if (company) {
+      await UserService.update(
+        { email: user.email },
+        {
+          companies: [company._id]
+        }
+      )
+    }
     const crop = await Crop.findById(req.params.id)
+
+    crop.company = company ? company._id : null
+
+    await crop.save()
 
     res.status(200).json(crop)
   }

@@ -69,6 +69,9 @@ const CropSchema = new Schema({
     type: Boolean,
     default: false
   },
+  identifier: {
+    type: String
+  },
   collaborators: [
     {
       type: Schema.Types.ObjectId,
