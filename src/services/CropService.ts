@@ -43,7 +43,7 @@ class CropService {
     }
 
     data.lots = lotsIds
-    data.company = company._id
+    data.company = company ? company._id : null
     data.pending = activities
 
     return this.store(data)
