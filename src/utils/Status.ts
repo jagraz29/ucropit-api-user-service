@@ -18,7 +18,7 @@ const getStatus = (name) => {
     }
   ]
 
-  return status.find((item) => item.es === name)
+  return status.find((item) => item.en === name)
 }
 
 export const statusActivities = (name) => {

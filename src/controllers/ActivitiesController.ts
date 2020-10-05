@@ -151,7 +151,7 @@ class ActivitiesController {
     if (status) {
       const crop = await Crop.findById(data.crop)
 
-      const statusCropRemove = status === 'PLANIFICADA' ? 'pending' : 'toMake'
+      const statusCropRemove = status === 'PLANNED' ? 'pending' : 'toMake'
 
       await CropService.removeActivities(activity, crop, statusCropRemove)
       await CropService.addActivities(activity, crop)

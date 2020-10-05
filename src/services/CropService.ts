@@ -17,19 +17,19 @@ interface ICrop {
 
 const statusActivities: Array<any> = [
   {
-    name: 'COMPLETAR',
+    name: 'TO_COMPLETE',
     cropStatus: 'pending'
   },
   {
-    name: 'PLANIFICADA',
+    name: 'PLANNED',
     cropStatus: 'toMake'
   },
   {
-    name: 'REALIZADA',
+    name: 'DONE',
     cropStatus: 'done'
   },
   {
-    name: 'TERMINADA',
+    name: 'FINISHED',
     cropStatus: 'finished'
   }
 ]
@@ -61,7 +61,7 @@ class CropService {
 
   public static async addActivities (activity, crop) {
     const status = statusActivities.find(
-      (item) => item.name === activity.status[0].name.es
+      (item) => item.name === activity.status[0].name.en
     )
 
     const statusCrop = status.cropStatus

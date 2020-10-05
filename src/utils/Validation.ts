@@ -135,6 +135,10 @@ export const validateFilesWithEvidences = (files, evidences) => {
     return { error: true, message: 'Not complete evidences' }
   }
 
+  if (!Array.isArray(files.files)) {
+    files.files = [files.files]
+  }
+
   if (files.files.length !== evidences.length) {
     return { error: true, message: 'Length files and evidences must equal' }
   }
