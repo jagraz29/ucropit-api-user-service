@@ -19,10 +19,12 @@ const TypeAgreement = models.TypeAgreement
 const seedersCropType = async () => {
   console.log(`${chalk.green('=====Registering CropTypes====')}`)
 
+  await CropType.deleteMany({})
+
   const cropTypes = await CropType.find({})
 
   const cropTypesSeed = cropTypesData.filter(
-    (item) => !cropTypes.find((element) => item.key === element.key)
+    item => !cropTypes.find(element => item.key === element.key)
   )
 
   for (const cropType of cropTypesSeed) {
@@ -38,10 +40,12 @@ const seedersCropType = async () => {
 const seedersUnitType = async () => {
   console.log(`${chalk.green('=====Registering UnitType====')}`)
 
+  await UnitType.deleteMany({})
+
   const unitTypes = await UnitType.find({})
 
   const unitTypeSeed = unitTypesData.filter(
-    (item) => !unitTypes.find((element) => item.key === element.key)
+    item => !unitTypes.find(element => item.key === element.key)
   )
 
   for (const unitType of unitTypeSeed) {
@@ -55,10 +59,12 @@ const seedersUnitType = async () => {
 const seedersActivitiesType = async () => {
   console.log(`${chalk.green('=====Registering ActivityType====')}`)
 
+  await ActivityType.deleteMany({})
+
   const activities = await ActivityType.find({})
 
   const activityTypeSeed = activitiesTypesData.filter(
-    (item) => !activities.find((element) => item.tag === element.tag)
+    item => !activities.find(element => item.tag === element.tag)
   )
 
   for (const activityType of activityTypeSeed) {
@@ -72,10 +78,12 @@ const seedersActivitiesType = async () => {
 const seedersTypeAgreement = async () => {
   console.log(`${chalk.green('=====Registering TypeAgreement====')}`)
 
+  await TypeAgreement.deleteMany({})
+
   const agreementTypes = await TypeAgreement.find({})
 
   const agreementTypeSeed = agreementTypesData.filter(
-    (item) => !agreementTypes.find((element) => item.key === element.key)
+    item => !agreementTypes.find(element => item.key === element.key)
   )
 
   for (const agreementType of agreementTypeSeed) {
@@ -85,8 +93,7 @@ const seedersTypeAgreement = async () => {
   console.log(`${chalk.green('=====Registered TypeAgreement====')}`)
   return true
 }
-
-(async () => {
+;(async () => {
   const connected = await connectDb()
 
   if (connected) {
