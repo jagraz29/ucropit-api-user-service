@@ -69,7 +69,10 @@ class ActivityService {
       const type = await this.getByTag(item)
       const typeAgreement = await TypeAgreement.findOne({ key: 'EXPLO' })
       const activity = await this.store({
-        name,
+        name:
+          item === 'ACT_AGREEMENTS'
+            ? this.createNameActivity(type, typeAgreement)
+            : this.createNameActivity(type, null),
         surface,
         dateLimitValidation: item === 'ACT_AGREEMENTS' ? date : null,
         typeAgreement: item === 'ACT_AGREEMENTS' ? typeAgreement._id : null,
@@ -130,6 +133,14 @@ class ActivityService {
 
   private static createStatus (status) {
     return statusActivities(status)
+  }
+
+  private static createNameActivity (typeActivity, typeAgreement) {
+    if (typeAgreement) {
+      return `${typeActivity.name.es} - ${typeAgreement.name.es}`
+    }
+
+    return `${typeActivity.name.es}`
   }
 }
 
