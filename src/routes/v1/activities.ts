@@ -88,7 +88,7 @@ router.post('/', activitiesController.create)
 /**
  * @swagger
  * path:
- *  /v1/activities:
+ *  /v1/activities/{id}:
  *    put:
  *      summary: Update a Activity
  *      tags: [Activity]
@@ -124,6 +124,68 @@ router.post('/', activitiesController.create)
  *
  */
 router.put('/:id', activitiesController.update)
+
+/**
+ * @swagger
+ * path:
+ *  /v1/activities/{id}/crops/{cropId}:
+ *    put:
+ *      summary: Update status Done in Activity
+ *      tags: [Activity]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *        - in: path
+ *          name: cropId
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  status:
+ *                    type: string
+ *
+ *      responses:
+ *       '200':
+ *         description: Update status Ok.
+ *         content:
+ *         application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Activity'
+ *
+ *       '500':
+ *         description: Error to Server.
+ *
+ */
+router.put('/:id/crops/:cropId', activitiesController.validate)
+
+/**
+ * @swagger
+ * path:
+ *  /v1/activities/{id}/crops/{cropId}/signed:
+ *    put:
+ *      summary: Sign User in Activity
+ *      tags: [Activity]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *        - in: path
+ *          name: cropId
+ *      responses:
+ *       '200':
+ *         description: Signed Ok.
+ *         content:
+ *         application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Activity'
+ *
+ *       '500':
+ *         description: Error to Server.
+ *
+ */
+router.put('/:id/crops/:cropId/signed', activitiesController.sign)
 
 /**
  * @swagger

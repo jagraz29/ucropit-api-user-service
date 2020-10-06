@@ -161,6 +161,59 @@ class ActivitiesController {
   }
 
   /**
+   * Sign Activity
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async sign (req: Request, res: Response) {
+    const { id, cropId } = req.params
+    const user: UserSchema = req.user
+
+    let activity = await Activity.findById(id)
+
+    activity = await ActivityService.signUser(activity, user)
+
+    const isCompleteSigned = await ActivityService.isCompleteSingers(activity)
+
+    if (isCompleteSigned) {
+      const crop = await Crop.findById(cropId)
+      await ActivityService.changeStatus(activity, 'FINISHED')
+      await CropService.removeActivities(activity, crop, 'done')
+    }
+
+    res.status(200).json(activity)
+  }
+
+  /**
+   * Validate Activity.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async validate (req: Request, res: Response) {
+    const { id, cropId } = req.params
+    const { status } = req.body
+
+    let activity = await Activity.findById(id)
+
+    await ActivityService.changeStatus(activity, status)
+
+    const crop = await Crop.findById(cropId)
+
+    await CropService.removeActivities(activity, crop, 'toMake')
+    await CropService.addActivities(activity, crop)
+
+    activity = await Activity.findById(id)
+
+    res.status(200).json(activity)
+  }
+
+  /**
    * Delete one activity.
    *
    * @param Request req

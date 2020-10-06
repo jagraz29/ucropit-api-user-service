@@ -50,8 +50,9 @@ export const validateActivityStore = async (activity) => {
         })
       )
       .optional(),
-    collaborators: Joi.array().items(
+    signers: Joi.array().items(
       Joi.object().keys({
+        userId: Joi.string().required(),
         fullName: Joi.string().required(),
         email: Joi.string().required(),
         type: Joi.string().required()
@@ -93,8 +94,9 @@ export const validateActivityUpdate = async (activity) => {
         })
       )
       .optional(),
-    collaborators: Joi.array().items(
+    signers: Joi.array().items(
       Joi.object().keys({
+        userId: Joi.string().required(),
         fullName: Joi.string().required(),
         email: Joi.string().required(),
         type: Joi.string().required()

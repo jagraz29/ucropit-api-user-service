@@ -5,6 +5,8 @@ import remove from 'lodash/remove'
 
 import { statusActivities } from '../utils/Status'
 
+import { UserSchema } from '../models/user'
+
 const Activity = models.Activity
 const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
@@ -125,6 +127,39 @@ class ActivityService {
     }
 
     return false
+  }
+
+  public static async changeStatus (activity, status: string) {
+    const statusChanged = statusActivities(status)
+
+    activity.status = statusChanged
+
+    return activity.save()
+  }
+
+  public static async signUser (activity, user) {
+    const signer = activity.signers.filter(
+      (item) => item.userId.toString() === user._id.toString()
+    )
+
+    if (signer.length > 0) {
+      const child = activity.signers.id(signer[0]._id)
+      child.signed = true
+    }
+
+    await activity.save()
+
+    return Activity.findById(activity._id)
+  }
+
+  public static async isCompleteSingers (activity) {
+    const signers = activity.signers.filter((item) => !item.signed)
+
+    if (signers.length > 0) {
+      return false
+    }
+
+    return true
   }
 
   private static existStatus (activity) {

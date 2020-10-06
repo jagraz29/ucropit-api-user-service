@@ -89,8 +89,11 @@ const ActivitySchema = new Schema({
       }
     }
   ],
-  collaborators: [
+  signers: [
     {
+      userId: {
+        type: Schema.Types.ObjectId
+      },
       fullName: {
         type: String
       },
