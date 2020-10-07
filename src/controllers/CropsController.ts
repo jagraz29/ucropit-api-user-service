@@ -81,51 +81,8 @@ class CropsController {
    * @return Response
    */
   public async show (req: Request, res: Response) {
-    const crop = await Crop.findById(req.params.id)
-      .populate('lots')
-      .populate('cropType')
-      .populate('unitType')
-      .populate({ path: 'company', populate: [{ path: 'files' }] })
-      .populate({
-        path: 'pending',
-        populate: [
-          { path: 'collaborators' },
-          { path: 'type' },
-          { path: 'typeAgreement' },
-          { path: 'lots' },
-          { path: 'files' }
-        ]
-      })
-      .populate({
-        path: 'toMake',
-        populate: [
-          { path: 'collaborators' },
-          { path: 'type' },
-          { path: 'typeAgreement' },
-          { path: 'lots' },
-          { path: 'files' }
-        ]
-      })
-      .populate({
-        path: 'done',
-        populate: [
-          { path: 'collaborators' },
-          { path: 'type' },
-          { path: 'typeAgreement' },
-          { path: 'lots' },
-          { path: 'files' }
-        ]
-      })
-      .populate({
-        path: 'finished',
-        populate: [
-          { path: 'collaborators' },
-          { path: 'type' },
-          { path: 'typeAgreement' },
-          { path: 'lots' },
-          { path: 'files' }
-        ]
-      })
+    const { id } = req.params
+    const crop = await CropService.getCropById(id)
 
     res.status(200).json(crop)
   }
