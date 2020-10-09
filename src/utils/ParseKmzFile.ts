@@ -14,25 +14,32 @@ import FileUpload from '../services/FileUpload'
  * @param file
  */
 export const handleFileConvertJSON = async function (file: FileArray) {
+  let lots = []
   let result = null
 
   const upload = new FileUpload(file, 'tmp')
-  const stored = (await upload.store())[0]
+  const stored = (await upload.store())
 
-  const pathFile = path.join(
-    process.cwd(),
-    `${process.env.DIR_TMP}/${stored.nameFile}`
-  )
+  console.log(stored)
 
-  if (stored.nameFile.split('.')[1] === 'kmz') {
-    result = await parseKMZ.toJson(pathFile)
-  } else {
-    result = await parseKML.toJson(pathFile)
+  for await (const fileStore of stored) {
+    const pathFile = path.join(
+      process.cwd(),
+      `${process.env.DIR_TMP}/${fileStore.nameFile}`
+    )
+
+    if (fileStore.nameFile.split('.')[1] === 'kmz') {
+      result = parseKMZ.toJson(pathFile)
+    } else {
+      result = parseKML.toJson(pathFile)
+    }
+
+    lots.push(result)
+
+    fs.unlinkSync(pathFile)
   }
 
-  fs.unlinkSync(pathFile)
-
-  return result
+  return Promise.all(lots)
 }
 
 /**
@@ -86,14 +93,19 @@ export const kmlJsonToArrayNames = function (data) {
  * @param kmzJsonParsers
  */
 export const mapArraySurfacesAndArea = function (kmzJsonParsers) {
-  return kmzJsonParsers.features.map((lot) => {
-    const flattenArr = _.flatten(lot.geometry.coordinates)
-    const areaSquare = geolib.getAreaOfPolygon(flattenArr)
-    const surface = geolib.convertArea(areaSquare, 'ha').toFixed(2)
-    return {
-      name: lot.properties.name,
-      surface: surface,
-      area: areaSquare
-    }
+  const listLots = kmzJsonParsers.map(item => {
+    return item.features.map((lot) => {
+      const flattenArr = _.flatten(lot.geometry.coordinates)
+      const areaSquare = geolib.getAreaOfPolygon(flattenArr)
+      const surface = geolib.convertArea(areaSquare, 'ha').toFixed(2)
+      return {
+        name: lot.properties.name,
+        surface: surface,
+        area: areaSquare
+      }
+    })
   })
+
+  return _.flatten(listLots)
+
 }

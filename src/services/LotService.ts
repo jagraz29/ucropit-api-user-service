@@ -2,6 +2,7 @@ import { Request } from 'express'
 import Lot from '../models/lot'
 import flatten from 'lodash/flatten'
 import * as geolib from 'geolib'
+import _ from 'lodash'
 
 import { handleFileConvertJSON } from '../utils/ParseKmzFile'
 
@@ -16,13 +17,17 @@ class LotService {
   public static async store (req: Request, { names, tag }) {
     const jsonParserKmz = await handleFileConvertJSON(req.files)
 
-    const filteringItem = jsonParserKmz.features.filter((item) => {
-      return (
-        names.filter((select) => select === item.properties.name).length > 0
-      )
+    const filterLots = jsonParserKmz.map(item => {
+      return item.features.filter((item) => {
+        return (
+          names.filter((select) => select === item.properties.name).length > 0
+        )
+      })
     })
 
-    const lots = await LotService.storeLots(filteringItem, tag)
+    const flattListLotFilter = _.flatten(filterLots)
+
+    const lots = await LotService.storeLots(flattListLotFilter, tag)
 
     return lots
   }

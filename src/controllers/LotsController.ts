@@ -77,7 +77,6 @@ class LotsController {
    */
   public async surfaces (req: Request, res: Response) {
     const result = await handleFileConvertJSON(req.files)
-
     const listNamesLots = mapArraySurfacesAndArea(result)
 
     res.status(200).json(listNamesLots)
