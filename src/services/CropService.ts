@@ -1,7 +1,8 @@
 import models from '../models'
-import remove from 'lodash/remove'
+import { isNowGreaterThan } from '../utils/Date'
 
 const Crop = models.Crop
+const Activity = models.Activity
 
 interface ICrop {
   name: string
@@ -31,10 +32,83 @@ const statusActivities: Array<any> = [
   {
     name: 'FINISHED',
     cropStatus: 'finished'
+  },
+  {
+    name: 'EXPIRED',
+    cropStatus: 'toMake'
   }
 ]
 
 class CropService {
+  public static async getCropById (cropId: string) {
+    let crop = await Crop.findById(cropId)
+      .populate('lots')
+      .populate('cropType')
+      .populate('unitType')
+      .populate({ path: 'company', populate: [{ path: 'files' }] })
+      .populate({
+        path: 'pending',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'toMake',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+
+    crop = this.expiredActivities(crop)
+
+    return crop
+  }
+  public static async expiredActivities (crop: any) {
+    let activities = crop.toMake.map(async (activity: any) => {
+      if (this.isExpiredActivity(activity)) {
+        activity.status[0].name.en = 'EXPIRED'
+        activity.status[0].name.es = 'VENCIDA'
+
+        await this.expiredActivity(activity)
+
+        return activity
+      }
+
+      return activity
+    })
+
+    crop.toMake = await Promise.all(activities)
+
+    return crop
+  }
   public static async handleDataCrop (data, company, lots, activities) {
     const lotsIds = []
 
@@ -85,6 +159,25 @@ class CropService {
     }
 
     return false
+  }
+
+  private static isExpiredActivity (activity): boolean {
+    if (
+      activity.dateLimitValidation &&
+      isNowGreaterThan(activity.dateLimitValidation)
+    ) {
+      return true
+    }
+
+    return false
+  }
+
+  private static async expiredActivity (activity) {
+    const activityInstance = await Activity.findById(activity._id)
+
+    activityInstance.setExpired()
+
+    return activityInstance.save()
   }
 }
 
