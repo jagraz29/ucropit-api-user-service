@@ -20,8 +20,6 @@ export const handleFileConvertJSON = async function (file: FileArray) {
   const upload = new FileUpload(file, 'tmp')
   const stored = (await upload.store())
 
-  console.log(stored)
-
   for await (const fileStore of stored) {
     const pathFile = path.join(
       process.cwd(),
