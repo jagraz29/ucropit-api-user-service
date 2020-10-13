@@ -25,6 +25,15 @@ class CompanyService {
   }
 
   /**
+   * Search one company by Id.
+   *
+   * @param string id
+   */
+  public static async findById (id: string) {
+    return Company.findById(id).populate('files')
+  }
+
+  /**
    * Search or create a new company
    *
    * @param ICompany company
