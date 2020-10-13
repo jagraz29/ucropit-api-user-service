@@ -73,6 +73,8 @@ class CompaniesController {
       user
     )
 
+    company = await CompanyService.findById(company._id)
+
     res.status(201).json(company)
   }
 
