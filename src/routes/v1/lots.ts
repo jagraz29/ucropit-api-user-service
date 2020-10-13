@@ -66,8 +66,10 @@ router.get('/:id', lotsController.show)
  *                       type: string
  *                       description: Name tag for lots
  *                  files:
- *                       type: string
- *                       format: binary
+ *                       type: array
+ *                       items:
+ *                          type: string
+ *                          format: binary
  *      responses:
  *       '201':
  *         description: List lots persists.
@@ -98,8 +100,10 @@ router.post('/', lotsController.create)
  *               type: object
  *               properties:
  *                  files:
- *                       type: string
- *                       format: binary
+ *                       type: array
+ *                       items:
+ *                          type: string
+ *                          format: binary
  *      responses:
  *       '200':
  *         description: List names and areas to lost kmz or kml file.
