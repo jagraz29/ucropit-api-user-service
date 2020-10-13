@@ -8,6 +8,7 @@ import crop from './crop'
 import activities from './activities'
 import company from './company'
 import common from './common'
+import configs from './configs'
 import passport from '../../utils/auth/strategies/jwt'
 
 const router: express.Router = express.Router()
@@ -41,5 +42,8 @@ router.use('/activities', authMiddleware, activities)
 
 // COMPANIES
 router.use('/companies', authMiddleware, company)
+
+// CONFIGURATIONS
+router.use('/configurations', authMiddleware, configs)
 
 export default router
