@@ -4,6 +4,8 @@ npm-debug.log
 .env
 .DS_Store|
 dist
-public/uploads/*
+public/uploads/activities/*
+public/uploads/companies/*
+public/uploads/tmp/*
 public/.DS_Store
 .DS_Store
