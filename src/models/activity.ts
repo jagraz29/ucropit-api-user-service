@@ -119,6 +119,7 @@ const ActivitySchema = new Schema({
     ref: 'TypeAgreement'
   },
   lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
+  lotsMade: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
   supplies: [
     {
       name: {
@@ -135,7 +136,8 @@ const ActivitySchema = new Schema({
       }
     }
   ],
-  files: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }]
+  files: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }],
+  achievements: [{ type: Schema.Types.ObjectId, ref: 'Achievement' }]
 })
 
 ActivitySchema.pre('save', async function (next) {

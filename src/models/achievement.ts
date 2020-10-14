@@ -29,31 +29,6 @@
 import mongoose, { Schema } from 'mongoose'
 import shortid from 'shortid'
 
-interface SignerDocument extends mongoose.Document {
-  userId: Schema.Types.ObjectId
-  fullName: String
-  email: String
-  type: String
-  signed: Boolean
-}
-
-interface SuppliesDocument extends mongoose.Document {
-  name: String
-  unit: String
-  quantity: Number
-  total: Number
-}
-
-export interface AchievementDocument extends mongoose.Document {
-  key?: string
-  dateAchievement?: Date | string
-  surface?: Number | string
-  lots?: Array<any>
-  supplies?: Array<SuppliesDocument>
-  files?: Array<any>
-  signers?: Array<SignerDocument>
-}
-
 const AchievementSchema: Schema = new Schema({
   key: {
     type: String,
@@ -66,6 +41,10 @@ const AchievementSchema: Schema = new Schema({
   surface: {
     type: Number,
     required: false
+  },
+  percent: {
+    type: Number,
+    default: 0
   },
   lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
   supplies: [
@@ -107,7 +86,7 @@ const AchievementSchema: Schema = new Schema({
   ]
 })
 
-AchievementSchema.pre<AchievementDocument>('save', async function (next: Function) {
+AchievementSchema.pre('save', async function (next: Function) {
   const achievement = this
 
   /** Generate unique key */
@@ -116,4 +95,4 @@ AchievementSchema.pre<AchievementDocument>('save', async function (next: Functio
   }
 })
 
-export default mongoose.model<AchievementDocument>('Achievement', AchievementSchema)
+export default mongoose.model('Achievement', AchievementSchema)

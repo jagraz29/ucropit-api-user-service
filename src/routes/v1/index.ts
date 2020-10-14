@@ -9,6 +9,7 @@ import activities from './activities'
 import company from './company'
 import common from './common'
 import passport from '../../utils/auth/strategies/jwt'
+import achievements from './achievements'
 
 const router: express.Router = express.Router()
 
@@ -41,5 +42,8 @@ router.use('/activities', authMiddleware, activities)
 
 // COMPANIES
 router.use('/companies', authMiddleware, company)
+
+// ACHIEVEMENTS
+router.use('/achievements', authMiddleware, achievements)
 
 export default router

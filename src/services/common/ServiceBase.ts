@@ -6,7 +6,9 @@ import models from '../../models'
 
 const FileDocument = models.FileDocument
 class ServiceBase {
+
     /**
+     * Upload Files and create Document Files.
      *
      * @param document
      * @param evidences
@@ -35,6 +37,7 @@ class ServiceBase {
   }
 
   /**
+   * Remove Files and DocumentFile.
    *
    * @param fileId
    * @param document
@@ -59,6 +62,27 @@ class ServiceBase {
     }
 
     return false
+  }
+
+  /**
+   * Sing User.
+   *
+   * @param document
+   * @param user
+   */
+  public static async signUser (document, user) {
+    console.log(document)
+    console.log(user)
+    const signer = document.signers.filter(
+      (item) => item.userId.toString() === user._id.toString()
+    )
+
+    if (signer.length > 0) {
+      const child = document.signers.id(signer[0]._id)
+      child.signed = true
+    }
+
+    await document.save()
   }
 }
 

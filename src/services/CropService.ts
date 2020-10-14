@@ -73,7 +73,12 @@ class CropService {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          { path: 'achievements', populate: [
+            { path: 'lots' },
+            { path: 'files' }
+          ] },
+          { path : 'lotsMade' }
         ]
       })
       .populate({

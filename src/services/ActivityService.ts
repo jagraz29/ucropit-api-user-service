@@ -23,6 +23,31 @@ interface IActivity {
 }
 
 class ActivityService extends ServiceBase {
+
+  public static async findActivityById (id: string) {
+    return Activity.findById(id)
+    .populate('type')
+    .populate('typeAgreement')
+    .populate({
+      path: 'crop',
+      populate: [
+        { path: 'cropType' },
+        { path: 'unitType' },
+        { path: 'company' },
+        { path: 'owner' }
+      ]
+    })
+    .populate('lots')
+    .populate('lotsMade')
+    .populate('files')
+    .populate({
+      path: 'achievements',
+      populate: [
+        { path: 'lots' },
+        { path: 'files' }
+      ]})
+  }
+
   public static async store (activity: IActivity) {
     let statusActivity: Array<any> = []
     if (!this.existStatus(activity)) {
@@ -110,6 +135,12 @@ class ActivityService extends ServiceBase {
     }
 
     return true
+  }
+
+  public static async addAchievement (activity, achievement) {
+    activity.achievements.push(achievement._id)
+
+    return activity.save()
   }
 
   private static existStatus (activity) {
