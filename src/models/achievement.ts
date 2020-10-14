@@ -2,7 +2,7 @@
  * @swagger
  *  components:
  *    schemas:
- *       Activity:
+ *       Achievement:
  *         type: object
  *         required:
  *           - key
