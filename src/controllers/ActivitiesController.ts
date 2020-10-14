@@ -103,7 +103,8 @@ class ActivitiesController {
         activity,
         data.evidences,
         req.files,
-        user
+        user,
+        `activities/${activity.key}`
       )
     }
 
@@ -144,7 +145,8 @@ class ActivitiesController {
         activity,
         data.evidences,
         req.files,
-        user
+        user,
+        `activities/${activity.key}`
       )
     }
 

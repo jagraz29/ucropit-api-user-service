@@ -119,7 +119,6 @@ class CropsController {
 
     const activities = await ActivityService.createDefault(
       data.surface,
-      data.name,
       data.dateCrop
     )
 
