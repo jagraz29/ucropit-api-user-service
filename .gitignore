@@ -6,6 +6,7 @@ npm-debug.log
 dist
 public/uploads/activities/*
 public/uploads/companies/*
+public/uploads/achievements/*
 public/uploads/tmp/*
 public/.DS_Store
 .DS_Store
