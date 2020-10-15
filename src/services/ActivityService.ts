@@ -1,16 +1,11 @@
+import ServiceBase from './common/ServiceBase'
 import models from '../models'
-import UploadService from './UploadService'
-import { fileExist, removeFile } from '../utils/Files'
-import remove from 'lodash/remove'
 
 import { statusActivities } from '../utils/Status'
-
-import { UserSchema } from '../models/user'
 
 const Activity = models.Activity
 const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
-const FileDocument = models.FileDocument
 
 interface IActivity {
   name?: String
@@ -27,7 +22,7 @@ interface IActivity {
   status?: String | Array<any>
 }
 
-class ActivityService {
+class ActivityService extends ServiceBase {
   public static async store (activity: IActivity) {
     let statusActivity: Array<any> = []
     if (!this.existStatus(activity)) {
@@ -64,17 +59,14 @@ class ActivityService {
     return ActivityType.findOne({ tag })
   }
 
-  public static createDefault (surface: number, name: string, date: string) {
+  public static createDefault (surface: number, date: string) {
     const typesActivity = ['ACT_SOWING', 'ACT_HARVEST', 'ACT_AGREEMENTS']
 
     const activities = typesActivity.map(async (item) => {
       const type = await this.getByTag(item)
       const typeAgreement = await TypeAgreement.findOne({ key: 'EXPLO' })
       const activity = await this.store({
-        name:
-          item === 'ACT_AGREEMENTS'
-            ? this.createNameActivity(type, typeAgreement)
-            : this.createNameActivity(type, null),
+        name: this.createNameActivity(type),
         surface,
         dateLimitValidation: item === 'ACT_AGREEMENTS' ? date : null,
         typeAgreement: item === 'ACT_AGREEMENTS' ? typeAgreement._id : null,
@@ -85,48 +77,6 @@ class ActivityService {
     })
 
     return Promise.all(activities)
-  }
-
-  public static async addFiles (activity, evidences, files, user) {
-    const filesUploaded = await UploadService.upload(
-      files,
-      `activities/${activity.key}`
-    )
-
-    const documents = filesUploaded.map(async (item, index) => {
-      const file = await FileDocument.create({
-        ...(item as object),
-        ...evidences[index],
-        user: user._id
-      })
-
-      return file._id
-    })
-
-    activity.files = await Promise.all(documents)
-
-    return activity.save()
-  }
-
-  public static async removeFiles (fileId: string, activity, filePath: string) {
-    if (fileExist(filePath)) {
-      removeFile(filePath)
-
-      const fileRemove = await FileDocument.findByIdAndDelete(fileId)
-
-      if (fileRemove) {
-        const files = remove(activity.files, function (item) {
-          return item === fileId
-        })
-
-        activity.files = files
-
-        await activity.save()
-      }
-      return true
-    }
-
-    return false
   }
 
   public static async changeStatus (activity, status: string) {
@@ -170,11 +120,7 @@ class ActivityService {
     return statusActivities(status)
   }
 
-  private static createNameActivity (typeActivity, typeAgreement) {
-    if (typeAgreement) {
-      return `${typeActivity.name.es} - ${typeAgreement.name.es}`
-    }
-
+  private static createNameActivity (typeActivity) {
     return `${typeActivity.name.es}`
   }
 }
