@@ -93,10 +93,22 @@ const seedersTypeAgreement = async () => {
   console.log(`${chalk.green('=====Registered TypeAgreement====')}`)
   return true
 }
+
+const dropAllDatabase = (connected) => {
+  return connected.connection.db.dropDatabase()
+}
+
 ;(async () => {
+
   const connected = await connectDb()
 
   if (connected) {
+    if (process.argv[2] && process.argv[2] === '--reset') {
+      console.log(`${chalk.green('=====Clean all DataBase ====')}`)
+      dropAllDatabase(connected)
+      console.log(`${chalk.green('=====Reset DataBase ====')}`)
+    }
+
     await seedersUnitType()
     await seedersCropType()
     await seedersActivitiesType()
