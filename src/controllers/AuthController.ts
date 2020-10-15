@@ -6,11 +6,10 @@ import UserConfigService from '../services/UserConfigService'
 import numbers from '../utils/Numbers'
 
 const User = models.User
-const UserConfig = models.UserConfig
 
 class AuthController {
   public async me (req, res: Response) {
-    const user = await User.findOne({ _id: req.user._id }).populate('config')
+    const user = await User.findOne({ _id: req.user._id }).populate('config').populate('companies')
 
     res.json(user)
   }
