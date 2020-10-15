@@ -24,6 +24,14 @@ export function removeFile (dir: string) {
   fs.unlinkSync(dir)
 }
 
+export async function removeFiles (dirs: Array<string>): Promise<boolean> {
+  for (const path of dirs) {
+    this.removeFile(path)
+  }
+
+  return true
+}
+
 export function getPathFileByType (type): string {
   let dir = ''
   switch (type) {
