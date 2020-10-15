@@ -8,6 +8,7 @@ import Supplies from './supplies'
 import ActivityType from './activityType'
 import TypeAgreement from './typeAgreement'
 import Activity from './activity'
+import Achievement from './achievement'
 
 import { CropType } from './cropType'
 import { UnitType } from './unitType'
@@ -35,7 +36,8 @@ const models = {
   Supplies,
   TypeAgreement,
   ActivityType,
-  Activity
+  Activity,
+  Achievement
 }
 
 export { connectDb }
