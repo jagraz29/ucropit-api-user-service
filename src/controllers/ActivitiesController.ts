@@ -55,20 +55,7 @@ class ActivitiesController {
    * @return Response
    */
   public async show (req: Request, res: Response) {
-    const activity = await Activity.findById(req.params.id)
-      .populate('type')
-      .populate('typeAgreement')
-      .populate({
-        path: 'crop',
-        populate: [
-          { path: 'cropType' },
-          { path: 'unitType' },
-          { path: 'company' },
-          { path: 'owner' }
-        ]
-      })
-      .populate('lots')
-      .populate('files')
+    const activity = await ActivityService.findActivityById(req.params.id)
 
     res.status(200).json(activity)
   }

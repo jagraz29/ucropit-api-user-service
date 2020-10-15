@@ -10,6 +10,7 @@ import company from './company'
 import common from './common'
 import configs from './configs'
 import passport from '../../utils/auth/strategies/jwt'
+import achievements from './achievements'
 
 const router: express.Router = express.Router()
 

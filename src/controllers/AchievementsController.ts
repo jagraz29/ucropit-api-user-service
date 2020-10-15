@@ -1,18 +1,70 @@
 import { Request, Response } from 'express'
-import models from '../models'
-import { AchievementDocument } from '../models/achievement'
+import {
+  validateAchievement,
+  validateFilesWithEvidences
+} from '../utils/Validation'
 
-const Achievement = models.Achievement
+import AchievementService from '../services/AchievementService'
+import ActivityService from '../services/ActivityService'
+import CropService from '../services/CropService'
+
+import models from '../models'
+
+const Crop = models.Crop
 
 class AchievementsController {
 
-  public async index (req: Request, res: Response) {
-        // TODO: Implement
-  }
-
+  /**
+   * Create a new Achievement.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
   public async create (req: Request, res: Response) {
-    // TODO: Implement
-    console.log(req)
+    const user = req.user
+    const data = JSON.parse(req.body.data)
+
+    await validateAchievement(data)
+
+    const validationFiles = validateFilesWithEvidences(
+      req.files,
+      data.evidences
+    )
+
+    if (validationFiles.error) {
+      res.status(400).json(validationFiles)
+    }
+
+    const activity = await ActivityService.findActivityById(data.activity)
+
+    let achievement = await AchievementService.store(data, activity)
+
+    await AchievementService.signUser(achievement, user)
+
+    await ActivityService.addAchievement(activity, achievement)
+
+    if (activity.status[0].name.en !== 'DONE') {
+      ActivityService.changeStatus(activity, 'DONE')
+
+      const crop = await Crop.findById(data.crop)
+
+      await CropService.removeActivities(activity, crop, 'toMake')
+      await CropService.addActivities(activity, crop)
+    }
+
+    if (req.files) {
+      achievement = await AchievementService.addFiles(
+        achievement,
+        data.evidences,
+        req.files,
+        user,
+        `achievements/${achievement.key}`
+      )
+    }
+
+    res.status(201).json(achievement)
   }
 
 }

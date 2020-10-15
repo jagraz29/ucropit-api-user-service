@@ -128,6 +128,45 @@ export const validateCompanyStore = async (company) => {
   return schema.validateAsync(company)
 }
 
+export const validateAchievement = async (achievement) => {
+  const schema = Joi.object({
+    dateAchievement: Joi.date().required(),
+    surface: Joi.string().required(),
+    lots: Joi.array().items(Joi.string()).required(),
+    activity: Joi.string().required(),
+    crop: Joi.string().required(),
+    supplies: Joi.array()
+      .items(
+        Joi.object().keys({
+          name: Joi.string().required(),
+          unit: Joi.string().required(),
+          quantity: Joi.number().required(),
+          total: Joi.number().required()
+        })
+      )
+      .optional(),
+    evidences: Joi.array()
+      .items(
+        Joi.object().keys({
+          name: Joi.string().required(),
+          description: Joi.string().required(),
+          date: Joi.date().required()
+        })
+      )
+      .optional(),
+    signers: Joi.array().items(
+      Joi.object().keys({
+        userId: Joi.string().required(),
+        fullName: Joi.string().required(),
+        email: Joi.string().required(),
+        type: Joi.string().required()
+      })
+    ).optional()
+  })
+
+  return schema.validateAsync(achievement)
+}
+
 export const validateFilesWithEvidences = (files, evidences) => {
   if (!files && !evidences) {
     return { error: false }
