@@ -1,4 +1,7 @@
 import UserConfig from '../models/userConfig'
+import models from '../models'
+
+const User = models.User
 
 interface IUserConfig {
   fromInvitation?: boolean
@@ -30,9 +33,20 @@ class UserConfigService {
    *
    * @param string id
    * @param IUserConfig user
+   * @param user optional
    */
-  public static async update (id: string, user: IUserConfig) {
-    const config = await UserConfig.findByIdAndUpdate({ _id: id }, user)
+  public static async update (id: string, configData: IUserConfig, user?) {
+    const config = await UserConfig.findByIdAndUpdate({ _id: id }, configData)
+
+    if (user) {
+      return User.findById(user._id).populate({
+        path: 'config',
+        populate: [
+          { path: 'companySelected' }
+        ]
+      })
+      .populate('companies')
+    }
 
     return this.findById(config._id)
   }
