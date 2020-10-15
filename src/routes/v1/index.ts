@@ -8,6 +8,7 @@ import crop from './crop'
 import activities from './activities'
 import company from './company'
 import common from './common'
+import configs from './configs'
 import passport from '../../utils/auth/strategies/jwt'
 import achievements from './achievements'
 
@@ -43,7 +44,7 @@ router.use('/activities', authMiddleware, activities)
 // COMPANIES
 router.use('/companies', authMiddleware, company)
 
-// ACHIEVEMENTS
-router.use('/achievements', authMiddleware, achievements)
+// CONFIGURATIONS
+router.use('/configurations', authMiddleware, configs)
 
 export default router

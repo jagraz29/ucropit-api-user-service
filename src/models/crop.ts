@@ -90,6 +90,7 @@ const CropSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Company'
   },
+  producers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
   pending: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
   toMake: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],

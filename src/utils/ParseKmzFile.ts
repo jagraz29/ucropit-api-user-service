@@ -7,6 +7,7 @@ import path from 'path'
 import fs from 'fs'
 
 import FileUpload from '../services/FileUpload'
+import { removeFiles } from '../utils/Files'
 
 /**
  * File convert KMZ or KML to JSON.
@@ -15,27 +16,29 @@ import FileUpload from '../services/FileUpload'
  */
 export const handleFileConvertJSON = async function (file: FileArray) {
   let lots = []
+  let paths = []
   let result = null
 
   const upload = new FileUpload(file, 'tmp')
   const stored = (await upload.store())
 
-  for await (const fileStore of stored) {
+  for (const fileStore of stored) {
     const pathFile = path.join(
       process.cwd(),
       `${process.env.DIR_TMP}/${fileStore.nameFile}`
     )
 
     if (fileStore.nameFile.split('.')[1] === 'kmz') {
-      result = parseKMZ.toJson(pathFile)
+      result = await parseKMZ.toJson(pathFile)
     } else {
-      result = parseKML.toJson(pathFile)
+      result = await parseKML.toJson(pathFile)
     }
 
     lots.push(result)
-
-    fs.unlinkSync(pathFile)
+    paths.push(pathFile)
   }
+
+  await removeFiles(paths)
 
   return Promise.all(lots)
 }

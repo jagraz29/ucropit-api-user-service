@@ -114,7 +114,13 @@ class CropService {
 
     return crop
   }
-  public static async handleDataCrop (data, company, lots, activities) {
+  public static async handleDataCrop (
+    data,
+    company,
+    lots,
+    activities,
+    { producers }
+  ) {
     const lotsIds = []
 
     for (const lot of lots) {
@@ -124,6 +130,7 @@ class CropService {
     data.lots = lotsIds
     data.company = company ? company._id : null
     data.pending = activities
+    data.producers = [producers._id]
 
     return this.store(data)
   }
@@ -132,7 +139,11 @@ class CropService {
     return Crop.create(crop)
   }
 
-  public static async removeActivities (activity, crop, statusCrop = 'pending') {
+  public static async removeActivities (
+    activity,
+    crop,
+    statusCrop = 'pending'
+  ) {
     crop[statusCrop].pull(activity._id)
 
     return crop.save()
@@ -140,7 +151,7 @@ class CropService {
 
   public static async addActivities (activity, crop) {
     const status = statusActivities.find(
-      (item) => item.name === activity.status[0].name.en
+      item => item.name === activity.status[0].name.en
     )
 
     const statusCrop = status.cropStatus
