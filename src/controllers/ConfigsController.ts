@@ -14,7 +14,7 @@ class ConfigsController {
   public async update (req: Request, res: Response) {
     const { id } = req.params
 
-    const configUser = await UserConfigService.update(id, req.body)
+    const configUser = await UserConfigService.update(id, req.body, req.user)
 
     res.status(200).json(configUser)
   }
