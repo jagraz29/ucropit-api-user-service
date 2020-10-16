@@ -68,7 +68,7 @@ class CompaniesController {
 
     const companyIsExist = await CompanyService.search({ identifier : data.identifier })
 
-    if (companyIsExist) {
+    if (companyIsExist.length > 0) {
       res.status(400).json('Already exist company with identifier')
     }
 
