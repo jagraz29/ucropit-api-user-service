@@ -11,6 +11,7 @@ import common from './common'
 import configs from './configs'
 import passport from '../../utils/auth/strategies/jwt'
 import achievements from './achievements'
+import collaborators from './collaborators'
 
 const router: express.Router = express.Router()
 
@@ -46,5 +47,8 @@ router.use('/companies', authMiddleware, company)
 
 // CONFIGURATIONS
 router.use('/configurations', authMiddleware, configs)
+
+// COLLABORATOR
+router.use('/collaborators', authMiddleware, collaborators)
 
 export default router

@@ -3,6 +3,7 @@ import models from '../models'
 import UserService from '../services/UserService'
 
 const User = models.User
+const CollaboratorRequest = models.CollaboratorRequest
 
 class UsersController {
   public async index (req: Request, res: Response) {
@@ -35,6 +36,45 @@ class UsersController {
     user = await user.save()
     await user.populate('config').execPopulate()
     res.json(user)
+  }
+
+  /**
+   * Update Collaborator Request.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async updateStatusCollaborator (req: Request, res: Response) {
+    const { userId } = req.params
+
+    let collaboratorRequest = await CollaboratorRequest.findOne({ user: userId })
+
+    collaboratorRequest.status = req.body.status
+
+    await collaboratorRequest.save()
+
+    collaboratorRequest = await CollaboratorRequest.findOne({ user: userId }).populate('user').populate('company')
+
+    res.status(200).json(collaboratorRequest)
+
+  }
+
+  /**
+   * List Collaborators.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async listCollaborators (req: Request, res: Response) {
+    const { query } = req.query
+
+    const collaboratorsRequest = await CollaboratorRequest.find(query).populate('user').populate('company')
+
+    res.status(200).json(collaboratorsRequest)
   }
 
   public async destroy (req: Request, res: Response) {
