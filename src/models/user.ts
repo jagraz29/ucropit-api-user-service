@@ -71,7 +71,18 @@ const userSchema = new mongoose.Schema(
       type: String
     },
     avatar: { type: String, required: false },
-    companies: [{ type: Schema.Types.ObjectId, ref: 'Company' }],
+    companies: [
+      {
+        company: {
+          type: Schema.Types.ObjectId,
+          ref: 'Company'
+        },
+        isProducer: {
+          type: Boolean,
+          default: true
+        }
+      }
+    ],
     config: { type: Schema.Types.ObjectId, ref: 'UserConfig' }
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }

@@ -54,7 +54,9 @@ class CompanyService extends ServiceBase {
     const companyCreated = await Company.create(company)
 
     if (companyCreated) {
-      user.companies.push(companyCreated._id)
+      user.companies.push({
+        company: companyCreated._id
+      })
 
       await user.save()
     }

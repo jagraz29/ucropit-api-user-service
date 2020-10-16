@@ -15,7 +15,7 @@ class AuthController {
         { path: 'companySelected' }
       ]
     })
-    .populate('companies')
+    .populate('companies.company')
 
     res.json(user)
   }
