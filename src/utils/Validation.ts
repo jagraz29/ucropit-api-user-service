@@ -128,6 +128,27 @@ export const validateCompanyStore = async (company) => {
   return schema.validateAsync(company)
 }
 
+export const validateCompanyUpdate = async (company) => {
+  const schema = Joi.object({
+    identifier: Joi.string().optional(),
+    typePerson: Joi.string().optional(),
+    name: Joi.string().optional(),
+    address: Joi.string().optional(),
+    addressFloor: Joi.string().optional(),
+    evidences: Joi.array()
+      .items(
+        Joi.object().keys({
+          name: Joi.string().required(),
+          description: Joi.string().required(),
+          date: Joi.date().required()
+        })
+      )
+      .optional()
+  })
+
+  return schema.validateAsync(company)
+}
+
 export const validateAchievement = async (achievement) => {
   const schema = Joi.object({
     dateAchievement: Joi.date().required(),

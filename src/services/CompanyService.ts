@@ -5,11 +5,11 @@ import models from '../models'
 const Company = models.Company
 
 interface ICompany {
-  identifier: string
-  typePerson: string
-  name: string
-  address: string
-  addressFloor: string
+  identifier?: string
+  typePerson?: string
+  name?: string
+  address?: string
+  addressFloor?: string
 }
 
 class CompanyService extends ServiceBase {
@@ -62,6 +62,11 @@ class CompanyService extends ServiceBase {
     }
 
     return this.addFiles(companyCreated, evidences, files, user, `companies/${companyCreated.identifier}`)
+  }
+
+  public static async updated (company: ICompany, id: string) {
+    await Company.findByIdAndUpdate(id, company)
+    return Company.findById(id)
   }
 
 }
