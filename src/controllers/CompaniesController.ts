@@ -39,7 +39,7 @@ class CompaniesController {
    * @return {Response}
    */
   public async show (req: Request, res: Response) {
-    const company = await Company.findById(req.params.id)
+    const company = await Company.findById(req.params.id).populate('files')
 
     res.status(200).json(company)
   }
@@ -66,7 +66,9 @@ class CompaniesController {
       res.status(400).json(validationFiles)
     }
 
-    const companyIsExist = await CompanyService.search({ identifier : data.identifier })
+    const companyIsExist = await CompanyService.search({
+      identifier: data.identifier
+    })
 
     if (companyIsExist.length > 0) {
       res.status(400).json('Already exist company with identifier')
