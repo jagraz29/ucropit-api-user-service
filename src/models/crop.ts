@@ -72,12 +72,6 @@ const CropSchema = new Schema({
   identifier: {
     type: String
   },
-  collaborators: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  ],
   cropType: {
     type: Schema.Types.ObjectId,
     ref: 'CropType'
@@ -90,7 +84,17 @@ const CropSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Company'
   },
-  producers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  members: [
+    {
+      producer: {
+        type: Boolean,
+        default: true
+      },
+      firstName: String,
+      lastName: String,
+      user: String
+    }
+  ],
   lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
   pending: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
   toMake: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
