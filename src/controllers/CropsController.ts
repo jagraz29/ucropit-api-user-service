@@ -3,7 +3,6 @@ import models from '../models'
 import CropService from '../services/CropService'
 import CompanyService from '../services/CompanyService'
 import LotService from '../services/LotService'
-import UserService from '../services/UserService'
 import ActivityService from '../services/ActivityService'
 
 import { validateCropStore } from '../utils/Validation'
@@ -103,15 +102,6 @@ class CropsController {
 
     company = (await CompanyService.search({ identifier: data.identifier }))[0]
 
-    if (company) {
-      await UserService.update(
-        { email: user.email },
-        {
-          companies: [company._id]
-        }
-      )
-    }
-
     const lots = await LotService.store(req, {
       names: data.lots.names,
       tag: data.lots.tag
@@ -148,14 +138,6 @@ class CropsController {
 
     company = (await CompanyService.search({ identifier: data.identifier }))[0]
 
-    if (company) {
-      await UserService.update(
-        { email: user.email },
-        {
-          companies: [company._id]
-        }
-      )
-    }
     const crop = await Crop.findById(req.params.id)
 
     crop.company = company ? company._id : null

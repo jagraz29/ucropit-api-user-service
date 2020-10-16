@@ -1,5 +1,6 @@
 import { FileArray } from 'express-fileupload'
 import ServiceBase from './common/ServiceBase'
+import UserService from './UserService'
 import models from '../models'
 
 const Company = models.Company
@@ -52,6 +53,15 @@ class CompanyService extends ServiceBase {
     }
 
     const companyCreated = await Company.create(company)
+
+    if (companyCreated) {
+      await UserService.update(
+        { email: user.email },
+        {
+          companies: [companyCreated._id]
+        }
+      )
+    }
 
     return this.addFiles(companyCreated, evidences, files, user, `companies/${companyCreated.identifier}`)
   }
