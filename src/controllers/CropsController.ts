@@ -127,7 +127,7 @@ class CropsController {
       company,
       lots,
       activities,
-      { producers: req.user }
+      { members: req.user }
     )
 
     res.status(201).json(crop)

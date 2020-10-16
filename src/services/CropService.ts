@@ -1,6 +1,6 @@
 import models from '../models'
 import { isNowGreaterThan } from '../utils/Date'
-
+import mongoose from 'mongoose'
 const Crop = models.Crop
 const Activity = models.Activity
 
@@ -13,6 +13,7 @@ interface ICrop {
   cropType: Object
   unitType: Object
   lots: Array<any>
+  members: Array<any>
   company: string
 }
 
@@ -74,11 +75,11 @@ class CropService {
           { path: 'typeAgreement' },
           { path: 'lots' },
           { path: 'files' },
-          { path: 'achievements', populate: [
-            { path: 'lots' },
-            { path: 'files' }
-          ] },
-          { path : 'lotsMade' }
+          {
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'files' }]
+          },
+          { path: 'lotsMade' }
         ]
       })
       .populate({
@@ -119,7 +120,7 @@ class CropService {
     company,
     lots,
     activities,
-    { producers }
+    { members }
   ) {
     const lotsIds = []
 
@@ -130,13 +131,21 @@ class CropService {
     data.lots = lotsIds
     data.company = company ? company._id : null
     data.pending = activities
-    data.producers = [producers._id]
+    data.members = [
+      {
+        user: members._id,
+        producer: true,
+        firstName: members.firstName,
+        lastName: members.firstName
+      }
+    ]
 
     return this.store(data)
   }
 
   public static async store (crop: ICrop) {
-    return Crop.create(crop)
+    const newCrop = new Crop(crop)
+    return newCrop.save()
   }
 
   public static async removeActivities (
