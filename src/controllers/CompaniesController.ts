@@ -66,6 +66,12 @@ class CompaniesController {
       res.status(400).json(validationFiles)
     }
 
+    const companyIsExist = await CompanyService.search({ identifier : data.identifier })
+
+    if (companyIsExist) {
+      res.status(400).json('Already exist company with identifier')
+    }
+
     let company = await CompanyService.store(
       data,
       req.files,
