@@ -102,13 +102,15 @@ class CompaniesController {
 
     await validateCompanyUpdate(data)
 
-    const validationFiles = validateFilesWithEvidences(
-      req.files,
-      data.evidences
-    )
+    if (req.files) {
+      const validationFiles = validateFilesWithEvidences(
+        req.files,
+        data.evidences
+      )
 
-    if (validationFiles.error) {
-      res.status(400).json(validationFiles)
+      if (validationFiles.error) {
+        res.status(400).json(validationFiles)
+      }
     }
 
     let company = await CompanyService.updated(data, id)
