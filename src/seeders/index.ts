@@ -13,6 +13,8 @@ const UnitType = models.UnitType
 const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
 
+const CollaboratorRequest = models.CollaboratorRequest
+
 /**
  * Seeders CropType
  */

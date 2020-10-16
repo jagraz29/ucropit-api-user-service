@@ -31,7 +31,11 @@ class ServiceBase {
       return file._id
     })
 
-    document.files = await Promise.all(documents)
+    const filesSync = await Promise.all(documents)
+
+    for (const file of filesSync) {
+      document.files.push(file)
+    }
 
     return document.save()
   }

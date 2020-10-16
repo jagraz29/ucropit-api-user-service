@@ -3,6 +3,7 @@ import models from '../models'
 
 import {
   validateCompanyStore,
+  validateCompanyUpdate,
   validateFilesWithEvidences
 } from '../utils/Validation'
 import { getPathFileByType, getFullPath } from '../utils/Files'
@@ -95,9 +96,32 @@ class CompaniesController {
    * @return {Response}
    */
   public async update (req: Request, res: Response) {
-    await Company.findByIdAndUpdate(req.params.id, req.body)
-    const company = await Company.findById(req.params.id)
+    const user = req.user
+    const { id } = req.params
+    const data = JSON.parse(req.body.data)
 
+    await validateCompanyUpdate(data)
+
+    const validationFiles = validateFilesWithEvidences(
+      req.files,
+      data.evidences
+    )
+
+    if (validationFiles.error) {
+      res.status(400).json(validationFiles)
+    }
+
+    let company = await CompanyService.updated(data, id)
+
+    if (req.files) {
+      company = await CompanyService.addFiles(
+        company,
+        data.evidences,
+        req.files,
+        user,
+        `companies/${company.identifier}`
+      )
+    }
     res.status(200).json(company)
   }
 
