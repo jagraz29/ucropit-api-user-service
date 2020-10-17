@@ -10,7 +10,6 @@ interface IUserConfig {
 }
 
 class UserConfigService {
-
   /**
    * Find One User config by Id.
    *
@@ -39,13 +38,12 @@ class UserConfigService {
     const config = await UserConfig.findByIdAndUpdate({ _id: id }, configData)
 
     if (user) {
-      return User.findById(user._id).populate({
-        path: 'config',
-        populate: [
-          { path: 'companySelected' }
-        ]
-      })
-      .populate('companies')
+      return User.findById(user._id)
+        .populate({
+          path: 'config',
+          populate: [{ path: 'companySelected' }]
+        })
+        .populate('companies.company')
     }
 
     return this.findById(config._id)
