@@ -5,6 +5,7 @@ import profile from './profile'
 import auth from './auth'
 import lots from './lots'
 import crop from './crop'
+import cropCollaborators from './cropCollaborators'
 import activities from './activities'
 import company from './company'
 import common from './common'
@@ -38,6 +39,9 @@ router.use('/commons', authMiddleware, common)
 
 // CROPS
 router.use('/crops', authMiddleware, crop)
+
+// CROPS
+router.use('/crops', authMiddleware, cropCollaborators)
 
 // ACTIVITIES
 router.use('/activities', authMiddleware, activities)

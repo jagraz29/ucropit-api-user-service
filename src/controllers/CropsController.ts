@@ -28,7 +28,7 @@ class CropsController {
     }
 
     if (req.query.identifier) {
-      query.identifier = req.query.identifier
+      query['members.identifier'] = req.query.identifier
     }
 
     const crops = await Crop.find(query)
@@ -66,6 +66,7 @@ class CropsController {
           { path: 'files' }
         ]
       })
+      .populate('members.user')
       .populate({
         path: 'finished',
         populate: [

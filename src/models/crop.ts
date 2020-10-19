@@ -86,13 +86,12 @@ const CropSchema = new Schema({
   },
   members: [
     {
+      identifier: String,
       producer: {
         type: Boolean,
         default: true
       },
-      firstName: String,
-      lastName: String,
-      user: String
+      user: { type: Schema.Types.ObjectId, ref: 'User' }
     }
   ],
   lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
