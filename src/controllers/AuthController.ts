@@ -9,13 +9,8 @@ const User = models.User
 
 class AuthController {
   public async me (req, res: Response) {
-    const user = await User.findOne({ _id: req.user._id }).populate({
-      path: 'config',
-      populate: [
-        { path: 'companySelected' }
-      ]
-    })
-    .populate('companies.company')
+    const { id } = req.user
+    const user = await UserConfigService.findUserWithConfigs(id)
 
     res.json(user)
   }
