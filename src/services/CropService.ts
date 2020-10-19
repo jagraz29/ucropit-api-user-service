@@ -1,6 +1,5 @@
 import models from '../models'
 import { isNowGreaterThan } from '../utils/Date'
-import mongoose from 'mongoose'
 const Crop = models.Crop
 const Activity = models.Activity
 
@@ -98,20 +97,12 @@ class CropService {
     return crop
   }
   public static async expiredActivities (crop: any) {
-    let activities = crop.toMake.map(async (activity: any) => {
-      if (this.isExpiredActivity(activity)) {
-        activity.status[0].name.en = 'EXPIRED'
-        activity.status[0].name.es = 'VENCIDA'
 
-        await this.expiredActivity(activity)
+    let activitiesToMake = await this.checkListActivitiesExpired(crop, 'toMake')
+    let activitiesToDone = await this.checkListActivitiesExpired(crop, 'done')
 
-        return activity
-      }
-
-      return activity
-    })
-
-    crop.toMake = await Promise.all(activities)
+    crop.toMake = await Promise.all(activitiesToMake)
+    crop.done = await Promise.all(activitiesToDone)
 
     return crop
   }
@@ -186,10 +177,27 @@ class CropService {
     return false
   }
 
+  private static async checkListActivitiesExpired (crop, statusCrop: string) {
+    return crop[statusCrop].map(async (activity: any) => {
+      if (this.isExpiredActivity(activity)) {
+        activity.status[0].name.en = 'EXPIRED'
+        activity.status[0].name.es = 'VENCIDA'
+
+        await this.expiredActivity(activity)
+
+        return activity
+      }
+
+      return activity
+    })
+  }
+
   private static isExpiredActivity (activity): boolean {
     if (
-      activity.dateLimitValidation &&
+      (activity.dateLimitValidation &&
       isNowGreaterThan(activity.dateLimitValidation)
+      ||
+      (activity.dateEnd && isNowGreaterThan(activity.dateEnd)))
     ) {
       return true
     }

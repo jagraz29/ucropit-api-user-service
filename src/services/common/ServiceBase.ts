@@ -75,8 +75,6 @@ class ServiceBase {
    * @param user
    */
   public static async signUser (document, user) {
-    console.log(document)
-    console.log(user)
     const signer = document.signers.filter(
       (item) => item.userId.toString() === user._id.toString()
     )
