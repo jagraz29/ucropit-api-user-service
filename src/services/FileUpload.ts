@@ -57,7 +57,7 @@ class FileUpload {
       getFullPath(`${process.env.DIR_UPLOADS}/${this.destination}`)
     )
 
-    await file.mv(`${path}/${renameFile}`)
+    const moveFile = await file.mv(`${path}/${renameFile}`)
 
     return {
       path: `${process.env.DIR_UPLOADS}/${this.destination}/${renameFile}`,
