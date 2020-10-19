@@ -21,8 +21,17 @@ class CropsController {
    *
    * @return Response
    */
-  public async index (req: Request, res: Response) {
-    const crops = await Crop.find({ cancelled: false })
+  public async index (req, res: Response) {
+    const query: any = {
+      cancelled: false,
+      'members.user': req.user._id
+    }
+
+    if (req.query.identifier) {
+      query.identifier = req.query.identifier
+    }
+
+    const crops = await Crop.find(query)
       .populate('lots')
       .populate('cropType')
       .populate('unitType')
