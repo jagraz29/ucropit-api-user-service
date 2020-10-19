@@ -1,5 +1,5 @@
 import express from 'express'
-import usersController from '../../controllers/UsersController'
+import collaboratorRequestController from '../../controllers/CollaboratorRequestController'
 
 const router: express.Router = express.Router()
 
@@ -18,42 +18,48 @@ const router: express.Router = express.Router()
  *     - application/json
  *   responses:
  *    '200':
- *      description: Get all Crops
+ *      description: Get all collaborators request
  */
-router.get('/', usersController.listCollaborators)
+router.get('/', collaboratorRequestController.index)
 
 /**
  * @swagger
  * path:
- *  /v1/collaborators/{userId}:
+ *  /v1/collaborators/{id}:
  *    put:
- *      summary: Update a crop
+ *      summary: Update a collaborator request
  *      tags: [Collaborators Request]
  *      parameters:
  *        - in: path
- *          name: userId
+ *          name: id
  *      requestBody:
  *        content:
- *        application/json:
+ *          application/json:
  *              schema:
  *               type: object
  *               properties:
  *                  status:
  *                    type: string
- *
+ *                    description: ['pending', 'accepted', 'rejected']
+ *                  user:
+ *                    type: string
+ *                    description: Id user
+ *                  company:
+ *                    type: string
+ *                    description: Id company
  *
  *      responses:
  *       '201':
- *         description: Create success a company.
+ *         description: Update collaborator Request.
  *         content:
  *            application/json:
- *              schema:
+ *             schema:
  *                $ref: '#/components/schemas/CollaboratorRequest'
  *
  *       '500':
  *         description: Error to Server.
  *
  */
-router.put('/:userId', usersController.updateStatusCollaborator)
+router.put('/:id', collaboratorRequestController.update)
 
 export default router
