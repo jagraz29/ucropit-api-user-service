@@ -53,7 +53,6 @@ class AuthController {
       user.verifyToken = code
       user = await user.save()
     } else {
-      console.log('here')
       user = await UserService.store({ ...req.body, verifyToken: code })
     }
 

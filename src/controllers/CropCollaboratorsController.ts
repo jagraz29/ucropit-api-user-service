@@ -23,17 +23,14 @@ class CropCollaboratorsController {
     }
 
     if (company) {
-      const isCurrentCompany =
-        String(current.config.companySelected._id) === String(company?._id)
+      //const isCurrentCompany = String(current.config.companySelected._id) === String(company?._id)
 
+      user.companies = user.companies ? user.companies : []
       user.companies.push({
         company: company?._id,
         isProducer: type === 'PRODUCER'
       })
 
-      if (!isCurrentCompany) {
-        // crear request
-      }
     } else {
       user.companies.push({
         isProducer: type === 'PRODUCER'
