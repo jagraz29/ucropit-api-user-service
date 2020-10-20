@@ -13,7 +13,10 @@ interface IUser {
 }
 
 class UserService {
-  public static async store (user: IUser, configs = { fromInvitation: false }) {
+  public static async store (
+    user: IUser,
+    configs = { fromInvitation: false, companySelected: '' }
+  ) {
     const config = await UserConfigService.create(configs)
 
     user.config = config._id

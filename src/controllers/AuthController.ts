@@ -16,7 +16,11 @@ class AuthController {
   }
 
   public async auth (req: Request, res: Response) {
-    let user = await User.findOne({ email: req.body.email })
+    let user = await User.findOne({ email: req.body.email }).populate('config')
+
+    if (user.config.fromInvitation && !user.firstName) {
+      return res.status(404).json({ error: 'ERR_USER_NOT_FOUND' })
+    }
 
     if (user) {
       const code = numbers.getRandom()
@@ -36,8 +40,21 @@ class AuthController {
   }
 
   public async register (req: Request, res: Response) {
+    const { firstName, lastName, email, phone } = req.body
+    let user = await User.findOne({ email: req.body.email }).populate('config')
+
     const code = numbers.getRandom()
-    const user = await UserService.store({ ...req.body, verifyToken: code })
+
+    if (user && user.config.fromInvitation && !user.firstName) {
+      user.firstName = firstName
+      user.lastName = lastName
+      user.email = email
+      user.phone = phone
+      user.verifyToken = code
+      user = await user.save()
+    } else {
+      user = await UserService.store({ ...req.body, verifyToken: code })
+    }
 
     await EmailService.send({
       template: 'send-code',

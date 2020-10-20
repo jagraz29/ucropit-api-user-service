@@ -3,35 +3,55 @@
 import UserService from '../services/UserService'
 import User from '../models/user'
 import Company from '../models/company'
+import Crop from '../models/crop'
 
 class CropCollaboratorsController {
   public async create (req, res) {
     const { email, identifier, type } = req.body
+    const { id } = req.params
+    const company = await Company.findOne({ identifier })
+
+    const current = await User.findById(req.user._id).populate('config')
 
     let user = await User.findOne({ email })
 
     if (user === null) {
       user = await UserService.store(
         { email, firstName: '', lastName: '', phone: '', config: '' },
-        { fromInvitation: true }
+        { fromInvitation: true, companySelected: company?._id }
       )
     }
 
-    const company = await Company.findOne({ identifier })
-
     if (company) {
+      const isCurrentCompany =
+        String(current.config.companySelected._id) === String(company?._id)
+
       user.companies.push({
-        company: company._id,
+        company: company?._id,
+        isProducer: type === 'PRODUCER'
+      })
+
+      if (!isCurrentCompany) {
+        // crear request
+      }
+    } else {
+      user.companies.push({
         isProducer: type === 'PRODUCER'
       })
     }
 
-    user.members.push({
+    const crop = await Crop.findById(id)
+
+    crop.members.push({
       user: user._id,
       producer: type === 'PRODUCER',
-      identifier
+      identifier,
+      type
     })
 
+    // enviar mail de invitacion
+
+    await crop.save()
     await user.save()
 
     res.json({ message: user })

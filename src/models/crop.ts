@@ -87,6 +87,10 @@ const CropSchema = new Schema({
   members: [
     {
       identifier: String,
+      type: {
+        type: String,
+        default: 'PRODUCER'
+      },
       producer: {
         type: Boolean,
         default: true

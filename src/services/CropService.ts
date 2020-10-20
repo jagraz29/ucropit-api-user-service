@@ -92,6 +92,7 @@ class CropService {
           { path: 'files' }
         ]
       })
+      .populate('members.user')
 
     crop = this.expiredActivities(crop)
 
