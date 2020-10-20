@@ -18,7 +18,7 @@ class AuthController {
   public async auth (req: Request, res: Response) {
     let user = await User.findOne({ email: req.body.email }).populate('config')
 
-    if (user.config.fromInvitation && !user.firstName) {
+    if (user && user.config.fromInvitation && !user.firstName) {
       return res.status(404).json({ error: 'ERR_USER_NOT_FOUND' })
     }
 
@@ -53,6 +53,7 @@ class AuthController {
       user.verifyToken = code
       user = await user.save()
     } else {
+      console.log('here')
       user = await UserService.store({ ...req.body, verifyToken: code })
     }
 

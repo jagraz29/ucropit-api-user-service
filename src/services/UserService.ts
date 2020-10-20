@@ -17,6 +17,10 @@ class UserService {
     user: IUser,
     configs = { fromInvitation: false, companySelected: '' }
   ) {
+    if (!configs.companySelected) {
+      delete configs.companySelected
+    }
+
     const config = await UserConfigService.create(configs)
 
     user.config = config._id
