@@ -9,7 +9,7 @@ class CropCollaboratorsController {
   public async create (req, res) {
     const { email, identifier, type } = req.body
     const { id } = req.params
-    const company = await Company.findOne({ identifier })
+    const company = (await Company.findOne({ identifier })) || {}
 
     const current = await User.findById(req.user._id).populate('config')
 
@@ -18,19 +18,18 @@ class CropCollaboratorsController {
     if (user === null) {
       user = await UserService.store(
         { email, firstName: '', lastName: '', phone: '', config: '' },
-        { fromInvitation: true, companySelected: company?._id }
+        { fromInvitation: true, companySelected: company._id || '' }
       )
     }
 
-    if (company) {
+    if (Object.keys(company).length > 0) {
       //const isCurrentCompany = String(current.config.companySelected._id) === String(company?._id)
 
       user.companies = user.companies ? user.companies : []
       user.companies.push({
-        company: company?._id,
+        company: company._id,
         isProducer: type === 'PRODUCER'
       })
-
     } else {
       user.companies.push({
         isProducer: type === 'PRODUCER'
