@@ -59,12 +59,12 @@ class CompanyService extends ServiceBase {
     const companyCreated = await Company.create(company)
 
     if (companyCreated) {
-      const exists = user.companies.findIndex(
+      const exists = await user.companies.findIndex(
         el => el.identifier === companyCreated.identifier
       )
 
       if (exists > -1) {
-        user.companies.set(exists, {
+        await user.companies.set(exists, {
           ...user.companies[exists],
           company: companyCreated.id
         })
