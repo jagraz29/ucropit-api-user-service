@@ -132,7 +132,7 @@ class CropService {
     data.lots = lotsIds
     data.company = company ? company._id : null
     data.pending = activities
-    
+
     let newCrop = await this.store(data)
 
     newCrop.members.push({

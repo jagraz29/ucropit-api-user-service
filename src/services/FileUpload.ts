@@ -24,6 +24,7 @@ class FileUpload {
             if (this.files[key].length > 0) {
               let filesStored = this.files[key].map(async (file) => {
                 const result = await this.save(file)
+                console.log(result)
                 return result
               })
 
@@ -57,13 +58,17 @@ class FileUpload {
       getFullPath(`${process.env.DIR_UPLOADS}/${this.destination}`)
     )
 
-    const moveFile = await file.mv(`${path}/${renameFile}`)
+    return new Promise((resolve, reject) => {
+      file.mv(`${path}/${renameFile}`, (err) => {
+        if (err) reject(err)
 
-    return {
-      path: `${process.env.DIR_UPLOADS}/${this.destination}/${renameFile}`,
-      nameFile: renameFile,
-      fileType: file.mimetype
-    }
+        resolve({
+          path: `${process.env.DIR_UPLOADS}/${this.destination}/${renameFile}`,
+          nameFile: renameFile,
+          fileType: file.mimetype
+        })
+      })
+    })
   }
 
   validTypes (file) {
