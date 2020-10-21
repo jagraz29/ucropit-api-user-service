@@ -19,7 +19,11 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(morgan('tiny'))
-app.use(fileUpload())
+app.use(
+  fileUpload({
+    createParentPath: true
+  })
+)
 
 app.use(
   '/api-docs',
