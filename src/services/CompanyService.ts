@@ -38,7 +38,12 @@ class CompanyService extends ServiceBase {
    * @param files
    * @param user
    */
-  public static async store (company: ICompany, files: FileArray, evidences, user) {
+  public static async store (
+    company: ICompany,
+    files: FileArray,
+    evidences,
+    user
+  ) {
     let companies = await this.search({
       identifier: company.identifier
     })
@@ -54,21 +59,37 @@ class CompanyService extends ServiceBase {
     const companyCreated = await Company.create(company)
 
     if (companyCreated) {
-      user.companies.push({
-        company: companyCreated._id
-      })
+      const exists = user.companies.findIndex(
+        el => el.identifier === companyCreated.identifier
+      )
 
-      await user.save()
+      if (exists > -1) {
+        user.companies.set(exists, {
+          ...user.companies[exists],
+          company: companyCreated.id
+        })
+      } else {
+        user.companies.push({
+          company: companyCreated._id
+        })
+      }
+
+      user = await user.save()
     }
 
-    return this.addFiles(companyCreated, evidences, files, user, `companies/${companyCreated.identifier}`)
+    return this.addFiles(
+      companyCreated,
+      evidences,
+      files,
+      user,
+      `companies/${companyCreated.identifier}`
+    )
   }
 
   public static async updated (company: ICompany, id: string) {
     await Company.findByIdAndUpdate(id, company)
     return Company.findById(id)
   }
-
 }
 
 export default CompanyService

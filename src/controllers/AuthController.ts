@@ -100,7 +100,9 @@ class AuthController {
 
     await UserConfigService.update(user.config, { hasPin: true })
 
-    res.json({ user: await user.populate('config').execPopulate() })
+    const responseUser = await UserConfigService.findUserWithConfigs(user._id)
+
+    res.json({ user: responseUser })
   }
 }
 
