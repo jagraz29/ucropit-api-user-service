@@ -91,6 +91,7 @@ class CropService {
           { path: 'files' }
         ]
       })
+      .populate('members.user')
 
     crop = this.expiredActivities(crop)
 
@@ -122,16 +123,18 @@ class CropService {
     data.lots = lotsIds
     data.company = company ? company._id : null
     data.pending = activities
-    data.members = [
-      {
-        user: members._id,
-        producer: true,
-        firstName: members.firstName,
-        lastName: members.firstName
-      }
-    ]
+    
+    let newCrop = await this.store(data)
 
-    return this.store(data)
+    newCrop.members.push({
+      user: members._id,
+      producer: true,
+      identifier: data.identifier
+    })
+
+    await newCrop.save()
+
+    return newCrop
   }
 
   public static async store (crop: ICrop) {

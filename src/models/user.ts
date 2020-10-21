@@ -48,20 +48,16 @@ export interface UserSchema extends mongoose.Document {
 const userSchema = new mongoose.Schema(
   {
     firstName: {
-      type: String,
-      required: true
+      type: String
     },
     lastName: {
-      type: String,
-      required: true
+      type: String
     },
     phone: {
-      type: String,
-      required: true
+      type: String
     },
     email: {
       type: String,
-      required: true,
       unique: true
     },
     pin: {

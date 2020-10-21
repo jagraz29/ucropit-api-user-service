@@ -11,6 +11,20 @@ interface IUserConfig {
 
 class UserConfigService {
   /**
+   * Get One user with a configs.
+   *
+   * @param string id
+   */
+  public static async findUserWithConfigs (id: string) {
+    return User.findOne({ _id: id }).populate({
+      path: 'config',
+      populate: [
+        { path: 'companySelected' }
+      ]
+    })
+    .populate('companies.company')
+  }
+  /**
    * Find One User config by Id.
    *
    * @param string id
