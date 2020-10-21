@@ -6,20 +6,22 @@ import models from '../../models'
 
 const FileDocument = models.FileDocument
 class ServiceBase {
-
-    /**
-     * Upload Files and create Document Files.
-     *
-     * @param document
-     * @param evidences
-     * @param files
-     * @param user
-     */
-  public static async addFiles (document, evidences, files: FileArray, user, path: string) {
-    const filesUploaded = await UploadService.upload(
-          files,
-         `${path}`
-        )
+  /**
+   * Upload Files and create Document Files.
+   *
+   * @param document
+   * @param evidences
+   * @param files
+   * @param user
+   */
+  public static async addFiles (
+    document,
+    evidences,
+    files: FileArray,
+    user,
+    path: string
+  ) {
+    const filesUploaded = await UploadService.upload(files, `${path}`)
 
     const documents = filesUploaded.map(async (item, index) => {
       const file = await FileDocument.create({
@@ -78,7 +80,7 @@ class ServiceBase {
     console.log(document)
     console.log(user)
     const signer = document.signers.filter(
-      (item) => item.userId.toString() === user._id.toString()
+      item => item.userId.toString() === user._id.toString()
     )
 
     if (signer.length > 0) {
