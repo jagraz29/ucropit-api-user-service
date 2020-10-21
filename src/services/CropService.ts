@@ -1,4 +1,5 @@
 import models from '../models'
+import achievement from '../models/achievement'
 import { isNowGreaterThan } from '../utils/Date'
 const Crop = models.Crop
 const Activity = models.Activity
@@ -100,12 +101,18 @@ class CropService {
   public static async expiredActivities (crop: any) {
 
     let activitiesToMake = await this.checkListActivitiesExpired(crop, 'toMake')
-    let activitiesToDone = await this.checkListActivitiesExpired(crop, 'done')
 
     crop.toMake = await Promise.all(activitiesToMake)
-    crop.done = await Promise.all(activitiesToDone)
 
     return crop
+  }
+
+  public static async changeStatusActivitiesRange (crop: any) {
+    // Si paso el tiempo de la siembra o cosecha y no esta al 100%
+    // Si esto es verdadero cambiar estado a pendiente
+
+    // verificar si todos firmaron las realizaciones y si esta al 100%
+    // Si esto es verdadero, cambiar estado de terminado
   }
   public static async handleDataCrop (
     data,
@@ -123,7 +130,7 @@ class CropService {
     data.lots = lotsIds
     data.company = company ? company._id : null
     data.pending = activities
-    
+
     let newCrop = await this.store(data)
 
     newCrop.members.push({
@@ -180,6 +187,28 @@ class CropService {
     return false
   }
 
+  /**
+   *
+   * @param crop
+   * @param statusCrop
+   */
+  private static async listActivitiesExpiredRange (crop, statusCrop: string) {
+    const activities = crop[statusCrop].map(async (activity: any) => {
+      if (this.isExpiredActivity(activity) && !this.isTotalPercentAchievements(activity)) {
+        return activity
+      }
+
+      return activity
+    })
+
+    return Promise.all(activities)
+  }
+
+  /**
+   *
+   * @param crop
+   * @param statusCrop
+   */
   private static async checkListActivitiesExpired (crop, statusCrop: string) {
     return crop[statusCrop].map(async (activity: any) => {
       if (this.isExpiredActivity(activity)) {
@@ -195,6 +224,10 @@ class CropService {
     })
   }
 
+  /**
+   *
+   * @param activity
+   */
   private static isExpiredActivity (activity): boolean {
     if (
       (activity.dateLimitValidation &&
@@ -208,6 +241,27 @@ class CropService {
     return false
   }
 
+  /**
+   *  Check is make total percent in achievements activities.
+   *
+   * @param activity
+   *
+   * @return boolean
+   */
+  private static isTotalPercentAchievements (activity): boolean {
+    const totalPercent = activity.achievements.reduce((a, b) => a + (b['percent'] || 0), 0)
+
+    if (totalPercent >= 100) {
+      return true
+    }
+
+    return false
+  }
+
+  /**
+   *
+   * @param activity
+   */
   private static async expiredActivity (activity) {
     const activityInstance = await Activity.findById(activity._id)
 
