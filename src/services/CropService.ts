@@ -1,6 +1,7 @@
 import models from '../models'
 import achievement from '../models/achievement'
 import { isNowGreaterThan } from '../utils/Date'
+import ServiceBase from './common/ServiceBase'
 const Crop = models.Crop
 const Activity = models.Activity
 
@@ -40,7 +41,7 @@ const statusActivities: Array<any> = [
   }
 ]
 
-class CropService {
+class CropService extends ServiceBase {
   public static async getCropById (cropId: string) {
     let crop = await Crop.findById(cropId)
       .populate('lots')
@@ -110,6 +111,9 @@ class CropService {
   public static async changeStatusActivitiesRange (crop: any) {
     // Si paso el tiempo de la siembra o cosecha y no esta al 100%
     // Si esto es verdadero cambiar estado a pendiente
+
+    let activitiesExpired = this.listActivitiesExpiredRange(crop, 'done')
+    console.log(activitiesExpired)
 
     // verificar si todos firmaron las realizaciones y si esta al 100%
     // Si esto es verdadero, cambiar estado de terminado
