@@ -49,10 +49,6 @@ const LotSchema = new Schema({
   surface: {
     type: Number,
     require: true
-  },
-  tag: {
-    type: String,
-    require: true
   }
 })
 
