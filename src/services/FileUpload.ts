@@ -53,9 +53,7 @@ class FileUpload {
 
     const renameFile = `${file.md5}.${fileNameArray.pop()}`
 
-    const path = await makeDirIfNotExists(
-      getFullPath(`${process.env.DIR_UPLOADS}/${this.destination}`)
-    )
+    const path = getFullPath(`${process.env.DIR_UPLOADS}/${this.destination}`)
 
     return new Promise((resolve, reject) => {
       file.mv(`${path}/${renameFile}`, (err) => {
