@@ -76,7 +76,8 @@ const userSchema = new mongoose.Schema(
         isProducer: {
           type: Boolean,
           default: true
-        }
+        },
+        identifier: String
       }
     ],
     config: { type: Schema.Types.ObjectId, ref: 'UserConfig' }
