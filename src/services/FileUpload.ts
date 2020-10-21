@@ -24,7 +24,6 @@ class FileUpload {
             if (this.files[key].length > 0) {
               let filesStored = this.files[key].map(async (file) => {
                 const result = await this.save(file)
-                console.log(result)
                 return result
               })
 
