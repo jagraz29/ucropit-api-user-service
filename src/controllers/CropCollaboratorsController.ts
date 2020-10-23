@@ -4,6 +4,7 @@ import UserService from '../services/UserService'
 import User from '../models/user'
 import Company from '../models/company'
 import Crop from '../models/crop'
+import CollaboratorRequest from '../models/collaboratorRequest'
 
 class CropCollaboratorsController {
   public async create (req, res) {
@@ -23,16 +24,21 @@ class CropCollaboratorsController {
     }
 
     if (Object.keys(company).length > 0) {
-
-      const isCurrentCompany =
-        String(current.config.companySelected._id) === String(company._id)
-
       user.companies = user.companies ? user.companies : []
       user.companies.push({
         company: company._id,
         isProducer: type === 'PRODUCER',
         identifier
       })
+
+      const request = new CollaboratorRequest({
+        user: user._id,
+        company: company._id
+      })
+
+      user.collaboratorRequest.push(request._id)
+
+      await request.save()
     } else {
       user.companies.push({
         isProducer: type === 'PRODUCER',

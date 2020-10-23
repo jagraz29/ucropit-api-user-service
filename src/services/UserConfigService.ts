@@ -22,6 +22,7 @@ class UserConfigService {
         { path: 'companySelected' }
       ]
     })
+    .populate('collaboratorRequest')
     .populate('companies.company')
   }
   /**
@@ -57,6 +58,7 @@ class UserConfigService {
           path: 'config',
           populate: [{ path: 'companySelected' }]
         })
+        .populate('collaboratorRequest')
         .populate('companies.company')
     }
 

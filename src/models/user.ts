@@ -67,6 +67,12 @@ const userSchema = new mongoose.Schema(
       type: String
     },
     avatar: { type: String, required: false },
+    collaboratorRequest: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'CollaboratorRequest'
+      }
+    ],
     companies: [
       {
         company: {
