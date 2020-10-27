@@ -1,16 +1,19 @@
 import { Request, Response } from 'express'
+import models from '../models'
+import user from '../models/user'
 import CollaboratorRequestService from '../services/CollaboratorRequestService'
 
-class CollaboratorRequestController {
+const User = models.User
 
-/**
- * Get all collaborator request.
- *
- * @param Request req
- * @param Response res
- *
- * @returns Response
- */
+class CollaboratorRequestController {
+  /**
+   * Get all collaborator request.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @returns Response
+   */
   public async index (req: Request, res: Response) {
     const { query } = req.query
 
@@ -19,14 +22,14 @@ class CollaboratorRequestController {
     res.status(200).json(collaboratorsRequest)
   }
 
-    /**
-     * Update Collaborator Request.
-     *
-     * @param req
-     * @param res
-     *
-     * @return Response
-     */
+  /**
+   * Update Collaborator Request.
+   *
+   * @param req
+   * @param res
+   *
+   * @return Response
+   */
   public async update (req: Request, res: Response) {
     const { id } = req.params
     const data = req.body
@@ -35,10 +38,27 @@ class CollaboratorRequestController {
 
     const collaboratorRequest = await CollaboratorRequestService.findById(id)
 
+    if (data.status === 'accepted') {
+      const user = await User.findById(collaboratorRequest.user._id).populate(
+        'companies'
+      )
+
+      const companyIndex = user.companies.findIndex(company => {
+        return (
+          String(company.company) === String(collaboratorRequest.company._id)
+        )
+      })
+      
+      await user.companies.set(companyIndex, {
+        ...user.companies[companyIndex],
+        isAdmin: Boolean(data.isAdmin)
+      })
+
+      await user.save()
+    }
+
     res.status(200).json(collaboratorRequest)
-
   }
-
 }
 
 export default new CollaboratorRequestController()

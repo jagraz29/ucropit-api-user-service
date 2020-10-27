@@ -79,7 +79,7 @@ const userSchema = new mongoose.Schema(
           type: Schema.Types.ObjectId,
           ref: 'Company'
         },
-        isProducer: {
+        isAdmin: {
           type: Boolean,
           default: true
         },
