@@ -27,7 +27,7 @@ class CropCollaboratorsController {
       user.companies = user.companies ? user.companies : []
       user.companies.push({
         company: company._id,
-        isProducer: type === 'PRODUCER',
+        isAdmin: false,
         identifier
       })
 
@@ -41,7 +41,7 @@ class CropCollaboratorsController {
       await request.save()
     } else {
       user.companies.push({
-        isProducer: type === 'PRODUCER',
+        isAdmin: type === 'PRODUCER',
         identifier
       })
     }
