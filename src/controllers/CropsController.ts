@@ -93,6 +93,8 @@ class CropsController {
     const { id } = req.params
     const crop = await CropService.getCropById(id)
 
+    console.log(crop)
+
     res.status(200).json(crop)
   }
 

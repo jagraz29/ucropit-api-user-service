@@ -13,19 +13,21 @@ import models from '../models'
 const Crop = models.Crop
 
 class AchievementsController {
-/**
- * Get all achievements filter query.
- *
- * @param Request req
- * @param Response res
- *
- * @return Response
- */
+  /**
+   * Get all achievements filter query.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
   public async index (req: Request, res: Response) {
     const { activityId } = req.query
 
     if (activityId) {
-      const activity = await ActivityService.findActivityById(String(activityId))
+      const activity = await ActivityService.findActivityById(
+        String(activityId)
+      )
 
       return res.status(200).json(activity.achievements)
     }
@@ -83,7 +85,7 @@ class AchievementsController {
     await ActivityService.addAchievement(activity, achievement)
 
     if (activity.status[0].name.en !== 'DONE') {
-      ActivityService.changeStatus(activity, 'DONE')
+      await ActivityService.changeStatus(activity, 'DONE')
 
       const crop = await Crop.findById(data.crop)
 
@@ -124,7 +126,6 @@ class AchievementsController {
 
     res.status(200).json(achievement)
   }
-
 }
 
 export default new AchievementsController()

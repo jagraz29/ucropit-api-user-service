@@ -2,6 +2,7 @@ import models from '../models'
 import achievement from '../models/achievement'
 import { isNowGreaterThan } from '../utils/Date'
 import ServiceBase from './common/ServiceBase'
+import ActivityService from './ActivityService'
 const Crop = models.Crop
 const Activity = models.Activity
 
@@ -42,8 +43,27 @@ const statusActivities: Array<any> = [
 ]
 
 class CropService extends ServiceBase {
+  /**
+   *
+   * @param cropId
+   */
   public static async getCropById (cropId: string) {
-    let crop = await Crop.findById(cropId)
+    let crop = await this.findOneCrop(cropId)
+
+    crop = await this.expiredActivities(crop)
+
+    crop = await this.changeStatusActivitiesRange(crop)
+
+    return crop
+  }
+
+  /**
+   * Find One Crop by Id.
+   *
+   * @param cropId
+   */
+  public static async findOneCrop (cropId: string) {
+    return Crop.findById(cropId)
       .populate('lots')
       .populate('cropType')
       .populate('unitType')
@@ -94,11 +114,13 @@ class CropService extends ServiceBase {
         ]
       })
       .populate('members.user')
-
-    crop = this.expiredActivities(crop)
-
-    return crop
   }
+
+  /**
+   * Expired Activity.
+   *
+   * @param crop
+   */
   public static async expiredActivities (crop: any) {
 
     let activitiesToMake = await this.checkListActivitiesExpired(crop, 'toMake')
@@ -108,16 +130,36 @@ class CropService extends ServiceBase {
     return crop
   }
 
-  public static async changeStatusActivitiesRange (crop: any) {
-    // Si paso el tiempo de la siembra o cosecha y no esta al 100%
-    // Si esto es verdadero cambiar estado a pendiente
+  /**
+   * Change status in list activities range.
+   *
+   * @param crop
+   *
+   * @return Promise
+   */
+  public static async changeStatusActivitiesRange (crop: any): Promise<void> {
+    const listActivitiesExpired = (await this.listActivitiesExpiredRange(crop, 'done')).filter(activity => activity)
+    const listActivitiesFinished = (await this.listActivitiesFinishedRange(crop, 'done')).filter(activity => activity)
 
-    let activitiesExpired = this.listActivitiesExpiredRange(crop, 'done')
-    console.log(activitiesExpired)
+    if (listActivitiesExpired.length > 0) {
+      for (let activity of listActivitiesExpired) {
+        await this.removeActivities(activity, crop, 'done')
+        activity = await ActivityService.changeStatus(activity, 'TO_COMPLETE')
+        await this.addActivities(activity, crop)
+      }
+    }
+    if (listActivitiesFinished.length > 0) {
+      for (let activity of listActivitiesFinished) {
+        await this.removeActivities(activity, crop, 'done')
+        activity = await ActivityService.changeStatus(activity, 'FINISHED')
+        await this.addActivities(activity, crop)
+      }
+    }
 
-    // verificar si todos firmaron las realizaciones y si esta al 100%
-    // Si esto es verdadero, cambiar estado de terminado
+    return this.findOneCrop(crop._id)
+
   }
+
   public static async handleDataCrop (
     data,
     company,
@@ -202,10 +244,45 @@ class CropService extends ServiceBase {
         return activity
       }
 
-      return activity
+      return undefined
     })
 
     return Promise.all(activities)
+  }
+
+  /**
+   *
+   * @param crop
+   * @param statusCrop
+   */
+  private static async listActivitiesFinishedRange (crop, statusCrop: string) {
+    const activities = crop[statusCrop].map(async (activity: any) => {
+      if (!this.isExpiredActivity(activity)
+       && this.isTotalPercentAchievements(activity)
+       && this.checkCompleteSignedEachAchievements(activity)) {
+        return activity
+      }
+
+      return undefined
+    })
+
+    return Promise.all(activities)
+  }
+
+  /**
+   *
+   * @param activity
+   */
+  private static checkCompleteSignedEachAchievements (activity: any): boolean {
+    let completeSigned = true
+    for (const achievement of activity.achievements) {
+      if (!this.isCompleteSignsUsers(achievement)) {
+        completeSigned = false
+        return completeSigned
+      }
+    }
+
+    return completeSigned
   }
 
   /**
@@ -253,6 +330,7 @@ class CropService extends ServiceBase {
    * @return boolean
    */
   private static isTotalPercentAchievements (activity): boolean {
+    if (!activity.achievements || activity.achievements.length === 0) return false
     const totalPercent = activity.achievements.reduce((a, b) => a + (b['percent'] || 0), 0)
 
     if (totalPercent >= 100) {
