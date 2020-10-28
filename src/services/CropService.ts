@@ -52,11 +52,11 @@ class CropService extends ServiceBase {
     let crops = await this.findAll(query)
 
     crops = crops.map(async (crop) => {
-      crop = await this.expiredActivities(crop);
+      crop = await this.expiredActivities(crop)
 
-      crop = await this.changeStatusActivitiesRange(crop);
+      crop = await this.changeStatusActivitiesRange(crop)
 
-      return crop;
+      return crop
     })
 
     return Promise.all(crops)
@@ -67,7 +67,7 @@ class CropService extends ServiceBase {
    *
    * @param query
    */
-  public static async findAll(query) {
+  public static async findAll (query) {
     return Crop.find(query)
       .populate('lots')
       .populate('cropType')
@@ -119,7 +119,7 @@ class CropService extends ServiceBase {
    *
    * @param cropId
    */
-  public static async getCropById(cropId: string) {
+  public static async getCropById (cropId: string) {
     let crop = await this.findOneCrop(cropId)
 
     crop = await this.expiredActivities(crop)
@@ -240,17 +240,29 @@ class CropService extends ServiceBase {
   public static async handleDataCrop (
     data,
     company,
-    lots,
+    lotsData,
     activities,
     { members }
   ) {
-    const lotsIds = []
+    const lotsArray = []
+    let tagIndex = null
 
-    for (const lot of lots) {
-      lotsIds.push(lot._id)
+    for (const item of lotsData) {
+      for (const lot of item.lots) {
+        if (tagIndex !== item.tag) {
+          lotsArray.push({
+            tag: item.tag,
+            data: [lot._id]
+          })
+          tagIndex = item.tag
+        } else {
+          const index = lotsArray.findIndex((x) => x.tag === item.tag)
+          lotsArray[index].data.push(lot._id)
+        }
+      }
     }
 
-    data.lots = lotsIds
+    data.lots = lotsArray
     data.company = company ? company._id : null
     data.pending = activities
 

@@ -98,7 +98,16 @@ const CropSchema = new Schema({
       user: { type: Schema.Types.ObjectId, ref: 'User' }
     }
   ],
-  lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
+  lots: [{
+    tag: {
+      type: String,
+      require: true
+    },
+    data: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Lot'
+    }]
+  }],
   pending: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
   toMake: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
   done: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
