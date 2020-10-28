@@ -43,7 +43,7 @@ const statusActivities: Array<any> = [
 class CropService {
   public static async getCropById (cropId: string) {
     let crop = await Crop.findById(cropId)
-      .populate('lots')
+      .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
       .populate({ path: 'company', populate: [{ path: 'files' }] })
@@ -119,17 +119,29 @@ class CropService {
   public static async handleDataCrop (
     data,
     company,
-    lots,
+    lotsData,
     activities,
     { members }
   ) {
-    const lotsIds = []
+    const lotsArray = []
+    let tagIndex = null
 
-    for (const lot of lots) {
-      lotsIds.push(lot._id)
+    for (const item of lotsData) {
+      for (const lot of item.lots) {
+        if (tagIndex !== item.tag) {
+          lotsArray.push({
+            tag: item.tag,
+            data: [lot._id]
+          })
+          tagIndex = item.tag
+        } else {
+          const index = lotsArray.findIndex(x => x.tag === item.tag)
+          lotsArray[index].data.push(lot._id)
+        }
+      }
     }
 
-    data.lots = lotsIds
+    data.lots = lotsArray
     data.company = company ? company._id : null
     data.pending = activities
 

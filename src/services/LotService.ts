@@ -10,52 +10,70 @@ interface ILot {
   name: String
   area: Array<any>
   surface: Number
-  tag: String
+  tag?: String
 }
 
 class LotService {
-  public static async store (req: Request, { names, tag }) {
+  public static async store (req: Request, lotsNames) {
+
     const jsonParserKmz = await handleFileConvertJSON(req.files)
 
-    const filterLots = jsonParserKmz.map(item => {
-      return item.features.filter((item) => {
-        return (
-          names.filter((select) => select === item.properties.name).length > 0
-        )
-      })
+    const filterLots = lotsNames.map(itemName => {
+      return jsonParserKmz.map(item => {
+        const lotsFilter = item.features.filter((item) => {
+          return (
+                itemName.names.filter((select) => select === item.properties.name).length > 0
+          )
+        })
+
+        if (lotsFilter.length > 0) {
+          return { lotsFilter, tag: itemName.tag }
+        }
+
+        return undefined
+
+      }).filter(kmzLotItem => kmzLotItem)
     })
 
-    const flattListLotFilter = _.flatten(filterLots)
+    const flattListLotFilter = this.getArrayLotsGroupTag(_.flatten(filterLots))
 
-    const lots = await LotService.storeLots(flattListLotFilter, tag)
+    const lots = await LotService.storeLots(flattListLotFilter)
 
     return lots
+
   }
   /**
    * To create a Lots when given items filter to Kmz/Kml file and lots are selected.
    *
    * @param itemsFilter
    */
-  public static async storeLots (itemsFilter: Array<any>, tag: String) {
+  public static async storeLots (itemsFilter: Array<any>) {
     let toStored: Array<any> = []
-    let index = 0
+    let toCrop = []
 
     for (const element of itemsFilter) {
-      const lot: ILot = {
-        name: element.properties.name,
-        area: this.getArrayAreas(element.geometry.coordinates),
-        surface: Number(this.getSurface(element.geometry.coordinates)),
-        tag: tag
+      const lotFilter = _.flatten(element.lots)
+
+      for (const lotItem of lotFilter) {
+        const lot: ILot = {
+          name: lotItem.properties.name,
+          area: this.getArrayAreas(lotItem.geometry.coordinates),
+          surface: Number(this.getSurface(lotItem.geometry.coordinates))
+        }
+
+        const asyncLot = this.create(lot)
+
+        toStored.push(asyncLot)
       }
 
-      const asyncLot = this.create(lot)
-
-      toStored.push(asyncLot)
-
-      index++
+      toCrop.push({
+        lots: await Promise.all(toStored),
+        tag: element.tag
+      })
+      toStored = []
     }
 
-    return Promise.all(toStored)
+    return toCrop
   }
 
   /**
@@ -87,6 +105,37 @@ class LotService {
     const areaSquare = this.getNumberAreaSquare(arrayAreas)
 
     return geolib.convertArea(areaSquare, 'ha').toFixed(2)
+  }
+
+  /**
+   * Group by tags  filter lots.
+   *
+   * @param list
+   *
+   * @returns Array
+   */
+  private static getArrayLotsGroupTag (list): Array<any> {
+    const LotArrayFilter: Array<any> = []
+    let tagIndex = null
+
+    for (const lotItem of list) {
+      if (lotItem.tag !== tagIndex) {
+        LotArrayFilter.push({
+          lots: this.getArrayLotData(lotItem.lotsFilter),
+          tag: lotItem.tag
+        })
+        tagIndex = lotItem.tag
+      } else {
+        const index = LotArrayFilter.findIndex(x => x.tag === lotItem.tag)
+        LotArrayFilter[index].lots.push(this.getArrayLotData(lotItem.lotsFilter))
+      }
+    }
+
+    return LotArrayFilter
+  }
+
+  private static getArrayLotData (lotFilter) {
+    return Array.isArray(lotFilter) ? lotFilter : [lotFilter]
   }
 
   /**

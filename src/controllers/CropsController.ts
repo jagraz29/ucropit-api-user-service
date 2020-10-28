@@ -32,7 +32,7 @@ class CropsController {
     }
 
     const crops = await Crop.find(query)
-      .populate('lots')
+      .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
       .populate('company')
@@ -112,10 +112,7 @@ class CropsController {
 
     company = (await CompanyService.search({ identifier: data.identifier }))[0]
 
-    const lots = await LotService.store(req, {
-      names: data.lots.names,
-      tag: data.lots.tag
-    })
+    const lots = await LotService.store(req, data.lots)
 
     const activities = await ActivityService.createDefault(
       data.surface,
