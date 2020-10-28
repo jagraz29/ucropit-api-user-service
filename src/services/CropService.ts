@@ -44,10 +44,82 @@ const statusActivities: Array<any> = [
 
 class CropService extends ServiceBase {
   /**
+   * Get all crops.
+   *
+   * @param query
+   */
+  public static async getAll(query) {
+    let crops = await this.findAll(query)
+
+    crops = crops.map(async (crop) => {
+      crop = await this.expiredActivities(crop);
+
+      crop = await this.changeStatusActivitiesRange(crop);
+
+      return crop;
+    })
+
+    return Promise.all(crops)
+  }
+
+  /**
+   * Find All crops by query filter.
+   *
+   * @param query
+   */
+  public static async findAll(query) {
+    return Crop.find(query)
+      .populate('lots')
+      .populate('cropType')
+      .populate('unitType')
+      .populate('company')
+      .populate({
+        path: 'pending',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'toMake',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate('members.user')
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+  }
+  /**
    *
    * @param cropId
    */
-  public static async getCropById (cropId: string) {
+  public static async getCropById(cropId: string) {
     let crop = await this.findOneCrop(cropId)
 
     crop = await this.expiredActivities(crop)
@@ -122,8 +194,10 @@ class CropService extends ServiceBase {
    * @param crop
    */
   public static async expiredActivities (crop: any) {
-
-    let activitiesToMake = await this.checkListActivitiesExpired(crop, 'toMake')
+    let activitiesToMake = await this.checkListActivitiesExpired(
+      crop,
+      'toMake'
+    )
 
     crop.toMake = await Promise.all(activitiesToMake)
 
@@ -138,8 +212,12 @@ class CropService extends ServiceBase {
    * @return Promise
    */
   public static async changeStatusActivitiesRange (crop: any): Promise<void> {
-    const listActivitiesExpired = (await this.listActivitiesExpiredRange(crop, 'done')).filter(activity => activity)
-    const listActivitiesFinished = (await this.listActivitiesFinishedRange(crop, 'done')).filter(activity => activity)
+    const listActivitiesExpired = (
+      await this.listActivitiesExpiredRange(crop, 'done')
+    ).filter((activity) => activity)
+    const listActivitiesFinished = (
+      await this.listActivitiesFinishedRange(crop, 'done')
+    ).filter((activity) => activity)
 
     if (listActivitiesExpired.length > 0) {
       for (let activity of listActivitiesExpired) {
@@ -157,7 +235,6 @@ class CropService extends ServiceBase {
     }
 
     return this.findOneCrop(crop._id)
-
   }
 
   public static async handleDataCrop (
@@ -195,11 +272,7 @@ class CropService extends ServiceBase {
     return newCrop.save()
   }
 
-  public static async removeActivities (
-    activity,
-    crop,
-    statusCrop = 'pending'
-  ) {
+  public static async removeActivities (activity, crop, statusCrop = 'pending') {
     crop[statusCrop].pull(activity._id)
 
     return crop.save()
@@ -207,7 +280,7 @@ class CropService extends ServiceBase {
 
   public static async addActivities (activity, crop) {
     const status = statusActivities.find(
-      item => item.name === activity.status[0].name.en
+      (item) => item.name === activity.status[0].name.en
     )
 
     const statusCrop = status.cropStatus
@@ -240,7 +313,10 @@ class CropService extends ServiceBase {
    */
   private static async listActivitiesExpiredRange (crop, statusCrop: string) {
     const activities = crop[statusCrop].map(async (activity: any) => {
-      if (this.isExpiredActivity(activity) && !this.isTotalPercentAchievements(activity)) {
+      if (
+        this.isExpiredActivity(activity, statusCrop) &&
+        !this.isTotalPercentAchievements(activity)
+      ) {
         return activity
       }
 
@@ -257,9 +333,11 @@ class CropService extends ServiceBase {
    */
   private static async listActivitiesFinishedRange (crop, statusCrop: string) {
     const activities = crop[statusCrop].map(async (activity: any) => {
-      if (!this.isExpiredActivity(activity)
-       && this.isTotalPercentAchievements(activity)
-       && this.checkCompleteSignedEachAchievements(activity)) {
+      if (
+        !this.isExpiredActivity(activity, statusCrop) &&
+        this.isTotalPercentAchievements(activity) &&
+        this.checkCompleteSignedEachAchievements(activity)
+      ) {
         return activity
       }
 
@@ -309,12 +387,12 @@ class CropService extends ServiceBase {
    *
    * @param activity
    */
-  private static isExpiredActivity (activity): boolean {
+  private static isExpiredActivity (activity, status?): boolean {
     if (
       (activity.dateLimitValidation &&
-      isNowGreaterThan(activity.dateLimitValidation)
-      ||
-      (activity.dateEnd && isNowGreaterThan(activity.dateEnd)))
+        isNowGreaterThan(activity.dateLimitValidation) &&
+        !status) ||
+      (activity.dateEnd && isNowGreaterThan(activity.dateEnd && status))
     ) {
       return true
     }
@@ -330,8 +408,13 @@ class CropService extends ServiceBase {
    * @return boolean
    */
   private static isTotalPercentAchievements (activity): boolean {
-    if (!activity.achievements || activity.achievements.length === 0) return false
-    const totalPercent = activity.achievements.reduce((a, b) => a + (b['percent'] || 0), 0)
+    if (!activity.achievements || activity.achievements.length === 0) {
+      return false
+    }
+    const totalPercent = activity.achievements.reduce(
+      (a, b) => a + (b['percent'] || 0),
+      0
+    )
 
     if (totalPercent >= 100) {
       return true

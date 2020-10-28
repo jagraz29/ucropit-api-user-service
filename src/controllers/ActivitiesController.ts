@@ -192,12 +192,12 @@ class ActivitiesController {
 
     await ActivityService.changeStatus(activity, status)
 
+    activity = await Activity.findById(id)
+
     const crop = await Crop.findById(cropId)
 
     await CropService.removeActivities(activity, crop, 'toMake')
     await CropService.addActivities(activity, crop)
-
-    activity = await Activity.findById(id)
 
     res.status(200).json(activity)
   }
