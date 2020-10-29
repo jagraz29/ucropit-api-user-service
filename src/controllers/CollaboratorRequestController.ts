@@ -15,7 +15,7 @@ class CollaboratorRequestController {
    * @returns Response
    */
   public async index (req: Request, res: Response) {
-    const { query } = req.query
+    const query = req.query
 
     const collaboratorsRequest = await CollaboratorRequestService.find(query)
 
@@ -43,12 +43,12 @@ class CollaboratorRequestController {
         'companies'
       )
 
-      const companyIndex = user.companies.findIndex(company => {
+      const companyIndex = user.companies.findIndex((company) => {
         return (
           String(company.company) === String(collaboratorRequest.company._id)
         )
       })
-      
+
       await user.companies.set(companyIndex, {
         ...user.companies[companyIndex],
         isAdmin: Boolean(data.isAdmin)
