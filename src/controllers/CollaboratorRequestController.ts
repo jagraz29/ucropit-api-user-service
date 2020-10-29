@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import models from '../models'
+import company from '../models/company'
 import user from '../models/user'
 import CollaboratorRequestService from '../services/CollaboratorRequestService'
 
@@ -48,9 +49,10 @@ class CollaboratorRequestController {
           String(company.company) === String(collaboratorRequest.company._id)
         )
       })
-      
+
       await user.companies.set(companyIndex, {
         ...user.companies[companyIndex],
+        company: collaboratorRequest.company._id,
         isAdmin: Boolean(data.isAdmin)
       })
 
