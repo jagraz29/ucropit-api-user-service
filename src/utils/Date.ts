@@ -1,9 +1,12 @@
-import moment from 'moment'
-
 export function isNowGreaterThan (date: Date): boolean {
-  const now = moment()
+  const dateCompare = new Date()
+  const now = new Date(
+    Date.UTC(
+      dateCompare.getFullYear(),
+      dateCompare.getMonth(),
+      dateCompare.getDate()
+    )
+  )
 
-  const dateMoment = moment(date)
-
-  return now >= dateMoment
+  return now > date
 }
