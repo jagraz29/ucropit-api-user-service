@@ -88,12 +88,22 @@ router.post('/', achievementsController.create)
  * @swagger
  * path:
  *  /v1/achievements/{id}/signs:
- *    put:
+ *    post:
  *      summary: Sign Achievement
  *      tags: [Achievement]
  *      parameters:
  *        - in: path
  *          name: id
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  activityId:
+ *                    type: string
+ *                    required: true
  *      responses:
  *       '200':
  *         description: Sign Achievement.
