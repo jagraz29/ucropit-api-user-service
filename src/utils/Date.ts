@@ -5,9 +5,5 @@ export function isNowGreaterThan (date: Date): boolean {
 
   const dateMoment = moment(date)
 
-  if (now > dateMoment) {
-    return true
-  }
-
-  return false
+  return now >= dateMoment
 }
