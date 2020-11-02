@@ -8,59 +8,64 @@ import CollaboratorRequest from '../models/collaboratorRequest'
 
 class CropCollaboratorsController {
   public async create (req, res) {
-    const { email, identifier, type } = req.body
-    const { id } = req.params
-    const company = await Company.findOne({ identifier })
+    try {
+      const { email, identifier, type } = req.body
+      const { id } = req.params
+      const company = await Company.findOne({ identifier })
 
-    const current = await User.findById(req.user._id).populate('config')
+      const current = await User.findById(req.user._id).populate('config')
 
-    let user = await User.findOne({ email })
+      let user = await User.findOne({ email })
 
-    if (user === null) {
-      user = await UserService.store(
-        { email, firstName: '', lastName: '', phone: '', config: '' },
-        { fromInvitation: true, companySelected: company._id || '' }
-      )
-    }
+      if (user === null) {
+        user = await UserService.store(
+          { email, firstName: '', lastName: '', phone: '', config: '' },
+          { fromInvitation: true, companySelected: company?._id || '' }
+        )
+      }
 
-    if (company != null) {
-      user.companies = user.companies ? user.companies : []
-      user.companies.push({
-        company: company._id,
-        isAdmin: false,
-        identifier
-      })
+      if (company !== null) {
+        user.companies = user.companies ? user.companies : []
+        user.companies.push({
+          company: company._id,
+          isAdmin: false,
+          identifier
+        })
 
-      const request = new CollaboratorRequest({
+        const request = new CollaboratorRequest({
+          user: user._id,
+          company: company._id
+        })
+
+        user.collaboratorRequest.push(request._id)
+
+        await request.save()
+      } else {
+        user.companies.push({
+          isAdmin: type === 'PRODUCER',
+          identifier
+        })
+      }
+
+      const crop = await Crop.findById(id)
+
+      crop.members.push({
         user: user._id,
-        company: company._id
+        producer: type === 'PRODUCER',
+        identifier,
+        type
       })
 
-      user.collaboratorRequest.push(request._id)
+      // enviar mail de invitacion
 
-      await request.save()
-    } else {
-      user.companies.push({
-        isAdmin: type === 'PRODUCER',
-        identifier
-      })
+      await crop.save()
+      await user.save()
+
+      res.json({ message: user })
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ message: err.message })
     }
-
-    const crop = await Crop.findById(id)
-
-    crop.members.push({
-      user: user._id,
-      producer: type === 'PRODUCER',
-      identifier,
-      type
-    })
-
-    // enviar mail de invitacion
-
-    await crop.save()
-    await user.save()
-
-    res.json({ message: user })
   }
 }
 export default new CropCollaboratorsController()
