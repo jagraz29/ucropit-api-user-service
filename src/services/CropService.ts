@@ -48,18 +48,18 @@ class CropService extends ServiceBase {
    *
    * @param query
    */
-  public static async getAll(query) {
+  public static async getAll (query) {
     let crops = await this.findAll(query)
 
-    crops = crops.map(async (crop) => {
-      crop = await this.expiredActivities(crop)
+    // crops = crops.map(async (crop) => {
+    //   crop = await this.expiredActivities(crop)
 
-      crop = await this.changeStatusActivitiesRange(crop)
+    //   crop = await this.changeStatusActivitiesRange(crop)
 
-      return crop
-    })
+    //   return crop
+    // })
 
-    return Promise.all(crops)
+    return crops
   }
 
   /**
@@ -69,7 +69,7 @@ class CropService extends ServiceBase {
    */
   public static async findAll (query) {
     return Crop.find(query)
-      .populate('lots')
+      .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
       .populate('company')
@@ -136,7 +136,7 @@ class CropService extends ServiceBase {
    */
   public static async findOneCrop (cropId: string) {
     return Crop.findById(cropId)
-      .populate('lots')
+      .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
       .populate({ path: 'company', populate: [{ path: 'files' }] })
