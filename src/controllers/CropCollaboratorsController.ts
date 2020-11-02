@@ -10,7 +10,7 @@ class CropCollaboratorsController {
   public async create (req, res) {
     const { email, identifier, type } = req.body
     const { id } = req.params
-    const company = (await Company.findOne({ identifier })) || {}
+    const company = await Company.findOne({ identifier })
 
     const current = await User.findById(req.user._id).populate('config')
 
@@ -23,7 +23,7 @@ class CropCollaboratorsController {
       )
     }
 
-    if (Object.keys(company).length > 0) {
+    if (company != null) {
       user.companies = user.companies ? user.companies : []
       user.companies.push({
         company: company._id,
