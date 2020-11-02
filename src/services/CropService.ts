@@ -59,7 +59,7 @@ class CropService extends ServiceBase {
       return crop
     })
 
-    return crops
+    return Promise.all(crops)
   }
 
   /**
