@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import {
   validateAchievement,
+  validateSignAchievement,
   validateFilesWithEvidences
 } from '../utils/Validation'
 
@@ -118,7 +119,14 @@ class AchievementsController {
     const user = req.user
     const { id } = req.params
 
+    await validateSignAchievement(req.body)
+
+    const { activityId } = req.body
+
     let achievement = await AchievementService.findById(id)
+    const activity = await ActivityService.findActivityById(activityId)
+
+    await ActivityService.signUser(activity, user)
 
     await AchievementService.signUser(achievement, user)
 

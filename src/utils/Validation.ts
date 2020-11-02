@@ -179,17 +179,27 @@ export const validateAchievement = async (achievement) => {
         })
       )
       .optional(),
-    signers: Joi.array().items(
-      Joi.object().keys({
-        userId: Joi.string().required(),
-        fullName: Joi.string().required(),
-        email: Joi.string().required(),
-        type: Joi.string().required()
-      })
-    ).optional()
+    signers: Joi.array()
+      .items(
+        Joi.object().keys({
+          userId: Joi.string().required(),
+          fullName: Joi.string().required(),
+          email: Joi.string().required(),
+          type: Joi.string().required()
+        })
+      )
+      .optional()
   })
 
   return schema.validateAsync(achievement)
+}
+
+export const validateSignAchievement = async (dataSign) => {
+  const schema = Joi.object({
+    activityId: Joi.string().required()
+  })
+
+  return schema.validateAsync(dataSign)
 }
 
 export const validateFilesWithEvidences = (files, evidences) => {

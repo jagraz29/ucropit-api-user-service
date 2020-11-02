@@ -48,16 +48,16 @@ class CropService extends ServiceBase {
    *
    * @param query
    */
-  public static async getAll (query) {
+  public static async getAll(query) {
     let crops = await this.findAll(query)
 
-    // crops = crops.map(async (crop) => {
-    //   crop = await this.expiredActivities(crop)
+    crops = crops.map(async (crop) => {
+      crop = await this.expiredActivities(crop)
 
-    //   crop = await this.changeStatusActivitiesRange(crop)
+      crop = await this.changeStatusActivitiesRange(crop)
 
-    //   return crop
-    // })
+      return crop
+    })
 
     return crops
   }

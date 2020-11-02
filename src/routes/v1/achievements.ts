@@ -106,6 +106,6 @@ router.post('/', achievementsController.create)
  *         description: Error to Server.
  *
  */
-router.put('/:id/signs', achievementsController.signAchievement)
+router.post('/:id/signs', achievementsController.signAchievement)
 
 export default router
