@@ -116,7 +116,7 @@ export const agreementTypesData = [
   {
     name: {
       en: 'financing',
-      es: 'financiación'
+      es: 'Financiación'
     },
     key: 'FINAN'
   },
