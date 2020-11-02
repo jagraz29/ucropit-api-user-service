@@ -124,8 +124,14 @@ class ActivitiesController {
     if (validationFiles.error) {
       res.status(400).json(validationFiles)
     }
+    let activity = await ActivityService.findActivityById(id)
+    if (data.signers) {
+      const listSigners = ActivityService.getSigners(data.signers, activity)
 
-    let activity = await ActivityService.update(id, data)
+      data.signers = listSigners
+    }
+
+    activity = await ActivityService.update(id, data)
 
     if (req.files) {
       activity = await ActivityService.addFiles(

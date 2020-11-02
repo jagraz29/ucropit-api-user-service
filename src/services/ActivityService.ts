@@ -23,29 +23,26 @@ interface IActivity {
 }
 
 class ActivityService extends ServiceBase {
-
   public static async findActivityById (id: string) {
     return Activity.findById(id)
-    .populate('type')
-    .populate('typeAgreement')
-    .populate({
-      path: 'crop',
-      populate: [
-        { path: 'cropType' },
-        { path: 'unitType' },
-        { path: 'company' },
-        { path: 'owner' }
-      ]
-    })
-    .populate('lots')
-    .populate('lotsMade')
-    .populate('files')
-    .populate({
-      path: 'achievements',
-      populate: [
-        { path: 'lots' },
-        { path: 'files' }
-      ]})
+      .populate('type')
+      .populate('typeAgreement')
+      .populate({
+        path: 'crop',
+        populate: [
+          { path: 'cropType' },
+          { path: 'unitType' },
+          { path: 'company' },
+          { path: 'owner' }
+        ]
+      })
+      .populate('lots')
+      .populate('lotsMade')
+      .populate('files')
+      .populate({
+        path: 'achievements',
+        populate: [{ path: 'lots' }, { path: 'files' }]
+      })
   }
 
   public static async store (activity: IActivity) {
@@ -153,6 +150,20 @@ class ActivityService extends ServiceBase {
 
   private static createNameActivity (typeActivity) {
     return `${typeActivity.name.es}`
+  }
+
+  public static getSigners (signers: Array<any>, activity) {
+    for (const signer of signers) {
+      if (
+        activity.signers.filter(
+          (item) => item.userId.toString() === signer.userId
+        ).length === 0
+      ) {
+        activity.signers.push(signer)
+      }
+    }
+
+    return activity.signers
   }
 }
 
