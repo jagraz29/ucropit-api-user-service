@@ -194,7 +194,7 @@ class ActivitiesController {
     const { id, cropId } = req.params
     const { status } = req.body
 
-    let activity = await Activity.findById(id)
+    let activity = await Activity.findById(id).populate('type')
 
     await ActivityService.changeStatus(activity, status)
 
