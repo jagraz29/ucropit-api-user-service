@@ -1,6 +1,7 @@
 import { FileArray } from 'express-fileupload'
 import UploadService from '../UploadService'
 import remove from 'lodash/remove'
+import axios from 'axios'
 import { fileExist, removeFile } from '../../utils/Files'
 import models from '../../models'
 
@@ -80,7 +81,7 @@ class ServiceBase {
     console.log(document)
     console.log(user)
     const signer = document.signers.filter(
-      item => item.userId.toString() === user._id.toString()
+      (item) => item.userId.toString() === user._id.toString()
     )
 
     if (signer.length > 0) {
@@ -89,6 +90,15 @@ class ServiceBase {
     }
 
     await document.save()
+  }
+
+  public static makeRequest (
+    method: string,
+    url: string,
+    values: any,
+    callback: Function
+  ) {
+    axios[method](url, values).then(callback)
   }
 }
 
