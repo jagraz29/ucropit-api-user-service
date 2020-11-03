@@ -13,7 +13,6 @@ import models from '../models'
 const Crop = models.Crop
 
 class AchievementsController {
-
   /**
    * Create a new Achievement.
    *
@@ -66,7 +65,6 @@ class AchievementsController {
 
     res.status(201).json(achievement)
   }
-
 }
 
 export default new AchievementsController()

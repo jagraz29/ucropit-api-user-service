@@ -68,8 +68,28 @@ LotSchema.virtual('coordinates').get(function () {
   return coordinates
 })
 
+LotSchema.virtual('coordinateForGoogle').get(function () {
+  const coordinatesForGoogle = this.area.map((coordinate) => {
+    return {
+      lat: coordinate[1],
+      lng: coordinate[0]
+    }
+  })
+
+  return coordinatesForGoogle
+})
+
 LotSchema.virtual('centerBound').get(function () {
   return getCenterOfBounds(this.coordinates)
+})
+
+LotSchema.virtual('centerBoundGoogle').get(function () {
+  const centerBound = this.centerBound
+
+  return {
+    lat: centerBound.latitude,
+    lng: centerBound.longitude
+  }
 })
 
 export default mongoose.model('Lot', LotSchema)
