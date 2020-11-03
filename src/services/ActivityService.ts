@@ -62,10 +62,6 @@ class ActivityService extends ServiceBase {
 
   public static async update (id: string, activity: IActivity) {
     let statusActivity: Array<any> = []
-    if (!this.existStatus(activity)) {
-      statusActivity = this.createStatus('COMPLETAR')
-      activity.status = statusActivity
-    }
 
     if (this.existStatus(activity)) {
       statusActivity = this.createStatus(activity.status)
