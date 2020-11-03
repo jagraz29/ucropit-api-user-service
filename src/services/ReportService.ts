@@ -6,7 +6,7 @@ const Company = models.Company
 class ReportService {
   public static generateCropReport (crops, identifier) {
     const reports = crops.map(async (crop) => {
-      this.getMembersWithIdentifier(crop, identifier)
+      this.getTotalSurface(crop)
       return {
         cuit: identifier,
         bussiness_name: (await this.getCompany(identifier)).name,
@@ -17,7 +17,9 @@ class ReportService {
         date_harvest: crop.dateHarvest.toLocaleDateString('es-ES', {
           year: 'numeric',
           month: 'long'
-        })
+        }),
+        localization: await this.listAddressLots(crop.lots),
+        surface_total: this.getTotalSurface(crop)
       }
     })
 
@@ -42,6 +44,7 @@ class ReportService {
   }
 
   public static async listAddressLots (losts) {
+    let listAddressLot = ''
     for (const lot of losts) {
       for (const data of lot.data) {
         const { latitude, longitude } = data.centerBound
@@ -49,10 +52,24 @@ class ReportService {
           latitude,
           longitude
         )
-
-        console.log(result)
+        listAddressLot += `${data.name}: ${result[0].address_components[1].long_name} ${result[0].address_components[2].long_name},`
       }
     }
+
+    return listAddressLot
+  }
+
+  private static getTotalSurface (crop) {
+    const totalPerLot = crop.lots.map((lot) => {
+      return this.getTotalSurfaceLot(lot)
+    })
+
+    return totalPerLot.reduce((a, b) => a + b, 0)
+  }
+
+  private static getTotalSurfaceLot (lot) {
+    console.log(lot)
+    return lot.data.reduce((a, b) => a + (b['surface'] || 0), 0)
   }
 }
 
