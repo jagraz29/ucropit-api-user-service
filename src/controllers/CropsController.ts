@@ -43,7 +43,8 @@ class CropsController {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          { path: 'user' }
         ]
       })
       .populate({
@@ -53,7 +54,8 @@ class CropsController {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          { path: 'user' }
         ]
       })
       .populate({
@@ -63,7 +65,8 @@ class CropsController {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          { path: 'user' }
         ]
       })
       .populate('members.user')
@@ -74,7 +77,8 @@ class CropsController {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          { path: 'user' }
         ]
       })
 
@@ -116,7 +120,8 @@ class CropsController {
 
     const activities = await ActivityService.createDefault(
       data.surface,
-      data.dateCrop
+      data.dateCrop,
+      user
     )
 
     const crop = await CropService.handleDataCrop(

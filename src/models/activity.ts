@@ -137,7 +137,8 @@ const ActivitySchema = new Schema({
     }
   ],
   files: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }],
-  achievements: [{ type: Schema.Types.ObjectId, ref: 'Achievement' }]
+  achievements: [{ type: Schema.Types.ObjectId, ref: 'Achievement' }],
+  user: { type: Schema.Types.ObjectId, ref: 'User' }
 })
 
 ActivitySchema.pre('save', async function (next) {

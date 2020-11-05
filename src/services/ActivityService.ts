@@ -20,6 +20,7 @@ interface IActivity {
   supplies?: Array<any>
   evidences?: Array<any>
   status?: String | Array<any>
+  user?: String
 }
 
 class ActivityService extends ServiceBase {
@@ -43,9 +44,10 @@ class ActivityService extends ServiceBase {
         path: 'achievements',
         populate: [{ path: 'lots' }, { path: 'files' }]
       })
+      .populate('user')
   }
 
-  public static async store (activity: IActivity) {
+  public static async store (activity: IActivity, user) {
     let statusActivity: Array<any> = []
     if (!this.existStatus(activity)) {
       statusActivity = this.createStatus('COMPLETAR')
@@ -56,6 +58,8 @@ class ActivityService extends ServiceBase {
       statusActivity = this.createStatus(activity.status)
       activity.status = statusActivity
     }
+
+    activity.user = user._id
 
     return Activity.create(activity)
   }
@@ -77,19 +81,22 @@ class ActivityService extends ServiceBase {
     return ActivityType.findOne({ tag })
   }
 
-  public static createDefault (surface: number, date: string) {
+  public static createDefault (surface: number, date: string, user) {
     const typesActivity = ['ACT_SOWING', 'ACT_HARVEST', 'ACT_AGREEMENTS']
 
     const activities = typesActivity.map(async (item) => {
       const type = await this.getByTag(item)
       const typeAgreement = await TypeAgreement.findOne({ key: 'EXPLO' })
-      const activity = await this.store({
-        name: this.createNameActivity(type),
-        surface,
-        dateLimitValidation: item === 'ACT_AGREEMENTS' ? date : null,
-        typeAgreement: item === 'ACT_AGREEMENTS' ? typeAgreement._id : null,
-        type: type._id
-      })
+      const activity = await this.store(
+        {
+          name: this.createNameActivity(type),
+          surface,
+          dateLimitValidation: item === 'ACT_AGREEMENTS' ? date : null,
+          typeAgreement: item === 'ACT_AGREEMENTS' ? typeAgreement._id : null,
+          type: type._id
+        },
+        user
+      )
 
       return activity._id
     })

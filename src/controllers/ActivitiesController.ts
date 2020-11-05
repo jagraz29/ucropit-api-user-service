@@ -42,6 +42,7 @@ class ActivitiesController {
       })
       .populate('lots')
       .populate('files')
+      .populate('user')
 
     res.status(200).json(activities)
   }
@@ -83,7 +84,7 @@ class ActivitiesController {
       res.status(400).json(validationFiles)
     }
 
-    let activity = await ActivityService.store(data)
+    let activity = await ActivityService.store(data, user)
 
     if (req.files) {
       activity = await ActivityService.addFiles(
