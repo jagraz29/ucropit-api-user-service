@@ -20,7 +20,7 @@ class CropCollaboratorsController {
       if (user === null) {
         user = await UserService.store(
           { email, firstName: '', lastName: '', phone: '', config: '' },
-          { fromInvitation: true, companySelected: company?._id || '' }
+          { fromInvitation: true, companySelected: company ? company._id : '' }
         )
       }
 

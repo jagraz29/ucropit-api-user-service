@@ -26,15 +26,15 @@ class ReportService {
         kmz_links: this.generateLinkShowLotKmz(crop.lots),
         surface_total: this.getTotalSurface(crop),
         link_sustainability_agreements: this.generateStaticDownloads(
-          crop.done,
+          crop.finished,
           'SUSTAIN'
         ),
         link_land_use_agreement: this.generateStaticDownloads(
-          crop.done,
+          crop.finished,
           'EXPLO'
         ),
-        total_surface_sus: this.sumSurfaceActivity(crop.done, 'SUSTAIN'),
-        total_surface_explo: this.sumSurfaceActivity(crop.done, 'EXPLO')
+        total_surface_sus: this.sumSurfaceActivity(crop.finished, 'SUSTAIN'),
+        total_surface_explo: this.sumSurfaceActivity(crop.finished, 'EXPLO')
       }
     })
 
