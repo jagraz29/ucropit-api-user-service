@@ -130,9 +130,13 @@ class ExportFileService {
   public static exportXls (data: Array<any>, options: OptionsXls): string {
     const xlsx = json2xlsx(data, options)
 
-    fs.writeFileSync(getFullPath('/uploads/tmp/report.xlsx'), xlsx, 'binary')
+    fs.writeFileSync(
+      getFullPath('/uploads/tmp/dashboard_soja_sustentable.xlsx'),
+      xlsx,
+      'binary'
+    )
 
-    return getFullPath('/uploads/tmp/report.xlsx')
+    return getFullPath('/uploads/tmp/dashboard_soja_sustentable.xlsx')
   }
 
   /**

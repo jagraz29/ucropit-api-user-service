@@ -28,7 +28,7 @@ class ReportsController {
     const pathFile = ExportFile.modeExport(report, mode)
 
     if (mode === 'csv') {
-      res.attachment('report.csv')
+      res.attachment('dashboard_soja_sustentable.csv')
       res.status(200).send(pathFile)
     }
 
@@ -44,7 +44,8 @@ class ReportsController {
     res.render('index', {
       api_key: process.env.GOOGLE_API_KEY,
       flightPlanCoordinates: lot.coordinateForGoogle,
-      center: lot.centerBoundGoogle
+      center: lot.centerBoundGoogle,
+      title: 'Localización Lote KMZ'
     })
   }
 }
