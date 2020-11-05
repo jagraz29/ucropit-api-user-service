@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import CropService from '../services/CropService'
 import ReportService from '../services/ReportService'
 import ExportFile from '../services/common/ExportFileService'
+import Company from '../services/CompanyService'
 
 import models from '../models'
 
@@ -18,6 +19,10 @@ class ReportsController {
    */
   public async generateCrops (req: Request, res: Response) {
     const { cuit, mode = 'xls' } = req.query
+
+    const company = await Company.search({ identifier: cuit })
+
+    if (!company[0]) return res.status(404).json({ err: 'NOT FOUND COMPANY' })
 
     let crops = await CropService.getAll()
 
