@@ -1,63 +1,39 @@
 import PDF from '../utils/PDF'
 import Stamp from '../utils/Stamp'
 
-import { basePath, getFullPath, makeDirIfNotExists } from '../utils/Files'
+import { basePath, makeDirIfNotExists } from '../utils/Files'
 
 class BlockChainServices {
   /**
+   * Create PDF and Register Sign in BlockChain with timestamp.
    *
    * @param crop
    * @param activity
    * @param user
    */
-  public static async sign (crop, activity, user) {
-    console.log(crop)
+  public static async sign (
+    crop,
+    activity,
+    user
+  ): Promise<{ ots: string; hash: string; path: string; nameFile: string }> {
     await makeDirIfNotExists(
       `${basePath()}${process.env.DIR_PDF_SINGS}/${activity.key}`
     )
 
+    const nameFile = `${activity.key}-${activity.type.name.es}-${user._id}-sing.pdf`
+
     const { hash, path } = await PDF.generate({
-      pathFile: `${basePath()}${process.env.DIR_PDF_SINGS}/${activity.key}-${
-        activity.type.name.es
-      }-${user._id}-sing.pdf`,
-      data: `
-        CULTIVO
-        -------------------------------------------------
-        Cultivo: ${crop.cropType.name.es}
-        Razon Social:
-        CUIT:
-        Superficie Total: ${crop.surface}
-        Fecha Siembra Estimada: ${crop.dateCrop.toLocaleDateString('es-ES', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })}
-        Fecha Cosecha Estimada: ${crop.dateHarvest.toLocaleDateString('es-ES', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })}
-        -------------------------------------------------
-        Actividad: ${activity.type.name.es} ${
-        activity.typeAgreement ? activity.typeAgreement.name.es : ''
-      }
-       Lotes Seleccionados:
-  `,
+      pathFile: `${basePath()}${process.env.DIR_PDF_SINGS}/${
+        activity.key
+      }/${nameFile}`,
+      data: await PDF.generateTemplateActivity(activity, crop, user),
       files: activity.files
     })
 
-    console.log(hash, path)
+    const ots = await Stamp.stampHash(hash)
+
+    return Promise.resolve({ ots, hash, path, nameFile })
   }
-
-  //   private static createStringLots (lots) {
-  //     let lotsLiteral = ''
-
-  //     for (const lot of lots) {
-  //       lotsLiteral = `
-  //                 -Latitude: ${lot.}
-  //         `
-  //     }
-  //   }
 }
 
 export default BlockChainServices

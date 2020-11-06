@@ -112,7 +112,11 @@ class CropService {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          {
+            path: 'signers.approvalRegister',
+            populate: [{ path: 'file' }, { path: 'user' }]
+          }
         ]
       })
       .populate({
@@ -122,7 +126,11 @@ class CropService {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          {
+            path: 'signers.approvalRegister',
+            populate: [{ path: 'file' }, { path: 'user' }]
+          }
         ]
       })
       .populate({
@@ -132,7 +140,11 @@ class CropService {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          {
+            path: 'signers.approvalRegister',
+            populate: [{ path: 'file' }, { path: 'user' }]
+          }
         ]
       })
       .populate({
@@ -146,7 +158,11 @@ class CropService {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          {
+            path: 'signers.approvalRegister',
+            populate: [{ path: 'file' }, { path: 'user' }]
+          }
         ]
       })
   }

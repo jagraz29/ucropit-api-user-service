@@ -8,6 +8,7 @@ import {
 import ActivityService from '../services/ActivityService'
 import CropService from '../services/CropService'
 import BlockChainServices from '../services/BlockChainService'
+import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
 import models from '../models'
 
 import { getPathFileByType, getFullPath } from '../utils/Files'
@@ -178,18 +179,36 @@ class ActivitiesController {
 
     const crop = await CropService.getCropById(cropId)
 
-    await BlockChainServices.sign(crop, activity, user)
+    const { ots, hash, path, nameFile } = await BlockChainServices.sign(
+      crop,
+      activity,
+      user
+    )
 
-    // const isCompleteSigned = await ActivityService.isCompleteSingers(activity)
+    const approvalRegisterSign = await ApprovalRegisterSingService.create({
+      ots,
+      hash,
+      path,
+      nameFile,
+      user
+    })
 
-    // if (isCompleteSigned) {
-    //   const crop = await Crop.findById(cropId)
-    //   await ActivityService.changeStatus(activity, 'FINISHED')
-    //   await CropService.removeActivities(activity, crop, 'done')
-    //   await CropService.addActivities(activity, crop)
-    // }
+    activity = await ActivityService.signUserAndUpdateSing(
+      activity,
+      user,
+      approvalRegisterSign
+    )
 
-    // res.status(200).json(activity)
+    const isCompleteSigned = await ActivityService.isCompleteSingers(activity)
+
+    if (isCompleteSigned) {
+      const crop = await Crop.findById(cropId)
+      await ActivityService.changeStatus(activity, 'FINISHED')
+      await CropService.removeActivities(activity, crop, 'done')
+      await CropService.addActivities(activity, crop)
+    }
+
+    res.status(200).json(activity)
   }
 
   /**

@@ -105,7 +105,7 @@ class ActivityService extends ServiceBase {
     return activity.save()
   }
 
-  public static async signUser (activity, user) {
+  public static async signUserAndUpdateSing (activity, user, registerApproval) {
     const signer = activity.signers.filter(
       (item) => item.userId.toString() === user._id.toString()
     )
@@ -113,6 +113,8 @@ class ActivityService extends ServiceBase {
     if (signer.length > 0) {
       const child = activity.signers.id(signer[0]._id)
       child.signed = true
+      child.dateSigned = new Date()
+      child.approvalRegister = registerApproval._id
     }
 
     await activity.save()

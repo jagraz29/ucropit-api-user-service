@@ -43,7 +43,11 @@ class CropsController {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          {
+            path: 'signers.approvalRegister',
+            populate: [{ path: 'file' }, { path: 'user' }]
+          }
         ]
       })
       .populate({
@@ -53,7 +57,11 @@ class CropsController {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          {
+            path: 'signers.approvalRegister',
+            populate: [{ path: 'file' }, { path: 'user' }]
+          }
         ]
       })
       .populate({
@@ -63,7 +71,11 @@ class CropsController {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          {
+            path: 'signers.approvalRegister',
+            populate: [{ path: 'file' }, { path: 'user' }]
+          }
         ]
       })
       .populate('members.user')
@@ -74,7 +86,11 @@ class CropsController {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          {
+            path: 'signers.approvalRegister',
+            populate: [{ path: 'file' }, { path: 'user' }]
+          }
         ]
       })
 

@@ -11,6 +11,7 @@ class ReportService {
    */
   public static generateCropReport (crops, identifier) {
     const reports = crops.map(async (crop) => {
+      this.generateLinkPdfSign(crop.finished)
       return {
         cuit: identifier,
         business_name: (await this.getCompany(identifier)).name,
@@ -29,10 +30,14 @@ class ReportService {
           crop.finished,
           'SUSTAIN'
         ),
+        link_sustainability_agreements_pdf_sign: this.generateLinkPdfSign(
+          crop.finished
+        ),
         link_land_use_agreement: this.generateStaticDownloads(
           crop.finished,
           'EXPLO'
         ),
+        link_land_use_pdf_sign: this.generateLinkPdfSign(crop.finished),
         total_surface_sus: this.sumSurfaceActivity(crop.finished, 'SUSTAIN'),
         total_surface_explo: this.sumSurfaceActivity(crop.finished, 'EXPLO')
       }
@@ -148,6 +153,31 @@ class ReportService {
       .filter((item) => item)
 
     return totalSurface[0]
+  }
+
+  private static generateLinkPdfSign (activities) {
+    let urls = ''
+    const urlDownloadsFiles = activities.map((activity) => {
+      return activity.signers
+        .map((signer) => {
+          if (signer.approvalRegister) {
+            return `${process.env.BASE_URL}/v1/files/downloads/sings/${signer.approvalRegister.file._id}`
+          }
+
+          return undefined
+        })
+        .filter((item) => item)
+    })
+
+    const listEndpointsDownloadPdf = _.flatten(urlDownloadsFiles)
+
+    for (const endpoint of listEndpointsDownloadPdf) {
+      urls += `
+      ${endpoint},
+      `
+    }
+
+    return urls
   }
 }
 
