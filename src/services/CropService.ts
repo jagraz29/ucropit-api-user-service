@@ -98,6 +98,72 @@ class CropService {
 
     return crop
   }
+
+  public static async getAll () {
+    return Crop.find()
+      .populate('lots.data')
+      .populate('cropType')
+      .populate('unitType')
+      .populate('company')
+      .populate({
+        path: 'pending',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'toMake',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+      .populate({
+        path: 'members.user',
+        populate: [{ path: 'companies.company' }]
+      })
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' }
+        ]
+      })
+  }
+
+  public static filterCropByIdentifier (identifier: string | any, crops) {
+    return crops
+      .map((crop) => {
+        if (
+          crop.members.filter((member) => member.identifier === identifier)
+            .length > 0
+        ) {
+          return crop
+        }
+        return undefined
+      })
+      .filter((crop) => crop)
+  }
   public static async expiredActivities (crop: any) {
     let activities = crop.toMake.map(async (activity: any) => {
       if (this.isExpiredActivity(activity)) {

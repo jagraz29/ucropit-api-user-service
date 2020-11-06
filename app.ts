@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 import express, { Application, Request, Response, NextFunction } from 'express'
+import { basePath } from './src/utils/Files'
 import swaggerUI from 'swagger-ui-express'
 import { swaggerDocs } from './config/swagger'
 import { errorHandler } from './src/loggin/error-handler'
@@ -19,9 +20,11 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(morgan('tiny'))
-app.use(fileUpload({
-  createParentPath: true
-}))
+app.use(
+  fileUpload({
+    createParentPath: true
+  })
+)
 
 app.use(
   '/api-docs',
@@ -30,6 +33,9 @@ app.use(
 )
 
 app.use(express.static('public'))
+
+app.set('view engine', 'pug')
+app.set('views', path.join(basePath(), 'views'))
 
 app.use('/v1', routes)
 

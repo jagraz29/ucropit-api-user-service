@@ -180,8 +180,6 @@ class ActivitiesController {
 
     await BlockChainServices.sign(crop, activity, user)
 
-    return
-
     // const isCompleteSigned = await ActivityService.isCompleteSingers(activity)
 
     // if (isCompleteSigned) {
