@@ -6,14 +6,18 @@ import Company from '../models/company'
 import Crop from '../models/crop'
 import CollaboratorRequest from '../models/collaboratorRequest'
 
+const PRODUCERS_ROLES = [
+  'PRODUCER',
+  'PRODUCER_ADVISER',
+  'PRODUCER_ADVISER_ENCOURAGED'
+]
+
 class CropCollaboratorsController {
   public async create (req, res) {
     try {
       const { email, identifier, type } = req.body
       const { id } = req.params
       const company = await Company.findOne({ identifier })
-
-      const current = await User.findById(req.user._id).populate('config')
 
       let user = await User.findOne({ email })
 
@@ -26,23 +30,29 @@ class CropCollaboratorsController {
 
       if (company !== null) {
         user.companies = user.companies ? user.companies : []
-        user.companies.push({
-          company: company._id,
-          isAdmin: false,
-          identifier
-        })
 
-        const request = new CollaboratorRequest({
-          user: user._id,
-          company: company._id
-        })
+        const existRelation = !user.companies.find(
+          el => String(el.company) === String(company._id)
+        )
 
-        user.collaboratorRequest.push(request._id)
+        if (existRelation) {
+          user.companies.push({
+            company: company._id,
+            isAdmin: false,
+            identifier
+          })
 
-        await request.save()
+          const request = new CollaboratorRequest({
+            user: user._id,
+            company: company._id
+          })
+
+          user.collaboratorRequest.push(request._id)
+          await request.save()
+        }
       } else {
         user.companies.push({
-          isAdmin: type === 'PRODUCER',
+          isAdmin: PRODUCERS_ROLES.includes(type),
           identifier
         })
       }
@@ -51,7 +61,7 @@ class CropCollaboratorsController {
 
       crop.members.push({
         user: user._id,
-        producer: type === 'PRODUCER',
+        producer: PRODUCERS_ROLES.includes(type),
         identifier,
         type
       })
