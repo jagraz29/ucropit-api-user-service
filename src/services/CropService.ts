@@ -135,7 +135,7 @@ class CropService {
           })
           tagIndex = item.tag
         } else {
-          const index = lotsArray.findIndex(x => x.tag === item.tag)
+          const index = lotsArray.findIndex((x) => x.tag === item.tag)
           lotsArray[index].data.push(lot._id)
         }
       }
@@ -163,11 +163,7 @@ class CropService {
     return newCrop.save()
   }
 
-  public static async removeActivities (
-    activity,
-    crop,
-    statusCrop = 'pending'
-  ) {
+  public static async removeActivities (activity, crop, statusCrop = 'pending') {
     crop[statusCrop].pull(activity._id)
 
     return crop.save()
@@ -175,7 +171,7 @@ class CropService {
 
   public static async addActivities (activity, crop) {
     const status = statusActivities.find(
-      item => item.name === activity.status[0].name.en
+      (item) => item.name === activity.status[0].name.en
     )
 
     const statusCrop = status.cropStatus

@@ -7,6 +7,7 @@ import {
 
 import ActivityService from '../services/ActivityService'
 import CropService from '../services/CropService'
+import BlockChainServices from '../services/BlockChainService'
 import models from '../models'
 
 import { getPathFileByType, getFullPath } from '../utils/Files'
@@ -170,19 +171,27 @@ class ActivitiesController {
     const user: UserSchema = req.user
 
     let activity = await Activity.findById(id)
+      .populate('type')
+      .populate('typeAgreement')
+      .populate('lots')
+      .populate('files')
 
-    activity = await ActivityService.signUser(activity, user)
+    const crop = await CropService.getCropById(cropId)
 
-    const isCompleteSigned = await ActivityService.isCompleteSingers(activity)
+    await BlockChainServices.sign(crop, activity, user)
 
-    if (isCompleteSigned) {
-      const crop = await Crop.findById(cropId)
-      await ActivityService.changeStatus(activity, 'FINISHED')
-      await CropService.removeActivities(activity, crop, 'done')
-      await CropService.addActivities(activity, crop)
-    }
+    return
 
-    res.status(200).json(activity)
+    // const isCompleteSigned = await ActivityService.isCompleteSingers(activity)
+
+    // if (isCompleteSigned) {
+    //   const crop = await Crop.findById(cropId)
+    //   await ActivityService.changeStatus(activity, 'FINISHED')
+    //   await CropService.removeActivities(activity, crop, 'done')
+    //   await CropService.addActivities(activity, crop)
+    // }
+
+    // res.status(200).json(activity)
   }
 
   /**

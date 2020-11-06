@@ -117,7 +117,7 @@ class ActivityService extends ServiceBase {
 
     await activity.save()
 
-    return Activity.findById(activity._id)
+    return Activity.findById(activity._id).populate('lots').populate('files')
   }
 
   public static async isCompleteSingers (activity) {
