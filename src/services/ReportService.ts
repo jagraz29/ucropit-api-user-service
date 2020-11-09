@@ -11,7 +11,6 @@ class ReportService {
    */
   public static generateCropReport (crops, identifier) {
     const reports = crops.map(async (crop) => {
-      this.generateLinkPdfSign(crop.finished)
       return {
         cuit: identifier,
         business_name: (await this.getCompany(identifier)).name,
@@ -25,21 +24,26 @@ class ReportService {
         }),
         localization: await this.listAddressLots(crop.lots),
         kmz_links: this.generateLinkShowLotKmz(crop.lots),
+        tags_lots: this.getListTagLots(crop.lots),
         surface_total: this.getTotalSurface(crop),
         link_sustainability_agreements: this.generateStaticDownloads(
           crop.finished,
           'SUSTAIN'
         ),
-        link_sustainability_agreements_pdf_sign: this.generateLinkPdfSign(
+        hash_sustainability_agreements_sign: this.getHashSign(crop.finished),
+        names_signers_sustainability_agreements: this.getNameSigner(
           crop.finished
         ),
+        total_surface_sus: this.sumSurfaceActivity(crop.finished, 'SUSTAIN'),
         link_land_use_agreement: this.generateStaticDownloads(
           crop.finished,
           'EXPLO'
         ),
-        link_land_use_pdf_sign: this.generateLinkPdfSign(crop.finished),
-        total_surface_sus: this.sumSurfaceActivity(crop.finished, 'SUSTAIN'),
-        total_surface_explo: this.sumSurfaceActivity(crop.finished, 'EXPLO')
+        hash_land_use_sign: this.getHashSign(crop.finished),
+        names_signers_land_use: this.getNameSigner(crop.finished),
+        total_surface_explo: this.sumSurfaceActivity(crop.finished, 'EXPLO'),
+        mail_producers: this.getMailsProducers(crop),
+        phone_producers: this.getPhonesProducers(crop)
       }
     })
 
@@ -59,6 +63,32 @@ class ReportService {
     }
 
     return membersNames
+  }
+
+  private static getMailsProducers (crop) {
+    let membersMails = ''
+    const members = crop.members.filter((member) => member.type === 'PRODUCER')
+
+    for (const member of members) {
+      membersMails += `
+      ${member.user.email},
+      `
+    }
+
+    return membersMails
+  }
+
+  private static getPhonesProducers (crop) {
+    let membersPhones = ''
+    const members = crop.members.filter((member) => member.type === 'PRODUCER')
+
+    for (const member of members) {
+      membersPhones += `
+      ${member.user.phone},
+      `
+    }
+
+    return membersPhones
   }
 
   public static async listAddressLots (lots) {
@@ -87,6 +117,17 @@ class ReportService {
     }
 
     return links
+  }
+
+  private static getListTagLots (lots) {
+    let tags = ''
+    for (const lot of lots) {
+      tags += `
+        ${lot.tag},
+        `
+    }
+
+    return tags
   }
 
   private static getTotalSurface (crop) {
@@ -155,13 +196,13 @@ class ReportService {
     return totalSurface[0]
   }
 
-  private static generateLinkPdfSign (activities) {
-    let urls = ''
-    const urlDownloadsFiles = activities.map((activity) => {
+  private static getHashSign (activities) {
+    let hashList = ''
+    const hashArrayList = activities.map((activity) => {
       return activity.signers
         .map((signer) => {
           if (signer.approvalRegister) {
-            return `${process.env.BASE_URL}/v1/files/downloads/sings/${signer.approvalRegister.file._id}`
+            return `${signer.approvalRegister.hash}`
           }
 
           return undefined
@@ -169,15 +210,41 @@ class ReportService {
         .filter((item) => item)
     })
 
-    const listEndpointsDownloadPdf = _.flatten(urlDownloadsFiles)
+    const hashItemsHash = _.flatten(hashArrayList)
 
-    for (const endpoint of listEndpointsDownloadPdf) {
-      urls += `
-      ${endpoint},
+    for (const hash of hashItemsHash) {
+      hashList += `
+      ${hash},
       `
     }
 
-    return urls
+    return hashList
+  }
+
+  private static getNameSigner (activities) {
+    let nameList = ''
+
+    const namesArrayList = activities.map((activity) => {
+      return activity.signers
+        .map((signer) => {
+          if (signer.signed) {
+            return `${signer.fullName}`
+          }
+
+          return undefined
+        })
+        .filter((item) => item)
+    })
+
+    const nameItems = _.flatten(namesArrayList)
+
+    for (const names of nameItems) {
+      nameList += `
+      ${names},
+      `
+    }
+
+    return nameList
   }
 }
 
