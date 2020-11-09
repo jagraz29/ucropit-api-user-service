@@ -117,7 +117,7 @@ export const validateCompanyStore = async (company) => {
     typePerson: Joi.string().optional(),
     name: Joi.string().required(),
     address: Joi.string().required(),
-    addressFloor: Joi.string().optional(),
+    addressFloor: Joi.string().allow('').optional(),
     evidences: Joi.array()
       .items(
         Joi.object().keys({
@@ -138,7 +138,7 @@ export const validateCompanyUpdate = async (company) => {
     typePerson: Joi.string().optional(),
     name: Joi.string().optional(),
     address: Joi.string().optional(),
-    addressFloor: Joi.string().optional(),
+    addressFloor: Joi.string().allow('').optional(),
     evidences: Joi.array()
       .items(
         Joi.object().keys({
