@@ -59,8 +59,6 @@ const LotSchema = new Schema(
 
 LotSchema.virtual('coordinates').get(function () {
   const coordinates = this.area.map((coordinate) => {
-    console.log('Virtual coordinates')
-    console.log(coordinate)
     return {
       latitude: coordinate[1],
       longitude: coordinate[0]
@@ -72,8 +70,6 @@ LotSchema.virtual('coordinates').get(function () {
 
 LotSchema.virtual('coordinateForGoogle').get(function () {
   const coordinatesForGoogle = this.area.map((coordinate) => {
-    console.log('Virtual coordinateForGoogle')
-    console.log(coordinate)
     return {
       lat: coordinate[1],
       lng: coordinate[0]
@@ -84,15 +80,14 @@ LotSchema.virtual('coordinateForGoogle').get(function () {
 })
 
 LotSchema.virtual('centerBound').get(function () {
-  console.log('centerBound')
-  console.log(this.coordinates)
+  if (this.coordinates.length === 0) return 0
   return getCenterOfBounds(this.coordinates)
 })
 
 LotSchema.virtual('centerBoundGoogle').get(function () {
-  console.log('centerBoundGoogle')
-  console.log(this.coordinates)
   const centerBound = this.centerBound
+
+  if (centerBound === 0) return {}
 
   return {
     lat: centerBound.latitude,
