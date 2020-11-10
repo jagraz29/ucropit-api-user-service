@@ -62,10 +62,6 @@ class ActivityService extends ServiceBase {
 
   public static async update (id: string, activity: IActivity) {
     let statusActivity: Array<any> = []
-    if (!this.existStatus(activity)) {
-      statusActivity = this.createStatus('COMPLETAR')
-      activity.status = statusActivity
-    }
 
     if (this.existStatus(activity)) {
       statusActivity = this.createStatus(activity.status)
@@ -150,6 +146,20 @@ class ActivityService extends ServiceBase {
 
   private static createNameActivity (typeActivity) {
     return `${typeActivity.name.es}`
+  }
+
+  public static getSigners (signers: Array<any>, activity) {
+    for (const signer of signers) {
+      if (
+        activity.signers.filter(
+          (item) => item.userId.toString() === signer.userId
+        ).length === 0
+      ) {
+        activity.signers.push(signer)
+      }
+    }
+
+    return activity.signers
   }
 }
 

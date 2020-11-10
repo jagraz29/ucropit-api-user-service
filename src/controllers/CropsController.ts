@@ -33,8 +33,6 @@ class CropsController {
 
     const crops = await CropService.getAll(query)
 
-    console.log(crops)
-
     res.status(200).json(crops)
   }
 

@@ -124,8 +124,14 @@ class ActivitiesController {
     if (validationFiles.error) {
       res.status(400).json(validationFiles)
     }
+    let activity = await ActivityService.findActivityById(id)
+    if (data.signers) {
+      const listSigners = ActivityService.getSigners(data.signers, activity)
 
-    let activity = await ActivityService.update(id, data)
+      data.signers = listSigners
+    }
+
+    activity = await ActivityService.update(id, data)
 
     if (req.files) {
       activity = await ActivityService.addFiles(
@@ -139,8 +145,10 @@ class ActivitiesController {
 
     if (status) {
       const crop = await Crop.findById(data.crop)
+      activity = await ActivityService.findActivityById(id)
 
-      const statusCropRemove = status === 'PLANNED' ? 'pending' : 'toMake'
+      const statusCropRemove =
+        activity.type.name.en === 'Agreements' ? 'pending' : 'toMake'
 
       await CropService.removeActivities(activity, crop, statusCropRemove)
       await CropService.addActivities(activity, crop)
@@ -171,6 +179,7 @@ class ActivitiesController {
       const crop = await Crop.findById(cropId)
       await ActivityService.changeStatus(activity, 'FINISHED')
       await CropService.removeActivities(activity, crop, 'done')
+      await CropService.addActivities(activity, crop)
     }
 
     res.status(200).json(activity)
@@ -188,7 +197,7 @@ class ActivitiesController {
     const { id, cropId } = req.params
     const { status } = req.body
 
-    let activity = await Activity.findById(id)
+    let activity = await Activity.findById(id).populate('type')
 
     await ActivityService.changeStatus(activity, status)
 
@@ -196,7 +205,10 @@ class ActivitiesController {
 
     const crop = await Crop.findById(cropId)
 
-    await CropService.removeActivities(activity, crop, 'toMake')
+    const statusCrop =
+      activity.type.name.en === 'Agreements' ? 'pending' : 'toMake'
+
+    await CropService.removeActivities(activity, crop, statusCrop)
     await CropService.addActivities(activity, crop)
 
     res.status(200).json(activity)

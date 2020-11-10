@@ -48,7 +48,7 @@ class CropService extends ServiceBase {
    *
    * @param query
    */
-  public static async getAll(query) {
+  public static async getAll(query?) {
     let crops = await this.findAll(query)
 
     crops = crops.map(async (crop) => {
@@ -202,6 +202,20 @@ class CropService extends ServiceBase {
     crop.toMake = await Promise.all(activitiesToMake)
 
     return crop
+  }
+
+  public static filterCropByIdentifier (identifier: string | any, crops) {
+    return crops
+      .map((crop) => {
+        if (
+          crop.members.filter((member) => member.identifier === identifier)
+            .length > 0
+        ) {
+          return crop
+        }
+        return undefined
+      })
+      .filter((crop) => crop)
   }
 
   /**

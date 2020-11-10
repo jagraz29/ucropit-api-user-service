@@ -1,6 +1,7 @@
 import { FileArray } from 'express-fileupload'
 import UploadService from '../UploadService'
 import remove from 'lodash/remove'
+import axios from 'axios'
 import { fileExist, removeFile } from '../../utils/Files'
 import models from '../../models'
 
@@ -78,7 +79,7 @@ class ServiceBase {
    */
   public static async signUser (document, user) {
     const signer = document.signers.filter(
-      item => item.userId.toString() === user._id.toString()
+      (item) => item.userId.toString() === user._id.toString()
     )
 
     if (signer.length > 0) {
@@ -97,13 +98,22 @@ class ServiceBase {
    * @returns boolean
    */
   public static isCompleteSignsUsers (document): boolean {
-    const listNotSigners = document.signers.filter(item => !item.signed)
+    const listNotSigners = document.signers.filter((item) => !item.signed)
 
     if (listNotSigners.length > 0) {
       return false
     }
 
     return true
+  }
+
+  public static makeRequest (
+    method: string,
+    url: string,
+    values: any,
+    callback: Function
+  ) {
+    axios[method](url, values).then(callback)
   }
 }
 

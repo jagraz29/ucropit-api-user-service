@@ -29,7 +29,7 @@ export const validateActivityStore = async (activity) => {
     dateStart: Joi.date().optional(),
     dateEnd: Joi.date().greater(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
-    surface: Joi.string().required(),
+    surface: Joi.number().required(),
     type: Joi.string().required(),
     typeAgreement: Joi.string().optional(),
     status: Joi.string().optional(),
@@ -73,7 +73,7 @@ export const validateActivityUpdate = async (activity) => {
     dateStart: Joi.date().optional(),
     dateEnd: Joi.date().greater(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
-    surface: Joi.string().optional(),
+    surface: Joi.number().optional(),
     type: Joi.string().optional(),
     typeAgreement: Joi.string().optional(),
     status: Joi.string().optional(),
@@ -117,7 +117,7 @@ export const validateCompanyStore = async (company) => {
     typePerson: Joi.string().optional(),
     name: Joi.string().required(),
     address: Joi.string().required(),
-    addressFloor: Joi.string().optional(),
+    addressFloor: Joi.string().allow('').optional(),
     evidences: Joi.array()
       .items(
         Joi.object().keys({
@@ -138,7 +138,7 @@ export const validateCompanyUpdate = async (company) => {
     typePerson: Joi.string().optional(),
     name: Joi.string().optional(),
     address: Joi.string().optional(),
-    addressFloor: Joi.string().optional(),
+    addressFloor: Joi.string().allow('').optional(),
     evidences: Joi.array()
       .items(
         Joi.object().keys({

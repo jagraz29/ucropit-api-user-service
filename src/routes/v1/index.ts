@@ -13,6 +13,8 @@ import configs from './configs'
 import passport from '../../utils/auth/strategies/jwt'
 import achievements from './achievements'
 import collaborators from './collaborators'
+import reports from './reports'
+import files from './files'
 
 const router: express.Router = express.Router()
 
@@ -57,5 +59,11 @@ router.use('/achievements', authMiddleware, achievements)
 
 // COLLABORATOR
 router.use('/collaborators', authMiddleware, collaborators)
+
+// REPORTS
+router.use('/reports', reports)
+
+// FILE DOCUMENTS
+router.use('/files', files)
 
 export default router
