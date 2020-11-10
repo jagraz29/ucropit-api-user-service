@@ -9,11 +9,8 @@ export const validateCropStore = async (crop) => {
     name: Joi.string().required(),
     pay: Joi.number().required(),
     surface: Joi.number().required(),
-    dateCrop: JoiValidation.date().format('YYYY-MM-DD').required(),
-    dateHarvest: JoiValidation.date()
-      .format('YYYY-MM-DD')
-      .greater(Joi.ref('dateCrop'))
-      .required(),
+    dateCrop: JoiValidation.date().required(),
+    dateHarvest: JoiValidation.date().greater(Joi.ref('dateCrop')).required(),
     cropType: Joi.string().required(),
     unitType: Joi.string().required(),
     identifier: Joi.string().required(),
