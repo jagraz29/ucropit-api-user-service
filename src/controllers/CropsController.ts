@@ -44,10 +44,12 @@ class CropsController {
           { path: 'typeAgreement' },
           { path: 'lots' },
           { path: 'files' },
+
           {
             path: 'signers.approvalRegister',
             populate: [{ path: 'file' }, { path: 'user' }]
-          }
+          },
+          { path: 'user' }
         ]
       })
       .populate({
@@ -61,7 +63,8 @@ class CropsController {
           {
             path: 'signers.approvalRegister',
             populate: [{ path: 'file' }, { path: 'user' }]
-          }
+          },
+          { path: 'user' }
         ]
       })
       .populate({
@@ -75,7 +78,8 @@ class CropsController {
           {
             path: 'signers.approvalRegister',
             populate: [{ path: 'file' }, { path: 'user' }]
-          }
+          },
+          { path: 'user' }
         ]
       })
       .populate('members.user')
@@ -90,7 +94,8 @@ class CropsController {
           {
             path: 'signers.approvalRegister',
             populate: [{ path: 'file' }, { path: 'user' }]
-          }
+          },
+          { path: 'user' }
         ]
       })
 
@@ -132,7 +137,8 @@ class CropsController {
 
     const activities = await ActivityService.createDefault(
       data.surface,
-      data.dateCrop
+      data.dateCrop,
+      user
     )
 
     const crop = await CropService.handleDataCrop(
