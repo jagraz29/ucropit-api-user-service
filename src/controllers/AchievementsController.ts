@@ -45,7 +45,7 @@ class AchievementsController {
     await ActivityService.addAchievement(activity, achievement)
 
     if (activity.status[0].name.en !== 'DONE') {
-      ActivityService.changeStatus(activity, 'DONE')
+      await ActivityService.changeStatus(activity, 'DONE')
 
       const crop = await Crop.findById(data.crop)
 

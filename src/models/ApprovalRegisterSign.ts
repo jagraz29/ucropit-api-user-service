@@ -36,7 +36,11 @@ const ApprovalRegisterSignSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  file: {
+  filePdf: {
+    type: Schema.Types.ObjectId,
+    ref: 'FileDocument'
+  },
+  fileOts: {
     type: Schema.Types.ObjectId,
     ref: 'FileDocument'
   }

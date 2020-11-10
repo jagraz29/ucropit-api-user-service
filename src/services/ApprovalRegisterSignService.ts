@@ -6,8 +6,10 @@ const ApprovalRegisterSign = models.ApprovalRegisterSign
 interface ApprovalRegister {
   ots: String
   hash: String
-  path: String
-  nameFile: String
+  pathPdf: String
+  nameFilePdf: String
+  nameFileOts: String
+  pathOtsFile: String
   user: String | any
   file?: String | any
 }
@@ -25,9 +27,16 @@ class ApprovalRegisterSignService {
    * @param data
    */
   public static async create (data: ApprovalRegister) {
-    const fileDocument = await this.createFile({
-      nameFile: data.nameFile,
-      path: data.path,
+    const fileDocumentPdf = await this.createFile({
+      nameFile: data.nameFilePdf,
+      path: data.pathPdf,
+      user: data.user._id,
+      date: new Date()
+    })
+
+    const fileDocumentOts = await this.createFile({
+      nameFile: data.nameFileOts,
+      path: data.pathOtsFile,
       user: data.user._id,
       date: new Date()
     })
@@ -35,10 +44,9 @@ class ApprovalRegisterSignService {
     return ApprovalRegisterSign.create({
       ots: data.ots,
       hash: data.hash,
-      path: data.path,
-      nameFile: data.nameFile,
-      user: user._id,
-      file: fileDocument._id
+      user: data.user._id,
+      filePdf: fileDocumentPdf._id,
+      fileOts: fileDocumentOts._id
     })
   }
 

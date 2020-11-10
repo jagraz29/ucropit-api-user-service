@@ -180,17 +180,22 @@ class ActivitiesController {
 
     const crop = await CropService.getCropById(cropId)
 
-    const { ots, hash, path, nameFile } = await BlockChainServices.sign(
-      crop,
-      activity,
-      user
-    )
+    const {
+      ots,
+      hash,
+      pathPdf,
+      nameFilePdf,
+      nameFileOts,
+      pathOtsFile
+    } = await BlockChainServices.sign(crop, activity, user)
 
     const approvalRegisterSign = await ApprovalRegisterSingService.create({
       ots,
       hash,
-      path,
-      nameFile,
+      pathPdf,
+      nameFilePdf,
+      nameFileOts,
+      pathOtsFile,
       user
     })
 

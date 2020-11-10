@@ -7,14 +7,17 @@ class Stamp {
    *
    * @returns Promise
    */
-  public static async stampHash (hash: string): Promise<string> {
+  public static async stampHash (
+    hash: string
+  ): Promise<{ ots: string; fileOts: Array<any> }> {
     const buff = Buffer.from(hash, 'hex')
     const ops = new OpenTimestamps.Ops.OpSHA256()
     const detached = OpenTimestamps.DetachedTimestampFile.fromHash(ops, buff)
 
     await OpenTimestamps.stamp(detached)
     const fileOts = detached.serializeToBytes()
-    return Promise.resolve(this.toHexString(fileOts))
+
+    return Promise.resolve({ ots: this.toHexString(fileOts), fileOts })
   }
 
   /**
@@ -26,6 +29,10 @@ class Stamp {
     return Array.from(byteArray, (byte: any) => {
       return ('0' + (byte & 0xff).toString(16)).slice(-2)
     }).join('')
+  }
+
+  public static saveOtsFile (byteArray: Array<any>, path: string): string {
+    return ''
   }
 }
 

@@ -1,3 +1,4 @@
+import fs from 'fs'
 import PDF from '../utils/PDF'
 import Stamp from '../utils/Stamp'
 
@@ -11,28 +12,52 @@ class BlockChainServices {
    * @param activity
    * @param user
    */
-  public static async sign (
-    crop,
-    activity,
-    user
-  ): Promise<{ ots: string; hash: string; path: string; nameFile: string }> {
+  public static async sign (crop, activity, user): Promise<any> {
     await makeDirIfNotExists(
       `${basePath()}${process.env.DIR_PDF_SINGS}/${activity.key}`
     )
 
     const nameFile = `${activity.key}-${activity.type.name.es}-${user._id}-sing.pdf`
+    const pathToSave = `${basePath()}${process.env.DIR_PDF_SINGS}/${
+      activity.key
+    }`
 
     const { hash, path } = await PDF.generate({
-      pathFile: `${basePath()}${process.env.DIR_PDF_SINGS}/${
-        activity.key
-      }/${nameFile}`,
+      pathFile: `${pathToSave}/${nameFile}`,
       data: await PDF.generateTemplateActivity(activity, crop, user),
       files: activity.files
     })
 
-    const ots = await Stamp.stampHash(hash)
+    const { ots, fileOts } = await Stamp.stampHash(hash)
 
-    return Promise.resolve({ ots, hash, path, nameFile })
+    const otsObject = await this.saveOtsFile(
+      fileOts,
+      `${nameFile}.ots`,
+      pathToSave
+    )
+
+    return Promise.resolve({
+      ots,
+      hash,
+      pathPdf: path,
+      nameFilePdf: nameFile,
+      ...otsObject
+    })
+  }
+
+  public static async saveOtsFile (
+    fileOtsBytes: any,
+    nameFile,
+    path: string
+  ): Promise<any> {
+    const pathToSaveFile = `${path}/${nameFile}`
+
+    fs.writeFileSync(pathToSaveFile, fileOtsBytes)
+
+    return Promise.resolve({
+      nameFileOts: nameFile,
+      pathOtsFile: `pathToSaveFile`
+    })
   }
 }
 
