@@ -54,6 +54,9 @@ router.use('/companies', authMiddleware, company)
 // CONFIGURATIONS
 router.use('/configurations', authMiddleware, configs)
 
+// ACHIEVEMENTS
+router.use('/achievements', authMiddleware, achievements)
+
 // COLLABORATOR
 router.use('/collaborators', authMiddleware, collaborators)
 

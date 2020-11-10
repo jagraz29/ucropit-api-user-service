@@ -201,6 +201,14 @@ export const validateAchievement = async (achievement) => {
   return schema.validateAsync(achievement)
 }
 
+export const validateSignAchievement = async (dataSign) => {
+  const schema = Joi.object({
+    activityId: Joi.string().required()
+  })
+
+  return schema.validateAsync(dataSign)
+}
+
 export const validateFilesWithEvidences = (files, evidences) => {
   if (!files && !evidences) {
     return { error: false }
