@@ -40,6 +40,7 @@ app.set('views', path.join(basePath(), 'views'))
 app.use('/v1', routes)
 
 app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.log(err)
   if (errorHandler.isCastErrorMongoose(err)) {
     res.status(404).json({
       err: {
