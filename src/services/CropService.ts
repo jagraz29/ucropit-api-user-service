@@ -54,7 +54,8 @@ class CropService {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          { path: 'user' }
         ]
       })
       .populate({
@@ -64,7 +65,8 @@ class CropService {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          { path: 'user' }
         ]
       })
       .populate({
@@ -79,7 +81,8 @@ class CropService {
             path: 'achievements',
             populate: [{ path: 'lots' }, { path: 'files' }]
           },
-          { path: 'lotsMade' }
+          { path: 'lotsMade' },
+          { path: 'user' }
         ]
       })
       .populate({
@@ -89,7 +92,8 @@ class CropService {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          { path: 'user' }
         ]
       })
       .populate('members.user')
