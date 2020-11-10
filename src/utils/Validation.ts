@@ -1,12 +1,19 @@
 import * as Joi from 'joi'
 
+import JoiDate from '@hapi/joi-date'
+
+const JoiValidation = Joi.extend(JoiDate)
+
 export const validateCropStore = async (crop) => {
   const schema = Joi.object({
     name: Joi.string().required(),
     pay: Joi.number().required(),
     surface: Joi.number().required(),
-    dateCrop: Joi.date().optional().required(),
-    dateHarvest: Joi.date().greater(Joi.ref('dateCrop')).required(),
+    dateCrop: JoiValidation.date().format('YYYY-MM-DD').required(),
+    dateHarvest: JoiValidation.date()
+      .format('YYYY-MM-DD')
+      .greater(Joi.ref('dateCrop'))
+      .required(),
     cropType: Joi.string().required(),
     unitType: Joi.string().required(),
     identifier: Joi.string().required(),

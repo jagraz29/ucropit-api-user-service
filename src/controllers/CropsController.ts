@@ -71,7 +71,8 @@ class CropsController {
 
     const activities = await ActivityService.createDefault(
       data.surface,
-      data.dateCrop
+      data.dateCrop,
+      user
     )
 
     const crop = await CropService.handleDataCrop(

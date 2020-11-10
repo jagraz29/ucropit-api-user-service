@@ -80,7 +80,8 @@ class CropService extends ServiceBase {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          { path: 'user' }
         ]
       })
       .populate({
@@ -90,7 +91,8 @@ class CropService extends ServiceBase {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          { path: 'user' }
         ]
       })
       .populate({
@@ -100,7 +102,13 @@ class CropService extends ServiceBase {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'files' }]
+          },
+          { path: 'lotsMade' },
+          { path: 'user' }
         ]
       })
       .populate('members.user')
@@ -111,7 +119,8 @@ class CropService extends ServiceBase {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          { path: 'user' }
         ]
       })
   }
