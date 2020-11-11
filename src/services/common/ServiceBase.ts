@@ -78,8 +78,6 @@ class ServiceBase {
    * @param user
    */
   public static async signUser (document, user) {
-    console.log(document)
-    console.log(user)
     const signer = document.signers.filter(
       (item) => item.userId.toString() === user._id.toString()
     )
@@ -90,6 +88,23 @@ class ServiceBase {
     }
 
     await document.save()
+  }
+
+  /**
+   * Verify Complete Sign User in the document.
+   *
+   * @param document
+   *
+   * @returns boolean
+   */
+  public static isCompleteSignsUsers (document): boolean {
+    const listNotSigners = document.signers.filter((item) => !item.signed)
+
+    if (listNotSigners.length > 0) {
+      return false
+    }
+
+    return true
   }
 
   public static makeRequest (

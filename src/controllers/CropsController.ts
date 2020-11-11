@@ -31,73 +31,7 @@ class CropsController {
       query['members.identifier'] = req.query.identifier
     }
 
-    const crops = await Crop.find(query)
-      .populate('lots.data')
-      .populate('cropType')
-      .populate('unitType')
-      .populate('company')
-      .populate({
-        path: 'pending',
-        populate: [
-          { path: 'collaborators' },
-          { path: 'type' },
-          { path: 'typeAgreement' },
-          { path: 'lots' },
-          { path: 'files' },
-
-          {
-            path: 'signers.approvalRegister',
-            populate: [{ path: 'file' }, { path: 'user' }]
-          },
-          { path: 'user' }
-        ]
-      })
-      .populate({
-        path: 'toMake',
-        populate: [
-          { path: 'collaborators' },
-          { path: 'type' },
-          { path: 'typeAgreement' },
-          { path: 'lots' },
-          { path: 'files' },
-          {
-            path: 'signers.approvalRegister',
-            populate: [{ path: 'file' }, { path: 'user' }]
-          },
-          { path: 'user' }
-        ]
-      })
-      .populate({
-        path: 'done',
-        populate: [
-          { path: 'collaborators' },
-          { path: 'type' },
-          { path: 'typeAgreement' },
-          { path: 'lots' },
-          { path: 'files' },
-          {
-            path: 'signers.approvalRegister',
-            populate: [{ path: 'file' }, { path: 'user' }]
-          },
-          { path: 'user' }
-        ]
-      })
-      .populate('members.user')
-      .populate({
-        path: 'finished',
-        populate: [
-          { path: 'collaborators' },
-          { path: 'type' },
-          { path: 'typeAgreement' },
-          { path: 'lots' },
-          { path: 'files' },
-          {
-            path: 'signers.approvalRegister',
-            populate: [{ path: 'file' }, { path: 'user' }]
-          },
-          { path: 'user' }
-        ]
-      })
+    const crops = await CropService.getAll(query)
 
     res.status(200).json(crops)
   }

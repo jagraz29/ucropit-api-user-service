@@ -1,6 +1,7 @@
 import models from '../models'
 import { isNowGreaterThan } from '../utils/Date'
-import mongoose from 'mongoose'
+import ServiceBase from './common/ServiceBase'
+import ActivityService from './ActivityService'
 const Crop = models.Crop
 const Activity = models.Activity
 
@@ -40,13 +41,37 @@ const statusActivities: Array<any> = [
   }
 ]
 
-class CropService {
-  public static async getCropById (cropId: string) {
-    let crop = await Crop.findById(cropId)
+class CropService extends ServiceBase {
+  /**
+   * Get all crops.
+   *
+   * @param query
+   */
+  public static async getAll(query?) {
+    let crops = await this.findAll(query)
+
+    crops = crops.map(async (crop) => {
+      crop = await this.expiredActivities(crop)
+
+      crop = await this.changeStatusActivitiesRange(crop)
+
+      return crop
+    })
+
+    return Promise.all(crops)
+  }
+
+  /**
+   * Find All crops by query filter.
+   *
+   * @param query
+   */
+  public static async findAll (query) {
+    return Crop.find(query)
       .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
-      .populate({ path: 'company', populate: [{ path: 'files' }] })
+      .populate('company')
       .populate({
         path: 'pending',
         populate: [
@@ -85,6 +110,7 @@ class CropService {
           { path: 'user' }
         ]
       })
+      .populate('members.user')
       .populate({
         path: 'finished',
         populate: [
@@ -96,19 +122,32 @@ class CropService {
           { path: 'user' }
         ]
       })
-      .populate('members.user')
+  }
+  /**
+   *
+   * @param cropId
+   */
+  public static async getCropById (cropId: string) {
+    let crop = await this.findOneCrop(cropId)
 
-    crop = this.expiredActivities(crop)
+    crop = await this.expiredActivities(crop)
+
+    crop = await this.changeStatusActivitiesRange(crop)
 
     return crop
   }
 
-  public static async getAll () {
-    return Crop.find()
+  /**
+   * Find One Crop by Id.
+   *
+   * @param cropId
+   */
+  public static async findOneCrop (cropId: string) {
+    return Crop.findById(cropId)
       .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
-      .populate('company')
+      .populate({ path: 'company', populate: [{ path: 'files' }] })
       .populate({
         path: 'pending',
         populate: [
@@ -148,12 +187,13 @@ class CropService {
           {
             path: 'signers.approvalRegister',
             populate: [{ path: 'file' }, { path: 'user' }]
-          }
+          },
+          {
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'files' }]
+          },
+          { path: 'lotsMade' }
         ]
-      })
-      .populate({
-        path: 'members.user',
-        populate: [{ path: 'companies.company' }]
       })
       .populate({
         path: 'finished',
@@ -169,6 +209,23 @@ class CropService {
           }
         ]
       })
+      .populate('members.user')
+  }
+
+  /**
+   * Expired Activity.
+   *
+   * @param crop
+   */
+  public static async expiredActivities (crop: any) {
+    let activitiesToMake = await this.checkListActivitiesExpired(
+      crop,
+      'toMake'
+    )
+
+    crop.toMake = await Promise.all(activitiesToMake)
+
+    return crop
   }
 
   public static filterCropByIdentifier (identifier: string | any, crops) {
@@ -184,24 +241,40 @@ class CropService {
       })
       .filter((crop) => crop)
   }
-  public static async expiredActivities (crop: any) {
-    let activities = crop.toMake.map(async (activity: any) => {
-      if (this.isExpiredActivity(activity)) {
-        activity.status[0].name.en = 'EXPIRED'
-        activity.status[0].name.es = 'VENCIDA'
 
-        await this.expiredActivity(activity)
+  /**
+   * Change status in list activities range.
+   *
+   * @param crop
+   *
+   * @return Promise
+   */
+  public static async changeStatusActivitiesRange (crop: any): Promise<void> {
+    const listActivitiesExpired = (
+      await this.listActivitiesExpiredRange(crop, 'done')
+    ).filter((activity) => activity)
+    const listActivitiesFinished = (
+      await this.listActivitiesFinishedRange(crop, 'done')
+    ).filter((activity) => activity)
 
-        return activity
+    if (listActivitiesExpired.length > 0) {
+      for (let activity of listActivitiesExpired) {
+        await this.removeActivities(activity, crop, 'done')
+        activity = await ActivityService.changeStatus(activity, 'TO_COMPLETE')
+        await this.addActivities(activity, crop)
       }
+    }
+    if (listActivitiesFinished.length > 0) {
+      for (let activity of listActivitiesFinished) {
+        await this.removeActivities(activity, crop, 'done')
+        activity = await ActivityService.changeStatus(activity, 'FINISHED')
+        await this.addActivities(activity, crop)
+      }
+    }
 
-      return activity
-    })
-
-    crop.toMake = await Promise.all(activities)
-
-    return crop
+    return this.findOneCrop(crop._id)
   }
+
   public static async handleDataCrop (
     data,
     company,
@@ -283,10 +356,93 @@ class CropService {
     return false
   }
 
-  private static isExpiredActivity (activity): boolean {
+  /**
+   *
+   * @param crop
+   * @param statusCrop
+   */
+  private static async listActivitiesExpiredRange (crop, statusCrop: string) {
+    const activities = crop[statusCrop].map(async (activity: any) => {
+      if (
+        this.isExpiredActivity(activity, statusCrop) &&
+        !this.isTotalPercentAchievements(activity)
+      ) {
+        return activity
+      }
+
+      return undefined
+    })
+
+    return Promise.all(activities)
+  }
+
+  /**
+   *
+   * @param crop
+   * @param statusCrop
+   */
+  private static async listActivitiesFinishedRange (crop, statusCrop: string) {
+    const activities = crop[statusCrop].map(async (activity: any) => {
+      if (
+        !this.isExpiredActivity(activity, statusCrop) &&
+        this.isTotalPercentAchievements(activity) &&
+        this.checkCompleteSignedEachAchievements(activity)
+      ) {
+        return activity
+      }
+
+      return undefined
+    })
+
+    return Promise.all(activities)
+  }
+
+  /**
+   *
+   * @param activity
+   */
+  private static checkCompleteSignedEachAchievements (activity: any): boolean {
+    let completeSigned = true
+    for (const achievement of activity.achievements) {
+      if (!this.isCompleteSignsUsers(achievement)) {
+        completeSigned = false
+        return completeSigned
+      }
+    }
+
+    return completeSigned
+  }
+
+  /**
+   *
+   * @param crop
+   * @param statusCrop
+   */
+  private static async checkListActivitiesExpired (crop, statusCrop: string) {
+    return crop[statusCrop].map(async (activity: any) => {
+      if (this.isExpiredActivity(activity)) {
+        activity.status[0].name.en = 'EXPIRED'
+        activity.status[0].name.es = 'VENCIDA'
+
+        await this.expiredActivity(activity)
+
+        return activity
+      }
+
+      return activity
+    })
+  }
+
+  /**
+   *
+   * @param activity
+   */
+  private static isExpiredActivity (activity, status?): boolean {
     if (
-      activity.dateLimitValidation &&
-      isNowGreaterThan(activity.dateLimitValidation)
+      (activity.dateLimitValidation &&
+        isNowGreaterThan(activity.dateLimitValidation) &&
+        !status) ||
+      (activity.dateEnd && isNowGreaterThan(activity.dateEnd && status))
     ) {
       return true
     }
@@ -294,6 +450,33 @@ class CropService {
     return false
   }
 
+  /**
+   *  Check is make total percent in achievements activities.
+   *
+   * @param activity
+   *
+   * @return boolean
+   */
+  private static isTotalPercentAchievements (activity): boolean {
+    if (!activity.achievements || activity.achievements.length === 0) {
+      return false
+    }
+    const totalPercent = activity.achievements.reduce(
+      (a, b) => a + (b['percent'] || 0),
+      0
+    )
+
+    if (totalPercent >= 100) {
+      return true
+    }
+
+    return false
+  }
+
+  /**
+   *
+   * @param activity
+   */
   private static async expiredActivity (activity) {
     const activityInstance = await Activity.findById(activity._id)
 
