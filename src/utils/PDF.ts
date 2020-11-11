@@ -26,7 +26,7 @@ class PDF {
     const { width, height } = page.getSize()
 
     // Draw a string of text toward the top of the page
-    const fontSize = 15
+    const fontSize = 12
     page.drawText(`${data}`, {
       x: 50,
       y: height - 4 * fontSize,

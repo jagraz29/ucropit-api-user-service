@@ -42,6 +42,10 @@ class ReportService {
         hash_land_use_sign: this.getHashSign(crop.finished),
         names_signers_land_use: this.getNameSigner(crop.finished),
         total_surface_explo: this.sumSurfaceActivity(crop.finished, 'EXPLO'),
+        link_pdf_ots_agreement: this.createLinkDownloadFilesSign(
+          crop.finished,
+          'Agreements'
+        ),
         mail_producers: this.getMailsProducers(crop),
         phone_producers: this.getPhonesProducers(crop)
       }
@@ -177,6 +181,37 @@ class ReportService {
     return urls
   }
 
+  private static createLinkDownloadFilesSign (activities, type) {
+    let urls = ''
+    const urlsDownloads = activities
+      .map((activity) => {
+        if (activity.type.name.en === type) {
+          const approvalRegister = activity.approvalRegister
+            ? activity.approvalRegister
+            : null
+          if (approvalRegister) {
+            return `
+              ${process.env.BASE_URL}/v1/files/downloads/sings/${approvalRegister.filePdf}
+              ${process.env.BASE_URL}/v1/files/downloads/sings/${approvalRegister.fileOts}
+              `
+          }
+        }
+
+        return undefined
+      })
+      .filter((endpoints) => endpoints)
+
+    const listEndpointsDownload = _.flatten(urlsDownloads)
+
+    for (const endpoint of listEndpointsDownload) {
+      urls += `
+      ${endpoint},
+      `
+    }
+
+    return urls
+  }
+
   private static sumSurfaceActivity (
     activities,
     typeAgreement: string = 'EXPLO'
@@ -199,15 +234,7 @@ class ReportService {
   private static getHashSign (activities) {
     let hashList = ''
     const hashArrayList = activities.map((activity) => {
-      return activity.signers
-        .map((signer) => {
-          if (signer.approvalRegister) {
-            return `${signer.approvalRegister.hash}`
-          }
-
-          return undefined
-        })
-        .filter((item) => item)
+      return activity.approvalRegister.ots
     })
 
     const hashItemsHash = _.flatten(hashArrayList)

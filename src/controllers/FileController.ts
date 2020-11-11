@@ -23,7 +23,7 @@ class FileController {
     res.download(getFullPath(file.path))
   }
 
-  public async downloadPdf (req: Request, res: Response) {
+  public async downloadSign (req: Request, res: Response) {
     const { id } = req.params
 
     const file = await File.findById(id)

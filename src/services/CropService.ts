@@ -51,11 +51,11 @@ class CropService extends ServiceBase {
     let crops = await this.findAll(query)
 
     crops = crops.map(async (crop) => {
-      crop = await this.expiredActivities(crop)
+      crop = await this.expiredActivities(crop);
 
-      crop = await this.changeStatusActivitiesRange(crop)
+      crop = await this.changeStatusActivitiesRange(crop);
 
-      return crop
+      return crop;
     })
 
     return Promise.all(crops)
@@ -119,7 +119,15 @@ class CropService extends ServiceBase {
           { path: 'typeAgreement' },
           { path: 'lots' },
           { path: 'files' },
-          { path: 'user' }
+          { path: 'user' },
+          {
+            path: 'approvalRegister',
+            populate: [
+              { path: 'filePdf' },
+              { path: 'fileOts' },
+              { path: 'activity' }
+            ]
+          }
         ]
       })
   }
@@ -157,8 +165,8 @@ class CropService extends ServiceBase {
           { path: 'lots' },
           { path: 'files' },
           {
-            path: 'signers.approvalRegister',
-            populate: [{ path: 'file' }, { path: 'user' }]
+            path: 'approvalRegister',
+            populate: [{ path: 'file' }, { path: 'activity' }]
           }
         ]
       })
@@ -171,8 +179,8 @@ class CropService extends ServiceBase {
           { path: 'lots' },
           { path: 'files' },
           {
-            path: 'signers.approvalRegister',
-            populate: [{ path: 'file' }, { path: 'user' }]
+            path: 'approvalRegister',
+            populate: [{ path: 'file' }, { path: 'activity' }]
           }
         ]
       })
@@ -185,8 +193,8 @@ class CropService extends ServiceBase {
           { path: 'lots' },
           { path: 'files' },
           {
-            path: 'signers.approvalRegister',
-            populate: [{ path: 'file' }, { path: 'user' }]
+            path: 'approvalRegister',
+            populate: [{ path: 'file' }, { path: 'activity' }]
           },
           {
             path: 'achievements',
@@ -204,8 +212,8 @@ class CropService extends ServiceBase {
           { path: 'lots' },
           { path: 'files' },
           {
-            path: 'signers.approvalRegister',
-            populate: [{ path: 'file' }, { path: 'user' }]
+            path: 'approvalRegister',
+            populate: [{ path: 'file' }, { path: 'activity' }]
           }
         ]
       })

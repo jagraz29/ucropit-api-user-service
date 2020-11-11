@@ -34,6 +34,7 @@ const headerXls = {
     'hash_land_use_sign',
     'names_signers_land_use',
     'total_surface_explo',
+    'link_pdf_ots_agreement',
     'mail_producers',
     'phone_producers'
   ],
@@ -57,6 +58,7 @@ const headerXls = {
     'Lista de HASH de firmas ACUERDOS de USO DE SUELO',
     'Nombre Firmantes ACUERDOS de USO DE SUELO',
     'HAS ACUERDOS de USO DE SUELO',
+    'Link de descarga de archivos de firmas Acuerdos',
     'Mail de los Productores',
     'Teléfono de los Producuctores'
   ]
@@ -138,6 +140,10 @@ const fields = [
   {
     label: 'HAS ACUERDOS de USO DE SUELO',
     value: 'total_surface_explo'
+  },
+  {
+    label: 'Link de descarga de archivos de firmas Acuerdos',
+    value: 'link_pdf_ots_agreement'
   },
   {
     label: 'Mail de los Productores',

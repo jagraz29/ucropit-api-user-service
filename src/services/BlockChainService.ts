@@ -60,7 +60,7 @@ class BlockChainServices {
 
     return Promise.resolve({
       nameFileOts: nameFile,
-      pathOtsFile: `pathToSaveFile`
+      pathOtsFile: `${pathToSaveFile}`
     })
   }
 }
