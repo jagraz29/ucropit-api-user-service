@@ -32,9 +32,9 @@ const ApprovalRegisterSignSchema = new Schema({
   hash: {
     type: String
   },
-  user: {
+  activity: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'Activity'
   },
   filePdf: {
     type: Schema.Types.ObjectId,

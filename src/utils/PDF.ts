@@ -3,6 +3,9 @@ import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 import { getFullPath } from '../utils/Files'
 import sha256 from 'sha256'
 import CompanyService from '../services/CompanyService'
+import models from '../models'
+
+const User = models.User
 
 const VALID_FORMATS_FILES_IMAGES_PNG = 'png'
 const VALID_FORMATS_FILES_IMAGES_JPG = 'jpg'
@@ -100,7 +103,7 @@ class PDF {
     })
   }
 
-  public static async generateTemplateActivity (activity, crop, user) {
+  public static async generateTemplateActivity (activity, crop, signers) {
     const companyProducer = await this.getCompanyProducer(crop)
     return `
         CULTIVO
@@ -126,11 +129,25 @@ class PDF {
        Lotes Seleccionados:
        ${this.createStringLot(activity.lots)}
        --------------------------------------------------
-       Firmante:
-       -${user.firstName} ${user.lastName} ${user.email}
+       Las siguientes personas expresaron su acuerdo a las declaraciones expresadas ene este documento:
+        ${await this.listSigners(signers)}
 
        Hora Firma: ${new Date()}
   `
+  }
+
+  private static async listSigners (signers) {
+    let users = ''
+
+    for (const sign of signers) {
+      const user = await User.findOne({ _id: sign.userId })
+
+      users += `
+       ${user.firstName} ${user.lastName},
+      `
+    }
+
+    return users
   }
 
   private static readImagesPngFiles (files: any) {

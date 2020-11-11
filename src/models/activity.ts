@@ -110,13 +110,13 @@ const ActivitySchema = new Schema({
       },
       dateSigned: {
         type: Date
-      },
-      approvalRegister: {
-        type: Schema.Types.ObjectId,
-        ref: 'ApprovalRegisterSign'
       }
     }
   ],
+  approvalRegister: {
+    type: Schema.Types.ObjectId,
+    ref: 'ApprovalRegisterSign'
+  },
   type: {
     type: Schema.Types.ObjectId,
     ref: 'ActivityType'

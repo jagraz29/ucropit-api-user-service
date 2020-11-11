@@ -112,7 +112,7 @@ class ActivityService extends ServiceBase {
     return activity.save()
   }
 
-  public static async signUserAndUpdateSing (activity, user, registerApproval) {
+  public static async signUserAndUpdateSing (activity, user) {
     const signer = activity.signers.filter(
       (item) => item.userId.toString() === user._id.toString()
     )
@@ -121,12 +121,15 @@ class ActivityService extends ServiceBase {
       const child = activity.signers.id(signer[0]._id)
       child.signed = true
       child.dateSigned = new Date()
-      child.approvalRegister = registerApproval._id
     }
 
     await activity.save()
 
-    return Activity.findById(activity._id).populate('lots').populate('files')
+    return Activity.findById(activity._id)
+      .populate('lots')
+      .populate('files')
+      .populate('type')
+      .populate('typeAgreement')
   }
 
   public static async isCompleteSingers (activity) {

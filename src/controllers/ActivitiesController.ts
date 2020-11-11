@@ -178,37 +178,34 @@ class ActivitiesController {
       .populate('lots')
       .populate('files')
 
-    const crop = await CropService.getCropById(cropId)
-
-    const {
-      ots,
-      hash,
-      pathPdf,
-      nameFilePdf,
-      nameFileOts,
-      pathOtsFile
-    } = await BlockChainServices.sign(crop, activity, user)
-
-    const approvalRegisterSign = await ApprovalRegisterSingService.create({
-      ots,
-      hash,
-      pathPdf,
-      nameFilePdf,
-      nameFileOts,
-      pathOtsFile,
-      user
-    })
-
-    activity = await ActivityService.signUserAndUpdateSing(
-      activity,
-      user,
-      approvalRegisterSign
-    )
+    activity = await ActivityService.signUserAndUpdateSing(activity, user)
 
     const isCompleteSigned = await ActivityService.isCompleteSingers(activity)
 
     if (isCompleteSigned) {
-      const crop = await Crop.findById(cropId)
+      const crop = await Crop.findById(cropId).populate('cropType')
+
+      const {
+        ots,
+        hash,
+        pathPdf,
+        nameFilePdf,
+        nameFileOts,
+        pathOtsFile
+      } = await BlockChainServices.sign(crop, activity)
+
+      const approvalRegisterSign = await ApprovalRegisterSingService.create({
+        ots,
+        hash,
+        pathPdf,
+        nameFilePdf,
+        nameFileOts,
+        pathOtsFile,
+        activity
+      })
+
+      activity.approvalRegister = approvalRegisterSign._id
+
       await ActivityService.changeStatus(activity, 'FINISHED')
       await CropService.removeActivities(activity, crop, 'done')
       await CropService.addActivities(activity, crop)

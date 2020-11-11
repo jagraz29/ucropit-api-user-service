@@ -12,19 +12,23 @@ class BlockChainServices {
    * @param activity
    * @param user
    */
-  public static async sign (crop, activity, user): Promise<any> {
+  public static async sign (crop, activity): Promise<any> {
     await makeDirIfNotExists(
       `${basePath()}${process.env.DIR_PDF_SINGS}/${activity.key}`
     )
 
-    const nameFile = `${activity.key}-${activity.type.name.es}-${user._id}-sing.pdf`
+    const nameFile = `${activity.key}-${activity.type.name.es}-sing.pdf`
     const pathToSave = `${basePath()}${process.env.DIR_PDF_SINGS}/${
       activity.key
     }`
 
     const { hash, path } = await PDF.generate({
       pathFile: `${pathToSave}/${nameFile}`,
-      data: await PDF.generateTemplateActivity(activity, crop, user),
+      data: await PDF.generateTemplateActivity(
+        activity,
+        crop,
+        activity.signers
+      ),
       files: activity.files
     })
 
