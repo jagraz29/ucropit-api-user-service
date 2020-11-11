@@ -5,7 +5,7 @@ import CompanyService from '../services/CompanyService'
 import LotService from '../services/LotService'
 import ActivityService from '../services/ActivityService'
 
-import { validateCropStore } from '../utils/Validation'
+import { validateCropStore, validateFormatKmz } from '../utils/Validation'
 
 import { UserSchema } from '../models/user'
 
@@ -63,7 +63,13 @@ class CropsController {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     await validateCropStore(data)
+    const validationKmz = await validateFormatKmz(req.files)
+
     let company = null
+
+    if (validationKmz.error) {
+      return res.status(400).json(validationKmz)
+    }
 
     company = (await CompanyService.search({ identifier: data.identifier }))[0]
 
