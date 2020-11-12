@@ -1,6 +1,8 @@
 import models from '../models'
 import _ from 'lodash'
 
+import { tagsTypeAgreement } from '../utils/Constants'
+
 const Company = models.Company
 
 class ReportService {
@@ -28,20 +30,26 @@ class ReportService {
         surface_total: this.getTotalSurface(crop),
         link_sustainability_agreements: this.generateStaticDownloads(
           crop.finished,
-          'SUSTAIN'
+          tagsTypeAgreement.SUSTAIN
         ),
         hash_sustainability_agreements_sign: this.getHashSign(crop.finished),
         names_signers_sustainability_agreements: this.getNameSigner(
           crop.finished
         ),
-        total_surface_sus: this.sumSurfaceActivity(crop.finished, 'SUSTAIN'),
+        total_surface_sus: this.sumSurfaceActivity(
+          crop.finished,
+          tagsTypeAgreement.SUSTAIN
+        ),
         link_land_use_agreement: this.generateStaticDownloads(
           crop.finished,
-          'EXPLO'
+          tagsTypeAgreement.EXPLO
         ),
         hash_land_use_sign: this.getHashSign(crop.finished),
         names_signers_land_use: this.getNameSigner(crop.finished),
-        total_surface_explo: this.sumSurfaceActivity(crop.finished, 'EXPLO'),
+        total_surface_explo: this.sumSurfaceActivity(
+          crop.finished,
+          tagsTypeAgreement.EXPLO
+        ),
         link_pdf_ots_agreement: this.createLinkDownloadFilesSign(
           crop.finished,
           'Agreements'
@@ -148,7 +156,7 @@ class ReportService {
 
   private static generateStaticDownloads (
     activities,
-    typeAgreement: string = 'EXPLO'
+    typeAgreement: string = tagsTypeAgreement.EXPLO
   ) {
     let urls = ''
     const urlsDownloads = activities
@@ -214,7 +222,7 @@ class ReportService {
 
   private static sumSurfaceActivity (
     activities,
-    typeAgreement: string = 'EXPLO'
+    typeAgreement: string = tagsTypeAgreement.EXPLO
   ) {
     const totalSurface = activities
       .map((activity) => {

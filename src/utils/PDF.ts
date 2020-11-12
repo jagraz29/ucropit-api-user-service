@@ -5,11 +5,13 @@ import sha256 from 'sha256'
 import CompanyService from '../services/CompanyService'
 import models from '../models'
 
-const User = models.User
+import {
+  VALID_FORMATS_FILES_IMAGES_PNG,
+  VALID_FORMATS_FILES_IMAGES_JPG,
+  VALID_FORMATS_FILES_DOCUMENTS
+} from '../utils/Constants'
 
-const VALID_FORMATS_FILES_IMAGES_PNG = 'png'
-const VALID_FORMATS_FILES_IMAGES_JPG = 'jpg'
-const VALID_FORMATS_FILES_DOCUMENTS = 'pdf'
+const User = models.User
 
 class PDF {
   public static async generate ({ pathFile, data, files }) {
