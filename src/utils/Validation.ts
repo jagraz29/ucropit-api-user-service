@@ -238,6 +238,7 @@ export const validateFilesWithEvidences = (files, evidences) => {
  */
 export const validateFormatKmz = async (files: FileArray) => {
   const result = await handleFileConvertJSON(files)
+  if (!result[0]) return { error: false }
   for (const feature of result[0].features) {
     if (feature.geometry.type !== 'Polygon') {
       return { error: true, message: 'KMZ format not allowed' }
