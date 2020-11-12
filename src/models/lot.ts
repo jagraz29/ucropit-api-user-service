@@ -80,11 +80,14 @@ LotSchema.virtual('coordinateForGoogle').get(function () {
 })
 
 LotSchema.virtual('centerBound').get(function () {
+  if (this.coordinates.length === 0) return 0
   return getCenterOfBounds(this.coordinates)
 })
 
 LotSchema.virtual('centerBoundGoogle').get(function () {
   const centerBound = this.centerBound
+
+  if (centerBound === 0) return {}
 
   return {
     lat: centerBound.latitude,
