@@ -8,6 +8,6 @@ public/uploads/activities/*
 public/uploads/companies/*
 public/uploads/achievements/*
 public/uploads/tmp/*
-public/uploads/pdf-sings
+public/uploads/pdf-sings/*
 public/.DS_Store
 .DS_Store

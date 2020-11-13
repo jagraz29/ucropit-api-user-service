@@ -107,9 +107,16 @@ const ActivitySchema = new Schema({
       signed: {
         type: Boolean,
         default: false
+      },
+      dateSigned: {
+        type: Date
       }
     }
   ],
+  approvalRegister: {
+    type: Schema.Types.ObjectId,
+    ref: 'ApprovalRegisterSign'
+  },
   type: {
     type: Schema.Types.ObjectId,
     ref: 'ActivityType'

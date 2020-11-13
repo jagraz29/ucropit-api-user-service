@@ -7,6 +7,8 @@ import {
 
 import ActivityService from '../services/ActivityService'
 import CropService from '../services/CropService'
+import BlockChainServices from '../services/BlockChainService'
+import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
 import models from '../models'
 
 import { getPathFileByType, getFullPath } from '../utils/Files'
@@ -171,13 +173,39 @@ class ActivitiesController {
     const user: UserSchema = req.user
 
     let activity = await Activity.findById(id)
+      .populate('type')
+      .populate('typeAgreement')
+      .populate('lots')
+      .populate('files')
 
-    activity = await ActivityService.signUser(activity, user)
+    activity = await ActivityService.signUserAndUpdateSing(activity, user)
 
     const isCompleteSigned = await ActivityService.isCompleteSingers(activity)
 
     if (isCompleteSigned) {
-      const crop = await Crop.findById(cropId)
+      const crop = await Crop.findById(cropId).populate('cropType')
+
+      const {
+        ots,
+        hash,
+        pathPdf,
+        nameFilePdf,
+        nameFileOts,
+        pathOtsFile
+      } = await BlockChainServices.sign(crop, activity)
+
+      const approvalRegisterSign = await ApprovalRegisterSingService.create({
+        ots,
+        hash,
+        pathPdf,
+        nameFilePdf,
+        nameFileOts,
+        pathOtsFile,
+        activity
+      })
+
+      activity.approvalRegister = approvalRegisterSign._id
+
       await ActivityService.changeStatus(activity, 'FINISHED')
       await CropService.removeActivities(activity, crop, 'done')
       await CropService.addActivities(activity, crop)

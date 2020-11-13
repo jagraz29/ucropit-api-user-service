@@ -10,6 +10,7 @@ import TypeAgreement from './typeAgreement'
 import Activity from './activity'
 import Achievement from './achievement'
 import CollaboratorRequest from './collaboratorRequest'
+import ApprovalRegisterSign from './ApprovalRegisterSign'
 
 import { CropType } from './cropType'
 import { UnitType } from './unitType'
@@ -39,7 +40,8 @@ const models = {
   ActivityType,
   Activity,
   Achievement,
-  CollaboratorRequest
+  CollaboratorRequest,
+  ApprovalRegisterSign
 }
 
 export { connectDb }

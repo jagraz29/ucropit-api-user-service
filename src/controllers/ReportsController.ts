@@ -18,11 +18,18 @@ class ReportsController {
    * @return Response
    */
   public async generateCrops (req: Request, res: Response) {
-    const { cuit, mode = 'xls' } = req.query
+    const cuit = req.query.cuit
+    const mode: any = req.query.mode || 'xls'
 
     const company = await Company.search({ identifier: cuit })
 
     if (!company[0]) return res.status(404).json({ err: 'NOT FOUND COMPANY' })
+
+    if (!(mode === 'csv' || mode === 'xls')) {
+      return res
+        .status(400)
+        .json({ err: `${mode} NOT ALLOWED export file mode` })
+    }
 
     let crops = await CropService.getAll()
 

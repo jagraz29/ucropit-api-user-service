@@ -1,5 +1,4 @@
 import models from '../models'
-import achievement from '../models/achievement'
 import { isNowGreaterThan } from '../utils/Date'
 import ServiceBase from './common/ServiceBase'
 import ActivityService from './ActivityService'
@@ -52,11 +51,11 @@ class CropService extends ServiceBase {
     let crops = await this.findAll(query)
 
     crops = crops.map(async (crop) => {
-      crop = await this.expiredActivities(crop)
+      crop = await this.expiredActivities(crop);
 
-      crop = await this.changeStatusActivitiesRange(crop)
+      crop = await this.changeStatusActivitiesRange(crop);
 
-      return crop
+      return crop;
     })
 
     return Promise.all(crops)
@@ -120,7 +119,15 @@ class CropService extends ServiceBase {
           { path: 'typeAgreement' },
           { path: 'lots' },
           { path: 'files' },
-          { path: 'user' }
+          { path: 'user' },
+          {
+            path: 'approvalRegister',
+            populate: [
+              { path: 'filePdf' },
+              { path: 'fileOts' },
+              { path: 'activity' }
+            ]
+          }
         ]
       })
   }
@@ -156,7 +163,11 @@ class CropService extends ServiceBase {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          {
+            path: 'approvalRegister',
+            populate: [{ path: 'file' }, { path: 'activity' }]
+          }
         ]
       })
       .populate({
@@ -166,7 +177,11 @@ class CropService extends ServiceBase {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          {
+            path: 'approvalRegister',
+            populate: [{ path: 'file' }, { path: 'activity' }]
+          }
         ]
       })
       .populate({
@@ -177,6 +192,10 @@ class CropService extends ServiceBase {
           { path: 'typeAgreement' },
           { path: 'lots' },
           { path: 'files' },
+          {
+            path: 'approvalRegister',
+            populate: [{ path: 'file' }, { path: 'activity' }]
+          },
           {
             path: 'achievements',
             populate: [{ path: 'lots' }, { path: 'files' }]
@@ -191,7 +210,11 @@ class CropService extends ServiceBase {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },
-          { path: 'files' }
+          { path: 'files' },
+          {
+            path: 'approvalRegister',
+            populate: [{ path: 'file' }, { path: 'activity' }]
+          }
         ]
       })
       .populate('members.user')

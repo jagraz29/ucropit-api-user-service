@@ -45,10 +45,12 @@
     "express-openapi-validator": "^3.16.7",
     "form-data": "^3.0.0",
     "geolib": "^3.3.1",
+    "javascript-opentimestamps": "^0.4.5",
     "joi": "^17.2.0",
     "json2csv": "^5.0.3",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.19",
+    "mkdirp": "^1.0.4",
     "moment": "^2.29.1",
     "mongoose": "^5.9.25",
     "morgan": "^1.10.0",
@@ -59,7 +61,10 @@
     "parse-kmz": "^1.0.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "pdf-lib": "^1.11.2",
     "pug": "^3.0.0",
+    "puppeteer": "^5.4.1",
+    "sha256": "^0.2.0",
     "shortid": "^2.2.15"
   },
   "devDependencies": {
