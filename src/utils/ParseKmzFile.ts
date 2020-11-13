@@ -20,7 +20,7 @@ export const handleFileConvertJSON = async function (file: FileArray) {
   let result = null
 
   const upload = new FileUpload(file, 'tmp')
-  const stored = (await upload.store())
+  const stored = await upload.store()
 
   for (const fileStore of stored) {
     const pathFile = path.join(
@@ -94,8 +94,9 @@ export const kmlJsonToArrayNames = function (data) {
  * @param kmzJsonParsers
  */
 export const mapArraySurfacesAndArea = function (kmzJsonParsers) {
-  const listLots = kmzJsonParsers.map(item => {
+  const listLots = kmzJsonParsers.map((item) => {
     return item.features.map((lot) => {
+      console.log(lot)
       const flattenArr = _.flatten(lot.geometry.coordinates)
       const areaSquare = geolib.getAreaOfPolygon(flattenArr)
       const surface = geolib.convertArea(areaSquare, 'ha').toFixed(2)
@@ -108,5 +109,4 @@ export const mapArraySurfacesAndArea = function (kmzJsonParsers) {
   })
 
   return _.flatten(listLots)
-
 }

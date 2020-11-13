@@ -24,11 +24,19 @@ const headerXls = {
     'date_harvest',
     'localization',
     'kmz_links',
+    'tags_lots',
     'surface_total',
     'link_sustainability_agreements',
-    'link_land_use_agreement',
+    'hash_sustainability_agreements_sign',
+    'names_signers_sustainability_agreements',
     'total_surface_sus',
-    'total_surface_explo'
+    'link_land_use_agreement',
+    'hash_land_use_sign',
+    'names_signers_land_use',
+    'total_surface_explo',
+    'link_pdf_ots_agreement',
+    'mail_producers',
+    'phone_producers'
   ],
   fieldNames: [
     'CUIT',
@@ -40,11 +48,19 @@ const headerXls = {
     'Fecha Estimada de Cosecha',
     'Localizaciones',
     'Localizacion KMZ',
+    'Establecimiento o Agrupador de lotes',
     'HAS KMZ',
     'Link ACUERDOS SUSTENTABILIDAD',
-    'Link ACUERDOS de USO DE SUELO',
+    'Lista de HASH de firmas ACUERDOS SUSTENTABILIDAD',
+    'Nombre Firmantes ACUERDOS SUSTENTABILIDAD',
     'HAS ACUERDO SUSTENTABILIDAD',
-    'HAS ACUERDOS de USO DE SUELO'
+    'Link ACUERDOS de USO DE SUELO',
+    'Lista de HASH de firmas ACUERDOS de USO DE SUELO',
+    'Nombre Firmantes ACUERDOS de USO DE SUELO',
+    'HAS ACUERDOS de USO DE SUELO',
+    'Link de descarga de archivos de firmas Acuerdos',
+    'Mail de los Productores',
+    'Teléfono de los Producuctores'
   ]
 }
 
@@ -86,6 +102,10 @@ const fields = [
     value: 'kmz_links'
   },
   {
+    label: 'Establecimiento o Agrupador de lotes',
+    value: 'tags_lots'
+  },
+  {
     label: 'HAS KMZ',
     value: 'surface_total'
   },
@@ -94,16 +114,44 @@ const fields = [
     value: 'link_sustainability_agreements'
   },
   {
+    label: 'Lista de HASH de firmas ACUERDOS SUSTENTABILIDAD',
+    value: 'hash_sustainability_agreements_sign'
+  },
+  {
+    label: 'Nombre Firmantes ACUERDOS SUSTENTABILIDAD',
+    value: 'names_signers_sustainability_agreements'
+  },
+  {
     label: 'Link ACUERDOS de USO DE SUELO',
     value: 'link_land_use_agreement'
+  },
+  {
+    label: 'Lista de HASH de firmas ACUERDOS de USO DE SUELO',
+    value: 'hash_land_use_sign'
   },
   {
     label: 'HAS ACUERDO SUSTENTABILIDAD',
     value: 'total_surface_sus'
   },
   {
-    label: 'Año',
-    value: 'HAS ACUERDOS de USO DE SUELO'
+    label: 'Nombre Firmantes ACUERDOS de USO DE SUELO',
+    value: 'names_signers_land_use'
+  },
+  {
+    label: 'HAS ACUERDOS de USO DE SUELO',
+    value: 'total_surface_explo'
+  },
+  {
+    label: 'Link de descarga de archivos de firmas Acuerdos',
+    value: 'link_pdf_ots_agreement'
+  },
+  {
+    label: 'Mail de los Productores',
+    value: 'mail_producers'
+  },
+  {
+    label: 'Teléfono de los Producuctores',
+    value: 'phone_producers'
   }
 ]
 
