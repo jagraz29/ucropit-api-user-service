@@ -242,7 +242,7 @@ class ReportService {
   private static getHashSign (activities) {
     let hashList = ''
     const hashArrayList = activities.map((activity) => {
-      return activity.approvalRegister.ots
+      return activity.approvalRegister ? activity.approvalRegister.ots : ''
     })
 
     const hashItemsHash = _.flatten(hashArrayList)
