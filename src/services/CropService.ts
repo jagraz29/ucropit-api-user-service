@@ -47,15 +47,15 @@ class CropService extends ServiceBase {
    *
    * @param query
    */
-  public static async getAll (query?) {
+  public static async getAll(query?) {
     let crops = await this.findAll(query)
 
-    crops = crops.map(async crop => {
-      crop = await this.expiredActivities(crop)
+    crops = crops.map(async (crop) => {
+      crop = await this.expiredActivities(crop);
 
-      crop = await this.changeStatusActivitiesRange(crop)
+      crop = await this.changeStatusActivitiesRange(crop);
 
-      return crop
+      return crop;
     })
 
     return Promise.all(crops)
@@ -68,14 +68,68 @@ class CropService extends ServiceBase {
    */
   public static async findAll (query) {
     return Crop.find(query)
+      .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
-      .populate('pending')
-      .populate('toMake')
-      .populate('done')
+      .populate('company')
+      .populate({
+        path: 'pending',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' },
+          { path: 'user' }
+        ]
+      })
+      .populate({
+        path: 'toMake',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' },
+          { path: 'user' }
+        ]
+      })
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'files' }]
+          },
+          { path: 'lotsMade' },
+          { path: 'user' }
+        ]
+      })
       .populate('members.user')
-      .populate('finished')
-      .lean()
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' },
+          { path: 'user' },
+          {
+            path: 'approvalRegister',
+            populate: [
+              { path: 'filePdf' },
+              { path: 'fileOts' },
+              { path: 'activity' }
+            ]
+          }
+        ]
+      })
   }
   /**
    *
@@ -172,7 +226,10 @@ class CropService extends ServiceBase {
    * @param crop
    */
   public static async expiredActivities (crop: any) {
-    let activitiesToMake = await this.checkListActivitiesExpired(crop, 'toMake')
+    let activitiesToMake = await this.checkListActivitiesExpired(
+      crop,
+      'toMake'
+    )
 
     crop.toMake = await Promise.all(activitiesToMake)
 
@@ -181,16 +238,16 @@ class CropService extends ServiceBase {
 
   public static filterCropByIdentifier (identifier: string | any, crops) {
     return crops
-      .map(crop => {
+      .map((crop) => {
         if (
-          crop.members.filter(member => member.identifier === identifier)
+          crop.members.filter((member) => member.identifier === identifier)
             .length > 0
         ) {
           return crop
         }
         return undefined
       })
-      .filter(crop => crop)
+      .filter((crop) => crop)
   }
 
   /**
@@ -203,10 +260,10 @@ class CropService extends ServiceBase {
   public static async changeStatusActivitiesRange (crop: any): Promise<void> {
     const listActivitiesExpired = (
       await this.listActivitiesExpiredRange(crop, 'done')
-    ).filter(activity => activity)
+    ).filter((activity) => activity)
     const listActivitiesFinished = (
       await this.listActivitiesFinishedRange(crop, 'done')
-    ).filter(activity => activity)
+    ).filter((activity) => activity)
 
     if (listActivitiesExpired.length > 0) {
       for (let activity of listActivitiesExpired) {
@@ -245,7 +302,7 @@ class CropService extends ServiceBase {
           })
           tagIndex = item.tag
         } else {
-          const index = lotsArray.findIndex(x => x.tag === item.tag)
+          const index = lotsArray.findIndex((x) => x.tag === item.tag)
           lotsArray[index].data.push(lot._id)
         }
       }
@@ -273,11 +330,7 @@ class CropService extends ServiceBase {
     return newCrop.save()
   }
 
-  public static async removeActivities (
-    activity,
-    crop,
-    statusCrop = 'pending'
-  ) {
+  public static async removeActivities (activity, crop, statusCrop = 'pending') {
     crop[statusCrop].pull(activity._id)
 
     return crop.save()
@@ -285,7 +338,7 @@ class CropService extends ServiceBase {
 
   public static async addActivities (activity, crop) {
     const status = statusActivities.find(
-      item => item.name === activity.status[0].name.en
+      (item) => item.name === activity.status[0].name.en
     )
 
     const statusCrop = status.cropStatus
