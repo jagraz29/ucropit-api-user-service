@@ -359,10 +359,10 @@ class CropService extends ServiceBase {
   private static checkCompleteSignedEachAchievements (activity: any): boolean {
     let completeSigned = true
     for (const achievement of activity.achievements) {
-      if (!this.isCompleteSignsUsers(achievement)) {
+      /* if (!this.isCompleteSignsUsers(achievement)) {
         completeSigned = false
         return completeSigned
-      }
+      } */
     }
 
     return completeSigned
