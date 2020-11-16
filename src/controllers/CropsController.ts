@@ -31,7 +31,15 @@ class CropsController {
       query['members.identifier'] = req.query.identifier
     }
 
-    const crops = await CropService.getAll(query)
+    const crops = await Crop.find(query)
+      .populate('cropType')
+      .populate('unitType')
+      .populate('pending')
+      .populate('toMake')
+      .populate('done')
+      .populate('members.user')
+      .populate('finished')
+      .lean()
 
     res.status(200).json(crops)
   }

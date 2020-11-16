@@ -198,7 +198,7 @@ class PDF {
     let listLots = ''
 
     for (const lot of lots) {
-      listLots = `
+      listLots += `
         Lote: ${lot.name}
         superficie: ${lot.surface}
         Coordenadas:
