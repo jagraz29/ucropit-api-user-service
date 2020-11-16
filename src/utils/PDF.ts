@@ -14,7 +14,7 @@ import {
 const User = models.User
 
 class PDF {
-  public static async generate({ pathFile, files, crop, activity }) {
+  public static async generate ({ pathFile, files, crop, activity }) {
     // Create a new PDFDocument
     const pdfDoc = await PDFDocument.create()
 
@@ -133,7 +133,7 @@ class PDF {
     })
   }
 
-  public static async generateCropTemplate(crop) {
+  public static async generateCropTemplate (crop) {
     const companyProducer = await this.getCompanyProducer(crop)
     return `
         CULTIVO
@@ -155,7 +155,7 @@ class PDF {
         `
   }
 
-  public static generateActivityTemplate(activity) {
+  public static generateActivityTemplate (activity) {
     return `
     Actividad
     -------------------------------------------------
@@ -168,7 +168,7 @@ class PDF {
     `
   }
 
-  public static async generateSignersTemplate(signers) {
+  public static async generateSignersTemplate (signers) {
     const listSigners = await this.listSigners(signers)
     return `
     --------------------------------------------------
@@ -179,7 +179,7 @@ class PDF {
     `
   }
 
-  private static async listSigners(signers) {
+  private static async listSigners (signers) {
     let users = ''
 
     for (const sign of signers) {
@@ -193,35 +193,35 @@ class PDF {
     return users
   }
 
-  private static readImagesPngFiles(files: any) {
+  private static readImagesPngFiles (files: any) {
     return files
       .map((item) => {
-        const arrayNameFile = item.nameFile.split('.');
+        const arrayNameFile = item.nameFile.split('.')
         if (arrayNameFile[1].match(VALID_FORMATS_FILES_IMAGES_PNG) !== null) {
           return {
             file: fs.readFileSync(getFullPath(`${item.path}`))
-          };
+          }
         }
-        return undefined;
+        return undefined
       })
       .filter((item) => item)
   }
 
-  private static readImagesJpgFiles(files: any) {
+  private static readImagesJpgFiles (files: any) {
     return files
       .map((item) => {
-        const arrayNameFile = item.nameFile.split('.');
+        const arrayNameFile = item.nameFile.split('.')
         if (arrayNameFile[1].match(VALID_FORMATS_FILES_IMAGES_JPG) !== null) {
           return {
             file: fs.readFileSync(getFullPath(`${item.path}`))
-          };
+          }
         }
-        return undefined;
+        return undefined
       })
       .filter((item) => item)
   }
 
-  private static readPdfFiles(files: any) {
+  private static readPdfFiles (files: any) {
     return files
       .map((item) => {
         const arrayNameFile = item.nameFile.split('.')
