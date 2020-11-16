@@ -26,7 +26,7 @@ const seedersCropType = async () => {
   const cropTypes = await CropType.find({})
 
   const cropTypesSeed = cropTypesData.filter(
-    item => !cropTypes.find(element => item.key === element.key)
+    (item) => !cropTypes.find((element) => item.key === element.key)
   )
 
   for (const cropType of cropTypesSeed) {
@@ -47,7 +47,7 @@ const seedersUnitType = async () => {
   const unitTypes = await UnitType.find({})
 
   const unitTypeSeed = unitTypesData.filter(
-    item => !unitTypes.find(element => item.key === element.key)
+    (item) => !unitTypes.find((element) => item.key === element.key)
   )
 
   for (const unitType of unitTypeSeed) {
@@ -66,7 +66,7 @@ const seedersActivitiesType = async () => {
   const activities = await ActivityType.find({})
 
   const activityTypeSeed = activitiesTypesData.filter(
-    item => !activities.find(element => item.tag === element.tag)
+    (item) => !activities.find((element) => item.tag === element.tag)
   )
 
   for (const activityType of activityTypeSeed) {
@@ -85,7 +85,7 @@ const seedersTypeAgreement = async () => {
   const agreementTypes = await TypeAgreement.find({})
 
   const agreementTypeSeed = agreementTypesData.filter(
-    item => !agreementTypes.find(element => item.key === element.key)
+    (item) => !agreementTypes.find((element) => item.key === element.key)
   )
 
   for (const agreementType of agreementTypeSeed) {
@@ -100,8 +100,7 @@ const dropAllDatabase = (connected) => {
   return connected.connection.db.dropDatabase()
 }
 
-;(async () => {
-
+(async () => {
   const connected = await connectDb()
 
   if (connected) {

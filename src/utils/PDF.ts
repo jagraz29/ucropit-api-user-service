@@ -14,7 +14,7 @@ import {
 const User = models.User
 
 class PDF {
-  public static async generate ({ pathFile, data, files }) {
+  public static async generate ({ pathFile, files, crop, activity }) {
     // Create a new PDFDocument
     const pdfDoc = await PDFDocument.create()
 
@@ -24,73 +24,101 @@ class PDF {
     // Add a blank page to the document
     const page = pdfDoc.addPage()
 
+    // Add a blank page to Activity
+    const pageActivity = pdfDoc.addPage()
+
     // Get the width and height of the page
     const { width, height } = page.getSize()
 
     // Draw a string of text toward the top of the page
-    const fontSize = 12
-    page.drawText(`${data}`, {
-      x: 50,
+    const fontSize = 8
+
+    page.drawText(`${await this.generateCropTemplate(crop)}`, {
+      x: 150,
       y: height - 4 * fontSize,
       size: fontSize,
       font: timesRomanFont,
       color: rgb(0, 0.53, 0.71)
     })
 
-    const imagesPngBytes = this.readImagesPngFiles(files)
-    const imagesJpgBytes = this.readImagesJpgFiles(files)
-    const pdfListBytes = this.readPdfFiles(files)
+    pageActivity.drawText(`${this.generateActivityTemplate(activity)}`, {
+      x: 150,
+      y: height - 4 * fontSize,
+      size: fontSize,
+      font: timesRomanFont,
+      color: rgb(0, 0.53, 0.71)
+    })
 
-    // Embed PNG files
-    if (imagesPngBytes.length > 0) {
-      for (const image of imagesPngBytes) {
-        // Add a blank page to images
-        const pngImage = await pdfDoc.embedPng(image.file)
-        const pngDims = pngImage.scale(0.5)
-        // Add a blank page to the document
-        const pagePng = pdfDoc.addPage()
+    if (files.length > 0) {
+      const imagesPngBytes = this.readImagesPngFiles(files)
+      const imagesJpgBytes = this.readImagesJpgFiles(files)
+      const pdfListBytes = this.readPdfFiles(files)
 
-        pagePng.drawImage(pngImage, {
-          x: page.getWidth() / 2 - pngDims.width / 2 + 75,
-          y: page.getHeight() / 2 - pngDims.height,
-          width: pngDims.width,
-          height: pngDims.height
-        })
+      // Embed PNG files
+      if (imagesPngBytes.length > 0) {
+        for (const image of imagesPngBytes) {
+          // Add a blank page to images
+          const pngImage = await pdfDoc.embedPng(image.file)
+          const pngDims = pngImage.scale(0.5)
+          // Add a blank page to the document
+          const pagePng = pdfDoc.addPage()
+
+          pagePng.drawImage(pngImage, {
+            x: page.getWidth() / 2 - pngDims.width / 2 + 75,
+            y: page.getHeight() / 2 - pngDims.height,
+            width: pngDims.width,
+            height: pngDims.height
+          })
+        }
+      }
+
+      // Embed JPG files
+      if (imagesJpgBytes.length > 0) {
+        for (const image of imagesJpgBytes) {
+          // Add a blank page to images
+          const jpgImage = await pdfDoc.embedJpg(image.file)
+          const jpgDims = jpgImage.scale(0.5)
+          // Add a blank page to the document
+          const pageJpg = pdfDoc.addPage()
+
+          pageJpg.drawImage(jpgImage, {
+            x: page.getWidth() / 2 - jpgDims.width / 2 + 75,
+            y: page.getHeight() / 2 - jpgDims.height,
+            width: jpgDims.width,
+            height: jpgDims.height
+          })
+        }
+      }
+
+      // Embed PDF document
+      if (pdfListBytes.length > 0) {
+        for (const pdfItemByte of pdfListBytes) {
+          const [pdfEmbedFile] = await pdfDoc.embedPdf(pdfItemByte.file)
+          const pdfEmbedFileDims = pdfEmbedFile.scale(0.3)
+
+          const newPage = pdfDoc.addPage()
+          newPage.drawPage(pdfEmbedFile, {
+            ...pdfEmbedFileDims,
+            x: page.getWidth() / 2 - pdfEmbedFileDims.width / 2,
+            y: page.getHeight() - pdfEmbedFileDims.height - 150
+          })
+        }
       }
     }
 
-    // Embed JPG files
-    if (imagesJpgBytes.length > 0) {
-      for (const image of imagesJpgBytes) {
-        // Add a blank page to images
-        const jpgImage = await pdfDoc.embedJpg(image.file)
-        const jpgDims = jpgImage.scale(0.5)
-        // Add a blank page to the document
-        const pageJpg = pdfDoc.addPage()
+    // Add a blank page to Signers
+    const pageSigners = pdfDoc.addPage()
 
-        pageJpg.drawImage(jpgImage, {
-          x: page.getWidth() / 2 - jpgDims.width / 2 + 75,
-          y: page.getHeight() / 2 - jpgDims.height,
-          width: jpgDims.width,
-          height: jpgDims.height
-        })
-      }
-    }
+    // Se agrega los firmantes
+    const signers = await this.generateSignersTemplate(activity.signers)
 
-    // Embed PDF document
-    if (pdfListBytes.length > 0) {
-      for (const pdfItemByte of pdfListBytes) {
-        const [pdfEmbedFile] = await pdfDoc.embedPdf(pdfItemByte.file)
-        const pdfEmbedFileDims = pdfEmbedFile.scale(0.3)
-
-        const newPage = pdfDoc.addPage()
-        newPage.drawPage(pdfEmbedFile, {
-          ...pdfEmbedFileDims,
-          x: page.getWidth() / 2 - pdfEmbedFileDims.width / 2,
-          y: page.getHeight() - pdfEmbedFileDims.height - 150
-        })
-      }
-    }
+    pageSigners.drawText(`${signers}`, {
+      x: 150,
+      y: height - 4 * fontSize,
+      size: fontSize,
+      font: timesRomanFont,
+      color: rgb(0, 0.53, 0.71)
+    })
 
     // Serialize the PDFDocument to bytes (a Uint8Array)
     const pdfBytes = await pdfDoc.save()
@@ -105,7 +133,7 @@ class PDF {
     })
   }
 
-  public static async generateTemplateActivity (activity, crop, signers) {
+  public static async generateCropTemplate (crop) {
     const companyProducer = await this.getCompanyProducer(crop)
     return `
         CULTIVO
@@ -124,18 +152,31 @@ class PDF {
           month: 'long',
           day: 'numeric'
         })}
-        -------------------------------------------------
-        Actividad: ${activity.type.name.es} ${
+        `
+  }
+
+  public static generateActivityTemplate (activity) {
+    return `
+    Actividad
+    -------------------------------------------------
+    Actividad: ${activity.type.name.es} ${
       activity.typeAgreement ? activity.typeAgreement.name.es : ''
     }
-       Lotes Seleccionados:
-       ${this.createStringLot(activity.lots)}
-       --------------------------------------------------
-       Las siguientes personas expresaron su acuerdo a las declaraciones expresadas ene este documento:
-        ${await this.listSigners(signers)}
+    Lotes Seleccionados:
+    ${this.createStringLot(activity.lots)}
+    --------------------------------------------------
+    `
+  }
 
-       Hora Firma: ${new Date()}
-  `
+  public static async generateSignersTemplate (signers) {
+    const listSigners = await this.listSigners(signers)
+    return `
+    --------------------------------------------------
+    Las siguientes personas expresaron su acuerdo a las declaraciones expresadas ene este documento:
+     ${listSigners}
+
+    Hora Firma: ${new Date()}
+    `
   }
 
   private static async listSigners (signers) {
@@ -145,8 +186,8 @@ class PDF {
       const user = await User.findOne({ _id: sign.userId })
 
       users += `
-       ${user.firstName} ${user.lastName},
-      `
+      ${user.firstName} ${user.lastName},
+    `
     }
 
     return users
@@ -199,11 +240,10 @@ class PDF {
 
     for (const lot of lots) {
       listLots += `
-        Lote: ${lot.name}
-        superficie: ${lot.surface}
-        Coordenadas:
-         ${this.createStringCoordinate(lot.coordinates)}
-      `
+      Lote: ${lot.name},
+      superficie: ${lot.surface}, Coordenadas: ${this.createStringCoordinate(
+        lot.coordinates
+      )}`
     }
 
     return listLots
@@ -213,10 +253,7 @@ class PDF {
     let coordinatesLiteral = ''
 
     for (const coordinate of coordinates) {
-      coordinatesLiteral = `
-            -Latitude: ${coordinate.latitude}
-            -Longitude: ${coordinate.longitude}
-          `
+      coordinatesLiteral = `${coordinate.latitude},${coordinate.longitude}`
     }
 
     return coordinatesLiteral
