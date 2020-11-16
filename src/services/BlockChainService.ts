@@ -24,12 +24,9 @@ class BlockChainServices {
 
     const { hash, path } = await PDF.generate({
       pathFile: `${pathToSave}/${nameFile}`,
-      data: await PDF.generateTemplateActivity(
-        activity,
-        crop,
-        activity.signers
-      ),
-      files: activity.files
+      files: activity.files,
+      crop: crop,
+      activity: activity
     })
 
     const { ots, fileOts } = await Stamp.stampHash(hash)
