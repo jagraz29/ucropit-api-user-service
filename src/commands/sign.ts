@@ -44,28 +44,32 @@ const createSignCrops = async () => {
   for (const crop of crops) {
     console.log(`${chalk.green(`${crop.name}`)}`)
     for (const activity of crop.finished) {
-      const {
-        ots,
-        hash,
-        pathPdf,
-        nameFilePdf,
-        nameFileOts,
-        pathOtsFile
-      } = await BlockChainServices.sign(crop, activity)
+      if (!activity.approvalRegister) {
+        const {
+          ots,
+          hash,
+          pathPdf,
+          nameFilePdf,
+          nameFileOts,
+          pathOtsFile
+        } = await BlockChainServices.sign(crop, activity)
 
-      const approvalRegisterSign = await ApprovalRegisterSingService.create({
-        ots,
-        hash,
-        pathPdf,
-        nameFilePdf,
-        nameFileOts,
-        pathOtsFile,
-        activity
-      })
+        const approvalRegisterSign = await ApprovalRegisterSingService.create({
+          ots,
+          hash,
+          pathPdf,
+          nameFilePdf,
+          nameFileOts,
+          pathOtsFile,
+          activity
+        })
 
-      activity.approvalRegister = approvalRegisterSign._id
+        activity.approvalRegister = approvalRegisterSign._id
 
-      await activity.save()
+        await activity.save()
+      } else {
+        console.log(`${chalk.green('Ya posee registro de aprovción')}`)
+      }
     }
   }
 }
