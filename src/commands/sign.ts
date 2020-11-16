@@ -3,10 +3,8 @@ import models, { connectDb } from '../models'
 import chalk from 'chalk'
 import BlockChainServices from '../services/BlockChainService'
 import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
-import crop from '../models/crop'
 
 const Crop = models.Crop
-const Activity = models.Activity
 
 const createSignCrops = async () => {
   let crops = await Crop.find({ cancelled: false })
@@ -31,14 +29,7 @@ const createSignCrops = async () => {
       ]
     })
 
-  crops = crops
-    .map((crop) => {
-      if (crop.finished.length > 0) {
-        return crop
-      }
-      return undefined
-    })
-    .filter((crop) => crop)
+  crops = crops.filter((crop) => crop.finished.length > 0)
 
   //
   for (const crop of crops) {
@@ -68,7 +59,7 @@ const createSignCrops = async () => {
 
         await activity.save()
       } else {
-        console.log(`${chalk.green('Ya posee registro de aprovción')}`)
+        console.log(`${chalk.green('Activity have approval register')}`)
       }
     }
   }
@@ -78,9 +69,9 @@ const createSignCrops = async () => {
   const connected = await connectDb()
 
   if (connected) {
-    console.log(`${chalk.green('Proceso de realizar de crear las firmas')}`)
+    console.log(`${chalk.green('Activity signing begins')}`)
     await createSignCrops()
-    console.log(`${chalk.green('Termino el proceso de firmas')}`)
+    console.log(`${chalk.green('Sign activities finished')}`)
   }
   process.exit()
 })()
