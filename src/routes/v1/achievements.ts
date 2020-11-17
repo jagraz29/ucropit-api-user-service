@@ -118,4 +118,9 @@ router.post('/', achievementsController.create)
  */
 router.post('/:id/signs', achievementsController.signAchievement)
 
+router.get(
+  '/:id/activities/:idActivity/crops/:idCrop',
+  achievementsController.makePdf
+)
+
 export default router

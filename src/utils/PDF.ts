@@ -27,6 +27,9 @@ class PDF {
     // Add a blank page to Activity
     const pageActivity = pdfDoc.addPage()
 
+    // Add a blank page to Achievement
+    const pageAchievement = pdfDoc.addPage()
+
     // Get the width and height of the page
     const { width, height } = page.getSize()
 
@@ -42,6 +45,14 @@ class PDF {
     })
 
     pageActivity.drawText(`${this.generateActivityTemplate(activity)}`, {
+      x: 150,
+      y: height - 4 * fontSize,
+      size: fontSize,
+      font: timesRomanFont,
+      color: rgb(0, 0.53, 0.71)
+    })
+
+    pageAchievement.drawText(`${this.listAchievements(activity)}`, {
       x: 150,
       y: height - 4 * fontSize,
       size: fontSize,
@@ -168,6 +179,14 @@ class PDF {
     `
   }
 
+  public static listAchievements (activity) {
+    return `
+    Realizaciones
+    -------------------------------------------------
+    ${this.generateAchievement(activity.achievements)}
+    `
+  }
+
   public static async generateSignersTemplate (signers) {
     const listSigners = await this.listSigners(signers)
     return `
@@ -179,15 +198,37 @@ class PDF {
     `
   }
 
+  private static generateAchievement (achievements) {
+    let list = ''
+
+    for (const achievement of achievements) {
+      list += `
+        Fecha de realización: ${achievement.dateAchievement.toLocaleDateString(
+          'es-ES',
+          {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }
+        )}
+        Porcentaje: ${achievement.percent * 100} %
+      `
+    }
+
+    return list
+  }
+
   private static async listSigners (signers) {
     let users = ''
 
     for (const sign of signers) {
-      const user = await User.findOne({ _id: sign.userId })
+      if (sign.signed) {
+        const user = await User.findOne({ _id: sign.userId })
 
-      users += `
-      ${user.firstName} ${user.lastName},
-    `
+        users += `
+         ${user.firstName} ${user.lastName},
+       `
+      }
     }
 
     return users
