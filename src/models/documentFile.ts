@@ -44,6 +44,9 @@ export const FileDocumentSchema = new Schema({
   description: {
     type: String
   },
+  settings: {
+    type: Schema.Types.Mixed
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
