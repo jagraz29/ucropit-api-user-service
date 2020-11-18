@@ -1,5 +1,6 @@
 import models from '../models'
 import _ from 'lodash'
+import GeoLocationService from '../services/GeoLocationService'
 
 import { tagsTypeAgreement } from '../utils/Constants'
 
@@ -17,10 +18,11 @@ class ReportService {
         cuit: identifier,
         business_name: (await this.getCompany(identifier)).name,
         crop: crop.cropType.name.es,
-        volume: crop.surface * crop.pay,
+        volume: this.calVolume(crop.unitType.name.en, crop.pay, crop.surface),
         surface: crop.surface,
         responsible: this.getMembersWithIdentifier(crop),
         date_harvest: crop.dateHarvest.toLocaleDateString('es-ES', {
+          day: 'numeric',
           year: 'numeric',
           month: 'long'
         }),
@@ -109,8 +111,13 @@ class ReportService {
       for (const data of lot.data) {
         const { latitude, longitude } = data.centerBound
 
+        const result = await GeoLocationService.getLocationByCoordinates(
+          latitude,
+          longitude
+        )
+
         listAddressLot += `
-        https://www.google.com.ar/maps/place/35%C2%B028'56.5%22S+60%C2%B057'47.1%22W/@${latitude},${longitude},132450m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d${latitude}!4d${longitude},
+          ${result[0].address_components[1].short_name},
         `
       }
     }
@@ -152,6 +159,22 @@ class ReportService {
 
   private static getTotalSurfaceLot (lot) {
     return lot.data.reduce((a, b) => a + (b['surface'] || 0), 0)
+  }
+
+  private static calVolume (unit: string, pay: number, surfaces: number) {
+    if (unit === 'Kilograms') {
+      return (pay / 1000) * surfaces
+    }
+
+    if (unit === 'Tons') {
+      return pay * surfaces
+    }
+
+    if (unit === 'Quintales') {
+      return (pay / 10) * surfaces
+    }
+
+    return 0
   }
 
   private static generateStaticDownloads (
