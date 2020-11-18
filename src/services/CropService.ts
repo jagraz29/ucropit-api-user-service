@@ -1,21 +1,21 @@
-import models from '../models'
-import { isNowGreaterThan } from '../utils/Date'
-import ServiceBase from './common/ServiceBase'
-import ActivityService from './ActivityService'
-const Crop = models.Crop
-const Activity = models.Activity
+import models from '../models';
+import { isNowGreaterThan } from '../utils/Date';
+import ServiceBase from './common/ServiceBase';
+import ActivityService from './ActivityService';
+const Crop = models.Crop;
+const Activity = models.Activity;
 
 interface ICrop {
-  name: string
-  pay: Number
-  surface: Number
-  dateCrop: string
-  dateHarvest: string
-  cropType: Object
-  unitType: Object
-  lots: Array<any>
-  members: Array<any>
-  company: string
+  name: string;
+  pay: Number;
+  surface: Number;
+  dateCrop: string;
+  dateHarvest: string;
+  cropType: Object;
+  unitType: Object;
+  lots: Array<any>;
+  members: Array<any>;
+  company: string;
 }
 
 const statusActivities: Array<any> = [
@@ -39,7 +39,7 @@ const statusActivities: Array<any> = [
     name: 'EXPIRED',
     cropStatus: 'toMake'
   }
-]
+];
 
 class CropService extends ServiceBase {
   /**
@@ -48,7 +48,7 @@ class CropService extends ServiceBase {
    * @param query
    */
   public static async getAll(query?) {
-    let crops = await this.findAll(query)
+    let crops = await this.findAll(query);
 
     crops = crops.map(async (crop) => {
       crop = await this.expiredActivities(crop);
@@ -56,9 +56,9 @@ class CropService extends ServiceBase {
       crop = await this.changeStatusActivitiesRange(crop);
 
       return crop;
-    })
+    });
 
-    return Promise.all(crops)
+    return Promise.all(crops);
   }
 
   /**
@@ -66,7 +66,7 @@ class CropService extends ServiceBase {
    *
    * @param query
    */
-  public static async findAll (query) {
+  public static async findAll(query) {
     return Crop.find(query)
       .populate('lots.data')
       .populate('cropType')
@@ -135,7 +135,7 @@ class CropService extends ServiceBase {
    *
    * @param cropId
    */
-  public static async getCropById (cropId: string) {
+  public static async getCropById(cropId: string) {
     let crop = await this.findOneCrop(cropId)
 
     crop = await this.expiredActivities(crop)
