@@ -19,6 +19,20 @@ export const cropTypesData = [
       es: 'Maiz'
     },
     key: 'corn'
+  },
+  {
+    name: {
+      en: 'Cotton',
+      es: 'Algodon'
+    },
+    key: 'cotton'
+  },
+  {
+    name: {
+      en: 'Wheat',
+      es: 'Trigo'
+    },
+    key: 'wheat'
   }
 ]
 
@@ -133,5 +147,12 @@ export const agreementTypesData = [
       es: 'Cultivo sustentable'
     },
     key: 'SUSTAIN'
+  },
+  {
+    name: {
+      en: 'Cotton Best Practices',
+      es: 'Algodon Buenas Practicas'
+    },
+    key: 'COTTON_BETS'
   }
 ]
