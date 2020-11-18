@@ -44,6 +44,7 @@ class ActivityService extends ServiceBase {
         path: 'achievements',
         populate: [{ path: 'lots' }, { path: 'files' }]
       })
+      .populate('approvalRegister')
       .populate('user')
   }
 
@@ -140,6 +141,24 @@ class ActivityService extends ServiceBase {
     }
 
     return true
+  }
+
+  public static isCompleteSignersAchievements (activity) {
+    for (const achievement of activity.achievements) {
+      if (!this.isCompleteSignsUsers(achievement)) {
+        return false
+      }
+    }
+
+    return true
+  }
+
+  public static isCompletePercentAchievement (activity) {
+    let total = 0
+    for (const achievement of activity.achievements) {
+      total += achievement.percent
+    }
+    return total >= 100
   }
 
   public static async addAchievement (activity, achievement) {

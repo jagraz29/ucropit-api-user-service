@@ -154,5 +154,12 @@ export const agreementTypesData = [
       es: 'Cultivo sustentable'
     },
     key: 'SUSTAIN'
+  },
+  {
+    name: {
+      en: 'Cotton Best Practices',
+      es: 'Algodon Buenas Practicas'
+    },
+    key: 'COTTON_BETS'
   }
 ]

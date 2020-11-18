@@ -71,7 +71,7 @@ class AchievementService extends ServiceBase {
 
   public static async generatePdf (activity, crop) {
     const pathPdf = this.getPathFilePdf(activity)
-    const nameFile = `${activity.type.name.es}-sing.pdf`
+    const nameFile = `${activity.key}-${activity.type.name.es}-sing.pdf`
 
     await makeDirIfNotExists(pathPdf)
 
