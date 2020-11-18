@@ -141,19 +141,14 @@ class AchievementsController {
    * @param Response res
    */
   public async makePdf (req: Request, res: Response) {
-    const { id, idActivity, idCrop } = req.params
+    const { idActivity, idCrop } = req.params
 
-    const achievement = await AchievementService.findById(id)
     const activity = await ActivityService.findActivityById(idActivity)
     const crop = await Crop.findById(idCrop).populate('cropType')
 
-    const pdf = await AchievementService.generatePdf(
-      achievement,
-      activity,
-      crop
-    )
+    const pdf = await AchievementService.generatePdf(activity, crop)
 
-    console.log(pdf)
+    res.download(pdf.path)
   }
 }
 

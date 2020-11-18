@@ -21,8 +21,6 @@ const CollaboratorRequest = models.CollaboratorRequest
 const seedersCropType = async () => {
   console.log(`${chalk.green('=====Registering CropTypes====')}`)
 
-  await CropType.deleteMany({})
-
   const cropTypes = await CropType.find({})
 
   const cropTypesSeed = cropTypesData.filter(
@@ -42,8 +40,6 @@ const seedersCropType = async () => {
 const seedersUnitType = async () => {
   console.log(`${chalk.green('=====Registering UnitType====')}`)
 
-  await UnitType.deleteMany({})
-
   const unitTypes = await UnitType.find({})
 
   const unitTypeSeed = unitTypesData.filter(
@@ -61,8 +57,6 @@ const seedersUnitType = async () => {
 const seedersActivitiesType = async () => {
   console.log(`${chalk.green('=====Registering ActivityType====')}`)
 
-  await ActivityType.deleteMany({})
-
   const activities = await ActivityType.find({})
 
   const activityTypeSeed = activitiesTypesData.filter(
@@ -79,8 +73,6 @@ const seedersActivitiesType = async () => {
 
 const seedersTypeAgreement = async () => {
   console.log(`${chalk.green('=====Registering TypeAgreement====')}`)
-
-  await TypeAgreement.deleteMany({})
 
   const agreementTypes = await TypeAgreement.find({})
 

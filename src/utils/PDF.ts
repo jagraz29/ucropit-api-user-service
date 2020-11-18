@@ -60,6 +60,8 @@ class PDF {
       color: rgb(0, 0.53, 0.71)
     })
 
+    await this.addFileDocumentAchievements(activity.achievements, pdfDoc)
+
     if (files.length > 0) {
       const imagesPngBytes = this.readImagesPngFiles(files)
       const imagesJpgBytes = this.readImagesJpgFiles(files)
@@ -202,20 +204,80 @@ class PDF {
     let list = ''
 
     for (const achievement of achievements) {
-      list += `
-        Fecha de realización: ${achievement.dateAchievement.toLocaleDateString(
-          'es-ES',
-          {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          }
-        )}
-        Porcentaje: ${achievement.percent * 100} %
+      list += `Fecha de realización: ${achievement.dateAchievement.toLocaleDateString(
+        'es-ES',
+        {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }
+      )}
+        Lotes Seleccionados: ${this.createStringLot(achievement.lots)}
+        Porcentaje: ${achievement.percent} %
+        -------------------------------------
+        Insumos Utilizados: ${this.listSupplies(achievement.supplies)}
       `
     }
 
     return list
+  }
+
+  private static async addFileDocumentAchievements (achievements, pdfDoc) {
+    for (const achievement of achievements) {
+      const imagesPngBytes = this.readImagesPngFiles(achievement.files)
+      const imagesJpgBytes = this.readImagesJpgFiles(achievement.files)
+      const pdfListBytes = this.readPdfFiles(achievement.files)
+
+      if (imagesPngBytes.length > 0) {
+        for (const image of imagesPngBytes) {
+          // Add a blank page to images
+          const pngImage = await pdfDoc.embedPng(image.file)
+          const pngDims = pngImage.scale(0.5)
+          // Add a blank page to the document
+          const pagePng = pdfDoc.addPage()
+
+          pagePng.drawImage(pngImage, {
+            x: pagePng.getWidth() / 2 - pngDims.width / 2 + 75,
+            y: pagePng.getHeight() / 2 - pngDims.height,
+            width: pngDims.width,
+            height: pngDims.height
+          })
+        }
+      }
+
+      // Embed JPG files
+      if (imagesJpgBytes.length > 0) {
+        for (const image of imagesJpgBytes) {
+          // Add a blank page to images
+          const jpgImage = await pdfDoc.embedJpg(image.file)
+          const jpgDims = jpgImage.scale(0.5)
+          // Add a blank page to the document
+          const pageJpg = pdfDoc.addPage()
+
+          pageJpg.drawImage(jpgImage, {
+            x: pageJpg.getWidth() / 2 - jpgDims.width / 2 + 75,
+            y: pageJpg.getHeight() / 2 - jpgDims.height,
+            width: jpgDims.width,
+            height: jpgDims.height
+          })
+        }
+      }
+
+      // Embed PDF document
+      if (pdfListBytes.length > 0) {
+        for (const pdfItemByte of pdfListBytes) {
+          const [pdfEmbedFile] = await pdfDoc.embedPdf(pdfItemByte.file)
+          const pdfEmbedFileDims = pdfEmbedFile.scale(0.3)
+
+          const newPage = pdfDoc.addPage()
+          newPage.drawPage(pdfEmbedFile, {
+            ...pdfEmbedFileDims,
+            x: newPage.getWidth() / 2 - pdfEmbedFileDims.width / 2,
+            y: newPage.getHeight() - pdfEmbedFileDims.height - 150
+          })
+        }
+      }
+    }
   }
 
   private static async listSigners (signers) {
@@ -232,6 +294,17 @@ class PDF {
     }
 
     return users
+  }
+
+  private static listSupplies (supplies) {
+    let list = ''
+
+    for (const input of supplies) {
+      list += `Nombre: ${input.name}, Unidad: ${input.unit}, Cantidad: ${input.quantity}
+      `
+    }
+
+    return list
   }
 
   private static readImagesPngFiles (files: any) {

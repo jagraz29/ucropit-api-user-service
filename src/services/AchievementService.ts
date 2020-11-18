@@ -69,7 +69,7 @@ class AchievementService extends ServiceBase {
     return Numbers.roundToTwo((sumPercent * 100) / activity.surface)
   }
 
-  public static async generatePdf (achievement, activity, crop) {
+  public static async generatePdf (activity, crop) {
     const pathPdf = this.getPathFilePdf(activity)
     const nameFile = `${activity.type.name.es}-sing.pdf`
 
@@ -86,9 +86,7 @@ class AchievementService extends ServiceBase {
   }
 
   public static getPathFilePdf (activity) {
-    return `${basePath()}${process.env.DIR_PDF_SINGS}/${activity.key}/${
-      activity.key
-    }`
+    return `${basePath()}${process.env.DIR_PDF_SINGS}/${activity.key}`
   }
 
   /**
