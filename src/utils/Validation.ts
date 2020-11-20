@@ -45,6 +45,8 @@ export const validateActivityStore = async (activity) => {
           name: Joi.string().required(),
           unit: Joi.string().required(),
           quantity: Joi.number().required(),
+          typeId: Joi.string().required(),
+          icon: Joi.string().optional(),
           total: Joi.number().required()
         })
       )
@@ -89,6 +91,8 @@ export const validateActivityUpdate = async (activity) => {
           name: Joi.string().required(),
           unit: Joi.string().required(),
           quantity: Joi.number().required(),
+          typeId: Joi.string().required(),
+          icon: Joi.string().optional(),
           total: Joi.number().required()
         })
       )
@@ -170,6 +174,8 @@ export const validateAchievement = async (achievement) => {
           name: Joi.string().required(),
           unit: Joi.string().required(),
           quantity: Joi.number().required(),
+          typeId: Joi.string().required(),
+          icon: Joi.string().optional(),
           total: Joi.number().required()
         })
       )
