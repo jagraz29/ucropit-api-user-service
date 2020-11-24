@@ -1,4 +1,5 @@
 require('dotenv').config()
+
 import models, { connectDb } from '../models'
 import chalk from 'chalk'
 import {
@@ -9,11 +10,14 @@ import {
   supplyTypesData
 } from './data'
 
+import { suppliesData } from './suppliesData'
+
 const CropType = models.CropType
 const UnitType = models.UnitType
 const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
 const SupplyType = models.SupplyType
+const Supply = models.Supply
 
 const CollaboratorRequest = models.CollaboratorRequest
 
@@ -94,8 +98,25 @@ const dropAllDatabase = connected => {
   return connected.connection.db.dropDatabase()
 }
 
+const seedersSupply = async () => {
+  console.log(`${chalk.green('=====Registering Supply====')}`)
+
+  const supplies = await Supply.find({})
+
+  const supplySeed = suppliesData.filter(
+    item => !supplies.find(element => item.name === element.name)
+  )
+
+  for (const supply of supplySeed) {
+    await Supply.create(supply)
+  }
+
+  console.log(`${chalk.green('=====Registered Supply====')}`)
+  return true
+}
+
 const seedersSupplyType = async () => {
-  console.log(`${chalk.green('=====Registering ActivityType====')}`)
+  console.log(`${chalk.green('=====Registering SupplyType====')}`)
 
   const supplies = await SupplyType.find({})
 
@@ -110,7 +131,6 @@ const seedersSupplyType = async () => {
   console.log(`${chalk.green('=====Registered SupplyType====')}`)
   return true
 }
-
 ;(async () => {
   const connected = await connectDb()
 
@@ -121,11 +141,16 @@ const seedersSupplyType = async () => {
       console.log(`${chalk.green('=====Reset DataBase ====')}`)
     }
 
-    await seedersSupplyType()
-    await seedersUnitType()
-    await seedersCropType()
-    await seedersActivitiesType()
-    await seedersTypeAgreement()
+    try {
+      await seedersSupply()
+      await seedersSupplyType()
+      await seedersUnitType()
+      await seedersCropType()
+      await seedersActivitiesType()
+      await seedersTypeAgreement()
+    } catch (e) {
+      console.log(e)
+    }
   }
   process.exit()
 })()

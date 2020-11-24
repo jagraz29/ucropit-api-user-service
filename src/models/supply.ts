@@ -27,4 +27,4 @@ const SupplySchema = new Schema({
   unit: String
 })
 
-export default mongoose.model('SupplySchema', SupplySchema)
+export default mongoose.model('Supply', SupplySchema)

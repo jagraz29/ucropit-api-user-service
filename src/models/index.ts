@@ -4,7 +4,6 @@ import Lot from './lot'
 import Crop from './crop'
 import Company from './company'
 import UserConfig from './userConfig'
-import Supplies from './supplies'
 import ActivityType from './activityType'
 import TypeAgreement from './typeAgreement'
 import Activity from './activity'
@@ -37,7 +36,6 @@ const models = {
   UnitType,
   UserConfig,
   FileDocument,
-  Supplies,
   TypeAgreement,
   ActivityType,
   Activity,
