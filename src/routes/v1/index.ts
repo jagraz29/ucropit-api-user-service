@@ -15,6 +15,7 @@ import achievements from './achievements'
 import collaborators from './collaborators'
 import reports from './reports'
 import files from './files'
+import supplies from './supplies'
 
 const router: express.Router = express.Router()
 
@@ -65,5 +66,8 @@ router.use('/reports', reports)
 
 // FILE DOCUMENTS
 router.use('/files', files)
+
+// SUPPLIES
+router.use('/supplies', supplies)
 
 export default router
