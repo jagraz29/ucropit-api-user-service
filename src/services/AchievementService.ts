@@ -81,7 +81,10 @@ class AchievementService extends ServiceBase {
       activity: activity
     })
 
-    return resultPDF
+    return {
+      resultPDF,
+      publicPath: `${process.env.BASE_URL}/${process.env.DIR_UPLOADS}/${process.env.DIR_FOLDER_PDF_SIGNS}/${activity.key}/${nameFile}`
+    }
   }
 
   public static getPathFilePdf (activity) {
