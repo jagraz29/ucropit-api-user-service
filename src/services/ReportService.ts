@@ -122,12 +122,15 @@ class ReportService {
         if (data.centerBound) {
           const { latitude, longitude } = data.centerBound
 
-          const resultAddress = await GeoLocationService.getLocationByCoordinates(
+          const resultAddress: any = await GeoLocationService.getLocationByCoordinates(
             latitude,
             longitude
           )
 
-          result = resultAddress[0].address_components[1].short_name
+          result =
+            resultAddress.length > 0
+              ? resultAddress[0].address_components[1].short_name
+              : ''
         }
         listAddressLot += `
           ${result},
@@ -288,23 +291,24 @@ class ReportService {
       'finished'
     )
 
-    const totalPercentDone =
-      listActivitiesDone.length > 0
-        ? listActivitiesDone.achievements.reduce(
-            (a, b) => a + (b['percent'] || 0),
-            0
-          )
-        : 0
+    const totalPercentDone = this.getTotalPercent(listActivitiesDone)
 
-    const totalPercentFinished =
-      listActivitiesFinished.length > 0
-        ? listActivitiesFinished.achievements.reduce(
-            (a, b) => a + (b['percent'] || 0),
-            0
-          )
-        : 0
+    const totalPercentFinished = this.getTotalPercent(listActivitiesFinished)
 
     return totalPercentDone + totalPercentFinished
+  }
+
+  private static getTotalPercent (activities) {
+    let total = 0
+
+    for (const activity of activities) {
+      total += activity.achievements.reduce(
+        (a, b) => a + (b['percent'] || 0),
+        0
+      )
+    }
+
+    return total
   }
 
   private static getHashSign (activities) {
@@ -375,7 +379,9 @@ class ReportService {
     let total = 0
 
     for (const activity of activities) {
+      console.log(activity)
       for (const achievement of activity.achievements) {
+        console.log(achievement)
         if (this.isCompleteSigners(achievement.signers)) {
           total += achievement.surface
         }
@@ -385,11 +391,14 @@ class ReportService {
     return total
   }
 
-  private static getActivitiesAchievementByType (crop, status, type) {
-    return crop[status].filter((activity) => activity.type.name.en === type)
+  private static getActivitiesAchievementByType (crop, type, status) {
+    return crop[status].length > 0
+      ? crop[status].filter((activity) => activity.type.name.en === type)
+      : []
   }
 
   private static isCompleteSigners (signers): boolean {
+    console.log(signers)
     for (const user of signers) {
       if (!user.signed) {
         return false
