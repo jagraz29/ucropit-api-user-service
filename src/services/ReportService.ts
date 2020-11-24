@@ -56,6 +56,15 @@ class ReportService {
           crop.finished,
           'Agreements'
         ),
+        percent_achievements_sowing: this.percentAchievementsActivity(
+          crop,
+          'Sowing'
+        ),
+        surfaces_signed_sowing: this.sumSurfaceSigners(crop, 'Sowing'),
+        link_pdf_ots_sowing: this.createLinkDownloadFilesSign(
+          crop.finished,
+          'Sowing'
+        ),
         mail_producers: this.getMailsProducers(crop),
         phone_producers: this.getPhonesProducers(crop)
       }
@@ -266,6 +275,38 @@ class ReportService {
     return totalSurface[0]
   }
 
+  private static percentAchievementsActivity (crop, type) {
+    const listActivitiesDone = this.getActivitiesAchievementByType(
+      crop,
+      type,
+      'done'
+    )
+
+    const listActivitiesFinished = this.getActivitiesAchievementByType(
+      crop,
+      type,
+      'finished'
+    )
+
+    const totalPercentDone =
+      listActivitiesDone.length > 0
+        ? listActivitiesDone.achievements.reduce(
+            (a, b) => a + (b['percent'] || 0),
+            0
+          )
+        : 0
+
+    const totalPercentFinished =
+      listActivitiesFinished.length > 0
+        ? listActivitiesFinished.achievements.reduce(
+            (a, b) => a + (b['percent'] || 0),
+            0
+          )
+        : 0
+
+    return totalPercentDone + totalPercentFinished
+  }
+
   private static getHashSign (activities) {
     let hashList = ''
     const hashArrayList = activities.map((activity) => {
@@ -281,6 +322,27 @@ class ReportService {
     }
 
     return hashList
+  }
+
+  private static sumSurfaceSigners (crop, type) {
+    const listActivitiesDone = this.getActivitiesAchievementByType(
+      crop,
+      type,
+      'done'
+    )
+
+    const listActivitiesFinished = this.getActivitiesAchievementByType(
+      crop,
+      type,
+      'finished'
+    )
+
+    const sumTotalActivitiesDone = this.getSurfaceSigned(listActivitiesDone)
+    const sumTotalActivitiesFinished = this.getSurfaceSigned(
+      listActivitiesFinished
+    )
+
+    return sumTotalActivitiesDone + sumTotalActivitiesFinished
   }
 
   private static getNameSigner (activities) {
@@ -307,6 +369,34 @@ class ReportService {
     }
 
     return nameList
+  }
+
+  private static getSurfaceSigned (activities) {
+    let total = 0
+
+    for (const activity of activities) {
+      for (const achievement of activity.achievements) {
+        if (this.isCompleteSigners(achievement.signers)) {
+          total += achievement.surface
+        }
+      }
+    }
+
+    return total
+  }
+
+  private static getActivitiesAchievementByType (crop, status, type) {
+    return crop[status].filter((activity) => activity.type.name.en === type)
+  }
+
+  private static isCompleteSigners (signers): boolean {
+    for (const user of signers) {
+      if (!user.signed) {
+        return false
+      }
+    }
+
+    return true
   }
 }
 
