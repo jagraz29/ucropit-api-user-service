@@ -4,13 +4,14 @@ import Lot from './lot'
 import Crop from './crop'
 import Company from './company'
 import UserConfig from './userConfig'
-import Supplies from './supplies'
 import ActivityType from './activityType'
 import TypeAgreement from './typeAgreement'
 import Activity from './activity'
 import Achievement from './achievement'
 import CollaboratorRequest from './collaboratorRequest'
 import ApprovalRegisterSign from './ApprovalRegisterSign'
+import Supply from './supply'
+import SupplyType from './supplyType'
 
 import { CropType } from './cropType'
 import { UnitType } from './unitType'
@@ -35,13 +36,14 @@ const models = {
   UnitType,
   UserConfig,
   FileDocument,
-  Supplies,
   TypeAgreement,
   ActivityType,
   Activity,
   Achievement,
   CollaboratorRequest,
-  ApprovalRegisterSign
+  ApprovalRegisterSign,
+  Supply,
+  SupplyType
 }
 
 export { connectDb }
