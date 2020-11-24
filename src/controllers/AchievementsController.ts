@@ -15,7 +15,6 @@ import models from '../models'
 import { FileDocumentSchema } from '../models/documentFile'
 
 const Crop = models.Crop
-const FileDocument = models.FileDocument
 
 class AchievementsController {
   /**
@@ -188,18 +187,8 @@ class AchievementsController {
     const activity = await ActivityService.findActivityById(idActivity)
     const crop = await Crop.findById(idCrop).populate('cropType')
 
-    if (activity.approvalRegister) {
-      const fileDocument = await FileDocument.findById(
-        activity.approvalRegister.filePdf
-      )
-
-      const publicPath = `${process.env.BASE_URL}/${process.env.DIR_FOLDER_PDF_SIGNS}/${fileDocument.path}`
-      return res.status(200).json(publicPath)
-    }
-
     const pdf = await AchievementService.generatePdf(activity, crop)
 
-    console.log(pdf)
     return res.status(200).json(pdf.publicPath)
   }
 }
