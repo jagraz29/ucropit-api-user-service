@@ -8,7 +8,7 @@ const router: express.Router = express.Router()
  * @swagger
  * /v1/supplies:
  *  get:
- *   summary: Get all supplies
+ *   summary: Get all supplies list
  *   tags:
  *      - Supply
  *   description: Supplies
