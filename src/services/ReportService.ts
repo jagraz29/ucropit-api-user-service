@@ -107,17 +107,21 @@ class ReportService {
 
   public static async listAddressLots (lots) {
     let listAddressLot = ''
+    let result = ''
     for (const lot of lots) {
       for (const data of lot.data) {
-        const { latitude, longitude } = data.centerBound
+        if (data.centerBound) {
+          const { latitude, longitude } = data.centerBound
 
-        const result = await GeoLocationService.getLocationByCoordinates(
-          latitude,
-          longitude
-        )
+          const resultAddress = await GeoLocationService.getLocationByCoordinates(
+            latitude,
+            longitude
+          )
 
+          result = resultAddress[0].address_components[1].short_name
+        }
         listAddressLot += `
-          ${result[0].address_components[1].short_name},
+          ${result},
         `
       }
     }

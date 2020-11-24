@@ -164,7 +164,7 @@ export const validateCompanyUpdate = async (company) => {
 export const validateAchievement = async (achievement) => {
   const schema = Joi.object({
     dateAchievement: Joi.date().required(),
-    surface: Joi.string().required(),
+    surface: Joi.number().required(),
     lots: Joi.array().items(Joi.string()).required(),
     activity: Joi.string().required(),
     crop: Joi.string().required(),
@@ -207,7 +207,8 @@ export const validateAchievement = async (achievement) => {
 
 export const validateSignAchievement = async (dataSign) => {
   const schema = Joi.object({
-    activityId: Joi.string().required()
+    activityId: Joi.string().required(),
+    cropId: Joi.string().required()
   })
 
   return schema.validateAsync(dataSign)

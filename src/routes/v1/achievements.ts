@@ -104,6 +104,9 @@ router.post('/', achievementsController.create)
  *                  activityId:
  *                    type: string
  *                    required: true
+ *                  cropId:
+ *                    type: string
+ *                    required: true
  *      responses:
  *       '200':
  *         description: Sign Achievement.
@@ -117,5 +120,34 @@ router.post('/', achievementsController.create)
  *
  */
 router.post('/:id/signs', achievementsController.signAchievement)
+
+/**
+ * @swagger
+ * path:
+ *  /v1/achievements/activities/{activityId}/crops/{cropId}/pdf:
+ *    get:
+ *      summary: Download PDF achievements
+ *      tags: [Achievement]
+ *      parameters:
+ *        - in: path
+ *          name: activityId
+ *        - in: path
+ *          name: cropId
+ *      produces:
+ *        - application/pdf
+ *      responses:
+ *       '200':
+ *          description: OK
+ *          schema:
+ *            type: file
+ *
+ *       '500':
+ *         description: Error to Server.
+ *
+ */
+router.get(
+  '/activities/:idActivity/crops/:idCrop/pdf',
+  achievementsController.makePdf
+)
 
 export default router
