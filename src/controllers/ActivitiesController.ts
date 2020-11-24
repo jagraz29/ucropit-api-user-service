@@ -150,9 +150,7 @@ class ActivitiesController {
       const crop = await Crop.findById(data.crop)
       activity = await ActivityService.findActivityById(id)
 
-      const statusCropRemove =
-        activity.type.name.en === 'Agreements' ? 'pending' : 'toMake'
-
+      const statusCropRemove = 'pending'
       await CropService.removeActivities(activity, crop, statusCropRemove)
       await CropService.addActivities(activity, crop)
     }
