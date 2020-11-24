@@ -193,7 +193,8 @@ class AchievementsController {
         activity.approvalRegister.filePdf
       )
 
-      return res.status(200).json(fileDocument.publicPath)
+      const publicPath = `${process.env.BASE_URL}/${process.env.DIR_FOLDER_PDF_SIGNS}/${fileDocument.path}`
+      return res.status(200).json(publicPath)
     }
 
     const pdf = await AchievementService.generatePdf(activity, crop)
