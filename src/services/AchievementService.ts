@@ -1,6 +1,5 @@
 import ServiceBase from './common/ServiceBase'
 import models from '../models'
-import Numbers from '../utils/Numbers'
 import PDF from '../utils/PDF'
 import { basePath, fileExist, makeDirIfNotExists } from '../utils/Files'
 
@@ -66,7 +65,7 @@ class AchievementService extends ServiceBase {
       0
     )
 
-    return Numbers.roundToTwo((sumPercent * 100) / activity.surface)
+    return Math.round((sumPercent * 100) / activity.surface)
   }
 
   public static async generatePdf (activity, crop) {
