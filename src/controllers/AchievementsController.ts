@@ -193,12 +193,13 @@ class AchievementsController {
         activity.approvalRegister.filePdf
       )
 
-      return res.download(fileDocument.path)
+      return res.status(200).json(fileDocument.publicPath)
     }
 
     const pdf = await AchievementService.generatePdf(activity, crop)
 
-    return res.download(pdf.path)
+    console.log(pdf)
+    return res.status(200).json(pdf.publicPath)
   }
 }
 
