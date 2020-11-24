@@ -8,10 +8,14 @@ import {
 import AchievementService from '../services/AchievementService'
 import ActivityService from '../services/ActivityService'
 import CropService from '../services/CropService'
+import BlockChainServices from '../services/BlockChainService'
+import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
 
 import models from '../models'
+import { FileDocumentSchema } from '../models/documentFile'
 
 const Crop = models.Crop
+const FileDocument = models.FileDocument
 
 class AchievementsController {
   /**
@@ -121,10 +125,11 @@ class AchievementsController {
 
     await validateSignAchievement(req.body)
 
-    const { activityId } = req.body
+    const { activityId, cropId } = req.body
 
     let achievement = await AchievementService.findById(id)
-    const activity = await ActivityService.findActivityById(activityId)
+    let activity = await ActivityService.findActivityById(activityId)
+    const crop = await Crop.findById(cropId).populate('cropType')
 
     await ActivityService.signUser(activity, user)
 
@@ -132,7 +137,68 @@ class AchievementsController {
 
     achievement = await AchievementService.findById(id)
 
+    activity = await ActivityService.findActivityById(activityId)
+
+    const isCompleteSigned = ActivityService.isCompleteSignersAchievements(
+      activity
+    )
+    const isCompletePercent = ActivityService.isCompletePercentAchievement(
+      activity
+    )
+
+    if (isCompleteSigned && isCompletePercent) {
+      const {
+        ots,
+        hash,
+        pathPdf,
+        nameFilePdf,
+        nameFileOts,
+        pathOtsFile
+      } = await BlockChainServices.sign(crop, activity)
+
+      const approvalRegisterSign = await ApprovalRegisterSingService.create({
+        ots,
+        hash,
+        pathPdf,
+        nameFilePdf,
+        nameFileOts,
+        pathOtsFile,
+        activity
+      })
+
+      activity.approvalRegister = approvalRegisterSign._id
+
+      await ActivityService.changeStatus(activity, 'FINISHED')
+      await CropService.removeActivities(activity, crop, 'done')
+      await CropService.addActivities(activity, crop)
+    }
+
     res.status(200).json(achievement)
+  }
+
+  /**
+   * Download PDF to progress Activity.
+   *
+   * @param Request req
+   * @param Response res
+   */
+  public async makePdf (req: Request, res: Response) {
+    const { idActivity, idCrop } = req.params
+
+    const activity = await ActivityService.findActivityById(idActivity)
+    const crop = await Crop.findById(idCrop).populate('cropType')
+
+    if (activity.approvalRegister) {
+      const fileDocument = await FileDocument.findById(
+        activity.approvalRegister.filePdf
+      )
+
+      return res.download(fileDocument.path)
+    }
+
+    const pdf = await AchievementService.generatePdf(activity, crop)
+
+    return res.download(pdf.path)
   }
 }
 

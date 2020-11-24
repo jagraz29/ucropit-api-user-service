@@ -116,6 +116,13 @@ export const activitiesTypesData = [
       es: 'Acuerdos'
     },
     tag: 'ACT_AGREEMENTS'
+  },
+  {
+    name: {
+      en: 'TEST',
+      es: 'TEST'
+    },
+    tag: 'TEST'
   }
 ]
 
