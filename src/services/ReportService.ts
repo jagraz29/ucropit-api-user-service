@@ -61,6 +61,10 @@ class ReportService {
           'Sowing'
         ),
         surfaces_signed_sowing: this.sumSurfaceSigners(crop, 'Sowing'),
+        surfaces_files_approved: this.totalSurfacesAchievementsFileApproved(
+          crop,
+          'Sowing'
+        ),
         link_pdf_ots_sowing: this.createLinkDownloadFilesSign(
           crop.finished,
           'Sowing'
@@ -298,6 +302,27 @@ class ReportService {
     return totalPercentDone + totalPercentFinished
   }
 
+  private static totalSurfacesAchievementsFileApproved (crop, type) {
+    const listActivitiesDone = this.getActivitiesAchievementByType(
+      crop,
+      type,
+      'done'
+    )
+
+    const listActivitiesFinished = this.getActivitiesAchievementByType(
+      crop,
+      type,
+      'finished'
+    )
+
+    const totalSurfaceDone = this.getSurfaceFileApproved(listActivitiesDone)
+    const totalSurfaceFinished = this.getSurfaceFileApproved(
+      listActivitiesFinished
+    )
+
+    return totalSurfaceDone + totalSurfaceFinished
+  }
+
   private static getTotalPercent (activities) {
     let total = 0
 
@@ -379,10 +404,21 @@ class ReportService {
     let total = 0
 
     for (const activity of activities) {
-      console.log(activity)
       for (const achievement of activity.achievements) {
-        console.log(achievement)
         if (this.isCompleteSigners(achievement.signers)) {
+          total += achievement.surface
+        }
+      }
+    }
+
+    return total
+  }
+
+  private static getSurfaceFileApproved (activities) {
+    let total = 0
+    for (const activity of activities) {
+      for (const achievement of activity.achievements) {
+        if (this.isApprovedFileEvidence(achievement.files)) {
           total += achievement.surface
         }
       }
@@ -398,7 +434,6 @@ class ReportService {
   }
 
   private static isCompleteSigners (signers): boolean {
-    console.log(signers)
     for (const user of signers) {
       if (!user.signed) {
         return false
@@ -406,6 +441,16 @@ class ReportService {
     }
 
     return true
+  }
+
+  private static isApprovedFileEvidence (files) {
+    for (const file of files) {
+      if (file.settings && file.settings.fromLots) {
+        return true
+      }
+    }
+
+    return false
   }
 }
 
