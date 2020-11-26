@@ -1,10 +1,24 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 
 import CropService from '../services/CropService'
 import models from '../models'
-import { UserSchema } from '../models/user'
 
 const Crop = models.Crop
+
+let allMonths = [
+  'enero',
+  'febrero',
+  'marzo',
+  'abril',
+  'mayo',
+  'junio',
+  'julio',
+  'agosto',
+  'septiembre',
+  'octubre',
+  'noviembre',
+  'diciembre'
+]
 
 class ChartController {
   /**
@@ -12,7 +26,7 @@ class ChartController {
    * @param req
    * @param res
    */
-  public async index (req, res: Response) {
+  public async surfaceActivityAgreement (req, res: Response) {
     const query: any = {
       cancelled: false,
       'members.user': req.user._id
@@ -36,7 +50,128 @@ class ChartController {
       })
       .lean()
 
-    CropService.createDataCropToChart(crops)
+    const listSummarySurfaces: any = CropService.createDataCropToChartSurface(
+      crops
+    )
+
+    const sortData = listSummarySurfaces.sort(function (a, b) {
+      // sort based on the value in the monthNames object
+      return allMonths.indexOf(a.date) - allMonths.indexOf(b.date)
+    })
+
+    let labels: any = sortData.map((item) => item.date)
+    let data: any = sortData.map((item) => item.total)
+
+    return res.status(200).json({ labels, data })
+  }
+
+  /**
+   *
+   * @param req
+   * @param res
+   */
+  public async volumesCrops (req, res: Response) {
+    const query: any = {
+      cancelled: false,
+      'members.user': req.user._id
+    }
+
+    if (req.query.identifier) {
+      query['members.identifier'] = req.query.identifier
+    }
+
+    const crops = await Crop.find(query).populate('unitType').lean()
+
+    const listSummaryVolumes = CropService.getSummaryVolumes(crops)
+
+    const sortData = listSummaryVolumes.sort(function (a, b) {
+      // sort based on the value in the monthNames object
+      return allMonths.indexOf(a.date) - allMonths.indexOf(b.date)
+    })
+
+    const labels = sortData.map((item) => item.date)
+    const data = sortData.map((item) => item.total)
+    const totalExpectedVolume = data.reduce((a, b) => a + (b || 0), 0)
+
+    return res.status(200).json({ labels, data, totalExpectedVolume })
+  }
+
+  /**
+   *
+   * @param req
+   * @param res
+   */
+  public async dataGeneralCrops (req, res: Response) {
+    const query: any = {
+      cancelled: false,
+      'members.user': req.user._id
+    }
+
+    if (req.query.identifier) {
+      query['members.identifier'] = req.query.identifier
+    }
+
+    const crops = await Crop.find(query)
+      .populate('unitType')
+      .populate({
+        path: 'pending',
+        populate: [{ path: 'lots' }]
+      })
+      .populate({
+        path: 'toMake',
+        populate: [{ path: 'lots' }]
+      })
+      .populate({
+        path: 'done',
+        populate: [{ path: 'lots' }]
+      })
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' }
+        ]
+      })
+      .lean()
+
+    const generalData = crops.map((crop) => {
+      const totalSurfacesExplo = CropService.sumSurfacesActivityAgreement(
+        crop.finished,
+        'ACT_AGREEMENTS',
+        'EXPLO'
+      )
+
+      const totalSurfacesSust = CropService.sumSurfacesActivityAgreement(
+        crop.finished,
+        'ACT_AGREEMENTS',
+        'SUSTAIN'
+      )
+
+      const totalSurfacesLots = CropService.sumSurfacesByLot(crop)
+
+      return {
+        total_sust: totalSurfacesExplo,
+        total_explo: totalSurfacesSust,
+        total_surfaces: totalSurfacesLots
+      }
+    })
+
+    const totalSus = generalData.reduce(
+      (a, b) => a + (b['total_sust'] || 0),
+      0
+    )
+    const totalExplo = generalData.reduce(
+      (a, b) => a + (b['total_explo'] || 0),
+      0
+    )
+    const totalKmz = generalData.reduce(
+      (a, b) => a + (b['total_surfaces'] || 0),
+      0
+    )
+
+    return res.status(200).json({ totalSus, totalExplo, totalKmz })
   }
 }
 

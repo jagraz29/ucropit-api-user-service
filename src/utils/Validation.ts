@@ -186,7 +186,8 @@ export const validateAchievement = async (achievement) => {
           name: Joi.string().required(),
           description: Joi.string().required(),
           date: Joi.date().required(),
-          settings: Joi.optional()
+          settings: Joi.optional(),
+          meta: Joi.optional()
         })
       )
       .optional(),

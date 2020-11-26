@@ -1,8 +1,8 @@
 import models from "../models";
-import { isNowGreaterThan } from "../utils/Date";
+import { isNowGreaterThan, compareDate } from "../utils/Date";
 import ServiceBase from "./common/ServiceBase";
 import ActivityService from "./ActivityService";
-import activity from "../models/activity";
+import crop from "../models/crop";
 const Crop = models.Crop;
 const Activity = models.Activity;
 
@@ -43,28 +43,82 @@ const statusActivities: Array<any> = [
 ];
 
 class CropService extends ServiceBase {
-  public static createDataCropToChart(crops) {
-    crops.map((crop) => {
-      this.sumSurfacesActivitiesAgreement(
+  public static createDataCropToChartSurface(crops) {
+    const listSurfacesData = crops.map((crop) => {
+      const sumSurfaceExplo: any = this.sumSurfacesAndDateActivitiesAgreement(
         crop.finished,
         "ACT_AGREEMENTS",
         "EXPLO"
       );
-      this.sumSurfacesActivitiesAgreement(
+      const sumSurfaceSustain: any = this.sumSurfacesAndDateActivitiesAgreement(
         crop.finished,
         "ACT_AGREEMENTS",
         "SUSTAIN"
       );
+
+      if (sumSurfaceExplo.total === sumSurfaceSustain.total) {
+        return {
+          total: sumSurfaceExplo.total,
+          date: sumSurfaceExplo.date
+        };
+      }
+
+      if (sumSurfaceExplo.total > sumSurfaceSustain.total) {
+        return {
+          total: sumSurfaceSustain.total,
+          date: sumSurfaceSustain.date
+        };
+      }
+
+      if (sumSurfaceExplo.total < sumSurfaceSustain.total) {
+        return {
+          total: sumSurfaceExplo.total,
+          date: sumSurfaceExplo.date
+        };
+      }
     });
+
+    return this.summaryData(listSurfacesData);
   }
 
-  public static sumSurfacesActivitiesAgreement(
-    activities,
-    type,
-    typeAgreement?
-  ) {
+  public static getSummaryVolumes(crops) {
+    const listVolumes = crops.map((crop) => {
+      return {
+        total: this.calVolume(crop.unitType.key, crop.pay, crop.surface),
+        date: crop.dateHarvest.toLocaleDateString("es-ES", {
+          month: "long"
+        })
+      };
+    });
+
+    return this.summaryData(listVolumes);
+  }
+
+  public static summaryData(list) {
+    let total = 0;
+    let date = "";
+    let summary = [];
+    for (const data of list) {
+      if (date !== data.date) {
+        total += data.total;
+        date = data.date;
+        summary.push({
+          total,
+          date
+        });
+      } else {
+        const index = summary.findIndex((item) => item.date === date);
+        summary[index].total += data.total;
+      }
+
+      total = 0;
+    }
+
+    return summary;
+  }
+
+  public static sumSurfacesActivityAgreement(activities, type, typeAgreement?) {
     const filterActivity = activities.filter((activity) => {
-      console.log(activity);
       return (
         activity.type.tag === type &&
         typeAgreement &&
@@ -72,11 +126,93 @@ class CropService extends ServiceBase {
         activity.typeAgreement.key === typeAgreement
       );
     });
-    console.log(filterActivity);
+
+    let total = 0;
     for (const activity of filterActivity) {
-      console.log(activity);
+      total += activity.surface;
     }
+
+    return total;
   }
+
+  public static sumSurfacesByLot(crop) {
+    let total = 0;
+    for (const status of statusActivities) {
+      if (status.name !== "EXPIRED") {
+        total += this.sumSurfacesLot(crop[status.cropStatus]);
+      }
+    }
+
+    return total;
+  }
+
+  public static sumSurfacesLot(activities) {
+    return activities
+      .map((activity) => {
+        const sumSurfacesLot = activity.lots
+          .map((lot) => {
+            return {
+              surface: lot.surface
+            };
+          })
+          .reduce((a, b) => a + (b["surface"] || 0), 0);
+
+        return {
+          surfaces_total_lot: sumSurfacesLot
+        };
+      })
+      .reduce((a, b) => a + (b["surfaces_total_lot"] || 0), 0);
+  }
+
+  public static sumSurfacesAndDateActivitiesAgreement(
+    activities,
+    type,
+    typeAgreement?
+  ) {
+    const filterActivity = activities.filter((activity) => {
+      return (
+        activity.type.tag === type &&
+        typeAgreement &&
+        activity.typeAgreement &&
+        activity.typeAgreement.key === typeAgreement
+      );
+    });
+    let total = 0;
+    let date = new Date();
+    for (const activity of filterActivity) {
+      total += activity.surface;
+      if (compareDate(date, activity.signers[0].dateSigned)) {
+        date = activity.signers[0].dateSigned.toLocaleDateString("es-ES", {
+          month: "long"
+        });
+      }
+    }
+
+    return { total, date };
+  }
+
+  /**
+   *
+   * @param unit
+   * @param pay
+   * @param surfaces
+   */
+  public static calVolume(unit: string, pay: number, surfaces: number): number {
+    if (unit === "kg") {
+      return (pay / 1000) * surfaces;
+    }
+
+    if (unit === "t") {
+      return pay * surfaces;
+    }
+
+    if (unit === "q") {
+      return (pay / 10) * surfaces;
+    }
+
+    return 0;
+  }
+
   /**
    * Get all crops.
    *
@@ -139,7 +275,7 @@ class CropService extends ServiceBase {
           { path: "files" },
           {
             path: "achievements",
-            populate: [{ path: "lots" }, { path: "files" }],
+            populate: [{ path: "lots" }, { path: "files" }]
           },
           { path: "lotsMade" },
           { path: "user" }
@@ -161,7 +297,11 @@ class CropService extends ServiceBase {
               { path: "filePdf" },
               { path: "fileOts" },
               { path: "activity" },
-            ],
+            ]
+          },
+          {
+            path: "achievements",
+            populate: [{ path: "lots" }, { path: "files" }]
           }
         ]
       });
@@ -201,7 +341,7 @@ class CropService extends ServiceBase {
           { path: "files" },
           {
             path: "approvalRegister",
-            populate: [{ path: "file" }, { path: "activity" }],
+            populate: [{ path: "file" }, { path: "activity" }]
           }
         ]
       })
@@ -215,7 +355,7 @@ class CropService extends ServiceBase {
           { path: "files" },
           {
             path: "approvalRegister",
-            populate: [{ path: "file" }, { path: "activity" }],
+            populate: [{ path: "file" }, { path: "activity" }]
           }
         ]
       })
@@ -229,11 +369,11 @@ class CropService extends ServiceBase {
           { path: "files" },
           {
             path: "approvalRegister",
-            populate: [{ path: "file" }, { path: "activity" }],
+            populate: [{ path: "file" }, { path: "activity" }]
           },
           {
             path: "achievements",
-            populate: [{ path: "lots" }, { path: "files" }],
+            populate: [{ path: "lots" }, { path: "files" }]
           },
           { path: "lotsMade" }
         ]
@@ -248,11 +388,15 @@ class CropService extends ServiceBase {
           { path: "files" },
           {
             path: "approvalRegister",
-            populate: [{ path: "file" }, { path: "activity" }],
+            populate: [{ path: "file" }, { path: "activity" }]
+          },
+          {
+            path: "achievements",
+            populate: [{ path: "lots" }, { path: "files" }]
           }
         ]
       })
-      .populate('members.user');
+      .populate('members.user')
   }
 
   /**
@@ -264,11 +408,11 @@ class CropService extends ServiceBase {
     let activitiesToMake = await this.checkListActivitiesExpired(
       crop,
       'toMake'
-    );
+    )
 
-    crop.toMake = await Promise.all(activitiesToMake);
+    crop.toMake = await Promise.all(activitiesToMake)
 
-    return crop;
+    return crop
   }
 
   public static filterCropByIdentifier(identifier: string | any, crops) {
@@ -282,7 +426,7 @@ class CropService extends ServiceBase {
         }
         return undefined;
       })
-      .filter((crop) => crop);
+      .filter((crop) => crop)
   }
 
   /**
@@ -295,21 +439,21 @@ class CropService extends ServiceBase {
   public static async changeStatusActivitiesRange(crop: any): Promise<void> {
     const listActivitiesExpired = (
       await this.listActivitiesExpiredRange(crop, 'done')
-    ).filter((activity) => activity);
+    ).filter((activity) => activity)
     const listActivitiesFinished = (
       await this.listActivitiesFinishedRange(crop, 'done')
-    ).filter((activity) => activity);
+    ).filter((activity) => activity)
 
     if (listActivitiesExpired.length > 0) {
       for (let activity of listActivitiesExpired) {
-        await this.removeActivities(activity, crop, 'done');
-        activity = await ActivityService.changeStatus(activity, 'TO_COMPLETE');
-        await this.addActivities(activity, crop);
+        await this.removeActivities(activity, crop, 'done')
+        activity = await ActivityService.changeStatus(activity, 'TO_COMPLETE')
+        await this.addActivities(activity, crop)
       }
     }
     if (listActivitiesFinished.length > 0) {
       for (let activity of listActivitiesFinished) {
-        await this.removeActivities(activity, crop, 'done');
+        await this.removeActivities(activity, crop, 'done')
         activity = await ActivityService.changeStatus(activity, 'FINISHED')
         await this.addActivities(activity, crop)
       }
@@ -410,10 +554,10 @@ class CropService extends ServiceBase {
         this.isExpiredActivity(activity, statusCrop) &&
         !this.isTotalPercentAchievements(activity)
       ) {
-        return activity;
+        return activity
       }
 
-      return undefined;
+      return undefined
     })
 
     return Promise.all(activities)
@@ -431,10 +575,10 @@ class CropService extends ServiceBase {
         this.isTotalPercentAchievements(activity) &&
         this.checkCompleteSignedEachAchievements(activity)
       ) {
-        return activity;
+        return activity
       }
 
-      return undefined;
+      return undefined
     })
 
     return Promise.all(activities)
@@ -464,15 +608,15 @@ class CropService extends ServiceBase {
   private static async checkListActivitiesExpired(crop, statusCrop: string) {
     return crop[statusCrop].map(async (activity: any) => {
       if (this.isExpiredActivity(activity)) {
-        activity.status[0].name.en = 'EXPIRED';
-        activity.status[0].name.es = 'VENCIDA';
+        activity.status[0].name.en = 'EXPIRED'
+        activity.status[0].name.es = 'VENCIDA'
 
-        await this.expiredActivity(activity);
+        await this.expiredActivity(activity)
 
-        return activity;
+        return activity
       }
 
-      return activity;
+      return activity
     })
   }
 
@@ -480,7 +624,7 @@ class CropService extends ServiceBase {
    *
    * @param activity
    */
-  private static isExpiredActivity(activity, status?): boolean {
+  private static isExpiredActivity (activity, status?): boolean {
     if (
       (activity.dateLimitValidation &&
         isNowGreaterThan(activity.dateLimitValidation) &&
@@ -500,7 +644,7 @@ class CropService extends ServiceBase {
    *
    * @return boolean
    */
-  private static isTotalPercentAchievements(activity): boolean {
+  private static isTotalPercentAchievements (activity): boolean {
     if (!activity.achievements || activity.achievements.length === 0) {
       return false
     }
