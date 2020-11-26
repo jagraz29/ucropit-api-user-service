@@ -113,12 +113,15 @@ class ReportService {
         if (data.centerBound) {
           const { latitude, longitude } = data.centerBound
 
-          const resultAddress = await GeoLocationService.getLocationByCoordinates(
+          const resultAddress: any = await GeoLocationService.getLocationByCoordinates(
             latitude,
             longitude
           )
 
-          result = resultAddress[0].address_components[1].short_name
+          result =
+            resultAddress.length > 0
+              ? resultAddress[0].address_components[1].short_name
+              : ''
         }
         listAddressLot += `
           ${result},
