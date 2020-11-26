@@ -14,6 +14,7 @@ import passport from '../../utils/auth/strategies/jwt'
 import achievements from './achievements'
 import collaborators from './collaborators'
 import reports from './reports'
+import charts from './charts'
 import files from './files'
 import supplies from './supplies'
 
@@ -60,6 +61,9 @@ router.use('/achievements', authMiddleware, achievements)
 
 // COLLABORATOR
 router.use('/collaborators', authMiddleware, collaborators)
+
+// CHARTS CROPS
+router.use('/charts', authMiddleware, charts)
 
 // REPORTS
 router.use('/reports', reports)
