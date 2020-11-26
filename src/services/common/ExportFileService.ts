@@ -35,6 +35,10 @@ const headerXls = {
     'names_signers_land_use',
     'total_surface_explo',
     'link_pdf_ots_agreement',
+    'percent_achievements_sowing',
+    'surfaces_signed_sowing',
+    'surfaces_files_approved',
+    'link_pdf_ots_sowing',
     'mail_producers',
     'phone_producers'
   ],
@@ -59,6 +63,10 @@ const headerXls = {
     'Nombre Firmantes ACUERDOS de USO DE SUELO',
     'HAS ACUERDOS de USO DE SUELO',
     'Link de descarga de archivos de firmas Acuerdos',
+    'Porcentaje de realización de Siembra',
+    'Total Superficie firmada de  Siembra',
+    'Superficie con evidencia aprovada Siembra',
+    'Link de descarga de archivos de firmas Siembra',
     'Mail de los Productores',
     'Teléfono de los Producuctores'
   ]
@@ -144,6 +152,22 @@ const fields = [
   {
     label: 'Link de descarga de archivos de firmas Acuerdos',
     value: 'link_pdf_ots_agreement'
+  },
+  {
+    label: 'Porcentaje de realización de Siembra',
+    value: 'percent_achievements_sowing'
+  },
+  {
+    label: 'Total Superficie firmada de  Siembra',
+    value: 'surfaces_signed_sowing'
+  },
+  {
+    label: 'Superficie con evidencia aprovada Siembra',
+    value: 'surfaces_files_approved'
+  },
+  {
+    label: 'Link de descarga de archivos de firmas Siembra',
+    value: 'link_pdf_ots_sowing'
   },
   {
     label: 'Mail de los Productores',
