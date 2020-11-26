@@ -26,6 +26,8 @@ const router: express.Router = express.Router()
  */
 router.get('/crops', checkAuth, reportsController.generateCrops)
 
+router.post('/crops/attachment', reportsController.sendFileReport)
+
 router.get('/map/lot', reportsController.showMap)
 
 export default router
