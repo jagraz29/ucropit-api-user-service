@@ -10,3 +10,7 @@ export function isNowGreaterThan (date: Date): boolean {
 
   return now > date
 }
+
+export function compareDate (dateFirst: Date, dateLast: Date): boolean {
+  return dateFirst > dateLast
+}
