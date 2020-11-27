@@ -127,6 +127,10 @@ class CropService extends ServiceBase {
               { path: 'fileOts' },
               { path: 'activity' }
             ]
+          },
+          {
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'files' }]
           }
         ]
       })
@@ -214,6 +218,10 @@ class CropService extends ServiceBase {
           {
             path: 'approvalRegister',
             populate: [{ path: 'file' }, { path: 'activity' }]
+          },
+          {
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'files' }]
           }
         ]
       })

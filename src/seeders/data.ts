@@ -1,3 +1,86 @@
+const mongoose = require('mongoose')
+
+export const supplyTypesData = [
+  {
+    _id: mongoose.Types.ObjectId('4edd40c86410'),
+    name: 'Otros',
+    code: 'Otros',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('4edd40c86420'),
+    name: 'Fertilizantes agroquimicos',
+    code: 'FE',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('4edd40c86421'),
+    name: 'Fungicidas agroquimicos',
+    code: 'FU',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('4edd40c86422'),
+    name: 'Herbicidas agroquimicos',
+    code: 'HE',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('4edd40c86423'),
+    name: 'Insecticidas agroquimicos',
+    code: 'IN',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('4edd40c86430'),
+    name: 'Semilla de Pisingallo',
+    code: 'SePi',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('4edd40c86431'),
+    name: 'Semilla de Maiz',
+    code: 'SeMa',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('4edd40c86432'),
+    name: 'Semilla de Girasol',
+    code: 'SeGi',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('4edd40c86433'),
+    name: 'Semilla de Trigo',
+    code: 'SeTr',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('4edd40c86434'),
+    name: 'Semilla de Soja',
+    code: 'SeSo',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('4edd40c86435'),
+    name: 'Semilla de Colza',
+    code: 'SeCo',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('4edd40c86436'),
+    name: 'Semilla de Cebada',
+    code: 'SeCe',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('4edd40c86437'),
+    name: 'Semilla de Algodon',
+    code: 'SeAl',
+    icon: 'spa'
+  }
+]
+
 export const cropTypesData = [
   {
     name: {
@@ -116,6 +199,13 @@ export const activitiesTypesData = [
       es: 'Acuerdos'
     },
     tag: 'ACT_AGREEMENTS'
+  },
+  {
+    name: {
+      en: 'TEST',
+      es: 'TEST'
+    },
+    tag: 'TEST'
   }
 ]
 

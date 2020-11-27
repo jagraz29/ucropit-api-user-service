@@ -58,6 +58,13 @@ const AchievementSchema: Schema = new Schema({
       quantity: {
         type: Number
       },
+      typeId: {
+        type: Schema.Types.ObjectId,
+        ref: 'SupplyType'
+      },
+      icon: {
+        type: String
+      },
       total: {
         type: Number
       }

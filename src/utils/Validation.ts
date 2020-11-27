@@ -45,6 +45,8 @@ export const validateActivityStore = async (activity) => {
           name: Joi.string().required(),
           unit: Joi.string().required(),
           quantity: Joi.number().required(),
+          typeId: Joi.string().required(),
+          icon: Joi.string().optional(),
           total: Joi.number().required()
         })
       )
@@ -89,6 +91,8 @@ export const validateActivityUpdate = async (activity) => {
           name: Joi.string().required(),
           unit: Joi.string().required(),
           quantity: Joi.number().required(),
+          typeId: Joi.string().required(),
+          icon: Joi.string().optional(),
           total: Joi.number().required()
         })
       )
@@ -160,7 +164,7 @@ export const validateCompanyUpdate = async (company) => {
 export const validateAchievement = async (achievement) => {
   const schema = Joi.object({
     dateAchievement: Joi.date().required(),
-    surface: Joi.string().required(),
+    surface: Joi.number().required(),
     lots: Joi.array().items(Joi.string()).required(),
     activity: Joi.string().required(),
     crop: Joi.string().required(),
@@ -170,6 +174,8 @@ export const validateAchievement = async (achievement) => {
           name: Joi.string().required(),
           unit: Joi.string().required(),
           quantity: Joi.number().required(),
+          typeId: Joi.string().required(),
+          icon: Joi.string().optional(),
           total: Joi.number().required()
         })
       )
@@ -180,7 +186,8 @@ export const validateAchievement = async (achievement) => {
           name: Joi.string().required(),
           description: Joi.string().required(),
           date: Joi.date().required(),
-          settings: Joi.optional()
+          settings: Joi.optional(),
+          meta: Joi.optional()
         })
       )
       .optional(),
@@ -201,7 +208,8 @@ export const validateAchievement = async (achievement) => {
 
 export const validateSignAchievement = async (dataSign) => {
   const schema = Joi.object({
-    activityId: Joi.string().required()
+    activityId: Joi.string().required(),
+    cropId: Joi.string().required()
   })
 
   return schema.validateAsync(dataSign)
