@@ -2,6 +2,7 @@ import { Response } from 'express'
 
 import CropService from '../services/CropService'
 import models from '../models'
+import Numbers from '../utils/Numbers'
 
 const Crop = models.Crop
 
@@ -60,7 +61,7 @@ class ChartController {
     })
 
     let labels: any = sortData.map((item) => item.date)
-    let data: any = sortData.map((item) => item.total)
+    let data: any = sortData.map((item) => Numbers.roundToTwo(item.total))
 
     return res.status(200).json({ labels, data })
   }
@@ -85,13 +86,14 @@ class ChartController {
     const listSummaryVolumes = CropService.getSummaryVolumes(crops)
 
     const sortData = listSummaryVolumes.sort(function (a, b) {
-      // sort based on the value in the monthNames object
       return allMonths.indexOf(a.date) - allMonths.indexOf(b.date)
     })
 
     const labels = sortData.map((item) => item.date)
-    const data = sortData.map((item) => item.total)
-    const totalExpectedVolume = data.reduce((a, b) => a + (b || 0), 0)
+    const data = sortData.map((item) => Numbers.roundToTwo(item.total))
+    const totalExpectedVolume = Numbers.roundToTwo(
+      data.reduce((a, b) => a + (b || 0), 0)
+    )
 
     return res.status(200).json({ labels, data, totalExpectedVolume })
   }
@@ -158,17 +160,14 @@ class ChartController {
       }
     })
 
-    const totalSus = generalData.reduce(
-      (a, b) => a + (b['total_sust'] || 0),
-      0
+    const totalSus = Numbers.roundToTwo(
+      generalData.reduce((a, b) => a + (b['total_sust'] || 0), 0)
     )
-    const totalExplo = generalData.reduce(
-      (a, b) => a + (b['total_explo'] || 0),
-      0
+    const totalExplo = Numbers.roundToTwo(
+      generalData.reduce((a, b) => a + (b['total_explo'] || 0), 0)
     )
-    const totalKmz = generalData.reduce(
-      (a, b) => a + (b['total_surfaces'] || 0),
-      0
+    const totalKmz = Numbers.roundToTwo(
+      generalData.reduce((a, b) => a + (b['total_surfaces'] || 0), 0)
     )
 
     return res.status(200).json({ totalSus, totalExplo, totalKmz })
