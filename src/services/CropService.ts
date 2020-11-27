@@ -48,12 +48,14 @@ class CropService extends ServiceBase {
       const sumSurfaceExplo: any = this.sumSurfacesAndDateActivitiesAgreement(
         crop.finished,
         "ACT_AGREEMENTS",
-        "EXPLO"
+        "EXPLO",
+        crop
       );
       const sumSurfaceSustain: any = this.sumSurfacesAndDateActivitiesAgreement(
         crop.finished,
         "ACT_AGREEMENTS",
-        "SUSTAIN"
+        "SUSTAIN",
+        crop
       );
 
       if (sumSurfaceExplo.total === sumSurfaceSustain.total) {
@@ -85,7 +87,7 @@ class CropService extends ServiceBase {
     const listVolumes = crops.map((crop) => {
       return {
         total: this.calVolume(crop.unitType.key, crop.pay, crop.surface),
-        date: crop.dateHarvest.toLocaleDateString("es-ES", {
+        date: crop.dateHarvest.toLocaleDateString("en-US", {
           month: "long"
         })
       };
@@ -167,7 +169,8 @@ class CropService extends ServiceBase {
   public static sumSurfacesAndDateActivitiesAgreement(
     activities,
     type,
-    typeAgreement?
+    typeAgreement,
+    crop
   ) {
     const filterActivity = activities.filter((activity) => {
       return (
@@ -181,11 +184,10 @@ class CropService extends ServiceBase {
     let date = new Date();
     for (const activity of filterActivity) {
       total += activity.surface;
-      if (compareDate(date, activity.signers[0].dateSigned)) {
-        date = activity.signers[0].dateSigned.toLocaleDateString("es-ES", {
-          month: "long"
-        });
-      }
+
+      date = crop.dateCrop.toLocaleDateString("en-US", {
+        month: "long"
+      });
     }
 
     return { total, date };
