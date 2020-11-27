@@ -4,6 +4,9 @@ import CropService from '../services/CropService'
 import ReportService from '../services/ReportService'
 import ExportFile from '../services/common/ExportFileService'
 import Company from '../services/CompanyService'
+import EmailService from '../services/EmailService'
+
+import fs from 'fs'
 
 import models from '../models'
 
@@ -45,6 +48,36 @@ class ReportsController {
     }
 
     res.download(pathFile)
+  }
+
+  /**
+   * Send export file report in email.
+   *
+   * @param req
+   * @param res
+   */
+  public async sendFileReport (req, res: Response) {
+    const { email, identifier } = req.body
+
+    let crops = await CropService.getAll({ cancelled: false })
+    crops = CropService.filterCropByIdentifier(identifier, crops)
+
+    const report = await ReportService.generateCropReport(crops, identifier)
+
+    const pathFile = ExportFile.modeExport(report, 'xls')
+
+    await EmailService.sendWithAttach({
+      template: 'export-file',
+      to: email,
+      data: {},
+      files: [
+        {
+          path: pathFile
+        }
+      ]
+    })
+
+    return res.status(200).json('Ok')
   }
 
   public async showMap (req: Request, res: Response) {
