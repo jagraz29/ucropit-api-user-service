@@ -29,6 +29,17 @@ class EmailService {
       .then(console.log)
       .catch(console.error)
   }
+
+  async sendWithAttach ({ template = '', to = '', data = {}, files }) {
+    email
+      .send({
+        template: template,
+        message: { to, from: 'no-reply@ucrop.it', attachments: files },
+        locals: { ...data }
+      })
+      .then(console.log)
+      .catch(console.error)
+  }
 }
 
 export default new EmailService()
