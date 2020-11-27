@@ -60,8 +60,14 @@ class ChartController {
       return allMonths.indexOf(a.date) - allMonths.indexOf(b.date)
     })
 
-    let labels: any = sortData.map((item) => item.date)
-    let data: any = sortData.map((item) => Numbers.roundToTwo(item.total))
+    let filterSortData = sortData.filter((item) => item.total > 0)
+
+    filterSortData = CropService.summaryData(filterSortData)
+
+    let labels: any = filterSortData.map((item) => item.date)
+    let data: any = filterSortData.map((item) =>
+      Numbers.roundToTwo(item.total)
+    )
 
     return res.status(200).json({ labels, data })
   }
@@ -89,8 +95,10 @@ class ChartController {
       return allMonths.indexOf(a.date) - allMonths.indexOf(b.date)
     })
 
-    const labels = sortData.map((item) => item.date)
-    const data = sortData.map((item) => Numbers.roundToTwo(item.total))
+    const summarySortData = CropService.summaryData(sortData)
+
+    const labels = summarySortData.map((item) => item.date)
+    const data = summarySortData.map((item) => Numbers.roundToTwo(item.total))
     const totalExpectedVolume = Numbers.roundToTwo(
       data.reduce((a, b) => a + (b || 0), 0)
     )
