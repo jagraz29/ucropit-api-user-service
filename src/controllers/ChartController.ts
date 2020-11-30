@@ -1,4 +1,4 @@
-import { Response } from 'express'
+import { Response, Request } from 'express'
 
 import CropService from '../services/CropService'
 import models from '../models'
@@ -23,14 +23,16 @@ let allMonths = [
 
 class ChartController {
   /**
+   * Data to Chart agreement's activity.
    *
    * @param req
    * @param res
    */
-  public async surfaceActivityAgreement (req, res: Response) {
+  public async surfaceActivityAgreement (req: Request, res: Response) {
+    const user: any = req.user
     const query: any = {
       cancelled: false,
-      'members.user': req.user._id
+      'members.user': user._id
     }
 
     if (req.query.identifier) {
@@ -73,14 +75,16 @@ class ChartController {
   }
 
   /**
+   * Data to volumes expected.
    *
    * @param req
    * @param res
    */
   public async volumesCrops (req, res: Response) {
+    const user: any = req.user
     const query: any = {
       cancelled: false,
-      'members.user': req.user._id
+      'members.user': user._id
     }
 
     if (req.query.identifier) {
@@ -107,14 +111,16 @@ class ChartController {
   }
 
   /**
+   * General data to crops.
    *
    * @param req
    * @param res
    */
   public async dataGeneralCrops (req, res: Response) {
+    const user: any = req.user
     const query: any = {
       cancelled: false,
-      'members.user': req.user._id
+      'members.user': user._id
     }
 
     if (req.query.identifier) {
