@@ -42,7 +42,11 @@ class ActivityService extends ServiceBase {
       .populate('files')
       .populate({
         path: 'achievements',
-        populate: [{ path: 'lots' }, { path: 'files' }]
+        populate: [
+          { path: 'lots' },
+          { path: 'files' },
+          { path: 'supplies', populate: [{ path: 'typeId' }] }
+        ]
       })
       .populate('approvalRegister')
       .populate('user')
