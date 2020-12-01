@@ -277,7 +277,7 @@ class CropService extends ServiceBase {
           { path: "files" },
           {
             path: "achievements",
-            populate: [{ path: "lots" }, { path: "files" }]
+            populate: [{ path: "lots" }, { path: "files" }],
           },
           { path: "lotsMade" },
           { path: "user" }
@@ -299,11 +299,11 @@ class CropService extends ServiceBase {
               { path: "filePdf" },
               { path: "fileOts" },
               { path: "activity" },
-            ]
+            ],
           },
           {
             path: "achievements",
-            populate: [{ path: "lots" }, { path: "files" }]
+            populate: [{ path: "lots" }, { path: "files" }],
           }
         ]
       });
@@ -343,7 +343,7 @@ class CropService extends ServiceBase {
           { path: "files" },
           {
             path: "approvalRegister",
-            populate: [{ path: "file" }, { path: "activity" }]
+            populate: [{ path: "file" }, { path: "activity" }],
           }
         ]
       })
@@ -357,7 +357,7 @@ class CropService extends ServiceBase {
           { path: "files" },
           {
             path: "approvalRegister",
-            populate: [{ path: "file" }, { path: "activity" }]
+            populate: [{ path: "file" }, { path: "activity" }],
           }
         ]
       })
@@ -371,11 +371,11 @@ class CropService extends ServiceBase {
           { path: "files" },
           {
             path: "approvalRegister",
-            populate: [{ path: "file" }, { path: "activity" }]
+            populate: [{ path: "file" }, { path: "activity" }],
           },
           {
             path: "achievements",
-            populate: [{ path: "lots" }, { path: "files" }]
+            populate: [{ path: "lots" }, { path: "files" }],
           },
           { path: "lotsMade" }
         ]
@@ -390,15 +390,15 @@ class CropService extends ServiceBase {
           { path: "files" },
           {
             path: "approvalRegister",
-            populate: [{ path: "file" }, { path: "activity" }]
+            populate: [{ path: "file" }, { path: "activity" }],
           },
           {
             path: "achievements",
-            populate: [{ path: "lots" }, { path: "files" }]
+            populate: [{ path: "lots" }, { path: "files" }],
           }
         ]
       })
-      .populate('members.user')
+      .populate('members.user');
   }
 
   /**
@@ -410,11 +410,11 @@ class CropService extends ServiceBase {
     let activitiesToMake = await this.checkListActivitiesExpired(
       crop,
       'toMake'
-    )
+    );
 
-    crop.toMake = await Promise.all(activitiesToMake)
+    crop.toMake = await Promise.all(activitiesToMake);
 
-    return crop
+    return crop;
   }
 
   public static filterCropByIdentifier(identifier: string | any, crops) {
@@ -428,7 +428,7 @@ class CropService extends ServiceBase {
         }
         return undefined;
       })
-      .filter((crop) => crop)
+      .filter((crop) => crop);
   }
 
   /**
@@ -441,21 +441,21 @@ class CropService extends ServiceBase {
   public static async changeStatusActivitiesRange(crop: any): Promise<void> {
     const listActivitiesExpired = (
       await this.listActivitiesExpiredRange(crop, 'done')
-    ).filter((activity) => activity)
+    ).filter((activity) => activity);
     const listActivitiesFinished = (
       await this.listActivitiesFinishedRange(crop, 'done')
-    ).filter((activity) => activity)
+    ).filter((activity) => activity);
 
     if (listActivitiesExpired.length > 0) {
       for (let activity of listActivitiesExpired) {
-        await this.removeActivities(activity, crop, 'done')
-        activity = await ActivityService.changeStatus(activity, 'TO_COMPLETE')
-        await this.addActivities(activity, crop)
+        await this.removeActivities(activity, crop, 'done');
+        activity = await ActivityService.changeStatus(activity, 'TO_COMPLETE');
+        await this.addActivities(activity, crop);
       }
     }
     if (listActivitiesFinished.length > 0) {
       for (let activity of listActivitiesFinished) {
-        await this.removeActivities(activity, crop, 'done')
+        await this.removeActivities(activity, crop, 'done');
         activity = await ActivityService.changeStatus(activity, 'FINISHED')
         await this.addActivities(activity, crop)
       }
@@ -556,10 +556,10 @@ class CropService extends ServiceBase {
         this.isExpiredActivity(activity, statusCrop) &&
         !this.isTotalPercentAchievements(activity)
       ) {
-        return activity
+        return activity;
       }
 
-      return undefined
+      return undefined;
     })
 
     return Promise.all(activities)
@@ -577,10 +577,10 @@ class CropService extends ServiceBase {
         this.isTotalPercentAchievements(activity) &&
         this.checkCompleteSignedEachAchievements(activity)
       ) {
-        return activity
+        return activity;
       }
 
-      return undefined
+      return undefined;
     })
 
     return Promise.all(activities)
@@ -610,15 +610,15 @@ class CropService extends ServiceBase {
   private static async checkListActivitiesExpired(crop, statusCrop: string) {
     return crop[statusCrop].map(async (activity: any) => {
       if (this.isExpiredActivity(activity)) {
-        activity.status[0].name.en = 'EXPIRED'
-        activity.status[0].name.es = 'VENCIDA'
+        activity.status[0].name.en = 'EXPIRED';
+        activity.status[0].name.es = 'VENCIDA';
 
-        await this.expiredActivity(activity)
+        await this.expiredActivity(activity);
 
-        return activity
+        return activity;
       }
 
-      return activity
+      return activity;
     })
   }
 
@@ -626,7 +626,7 @@ class CropService extends ServiceBase {
    *
    * @param activity
    */
-  private static isExpiredActivity (activity, status?): boolean {
+  private static isExpiredActivity(activity, status?): boolean {
     if (
       (activity.dateLimitValidation &&
         isNowGreaterThan(activity.dateLimitValidation) &&
@@ -646,7 +646,7 @@ class CropService extends ServiceBase {
    *
    * @return boolean
    */
-  private static isTotalPercentAchievements (activity): boolean {
+  private static isTotalPercentAchievements(activity): boolean {
     if (!activity.achievements || activity.achievements.length === 0) {
       return false
     }

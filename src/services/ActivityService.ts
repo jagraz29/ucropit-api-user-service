@@ -196,6 +196,39 @@ class ActivityService extends ServiceBase {
 
     return activity.signers
   }
+
+  public static groupSurfaceAndDateAchievements (activities, type) {
+    return activities
+      .map((activity) => {
+        if (this.isActivityType(activity, type)) {
+          const total = activity.achievements.reduce(
+            (a, b) => a + (b['surface'] || 0),
+            0
+          )
+
+          return {
+            total: total,
+            date: activity.achievements[0].dateAchievement.toLocaleDateString(
+              'en-US',
+              {
+                month: 'long'
+              }
+            )
+          }
+        }
+
+        return undefined
+      })
+      .filter((activity) => activity)
+  }
+
+  private static isActivityType (activity, type: string): boolean {
+    if (activity.type.tag === type) {
+      return true
+    }
+
+    return false
+  }
 }
 
 export default ActivityService

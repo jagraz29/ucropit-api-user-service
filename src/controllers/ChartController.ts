@@ -1,8 +1,10 @@
 import { Response, Request } from 'express'
 
 import CropService from '../services/CropService'
+import ActivityService from '../services/ActivityService'
 import models from '../models'
 import Numbers from '../utils/Numbers'
+import _ from 'lodash'
 
 const Crop = models.Crop
 
@@ -70,6 +72,65 @@ class ChartController {
     let data: any = filterSortData.map((item) =>
       Numbers.roundToTwo(item.total)
     )
+
+    return res.status(200).json({ labels, data })
+  }
+
+  /**
+   *
+   * @param req
+   * @param res
+   */
+  public async surfaceProgressAchievements (req: Request, res: Response) {
+    const user: any = req.user
+    const type: any = req.query.type
+    const query: any = {
+      cancelled: false,
+      'members.user': user._id
+    }
+
+    if (req.query.identifier) {
+      query['members.identifier'] = req.query.identifier
+    }
+
+    const crops = await Crop.find(query)
+      .populate('cropType')
+      .populate('unitType')
+      .populate('members.user')
+      .populate({
+        path: 'done',
+        populate: [{ path: 'type' }, { path: 'achievements' }]
+      })
+      .populate({
+        path: 'finished',
+        populate: [{ path: 'type' }, { path: 'achievements' }]
+      })
+      .lean()
+
+    let groupData = crops.map((crop) => {
+      const groupDataActivitiesDone = ActivityService.groupSurfaceAndDateAchievements(
+        crop.done,
+        type
+      )
+      const groupDataActivitiesFinished = ActivityService.groupSurfaceAndDateAchievements(
+        crop.finished,
+        type
+      )
+
+      return groupDataActivitiesDone.concat(groupDataActivitiesFinished)
+    })
+
+    groupData = _.flatten(groupData)
+
+    const sortData = groupData.sort(function (a, b) {
+      // sort based on the value in the monthNames object
+      return allMonths.indexOf(a.date) - allMonths.indexOf(b.date)
+    })
+
+    groupData = CropService.summaryData(sortData)
+
+    let labels: any = groupData.map((item) => item.date)
+    let data: any = groupData.map((item) => Numbers.roundToTwo(item.total))
 
     return res.status(200).json({ labels, data })
   }
