@@ -2,6 +2,7 @@ import { Response, Request } from 'express'
 
 import CropService from '../services/CropService'
 import ActivityService from '../services/ActivityService'
+import ChartService from '../services/ChartDataService'
 import models from '../models'
 import Numbers from '../utils/Numbers'
 import _ from 'lodash'
@@ -31,6 +32,7 @@ class ChartController {
    * @param res
    */
   public async surfaceActivityAgreement (req: Request, res: Response) {
+    let sum = 0
     const user: any = req.user
     const query: any = {
       cancelled: false,
@@ -55,25 +57,9 @@ class ChartController {
       })
       .lean()
 
-    const listSummarySurfaces: any = CropService.createDataCropToChartSurface(
-      crops
-    )
+    const dataChartAgreement = ChartService.generateDataAgreement(crops)
 
-    const sortData = listSummarySurfaces.sort(function (a, b) {
-      // sort based on the value in the monthNames object
-      return allMonths.indexOf(a.date) - allMonths.indexOf(b.date)
-    })
-
-    let filterSortData = sortData.filter((item) => item.total > 0)
-
-    filterSortData = CropService.summaryData(filterSortData)
-
-    let labels: any = filterSortData.map((item) => item.date)
-    let data: any = filterSortData.map((item) =>
-      Numbers.roundToTwo(item.total)
-    )
-
-    return res.status(200).json({ labels, data })
+    return res.status(200).json(dataChartAgreement)
   }
 
   /**
@@ -83,6 +69,7 @@ class ChartController {
    * @param res
    */
   public async surfaceProgressAchievements (req: Request, res: Response) {
+    let sum = 0
     const user: any = req.user
     const type: any = req.query.type
     const query: any = {
@@ -108,32 +95,12 @@ class ChartController {
       })
       .lean()
 
-    let groupData = crops.map((crop) => {
-      const groupDataActivitiesDone = ActivityService.groupSurfaceAndDateAchievements(
-        crop.done,
-        type
-      )
-      const groupDataActivitiesFinished = ActivityService.groupSurfaceAndDateAchievements(
-        crop.finished,
-        type
-      )
+    const dataChartActivities = ChartService.generateDataActivities(
+      crops,
+      type
+    )
 
-      return groupDataActivitiesDone.concat(groupDataActivitiesFinished)
-    })
-
-    groupData = _.flatten(groupData)
-
-    const sortData = groupData.sort(function (a, b) {
-      // sort based on the value in the monthNames object
-      return allMonths.indexOf(a.date) - allMonths.indexOf(b.date)
-    })
-
-    groupData = CropService.summaryData(sortData)
-
-    let labels: any = groupData.map((item) => item.date)
-    let data: any = groupData.map((item) => Numbers.roundToTwo(item.total))
-
-    return res.status(200).json({ labels, data })
+    return res.status(200).json(dataChartActivities)
   }
 
   /**
