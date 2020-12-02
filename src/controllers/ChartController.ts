@@ -77,6 +77,7 @@ class ChartController {
   }
 
   /**
+   * Progress achievements to activities.
    *
    * @param req
    * @param res
