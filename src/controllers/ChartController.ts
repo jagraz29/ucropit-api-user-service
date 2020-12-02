@@ -1,7 +1,6 @@
 import { Response, Request } from 'express'
 
 import CropService from '../services/CropService'
-import ActivityService from '../services/ActivityService'
 import ChartService from '../services/ChartDataService'
 import models from '../models'
 import Numbers from '../utils/Numbers'
@@ -131,12 +130,14 @@ class ChartController {
     const summarySortData = CropService.summaryData(sortData)
 
     const labels = summarySortData.map((item) => item.date)
-    const data = summarySortData.map((item) => Numbers.roundToTwo(item.total))
+
     const totalExpectedVolume = Numbers.roundToTwo(
-      data.reduce((a, b) => a + (b || 0), 0)
+      summarySortData.reduce((a, b) => a + (b['total'] || 0), 0)
     )
 
-    return res.status(200).json({ labels, data, totalExpectedVolume })
+    return res
+      .status(200)
+      .json({ summarySortData, labels, totalExpectedVolume })
   }
 
   /**
