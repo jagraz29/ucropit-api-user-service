@@ -1,8 +1,7 @@
 import models from "../models";
-import { isNowGreaterThan, compareDate } from "../utils/Date";
+import { isNowGreaterThan } from "../utils/Date";
 import ServiceBase from "./common/ServiceBase";
 import ActivityService from "./ActivityService";
-import crop from "../models/crop";
 const Crop = models.Crop;
 const Activity = models.Activity;
 
@@ -138,32 +137,15 @@ class CropService extends ServiceBase {
   }
 
   public static sumSurfacesByLot(crop) {
-    let total = 0;
-    for (const status of statusActivities) {
-      if (status.name !== "EXPIRED") {
-        total += this.sumSurfacesLot(crop[status.cropStatus]);
-      }
-    }
+    const totalPerLot = crop.lots.map((lot) => {
+      return this.sumSurfacesLot(lot);
+    });
 
-    return total;
+    return totalPerLot.reduce((a, b) => a + b, 0);
   }
 
-  public static sumSurfacesLot(activities) {
-    return activities
-      .map((activity) => {
-        const sumSurfacesLot = activity.lots
-          .map((lot) => {
-            return {
-              surface: lot.surface
-            };
-          })
-          .reduce((a, b) => a + (b["surface"] || 0), 0);
-
-        return {
-          surfaces_total_lot: sumSurfacesLot
-        };
-      })
-      .reduce((a, b) => a + (b["surfaces_total_lot"] || 0), 0);
+  public static sumSurfacesLot(lot) {
+    return lot.data.reduce((a, b) => a + (b["surface"] || 0), 0);
   }
 
   public static sumSurfacesAndDateActivitiesAgreement(

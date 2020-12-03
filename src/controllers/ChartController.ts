@@ -108,7 +108,7 @@ class ChartController {
    * @param req
    * @param res
    */
-  public async volumesCrops (req, res: Response) {
+  public async volumesCrops (req: Request, res: Response) {
     const user: any = req.user
     const query: any = {
       cancelled: false,
@@ -146,7 +146,7 @@ class ChartController {
    * @param req
    * @param res
    */
-  public async dataGeneralCrops (req, res: Response) {
+  public async dataGeneralCrops (req: Request, res: Response) {
     const user: any = req.user
     const query: any = {
       cancelled: false,
@@ -159,6 +159,7 @@ class ChartController {
 
     const crops = await Crop.find(query)
       .populate('unitType')
+      .populate('lots.data')
       .populate({
         path: 'pending',
         populate: [{ path: 'lots' }]

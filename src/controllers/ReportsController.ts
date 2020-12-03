@@ -58,9 +58,14 @@ class ReportsController {
    */
   public async sendFileReport (req, res: Response) {
     const { email, identifier } = req.body
+    const user: any = req.user
+    console.log(user)
 
-    let crops = await CropService.getAll({ cancelled: false })
-    crops = CropService.filterCropByIdentifier(identifier, crops)
+    let crops = await CropService.getAll({
+      cancelled: false,
+      'members.user': user._id,
+      'members.identifier': identifier
+    })
 
     const report = await ReportService.generateCropReport(crops, identifier)
 
