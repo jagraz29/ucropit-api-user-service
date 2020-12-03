@@ -298,12 +298,12 @@ class CropService extends ServiceBase {
             populate: [
               { path: "filePdf" },
               { path: "fileOts" },
-              { path: "activity" },
+              { path: "activity" }
             ]
           },
           {
-            path: "achievements",
-            populate: [{ path: "lots" }, { path: "files" }]
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'files' }]
           }
         ]
       });
@@ -329,72 +329,72 @@ class CropService extends ServiceBase {
    */
   public static async findOneCrop(cropId: string) {
     return Crop.findById(cropId)
-      .populate("lots.data")
-      .populate("cropType")
-      .populate("unitType")
-      .populate({ path: "company", populate: [{ path: "files" }] })
+      .populate('lots.data')
+      .populate('cropType')
+      .populate('unitType')
+      .populate({ path: 'company', populate: [{ path: 'files' }] })
       .populate({
-        path: "pending",
+        path: 'pending',
         populate: [
-          { path: "collaborators" },
-          { path: "type" },
-          { path: "typeAgreement" },
-          { path: "lots" },
-          { path: "files" },
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' },
           {
-            path: "approvalRegister",
-            populate: [{ path: "file" }, { path: "activity" }]
+            path: 'approvalRegister',
+            populate: [{ path: 'file' }, { path: 'activity' }]
           }
         ]
       })
       .populate({
-        path: "toMake",
+        path: 'toMake',
         populate: [
-          { path: "collaborators" },
-          { path: "type" },
-          { path: "typeAgreement" },
-          { path: "lots" },
-          { path: "files" },
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' },
           {
-            path: "approvalRegister",
-            populate: [{ path: "file" }, { path: "activity" }]
+            path: 'approvalRegister',
+            populate: [{ path: 'file' }, { path: 'activity' }]
           }
         ]
       })
       .populate({
-        path: "done",
+        path: 'done',
         populate: [
-          { path: "collaborators" },
-          { path: "type" },
-          { path: "typeAgreement" },
-          { path: "lots" },
-          { path: "files" },
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' },
           {
-            path: "approvalRegister",
-            populate: [{ path: "file" }, { path: "activity" }]
+            path: 'approvalRegister',
+            populate: [{ path: 'file' }, { path: 'activity' }]
           },
           {
-            path: "achievements",
-            populate: [{ path: "lots" }, { path: "files" }]
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'files' }]
           },
-          { path: "lotsMade" }
+          { path: 'lotsMade' }
         ]
       })
       .populate({
-        path: "finished",
+        path: 'finished',
         populate: [
-          { path: "collaborators" },
-          { path: "type" },
-          { path: "typeAgreement" },
-          { path: "lots" },
-          { path: "files" },
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' },
           {
-            path: "approvalRegister",
-            populate: [{ path: "file" }, { path: "activity" }]
+            path: 'approvalRegister',
+            populate: [{ path: 'file' }, { path: 'activity' }]
           },
           {
-            path: "achievements",
-            populate: [{ path: "lots" }, { path: "files" }]
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'files' }]
           }
         ]
       })
@@ -424,9 +424,9 @@ class CropService extends ServiceBase {
           crop.members.filter((member) => member.identifier === identifier)
             .length > 0
         ) {
-          return crop;
+          return crop
         }
-        return undefined;
+        return undefined
       })
       .filter((crop) => crop)
   }
@@ -438,7 +438,7 @@ class CropService extends ServiceBase {
    *
    * @return Promise
    */
-  public static async changeStatusActivitiesRange(crop: any): Promise<void> {
+  public static async changeStatusActivitiesRange (crop: any): Promise<void> {
     const listActivitiesExpired = (
       await this.listActivitiesExpiredRange(crop, 'done')
     ).filter((activity) => activity)
@@ -464,7 +464,7 @@ class CropService extends ServiceBase {
     return this.findOneCrop(crop._id)
   }
 
-  public static async handleDataCrop(
+  public static async handleDataCrop (
     data,
     company,
     lotsData,
@@ -506,18 +506,18 @@ class CropService extends ServiceBase {
     return newCrop
   }
 
-  public static async store(crop: ICrop) {
+  public static async store (crop: ICrop) {
     const newCrop = new Crop(crop)
     return newCrop.save()
   }
 
-  public static async removeActivities(activity, crop, statusCrop = 'pending') {
+  public static async removeActivities (activity, crop, statusCrop = 'pending') {
     crop[statusCrop].pull(activity._id)
 
     return crop.save()
   }
 
-  public static async addActivities(activity, crop) {
+  public static async addActivities (activity, crop) {
     const status = statusActivities.find(
       (item) => item.name === activity.status[0].name.en
     )
@@ -527,7 +527,7 @@ class CropService extends ServiceBase {
     return crop.save()
   }
 
-  public static async cancelled(cropId) {
+  public static async cancelled (cropId) {
     const crop = await Crop.findById(cropId)
 
     if (
@@ -550,7 +550,7 @@ class CropService extends ServiceBase {
    * @param crop
    * @param statusCrop
    */
-  private static async listActivitiesExpiredRange(crop, statusCrop: string) {
+  private static async listActivitiesExpiredRange (crop, statusCrop: string) {
     const activities = crop[statusCrop].map(async (activity: any) => {
       if (
         this.isExpiredActivity(activity, statusCrop) &&
@@ -570,7 +570,7 @@ class CropService extends ServiceBase {
    * @param crop
    * @param statusCrop
    */
-  private static async listActivitiesFinishedRange(crop, statusCrop: string) {
+  private static async listActivitiesFinishedRange (crop, statusCrop: string) {
     const activities = crop[statusCrop].map(async (activity: any) => {
       if (
         !this.isExpiredActivity(activity, statusCrop) &&
@@ -590,7 +590,7 @@ class CropService extends ServiceBase {
    *
    * @param activity
    */
-  private static checkCompleteSignedEachAchievements(activity: any): boolean {
+  private static checkCompleteSignedEachAchievements (activity: any): boolean {
     let completeSigned = true
     for (const achievement of activity.achievements) {
       if (!this.isCompleteSignsUsers(achievement)) {
@@ -607,7 +607,7 @@ class CropService extends ServiceBase {
    * @param crop
    * @param statusCrop
    */
-  private static async checkListActivitiesExpired(crop, statusCrop: string) {
+  private static async checkListActivitiesExpired (crop, statusCrop: string) {
     return crop[statusCrop].map(async (activity: any) => {
       if (this.isExpiredActivity(activity)) {
         activity.status[0].name.en = 'EXPIRED'

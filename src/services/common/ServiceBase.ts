@@ -115,6 +115,23 @@ class ServiceBase {
   ) {
     axios[method](url, values).then(callback)
   }
+
+  /**
+   * Sort based on the value in the monthNames object.
+   *
+   * @param list
+   * @param sortReference
+   */
+  public static sortData (
+    list: Array<any>,
+    sortReference: Array<any>
+  ): Array<any> {
+    const sortData = list.sort(function (a, b) {
+      return sortReference.indexOf(a.date) - sortReference.indexOf(b.date)
+    })
+
+    return sortData
+  }
 }
 
 export default ServiceBase
