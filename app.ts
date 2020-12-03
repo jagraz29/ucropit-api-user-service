@@ -9,12 +9,19 @@ import morgan from 'morgan'
 import cors from 'cors'
 import routes from './src/routes/v1'
 import fileUpload from 'express-fileupload'
+import * as Sentry from '@sentry/node'
 import path from 'path'
 
 const app: Application = express()
 
+Sentry.init({
+  dsn:
+    'https://673094ae713245a0af2e22148de27f27@o478047.ingest.sentry.io/5519962'
+})
+
 import jwt from './src/utils/auth/strategies/jwt'
 
+app.use(Sentry.Handlers.requestHandler() as express.RequestHandler)
 app.use(jwt.initialize())
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
@@ -38,6 +45,8 @@ app.set('view engine', 'pug')
 app.set('views', path.join(basePath(), 'views'))
 
 app.use('/v1', routes)
+
+app.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler)
 
 app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
   console.log(err)

@@ -1,155 +1,154 @@
-import models from '../models'
-import { isNowGreaterThan, compareDate } from '../utils/Date'
-import ServiceBase from './common/ServiceBase'
-import ActivityService from './ActivityService'
-import crop from '../models/crop'
-const Crop = models.Crop
-const Activity = models.Activity
+import models from "../models";
+import { isNowGreaterThan } from "../utils/Date";
+import ServiceBase from "./common/ServiceBase";
+import ActivityService from "./ActivityService";
+const Crop = models.Crop;
+const Activity = models.Activity;
 
 interface ICrop {
-  name: string
-  pay: Number
-  surface: Number
-  dateCrop: string
-  dateHarvest: string
-  cropType: Object
-  unitType: Object
-  lots: Array<any>
-  members: Array<any>
-  company: string
+  name: string;
+  pay: Number;
+  surface: Number;
+  dateCrop: string;
+  dateHarvest: string;
+  cropType: Object;
+  unitType: Object;
+  lots: Array<any>;
+  members: Array<any>;
+  company: string;
 }
 
 const statusActivities: Array<any> = [
   {
-    name: 'TO_COMPLETE',
-    cropStatus: 'pending'
+    name: "TO_COMPLETE",
+    cropStatus: "pending"
   },
   {
-    name: 'PLANNED',
-    cropStatus: 'toMake'
+    name: "PLANNED",
+    cropStatus: "toMake"
   },
   {
-    name: 'DONE',
-    cropStatus: 'done'
+    name: "DONE",
+    cropStatus: "done"
   },
   {
-    name: 'FINISHED',
-    cropStatus: 'finished'
+    name: "FINISHED",
+    cropStatus: "finished"
   },
   {
-    name: 'EXPIRED',
-    cropStatus: 'toMake'
+    name: "EXPIRED",
+    cropStatus: "toMake"
   }
-]
+];
 
 class CropService extends ServiceBase {
-  public static createDataCropToChartSurface (crops) {
+  public static createDataCropToChartSurface(crops) {
     const listSurfacesData = crops.map((crop) => {
       const sumSurfaceExplo: any = this.sumSurfacesAndDateActivitiesAgreement(
         crop.finished,
-        'ACT_AGREEMENTS',
-        'EXPLO',
+        "ACT_AGREEMENTS",
+        "EXPLO",
         crop
-      )
+      );
       const sumSurfaceSustain: any = this.sumSurfacesAndDateActivitiesAgreement(
         crop.finished,
-        'ACT_AGREEMENTS',
-        'SUSTAIN',
+        "ACT_AGREEMENTS",
+        "SUSTAIN",
         crop
-      )
+      );
 
       if (sumSurfaceExplo.total === sumSurfaceSustain.total) {
         return {
           total: sumSurfaceExplo.total,
           date: sumSurfaceExplo.date
-        }
+        };
       }
 
       if (sumSurfaceExplo.total > sumSurfaceSustain.total) {
         return {
           total: sumSurfaceSustain.total,
           date: sumSurfaceSustain.date
-        }
+        };
       }
 
       if (sumSurfaceExplo.total < sumSurfaceSustain.total) {
         return {
           total: sumSurfaceExplo.total,
           date: sumSurfaceExplo.date
-        }
+        };
       }
-    })
+    });
 
-    return this.summaryData(listSurfacesData)
+    return this.summaryData(listSurfacesData);
   }
 
-  public static getSummaryVolumes (crops) {
+  public static getSummaryVolumes(crops) {
     const listVolumes = crops.map((crop) => {
       return {
         total: this.calVolume(crop.unitType.key, crop.pay, crop.surface),
-        date: crop.dateHarvest.toLocaleDateString('en-US', {
-          month: 'long'
+        date: crop.dateHarvest.toLocaleDateString("en-US", {
+          month: "long"
         })
-      }
-    })
+      };
+    });
 
-    return this.summaryData(listVolumes)
+    return this.summaryData(listVolumes);
   }
 
-  public static summaryData (list) {
-    let total = 0
-    let date = ''
-    let summary = []
+  public static summaryData(list) {
+    let total = 0;
+    let date = "";
+    let summary = [];
     for (const data of list) {
       if (date !== data.date) {
-        total += data.total
-        date = data.date
+        total += data.total;
+        date = data.date;
         summary.push({
           total,
           date
-        })
+        });
       } else {
-        const index = summary.findIndex((item) => item.date === date)
-        summary[index].total += data.total
+        const index = summary.findIndex((item) => item.date === date);
+        summary[index].total += data.total;
       }
 
-      total = 0
+      total = 0;
     }
 
-    return summary
+    return summary;
   }
 
-  public static sumSurfacesActivityAgreement (activities, type, typeAgreement?) {
+  public static sumSurfacesActivityAgreement(activities, type, typeAgreement?) {
     const filterActivity = activities.filter((activity) => {
       return (
         activity.type.tag === type &&
         typeAgreement &&
         activity.typeAgreement &&
         activity.typeAgreement.key === typeAgreement
-      )
-    })
+      );
+    });
 
-    let total = 0
+    let total = 0;
     for (const activity of filterActivity) {
-      total += activity.surface
+      total += activity.surface;
     }
 
-    return total
+    return total;
   }
 
-  public static sumSurfacesByLot (crop) {
+  public static sumSurfacesByLot(crop) {
     const totalPerLot = crop.lots.map((lot) => {
-      return this.sumSurfacesLot(lot)
-    })
+      return this.sumSurfacesLot(lot);
+    });
 
-    return totalPerLot.reduce((a, b) => a + b, 0)
+    return totalPerLot.reduce((a, b) => a + b, 0);
   }
 
-  public static sumSurfacesLot (lot) {
-    return lot.data.reduce((a, b) => a + (b['surface'] || 0), 0)
+  public static sumSurfacesLot(lot) {
+    return lot.data.reduce((a, b) => a + (b["surface"] || 0), 0);
   }
 
-  public static sumSurfacesAndDateActivitiesAgreement (
+  public static sumSurfacesAndDateActivitiesAgreement(
     activities,
     type,
     typeAgreement,
@@ -161,19 +160,19 @@ class CropService extends ServiceBase {
         typeAgreement &&
         activity.typeAgreement &&
         activity.typeAgreement.key === typeAgreement
-      )
-    })
-    let total = 0
-    let date = new Date()
+      );
+    });
+    let total = 0;
+    let date = new Date();
     for (const activity of filterActivity) {
-      total += activity.surface
+      total += activity.surface;
 
-      date = crop.dateCrop.toLocaleDateString('en-US', {
-        month: 'long'
-      })
+      date = crop.dateCrop.toLocaleDateString("en-US", {
+        month: "long"
+      });
     }
 
-    return { total, date }
+    return { total, date };
   }
 
   /**
@@ -182,20 +181,20 @@ class CropService extends ServiceBase {
    * @param pay
    * @param surfaces
    */
-  public static calVolume (unit: string, pay: number, surfaces: number): number {
-    if (unit === 'kg') {
-      return (pay / 1000) * surfaces
+  public static calVolume(unit: string, pay: number, surfaces: number): number {
+    if (unit === "kg") {
+      return (pay / 1000) * surfaces;
     }
 
-    if (unit === 't') {
-      return pay * surfaces
+    if (unit === "t") {
+      return pay * surfaces;
     }
 
-    if (unit === 'q') {
-      return (pay / 10) * surfaces
+    if (unit === "q") {
+      return (pay / 10) * surfaces;
     }
 
-    return 0
+    return 0;
   }
 
   /**
@@ -203,18 +202,18 @@ class CropService extends ServiceBase {
    *
    * @param query
    */
-  public static async getAll (query?) {
-    let crops = await this.findAll(query)
+  public static async getAll(query?) {
+    let crops = await this.findAll(query);
 
     crops = crops.map(async (crop) => {
-      crop = await this.expiredActivities(crop)
+      crop = await this.expiredActivities(crop);
 
-      crop = await this.changeStatusActivitiesRange(crop)
+      crop = await this.changeStatusActivitiesRange(crop);
 
-      return crop
-    })
+      return crop;
+    });
 
-    return Promise.all(crops)
+    return Promise.all(crops);
   }
 
   /**
@@ -222,66 +221,66 @@ class CropService extends ServiceBase {
    *
    * @param query
    */
-  public static async findAll (query) {
+  public static async findAll(query) {
     return Crop.find(query)
-      .populate('lots.data')
-      .populate('cropType')
-      .populate('unitType')
-      .populate('company')
+      .populate("lots.data")
+      .populate("cropType")
+      .populate("unitType")
+      .populate("company")
       .populate({
-        path: 'pending',
+        path: "pending",
         populate: [
-          { path: 'collaborators' },
-          { path: 'type' },
-          { path: 'typeAgreement' },
-          { path: 'lots' },
-          { path: 'files' },
-          { path: 'user' }
+          { path: "collaborators" },
+          { path: "type" },
+          { path: "typeAgreement" },
+          { path: "lots" },
+          { path: "files" },
+          { path: "user" }
         ]
       })
       .populate({
-        path: 'toMake',
+        path: "toMake",
         populate: [
-          { path: 'collaborators' },
-          { path: 'type' },
-          { path: 'typeAgreement' },
-          { path: 'lots' },
-          { path: 'files' },
-          { path: 'user' }
+          { path: "collaborators" },
+          { path: "type" },
+          { path: "typeAgreement" },
+          { path: "lots" },
+          { path: "files" },
+          { path: "user" }
         ]
       })
       .populate({
-        path: 'done',
+        path: "done",
         populate: [
-          { path: 'collaborators' },
-          { path: 'type' },
-          { path: 'typeAgreement' },
-          { path: 'lots' },
-          { path: 'files' },
+          { path: "collaborators" },
+          { path: "type" },
+          { path: "typeAgreement" },
+          { path: "lots" },
+          { path: "files" },
           {
-            path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }]
+            path: "achievements",
+            populate: [{ path: "lots" }, { path: "files" }]
           },
-          { path: 'lotsMade' },
-          { path: 'user' }
+          { path: "lotsMade" },
+          { path: "user" }
         ]
       })
-      .populate('members.user')
+      .populate("members.user")
       .populate({
-        path: 'finished',
+        path: "finished",
         populate: [
-          { path: 'collaborators' },
-          { path: 'type' },
-          { path: 'typeAgreement' },
-          { path: 'lots' },
-          { path: 'files' },
-          { path: 'user' },
+          { path: "collaborators" },
+          { path: "type" },
+          { path: "typeAgreement" },
+          { path: "lots" },
+          { path: "files" },
+          { path: "user" },
           {
-            path: 'approvalRegister',
+            path: "approvalRegister",
             populate: [
-              { path: 'filePdf' },
-              { path: 'fileOts' },
-              { path: 'activity' }
+              { path: "filePdf" },
+              { path: "fileOts" },
+              { path: "activity" }
             ]
           },
           {
@@ -289,20 +288,20 @@ class CropService extends ServiceBase {
             populate: [{ path: 'lots' }, { path: 'files' }]
           }
         ]
-      })
+      });
   }
   /**
    *
    * @param cropId
    */
-  public static async getCropById (cropId: string) {
-    let crop = await this.findOneCrop(cropId)
+  public static async getCropById(cropId: string) {
+    let crop = await this.findOneCrop(cropId);
 
-    crop = await this.expiredActivities(crop)
+    crop = await this.expiredActivities(crop);
 
-    crop = await this.changeStatusActivitiesRange(crop)
+    crop = await this.changeStatusActivitiesRange(crop);
 
-    return crop
+    return crop;
   }
 
   /**
@@ -310,7 +309,7 @@ class CropService extends ServiceBase {
    *
    * @param cropId
    */
-  public static async findOneCrop (cropId: string) {
+  public static async findOneCrop(cropId: string) {
     return Crop.findById(cropId)
       .populate('lots.data')
       .populate('cropType')
@@ -389,7 +388,7 @@ class CropService extends ServiceBase {
    *
    * @param crop
    */
-  public static async expiredActivities (crop: any) {
+  public static async expiredActivities(crop: any) {
     let activitiesToMake = await this.checkListActivitiesExpired(
       crop,
       'toMake'
@@ -400,7 +399,7 @@ class CropService extends ServiceBase {
     return crop
   }
 
-  public static filterCropByIdentifier (identifier: string | any, crops) {
+  public static filterCropByIdentifier(identifier: string | any, crops) {
     return crops
       .map((crop) => {
         if (

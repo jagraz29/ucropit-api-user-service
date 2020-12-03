@@ -5,6 +5,11 @@ import chartsController from '../../controllers/ChartController'
 
 router.get('/surfaces/agreements', chartsController.surfaceActivityAgreement)
 
+router.get(
+  '/activities/achievements',
+  chartsController.surfaceProgressAchievements
+)
+
 router.get('/volumes/tons', chartsController.volumesCrops)
 
 router.get('/summary/crops', chartsController.dataGeneralCrops)
