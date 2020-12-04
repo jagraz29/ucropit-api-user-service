@@ -51,7 +51,8 @@ class ChartController {
         populate: [
           { path: 'collaborators' },
           { path: 'type' },
-          { path: 'typeAgreement' }
+          { path: 'typeAgreement' },
+          { path: 'achievements' }
         ]
       })
       .lean()
