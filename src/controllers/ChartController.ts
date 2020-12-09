@@ -52,7 +52,8 @@ class ChartController {
           { path: 'collaborators' },
           { path: 'type' },
           { path: 'typeAgreement' },
-          { path: 'achievements' }
+          { path: 'achievements' },
+          { path: 'lots' }
         ]
       })
       .lean()
