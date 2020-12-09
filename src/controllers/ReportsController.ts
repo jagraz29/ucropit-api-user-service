@@ -77,7 +77,8 @@ class ReportsController {
       data: {},
       files: [
         {
-          path: pathFile
+          filename: 'report.xlsx',
+          content: fs.readFileSync(pathFile)
         }
       ]
     })
