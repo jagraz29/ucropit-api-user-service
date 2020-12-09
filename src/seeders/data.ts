@@ -202,10 +202,10 @@ export const activitiesTypesData = [
   },
   {
     name: {
-      en: 'TEST',
-      es: 'TEST'
+      en: 'Monitoring',
+      es: 'Monitoreo'
     },
-    tag: 'TEST'
+    tag: 'ACT_MONITORING'
   }
 ]
 

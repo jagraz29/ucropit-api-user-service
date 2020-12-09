@@ -33,12 +33,16 @@ export const validateActivityStore = async (activity) => {
     dateStart: Joi.date().optional(),
     dateEnd: Joi.date().greater(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
-    surface: Joi.number().required(),
+    surface: Joi.number().optional(),
     type: Joi.string().required(),
     typeAgreement: Joi.string().optional(),
     status: Joi.string().optional(),
     lots: Joi.array().items(Joi.string()).optional(),
     crop: Joi.string().optional(),
+    dateObservation: Joi.date().optional(),
+    unitType: Joi.string().optional(),
+    pay: Joi.number().optional(),
+    observation: Joi.string().optional(),
     supplies: Joi.array()
       .items(
         Joi.object().keys({
