@@ -201,11 +201,9 @@ class ActivityService extends ServiceBase {
     return activities
       .map((activity) => {
         if (this.isActivityType(activity, type)) {
-          const total = activity.achievements.reduce(
-            (a, b) => a + (b['surface'] || 0),
-            0
+          const total = this.sumSurfacesByLotsAchievements(
+            activity.achievements
           )
-
           return {
             total: total,
             date: activity.achievements[0].dateAchievement.toLocaleDateString(
@@ -220,6 +218,16 @@ class ActivityService extends ServiceBase {
         return undefined
       })
       .filter((activity) => activity)
+  }
+
+  private static sumSurfacesByLotsAchievements (achievements) {
+    let total = 0
+
+    for (const achievement of achievements) {
+      total += achievement.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
+    }
+
+    return total
   }
 
   private static isActivityType (activity, type: string): boolean {

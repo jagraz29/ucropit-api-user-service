@@ -408,7 +408,10 @@ class ReportService {
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
         if (this.isCompleteSigners(achievement.signers)) {
-          total += achievement.surface
+          total += achievement.lots.reduce(
+            (a, b) => a + (b['surface'] || 0),
+            0
+          )
         }
       }
     }
@@ -421,7 +424,10 @@ class ReportService {
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
         if (this.isApprovedFileEvidence(achievement.files)) {
-          total += achievement.surface
+          total += achievement.lots.reduce(
+            (a, b) => a + (b['surface'] || 0),
+            0
+          )
         }
       }
     }
