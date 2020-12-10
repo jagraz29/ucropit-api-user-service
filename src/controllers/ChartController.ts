@@ -88,11 +88,17 @@ class ChartController {
       .populate('members.user')
       .populate({
         path: 'done',
-        populate: [{ path: 'type' }, { path: 'achievements' }]
+        populate: [
+          { path: 'type' },
+          { path: 'achievements', populate: [{ path: 'lots' }] }
+        ]
       })
       .populate({
         path: 'finished',
-        populate: [{ path: 'type' }, { path: 'achievements' }]
+        populate: [
+          { path: 'type' },
+          { path: 'achievements', populate: [{ path: 'lots' }] }
+        ]
       })
       .lean()
 
