@@ -173,6 +173,7 @@ class ActivitiesController {
     let activity = await Activity.findById(id)
       .populate('type')
       .populate('typeAgreement')
+      .populate('unitType')
       .populate('lots')
       .populate('files')
 

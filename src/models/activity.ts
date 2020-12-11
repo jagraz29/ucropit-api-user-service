@@ -72,6 +72,19 @@ const ActivitySchema = new Schema({
     type: Date,
     required: false
   },
+  dateObservation: {
+    type: Date
+  },
+  observation: {
+    type: String
+  },
+  unitType: {
+    type: Schema.Types.ObjectId,
+    ref: 'UnitType'
+  },
+  pay: {
+    type: Number
+  },
   surface: {
     type: Number,
     required: false

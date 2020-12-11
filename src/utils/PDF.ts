@@ -14,7 +14,7 @@ import {
 const User = models.User
 
 class PDF {
-  public static async generate ({ pathFile, files, crop, activity }) {
+  public static async generate({ pathFile, files, crop, activity }) {
     // Create a new PDFDocument
     const pdfDoc = await PDFDocument.create()
 
@@ -26,6 +26,9 @@ class PDF {
 
     // Add a blank page to Activity
     const pageActivity = pdfDoc.addPage()
+
+    // Add a blank page to Lots Selected
+    const pageLotsSelected = pdfDoc.addPage()
 
     // Add a blank page to Achievement
     const pageAchievement = pdfDoc.addPage()
@@ -45,6 +48,14 @@ class PDF {
     })
 
     pageActivity.drawText(`${this.generateActivityTemplate(activity)}`, {
+      x: 150,
+      y: height - 4 * fontSize,
+      size: fontSize,
+      font: timesRomanFont,
+      color: rgb(0, 0.53, 0.71)
+    })
+
+    pageLotsSelected.drawText(`${this.generateLotsSelected(activity)}`, {
       x: 150,
       y: height - 4 * fontSize,
       size: fontSize,
@@ -148,7 +159,7 @@ class PDF {
     })
   }
 
-  public static async generateCropTemplate (crop) {
+  public static async generateCropTemplate(crop) {
     const companyProducer = await this.getCompanyProducer(crop)
     return `
         CULTIVO
@@ -170,20 +181,35 @@ class PDF {
         `
   }
 
-  public static generateActivityTemplate (activity) {
+  public static generateActivityTemplate(activity) {
     return `
-    Actividad
-    -------------------------------------------------
     Actividad: ${activity.type.name.es} ${
       activity.typeAgreement ? activity.typeAgreement.name.es : ''
     }
+    ${activity.pay || ''} ${activity.unitType ? activity.unitType.name.es : ''}
+    ${activity.observation || ''}
+    ${
+      activity.dateObservation
+        ? activity.dateObservation.toLocaleDateString('es-ES', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })
+        : ''
+    }
+    -------------------------------------------------------------
+    `
+  }
+
+  public static generateLotsSelected(activity) {
+    return `
     Lotes Seleccionados:
     ${this.createStringLot(activity.lots)}
     --------------------------------------------------
     `
   }
 
-  public static async listAchievements (activity) {
+  public static async listAchievements(activity) {
     return `
     Realizaciones
     -------------------------------------------------
@@ -191,7 +217,7 @@ class PDF {
     `
   }
 
-  public static async generateSignersTemplate (signers) {
+  public static async generateSignersTemplate(signers) {
     const listSigners = await this.listSigners(signers)
     return `
     --------------------------------------------------
@@ -202,7 +228,7 @@ class PDF {
     `
   }
 
-  private static async generateAchievement (achievements) {
+  private static async generateAchievement(achievements) {
     let list = ''
 
     for (const achievement of achievements) {
@@ -227,7 +253,7 @@ class PDF {
     return list
   }
 
-  private static async addFileDocumentAchievements (achievements, pdfDoc) {
+  private static async addFileDocumentAchievements(achievements, pdfDoc) {
     for (const achievement of achievements) {
       const imagesPngBytes = this.readImagesPngFiles(achievement.files)
       const imagesJpgBytes = this.readImagesJpgFiles(achievement.files)
@@ -307,7 +333,7 @@ class PDF {
     }
   }
 
-  private static async listSigners (signers) {
+  private static async listSigners(signers) {
     let users = ''
 
     for (const sign of signers) {
@@ -321,7 +347,7 @@ class PDF {
     return users
   }
 
-  private static listSupplies (supplies) {
+  private static listSupplies(supplies) {
     let list = ''
 
     for (const input of supplies) {
@@ -332,7 +358,7 @@ class PDF {
     return list
   }
 
-  private static readImagesPngFiles (files: any) {
+  private static readImagesPngFiles(files: any) {
     return files
       .map((item) => {
         console.log(item)
@@ -350,7 +376,7 @@ class PDF {
       .filter((item) => item)
   }
 
-  private static readImagesJpgFiles (files: any) {
+  private static readImagesJpgFiles(files: any) {
     return files
       .map((item) => {
         console.log(item)
