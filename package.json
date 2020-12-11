@@ -67,6 +67,7 @@
     "pug": "^3.0.0",
     "puppeteer": "^5.4.1",
     "sha256": "^0.2.0",
+    "sharp": "^0.26.3",
     "shortid": "^2.2.15"
   },
   "devDependencies": {

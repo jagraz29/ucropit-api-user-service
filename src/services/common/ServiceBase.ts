@@ -1,5 +1,6 @@
 import { FileArray } from 'express-fileupload'
 import UploadService from '../UploadService'
+import ImageService from '../ImageService'
 import remove from 'lodash/remove'
 import axios from 'axios'
 import { fileExist, removeFile } from '../../utils/Files'
@@ -25,6 +26,7 @@ class ServiceBase {
     const filesUploaded = await UploadService.upload(files, `${path}`)
 
     const documents = filesUploaded.map(async (item, index) => {
+      // await ImageService.resize({ path: item.path, width: 200, height: 200 })
       const file = await FileDocument.create({
         ...(item as object),
         ...evidences[index],

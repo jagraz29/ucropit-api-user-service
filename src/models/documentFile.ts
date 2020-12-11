@@ -41,6 +41,12 @@ export const FileDocumentSchema = new Schema({
   name: {
     type: String
   },
+  pathThumbnails: {
+    type: String
+  },
+  pathIntermediate: {
+    type: String
+  },
   description: {
     type: String
   },

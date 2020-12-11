@@ -14,6 +14,9 @@ import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService
 import models from '../models'
 import { FileDocumentSchema } from '../models/documentFile'
 
+import UploadService from '../services/UploadService'
+import ImageService from '../services/ImageService'
+
 const Crop = models.Crop
 
 class AchievementsController {
@@ -190,6 +193,24 @@ class AchievementsController {
     const pdf = await AchievementService.generatePdf(activity, crop)
 
     return res.status(200).json(pdf.publicPath)
+  }
+
+  public async testFile (req: Request, res: Response) {
+    const filesUploaded = await UploadService.upload(
+      req.files,
+      `achievements/123-tre`
+    )
+
+    for (const item of filesUploaded) {
+      await ImageService.resize({
+        path: item.path,
+        destination: `achievements/123-tre`,
+        width: 200,
+        height: 200
+      })
+    }
+
+    res.status(200).send(filesUploaded)
   }
 }
 
