@@ -22,7 +22,10 @@ class ImageService {
       .resize(parameters.width, parameters.height)
       .toFile(getFullPath(pathImage))
 
-    return pathImage
+    return {
+      path: pathImage,
+      nameFile: `${parameters.suffixName}-${parameters.nameFile}`
+    }
   }
 
   /**
@@ -31,7 +34,7 @@ class ImageService {
    * @param parameters
    */
   public static async createThumbnail (parameters: ResizeImageParameters) {
-    const pathImageThumbnails = await this.resize({
+    const thumbnails = await this.resize({
       path: parameters.path,
       destination: parameters.destination,
       nameFile: parameters.nameFile,
@@ -40,7 +43,7 @@ class ImageService {
       height: 200
     })
 
-    return pathImageThumbnails
+    return thumbnails
   }
 }
 

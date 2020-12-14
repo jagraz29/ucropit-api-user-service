@@ -5,8 +5,11 @@ import remove from 'lodash/remove'
 import axios from 'axios'
 import { fileExist, removeFile } from '../../utils/Files'
 import models from '../../models'
+import { array } from 'joi'
 
 const FileDocument = models.FileDocument
+
+const VALID_FORMATS_FILES = `image.*`
 class ServiceBase {
   /**
    * Upload Files and create Document Files.
@@ -35,6 +38,11 @@ class ServiceBase {
 
       return file._id
     })
+
+    const manipulateImages = await this.manipulateImage(filesUploaded)
+
+    console.log('Array de imagenes manipuladas')
+    console.log(manipulateImages)
 
     const filesSync = await Promise.all(documents)
 
@@ -133,6 +141,45 @@ class ServiceBase {
     })
 
     return sortData
+  }
+
+  private static async manipulateImage (files) {
+    let fileArray = []
+    for (const file of files) {
+      if (file.fileType.match(VALID_FORMATS_FILES) !== null) {
+        const thumbnail = await ImageService.createThumbnail({
+          path: file.path,
+          destination: 'uploads/achievements/123-tre',
+          nameFile: file.nameFile,
+          suffixName: 'thumbnail',
+          width: 200,
+          height: 200
+        })
+
+        const intermediate = await ImageService.resize({
+          path: file.path,
+          destination: 'uploads/achievements/123-tre',
+          nameFile: file.nameFile,
+          suffixName: 'intermediate',
+          width: 350,
+          height: 350
+        })
+
+        fileArray.push({
+          path: thumbnail.path,
+          nameFile: thumbnail.nameFile,
+          fileType: file.fileType
+        })
+
+        fileArray.push({
+          path: intermediate.path,
+          nameFile: intermediate.nameFile,
+          fileType: file.fileType
+        })
+      }
+    }
+
+    return fileArray
   }
 }
 

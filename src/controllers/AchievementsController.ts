@@ -202,12 +202,26 @@ class AchievementsController {
     )
 
     for (const item of filesUploaded) {
-      await ImageService.resize({
+      const pathThumbnail = await ImageService.createThumbnail({
         path: item.path,
-        destination: `achievements/123-tre`,
+        destination: 'uploads/achievements/123-tre',
+        nameFile: item.nameFile,
+        suffixName: 'thumbnail',
         width: 200,
         height: 200
       })
+
+      const intermediatePath = await ImageService.resize({
+        path: item.path,
+        destination: 'uploads/achievements/123-tre',
+        nameFile: item.nameFile,
+        suffixName: 'intermediate',
+        width: 350,
+        height: 350
+      })
+
+      console.log(pathThumbnail)
+      console.log(intermediatePath)
     }
 
     res.status(200).send(filesUploaded)
