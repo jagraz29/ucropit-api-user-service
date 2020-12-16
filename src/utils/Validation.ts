@@ -60,7 +60,9 @@ export const validateActivityStore = async (activity) => {
         Joi.object().keys({
           name: Joi.string().required(),
           description: Joi.string().required(),
-          date: Joi.date().required()
+          date: Joi.date().required(),
+          settings: Joi.optional(),
+          meta: Joi.optional()
         })
       )
       .optional(),
@@ -110,7 +112,9 @@ export const validateActivityUpdate = async (activity) => {
         Joi.object().keys({
           name: Joi.string().required(),
           description: Joi.string().required(),
-          date: Joi.date().required()
+          date: Joi.date().required(),
+          settings: Joi.optional(),
+          meta: Joi.optional()
         })
       )
       .optional(),
