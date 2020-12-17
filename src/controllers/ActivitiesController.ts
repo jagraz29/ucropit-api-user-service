@@ -117,6 +117,7 @@ class ActivitiesController {
     const { id } = req.params
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
+
     const { status } = data
     await validateActivityUpdate(data)
     const validationFiles = validateFilesWithEvidences(
@@ -173,6 +174,7 @@ class ActivitiesController {
     let activity = await Activity.findById(id)
       .populate('type')
       .populate('typeAgreement')
+      .populate('unitType')
       .populate('lots')
       .populate('files')
 

@@ -71,6 +71,22 @@ const AchievementSchema: Schema = new Schema({
     }
   ],
   files: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }],
+  destination: [
+    {
+      unitType: {
+        type: Schema.Types.ObjectId
+      },
+      tonsHarvest: {
+        type: Number
+      },
+      destinationAddress: {
+        type: String
+      },
+      label: {
+        type: String
+      }
+    }
+  ],
   signers: [
     {
       userId: {

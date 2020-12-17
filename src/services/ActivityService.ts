@@ -24,7 +24,7 @@ interface IActivity {
 }
 
 class ActivityService extends ServiceBase {
-  public static async findActivityById (id: string) {
+  public static async findActivityById(id: string) {
     return Activity.findById(id)
       .populate('type')
       .populate('typeAgreement')
@@ -52,7 +52,7 @@ class ActivityService extends ServiceBase {
       .populate('user')
   }
 
-  public static async store (activity: IActivity, user) {
+  public static async store(activity: IActivity, user) {
     let statusActivity: Array<any> = []
     if (!this.existStatus(activity)) {
       statusActivity = this.createStatus('COMPLETAR')
@@ -69,7 +69,7 @@ class ActivityService extends ServiceBase {
     return Activity.create(activity)
   }
 
-  public static async update (id: string, activity: IActivity) {
+  public static async update(id: string, activity: IActivity) {
     let statusActivity: Array<any> = []
 
     if (this.existStatus(activity)) {
@@ -82,11 +82,11 @@ class ActivityService extends ServiceBase {
     return Activity.findOne({ _id: id })
   }
 
-  public static async getByTag (tag: string) {
+  public static async getByTag(tag: string) {
     return ActivityType.findOne({ tag })
   }
 
-  public static createDefault (surface: number, date: string, user) {
+  public static createDefault(surface: number, date: string, user) {
     const typesActivity = ['ACT_SOWING', 'ACT_HARVEST', 'ACT_AGREEMENTS']
 
     const activities = typesActivity.map(async (item) => {
@@ -134,6 +134,7 @@ class ActivityService extends ServiceBase {
       .populate('lots')
       .populate('files')
       .populate('type')
+      .populate('unitType')
       .populate('typeAgreement')
   }
 
