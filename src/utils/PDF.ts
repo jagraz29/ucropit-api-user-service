@@ -245,6 +245,8 @@ class PDF {
         -------------------------------------
         Insumos Utilizados: ${this.listSupplies(achievement.supplies)}
         -------------------------------------
+        Destinos: ${this.listDestination(achievement.destination)}
+        -------------------------------------
         Firmantes de la Realización: ${await this.listSigners(
           achievement.signers
         )}`
@@ -353,6 +355,15 @@ class PDF {
     for (const input of supplies) {
       list += `Nombre: ${input.name}, Unidad: ${input.unit}, Cantidad: ${input.quantity}
       `
+    }
+
+    return list
+  }
+
+  private static listDestination(destinations) {
+    let list = ''
+    for (const destination of destinations) {
+      list += `Unidad: ${destination.tonsHarvest} ${destination.label} - Destino: ${destination.destinationAddress}`
     }
 
     return list

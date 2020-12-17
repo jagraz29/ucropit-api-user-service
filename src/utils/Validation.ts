@@ -60,7 +60,9 @@ export const validateActivityStore = async (activity) => {
         Joi.object().keys({
           name: Joi.string().required(),
           description: Joi.string().required(),
-          date: Joi.date().required()
+          date: Joi.date().required(),
+          settings: Joi.optional(),
+          meta: Joi.optional()
         })
       )
       .optional(),
@@ -86,6 +88,10 @@ export const validateActivityUpdate = async (activity) => {
     surface: Joi.number().optional(),
     type: Joi.string().optional(),
     typeAgreement: Joi.string().optional(),
+    dateObservation: Joi.date().optional(),
+    unitType: Joi.string().optional(),
+    pay: Joi.number().optional(),
+    observation: Joi.string().optional(),
     status: Joi.string().optional(),
     lots: Joi.array().items(Joi.string()).optional(),
     crop: Joi.string().optional(),
@@ -106,7 +112,9 @@ export const validateActivityUpdate = async (activity) => {
         Joi.object().keys({
           name: Joi.string().required(),
           description: Joi.string().required(),
-          date: Joi.date().required()
+          date: Joi.date().required(),
+          settings: Joi.optional(),
+          meta: Joi.optional()
         })
       )
       .optional(),
@@ -181,6 +189,17 @@ export const validateAchievement = async (achievement) => {
           typeId: Joi.string().required(),
           icon: Joi.string().optional(),
           total: Joi.number().required()
+        })
+      )
+      .optional(),
+    destination: Joi.array()
+      .items(
+        Joi.object().keys({
+          unitType: Joi.string().required(),
+          tonsHarvest: Joi.number().required(),
+          destinationAddress: Joi.string().required(),
+          icon: Joi.string().optional(),
+          label: Joi.string().optional()
         })
       )
       .optional(),

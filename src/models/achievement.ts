@@ -81,6 +81,9 @@ const AchievementSchema: Schema = new Schema({
       },
       destinationAddress: {
         type: String
+      },
+      label: {
+        type: String
       }
     }
   ],
