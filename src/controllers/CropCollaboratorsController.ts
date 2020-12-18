@@ -9,7 +9,8 @@ import CollaboratorRequest from '../models/collaboratorRequest'
 const PRODUCERS_ROLES = [
   'PRODUCER',
   'PRODUCER_ADVISER',
-  'PRODUCER_ADVISER_ENCOURAGED'
+  'PRODUCER_ADVISER_ENCOURAGED',
+  'CAM'
 ]
 
 class CropCollaboratorsController {
