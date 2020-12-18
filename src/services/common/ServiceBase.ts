@@ -1,11 +1,14 @@
 import { FileArray } from 'express-fileupload'
 import UploadService from '../UploadService'
+import ImageService from '../ImageService'
 import remove from 'lodash/remove'
 import axios from 'axios'
 import { fileExist, removeFile } from '../../utils/Files'
 import models from '../../models'
 
 const FileDocument = models.FileDocument
+
+const VALID_FORMATS_FILES = `image.*`
 class ServiceBase {
   /**
    * Upload Files and create Document Files.
@@ -25,15 +28,17 @@ class ServiceBase {
     const filesUploaded = await UploadService.upload(files, `${path}`)
 
     const documents = filesUploaded.map(async (item, index) => {
+      const manipulated = await this.manipulateImage(item, path, 500, 500)
       const file = await FileDocument.create({
         ...(item as object),
         ...evidences[index],
+        pathThumbnails: manipulated ? manipulated.pathThumbnail : null,
+        pathIntermediate: manipulated ? manipulated.pathIntermediate : null,
         user: user._id
       })
 
       return file._id
     })
-
     const filesSync = await Promise.all(documents)
 
     for (const file of filesSync) {
@@ -131,6 +136,50 @@ class ServiceBase {
     })
 
     return sortData
+  }
+
+  /**
+   * Resize image.
+   *
+   * @param file
+   * @param destination
+   * @param width
+   * @param height
+   */
+  private static async manipulateImage (
+    file,
+    destination: string,
+    width: number,
+    height: number
+  ) {
+    if (file.fileType.match(VALID_FORMATS_FILES) !== null) {
+      const thumbnail = await ImageService.createThumbnail({
+        path: file.path,
+        destination: `${process.env.DIR_UPLOADS}/${destination}`,
+        nameFile: file.nameFile,
+        suffixName: 'thumbnail',
+        width: 200,
+        height: 200,
+        fit: 'cover'
+      })
+
+      const intermediate = await ImageService.resize({
+        path: file.path,
+        destination: `${process.env.DIR_UPLOADS}/${destination}`,
+        nameFile: file.nameFile,
+        suffixName: 'intermediate',
+        width: width,
+        height: height,
+        fit: 'contain'
+      })
+
+      return {
+        pathThumbnail: thumbnail.path,
+        pathIntermediate: intermediate.path
+      }
+    }
+
+    return null
   }
 }
 

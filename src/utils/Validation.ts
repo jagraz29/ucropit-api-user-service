@@ -192,6 +192,17 @@ export const validateAchievement = async (achievement) => {
         })
       )
       .optional(),
+    destination: Joi.array()
+      .items(
+        Joi.object().keys({
+          unitType: Joi.string().required(),
+          tonsHarvest: Joi.number().required(),
+          destinationAddress: Joi.string().required(),
+          icon: Joi.string().optional(),
+          label: Joi.string().optional()
+        })
+      )
+      .optional(),
     evidences: Joi.array()
       .items(
         Joi.object().keys({

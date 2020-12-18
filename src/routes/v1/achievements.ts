@@ -150,4 +150,6 @@ router.get(
   achievementsController.makePdf
 )
 
+router.post('/test/files', achievementsController.testFile)
+
 export default router

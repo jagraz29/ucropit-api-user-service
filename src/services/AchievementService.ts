@@ -33,6 +33,7 @@ class AchievementService extends ServiceBase {
       .populate('lots')
       .populate('files')
       .populate('signers')
+      .populate('destination')
   }
 
   /**
