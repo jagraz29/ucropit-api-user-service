@@ -20,11 +20,17 @@ class SuppliesController {
       skip,
       limit: 15
     })
-    .populate('typeId')
-    .sort('name')
-    .lean()
+      .populate('typeId')
+      .sort('name')
+      .lean()
 
     res.status(200).json(supplies)
+  }
+
+  public async quantity (req: Request, res: Response) {
+    const total = await Supply.countDocuments()
+
+    res.status(200).json({ quantity: total })
   }
 }
 
