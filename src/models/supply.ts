@@ -24,7 +24,9 @@ const SupplySchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'SupplyType'
   },
-  unit: String
+  unit: String,
+  brand: String,
+  compositon: String
 })
 
 export default mongoose.model('Supply', SupplySchema)
