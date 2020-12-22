@@ -138,7 +138,6 @@ const seedersSupplyFertilizers = async (flag?) => {
 }
 
 const seedersSupplyPesticides = async (flag?) => {
-  console.log(flag)
   if (flag && flag !== '--pesticides') return
   console.log(`${chalk.green('=====Registering Supply Pesticides====')}`)
 
