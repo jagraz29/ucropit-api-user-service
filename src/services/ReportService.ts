@@ -71,6 +71,68 @@ class ReportService {
           crop.finished,
           'Sowing'
         ),
+        percent_achievements_harvest: this.percentAchievementsActivity(
+          crop,
+          'Harvest'
+        ),
+        surfaces_signed_harvest: this.sumSurfaceSigners(crop, 'Harvest'),
+        surfaces_files_approved_harvest: this.totalSurfacesAchievementsFileApproved(
+          crop,
+          'Harvest'
+        ),
+        link_pdf_ots_harvest: this.createLinkDownloadFilesSign(
+          crop.finished,
+          'Harvest'
+        ),
+
+        percent_achievements_application: this.percentAchievementsActivity(
+          crop,
+          'Application'
+        ),
+        surfaces_signed_application: this.sumSurfaceSigners(
+          crop,
+          'Application'
+        ),
+        surfaces_files_approved_application: this.totalSurfacesAchievementsFileApproved(
+          crop,
+          'Application'
+        ),
+        link_pdf_ots_application: this.createLinkDownloadFilesSign(
+          crop.finished,
+          'Application'
+        ),
+
+        percent_achievements_fertilization: this.percentAchievementsActivity(
+          crop,
+          'Fertilization'
+        ),
+        surfaces_signed_fertilization: this.sumSurfaceSigners(
+          crop,
+          'Fertilization'
+        ),
+        surfaces_files_approved_fertilization: this.totalSurfacesAchievementsFileApproved(
+          crop,
+          'Fertilization'
+        ),
+        link_pdf_ots_fertilization: this.createLinkDownloadFilesSign(
+          crop.finished,
+          'Fertilization'
+        ),
+
+        percent_achievements_tillage: this.percentAchievementsActivity(
+          crop,
+          'Tillage'
+        ),
+        surfaces_signed_tillage: this.sumSurfaceSigners(crop, 'Tillage'),
+        surfaces_files_approved_tillage: this.totalSurfacesAchievementsFileApproved(
+          crop,
+          'Tillage'
+        ),
+        link_pdf_ots_tillage: this.createLinkDownloadFilesSign(
+          crop.finished,
+          'Tillage'
+        ),
+
         mail_producers: this.getMailsProducers(crop),
         phone_producers: this.getPhonesProducers(crop)
       }
