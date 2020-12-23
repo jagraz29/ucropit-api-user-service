@@ -71,11 +71,8 @@ class ChartController {
       'members.user': user._id
     }
 
-    console.log(req.query.identifier)
-    console.log(typeof req.query.identifier)
-
     if (req.query.identifier) {
-      query['members.identifier'] = '20343629835'
+      query['members.identifier'] = req.query.identifier
     }
 
     const crops = await Crop.find(query)
@@ -86,6 +83,7 @@ class ChartController {
         path: 'done',
         populate: [
           { path: 'type' },
+          { path: 'lots' },
           { path: 'achievements', populate: [{ path: 'lots' }] }
         ]
       })
@@ -93,6 +91,7 @@ class ChartController {
         path: 'finished',
         populate: [
           { path: 'type' },
+          { path: 'lots' },
           { path: 'achievements', populate: [{ path: 'lots' }] }
         ]
       })

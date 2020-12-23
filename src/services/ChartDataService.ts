@@ -24,7 +24,8 @@ const activitiesTags: Array<string> = [
   'ACT_HARVEST',
   'ACT_APPLICATION',
   'ACT_FERTILIZATION',
-  'ACT_TILLAGE'
+  'ACT_TILLAGE',
+  'ACT_MONITORING'
 ]
 
 class ChartDataService extends ServiceBase {
@@ -56,9 +57,10 @@ class ChartDataService extends ServiceBase {
 
   public static generateDataActivities (crops) {
     let labels = []
-    console.log(crops)
     const groupData = activitiesTags.map((tag) => {
       const dataCrop = crops.map((crop) => {
+        console.log(tag)
+
         const groupDataActivitiesDone = ActivityService.groupSurfaceAndDateAchievements(
           crop.done,
           tag
@@ -67,6 +69,9 @@ class ChartDataService extends ServiceBase {
           crop.finished,
           tag
         )
+
+        console.log(groupDataActivitiesDone)
+        console.log(groupDataActivitiesFinished)
 
         return groupDataActivitiesDone.concat(groupDataActivitiesFinished)
       })
