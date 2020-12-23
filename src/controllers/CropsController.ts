@@ -41,6 +41,8 @@ class CropsController {
       .populate('finished')
       .lean()
 
+    console.log(crops)
+
     res.status(200).json(crops)
   }
 

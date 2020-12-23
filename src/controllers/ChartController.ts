@@ -63,23 +63,19 @@ class ChartController {
     return res.status(200).json(dataChartAgreement)
   }
 
-  /**
-   * Progress achievements to activities.
-   *
-   * @param req
-   * @param res
-   */
   public async surfaceProgressAchievements (req: Request, res: Response) {
     let sum = 0
     const user: any = req.user
-    const type: any = req.query.type
     const query: any = {
       cancelled: false,
       'members.user': user._id
     }
 
+    console.log(req.query.identifier)
+    console.log(typeof req.query.identifier)
+
     if (req.query.identifier) {
-      query['members.identifier'] = req.query.identifier
+      query['members.identifier'] = '20343629835'
     }
 
     const crops = await Crop.find(query)
@@ -102,10 +98,7 @@ class ChartController {
       })
       .lean()
 
-    const dataChartActivities = ChartService.generateDataActivities(
-      crops,
-      type
-    )
+    const dataChartActivities = ChartService.generateDataActivities(crops)
 
     return res.status(200).json(dataChartActivities)
   }

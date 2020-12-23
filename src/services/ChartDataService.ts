@@ -19,6 +19,14 @@ let allMonths: Array<string> = [
   'December'
 ]
 
+const activitiesTags: Array<string> = [
+  'ACT_SOWING',
+  'ACT_HARVEST',
+  'ACT_APPLICATION',
+  'ACT_FERTILIZATION',
+  'ACT_TILLAGE'
+]
+
 class ChartDataService extends ServiceBase {
   /**
    * Generate data to Chart Agreement
@@ -46,38 +54,78 @@ class ChartDataService extends ServiceBase {
     return { labels, data }
   }
 
-  /**
-   * Generate Data to Chart Activities.
-   *
-   * @param crops
-   * @param typeActivity
-   */
-  public static generateDataActivities (crops, typeActivity: string) {
-    const groupData = crops.map((crop) => {
-      const groupDataActivitiesDone = ActivityService.groupSurfaceAndDateAchievements(
-        crop.done,
-        typeActivity
-      )
-      const groupDataActivitiesFinished = ActivityService.groupSurfaceAndDateAchievements(
-        crop.finished,
-        typeActivity
+  public static generateDataActivities (crops) {
+    let labels = []
+    console.log(crops)
+    const groupData = activitiesTags.map((tag) => {
+      const dataCrop = crops.map((crop) => {
+        const groupDataActivitiesDone = ActivityService.groupSurfaceAndDateAchievements(
+          crop.done,
+          tag
+        )
+        const groupDataActivitiesFinished = ActivityService.groupSurfaceAndDateAchievements(
+          crop.finished,
+          tag
+        )
+
+        return groupDataActivitiesDone.concat(groupDataActivitiesFinished)
+      })
+
+      const sortGroupData = this.sortData(_.flatten(dataCrop), allMonths)
+
+      const dataActivitiesSummary = this.summaryTotalPerMonth(
+        CropService.summaryData(sortGroupData)
       )
 
-      return groupDataActivitiesDone.concat(groupDataActivitiesFinished)
+      const labels: any = dataActivitiesSummary.map((item) => item.date)
+      const data: any = dataActivitiesSummary.map((item) =>
+        Numbers.roundToTwo(item.total)
+      )
+
+      return { labels, data, tag }
     })
 
-    const sortGroupData = this.sortData(_.flatten(groupData), allMonths)
+    for (const data of groupData) {
+      labels = labels.concat(data.labels)
+    }
 
-    const dataActivitiesSummary = this.summaryTotalPerMonth(
-      CropService.summaryData(sortGroupData)
-    )
+    labels = this.mergeDataLabelsActivity(labels)
 
-    const labels: any = dataActivitiesSummary.map((item) => item.date)
-    const data: any = dataActivitiesSummary.map((item) =>
-      Numbers.roundToTwo(item.total)
-    )
+    const dataChartActivities = groupData.map((item) => {
+      const data = this.dataActivity(item.data, labels, item.labels)
 
-    return { labels, data }
+      return {
+        tag: item.tag,
+        data: data
+      }
+    })
+
+    return { data: dataChartActivities, labels }
+  }
+
+  private static dataActivity (data, labels, activityLabel) {
+    let newDataSet = []
+    if (data.length === 0) return newDataSet
+
+    for (const label of labels) {
+      const existLabel = activityLabel.find((item) => item === label)
+
+      if (existLabel) {
+        const pos = activityLabel.indexOf(label)
+        newDataSet.push(data[pos])
+      } else {
+        newDataSet.push(0)
+      }
+    }
+
+    return newDataSet
+  }
+  private static mergeDataLabelsActivity (labels: Array<string>) {
+    return labels.filter(this.onlyUniqueLabels)
+  }
+
+  private static onlyUniqueLabels (value, index, self) {
+    return self.indexOf(value) === index
   }
 
   /**
