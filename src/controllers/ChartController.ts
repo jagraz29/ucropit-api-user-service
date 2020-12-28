@@ -63,16 +63,9 @@ class ChartController {
     return res.status(200).json(dataChartAgreement)
   }
 
-  /**
-   * Progress achievements to activities.
-   *
-   * @param req
-   * @param res
-   */
   public async surfaceProgressAchievements (req: Request, res: Response) {
     let sum = 0
     const user: any = req.user
-    const type: any = req.query.type
     const query: any = {
       cancelled: false,
       'members.user': user._id
@@ -90,6 +83,7 @@ class ChartController {
         path: 'done',
         populate: [
           { path: 'type' },
+          { path: 'lots' },
           { path: 'achievements', populate: [{ path: 'lots' }] }
         ]
       })
@@ -97,15 +91,13 @@ class ChartController {
         path: 'finished',
         populate: [
           { path: 'type' },
+          { path: 'lots' },
           { path: 'achievements', populate: [{ path: 'lots' }] }
         ]
       })
       .lean()
 
-    const dataChartActivities = ChartService.generateDataActivities(
-      crops,
-      type
-    )
+    const dataChartActivities = ChartService.generateDataActivities(crops)
 
     return res.status(200).json(dataChartActivities)
   }
