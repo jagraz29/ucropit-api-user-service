@@ -39,6 +39,26 @@ const headerXls = {
     'surfaces_signed_sowing',
     'surfaces_files_approved',
     'link_pdf_ots_sowing',
+    'percent_achievements_harvest',
+    'surfaces_signed_harvest',
+    'surfaces_files_approved_harvest',
+    'link_pdf_ots_harvest',
+
+    'percent_achievements_application',
+    'surfaces_signed_application',
+    'surfaces_files_approved_application',
+    'link_pdf_ots_application',
+
+    'percent_achievements_fertilization',
+    'surfaces_signed_fertilization',
+    'surfaces_files_approved_fertilization',
+    'link_pdf_ots_fertilization',
+
+    'percent_achievements_tillage',
+    'surfaces_signed_tillage',
+    'surfaces_files_approved_tillage',
+    'link_pdf_ots_tillage',
+
     'mail_producers',
     'phone_producers'
   ],
@@ -67,6 +87,22 @@ const headerXls = {
     'Total Superficie firmada de  Siembra',
     'Superficie con evidencia aprovada Siembra',
     'Link de descarga de archivos de firmas Siembra',
+    'Porcentaje de realización de Cosecha',
+    'Total Superficie firmada de  Cosecha',
+    'Superficie con evidencia aprovada Cosecha',
+    'Link de descarga de archivos de firmas Cosecha',
+    'Porcentaje de realización de Aplicación',
+    'Total Superficie firmada de  Aplicación',
+    'Superficie con evidencia aprovada Aplicación',
+    'Link de descarga de archivos de firmas Aplicación',
+    'Porcentaje de realización de Fertilización',
+    'Total Superficie firmada de  Fertilización',
+    'Superficie con evidencia aprovada Fertilización',
+    'Link de descarga de archivos de firmas Fertilización',
+    'Porcentaje de realización de Labores',
+    'Total Superficie firmada de  Labores',
+    'Superficie con evidencia aprovada Labores',
+    'Link de descarga de archivos de firmas Labores',
     'Mail de los Productores',
     'Teléfono de los Producuctores'
   ]
@@ -168,6 +204,70 @@ const fields = [
   {
     label: 'Link de descarga de archivos de firmas Siembra',
     value: 'link_pdf_ots_sowing'
+  },
+  {
+    label: 'Porcentaje de realización de Cosecha',
+    value: 'percent_achievements_harvest'
+  },
+  {
+    label: 'Total Superficie firmada de  Cosecha',
+    value: 'surfaces_signed_harvest'
+  },
+  {
+    label: 'Superficie con evidencia aprovada Cosecha',
+    value: 'surfaces_files_approved_harvest'
+  },
+  {
+    label: 'Link de descarga de archivos de firmas Cosecha',
+    value: 'link_pdf_ots_harvest'
+  },
+  {
+    label: 'Porcentaje de realización de Aplicación',
+    value: 'percent_achievements_application'
+  },
+  {
+    label: 'Total Superficie firmada de Aplicación',
+    value: 'surfaces_signed_application'
+  },
+  {
+    label: 'Superficie con evidencia aprovada Aplicación',
+    value: 'surfaces_files_approved_application'
+  },
+  {
+    label: 'Link de descarga de archivos de firmas Aplicación',
+    value: 'link_pdf_ots_application'
+  },
+  {
+    label: 'Porcentaje de realización de Fertilización',
+    value: 'percent_achievements_fertilization'
+  },
+  {
+    label: 'Total Superficie firmada de Fertilización',
+    value: 'surfaces_signed_fertilization'
+  },
+  {
+    label: 'Superficie con evidencia aprovada Fertilización',
+    value: 'surfaces_files_approved_fertilization'
+  },
+  {
+    label: 'Link de descarga de archivos de firmas Fertilización',
+    value: 'link_pdf_ots_fertilization'
+  },
+  {
+    label: 'Porcentaje de realización de Labores',
+    value: 'percent_achievements_tillage'
+  },
+  {
+    label: 'Total Superficie firmada de Labores',
+    value: 'surfaces_signed_tillage'
+  },
+  {
+    label: 'Superficie con evidencia aprovada Labores',
+    value: 'surfaces_files_approved_tillage'
+  },
+  {
+    label: 'Link de descarga de archivos de firmas Labores',
+    value: 'link_pdf_ots_tillage'
   },
   {
     label: 'Mail de los Productores',
