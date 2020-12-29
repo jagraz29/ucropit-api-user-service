@@ -71,7 +71,8 @@ export const validateActivityStore = async (activity) => {
         userId: Joi.string().required(),
         fullName: Joi.string().required(),
         email: Joi.string().required(),
-        type: Joi.string().required()
+        type: Joi.string().required(),
+        signed: Joi.boolean().optional()
       })
     )
   })
@@ -123,7 +124,8 @@ export const validateActivityUpdate = async (activity) => {
         userId: Joi.string().required(),
         fullName: Joi.string().required(),
         email: Joi.string().required(),
-        type: Joi.string().required()
+        type: Joi.string().required(),
+        signed: Joi.boolean().optional()
       })
     )
   })
