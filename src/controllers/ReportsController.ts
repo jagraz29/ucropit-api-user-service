@@ -38,7 +38,7 @@ class ReportsController {
 
     crops = CropService.filterCropByIdentifier(cuit, crops)
 
-    const report = await ReportService.generateCropReport(crops, cuit)
+    const report = await ReportService.generateCropReport(crops)
 
     const pathFile = ExportFile.modeExport(report, mode)
 
@@ -66,9 +66,9 @@ class ReportsController {
       'members.identifier': identifier
     })
 
-    const report = await ReportService.generateCropReport(crops, identifier)
+    const reports = await ReportService.generateLotReports(crops)
 
-    const pathFile = ExportFile.modeExport(report, 'xls')
+    const pathFile = ExportFile.modeExport(reports, 'xls')
 
     await EmailService.sendWithAttach({
       template: 'export-file',
