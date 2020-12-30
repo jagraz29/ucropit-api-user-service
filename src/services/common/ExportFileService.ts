@@ -18,11 +18,13 @@ const headerXls = {
     'cuit',
     'business_name',
     'crop',
+    'crop_name',
     'volume',
     'surface',
     'responsible',
     'date_harvest',
-    'localization',
+    'city',
+    'province',
     'kmz_links',
     'tags_lots',
     'surface_total',
@@ -39,26 +41,27 @@ const headerXls = {
     'surfaces_signed_sowing',
     'surfaces_files_approved',
     'link_pdf_ots_sowing',
+    'cant_achievements_sowing',
     'percent_achievements_harvest',
     'surfaces_signed_harvest',
     'surfaces_files_approved_harvest',
     'link_pdf_ots_harvest',
-
+    'cant_achievements_harvest',
     'percent_achievements_application',
     'surfaces_signed_application',
     'surfaces_files_approved_application',
     'link_pdf_ots_application',
-
+    'cant_achievements_application',
     'percent_achievements_fertilization',
     'surfaces_signed_fertilization',
     'surfaces_files_approved_fertilization',
     'link_pdf_ots_fertilization',
-
+    'cant_achievements_fertilization',
     'percent_achievements_tillage',
     'surfaces_signed_tillage',
     'surfaces_files_approved_tillage',
     'link_pdf_ots_tillage',
-
+    'cant_achievements_tillage',
     'mail_producers',
     'phone_producers'
   ],
@@ -66,11 +69,13 @@ const headerXls = {
     'CUIT',
     'razon social',
     'Cultivo',
+    'Nombre de la campaña',
     'Volumen TON (has x rinde en TON)',
     'has',
     'Ing Responsable/s',
     'Fecha Estimada de Cosecha',
-    'Localizaciones',
+    'Departamentos',
+    'Provincias',
     'Localizacion KMZ',
     'Establecimiento o Agrupador de lotes',
     'HAS KMZ',
@@ -87,22 +92,27 @@ const headerXls = {
     'Total Superficie firmada de  Siembra',
     'Superficie con evidencia aprovada Siembra',
     'Link de descarga de archivos de firmas Siembra',
+    'Lote Cantidad de realización de Actividad Siembra',
     'Porcentaje de realización de Cosecha',
     'Total Superficie firmada de  Cosecha',
     'Superficie con evidencia aprovada Cosecha',
     'Link de descarga de archivos de firmas Cosecha',
+    'Lote Cantidad de realización de Actividad Cosecha',
     'Porcentaje de realización de Aplicación',
     'Total Superficie firmada de  Aplicación',
     'Superficie con evidencia aprovada Aplicación',
     'Link de descarga de archivos de firmas Aplicación',
+    'Lote Cantidad de realización de Actividad Aplicación',
     'Porcentaje de realización de Fertilización',
     'Total Superficie firmada de  Fertilización',
     'Superficie con evidencia aprovada Fertilización',
     'Link de descarga de archivos de firmas Fertilización',
+    'Lote Cantidad de realización de Actividad Fertilización',
     'Porcentaje de realización de Labores',
     'Total Superficie firmada de  Labores',
     'Superficie con evidencia aprovada Labores',
     'Link de descarga de archivos de firmas Labores',
+    'Lote Cantidad de realización de Actividad Labores',
     'Mail de los Productores',
     'Teléfono de los Producuctores'
   ]
@@ -122,6 +132,10 @@ const fields = [
     value: 'crop'
   },
   {
+    label: 'Nombre de la campaña',
+    value: 'crop_name'
+  },
+  {
     label: 'Volumen TON (has x rinde en TON)',
     value: 'volume'
   },
@@ -138,8 +152,12 @@ const fields = [
     value: 'date_harvest'
   },
   {
-    label: 'Localizaciones',
-    value: 'localization'
+    label: 'Departamento',
+    value: 'city'
+  },
+  {
+    label: 'Provincia',
+    value: 'province'
   },
   {
     label: 'Localizacion KMZ',
@@ -205,6 +223,12 @@ const fields = [
     label: 'Link de descarga de archivos de firmas Siembra',
     value: 'link_pdf_ots_sowing'
   },
+
+  {
+    label: 'Lote Cantidad de realización de Actividad Siembra',
+    value: 'cant_achievements_sowing'
+  },
+
   {
     label: 'Porcentaje de realización de Cosecha',
     value: 'percent_achievements_harvest'
@@ -220,6 +244,10 @@ const fields = [
   {
     label: 'Link de descarga de archivos de firmas Cosecha',
     value: 'link_pdf_ots_harvest'
+  },
+  {
+    label: 'Lote Cantidad de realización de Actividad Cosecha',
+    value: 'cant_achievements_harvest'
   },
   {
     label: 'Porcentaje de realización de Aplicación',
@@ -238,6 +266,10 @@ const fields = [
     value: 'link_pdf_ots_application'
   },
   {
+    label: 'Lote Cantidad de realización de Actividad Aplicación',
+    value: 'cant_achievements_application'
+  },
+  {
     label: 'Porcentaje de realización de Fertilización',
     value: 'percent_achievements_fertilization'
   },
@@ -254,6 +286,10 @@ const fields = [
     value: 'link_pdf_ots_fertilization'
   },
   {
+    label: 'Lote Cantidad de realización de Actividad Fertilización',
+    value: 'cant_achievements_fertilization'
+  },
+  {
     label: 'Porcentaje de realización de Labores',
     value: 'percent_achievements_tillage'
   },
@@ -268,6 +304,10 @@ const fields = [
   {
     label: 'Link de descarga de archivos de firmas Labores',
     value: 'link_pdf_ots_tillage'
+  },
+  {
+    label: 'Lote Cantidad de realización de Actividad Labores',
+    value: 'cant_achievements_tillage'
   },
   {
     label: 'Mail de los Productores',
