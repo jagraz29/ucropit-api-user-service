@@ -244,5 +244,12 @@ export const agreementTypesData = [
       es: 'Algodon Buenas Practicas'
     },
     key: 'COTTON_BETS'
+  },
+  {
+    name: {
+      en: 'Supplies',
+      es: 'Proveedor'
+    },
+    key: 'SUPPLIER'
   }
 ]

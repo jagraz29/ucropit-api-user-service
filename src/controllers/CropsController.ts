@@ -41,8 +41,6 @@ class CropsController {
       .populate('finished')
       .lean()
 
-    console.log(crops)
-
     res.status(200).json(crops)
   }
 
@@ -54,7 +52,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async show (req: Request, res: Response) {
+  public async show (req, res: Response) {
     const { id } = req.params
     const crop = await CropService.getCropById(id)
 
