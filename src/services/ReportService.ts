@@ -147,7 +147,6 @@ class ReportService {
     const reports = crops.map((crop) => {
       const reportByCrop = crop.lots.map(async (item) => {
         const reportByLot = item.data.map(async (lot) => {
-          this.sumCantAchievementsByLot(crop, lot, 'ACT_SOWING');
           return {
             cuit: crop.company?.identifier,
             business_name: (await this.getCompany(crop.company?.identifier))

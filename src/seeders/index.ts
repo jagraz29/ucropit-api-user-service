@@ -80,7 +80,7 @@ const seedersActivitiesType = async (flag?) => {
   return true
 }
 
-const seedersTypeAgreement = async (flag?) => {
+const seedersTypeAgreement = async (flag) => {
   if (flag && flag !== '--typeAgreement') return
   console.log(`${chalk.green('=====Registering TypeAgreement====')}`)
 
