@@ -36,7 +36,8 @@ const TypeAgreementSchema = new Schema({
   key: {
     type: String,
     required: true
-  }
+  },
+  visible: [String]
 })
 
 export default mongoose.model('TypeAgreement', TypeAgreementSchema)
