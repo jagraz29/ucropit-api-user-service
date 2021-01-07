@@ -1,11 +1,11 @@
-import models from "../models";
-import _ from "lodash";
-import GeoLocationService from "../services/GeoLocationService";
-import Numbers from "../utils/Numbers";
+import models from '../models'
+import _ from 'lodash'
+import GeoLocationService from '../services/GeoLocationService'
+import Numbers from '../utils/Numbers'
 
-import { tagsTypeAgreement } from "../utils/Constants";
+import { tagsTypeAgreement } from '../utils/Constants'
 
-const Company = models.Company;
+const Company = models.Company
 
 class ReportService {
   /**
@@ -24,10 +24,10 @@ class ReportService {
         ),
         surface: crop.surface,
         responsible: this.getMembersWithIdentifier(crop),
-        date_harvest: crop.dateHarvest.toLocaleDateString("es-ES", {
-          day: "numeric",
-          year: "numeric",
-          month: "long"
+        date_harvest: crop.dateHarvest.toLocaleDateString('es-ES', {
+          day: 'numeric',
+          year: 'numeric',
+          month: 'long',
         }),
         city: await this.listAddressLots(crop.lots, 1),
         province: await this.listAddressLots(crop.lots, 2),
@@ -58,89 +58,89 @@ class ReportService {
         ),
         link_pdf_ots_agreement: this.createLinkDownloadFilesSign(
           crop.finished,
-          "Agreements"
+          'Agreements'
         ),
         percent_achievements_sowing: this.percentAchievementsActivity(
           crop,
-          "Sowing"
+          'Sowing'
         ),
-        surfaces_signed_sowing: this.sumSurfaceSigners(crop, "Sowing"),
+        surfaces_signed_sowing: this.sumSurfaceSigners(crop, 'Sowing'),
         surfaces_files_approved: this.totalSurfacesAchievementsFileApproved(
           crop,
-          "Sowing"
+          'Sowing'
         ),
         link_pdf_ots_sowing: this.createLinkDownloadFilesSign(
           crop.finished,
-          "Sowing"
+          'Sowing'
         ),
         percent_achievements_harvest: this.percentAchievementsActivity(
           crop,
-          "Harvest"
+          'Harvest'
         ),
-        surfaces_signed_harvest: this.sumSurfaceSigners(crop, "Harvest"),
+        surfaces_signed_harvest: this.sumSurfaceSigners(crop, 'Harvest'),
         surfaces_files_approved_harvest: this.totalSurfacesAchievementsFileApproved(
           crop,
-          "Harvest"
+          'Harvest'
         ),
         link_pdf_ots_harvest: this.createLinkDownloadFilesSign(
           crop.finished,
-          "Harvest"
+          'Harvest'
         ),
 
         percent_achievements_application: this.percentAchievementsActivity(
           crop,
-          "Application"
+          'Application'
         ),
         surfaces_signed_application: this.sumSurfaceSigners(
           crop,
-          "Application"
+          'Application'
         ),
         surfaces_files_approved_application: this.totalSurfacesAchievementsFileApproved(
           crop,
-          "Application"
+          'Application'
         ),
         link_pdf_ots_application: this.createLinkDownloadFilesSign(
           crop.finished,
-          "Application"
+          'Application'
         ),
 
         percent_achievements_fertilization: this.percentAchievementsActivity(
           crop,
-          "Fertilization"
+          'Fertilization'
         ),
         surfaces_signed_fertilization: this.sumSurfaceSigners(
           crop,
-          "Fertilization"
+          'Fertilization'
         ),
         surfaces_files_approved_fertilization: this.totalSurfacesAchievementsFileApproved(
           crop,
-          "Fertilization"
+          'Fertilization'
         ),
         link_pdf_ots_fertilization: this.createLinkDownloadFilesSign(
           crop.finished,
-          "Fertilization"
+          'Fertilization'
         ),
 
         percent_achievements_tillage: this.percentAchievementsActivity(
           crop,
-          "Tillage"
+          'Tillage'
         ),
-        surfaces_signed_tillage: this.sumSurfaceSigners(crop, "Tillage"),
+        surfaces_signed_tillage: this.sumSurfaceSigners(crop, 'Tillage'),
         surfaces_files_approved_tillage: this.totalSurfacesAchievementsFileApproved(
           crop,
-          "Tillage"
+          'Tillage'
         ),
         link_pdf_ots_tillage: this.createLinkDownloadFilesSign(
           crop.finished,
-          "Tillage"
+          'Tillage'
         ),
 
         mail_producers: this.getMailsProducers(crop),
-        phone_producers: this.getPhonesProducers(crop)
-      };
-    });
+        phone_producers: this.getPhonesProducers(crop),
+      }
+    })
 
-    return Promise.all(reports);
+    return Promise.all(reports)
   }
 
   public static async generateLotReports(crops) {
@@ -158,13 +158,13 @@ class ReportService {
             ),
             surface: crop.surface,
             responsible: this.getMembersWithIdentifier(crop),
-            date_harvest: crop.dateHarvest.toLocaleDateString("es-ES", {
-              day: "numeric",
-              year: "numeric",
-              month: "long"
+            date_harvest: crop.dateHarvest.toLocaleDateString('es-ES', {
+              day: 'numeric',
+              year: 'numeric',
+              month: 'long',
             }),
-            city: await this.getLocaleAddress(lot, 1),
-            province: await this.getLocaleAddress(lot, 2),
+            city: await this.getLocaleAddress(lot, 2),
+            province: await this.getLocaleAddress(lot, 1),
             kmz_links: this.linkKmzLot(lot),
             tags_lots: this.getListTagLots(crop.lots),
             surface_total: lot.surface,
@@ -172,11 +172,22 @@ class ReportService {
               crop.finished,
               tagsTypeAgreement.SUSTAIN
             ),
-            hash_sustainability_agreements_sign: this.getHashSign(
-              crop.finished
+            link_pdf_ots_agreement_sus: this.createLinkDownloadFilesSign(
+              crop.finished.filter(
+                (activity) =>
+                  activity.type.tag === 'ACT_AGREEMENTS' &&
+                  activity.typeAgreement &&
+                  activity.typeAgreement.key === 'SUSTAIN'
+              ),
+              'Agreements'
             ),
             names_signers_sustainability_agreements: this.getNameSigner(
-              crop.finished
+              crop.finished.filter(
+                (activity) =>
+                  activity.type.tag === 'ACT_AGREEMENTS' &&
+                  activity.typeAgreement &&
+                  activity.typeAgreement.key === 'SUSTAIN'
+              )
             ),
             total_surface_sus: this.includeLotInActivity(
               crop.finished,
@@ -187,29 +198,39 @@ class ReportService {
               crop.finished,
               tagsTypeAgreement.EXPLO
             ),
-            hash_land_use_sign: this.getHashSign(crop.finished),
-            names_signers_land_use: this.getNameSigner(crop.finished),
+            link_pdf_ots_agreement_explo: this.createLinkDownloadFilesSign(
+              crop.finished.filter(
+                (activity) =>
+                  activity.type.tag === 'ACT_AGREEMENTS' &&
+                  activity.typeAgreement &&
+                  activity.typeAgreement.key === 'EXPLO'
+              ),
+              'Agreements'
+            ),
+            names_signers_land_use: this.getNameSigner(
+              crop.finished.filter(
+                (activity) =>
+                  activity.type.tag === 'ACT_AGREEMENTS' &&
+                  activity.typeAgreement &&
+                  activity.typeAgreement.key === 'EXPLO'
+              )
+            ),
             total_surface_explo: this.includeLotInActivity(
               crop.finished,
               lot,
               tagsTypeAgreement.EXPLO
             ),
-            link_pdf_ots_agreement: this.createLinkDownloadFilesSign(
-              crop.finished,
-              'Agreements'
-            ),
             percent_achievements_sowing: this.percentAchievementsActivity(
-              crop,
-              'Sowing'
-            ),
-            surfaces_signed_sowing: this.sumSurfaceSigners(crop, 'Sowing'),
-            surfaces_files_approved: this.totalSurfacesAchievementsFileApproved(
               crop,
               'Sowing'
             ),
             link_pdf_ots_sowing: this.createLinkDownloadFilesSign(
               crop.finished,
               'Sowing'
+            ),
+            link_evidences_files_sowing: this.getEvidenceFiles(
+              crop,
+              'ACT_SOWING'
             ),
             cant_achievements_sowing: this.sumCantAchievementsByLot(
               crop,
@@ -220,16 +241,14 @@ class ReportService {
               crop,
               'Harvest'
             ),
-            surfaces_signed_harvest: this.sumSurfaceSigners(crop, 'Harvest'),
-            surfaces_files_approved_harvest: this.totalSurfacesAchievementsFileApproved(
-              crop,
-              'Harvest'
-            ),
             link_pdf_ots_harvest: this.createLinkDownloadFilesSign(
               crop.finished,
               'Harvest'
             ),
-
+            link_evidences_files_harvest: this.getEvidenceFiles(
+              crop,
+              'ACT_HARVEST'
+            ),
             cant_achievements_harvest: this.sumCantAchievementsByLot(
               crop,
               lot,
@@ -240,17 +259,14 @@ class ReportService {
               crop,
               'Application'
             ),
-            surfaces_signed_application: this.sumSurfaceSigners(
-              crop,
-              'Application'
-            ),
-            surfaces_files_approved_application: this.totalSurfacesAchievementsFileApproved(
-              crop,
-              'Application'
-            ),
             link_pdf_ots_application: this.createLinkDownloadFilesSign(
               crop.finished,
               'Application'
+            ),
+
+            link_evidences_files_application: this.getEvidenceFiles(
+              crop,
+              'ACT_APPLICATION'
             ),
 
             cant_achievements_application: this.sumCantAchievementsByLot(
@@ -263,19 +279,14 @@ class ReportService {
               crop,
               'Fertilization'
             ),
-            surfaces_signed_fertilization: this.sumSurfaceSigners(
-              crop,
-              'Fertilization'
-            ),
-            surfaces_files_approved_fertilization: this.totalSurfacesAchievementsFileApproved(
-              crop,
-              'Fertilization'
-            ),
             link_pdf_ots_fertilization: this.createLinkDownloadFilesSign(
               crop.finished,
               'Fertilization'
             ),
-
+            link_evidences_files_fertilization: this.getEvidenceFiles(
+              crop,
+              'ACT_FERTILIZATION'
+            ),
             cant_achievements_fertilization: this.sumCantAchievementsByLot(
               crop,
               lot,
@@ -287,15 +298,14 @@ class ReportService {
               'Tillage'
             ),
             surfaces_signed_tillage: this.sumSurfaceSigners(crop, 'Tillage'),
-            surfaces_files_approved_tillage: this.totalSurfacesAchievementsFileApproved(
-              crop,
-              'Tillage'
-            ),
             link_pdf_ots_tillage: this.createLinkDownloadFilesSign(
               crop.finished,
               'Tillage'
             ),
-
+            link_evidences_files_tillage: this.getEvidenceFiles(
+              crop,
+              'ACT_TILLAGE'
+            ),
             cant_achievements_tillage: this.sumCantAchievementsByLot(
               crop,
               lot,
@@ -303,135 +313,144 @@ class ReportService {
             ),
 
             mail_producers: this.getMailsProducers(crop),
-            phone_producers: this.getPhonesProducers(crop)
-          };
-        });
+            phone_producers: this.getPhonesProducers(crop),
+          }
+        })
 
-        return Promise.all(reportByLot);
-      });
+        return Promise.all(reportByLot)
+      })
 
-      return Promise.all(reportByCrop);
-    });
+      return Promise.all(reportByCrop)
+    })
 
-    return _.flatten(_.flatten(await Promise.all(reports)));
+    return _.flatten(_.flatten(await Promise.all(reports)))
   }
 
   private static async getCompany(identifier) {
-    return Company.findOne({ identifier: identifier });
+    return Company.findOne({ identifier: identifier })
   }
 
   private static getMembersWithIdentifier(crop) {
-    let membersNames = '';
-    const members = crop.members.filter((member) => member.type === 'PRODUCER');
+    let membersNames = ''
+    const members = crop.members.filter((member) => member.type === 'PRODUCER')
 
     for (const member of members) {
-      membersNames += `${member.user.firstName} ${member.user.lastName},`;
+      membersNames += `${member.user.firstName} ${member.user.lastName},`
     }
 
-    return membersNames;
+    return membersNames
   }
 
   private static getMailsProducers(crop) {
-    let membersMails = '';
-    const members = crop.members.filter((member) => member.type === 'PRODUCER');
+    let membersMails = ''
+    const members = crop.members.filter((member) => member.type === 'PRODUCER')
 
     for (const member of members) {
       membersMails += `
       ${member.user.email},
-      `;
+      `
     }
 
-    return membersMails;
+    return membersMails
   }
 
   private static getPhonesProducers(crop) {
-    let membersPhones = '';
-    const members = crop.members.filter((member) => member.type === 'PRODUCER');
+    let membersPhones = ''
+    const members = crop.members.filter((member) => member.type === 'PRODUCER')
 
     for (const member of members) {
       membersPhones += `
       ${member.user.phone},
-      `;
+      `
     }
 
-    return membersPhones;
+    return membersPhones
   }
 
   public static async listAddressLots(lots, pos: number) {
-    let listAddressLot = '';
-    let result = '';
+    let listAddressLot = ''
+    let result = ''
     for (const lot of lots) {
       for (const data of lot.data) {
-        result = await this.getLocaleAddress(data, pos);
+        result = await this.getLocaleAddress(data, pos)
         listAddressLot += `
           ${result},
-        `;
+        `
       }
     }
 
-    return listAddressLot;
+    return listAddressLot
   }
 
-  private static async getLocaleAddress(lot: any, pos: number) {
-    let listAddressLot = '';
-    let result = '';
+  private static async getLocaleAddress(
+    lot: any,
+    pos: number
+  ): Promise<string> {
+    let listAddressLot = ''
+    let result = ''
     if (lot.centerBound) {
-      const { latitude, longitude } = lot.centerBound;
+      const { latitude, longitude } = lot.centerBound
 
       const resultAddress: any = await GeoLocationService.getLocationByCoordinates(
         latitude,
         longitude
-      );
+      )
 
-      result =
-        resultAddress.length > 0
-          ? resultAddress[0].address_components[pos].short_name
-          : '';
+      if (
+        resultAddress.length > 0 &&
+        resultAddress[0].address_components.length > 0
+      ) {
+        const address = resultAddress[0].address_components.filter((item) =>
+          item.types.includes(`administrative_area_level_${pos}`)
+        )
+
+        result = address.length > 0 ? address[0].short_name : ''
+      }
     }
 
     listAddressLot += `
     ${result},
-  `;
+  `
 
-    return listAddressLot;
+    return listAddressLot
   }
 
   private static generateLinkShowLotKmz(lots) {
-    let links = '';
+    let links = ''
     for (const lot of lots) {
       for (const data of lot.data) {
-        links += this.linkKmzLot(data);
+        links += this.linkKmzLot(data)
       }
     }
 
-    return links;
+    return links
   }
 
   private static linkKmzLot(lot) {
-    return `${process.env.BASE_URL}/v1/reports/map/lot?id=${lot._id}`;
+    return `${process.env.BASE_URL}/v1/reports/map/lot?id=${lot._id}`
   }
 
   private static getListTagLots(lots) {
-    let tags = '';
+    let tags = ''
     for (const lot of lots) {
       tags += `
         ${lot.tag},
-        `;
+        `
     }
 
-    return tags;
+    return tags
   }
 
   private static getTotalSurface(crop) {
     const totalPerLot = crop.lots.map((lot) => {
-      return this.getTotalSurfaceLot(lot);
-    });
+      return this.getTotalSurfaceLot(lot)
+    })
 
-    return totalPerLot.reduce((a, b) => a + b, 0);
+    return totalPerLot.reduce((a, b) => a + b, 0)
   }
 
   private static getTotalSurfaceLot(lot) {
-    return lot.data.reduce((a, b) => a + (b['surface'] || 0), 0);
+    return lot.data.reduce((a, b) => a + (b['surface'] || 0), 0)
   }
 
   private static calVolume(
@@ -439,66 +458,98 @@ class ReportService {
     pay: number,
     lots: Array<any>
   ): number {
-    const surfaces = this.sumSurfaceLotsCrop(lots);
+    const surfaces = this.sumSurfaceLotsCrop(lots)
+
+    if (unit === 'Tons') {
+      return pay * surfaces
+    }
 
     if (unit === 'Kilograms') {
-      return (pay / 1000) * surfaces;
+      return (pay / 1000) * surfaces
     }
 
     if (unit === 'Quintales') {
-      return (pay / 10) * surfaces;
+      return (pay / 10) * surfaces
     }
 
-    return 0;
+    return 0
   }
 
   private static sumCantAchievementsByLot(crop, lot, typeActivity) {
     const done = this.cantAchievementByLot(
       crop.done.filter((activity) => activity.type.tag === typeActivity),
       lot
-    );
+    )
     const finished = this.cantAchievementByLot(
       crop.finished.filter((activity) => activity.type.tag === typeActivity),
       lot
-    );
+    )
 
-    return done + finished;
+    return done + finished
   }
 
   private static cantAchievementByLot(activities, lot) {
-    let cant = 0;
+    let cant = 0
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
         const lotSelected = achievement.lots.find(
           (lotMade) => lotMade._id.toString() === lot._id.toString()
-        );
+        )
 
-        if (lotSelected) cant++;
+        if (lotSelected) cant++
       }
     }
 
-    return cant;
+    return cant
   }
 
   private static sumSurfaceLotsCrop(lots: Array<any>): number {
-    let sum = 0;
+    let sum = 0
 
     sum = lots
       .map((lot) => {
         return {
-          total: lot.data.reduce((a, b) => a + (b['surface'] || 0), 0)
-        };
+          total: lot.data.reduce((a, b) => a + (b['surface'] || 0), 0),
+        }
       })
       .reduce((a, b) => a + (b['total'] || 0), 0)
 
     return sum
   }
 
+  private static getEvidenceFiles(crop: any, tag: string): string {
+    let urls: string = ''
+
+    const activities: Array<any> = crop.done
+      .filter((activity) => activity.type.tag === tag)
+      .concat(crop.finished.filter((activity) => activity.type.tag === tag))
+
+    const urlsDownloads = activities.map((activity) => {
+      return activity.achievements.map((achievement) => {
+        const urlFiles = achievement.files.map(
+          (file) => `${process.env.BASE_URL}/v1/files/downloads/${file._id}`
+        )
+
+        return urlFiles
+      })
+    })
+
+    const listEndpointsDownload = _.flatten(_.flatten(urlsDownloads))
+
+    for (const endpoint of listEndpointsDownload) {
+      urls += `
+      ${endpoint},
+      `
+    }
+
+    return urls
+  }
+
   private static generateStaticDownloads(
     activities,
     typeAgreement: string = tagsTypeAgreement.EXPLO
   ) {
-    let urls = ''
+    let urls: string = ''
     const urlsDownloads = activities
       .map((activity) => {
         if (
@@ -509,12 +560,12 @@ class ReportService {
             .map(
               (file) => `${process.env.BASE_URL}/v1/files/downloads/${file._id}`
             )
-            .filter((list) => list.length > 0);
+            .filter((list) => list.length > 0)
 
-          return urlFiles;
+          return urlFiles
         }
 
-        return undefined;
+        return undefined
       })
       .filter((endpoints) => endpoints)
 
@@ -536,16 +587,16 @@ class ReportService {
         if (activity.type.name.en === type) {
           const approvalRegister = activity.approvalRegister
             ? activity.approvalRegister
-            : null;
+            : null
           if (approvalRegister) {
             return `
               ${process.env.BASE_URL}/v1/files/downloads/sings/${approvalRegister.filePdf}
               ${process.env.BASE_URL}/v1/files/downloads/sings/${approvalRegister.fileOts}
-              `;
+              `
           }
         }
 
-        return undefined;
+        return undefined
       })
       .filter((endpoints) => endpoints)
 
@@ -570,9 +621,9 @@ class ReportService {
           activity.type.name.en === 'Agreements' &&
           activity.typeAgreement.key === typeAgreement
         ) {
-          return activity.lots.reduce((a, b) => a + (b['surface'] || 0), 0);
+          return activity.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
         }
-        return undefined;
+        return undefined
       })
       .filter((item) => item)
 
@@ -592,11 +643,11 @@ class ReportService {
         ) {
           const lotSelected = activity.lots.find(
             (lotItem) => lotItem._id.toString() === lot._id.toString()
-          );
+          )
 
-          if (lotSelected) return lotSelected.surface;
+          if (lotSelected) return lotSelected.surface
         }
-        return undefined;
+        return undefined
       })
       .filter((item) => item)
 
@@ -660,7 +711,7 @@ class ReportService {
   private static getHashSign(activities) {
     let hashList = ''
     const hashArrayList = activities.map((activity) => {
-      return activity.approvalRegister ? activity.approvalRegister.ots : '';
+      return activity.approvalRegister ? activity.approvalRegister.ots : ''
     })
 
     const hashItemsHash = _.flatten(hashArrayList)
@@ -702,12 +753,12 @@ class ReportService {
       return activity.signers
         .map((signer) => {
           if (signer.signed) {
-            return `${signer.fullName}`;
+            return `${signer.fullName}`
           }
 
-          return undefined;
+          return undefined
         })
-        .filter((item) => item);
+        .filter((item) => item)
     })
 
     const nameItems = _.flatten(namesArrayList)
@@ -727,10 +778,7 @@ class ReportService {
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
         if (this.isCompleteSigners(achievement.signers)) {
-          total += achievement.lots.reduce(
-            (a, b) => a + (b['surface'] || 0),
-            0
-          )
+          total += achievement.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
         }
       }
     }
@@ -743,10 +791,7 @@ class ReportService {
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
         if (this.isApprovedFileEvidence(achievement.files)) {
-          total += achievement.lots.reduce(
-            (a, b) => a + (b['surface'] || 0),
-            0
-          )
+          total += achievement.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
         }
       }
     }
@@ -754,13 +799,13 @@ class ReportService {
     return total
   }
 
-  private static getActivitiesAchievementByType (crop, type, status) {
+  private static getActivitiesAchievementByType(crop, type, status) {
     return crop[status].length > 0
       ? crop[status].filter((activity) => activity.type.name.en === type)
       : []
   }
 
-  private static isCompleteSigners (signers): boolean {
+  private static isCompleteSigners(signers): boolean {
     for (const user of signers) {
       if (!user.signed) {
         return false
@@ -770,7 +815,7 @@ class ReportService {
     return true
   }
 
-  private static isApprovedFileEvidence (files) {
+  private static isApprovedFileEvidence(files) {
     for (const file of files) {
       if (file.settings && file.settings.fromLots) {
         return true

@@ -29,41 +29,35 @@ const headerXls = {
     'tags_lots',
     'surface_total',
     'link_sustainability_agreements',
-    'hash_sustainability_agreements_sign',
+    'link_pdf_ots_agreement_sus',
     'names_signers_sustainability_agreements',
     'total_surface_sus',
     'link_land_use_agreement',
-    'hash_land_use_sign',
+    'link_pdf_ots_agreement_explo',
     'names_signers_land_use',
     'total_surface_explo',
-    'link_pdf_ots_agreement',
     'percent_achievements_sowing',
-    'surfaces_signed_sowing',
-    'surfaces_files_approved',
     'link_pdf_ots_sowing',
+    'link_evidences_files_sowing',
     'cant_achievements_sowing',
     'percent_achievements_harvest',
-    'surfaces_signed_harvest',
-    'surfaces_files_approved_harvest',
     'link_pdf_ots_harvest',
+    'link_evidences_files_harvest',
     'cant_achievements_harvest',
     'percent_achievements_application',
-    'surfaces_signed_application',
-    'surfaces_files_approved_application',
     'link_pdf_ots_application',
+    'link_evidences_files_application',
     'cant_achievements_application',
     'percent_achievements_fertilization',
-    'surfaces_signed_fertilization',
-    'surfaces_files_approved_fertilization',
     'link_pdf_ots_fertilization',
+    'link_evidences_files_fertilization',
     'cant_achievements_fertilization',
     'percent_achievements_tillage',
-    'surfaces_signed_tillage',
-    'surfaces_files_approved_tillage',
     'link_pdf_ots_tillage',
+    'link_evidences_files_tillage',
     'cant_achievements_tillage',
     'mail_producers',
-    'phone_producers'
+    'phone_producers',
   ],
   fieldNames: [
     'CUIT',
@@ -80,243 +74,233 @@ const headerXls = {
     'Establecimiento o Agrupador de lotes',
     'HAS KMZ',
     'Link ACUERDOS SUSTENTABILIDAD',
-    'Lista de HASH de firmas ACUERDOS SUSTENTABILIDAD',
+    'Link archivos de Firmas ACUERDOS SUSTENTABILIDAD',
     'Nombre Firmantes ACUERDOS SUSTENTABILIDAD',
     'HAS ACUERDO SUSTENTABILIDAD',
     'Link ACUERDOS de USO DE SUELO',
-    'Lista de HASH de firmas ACUERDOS de USO DE SUELO',
+    'Link archivos de Firmas ACUERDOS DE USO DE SUELO',
     'Nombre Firmantes ACUERDOS de USO DE SUELO',
     'HAS ACUERDOS de USO DE SUELO',
-    'Link de descarga de archivos de firmas Acuerdos',
     'Porcentaje de realización de Siembra',
-    'Total Superficie firmada de  Siembra',
-    'Superficie con evidencia aprovada Siembra',
     'Link de descarga de archivos de firmas Siembra',
+    'Link evidencias Siembra',
     'Lote Cantidad de realización de Actividad Siembra',
     'Porcentaje de realización de Cosecha',
-    'Total Superficie firmada de  Cosecha',
-    'Superficie con evidencia aprovada Cosecha',
     'Link de descarga de archivos de firmas Cosecha',
+    'Link evidencias Cosecha',
     'Lote Cantidad de realización de Actividad Cosecha',
     'Porcentaje de realización de Aplicación',
-    'Total Superficie firmada de  Aplicación',
-    'Superficie con evidencia aprovada Aplicación',
     'Link de descarga de archivos de firmas Aplicación',
+    'Link evidencias Aplicación',
     'Lote Cantidad de realización de Actividad Aplicación',
     'Porcentaje de realización de Fertilización',
-    'Total Superficie firmada de  Fertilización',
-    'Superficie con evidencia aprovada Fertilización',
     'Link de descarga de archivos de firmas Fertilización',
+    'Link evidencias Fertilización',
     'Lote Cantidad de realización de Actividad Fertilización',
     'Porcentaje de realización de Labores',
-    'Total Superficie firmada de  Labores',
-    'Superficie con evidencia aprovada Labores',
     'Link de descarga de archivos de firmas Labores',
+    'Link evidencias Labores',
     'Lote Cantidad de realización de Actividad Labores',
     'Mail de los Productores',
-    'Teléfono de los Producuctores'
-  ]
+    'Teléfono de los Producuctores',
+  ],
 }
 
 const fields = [
   {
     label: 'CUIT',
-    value: 'cuit'
+    value: 'cuit',
   },
   {
     label: 'razon social',
-    value: 'business_name'
+    value: 'business_name',
   },
   {
     label: 'Cultivo',
-    value: 'crop'
+    value: 'crop',
   },
   {
     label: 'Nombre de la campaña',
-    value: 'crop_name'
+    value: 'crop_name',
   },
   {
     label: 'Volumen TON (has x rinde en TON)',
-    value: 'volume'
+    value: 'volume',
   },
   {
     label: 'has',
-    value: 'surface'
+    value: 'surface',
   },
   {
     label: 'Ing Responsable/s',
-    value: 'responsible'
+    value: 'responsible',
   },
   {
     label: 'Fecha Estimada de Cosecha',
-    value: 'date_harvest'
+    value: 'date_harvest',
   },
   {
     label: 'Departamento',
-    value: 'city'
+    value: 'city',
   },
   {
     label: 'Provincia',
-    value: 'province'
+    value: 'province',
   },
   {
     label: 'Localizacion KMZ',
-    value: 'kmz_links'
+    value: 'kmz_links',
   },
   {
     label: 'Establecimiento o Agrupador de lotes',
-    value: 'tags_lots'
+    value: 'tags_lots',
   },
   {
     label: 'HAS KMZ',
-    value: 'surface_total'
+    value: 'surface_total',
   },
   {
     label: 'Link ACUERDOS SUSTENTABILIDAD',
-    value: 'link_sustainability_agreements'
+    value: 'link_sustainability_agreements',
   },
   {
-    label: 'Lista de HASH de firmas ACUERDOS SUSTENTABILIDAD',
-    value: 'hash_sustainability_agreements_sign'
+    label: 'Link de archivos de firmas ACUERDOS SUSTENTABILIDAD',
+    value: 'link_pdf_ots_agreement_sus',
   },
   {
     label: 'Nombre Firmantes ACUERDOS SUSTENTABILIDAD',
-    value: 'names_signers_sustainability_agreements'
+    value: 'names_signers_sustainability_agreements',
   },
   {
     label: 'Link ACUERDOS de USO DE SUELO',
-    value: 'link_land_use_agreement'
+    value: 'link_land_use_agreement',
   },
   {
-    label: 'Lista de HASH de firmas ACUERDOS de USO DE SUELO',
-    value: 'hash_land_use_sign'
+    label: 'Link archivos de firmas ACUERDOS de USO DE SUELO',
+    value: 'link_pdf_ots_agreement_explo',
   },
   {
     label: 'HAS ACUERDO SUSTENTABILIDAD',
-    value: 'total_surface_sus'
+    value: 'total_surface_sus',
   },
   {
     label: 'Nombre Firmantes ACUERDOS de USO DE SUELO',
-    value: 'names_signers_land_use'
+    value: 'names_signers_land_use',
   },
   {
     label: 'HAS ACUERDOS de USO DE SUELO',
-    value: 'total_surface_explo'
-  },
-  {
-    label: 'Link de descarga de archivos de firmas Acuerdos',
-    value: 'link_pdf_ots_agreement'
+    value: 'total_surface_explo',
   },
   {
     label: 'Porcentaje de realización de Siembra',
-    value: 'percent_achievements_sowing'
+    value: 'percent_achievements_sowing',
   },
   {
     label: 'Total Superficie firmada de  Siembra',
-    value: 'surfaces_signed_sowing'
+    value: 'surfaces_signed_sowing',
   },
   {
     label: 'Superficie con evidencia aprovada Siembra',
-    value: 'surfaces_files_approved'
+    value: 'surfaces_files_approved',
   },
   {
     label: 'Link de descarga de archivos de firmas Siembra',
-    value: 'link_pdf_ots_sowing'
+    value: 'link_pdf_ots_sowing',
   },
 
   {
     label: 'Lote Cantidad de realización de Actividad Siembra',
-    value: 'cant_achievements_sowing'
+    value: 'cant_achievements_sowing',
   },
 
   {
     label: 'Porcentaje de realización de Cosecha',
-    value: 'percent_achievements_harvest'
+    value: 'percent_achievements_harvest',
   },
   {
     label: 'Total Superficie firmada de  Cosecha',
-    value: 'surfaces_signed_harvest'
+    value: 'surfaces_signed_harvest',
   },
   {
     label: 'Superficie con evidencia aprovada Cosecha',
-    value: 'surfaces_files_approved_harvest'
+    value: 'surfaces_files_approved_harvest',
   },
   {
     label: 'Link de descarga de archivos de firmas Cosecha',
-    value: 'link_pdf_ots_harvest'
+    value: 'link_pdf_ots_harvest',
   },
   {
     label: 'Lote Cantidad de realización de Actividad Cosecha',
-    value: 'cant_achievements_harvest'
+    value: 'cant_achievements_harvest',
   },
   {
     label: 'Porcentaje de realización de Aplicación',
-    value: 'percent_achievements_application'
+    value: 'percent_achievements_application',
   },
   {
     label: 'Total Superficie firmada de Aplicación',
-    value: 'surfaces_signed_application'
+    value: 'surfaces_signed_application',
   },
   {
     label: 'Superficie con evidencia aprovada Aplicación',
-    value: 'surfaces_files_approved_application'
+    value: 'surfaces_files_approved_application',
   },
   {
     label: 'Link de descarga de archivos de firmas Aplicación',
-    value: 'link_pdf_ots_application'
+    value: 'link_pdf_ots_application',
   },
   {
     label: 'Lote Cantidad de realización de Actividad Aplicación',
-    value: 'cant_achievements_application'
+    value: 'cant_achievements_application',
   },
   {
     label: 'Porcentaje de realización de Fertilización',
-    value: 'percent_achievements_fertilization'
+    value: 'percent_achievements_fertilization',
   },
   {
     label: 'Total Superficie firmada de Fertilización',
-    value: 'surfaces_signed_fertilization'
+    value: 'surfaces_signed_fertilization',
   },
   {
     label: 'Superficie con evidencia aprovada Fertilización',
-    value: 'surfaces_files_approved_fertilization'
+    value: 'surfaces_files_approved_fertilization',
   },
   {
     label: 'Link de descarga de archivos de firmas Fertilización',
-    value: 'link_pdf_ots_fertilization'
+    value: 'link_pdf_ots_fertilization',
   },
   {
     label: 'Lote Cantidad de realización de Actividad Fertilización',
-    value: 'cant_achievements_fertilization'
+    value: 'cant_achievements_fertilization',
   },
   {
     label: 'Porcentaje de realización de Labores',
-    value: 'percent_achievements_tillage'
+    value: 'percent_achievements_tillage',
   },
   {
     label: 'Total Superficie firmada de Labores',
-    value: 'surfaces_signed_tillage'
+    value: 'surfaces_signed_tillage',
   },
   {
     label: 'Superficie con evidencia aprovada Labores',
-    value: 'surfaces_files_approved_tillage'
+    value: 'surfaces_files_approved_tillage',
   },
   {
     label: 'Link de descarga de archivos de firmas Labores',
-    value: 'link_pdf_ots_tillage'
+    value: 'link_pdf_ots_tillage',
   },
   {
     label: 'Lote Cantidad de realización de Actividad Labores',
-    value: 'cant_achievements_tillage'
+    value: 'cant_achievements_tillage',
   },
   {
     label: 'Mail de los Productores',
-    value: 'mail_producers'
+    value: 'mail_producers',
   },
   {
     label: 'Teléfono de los Producuctores',
-    value: 'phone_producers'
-  }
+    value: 'phone_producers',
+  },
 ]
 
 class ExportFileService {
@@ -325,7 +309,7 @@ class ExportFileService {
    * @param data
    * @param mode
    */
-  public static modeExport (data: Array<any>, mode: string | any) {
+  public static modeExport(data: Array<any>, mode: string | any) {
     if (mode === 'xls') {
       return this.exportXls(data, headerXls)
     }
@@ -339,7 +323,7 @@ class ExportFileService {
    * @param data
    * @param options
    */
-  public static exportXls (data: Array<any>, options: OptionsXls): string {
+  public static exportXls(data: Array<any>, options: OptionsXls): string {
     const xlsx = json2xlsx(data, options)
 
     fs.writeFileSync(
@@ -356,7 +340,7 @@ class ExportFileService {
    * @param data
    * @param options
    */
-  public static exportCsv (data: Array<any>, options: Array<OptionsCsv>) {
+  public static exportCsv(data: Array<any>, options: Array<OptionsCsv>) {
     const opts = { options }
     const parser = new Parser(opts)
 
