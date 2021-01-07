@@ -20,7 +20,7 @@ class ReportsController {
    *
    * @return Response
    */
-  public async generateCrops (req: Request, res: Response) {
+  public async generateCrops(req: Request, res: Response) {
     const cuit = req.query.cuit
     const mode: any = req.query.mode || 'xls'
 
@@ -56,14 +56,14 @@ class ReportsController {
    * @param req
    * @param res
    */
-  public async sendFileReport (req, res: Response) {
+  public async sendFileReport(req: Request, res: Response) {
     const { email, identifier } = req.body
     const user: any = req.user
 
     let crops = await CropService.getAll({
       cancelled: false,
       'members.user': user._id,
-      'members.identifier': identifier
+      'members.identifier': identifier,
     })
 
     const reports = await ReportService.generateLotReports(crops)
@@ -77,15 +77,15 @@ class ReportsController {
       files: [
         {
           filename: 'report.xlsx',
-          content: fs.readFileSync(pathFile)
-        }
-      ]
+          content: fs.readFileSync(pathFile),
+        },
+      ],
     })
 
     return res.status(200).json('Ok')
   }
 
-  public async showMap (req: Request, res: Response) {
+  public async showMap(req: Request, res: Response) {
     const { id } = req.query
 
     if (!id) res.status(403).json({ error: 'MUST PASS ID LOT' })
@@ -95,7 +95,7 @@ class ReportsController {
       api_key: process.env.GOOGLE_API_KEY,
       flightPlanCoordinates: lot.coordinateForGoogle,
       center: lot.centerBoundGoogle,
-      title: 'Localización Lote KMZ'
+      title: 'Localización Lote KMZ',
     })
   }
 }
