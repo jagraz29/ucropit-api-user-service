@@ -60,11 +60,21 @@ class ReportsController {
     const { email, identifier } = req.body
     const user: any = req.user
 
-    let crops = await CropService.getAll({
-      cancelled: false,
-      'members.user': user._id,
-      'members.identifier': identifier,
-    })
+    let crops = await CropService.cropsOnlySeeRoles(
+      {
+        cancelled: false,
+        'members.user': user._id,
+        'members.identifier': identifier,
+      },
+      {
+        user: user._id,
+        identifier: identifier,
+      },
+      ['MARKETER', 'PROVIDER', 'KAM']
+    )
+
+    if (crops.length === 0)
+      return res.status(400).json('NOT_AUTHORIZATION_EXPORT')
 
     const reports = await ReportService.generateLotReports(crops)
 
