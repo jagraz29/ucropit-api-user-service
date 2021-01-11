@@ -35,7 +35,6 @@ class ConfigsController {
     const indexCompany = configUser.companies.findIndex(
       (company) => company.identifier === identifier
     )
-    console.log(indexCompany)
     if (indexCompany === -1) return res.status(404).json('identifier not found')
 
     configUser.companies[indexCompany].company =
