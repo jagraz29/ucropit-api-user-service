@@ -1,6 +1,5 @@
 import UserConfigService from './UserConfigService'
 import User from '../models/user'
-import { any } from 'joi'
 
 interface IUser {
   firstName: string
