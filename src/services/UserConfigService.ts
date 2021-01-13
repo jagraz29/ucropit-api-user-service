@@ -63,6 +63,20 @@ class UserConfigService {
 
     return this.findById(config._id)
   }
+
+  public static existAdminInCompany(
+    companies,
+    identifier: string | any
+  ): boolean {
+    const existAdmin = companies.find(
+      (member) => member.isAdmin && member.identifier === identifier
+    )
+
+    if (existAdmin) {
+      return true
+    }
+    return false
+  }
 }
 
 export default UserConfigService
