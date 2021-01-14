@@ -68,4 +68,20 @@ router.get('/activities', commonController.activitiesTypes)
  */
 router.get('/agreements', commonController.agreementTypes)
 
+/**
+ * @swagger
+ * /v1/commons/concepts:
+ *  get:
+ *   summary: Get all evidence concepts
+ *   tags:
+ *      - Common
+ *   description: Evidence Concepts
+ *   produces:
+ *     - application/json
+ *   responses:
+ *    '200':
+ *      description: Get all evidence concepts
+ */
+router.get('/concepts', commonController.evidenceConcepts)
+
 export default router

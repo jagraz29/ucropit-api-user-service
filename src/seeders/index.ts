@@ -7,7 +7,8 @@ import {
   unitTypesData,
   activitiesTypesData,
   agreementTypesData,
-  supplyTypesData
+  supplyTypesData,
+  evidenceConcepts,
 } from './data'
 
 import { suppliesData, fertilizers, pesticides } from './suppliesData'
@@ -18,6 +19,7 @@ const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
 const SupplyType = models.SupplyType
 const Supply = models.Supply
+const EvidenceConcept = models.EvidenceConcept
 
 const CollaboratorRequest = models.CollaboratorRequest
 
@@ -171,7 +173,26 @@ const seedersSupplyType = async (flag?) => {
   console.log(`${chalk.green('=====Registered SupplyType====')}`)
   return true
 }
-(async () => {
+
+const seedersEvidenceConcepts = async (flag?) => {
+  if (flag && flag !== '--evidence') return
+
+  console.log(`${chalk.green('=====Registering Evidence Concept====')}`)
+
+  const evidences = await EvidenceConcept.find({})
+
+  const evidencesConceptSeed = evidenceConcepts.filter(
+    (item) => !evidences.find((element) => item.code === element.code)
+  )
+
+  for (const evidenceConcept of evidencesConceptSeed) {
+    await EvidenceConcept.create(evidenceConcept)
+  }
+
+  console.log(`${chalk.green('=====Registered Evidence Concept====')}`)
+  return true
+}
+;(async () => {
   const connected = await connectDb()
 
   if (connected) {
@@ -192,6 +213,7 @@ const seedersSupplyType = async (flag?) => {
       await seedersCropType(flag)
       await seedersActivitiesType(flag)
       await seedersTypeAgreement(flag)
+      await seedersEvidenceConcepts(flag)
     } catch (e) {
       console.log(e)
     }
