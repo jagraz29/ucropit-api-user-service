@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
+import UserService from '../services/UserService'
 import UserConfigService from '../services/UserConfigService'
+import CollaboratorRequest from '../models/collaboratorRequest'
 
 class ConfigsController {
   /**
@@ -29,6 +31,7 @@ class ConfigsController {
   public async updateSelectedCompany(req: Request, res: Response) {
     const { id } = req.params
     const { identifier } = req.query
+    const user: any = req.user
 
     const configUser = await UserConfigService.update(id, req.body, req.user)
 
@@ -39,7 +42,17 @@ class ConfigsController {
 
     configUser.companies[indexCompany].company =
       configUser.config.companySelected._id
+    configUser.companies[indexCompany].isAdmin = false
 
+    const request = new CollaboratorRequest({
+      user: user._id,
+      company: configUser.config.companySelected._id,
+    })
+
+    // Update collaborator request array
+    configUser.collaboratorRequest.push(request._id)
+
+    await request.save()
     await configUser.save()
 
     res.status(200).json(configUser)
