@@ -1,6 +1,5 @@
 <div style="text-align: center">
-    <img src="./assets/icon/logo.svg" alt="UCROP.IT" width="200"/>
-    <h1>UCROP.IT APP (MORGAN)</h1>
+    <h1>UCROP.IT API </h1>
 </div>
 
 <p>
