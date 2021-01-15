@@ -28,4 +28,4 @@
 
 ## API Documentation Development
 
-- [API Documentation in Development environment](http://localhost:3000/api-docs/#/)
+- [API Documentation in Testing environment](https://devapi.ucrop.it/api-docs/#/)
