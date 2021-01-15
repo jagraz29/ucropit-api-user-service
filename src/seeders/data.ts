@@ -129,15 +129,15 @@ export const unitTypesData = [
   },
   {
     name: {
-      en: 'Tons',
-      es: 'Toneladas',
+      en: 'Tons/ha',
+      es: 'Toneladas/ha',
     },
     key: 't',
   },
   {
     name: {
-      en: 'Bags',
-      es: 'Bolsas',
+      en: 'Bags/ha',
+      es: 'Bolsas/ha',
     },
     key: 'bls',
   },
@@ -150,8 +150,8 @@ export const unitTypesData = [
   },
   {
     name: {
-      en: 'Quintales',
-      es: 'Quintales',
+      en: 'Quintales/ha',
+      es: 'Quintales/ha',
     },
     key: 'q',
   },
