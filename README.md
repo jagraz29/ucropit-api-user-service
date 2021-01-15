@@ -24,7 +24,7 @@
 ## MongoDB in Docker
 
 1. docker-compose up
-2. Add url in DATABASE_URL=mongodb://root:root@localhost:27018/production?authSource=admin
+2. Add url in .env DATABASE_URL=mongodb://root:root@localhost:27018/production?authSource=admin
 
 ## API Documentation Development
 
