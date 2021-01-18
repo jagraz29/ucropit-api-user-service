@@ -15,22 +15,21 @@ class UserConfigService {
    *
    * @param string id
    */
-  public static async findUserWithConfigs (id: string) {
-    return User.findOne({ _id: id }).populate({
-      path: 'config',
-      populate: [
-        { path: 'companySelected' }
-      ]
-    })
-    .populate('collaboratorRequest')
-    .populate('companies.company')
+  public static async findUserWithConfigs(id: string) {
+    return User.findOne({ _id: id })
+      .populate({
+        path: 'config',
+        populate: [{ path: 'companySelected' }],
+      })
+      .populate('collaboratorRequest')
+      .populate('companies.company')
   }
   /**
    * Find One User config by Id.
    *
    * @param string id
    */
-  public static async findById (id: string) {
+  public static async findById(id: string) {
     return UserConfig.findById(id).populate('companySelected')
   }
   /**
@@ -38,7 +37,7 @@ class UserConfigService {
    *
    * @param IUserConfig user
    */
-  public static async create (user: IUserConfig) {
+  public static async create(user: IUserConfig) {
     return UserConfig.create(user)
   }
 
@@ -49,20 +48,34 @@ class UserConfigService {
    * @param IUserConfig user
    * @param user optional
    */
-  public static async update (id: string, configData: IUserConfig, user?) {
+  public static async update(id: string, configData: IUserConfig, user?) {
     const config = await UserConfig.findByIdAndUpdate({ _id: id }, configData)
 
     if (user) {
       return User.findById(user._id)
         .populate({
           path: 'config',
-          populate: [{ path: 'companySelected' }]
+          populate: [{ path: 'companySelected' }],
         })
         .populate('collaboratorRequest')
         .populate('companies.company')
     }
 
     return this.findById(config._id)
+  }
+
+  public static existAdminInCompany(
+    companies,
+    identifier: string | any
+  ): boolean {
+    const existAdmin = companies.find(
+      (member) => member.isAdmin && member.identifier === identifier
+    )
+
+    if (existAdmin) {
+      return true
+    }
+    return false
   }
 }
 

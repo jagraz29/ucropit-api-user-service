@@ -13,7 +13,7 @@ interface IUser {
 }
 
 class UserService {
-  public static async store (
+  public static async store(
     user: IUser,
     configs = { fromInvitation: false, companySelected: '' }
   ) {
@@ -30,8 +30,24 @@ class UserService {
     return newUser.save()
   }
 
-  public static async update (filter, data) {
+  public static async update(filter, data) {
     return User.findOneAndUpdate(filter, data)
+  }
+
+  /**
+   *  Updated collaborator request in array user.
+   *
+   * @param userId
+   * @param collaboratorRequest
+   */
+  public static async updateCollaboratorRequest(
+    userId: string,
+    collaboratorRequest: any
+  ) {
+    const user = await User.findById(userId)
+    user.collaboratorRequest.push(collaboratorRequest._id)
+
+    return user.save()
   }
 }
 
