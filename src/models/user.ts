@@ -93,7 +93,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.virtual('avatarPath').get(function () {
   if (this.avatar) {
-    return `${process.env.APP_URL}/${this.avatar}`
+    return `${process.env.BASE_URL}/${this.avatar}`
   }
   return ''
 })
