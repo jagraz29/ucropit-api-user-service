@@ -69,6 +69,10 @@ const CropSchema = new Schema({
     type: Boolean,
     default: false
   },
+  downloaded: {
+    type: Boolean,
+    default: false
+  },
   identifier: {
     type: String
   },

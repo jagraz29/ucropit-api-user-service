@@ -17,6 +17,7 @@ import reports from './reports'
 import charts from './charts'
 import files from './files'
 import supplies from './supplies'
+import offline from './offline'
 
 const router: express.Router = express.Router()
 
@@ -73,5 +74,8 @@ router.use('/files', files)
 
 // SUPPLIES
 router.use('/supplies', supplies)
+
+// OFFLINE
+router.use('/offline', authMiddleware, offline)
 
 export default router

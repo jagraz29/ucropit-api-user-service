@@ -11,7 +11,7 @@ class SuppliesController {
     let type = null
     let filter: any = {}
     if (req.query.tag) {
-      type = typesSupplies.find((item) => item.tag === req.query.tag)
+      type = typesSupplies.find(item => item.tag === req.query.tag)
     }
 
     const skip =
@@ -28,10 +28,10 @@ class SuppliesController {
     if (type) {
       filter.typeId = { $in: type.types }
     }
-
+    
     const supplies = await Supply.find(filter, undefined, {
       skip,
-      limit: 15
+      limit: req.query.limit >= 0 ? Number(req.query.limit) : 15
     })
       .populate('typeId')
       .sort('name')
