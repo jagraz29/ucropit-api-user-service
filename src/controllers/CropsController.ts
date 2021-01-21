@@ -65,7 +65,7 @@ class CropsController {
    */
   public async show (req: Request, res: Response) {
     const { id } = req.params
-    const crop = await CropService.getCropById(id)
+    const crop = await CropService.getCrop(id)
 
     res.status(200).json(crop)
   }
