@@ -117,6 +117,38 @@ router.post('/', cropsController.create)
 /**
  * @swagger
  * path:
+ *  /v1/crops/offline/{id}:
+ *    put:
+ *      summary: Update a crop
+ *      tags: [Crops]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      requestBody:
+ *        content:
+ *          application/json:
+ *              schema:
+ *               type: object
+ *               properties:
+ *                  downloaded:
+ *                    type: boolean
+ *      responses:
+ *       '201':
+ *         description: Create success a crop.
+ *         content:
+ *            application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Crop'
+ *
+ *       '500':
+ *         description: Error to Server.
+ *
+ */
+router.put('/offline/:id', cropsController.enableOffline)
+
+/**
+ * @swagger
+ * path:
  *  /v1/crops/{id}:
  *    put:
  *      summary: Update a crop

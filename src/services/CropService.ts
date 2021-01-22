@@ -313,6 +313,70 @@ class CropService extends ServiceBase {
         ],
       })
   }
+
+  /**
+   *  Get One crop and json converter.
+   *
+   * @param string id
+   */
+  public static async getCrop(id: string) {
+    return Crop.findById(id)
+      .populate('lots.data', '-area -__v')
+      .populate('cropType')
+      .populate('unitType')
+      .populate({ path: 'company', populate: [{ path: 'files' }] })
+      .populate({
+        path: 'pending',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots', select: '-area -__v' },
+          { path: 'files' },
+        ],
+      })
+      .populate({
+        path: 'toMake',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots', select: '-area -__v' },
+          { path: 'files' },
+        ],
+      })
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots', select: '-area -__v' },
+          { path: 'files' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'files' }],
+          },
+          { path: 'lotsMade' },
+        ],
+      })
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots', select: '-area -__v' },
+          { path: 'files' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'files' }],
+          },
+        ],
+      })
+      .populate('members.user')
+      .lean()
+  }
   /**
    *
    * @param cropId
