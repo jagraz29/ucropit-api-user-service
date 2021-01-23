@@ -35,7 +35,15 @@ class ExporterController {
           { path: 'lots' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'supplies.typeId' }]
+            populate: [
+              { path: 'lots' }, 
+              { 
+                path: 'supplies',
+                populate: [
+                  { path: 'supplytypes' }
+                ]
+              }
+            ]
           }
         ]
       })
