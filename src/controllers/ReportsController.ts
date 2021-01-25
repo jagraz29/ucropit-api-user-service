@@ -6,13 +6,13 @@ import ExportFile from '../services/common/ExportFileService'
 import Company from '../services/CompanyService'
 import EmailService from '../services/EmailService'
 
+import { roles, errors } from '../types/common'
+
 import fs from 'fs'
 
 import models from '../models'
 
 const Lot = models.Lot
-
-const ROLES = ['MARKETER', 'PROVIDER', 'KAM']
 
 class ReportsController {
   /**
@@ -62,6 +62,8 @@ class ReportsController {
     const { email, identifier } = req.body
     const user: any = req.user
 
+    console.log()
+
     let crops = await CropService.cropsOnlySeeRoles(
       {
         cancelled: false,
@@ -72,11 +74,12 @@ class ReportsController {
         user: user._id,
         identifier: identifier,
       },
-      ROLES
+      roles
     )
 
     if (crops.length === 0) {
-      return res.status(400).json('NOT_AUTHORIZATION_EXPORT')
+      const error = errors.find((error) => error.key === '001')
+      return res.status(400).json(error.code)
     }
 
     const reports = await ReportService.generateLotReports(crops)
