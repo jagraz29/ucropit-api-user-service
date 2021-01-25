@@ -31,7 +31,7 @@ export const validateActivityStore = async (activity) => {
   const schema = Joi.object({
     name: Joi.string().required(),
     dateStart: Joi.date().optional(),
-    dateEnd: Joi.date().greater(Joi.ref('dateStart')).optional(),
+    dateEnd: Joi.date().min(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
     surface: Joi.number().optional(),
     type: Joi.string().required(),
@@ -84,7 +84,7 @@ export const validateActivityUpdate = async (activity) => {
   const schema = Joi.object({
     name: Joi.string().optional(),
     dateStart: Joi.date().optional(),
-    dateEnd: Joi.date().greater(Joi.ref('dateStart')).optional(),
+    dateEnd: Joi.date().min(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
     surface: Joi.number().optional(),
     type: Joi.string().optional(),
