@@ -12,6 +12,8 @@ import models from '../models'
 
 const Lot = models.Lot
 
+const ROLES = ['MARKETER', 'PROVIDER', 'KAM']
+
 class ReportsController {
   /**
    *
@@ -70,11 +72,12 @@ class ReportsController {
         user: user._id,
         identifier: identifier,
       },
-      ['MARKETER', 'PROVIDER', 'KAM']
+      ROLES
     )
 
-    if (crops.length === 0)
+    if (crops.length === 0) {
       return res.status(400).json('NOT_AUTHORIZATION_EXPORT')
+    }
 
     const reports = await ReportService.generateLotReports(crops)
 
