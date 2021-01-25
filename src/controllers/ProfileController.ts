@@ -13,7 +13,7 @@ class ProfileController {
    *
    * @return Response
    */
-  public async image (req: Request, res: Response) {
+  public async image(req: Request, res: Response) {
     const user = await User.findById(req.params.id)
 
     if (!user) {
