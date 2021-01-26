@@ -68,6 +68,9 @@ class ReportsController {
 
     const reports = await ReportService.generateLotReports(crops)
 
+    console.log('=== REPORTES ===')
+    console.log(reports)
+
     const pathFile = ExportFile.modeExport(reports, 'xls')
 
     await EmailService.sendWithAttach({
