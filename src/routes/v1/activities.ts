@@ -1,6 +1,7 @@
 import express from 'express'
 
 import activitiesController from '../../controllers/ActivitiesController'
+import ActivitiesNotificationsController from '../../controllers/ActivitiesNotificationsController'
 
 const router: express.Router = express.Router()
 
@@ -228,5 +229,30 @@ router.delete('/:id', activitiesController.delete)
  *          description: Server error
  */
 router.delete('/:id/files/:fileId', activitiesController.removeFile)
+
+/**
+ * @swagger
+ * /v1/activities/notify:
+ *  post:
+ *   security: []
+ *   summary: send notification emails to all collaborators of the crop
+ *   tags: [Auth]
+ *   description: send notification emails to all collaborators of the crop
+ *   requestBody:
+ *     content:
+ *       application/json:
+ *         schema:
+ *           type: object
+ *           properties:
+ *            name:
+ *              type: string
+ *            last:
+ *              type: string
+ *            cropname:
+ *              type: string
+ *            email:
+ *              type: string
+ */
+router.post('/notify', ActivitiesNotificationsController.notify)
 
 export default router

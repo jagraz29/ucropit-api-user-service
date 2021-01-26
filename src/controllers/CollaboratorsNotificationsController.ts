@@ -6,12 +6,13 @@ const User = models.User
 
 class CollaboratorsNotificationsController {
   public async notify(req: Request, res: Response) {
-    const { email, identifier, cropname } = req.body
+    var host = process.env.BASE_URL;
+    const { email, identifier, cropname, role } = req.body
     const user = await User.findOne({ email }).populate('config')
     await EmailService.send({
-      template: 'send-code',
+      template: 'notification-collab',
       to: user.email,
-      data: { user, cropname, identifier },
+      data: { user, cropname, identifier, role, host},
     })
 
     res.json({ user })

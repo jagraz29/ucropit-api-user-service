@@ -83,6 +83,8 @@ router.put('/:id', collaboratorRequestController.update)
  *              type: string
  *            identifier:
  *              type: string
+ *            role:
+ *              type: string
  */
 router.post('/notify', CollaboratorsNotificationsController.notify)
 
