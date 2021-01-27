@@ -194,38 +194,6 @@ class AchievementsController {
 
     return res.status(200).json(pdf.publicPath)
   }
-
-  public async testFile(req: Request, res: Response) {
-    const filesUploaded = await UploadService.upload(
-      req.files,
-      `achievements/123-tre`
-    )
-
-    for (const item of filesUploaded) {
-      const pathThumbnail = await ImageService.createThumbnail({
-        path: item.path,
-        destination: 'uploads/achievements/123-tre',
-        nameFile: item.nameFile,
-        suffixName: 'thumbnail',
-        width: 200,
-        height: 200,
-      })
-
-      const intermediatePath = await ImageService.resize({
-        path: item.path,
-        destination: 'uploads/achievements/123-tre',
-        nameFile: item.nameFile,
-        suffixName: 'intermediate',
-        width: 350,
-        height: 350,
-      })
-
-      console.log(pathThumbnail)
-      console.log(intermediatePath)
-    }
-
-    res.status(200).send(filesUploaded)
-  }
 }
 
 export default new AchievementsController()
