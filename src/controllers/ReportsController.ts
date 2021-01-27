@@ -62,8 +62,6 @@ class ReportsController {
     const { email, identifier } = req.body
     const user: any = req.user
 
-    console.log()
-
     let crops = await CropService.cropsOnlySeeRoles(
       {
         cancelled: false,
