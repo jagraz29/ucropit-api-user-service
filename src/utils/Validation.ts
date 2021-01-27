@@ -223,6 +223,7 @@ export const validateAchievement = async (achievement) => {
           fullName: Joi.string().required(),
           email: Joi.string().required(),
           type: Joi.string().required(),
+          signed: Joi.boolean().optional(),
         })
       )
       .optional(),

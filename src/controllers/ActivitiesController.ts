@@ -77,9 +77,6 @@ class ActivitiesController {
 
     await validateActivityStore(data)
 
-    console.log('CREATE Activity')
-    console.log(data)
-
     const validationFiles = validateFilesWithEvidences(
       req.files,
       data.evidences
@@ -127,9 +124,6 @@ class ActivitiesController {
       req.files,
       data.evidences
     )
-
-    console.log('EDIT Activity')
-    console.log(data)
 
     if (validationFiles.error) {
       res.status(400).json(validationFiles)
@@ -236,12 +230,15 @@ class ActivitiesController {
 
     await ActivityService.changeStatus(activity, status)
 
-    activity = await Activity.findById(id)
+    activity = await Activity.findById(id).populate('type')
 
     const crop = await Crop.findById(cropId)
 
     const statusCrop =
-      activity.type.name.en === 'Agreements' ? 'pending' : 'toMake'
+      activity.type.tag === 'ACT_AGREEMENTS' ||
+      activity.type.tag === 'ACT_MONITORING'
+        ? 'pending'
+        : 'toMake'
 
     await CropService.removeActivities(activity, crop, statusCrop)
     await CropService.addActivities(activity, crop)
