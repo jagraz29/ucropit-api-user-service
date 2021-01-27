@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import {
   validateAchievement,
   validateSignAchievement,
-  validateFilesWithEvidences
+  validateFilesWithEvidences,
 } from '../utils/Validation'
 
 import AchievementService from '../services/AchievementService'
@@ -28,7 +28,7 @@ class AchievementsController {
    *
    * @return Response
    */
-  public async index (req: Request, res: Response) {
+  public async index(req: Request, res: Response) {
     const { activityId } = req.query
 
     if (activityId) {
@@ -52,7 +52,7 @@ class AchievementsController {
    *
    * @returns Response
    */
-  public async show (req: Request, res: Response) {
+  public async show(req: Request, res: Response) {
     const { id } = req.params
 
     const achievement = await AchievementService.findById(id)
@@ -68,7 +68,7 @@ class AchievementsController {
    *
    * @return Response
    */
-  public async create (req: Request, res: Response) {
+  public async create(req: Request, res: Response) {
     const user = req.user
     const data = JSON.parse(req.body.data)
 
@@ -121,7 +121,7 @@ class AchievementsController {
    *
    * @return Response
    */
-  public async signAchievement (req: Request, res: Response) {
+  public async signAchievement(req: Request, res: Response) {
     const user = req.user
     const { id } = req.params
 
@@ -155,7 +155,7 @@ class AchievementsController {
         pathPdf,
         nameFilePdf,
         nameFileOts,
-        pathOtsFile
+        pathOtsFile,
       } = await BlockChainServices.sign(crop, activity)
 
       const approvalRegisterSign = await ApprovalRegisterSingService.create({
@@ -165,7 +165,7 @@ class AchievementsController {
         nameFilePdf,
         nameFileOts,
         pathOtsFile,
-        activity
+        activity,
       })
 
       activity.approvalRegister = approvalRegisterSign._id
@@ -184,7 +184,7 @@ class AchievementsController {
    * @param Request req
    * @param Response res
    */
-  public async makePdf (req: Request, res: Response) {
+  public async makePdf(req: Request, res: Response) {
     const { idActivity, idCrop } = req.params
 
     const activity = await ActivityService.findActivityById(idActivity)
@@ -193,38 +193,6 @@ class AchievementsController {
     const pdf = await AchievementService.generatePdf(activity, crop)
 
     return res.status(200).json(pdf.publicPath)
-  }
-
-  public async testFile (req: Request, res: Response) {
-    const filesUploaded = await UploadService.upload(
-      req.files,
-      `achievements/123-tre`
-    )
-
-    for (const item of filesUploaded) {
-      const pathThumbnail = await ImageService.createThumbnail({
-        path: item.path,
-        destination: 'uploads/achievements/123-tre',
-        nameFile: item.nameFile,
-        suffixName: 'thumbnail',
-        width: 200,
-        height: 200
-      })
-
-      const intermediatePath = await ImageService.resize({
-        path: item.path,
-        destination: 'uploads/achievements/123-tre',
-        nameFile: item.nameFile,
-        suffixName: 'intermediate',
-        width: 350,
-        height: 350
-      })
-
-      console.log(pathThumbnail)
-      console.log(intermediatePath)
-    }
-
-    res.status(200).send(filesUploaded)
   }
 }
 
