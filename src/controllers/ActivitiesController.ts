@@ -29,22 +29,13 @@ class ActivitiesController {
    *
    * @return Response
    */
-  public async index(req: Request, res: Response) {
-    const activities = await Activity.find()
-      .populate('type')
-      .populate('typeAgreement')
-      .populate({
-        path: 'crop',
-        populate: [
-          { path: 'cropType' },
-          { path: 'unitType' },
-          { path: 'company' },
-          { path: 'owner' },
-        ],
-      })
-      .populate('lots')
-      .populate('files')
-      .populate('user')
+  public async index(req: Request | any, res: Response) {
+    let activities = []
+    if (req.query) {
+      activities = await ActivityService.getActivitiesByIds(req.query.ids)
+    } else {
+      activities = await ActivityService.getActivities()
+    }
 
     res.status(200).json(activities)
   }
