@@ -122,8 +122,8 @@ export const cropTypesData = [
 export const unitTypesData = [
   {
     name: {
-      en: 'Kilograms',
-      es: 'Kilogramos',
+      en: 'Kilograms/ha',
+      es: 'Kilogramos/ha',
     },
     key: 'kg',
   },
