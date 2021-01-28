@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import models from '../models'
 import UploadService from '../services/UploadService'
+import ImageService from '../services/ImageService'
 
 const User = models.User
 
@@ -25,7 +26,23 @@ class ProfileController {
       `profile/${user._id}`
     )
 
-    user.avatar = fileSaved[0].path
+    let thumbnailImages = fileSaved.map(async (file) => {
+      const thumbnail = await ImageService.createThumbnail({
+        path: file.path,
+        destination: `${process.env.DIR_UPLOADS}/profile`,
+        nameFile: file.nameFile,
+        suffixName: 'thumbnail',
+        width: 200,
+        height: 200,
+        fit: 'cover',
+      })
+
+      return thumbnail
+    })
+
+    thumbnailImages = await Promise.all(thumbnailImages)
+
+    user.avatar = thumbnailImages[0].path
 
     await user.save()
 

@@ -18,7 +18,7 @@ class ServiceBase {
    * @param files
    * @param user
    */
-  public static async addFiles (
+  public static async addFiles(
     document,
     evidences,
     files: FileArray,
@@ -34,7 +34,7 @@ class ServiceBase {
         ...evidences[index],
         pathThumbnails: manipulated ? manipulated.pathThumbnail : null,
         pathIntermediate: manipulated ? manipulated.pathIntermediate : null,
-        user: user._id
+        user: user._id,
       })
 
       return file._id
@@ -55,7 +55,7 @@ class ServiceBase {
    * @param document
    * @param filePath
    */
-  public static async removeFiles (fileId: string, document, filePath: string) {
+  public static async removeFiles(fileId: string, document, filePath: string) {
     if (fileExist(filePath)) {
       removeFile(filePath)
 
@@ -82,7 +82,7 @@ class ServiceBase {
    * @param document
    * @param user
    */
-  public static async signUser (document, user) {
+  public static async signUser(document, user) {
     const signer = document.signers.filter(
       (item) => item.userId.toString() === user._id.toString()
     )
@@ -102,7 +102,7 @@ class ServiceBase {
    *
    * @returns boolean
    */
-  public static isCompleteSignsUsers (document): boolean {
+  public static isCompleteSignsUsers(document): boolean {
     const listNotSigners = document.signers.filter((item) => !item.signed)
 
     if (listNotSigners.length > 0) {
@@ -112,7 +112,7 @@ class ServiceBase {
     return true
   }
 
-  public static makeRequest (
+  public static makeRequest(
     method: string,
     url: string,
     values: any,
@@ -127,7 +127,7 @@ class ServiceBase {
    * @param list
    * @param sortReference
    */
-  public static sortData (
+  public static sortData(
     list: Array<any>,
     sortReference: Array<any>
   ): Array<any> {
@@ -146,7 +146,7 @@ class ServiceBase {
    * @param width
    * @param height
    */
-  private static async manipulateImage (
+  public static async manipulateImage(
     file,
     destination: string,
     width: number,
@@ -160,7 +160,7 @@ class ServiceBase {
         suffixName: 'thumbnail',
         width: 200,
         height: 200,
-        fit: 'cover'
+        fit: 'cover',
       })
 
       const intermediate = await ImageService.resize({
@@ -170,12 +170,12 @@ class ServiceBase {
         suffixName: 'intermediate',
         width: width,
         height: height,
-        fit: 'contain'
+        fit: 'contain',
       })
 
       return {
         pathThumbnail: thumbnail.path,
-        pathIntermediate: intermediate.path
+        pathIntermediate: intermediate.path,
       }
     }
 
