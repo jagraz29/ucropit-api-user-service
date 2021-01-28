@@ -21,36 +21,22 @@ class CropsController {
    *
    * @return Response
    */
-  public async index (req: Request | any, res: Response) {
+  public async index(req: Request | any, res: Response) {
     const query: any = {
-      cancelled: false
+      cancelled: false,
+      'members.identifier': req.query.identifier,
+      'members.user': req.user._id,
     }
-    const userId: string = req.user._id.toString()
-    const identifier: string = req.query.identifier
 
-    const crops = (
-      await Crop.find(query)
-        .populate('cropType')
-        .populate('unitType')
-        .populate('pending')
-        .populate('toMake')
-        .populate('done')
-        .populate('members.user')
-        .populate('finished')
-        .lean()
-    )
-      .map(crop => {
-        if (
-          crop.members.find(
-            member =>
-              member.identifier === identifier &&
-              member.user._id.toString() === userId
-          )
-        ) {
-          return crop
-        }
-      })
-      .filter(crop => crop)
+    const crops = await Crop.find(query)
+      .populate('cropType')
+      .populate('unitType')
+      .populate('pending')
+      .populate('toMake')
+      .populate('done')
+      .populate('members.user')
+      .populate('finished')
+      .lean()
 
     res.status(200).json(crops)
   }
@@ -63,9 +49,9 @@ class CropsController {
    *
    * @return Response
    */
-  public async show (req: Request, res: Response) {
+  public async show(req: Request, res: Response) {
     const { id } = req.params
-    const crop = await CropService.getCropById(id)
+    const crop = await CropService.getCrop(id)
 
     res.status(200).json(crop)
   }
@@ -78,7 +64,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async create (req: Request | any, res: Response) {
+  public async create(req: Request | any, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     await validateCropStore(data)
@@ -113,7 +99,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async update (req: Request, res: Response) {
+  public async update(req: Request, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     let company = null
@@ -137,7 +123,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async enableOffline (req: Request, res: Response) {
+  public async enableOffline(req: Request, res: Response) {
     const crop = await Crop.findById(req.params.id)
 
     crop.downloaded = req.body.downloaded
@@ -155,18 +141,18 @@ class CropsController {
    *
    * @return Response
    */
-  public async delete (req: Request, res: Response) {
+  public async delete(req: Request, res: Response) {
     const isCancelled = await CropService.cancelled(req.params.id)
 
     if (!isCancelled) {
       return res.status(400).json({
         error: true,
-        message: 'deleted not allowd'
+        message: 'deleted not allowd',
       })
     }
 
     res.status(200).json({
-      message: 'deleted successfuly'
+      message: 'deleted successfuly',
     })
   }
 }

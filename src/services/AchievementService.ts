@@ -8,7 +8,7 @@ const Achievement = models.Achievement
 
 interface IAchievement {
   dateAchievement?: String
-  surface?: Number
+  surface?: number
   lots?: Array<string>
   supplies?: Array<any>
   evidences?: Array<any>
@@ -17,7 +17,7 @@ interface IAchievement {
 }
 
 class AchievementService extends ServiceBase {
-  public static async find (query) {
+  public static async find(query) {
     return Achievement.find(query)
       .populate('lots')
       .populate('files')
@@ -28,7 +28,7 @@ class AchievementService extends ServiceBase {
    *
    * @param string id
    */
-  public static async findById (id: string) {
+  public static async findById(id: string) {
     return Achievement.findById(id)
       .populate('lots')
       .populate('files')
@@ -41,8 +41,8 @@ class AchievementService extends ServiceBase {
    * @param IAchievement achievement
    * @param activity
    */
-  public static async store (achievement: IAchievement, activity) {
-    achievement.percent = this.calcPercent(achievement.lots, activity)
+  public static async store(achievement: IAchievement, activity) {
+    achievement.percent = this.calcPercent(achievement.surface, activity)
     await this.addLotsAchievement(achievement.lots, activity)
 
     return Achievement.create(achievement)
@@ -53,29 +53,16 @@ class AchievementService extends ServiceBase {
    * @param Array lots
    * @param activity
    */
-  public static calcPercent (lots: Array<string>, activity) {
-    let lotsSelected: Array<any> = []
-    for (const lotId of lots) {
-      const lot = activity.lots.filter(
-        (lotItem) => lotItem._id.toString() === lotId
-      )[0]
-      lotsSelected.push(lot)
-    }
-
-    const sumPercent = lotsSelected.reduce(
-      (a, b) => a + (b['surface'] || 0),
-      0
-    )
-
+  public static calcPercent(surface: number, activity) {
     const totalSurface = activity.lots.reduce(
       (a, b) => a + (b['surface'] || 0),
       0
     )
 
-    return Math.round((sumPercent * 100) / totalSurface)
+    return Math.round((surface * 100) / totalSurface)
   }
 
-  public static async generatePdf (activity, crop) {
+  public static async generatePdf(activity, crop) {
     const pathPdf = this.getPathFilePdf(activity)
     const nameFile = `${activity.key}-${activity.type.name.es}-sing.pdf`
     const direction = `${process.env.BASE_URL}/${process.env.DIR_UPLOADS}/${process.env.DIR_FOLDER_PDF_SIGNS}/${activity.key}/${nameFile}`
@@ -92,16 +79,16 @@ class AchievementService extends ServiceBase {
       pathFile: `${pathPdf}/${nameFile}`,
       files: activity.files,
       crop: crop,
-      activity: activity
+      activity: activity,
     })
 
     return {
       resultPDF,
-      publicPath: direction
+      publicPath: direction,
     }
   }
 
-  public static getPathFilePdf (activity) {
+  public static getPathFilePdf(activity) {
     return `${basePath()}${process.env.DIR_PDF_SINGS}/${activity.key}`
   }
 
@@ -110,7 +97,7 @@ class AchievementService extends ServiceBase {
    * @param Array lots
    * @param activity
    */
-  private static addLotsAchievement (lots: Array<string>, activity) {
+  private static addLotsAchievement(lots: Array<string>, activity) {
     if (activity.lotsMade.length === 0) {
       activity.lotsMade = lots
     } else {

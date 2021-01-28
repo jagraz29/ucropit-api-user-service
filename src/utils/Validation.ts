@@ -18,10 +18,10 @@ export const validateCropStore = async (crop) => {
       .items(
         Joi.object().keys({
           names: Joi.array().items(Joi.string()).required(),
-          tag: Joi.string().required()
+          tag: Joi.string().required(),
         })
       )
-      .required()
+      .required(),
   })
 
   return schema.validateAsync(crop)
@@ -31,7 +31,7 @@ export const validateActivityStore = async (activity) => {
   const schema = Joi.object({
     name: Joi.string().required(),
     dateStart: Joi.date().optional(),
-    dateEnd: Joi.date().greater(Joi.ref('dateStart')).optional(),
+    dateEnd: Joi.date().min(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
     surface: Joi.number().optional(),
     type: Joi.string().required(),
@@ -51,18 +51,18 @@ export const validateActivityStore = async (activity) => {
           quantity: Joi.number().required(),
           typeId: Joi.string().required(),
           icon: Joi.string().optional(),
-          total: Joi.number().required()
+          total: Joi.number().required(),
         })
       )
       .optional(),
     evidences: Joi.array()
       .items(
         Joi.object().keys({
-          name: Joi.string().required(),
+          name: Joi.string().optional(),
           description: Joi.string().required(),
           date: Joi.date().required(),
           settings: Joi.optional(),
-          meta: Joi.optional()
+          meta: Joi.optional(),
         })
       )
       .optional(),
@@ -72,9 +72,9 @@ export const validateActivityStore = async (activity) => {
         fullName: Joi.string().required(),
         email: Joi.string().required(),
         type: Joi.string().required(),
-        signed: Joi.boolean().optional()
+        signed: Joi.boolean().optional(),
       })
-    )
+    ),
   })
 
   return schema.validateAsync(activity)
@@ -84,7 +84,7 @@ export const validateActivityUpdate = async (activity) => {
   const schema = Joi.object({
     name: Joi.string().optional(),
     dateStart: Joi.date().optional(),
-    dateEnd: Joi.date().greater(Joi.ref('dateStart')).optional(),
+    dateEnd: Joi.date().min(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
     surface: Joi.number().optional(),
     type: Joi.string().optional(),
@@ -104,18 +104,18 @@ export const validateActivityUpdate = async (activity) => {
           quantity: Joi.number().required(),
           typeId: Joi.string().required(),
           icon: Joi.string().optional(),
-          total: Joi.number().required()
+          total: Joi.number().required(),
         })
       )
       .optional(),
     evidences: Joi.array()
       .items(
         Joi.object().keys({
-          name: Joi.string().required(),
+          name: Joi.string().optional(),
           description: Joi.string().required(),
           date: Joi.date().required(),
           settings: Joi.optional(),
-          meta: Joi.optional()
+          meta: Joi.optional(),
         })
       )
       .optional(),
@@ -125,9 +125,9 @@ export const validateActivityUpdate = async (activity) => {
         fullName: Joi.string().required(),
         email: Joi.string().required(),
         type: Joi.string().required(),
-        signed: Joi.boolean().optional()
+        signed: Joi.boolean().optional(),
       })
-    )
+    ),
   })
 
   return schema.validateAsync(activity)
@@ -145,10 +145,10 @@ export const validateCompanyStore = async (company) => {
         Joi.object().keys({
           name: Joi.string().required(),
           description: Joi.string().required(),
-          date: Joi.date().required()
+          date: Joi.date().required(),
         })
       )
-      .optional()
+      .optional(),
   })
 
   return schema.validateAsync(company)
@@ -166,10 +166,10 @@ export const validateCompanyUpdate = async (company) => {
         Joi.object().keys({
           name: Joi.string().required(),
           description: Joi.string().required(),
-          date: Joi.date().required()
+          date: Joi.date().required(),
         })
       )
-      .optional()
+      .optional(),
   })
 
   return schema.validateAsync(company)
@@ -190,7 +190,7 @@ export const validateAchievement = async (achievement) => {
           quantity: Joi.number().required(),
           typeId: Joi.string().required(),
           icon: Joi.string().optional(),
-          total: Joi.number().required()
+          total: Joi.number().required(),
         })
       )
       .optional(),
@@ -201,18 +201,18 @@ export const validateAchievement = async (achievement) => {
           tonsHarvest: Joi.number().required(),
           destinationAddress: Joi.string().required(),
           icon: Joi.string().optional(),
-          label: Joi.string().optional()
+          label: Joi.string().optional(),
         })
       )
       .optional(),
     evidences: Joi.array()
       .items(
         Joi.object().keys({
-          name: Joi.string().required(),
+          name: Joi.string().optional(),
           description: Joi.string().required(),
           date: Joi.date().required(),
           settings: Joi.optional(),
-          meta: Joi.optional()
+          meta: Joi.optional(),
         })
       )
       .optional(),
@@ -222,10 +222,11 @@ export const validateAchievement = async (achievement) => {
           userId: Joi.string().required(),
           fullName: Joi.string().required(),
           email: Joi.string().required(),
-          type: Joi.string().required()
+          type: Joi.string().required(),
+          signed: Joi.boolean().optional(),
         })
       )
-      .optional()
+      .optional(),
   })
 
   return schema.validateAsync(achievement)
@@ -234,7 +235,7 @@ export const validateAchievement = async (achievement) => {
 export const validateSignAchievement = async (dataSign) => {
   const schema = Joi.object({
     activityId: Joi.string().required(),
-    cropId: Joi.string().required()
+    cropId: Joi.string().required(),
   })
 
   return schema.validateAsync(dataSign)

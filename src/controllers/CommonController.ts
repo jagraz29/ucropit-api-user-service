@@ -5,6 +5,7 @@ const CropType = models.CropType
 const UnitType = models.UnitType
 const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
+const EvidenceConcepts = models.EvidenceConcept
 
 class CommonController {
   /**
@@ -16,7 +17,7 @@ class CommonController {
    *
    * @return Response
    */
-  public async cropTypes (req: Request, res: Response) {
+  public async cropTypes(req: Request, res: Response) {
     const cropTypes = await CropType.find({})
 
     res.status(200).json(cropTypes)
@@ -30,7 +31,7 @@ class CommonController {
    *
    *  @return Response
    */
-  public async unitTypes (req: Request, res: Response) {
+  public async unitTypes(req: Request, res: Response) {
     const unitTypes = await UnitType.find({})
 
     res.status(200).json(unitTypes)
@@ -45,7 +46,7 @@ class CommonController {
    *
    * @return Response
    */
-  public async activitiesTypes (req: Request, res: Response) {
+  public async activitiesTypes(req: Request, res: Response) {
     const activitiesTypes = await ActivityType.find({})
 
     res.status(200).json(activitiesTypes)
@@ -60,10 +61,24 @@ class CommonController {
    *
    * @return Response
    */
-  public async agreementTypes (req: Request, res: Response) {
+  public async agreementTypes(req: Request, res: Response) {
     const agreementTypes = await TypeAgreement.find({})
 
     res.status(200).json(agreementTypes)
+  }
+
+  /**
+   * Get all evidence concepts.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async evidenceConcepts(req: Request, res: Response) {
+    const evidenceConcepts = await EvidenceConcepts.find({})
+
+    res.status(200).json(evidenceConcepts)
   }
 }
 

@@ -5,251 +5,296 @@ export const supplyTypesData = [
     _id: mongoose.Types.ObjectId('4edd40c86410'),
     name: 'Otros',
     code: 'Otros',
-    icon: 'spa'
+    icon: 'spa',
   },
   {
     _id: mongoose.Types.ObjectId('4edd40c86420'),
     name: 'Fertilizantes agroquimicos',
     code: 'FE',
-    icon: 'spa'
+    icon: 'spa',
   },
   {
     _id: mongoose.Types.ObjectId('4edd40c86421'),
     name: 'Fungicidas agroquimicos',
     code: 'FU',
-    icon: 'spa'
+    icon: 'spa',
   },
   {
     _id: mongoose.Types.ObjectId('4edd40c86422'),
     name: 'Herbicidas agroquimicos',
     code: 'HE',
-    icon: 'spa'
+    icon: 'spa',
   },
   {
     _id: mongoose.Types.ObjectId('4edd40c86423'),
     name: 'Insecticidas agroquimicos',
     code: 'IN',
-    icon: 'spa'
+    icon: 'spa',
   },
   {
     _id: mongoose.Types.ObjectId('4edd40c86430'),
     name: 'Semilla de Pisingallo',
     code: 'SePi',
-    icon: 'spa'
+    icon: 'spa',
   },
   {
     _id: mongoose.Types.ObjectId('4edd40c86431'),
     name: 'Semilla de Maiz',
     code: 'SeMa',
-    icon: 'spa'
+    icon: 'spa',
   },
   {
     _id: mongoose.Types.ObjectId('4edd40c86432'),
     name: 'Semilla de Girasol',
     code: 'SeGi',
-    icon: 'spa'
+    icon: 'spa',
   },
   {
     _id: mongoose.Types.ObjectId('4edd40c86433'),
     name: 'Semilla de Trigo',
     code: 'SeTr',
-    icon: 'spa'
+    icon: 'spa',
   },
   {
     _id: mongoose.Types.ObjectId('4edd40c86434'),
     name: 'Semilla de Soja',
     code: 'SeSo',
-    icon: 'spa'
+    icon: 'spa',
   },
   {
     _id: mongoose.Types.ObjectId('4edd40c86435'),
     name: 'Semilla de Colza',
     code: 'SeCo',
-    icon: 'spa'
+    icon: 'spa',
   },
   {
     _id: mongoose.Types.ObjectId('4edd40c86436'),
     name: 'Semilla de Cebada',
     code: 'SeCe',
-    icon: 'spa'
+    icon: 'spa',
   },
   {
     _id: mongoose.Types.ObjectId('4edd40c86437'),
     name: 'Semilla de Algodon',
     code: 'SeAl',
-    icon: 'spa'
-  }
+    icon: 'spa',
+  },
 ]
 
 export const cropTypesData = [
   {
     name: {
       en: 'Soy',
-      es: 'Soja'
+      es: 'Soja',
     },
-    key: 'soy'
+    key: 'soy',
   },
   {
     name: {
       en: 'Sunflower',
-      es: 'Girasol'
+      es: 'Girasol',
     },
-    key: 'sunflower'
+    key: 'sunflower',
   },
   {
     name: {
       en: 'Corn',
-      es: 'Maiz'
+      es: 'Maiz',
     },
-    key: 'corn'
+    key: 'corn',
   },
   {
     name: {
       en: 'Cotton',
-      es: 'Algodon'
+      es: 'Algodon',
     },
-    key: 'cotton'
+    key: 'cotton',
   },
   {
     name: {
       en: 'Wheat',
-      es: 'Trigo'
+      es: 'Trigo',
     },
-    key: 'wheat'
-  }
+    key: 'wheat',
+  },
 ]
 
 export const unitTypesData = [
   {
     name: {
-      en: 'Kilograms',
-      es: 'Kilogramos'
+      en: 'Kilograms/ha',
+      es: 'Kilogramos/ha',
     },
-    key: 'kg'
+    key: 'kg',
   },
   {
     name: {
-      en: 'Tons',
-      es: 'Toneladas'
+      en: 'Tons/ha',
+      es: 'Toneladas/ha',
     },
-    key: 't'
+    key: 't',
   },
   {
     name: {
-      en: 'Bags',
-      es: 'Bolsas'
+      en: 'Bags/ha',
+      es: 'Bolsas/ha',
     },
-    key: 'bls'
+    key: 'bls',
   },
   {
     name: {
       en: 'Bales',
-      es: 'Fardos'
+      es: 'Fardos',
     },
-    key: 'fds'
+    key: 'fds',
   },
   {
     name: {
-      en: 'Quintales',
-      es: 'Quintales'
+      en: 'Quintales/ha',
+      es: 'Quintales/ha',
     },
-    key: 'q'
-  }
+    key: 'q',
+  },
 ]
 
 export const activitiesTypesData = [
   {
     name: {
       en: 'Tillage',
-      es: 'Labranza'
+      es: 'Labranza',
     },
-    tag: 'ACT_TILLAGE'
+    tag: 'ACT_TILLAGE',
   },
   {
     name: {
       en: 'Application',
-      es: 'Aplicación'
+      es: 'Aplicación',
     },
-    tag: 'ACT_APPLICATION'
+    tag: 'ACT_APPLICATION',
   },
   {
     name: {
       en: 'Fertilization',
-      es: 'Fertilización'
+      es: 'Fertilización',
     },
-    tag: 'ACT_FERTILIZATION'
+    tag: 'ACT_FERTILIZATION',
   },
   {
     name: {
       en: 'Sowing',
-      es: 'Siembra'
+      es: 'Siembra',
     },
-    tag: 'ACT_SOWING'
+    tag: 'ACT_SOWING',
   },
   {
     name: {
       en: 'Harvest',
-      es: 'Cosecha'
+      es: 'Cosecha',
     },
-    tag: 'ACT_HARVEST'
+    tag: 'ACT_HARVEST',
   },
   {
     name: {
       en: 'Agreements',
-      es: 'Acuerdos'
+      es: 'Acuerdos',
     },
-    tag: 'ACT_AGREEMENTS'
+    tag: 'ACT_AGREEMENTS',
   },
   {
     name: {
       en: 'Monitoring',
-      es: 'Monitoreo'
+      es: 'Monitoreo',
     },
-    tag: 'ACT_MONITORING'
-  }
+    tag: 'ACT_MONITORING',
+  },
 ]
 
 export const agreementTypesData = [
   {
     name: {
       en: 'Commercialization',
-      es: 'Comercialización'
+      es: 'Comercialización',
     },
-    key: 'COMMER'
+    key: 'COMMER',
   },
   {
     name: {
       en: 'financing',
-      es: 'Financiación'
+      es: 'Financiación',
     },
-    key: 'FINAN'
+    key: 'FINAN',
   },
   {
     name: {
       en: 'Exploitation',
-      es: 'Explotación'
+      es: 'Explotación',
     },
-    key: 'EXPLO'
+    key: 'EXPLO',
   },
   {
     name: {
       en: 'Sustainable cultivation',
-      es: 'Cultivo sustentable'
+      es: 'Cultivo sustentable',
     },
-    key: 'SUSTAIN'
+    key: 'SUSTAIN',
   },
   {
     name: {
       en: 'Cotton Best Practices',
-      es: 'Algodon Buenas Practicas'
+      es: 'Algodon Buenas Practicas',
     },
-    key: 'COTTON_BETS'
+    key: 'COTTON_BETS',
   },
   {
     name: {
       en: 'Supplies',
-      es: 'Proveedor'
+      es: 'Proveedor',
     },
-    key: 'SUPPLIER'
-  }
+    key: 'SUPPLIER',
+  },
+]
+
+export const evidenceConcepts = [
+  {
+    code: '0001',
+    name: {
+      en: 'Waybill',
+      es: 'Carta de porte',
+    },
+  },
+  {
+    code: '0002',
+    name: {
+      en: 'Supporting Documentation',
+      es: 'Documentación de Respaldo',
+    },
+  },
+  {
+    code: '0003',
+    name: {
+      en: 'Bill',
+      es: 'Factura',
+    },
+  },
+  {
+    code: '0004',
+    name: {
+      en: 'Photo inside the Lot',
+      es: 'Foto dentro del Lote',
+    },
+  },
+  {
+    code: '0005',
+    name: {
+      en: 'Agricultural recipe',
+      es: 'Receta agropecuaria',
+    },
+  },
+  {
+    code: '0006',
+    name: {
+      en: 'Dispatch Form',
+      es: 'Remito',
+    },
+  },
 ]

@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import {
   validateActivityStore,
   validateActivityUpdate,
-  validateFilesWithEvidences
+  validateFilesWithEvidences,
 } from '../utils/Validation'
 
 import ActivityService from '../services/ActivityService'
@@ -29,22 +29,15 @@ class ActivitiesController {
    *
    * @return Response
    */
-  public async index (req: Request, res: Response) {
-    const activities = await Activity.find()
-      .populate('type')
-      .populate('typeAgreement')
-      .populate({
-        path: 'crop',
-        populate: [
-          { path: 'cropType' },
-          { path: 'unitType' },
-          { path: 'company' },
-          { path: 'owner' }
-        ]
-      })
-      .populate('lots')
-      .populate('files')
-      .populate('user')
+  public async index(req: Request | any, res: Response) {
+    let activities = []
+    const { ids } = req.query
+    
+    if (ids) {
+      activities = await ActivityService.getActivitiesByIds(JSON.parse(ids))
+    } else {
+      activities = await ActivityService.getActivities()
+    }
 
     res.status(200).json(activities)
   }
@@ -57,7 +50,7 @@ class ActivitiesController {
    *
    * @return Response
    */
-  public async show (req: Request, res: Response) {
+  public async show(req: Request, res: Response) {
     const activity = await ActivityService.findActivityById(req.params.id)
 
     res.status(200).json(activity)
@@ -71,7 +64,7 @@ class ActivitiesController {
    *
    * @return Response
    */
-  public async create (req: Request, res: Response) {
+  public async create(req: Request, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
 
@@ -113,7 +106,7 @@ class ActivitiesController {
    *
    * @return Response
    */
-  public async update (req: Request, res: Response) {
+  public async update(req: Request, res: Response) {
     const { id } = req.params
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
@@ -167,7 +160,7 @@ class ActivitiesController {
    *
    * @return Response
    */
-  public async sign (req: Request, res: Response) {
+  public async sign(req: Request, res: Response) {
     const { id, cropId } = req.params
     const user: UserSchema = req.user
 
@@ -191,7 +184,7 @@ class ActivitiesController {
         pathPdf,
         nameFilePdf,
         nameFileOts,
-        pathOtsFile
+        pathOtsFile,
       } = await BlockChainServices.sign(crop, activity)
 
       const approvalRegisterSign = await ApprovalRegisterSingService.create({
@@ -201,7 +194,7 @@ class ActivitiesController {
         nameFilePdf,
         nameFileOts,
         pathOtsFile,
-        activity
+        activity,
       })
 
       activity.approvalRegister = approvalRegisterSign._id
@@ -222,7 +215,7 @@ class ActivitiesController {
    *
    * @return Response
    */
-  public async validate (req: Request, res: Response) {
+  public async validate(req: Request, res: Response) {
     const { id, cropId } = req.params
     const { status } = req.body
 
@@ -230,12 +223,15 @@ class ActivitiesController {
 
     await ActivityService.changeStatus(activity, status)
 
-    activity = await Activity.findById(id)
+    activity = await Activity.findById(id).populate('type')
 
     const crop = await Crop.findById(cropId)
 
     const statusCrop =
-      activity.type.name.en === 'Agreements' ? 'pending' : 'toMake'
+      activity.type.tag === 'ACT_AGREEMENTS' ||
+      activity.type.tag === 'ACT_MONITORING'
+        ? 'pending'
+        : 'toMake'
 
     await CropService.removeActivities(activity, crop, statusCrop)
     await CropService.addActivities(activity, crop)
@@ -251,11 +247,11 @@ class ActivitiesController {
    *
    * @return Response
    */
-  public async delete (req: Request, res: Response) {
+  public async delete(req: Request, res: Response) {
     const activity = await Activity.findByIdAndDelete(req.params.id)
 
     res.status(200).json({
-      message: 'deleted successfully'
+      message: 'deleted successfully',
     })
   }
 
@@ -267,7 +263,7 @@ class ActivitiesController {
    *
    * @return {Response}
    */
-  public async removeFile (req: Request, res: Response) {
+  public async removeFile(req: Request, res: Response) {
     const { id, fileId } = req.params
 
     const activity = await Activity.findOne({ _id: id })
@@ -288,7 +284,7 @@ class ActivitiesController {
     }
 
     res.status(200).json({
-      message: 'deleted file successfully'
+      message: 'deleted file successfully',
     })
   }
 }

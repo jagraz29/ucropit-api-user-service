@@ -6,6 +6,8 @@ import ExportFile from '../services/common/ExportFileService'
 import Company from '../services/CompanyService'
 import EmailService from '../services/EmailService'
 
+import { roles, errors } from '../types/common'
+
 import fs from 'fs'
 
 import models from '../models'
@@ -60,11 +62,23 @@ class ReportsController {
     const { email, identifier } = req.body
     const user: any = req.user
 
-    let crops = await CropService.getAll({
-      cancelled: false,
-      'members.user': user._id,
-      'members.identifier': identifier,
-    })
+    let crops = await CropService.cropsOnlySeeRoles(
+      {
+        cancelled: false,
+        'members.user': user._id,
+        'members.identifier': identifier,
+      },
+      {
+        user: user._id,
+        identifier: identifier,
+      },
+      roles
+    )
+
+    if (crops.length === 0) {
+      const error = errors.find((error) => error.key === '001')
+      return res.status(400).json(error.code)
+    }
 
     const reports = await ReportService.generateLotReports(crops)
 
