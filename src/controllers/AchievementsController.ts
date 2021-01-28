@@ -87,8 +87,6 @@ class AchievementsController {
 
     let achievement = await AchievementService.store(data, activity)
 
-    await AchievementService.signUser(achievement, user)
-
     await ActivityService.addAchievement(activity, achievement)
 
     if (activity.status[0].name.en !== 'DONE') {

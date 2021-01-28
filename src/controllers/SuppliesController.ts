@@ -7,11 +7,11 @@ import { typesSupplies } from '../utils/Constants'
 const Supply = models.Supply
 
 class SuppliesController {
-  public async index (req, res: Response) {
+  public async index(req, res: Response) {
     let type = null
     let filter: any = {}
     if (req.query.tag) {
-      type = typesSupplies.find(item => item.tag === req.query.tag)
+      type = typesSupplies.find((item) => item.tag === req.query.tag)
     }
 
     const skip =
@@ -21,17 +21,17 @@ class SuppliesController {
 
     if (req.query.q) {
       filter = {
-        name: { $regex: new RegExp('^' + req.query.q.toLowerCase(), 'i') }
+        name: { $regex: new RegExp('^' + req.query.q.toLowerCase(), 'i') },
       }
     }
 
     if (type) {
       filter.typeId = { $in: type.types }
     }
-    
+
     const supplies = await Supply.find(filter, undefined, {
       skip,
-      limit: req.query.limit >= 0 ? Number(req.query.limit) : 15
+      limit: req.query.limit >= 0 ? Number(req.query.limit) : 15,
     })
       .populate('typeId')
       .sort('name')
@@ -40,7 +40,7 @@ class SuppliesController {
     res.status(200).json(supplies)
   }
 
-  public async quantity (req: Request, res: Response) {
+  public async quantity(req: Request, res: Response) {
     const total = await Supply.countDocuments()
 
     res.status(200).json({ quantity: total })
