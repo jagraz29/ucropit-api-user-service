@@ -32,8 +32,9 @@ class ActivitiesController {
   public async index(req: Request | any, res: Response) {
     let activities = []
     const { ids } = req.query
+    
     if (ids) {
-      activities = await ActivityService.getActivitiesByIds(ids)
+      activities = await ActivityService.getActivitiesByIds(JSON.parse(ids))
     } else {
       activities = await ActivityService.getActivities()
     }
