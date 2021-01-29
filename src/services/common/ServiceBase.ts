@@ -18,7 +18,7 @@ class ServiceBase {
    * @param files
    * @param user
    */
-  public static async addFiles (
+  public static async addFiles(
     document,
     evidences,
     files: FileArray,
@@ -55,7 +55,7 @@ class ServiceBase {
    * @param document
    * @param filePath
    */
-  public static async removeFiles (fileId: string, document, filePath: string) {
+  public static async removeFiles(fileId: string, document, filePath: string) {
     if (fileExist(filePath)) {
       removeFile(filePath)
 
@@ -82,7 +82,7 @@ class ServiceBase {
    * @param document
    * @param user
    */
-  public static async signUser (document, user) {
+  public static async signUser(document, user) {
     const signer = document.signers.filter(
       (item) => item.userId.toString() === user._id.toString()
     )
@@ -90,6 +90,7 @@ class ServiceBase {
     if (signer.length > 0) {
       const child = document.signers.id(signer[0]._id)
       child.signed = true
+      child.dateSigned = new Date()
     }
 
     await document.save()
@@ -102,7 +103,7 @@ class ServiceBase {
    *
    * @returns boolean
    */
-  public static isCompleteSignsUsers (document): boolean {
+  public static isCompleteSignsUsers(document): boolean {
     const listNotSigners = document.signers.filter((item) => !item.signed)
 
     if (listNotSigners.length > 0) {
@@ -112,7 +113,7 @@ class ServiceBase {
     return true
   }
 
-  public static makeRequest (
+  public static makeRequest(
     method: string,
     url: string,
     values: any,
@@ -127,7 +128,7 @@ class ServiceBase {
    * @param list
    * @param sortReference
    */
-  public static sortData (
+  public static sortData(
     list: Array<any>,
     sortReference: Array<any>
   ): Array<any> {
@@ -146,7 +147,7 @@ class ServiceBase {
    * @param width
    * @param height
    */
-  private static async manipulateImage (
+  private static async manipulateImage(
     file,
     destination: string,
     width: number,
