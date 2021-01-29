@@ -79,12 +79,12 @@ class AchievementService extends ServiceBase {
       pathFile: `${pathPdf}/${nameFile}`,
       files: activity.files,
       crop: crop,
-      activity: activity,
+      activity: activity
     })
 
     return {
       resultPDF,
-      publicPath: direction,
+      publicPath: direction
     }
   }
 
