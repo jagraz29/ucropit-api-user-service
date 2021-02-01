@@ -105,6 +105,9 @@ const AchievementSchema: Schema = new Schema({
       signed: {
         type: Boolean,
         default: false
+      },
+      dateSigned: {
+        type: Date
       }
     }
   ]
