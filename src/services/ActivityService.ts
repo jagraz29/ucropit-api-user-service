@@ -1,6 +1,6 @@
 import ServiceBase from './common/ServiceBase'
 import models from '../models'
-
+import mongoose from 'mongoose'
 import { statusActivities } from '../utils/Status'
 
 const Activity = models.Activity
@@ -8,6 +8,7 @@ const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
 
 interface IActivity {
+  _id?: String
   name?: String
   dateStart?: String
   dateEnd?: String
@@ -24,7 +25,7 @@ interface IActivity {
 }
 
 class ActivityService extends ServiceBase {
-  public static async findActivityById(id: string) {
+  public static async findActivityById (id: string) {
     return Activity.findById(id)
       .populate('type')
       .populate('typeAgreement')
@@ -34,8 +35,8 @@ class ActivityService extends ServiceBase {
           { path: 'cropType' },
           { path: 'unitType' },
           { path: 'company' },
-          { path: 'owner' },
-        ],
+          { path: 'owner' }
+        ]
       })
       .populate('lots')
       .populate('lotsMade')
@@ -45,14 +46,14 @@ class ActivityService extends ServiceBase {
         populate: [
           { path: 'lots' },
           { path: 'files' },
-          { path: 'supplies', populate: [{ path: 'typeId' }] },
-        ],
+          { path: 'supplies', populate: [{ path: 'typeId' }] }
+        ]
       })
       .populate('approvalRegister')
       .populate('user')
   }
 
-  public static async getActivities() {
+  public static async getActivities () {
     return Activity.find()
       .populate('type')
       .populate('typeAgreement')
@@ -62,15 +63,15 @@ class ActivityService extends ServiceBase {
           { path: 'cropType' },
           { path: 'unitType' },
           { path: 'company' },
-          { path: 'owner' },
-        ],
+          { path: 'owner' }
+        ]
       })
       .populate('lots')
       .populate('files')
       .populate('user')
   }
 
-  public static async getActivitiesByIds(ids: Array<string>) {
+  public static async getActivitiesByIds (ids: Array<string>) {
     return Activity.find()
       .populate('type')
       .populate('typeAgreement')
@@ -80,8 +81,8 @@ class ActivityService extends ServiceBase {
           { path: 'cropType' },
           { path: 'unitType' },
           { path: 'company' },
-          { path: 'owner' },
-        ],
+          { path: 'owner' }
+        ]
       })
       .populate({ path: 'lots', select: '-area -__v' })
       .populate({ path: 'lotsMade', select: '-area -__v' })
@@ -91,8 +92,8 @@ class ActivityService extends ServiceBase {
         populate: [
           { path: 'lots', select: '-area -__v' },
           { path: 'files' },
-          { path: 'supplies', populate: [{ path: 'typeId' }] },
-        ],
+          { path: 'supplies', populate: [{ path: 'typeId' }] }
+        ]
       })
       .populate('approvalRegister')
       .populate('user')
@@ -101,7 +102,7 @@ class ActivityService extends ServiceBase {
       .lean()
   }
 
-  public static async store(activity: IActivity, user) {
+  public static async store (activity: IActivity, user) {
     let statusActivity: Array<any> = []
     if (!this.existStatus(activity)) {
       statusActivity = this.createStatus('COMPLETAR')
@@ -115,10 +116,14 @@ class ActivityService extends ServiceBase {
 
     activity.user = user._id
 
+    if (!activity._id) {
+      activity._id = mongoose.Types.ObjectId()
+    }
+
     return Activity.create(activity)
   }
 
-  public static async update(id: string, activity: IActivity) {
+  public static async update (id: string, activity: IActivity) {
     let statusActivity: Array<any> = []
 
     if (this.existStatus(activity)) {
@@ -131,14 +136,14 @@ class ActivityService extends ServiceBase {
     return Activity.findOne({ _id: id })
   }
 
-  public static async getByTag(tag: string) {
+  public static async getByTag (tag: string) {
     return ActivityType.findOne({ tag })
   }
 
-  public static createDefault(surface: number, date: string, user) {
+  public static createDefault (surface: number, date: string, user) {
     const typesActivity = ['ACT_SOWING', 'ACT_HARVEST', 'ACT_AGREEMENTS']
 
-    const activities = typesActivity.map(async (item) => {
+    const activities = typesActivity.map(async item => {
       const type = await this.getByTag(item)
       const typeAgreement = await TypeAgreement.findOne({ key: 'EXPLO' })
       const activity = await this.store(
@@ -147,7 +152,7 @@ class ActivityService extends ServiceBase {
           surface,
           dateLimitValidation: item === 'ACT_AGREEMENTS' ? date : null,
           typeAgreement: item === 'ACT_AGREEMENTS' ? typeAgreement._id : null,
-          type: type._id,
+          type: type._id
         },
         user
       )
@@ -158,7 +163,7 @@ class ActivityService extends ServiceBase {
     return Promise.all(activities)
   }
 
-  public static async changeStatus(activity, status: string) {
+  public static async changeStatus (activity, status: string) {
     const statusChanged = statusActivities(status)
 
     activity.status = statusChanged
@@ -166,9 +171,9 @@ class ActivityService extends ServiceBase {
     return activity.save()
   }
 
-  public static async signUserAndUpdateSing(activity, user) {
+  public static async signUserAndUpdateSing (activity, user) {
     const signer = activity.signers.filter(
-      (item) => item.userId.toString() === user._id.toString()
+      item => item.userId.toString() === user._id.toString()
     )
 
     if (signer.length > 0) {
@@ -187,8 +192,8 @@ class ActivityService extends ServiceBase {
       .populate('typeAgreement')
   }
 
-  public static async isCompleteSingers(activity) {
-    const signers = activity.signers.filter((item) => !item.signed)
+  public static async isCompleteSingers (activity) {
+    const signers = activity.signers.filter(item => !item.signed)
 
     if (signers.length > 0) {
       return false
@@ -197,7 +202,7 @@ class ActivityService extends ServiceBase {
     return true
   }
 
-  public static isCompleteSignersAchievements(activity) {
+  public static isCompleteSignersAchievements (activity) {
     for (const achievement of activity.achievements) {
       if (!this.isCompleteSignsUsers(achievement)) {
         return false
@@ -207,7 +212,7 @@ class ActivityService extends ServiceBase {
     return true
   }
 
-  public static isCompletePercentAchievement(activity) {
+  public static isCompletePercentAchievement (activity) {
     let total = 0
     for (const achievement of activity.achievements) {
       total += achievement.percent
@@ -215,29 +220,29 @@ class ActivityService extends ServiceBase {
     return total >= 100
   }
 
-  public static async addAchievement(activity, achievement) {
+  public static async addAchievement (activity, achievement) {
     activity.achievements.push(achievement._id)
 
     return activity.save()
   }
 
-  private static existStatus(activity) {
+  private static existStatus (activity) {
     return activity.status
   }
 
-  private static createStatus(status) {
+  private static createStatus (status) {
     return statusActivities(status)
   }
 
-  private static createNameActivity(typeActivity) {
+  private static createNameActivity (typeActivity) {
     return `${typeActivity.name.es}`
   }
 
-  public static getSigners(signers: Array<any>, activity) {
+  public static getSigners (signers: Array<any>, activity) {
     for (const signer of signers) {
       if (
         activity.signers.filter(
-          (item) => item.userId.toString() === signer.userId
+          item => item.userId.toString() === signer.userId
         ).length === 0
       ) {
         activity.signers.push(signer)
@@ -247,9 +252,9 @@ class ActivityService extends ServiceBase {
     return activity.signers
   }
 
-  public static groupSurfaceAndDateAchievements(activities, type) {
+  public static groupSurfaceAndDateAchievements (activities, type) {
     return activities
-      .map((activity) => {
+      .map(activity => {
         if (this.isActivityType(activity, type) && type !== 'ACT_MONITORING') {
           const total = this.sumSurfacesByLotsAchievements(
             activity.achievements
@@ -259,9 +264,9 @@ class ActivityService extends ServiceBase {
             date: activity.achievements[0].dateAchievement.toLocaleDateString(
               'en-US',
               {
-                month: 'long',
+                month: 'long'
               }
-            ),
+            )
           }
         }
 
@@ -275,17 +280,17 @@ class ActivityService extends ServiceBase {
           return {
             total: total,
             date: activity.dateObservation.toLocaleDateString('en-US', {
-              month: 'long',
-            }),
+              month: 'long'
+            })
           }
         }
 
         return undefined
       })
-      .filter((activity) => activity)
+      .filter(activity => activity)
   }
 
-  private static sumSurfacesByLotsAchievements(achievements) {
+  private static sumSurfacesByLotsAchievements (achievements) {
     let total = 0
 
     for (const achievement of achievements) {
@@ -295,7 +300,7 @@ class ActivityService extends ServiceBase {
     return total
   }
 
-  private static isActivityType(activity, type: string): boolean {
+  private static isActivityType (activity, type: string): boolean {
     if (activity.type.tag === type) {
       return true
     }
