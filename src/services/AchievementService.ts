@@ -47,7 +47,7 @@ class AchievementService extends ServiceBase {
     await this.addLotsAchievement(achievement.lots, activity)
 
     if (!achievement._id) {
-      activity._id = mongoose.Types.ObjectId()
+      achievement._id = mongoose.Types.ObjectId()
     }
 
     return Achievement.create(achievement)
