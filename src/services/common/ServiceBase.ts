@@ -34,7 +34,7 @@ class ServiceBase {
         ...evidences[index],
         pathThumbnails: manipulated ? manipulated.pathThumbnail : null,
         pathIntermediate: manipulated ? manipulated.pathIntermediate : null,
-        user: user._id,
+        user: user._id
       })
 
       return file._id
@@ -90,6 +90,7 @@ class ServiceBase {
     if (signer.length > 0) {
       const child = document.signers.id(signer[0]._id)
       child.signed = true
+      child.dateSigned = new Date()
     }
 
     await document.save()
@@ -146,6 +147,7 @@ class ServiceBase {
    * @param width
    * @param height
    */
+
   public static async manipulateImage(
     file,
     destination: string,
@@ -160,7 +162,7 @@ class ServiceBase {
         suffixName: 'thumbnail',
         width: 200,
         height: 200,
-        fit: 'cover',
+        fit: 'cover'
       })
 
       const intermediate = await ImageService.resize({
@@ -170,12 +172,12 @@ class ServiceBase {
         suffixName: 'intermediate',
         width: width,
         height: height,
-        fit: 'contain',
+        fit: 'contain'
       })
 
       return {
         pathThumbnail: thumbnail.path,
-        pathIntermediate: intermediate.path,
+        pathIntermediate: intermediate.path
       }
     }
 
