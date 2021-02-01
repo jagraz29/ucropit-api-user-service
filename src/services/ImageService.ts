@@ -17,17 +17,17 @@ class ImageService {
    *
    * @param ResizeImageParameters parameters
    */
-  public static async resize (parameters: ResizeImageParameters) {
+  public static async resize(parameters: ResizeImageParameters) {
     const pathImage = `${parameters.destination}/${parameters.suffixName}-${parameters.nameFile}`
     await sharp(getFullPath(parameters.path))
       .resize(parameters.width, parameters.height, {
-        fit: parameters.fit || 'cover'
+        fit: parameters.fit || 'cover',
       })
       .toFile(getFullPath(pathImage))
 
     return {
       path: pathImage,
-      nameFile: `${parameters.suffixName}-${parameters.nameFile}`
+      nameFile: `${parameters.suffixName}-${parameters.nameFile}`,
     }
   }
 
@@ -36,7 +36,7 @@ class ImageService {
    *
    * @param parameters
    */
-  public static async createThumbnail (parameters: ResizeImageParameters) {
+  public static async createThumbnail(parameters: ResizeImageParameters) {
     const thumbnails = await this.resize({
       path: parameters.path,
       destination: parameters.destination,
@@ -44,7 +44,7 @@ class ImageService {
       suffixName: 'thumbnail',
       width: 200,
       height: 200,
-      fit: 'cover'
+      fit: 'cover',
     })
 
     return thumbnails

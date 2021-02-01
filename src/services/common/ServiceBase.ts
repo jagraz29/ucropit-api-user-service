@@ -147,7 +147,8 @@ class ServiceBase {
    * @param width
    * @param height
    */
-  private static async manipulateImage(
+
+  public static async manipulateImage(
     file,
     destination: string,
     width: number,
