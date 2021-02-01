@@ -260,7 +260,7 @@ router.delete('/:id/files/:fileId', activitiesController.removeFile)
  *           properties:
  *            name:
  *              type: string
- *            last:
+ *            activity:
  *              type: string
  *            cropname:
  *              type: string
