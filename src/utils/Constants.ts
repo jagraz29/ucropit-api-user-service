@@ -1,6 +1,6 @@
 export const tagsTypeAgreement = {
   SUSTAIN: 'SUSTAIN',
-  EXPLO: 'EXPLO'
+  EXPLO: 'EXPLO',
 }
 
 export const VALID_FORMATS_FILES_IMAGES_PNG = 'png'
@@ -9,7 +9,7 @@ export const VALID_FORMATS_FILES_DOCUMENTS = 'pdf'
 
 export const typesSupplies = [
   {
-    tag: 'TAG_SOWING',
+    tag: 'ACT_SOWING',
     types: [
       '346564643430633836343130',
       '346564643430633836343230',
@@ -23,8 +23,8 @@ export const typesSupplies = [
       '346564643430633836343333',
       '346564643430633836343335',
       '346564643430633836343336',
-      '346564643430633836343337'
-    ]
+      '346564643430633836343337',
+    ],
   },
   {
     tag: 'ACT_APPLICATION',
@@ -33,8 +33,8 @@ export const typesSupplies = [
       '346564643430633836343230',
       '346564643430633836343231',
       '346564643430633836343232',
-      '346564643430633836343233'
-    ]
+      '346564643430633836343233',
+    ],
   },
   {
     tag: 'ACT_FERTILIZATION',
@@ -43,8 +43,8 @@ export const typesSupplies = [
       '346564643430633836343230',
       '346564643430633836343231',
       '346564643430633836343232',
-      '346564643430633836343233'
-    ]
+      '346564643430633836343233',
+    ],
   },
   {
     tag: 'ACT_TILLAGE',
@@ -53,7 +53,7 @@ export const typesSupplies = [
       '346564643430633836343230',
       '346564643430633836343231',
       '346564643430633836343232',
-      '346564643430633836343233'
-    ]
-  }
+      '346564643430633836343233',
+    ],
+  },
 ]
