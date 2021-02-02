@@ -13,7 +13,7 @@ import ApprovalRegisterSign from './ApprovalRegisterSign'
 import Supply from './supply'
 import SupplyType from './supplyType'
 import EvidenceConcept from './evidenceConcept'
-import Roles from './Roles'
+import roles from './roles'
 
 import { CropType } from './cropType'
 import { UnitType } from './unitType'
@@ -47,7 +47,7 @@ const models = {
   Supply,
   SupplyType,
   EvidenceConcept,
-  Roles,
+  roles,
 }
 
 export { connectDb }

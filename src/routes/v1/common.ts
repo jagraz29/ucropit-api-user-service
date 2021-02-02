@@ -17,7 +17,7 @@ const router: express.Router = express.Router()
  *    '200':
  *      description: Get all Collaborator roletypes
  */
-router.get('/roles', commonController.Roles)
+router.get('/roles', commonController.roles)
 
 /**
  * @swagger

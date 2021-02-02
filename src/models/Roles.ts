@@ -2,7 +2,7 @@
  * @swagger
  *  components:
  *    schemas:
- *       Roles:
+ *       roles:
  *         type: object
  *         required:
  *           - label
@@ -17,7 +17,7 @@ import mongoose from 'mongoose'
 
 const { Schema } = mongoose
 
-const Roles = new Schema({
+const roles = new Schema({
   label: {
     en: {
       type: String,
@@ -34,4 +34,4 @@ const Roles = new Schema({
   },
 })
 
-export default mongoose.model('roles', Roles)
+export default mongoose.model('roles', roles)
