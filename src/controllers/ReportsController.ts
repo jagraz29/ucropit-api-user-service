@@ -66,11 +66,11 @@ class ReportsController {
       {
         cancelled: false,
         'members.user': user._id,
-        'members.identifier': identifier,
+        'members.identifier': identifier
       },
       {
         user: user._id,
-        identifier: identifier,
+        identifier: identifier
       },
       roles
     )
@@ -91,9 +91,9 @@ class ReportsController {
       files: [
         {
           filename: 'report.xlsx',
-          content: fs.readFileSync(pathFile),
-        },
-      ],
+          content: fs.readFileSync(pathFile)
+        }
+      ]
     })
 
     return res.status(200).json('Ok')
@@ -109,7 +109,7 @@ class ReportsController {
       api_key: process.env.GOOGLE_API_KEY,
       flightPlanCoordinates: lot.coordinateForGoogle,
       center: lot.centerBoundGoogle,
-      title: 'Localización Lote KMZ',
+      title: 'Localización Lote KMZ'
     })
   }
 }

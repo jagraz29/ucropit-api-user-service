@@ -30,6 +30,7 @@ import mongoose, { Schema } from 'mongoose'
 import shortid from 'shortid'
 
 const AchievementSchema: Schema = new Schema({
+  _id: { type:  mongoose.Schema.Types.ObjectId, required: false },
   key: {
     type: String,
     required: false
@@ -104,6 +105,9 @@ const AchievementSchema: Schema = new Schema({
       signed: {
         type: Boolean,
         default: false
+      },
+      dateSigned: {
+        type: Date
       }
     }
   ]
