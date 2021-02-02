@@ -177,7 +177,7 @@ const seedersSupplyType = async (flag?) => {
 
 const seedersRoles = async (flag?) => {
   if (flag && flag !== '--roles') return
-  console.log(`${chalk.green('=====fatima Roles====')}`)
+  console.log(`${chalk.green('=====Registering Roles====')}`)
 
   const role = await Roles.find({})
   const roleTypeSeed = rolesData.filter(
@@ -185,11 +185,10 @@ const seedersRoles = async (flag?) => {
   )
 
   for (const roleType of roleTypeSeed) {
-    console.log(roleType)
     await Roles.create(roleType)
   }
 
-  console.log(`${chalk.green('=====fatima Roles====')}`)
+  console.log(`${chalk.green('=====Registered Roles====')}`)
   return true
 }
 

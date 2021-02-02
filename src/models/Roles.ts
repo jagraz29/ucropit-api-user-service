@@ -19,8 +19,14 @@ const { Schema } = mongoose
 
 const Roles = new Schema({
   label: {
-    type: String,
-    require: true
+    en: {
+      type: String,
+      required: true,
+    },
+    es: {
+      type: String,
+      required: true,
+    },
   },
   value: {
     type: String,
@@ -28,4 +34,4 @@ const Roles = new Schema({
   },
 })
 
-export default mongoose.model('Roles', Roles)
+export default mongoose.model('roles', Roles)
