@@ -13,7 +13,7 @@ import ApprovalRegisterSign from './ApprovalRegisterSign'
 import Supply from './supply'
 import SupplyType from './supplyType'
 import EvidenceConcept from './evidenceConcept'
-
+import ServiceIntegration from './serviceIntegration'
 import { CropType } from './cropType'
 import { UnitType } from './unitType'
 
@@ -24,7 +24,7 @@ const connectDb = function () {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-    useFindAndModify: false,
+    useFindAndModify: false
   })
 }
 
@@ -46,6 +46,7 @@ const models = {
   Supply,
   SupplyType,
   EvidenceConcept,
+  ServiceIntegration
 }
 
 export { connectDb }

@@ -102,20 +102,27 @@ const CropSchema = new Schema({
       user: { type: Schema.Types.ObjectId, ref: 'User' }
     }
   ],
-  lots: [{
-    tag: {
-      type: String,
-      require: true
-    },
-    data: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Lot'
-    }]
-  }],
+  lots: [
+    {
+      tag: {
+        type: String,
+        require: true
+      },
+      data: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Lot'
+        }
+      ]
+    }
+  ],
   pending: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
   toMake: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
   done: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
-  finished: [{ type: Schema.Types.ObjectId, ref: 'Activity' }]
+  finished: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
+  isSynchronized: {
+    type: Boolean
+  }
 })
 
 export default mongoose.model('Crop', CropSchema)

@@ -651,6 +651,19 @@ class CropService extends ServiceBase {
   }
 
   /**
+   * Change status synchronized data crop.
+   *
+   * @param result
+   */
+  public static async changeStatusSynchronized(result): Promise<void> {
+    for (const data of result) {
+      await Crop.findByIdAndUpdate(data.cropId, {
+        isSynchronized: data.synchronized
+      })
+    }
+  }
+
+  /**
    *
    * @param crop
    * @param statusCrop

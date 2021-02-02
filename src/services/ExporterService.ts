@@ -5,8 +5,8 @@ interface IExportCrop {
   erpAgent: String | string
   crops?: Array<String | string | any>
   token?: String | string
-  achievementId?: String | string
-  activityId?: String | string
+  achievementId?: String | string | any
+  activityId?: String | string | any
 }
 
 class ExporterService extends ServiceBase {
