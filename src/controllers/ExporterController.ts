@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import models from '../models'
-
-const Crop = models.Crop
+import ExporterService from '../services/ExporterService'
+import CropService from '../services/CropService'
+import UserConfigService from '../services/UserConfigService'
 
 class ExporterController {
   /**
@@ -9,49 +9,36 @@ class ExporterController {
    * @param Request req
    * @param Response res
    */
-  public async cropData (req: Request, res: Response) {
+  public async cropData(req: Request | any, res: Response) {
     const { ids } = req.query
 
-    const crops = await Crop.find()
-      .populate('lots.data')
-      .populate('cropType')
-      .populate('unitType')
-      .populate({
-        path: 'done',
-        populate: [
-          { path: 'type' },
-          { path: 'lots' },
-          {
-            path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'supplies.typeId' }]
-          }
-        ]
-      })
-      .populate('members.user')
-      .populate({
-        path: 'finished',
-        populate: [
-          { path: 'type' },
-          { path: 'lots' },
-          {
-            path: 'achievements',
-            populate: [
-              { path: 'lots' }, 
-              { 
-                path: 'supplies',
-                populate: [
-                  { path: 'supplytypes' }
-                ]
-              }
-            ]
-          }
-        ]
-      })
-      .where('_id')
-      .in(ids)
-      .lean()
+    const crops = await CropService.getCropsByIds(ids)
 
     res.status(200).json(crops)
+  }
+
+  /**
+   * Export data crop to third party service.
+   *
+   * @param req
+   * @param res
+   */
+  public async exporterCrops(req: Request, res: Response) {
+    const token: string = req.get('authorization').split(' ')[1]
+    const user: any = req.user
+    const data = req.body
+
+    const userConfig = await UserConfigService.findById(user.config)
+
+    const result = await ExporterService.export(
+      {
+        ...data,
+        token: token,
+        identifier: userConfig.companySelected.identifier
+      },
+      `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_EXPORTER_CROPS}`
+    )
+    res.status(200).json(result)
   }
 }
 
