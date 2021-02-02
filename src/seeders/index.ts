@@ -9,6 +9,7 @@ import {
   agreementTypesData,
   supplyTypesData,
   evidenceConcepts,
+  rolesData,
 } from './data'
 
 import { suppliesData, fertilizers, pesticides } from './suppliesData'
@@ -20,6 +21,7 @@ const TypeAgreement = models.TypeAgreement
 const SupplyType = models.SupplyType
 const Supply = models.Supply
 const EvidenceConcept = models.EvidenceConcept
+const Roles = models.Roles
 
 const CollaboratorRequest = models.CollaboratorRequest
 
@@ -161,7 +163,6 @@ const seedersSupplyType = async (flag?) => {
   console.log(`${chalk.green('=====Registering SupplyType====')}`)
 
   const supplies = await SupplyType.find({})
-
   const supplyTypeSeed = supplyTypesData.filter(
     (item) => !supplies.find((element) => item.name === element.name)
   )
@@ -171,6 +172,24 @@ const seedersSupplyType = async (flag?) => {
   }
 
   console.log(`${chalk.green('=====Registered SupplyType====')}`)
+  return true
+}
+
+const seedersRoles = async (flag?) => {
+  if (flag && flag !== '--roles') return
+  console.log(`${chalk.green('=====fatima Roles====')}`)
+
+  const role = await Roles.find({})
+  const roleTypeSeed = rolesData.filter(
+    (item) => !role.find((element) => item.value === element.value)
+  )
+
+  for (const roleType of roleTypeSeed) {
+    console.log(roleType)
+    await Roles.create(roleType)
+  }
+
+  console.log(`${chalk.green('=====fatima Roles====')}`)
   return true
 }
 
@@ -205,6 +224,7 @@ const seedersEvidenceConcepts = async (flag?) => {
     const flag = process.argv[2] === '--reset' ? null : process.argv[2] || null
 
     try {
+      await seedersRoles(flag)
       await seedersSupply(flag)
       await seedersSupplyFertilizers(flag)
       await seedersSupplyPesticides(flag)
