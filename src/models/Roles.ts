@@ -21,17 +21,17 @@ const Roles = new Schema({
   label: {
     en: {
       type: String,
-      required: true,
+      required: true
     },
     es: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   value: {
     type: String,
     require: true
-  },
+  }
 })
 
 export default mongoose.model('roles', Roles)
