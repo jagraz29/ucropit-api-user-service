@@ -120,9 +120,17 @@ const CropSchema = new Schema({
   toMake: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
   done: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
   finished: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
-  isSynchronized: {
-    type: Boolean
-  }
+  synchronizedList: [
+    {
+      service: {
+        type: String
+      },
+      isSynchronized: {
+        type: Boolean,
+        default: false
+      }
+    }
+  ]
 })
 
 export default mongoose.model('Crop', CropSchema)

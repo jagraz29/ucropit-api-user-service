@@ -25,7 +25,7 @@ class CropsController {
     const query: any = {
       cancelled: false,
       'members.identifier': req.query.identifier,
-      'members.user': req.user._id,
+      'members.user': req.user._id
     }
 
     const crops = await Crop.find(query)
@@ -134,6 +134,25 @@ class CropsController {
   }
 
   /**
+   * Add integration Service.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async addIntegrationService(req: Request, res: Response) {
+    const crop = await Crop.findById(req.params.id)
+    const data = req.body
+
+    crop.synchronizedList.push(data)
+
+    await crop.save()
+
+    res.status(200).json(crop)
+  }
+
+  /**
    * Delete one crop.
    *
    * @param  Request req
@@ -147,12 +166,12 @@ class CropsController {
     if (!isCancelled) {
       return res.status(400).json({
         error: true,
-        message: 'deleted not allowd',
+        message: 'deleted not allowd'
       })
     }
 
     res.status(200).json({
-      message: 'deleted successfuly',
+      message: 'deleted successfuly'
     })
   }
 }

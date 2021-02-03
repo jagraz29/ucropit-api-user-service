@@ -99,4 +99,20 @@ router.get('/agreements', commonController.agreementTypes)
  */
 router.get('/concepts', commonController.evidenceConcepts)
 
+/**
+ * @swagger
+ * /v1/commons/integrations:
+ *  get:
+ *   summary: Get all services integrations
+ *   tags:
+ *      - Common
+ *   description: Services Integration
+ *   produces:
+ *     - application/json
+ *   responses:
+ *    '200':
+ *      description: Get all services integrations
+ */
+router.get('/integrations', commonController.serviceIntegration)
+
 export default router

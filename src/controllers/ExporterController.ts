@@ -30,6 +30,8 @@ class ExporterController {
 
     const userConfig = await UserConfigService.findById(user.config)
 
+    await CropService.addServiceSynchronized(data)
+
     const result = await ExporterService.export(
       {
         ...data,

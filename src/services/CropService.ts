@@ -657,10 +657,38 @@ class CropService extends ServiceBase {
    */
   public static async changeStatusSynchronized(result): Promise<void> {
     for (const data of result) {
-      await Crop.findByIdAndUpdate(data.cropId, {
-        isSynchronized: data.synchronized
-      })
+      await Crop.update(
+        { _id: data.cropId, 'synchronizedList.service': data.erpAgent },
+        { $set: { 'synchronizedList.$.isSynchronized': true } }
+      )
     }
+  }
+
+  public static async addServiceSynchronized(data): Promise<boolean> {
+    for (const item of data.crops) {
+      const crop = await Crop.findById(item.id)
+      if (!this.isServiceAdded(crop, item.erpAgent)) {
+        if (!crop.synchronizedList) {
+          const synchronized = []
+          synchronized.push({ service: data.erpAgent })
+          console.log(synchronized)
+          crop.synchronizedList = synchronized
+        } else {
+          crop.synchronizedList.push({ service: data.erpAgent })
+        }
+
+        await crop.save()
+      }
+    }
+
+    return true
+  }
+
+  private static isServiceAdded(crop: any, service: string) {
+    return (
+      crop.synchronizedList ||
+      crop.synchronizedList.find((item) => item.service === service).length > 0
+    )
   }
 
   /**

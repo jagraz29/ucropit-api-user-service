@@ -7,6 +7,8 @@ const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
 const EvidenceConcepts = models.EvidenceConcept
 const Roles = models.Roles
+const ServiceIntegrations = models.ServiceIntegration
+
 class CommonController {
   /**
    *
@@ -93,6 +95,18 @@ class CommonController {
     const roles = await Roles.find({})
 
     res.status(200).json(roles)
+  }
+
+  /**
+   * Get all services integrations
+   *
+   * @param Request req
+   * @param Response res
+   */
+  public async serviceIntegration(req: Request, res: Response) {
+    const services = await ServiceIntegrations.find({})
+
+    res.status(200).json(services)
   }
 }
 
