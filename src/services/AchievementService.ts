@@ -1,14 +1,15 @@
 import ServiceBase from './common/ServiceBase'
 import models from '../models'
 import PDF from '../utils/PDF'
-
+import mongoose from 'mongoose'
 import { basePath, fileExist, makeDirIfNotExists } from '../utils/Files'
 
 const Achievement = models.Achievement
 
 interface IAchievement {
+  _id?: String
   dateAchievement?: String
-  surface?: Number
+  surface?: number
   lots?: Array<string>
   supplies?: Array<any>
   evidences?: Array<any>
@@ -42,8 +43,12 @@ class AchievementService extends ServiceBase {
    * @param activity
    */
   public static async store (achievement: IAchievement, activity) {
-    achievement.percent = this.calcPercent(achievement.lots, activity)
+    achievement.percent = this.calcPercent(achievement.surface, activity)
     await this.addLotsAchievement(achievement.lots, activity)
+
+    if (!achievement._id) {
+      achievement._id = mongoose.Types.ObjectId()
+    }
 
     return Achievement.create(achievement)
   }
@@ -53,26 +58,13 @@ class AchievementService extends ServiceBase {
    * @param Array lots
    * @param activity
    */
-  public static calcPercent (lots: Array<string>, activity) {
-    let lotsSelected: Array<any> = []
-    for (const lotId of lots) {
-      const lot = activity.lots.filter(
-        (lotItem) => lotItem._id.toString() === lotId
-      )[0]
-      lotsSelected.push(lot)
-    }
-
-    const sumPercent = lotsSelected.reduce(
-      (a, b) => a + (b['surface'] || 0),
-      0
-    )
-
+  public static calcPercent (surface: number, activity) {
     const totalSurface = activity.lots.reduce(
       (a, b) => a + (b['surface'] || 0),
       0
     )
 
-    return Math.round((sumPercent * 100) / totalSurface)
+    return Math.round((surface * 100) / totalSurface)
   }
 
   public static async generatePdf (activity, crop) {

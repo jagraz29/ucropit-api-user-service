@@ -48,52 +48,52 @@ export interface UserSchema extends mongoose.Document {
 const userSchema = new mongoose.Schema(
   {
     firstName: {
-      type: String
+      type: String,
     },
     lastName: {
-      type: String
+      type: String,
     },
     phone: {
-      type: String
+      type: String,
     },
     email: {
       type: String,
-      unique: true
+      unique: true,
     },
     pin: {
-      type: String
+      type: String,
     },
     verifyToken: {
-      type: String
+      type: String,
     },
     avatar: { type: String, required: false },
     collaboratorRequest: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'CollaboratorRequest'
-      }
+        ref: 'CollaboratorRequest',
+      },
     ],
     companies: [
       {
         company: {
           type: Schema.Types.ObjectId,
-          ref: 'Company'
+          ref: 'Company',
         },
         isAdmin: {
           type: Boolean,
-          default: true
+          default: true,
         },
-        identifier: String
-      }
+        identifier: String,
+      },
     ],
-    config: { type: Schema.Types.ObjectId, ref: 'UserConfig' }
+    config: { type: Schema.Types.ObjectId, ref: 'UserConfig' },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
 
 userSchema.virtual('avatarPath').get(function () {
   if (this.avatar) {
-    return `${process.env.APP_URL}/${this.avatar}`
+    return `${process.env.BASE_URL}/${this.avatar}`
   }
   return ''
 })
@@ -129,13 +129,14 @@ userSchema.methods.comparePassword = function (
   if (!this[field]) return cb(null, false)
 
   const fieldToCompare: string = this[field]
-  bcrypt.compare(candidatePassword, fieldToCompare, function (
-    err,
-    isMatch: boolean
-  ) {
-    if (err) return cb(err)
-    cb(null, isMatch)
-  })
+  bcrypt.compare(
+    candidatePassword,
+    fieldToCompare,
+    function (err, isMatch: boolean) {
+      if (err) return cb(err)
+      cb(null, isMatch)
+    }
+  )
 }
 
 userSchema.methods.generateAuthToken = function (): string {

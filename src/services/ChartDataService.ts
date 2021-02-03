@@ -16,7 +16,7 @@ let allMonths: Array<string> = [
   'September',
   'October',
   'November',
-  'December'
+  'December',
 ]
 
 const activitiesTags: Array<string> = [
@@ -25,7 +25,7 @@ const activitiesTags: Array<string> = [
   'ACT_APPLICATION',
   'ACT_FERTILIZATION',
   'ACT_TILLAGE',
-  'ACT_MONITORING'
+  'ACT_MONITORING',
 ]
 
 class ChartDataService extends ServiceBase {
@@ -34,7 +34,7 @@ class ChartDataService extends ServiceBase {
    *
    * @param crops
    */
-  public static generateDataAgreement (crops) {
+  public static generateDataAgreement(crops) {
     const listSummarySurfaces: any = CropService.createDataCropToChartSurface(
       crops
     )
@@ -55,12 +55,10 @@ class ChartDataService extends ServiceBase {
     return { labels, data }
   }
 
-  public static generateDataActivities (crops) {
+  public static generateDataActivities(crops) {
     let labels = []
     const groupData = activitiesTags.map((tag) => {
       const dataCrop = crops.map((crop) => {
-        console.log(tag)
-
         const groupDataActivitiesDone = ActivityService.groupSurfaceAndDateAchievements(
           crop.done,
           tag
@@ -69,9 +67,6 @@ class ChartDataService extends ServiceBase {
           crop.finished,
           tag
         )
-
-        console.log(groupDataActivitiesDone)
-        console.log(groupDataActivitiesFinished)
 
         return groupDataActivitiesDone.concat(groupDataActivitiesFinished)
       })
@@ -101,14 +96,14 @@ class ChartDataService extends ServiceBase {
 
       return {
         tag: item.tag,
-        data: data
+        data: data,
       }
     })
 
     return { data: dataChartActivities, labels }
   }
 
-  private static dataActivity (data, labels, activityLabel) {
+  private static dataActivity(data, labels, activityLabel) {
     let newDataSet = []
     if (data.length === 0) return newDataSet
 
@@ -125,11 +120,11 @@ class ChartDataService extends ServiceBase {
 
     return newDataSet
   }
-  private static mergeDataLabelsActivity (labels: Array<string>) {
+  private static mergeDataLabelsActivity(labels: Array<string>) {
     return labels.filter(this.onlyUniqueLabels)
   }
 
-  private static onlyUniqueLabels (value, index, self) {
+  private static onlyUniqueLabels(value, index, self) {
     return self.indexOf(value) === index
   }
 
@@ -138,14 +133,14 @@ class ChartDataService extends ServiceBase {
    *
    * @param list
    */
-  private static summaryTotalPerMonth (list: Array<any>) {
+  private static summaryTotalPerMonth(list: Array<any>) {
     let total = 0
     return list.map((item) => {
       total += item.total
 
       return {
         date: item.date,
-        total: total
+        total: total,
       }
     })
   }

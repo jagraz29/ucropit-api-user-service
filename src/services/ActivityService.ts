@@ -1,6 +1,6 @@
 import ServiceBase from './common/ServiceBase'
 import models from '../models'
-
+import mongoose from 'mongoose'
 import { statusActivities } from '../utils/Status'
 
 const Activity = models.Activity
@@ -8,6 +8,7 @@ const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
 
 interface IActivity {
+  _id?: String
   name?: String
   dateStart?: String
   dateEnd?: String
@@ -52,6 +53,55 @@ class ActivityService extends ServiceBase {
       .populate('user')
   }
 
+  public static async getActivities () {
+    return Activity.find()
+      .populate('type')
+      .populate('typeAgreement')
+      .populate({
+        path: 'crop',
+        populate: [
+          { path: 'cropType' },
+          { path: 'unitType' },
+          { path: 'company' },
+          { path: 'owner' }
+        ]
+      })
+      .populate('lots')
+      .populate('files')
+      .populate('user')
+  }
+
+  public static async getActivitiesByIds (ids: Array<string>) {
+    return Activity.find()
+      .populate('type')
+      .populate('typeAgreement')
+      .populate({
+        path: 'crop',
+        populate: [
+          { path: 'cropType' },
+          { path: 'unitType' },
+          { path: 'company' },
+          { path: 'owner' }
+        ]
+      })
+      .populate({ path: 'lots', select: '-area -__v' })
+      .populate({ path: 'lotsMade', select: '-area -__v' })
+      .populate('files')
+      .populate({
+        path: 'achievements',
+        populate: [
+          { path: 'lots', select: '-area -__v' },
+          { path: 'files' },
+          { path: 'supplies', populate: [{ path: 'typeId' }] }
+        ]
+      })
+      .populate('approvalRegister')
+      .populate('user')
+      .where('_id')
+      .in(ids)
+      .lean()
+  }
+
   public static async store (activity: IActivity, user) {
     let statusActivity: Array<any> = []
     if (!this.existStatus(activity)) {
@@ -65,6 +115,10 @@ class ActivityService extends ServiceBase {
     }
 
     activity.user = user._id
+
+    if (!activity._id) {
+      activity._id = mongoose.Types.ObjectId()
+    }
 
     return Activity.create(activity)
   }
@@ -89,7 +143,7 @@ class ActivityService extends ServiceBase {
   public static createDefault (surface: number, date: string, user) {
     const typesActivity = ['ACT_SOWING', 'ACT_HARVEST', 'ACT_AGREEMENTS']
 
-    const activities = typesActivity.map(async (item) => {
+    const activities = typesActivity.map(async item => {
       const type = await this.getByTag(item)
       const typeAgreement = await TypeAgreement.findOne({ key: 'EXPLO' })
       const activity = await this.store(
@@ -119,7 +173,7 @@ class ActivityService extends ServiceBase {
 
   public static async signUserAndUpdateSing (activity, user) {
     const signer = activity.signers.filter(
-      (item) => item.userId.toString() === user._id.toString()
+      item => item.userId.toString() === user._id.toString()
     )
 
     if (signer.length > 0) {
@@ -139,7 +193,7 @@ class ActivityService extends ServiceBase {
   }
 
   public static async isCompleteSingers (activity) {
-    const signers = activity.signers.filter((item) => !item.signed)
+    const signers = activity.signers.filter(item => !item.signed)
 
     if (signers.length > 0) {
       return false
@@ -188,7 +242,7 @@ class ActivityService extends ServiceBase {
     for (const signer of signers) {
       if (
         activity.signers.filter(
-          (item) => item.userId.toString() === signer.userId
+          item => item.userId.toString() === signer.userId
         ).length === 0
       ) {
         activity.signers.push(signer)
@@ -200,7 +254,7 @@ class ActivityService extends ServiceBase {
 
   public static groupSurfaceAndDateAchievements (activities, type) {
     return activities
-      .map((activity) => {
+      .map(activity => {
         if (this.isActivityType(activity, type) && type !== 'ACT_MONITORING') {
           const total = this.sumSurfacesByLotsAchievements(
             activity.achievements
@@ -233,7 +287,7 @@ class ActivityService extends ServiceBase {
 
         return undefined
       })
-      .filter((activity) => activity)
+      .filter(activity => activity)
   }
 
   private static sumSurfacesByLotsAchievements (achievements) {

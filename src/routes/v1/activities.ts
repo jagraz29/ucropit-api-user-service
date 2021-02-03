@@ -12,9 +12,23 @@ const router: express.Router = express.Router()
  *   tags:
  *      - Activity
  *   parameters:
- *        - in: query
- *          name: crop
- *          description: ID del crop
+ *       - in: query
+ *         name: ids
+ *         description: One or more IDs
+ *         required: false
+ *         schema:
+ *          type: array
+ *          items:
+ *             type: string
+ *         style: form
+ *         explode: false
+ *         examples:
+ *          oneId:
+ *            summary: Example of a single ID
+ *            value: [5]   # ?ids=5
+ *          multipleIds:
+ *            summary: Example of multiple IDs
+ *            value: [1, 5, 7]   # ?ids=1,5,7
  *   description: Activities
  *   produces:
  *     - application/json

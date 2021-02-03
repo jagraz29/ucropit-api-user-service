@@ -216,6 +216,29 @@ class CropService extends ServiceBase {
     return Promise.all(crops)
   }
 
+  public static async cropsOnlySeeRoles(
+    query: any,
+    filtering,
+    roles: Array<string>
+  ) {
+    let crops = (await this.findAll(query))
+      .map((crop) => {
+        if (
+          crop.members.find(
+            (member) =>
+              member.user._id.toString() === filtering.user.toString() &&
+              member.identifier === filtering.identifier &&
+              roles.includes(member.type)
+          )
+        ) {
+          return crop
+        }
+      })
+      .filter((crop) => crop)
+
+    return crops
+  }
+
   /**
    * Find All crops by query filter.
    *

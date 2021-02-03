@@ -87,6 +87,34 @@ router.put('/:id', usersController.update)
 /**
  * @swagger
  * path:
+ *  /v1/users/validate/pin:
+ *    post:
+ *      summary: Validate PIN user.
+ *      tags: [Users]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  pin:
+ *                    type: string
+ *                    required: true
+ *                    description: PIN del usuario
+ *      responses:
+ *        "200":
+ *          description: A user schema
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/User'
+ */
+router.post('/validate/pin', usersController.validatePin)
+
+/**
+ * @swagger
+ * path:
  *  /v1/users/{id}:
  *    delete:
  *      summary: Delete a user

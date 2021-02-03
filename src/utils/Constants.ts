@@ -7,9 +7,15 @@ export const VALID_FORMATS_FILES_IMAGES_PNG = 'png'
 export const VALID_FORMATS_FILES_IMAGES_JPG = 'jpg'
 export const VALID_FORMATS_FILES_DOCUMENTS = 'pdf'
 
+export const responsibleRoles = [
+  'PRODUCER',
+  'PRODUCER_ADVISER',
+  'PRODUCER_ADVISER_ENCOURAGED'
+]
+
 export const typesSupplies = [
   {
-    tag: 'TAG_SOWING',
+    tag: 'ACT_SOWING',
     types: [
       '346564643430633836343130',
       '346564643430633836343230',
