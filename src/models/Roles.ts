@@ -17,7 +17,7 @@ import mongoose from 'mongoose'
 
 const { Schema } = mongoose
 
-const roles = new Schema({
+const Roles = new Schema({
   label: {
     en: {
       type: String,
@@ -34,4 +34,4 @@ const roles = new Schema({
   },
 })
 
-export default mongoose.model('roles', roles)
+export default mongoose.model('roles', Roles)

@@ -6,7 +6,7 @@ const UnitType = models.UnitType
 const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
 const EvidenceConcepts = models.EvidenceConcept
-const Roles = models.roles
+const Roles = models.Roles
 class CommonController {
   /**
    *

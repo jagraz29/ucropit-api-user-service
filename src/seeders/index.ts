@@ -21,7 +21,7 @@ const TypeAgreement = models.TypeAgreement
 const SupplyType = models.SupplyType
 const Supply = models.Supply
 const EvidenceConcept = models.EvidenceConcept
-const Roles = models.roles
+const Roles = models.Roles
 
 const CollaboratorRequest = models.CollaboratorRequest
 
