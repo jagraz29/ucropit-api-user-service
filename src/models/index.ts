@@ -14,6 +14,7 @@ import Supply from './supply'
 import SupplyType from './supplyType'
 import EvidenceConcept from './evidenceConcept'
 import ServiceIntegration from './serviceIntegration'
+import Roles from './Roles'
 import { CropType } from './cropType'
 import { UnitType } from './unitType'
 
@@ -46,7 +47,8 @@ const models = {
   Supply,
   SupplyType,
   EvidenceConcept,
-  ServiceIntegration
+  ServiceIntegration,
+  Roles
 }
 
 export { connectDb }

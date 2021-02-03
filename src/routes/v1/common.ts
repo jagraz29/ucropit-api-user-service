@@ -3,6 +3,21 @@ import express from 'express'
 import commonController from '../../controllers/CommonController'
 
 const router: express.Router = express.Router()
+/**
+ * @swagger
+ * /v1/commons/roles:
+ *  get:
+ *   summary: Get all collaborators roletypes
+ *   tags:
+ *      - Common
+ *   description: Collaborator roletypes
+ *   produces:
+ *     - application/json
+ *   responses:
+ *    '200':
+ *      description: Get all Collaborator roletypes
+ */
+router.get('/roles', commonController.roles)
 
 /**
  * @swagger
