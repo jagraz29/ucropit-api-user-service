@@ -311,43 +311,43 @@ export const rolesData = [
   {
     label: {
       en: 'Advisor',
-      es: 'Asesor',
+      es: 'Asesor'
     },
     value: 'PRODUCER_ADVISER'
   },
   {
     label: {
       en: 'Advisor promoter',
-      es: 'Asesor promotor',
+      es: 'Asesor promotor'
     },
     value: 'PRODUCER_ADVISER_ENCOURAGED'
   },
   {
     label: {
       en: 'Producer',
-      es: 'Productor',
+      es: 'Productor'
     },
     value: 'PRODUCER'
   },
   {
     label: {
       en: 'Proveedor',
-      es: 'Provider',
+      es: 'Provider'
     },
     value: 'PROVIDER'
   },
   {
     label: {
       en: 'Marketer',
-      es: 'Comercializador',
+      es: 'Comercializador'
     },
     value: 'MARKETER'
   },
   {
     label: {
       en: 'KAM',
-      es: 'KAM',
+      es: 'KAM'
     },
     value: 'CAM'
-  },
+  }
 ]

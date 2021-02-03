@@ -59,9 +59,6 @@ const CompanySchema = new Schema({
       service: {
         type: String
       },
-      credentials: {
-        type: Schema.Types.Mixed
-      },
       integrate: {
         type: Boolean
       }
