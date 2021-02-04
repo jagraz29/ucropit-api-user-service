@@ -23,7 +23,6 @@ class SuppliesController {
       filter = {
         name: { $regex: new RegExp('.*' + req.query.q.toLowerCase()+'.*', 'i')},
       }
-      console.log('filter ', filter)
     }
 
     if (type) {
