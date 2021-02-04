@@ -671,10 +671,14 @@ class CropService extends ServiceBase {
         if (!crop.synchronizedList) {
           const synchronized = []
           synchronized.push({ service: data.erpAgent })
-          console.log(synchronized)
           crop.synchronizedList = synchronized
         } else {
-          crop.synchronizedList.push({ service: data.erpAgent })
+          if (
+            crop.synchronizedList.filter((el) => el.service === data.erpAgent)
+              .length === 0
+          ) {
+            crop.synchronizedList.push({ service: data.erpAgent })
+          }
         }
 
         await crop.save()
@@ -682,6 +686,16 @@ class CropService extends ServiceBase {
     }
 
     return true
+  }
+
+  public static serviceCropIsSynchronized(crop: any, service: any): boolean {
+    return (
+      service &&
+      crop.synchronizedList.filter((item) => item.service === service.erpAgent)
+        .length > 0 &&
+      crop.synchronizedList.find((item) => item.service === service.erpAgent)
+        .isSynchronized
+    )
   }
 
   private static isServiceAdded(crop: any, service: string) {

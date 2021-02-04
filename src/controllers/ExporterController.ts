@@ -41,6 +41,8 @@ class ExporterController {
       `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_EXPORTER_CROPS}`
     )
 
+    console.log(result)
+
     await CropService.changeStatusSynchronized(result)
 
     res.status(200).json('Ok')

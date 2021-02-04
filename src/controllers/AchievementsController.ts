@@ -104,12 +104,7 @@ class AchievementsController {
       )
     }
 
-    if (
-      crop.synchronizedList.filter((item) => item.service === data.erpAgent)
-        .length > 0 &&
-      crop.synchronizedList.find((item) => item.service === data.erpAgent)
-        .isSynchronized
-    ) {
+    if (CropService.serviceCropIsSynchronized(crop, data.erpAgent)) {
       const token: string = req.get('authorization').split(' ')[1]
       const userConfig = await UserConfigService.findById(user.config)
 
