@@ -685,10 +685,11 @@ class CropService extends ServiceBase {
   }
 
   private static isServiceAdded(crop: any, service: string) {
-    const synchronized =
+    return (
       crop.synchronizedList &&
-      crop.synchronizedList.find((item) => item.service === service)
-    return synchronized && synchronized.length > 0
+      crop.synchronizedList.filter((item) => item.service === service).length >
+        0
+    )
   }
 
   /**
