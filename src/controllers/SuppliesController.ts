@@ -19,10 +19,11 @@ class SuppliesController {
         ? Number(req.query.skip)
         : 0
 
-    if (req.query.q) {
+    if (req.query.q) {      
       filter = {
-        name: { $regex: new RegExp('^' + req.query.q.toLowerCase(), 'i') },
+        name: { $regex: new RegExp('.*' + req.query.q.toLowerCase()+'.*', 'i')},
       }
+      console.log('filter ', filter)
     }
 
     if (type) {
