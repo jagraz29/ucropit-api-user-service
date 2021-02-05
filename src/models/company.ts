@@ -60,7 +60,8 @@ const CompanySchema = new Schema({
         type: String
       },
       integrate: {
-        type: Boolean
+        type: Boolean,
+        default: true
       }
     }
   ]

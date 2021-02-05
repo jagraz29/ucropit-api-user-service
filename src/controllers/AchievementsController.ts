@@ -10,7 +10,6 @@ import ActivityService from '../services/ActivityService'
 import CropService from '../services/CropService'
 import BlockChainServices from '../services/BlockChainService'
 import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
-import ExporterService from '../services/ExporterService'
 import UserConfigService from '../services/UserConfigService'
 
 import models from '../models'
@@ -101,22 +100,6 @@ class AchievementsController {
         req.files,
         user,
         `achievements/${achievement.key}`
-      )
-    }
-
-    if (CropService.serviceCropIsSynchronized(crop, data.erpAgent)) {
-      const token: string = req.get('authorization').split(' ')[1]
-      const userConfig = await UserConfigService.findById(user.config)
-
-      await ExporterService.export(
-        {
-          token: token,
-          erpAgent: data.erpAgent,
-          identifier: userConfig.companySelected.identifier,
-          achievementId: achievement._id,
-          activityId: activity._id
-        },
-        `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_EXPORTER_ACHIEVEMENTS}`
       )
     }
 

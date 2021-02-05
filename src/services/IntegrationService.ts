@@ -9,9 +9,36 @@ interface IExportCrop {
   activityId?: String | string | any
 }
 
+interface IExportIntegration {
+  ucropitCompanyId: String | string
+  identifier: String | string
+  erpAgent: String | string
+  user?: String | string
+  password?: String | string
+}
+
 const dummyDataResponse = true
 
-class ExporterService extends ServiceBase {
+class IntegrationService extends ServiceBase {
+  /**
+   *
+   * @param data
+   */
+  public static create(data: IExportIntegration, target: string) {
+    return new Promise((resolve, reject) => {
+      this.makeRequest(
+        'post',
+        target,
+        data,
+        (result) => {
+          resolve(result.data)
+        },
+        (err) => {
+          reject(err)
+        }
+      )
+    })
+  }
   /**
    *
    * @param data
@@ -36,4 +63,4 @@ class ExporterService extends ServiceBase {
   }
 }
 
-export default ExporterService
+export default IntegrationService

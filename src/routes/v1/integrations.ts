@@ -1,6 +1,6 @@
 import express from 'express'
 
-import exporterController from '../../controllers/ExporterController'
+import integrationServiceController from '../../controllers/IntegrationServiceController'
 
 const router: express.Router = express.Router()
 
@@ -36,7 +36,7 @@ const router: express.Router = express.Router()
  *    '200':
  *      description: Get all Data Crops
  */
-router.get('/crops', exporterController.cropData)
+router.get('/crops', integrationServiceController.cropData)
 
 /**
  * @swagger
@@ -66,6 +66,11 @@ router.get('/crops', exporterController.cropData)
  *       '500':
  *         description: Error to Server.
  */
-router.post('/crops', exporterController.exporterCrops)
+router.post('/crops', integrationServiceController.exporterCrops)
+
+/**
+ *
+ */
+router.post('/company', integrationServiceController.create)
 
 export default router

@@ -50,6 +50,30 @@ router.get('/:id', companiesController.show)
 /**
  * @swagger
  * path:
+ *  /v1/companies/integrations/{id}:
+ *    get:
+ *      summary: Show a services integration company's
+ *      tags: [Companies]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          content:
+ *            application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Company'
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.get('/integrations/:id', companiesController.showIntegrations)
+
+/**
+ * @swagger
+ * path:
  *  /v1/companies:
  *    post:
  *      summary: Create a company
