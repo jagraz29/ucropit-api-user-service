@@ -8,15 +8,17 @@ import numbers from '../utils/Numbers'
 const User = models.User
 
 class AuthController {
-  public async me (req, res: Response) {
+  public async me(req, res: Response) {
     const { id } = req.user
     const user = await UserConfigService.findUserWithConfigs(id)
 
     res.json(user)
   }
 
-  public async auth (req: Request, res: Response) {
-    let user = await User.findOne({ email: req.body.email }).populate('config')
+  public async auth(req: Request, res: Response) {
+    let user = await User.findOne({
+      email: req.body.email.toLocaleLowerCase()
+    }).populate('config')
 
     if (user && user.config.fromInvitation && !user.firstName) {
       return res.status(404).json({ error: 'ERR_USER_NOT_FOUND' })
@@ -39,16 +41,18 @@ class AuthController {
     }
   }
 
-  public async register (req: Request, res: Response) {
+  public async register(req: Request, res: Response) {
     const { firstName, lastName, email, phone } = req.body
-    let user = await User.findOne({ email: req.body.email }).populate('config')
+    let user = await User.findOne({
+      email: req.body.email.toLocaleLowerCase()
+    }).populate('config')
 
     const code = numbers.getRandom()
 
     if (user && user.config.fromInvitation && !user.firstName) {
       user.firstName = firstName
       user.lastName = lastName
-      user.email = email
+      user.email = email.toLowerCase()
       user.phone = phone
       user.verifyToken = code
       user = await user.save()
@@ -65,32 +69,35 @@ class AuthController {
     res.json({ user })
   }
 
-  public async validate (req: Request, res: Response) {
-    const user = await User.findOne({ email: req.body.email })
+  public async validate(req: Request, res: Response) {
+    const user = await User.findOne({
+      email: req.body.email.toLocaleLowerCase()
+    })
 
     if (user) {
-      user.comparePassword(req.body.code, 'verifyToken', async function (
-        err,
-        isMatch
-      ) {
-        if (err) res.status(500).json({ error: err.message })
+      user.comparePassword(
+        req.body.code,
+        'verifyToken',
+        async function (err, isMatch) {
+          if (err) res.status(500).json({ error: err.message })
 
-        user.verifyToken = null
-        await user.save()
+          user.verifyToken = null
+          await user.save()
 
-        if (isMatch) {
-          const token = user.generateAuthToken()
-          res.json({ user, token })
-        } else {
-          res.status(401).json({ error: 'ERR_CODE_NOT_VALID' })
+          if (isMatch) {
+            const token = user.generateAuthToken()
+            res.json({ user, token })
+          } else {
+            res.status(401).json({ error: 'ERR_CODE_NOT_VALID' })
+          }
         }
-      })
+      )
     } else {
       res.status(404).json({ error: 'ERR_NOT_FOUND' })
     }
   }
 
-  public async pin (req: Request, res: Response) {
+  public async pin(req: Request, res: Response) {
     let user = await User.findOne({ email: req.body.email })
 
     if (!user) return res.status(404).json({ error: 'ERR_NOT_FOUND' })
