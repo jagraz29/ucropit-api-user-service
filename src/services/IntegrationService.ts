@@ -17,7 +17,7 @@ interface IExportIntegration {
   password?: String | string
 }
 
-const dummyDataResponse = true
+const dummyDataResponse = false
 
 class IntegrationService extends ServiceBase {
   /**
@@ -48,7 +48,13 @@ class IntegrationService extends ServiceBase {
       return this.dummyResponse(data)
     }
     return new Promise((resolve, reject) => {
-      this.makeRequest('post', target, data, (result) => resolve(result.data))
+      this.makeRequest(
+        'post',
+        target,
+        data,
+        (result) => resolve(result.data),
+        (error) => console.log(error)
+      )
     })
   }
 
