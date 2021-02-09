@@ -22,16 +22,9 @@ class SuppliesController {
 
     if (req.query.q) {
      filter = {
-        $text: { $search: req.query.q.toLowerCase() }
+        $text: { $search: req.query.q }
       }
-      console.log(filter) 
     }
-    
-     /*if (req.query.q) {      
-      filter = {
-        name: { $regex: new RegExp('.*' + req.query.q.toLowerCase()+'.*', 'i')},
-      }
-    } */
 
     if (type) {
       filter.typeId = { $in: type.types }
