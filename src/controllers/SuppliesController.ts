@@ -21,17 +21,12 @@ class SuppliesController {
         : 0
 
     if (req.query.q) {
-      filter = {
-        $expr: {
-          $function: {
-            body: function (name) { return name == req.query.q.toLowerCase(); },
-            args: ["$name"],
-            lang: "js"
-          }
-        }
-
+     filter = {
+        $text: { $search: req.query.q.toLowerCase() }
       }
+      console.log(filter) 
     }
+    
      /*if (req.query.q) {      
       filter = {
         name: { $regex: new RegExp('.*' + req.query.q.toLowerCase()+'.*', 'i')},
