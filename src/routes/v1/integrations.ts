@@ -69,6 +69,39 @@ router.get('/crops', integrationServiceController.cropData)
 router.post('/crops', integrationServiceController.exporterCrops)
 
 /**
+ * @swagger
+ * path:
+ *  /v1/exporters/crops:
+ *    post:
+ *      summary: Exporter data crop in third party service
+ *      tags: [Exporter]
+ *      requestBody:
+ *         content:
+ *           application/json:
+ *              schema:
+ *               type: object
+ *               properties:
+ *                  erpAgent:
+ *                    type: string
+ *                  crops:
+ *                    type: array
+ *                    items:
+ *                       type: object
+ *                       properties:
+ *                          id:
+ *                            type: string
+ *      responses:
+ *       '200':
+ *         description: Exporter Successfully.
+ *       '500':
+ *         description: Error to Server.
+ */
+router.post(
+  '/crops/:cropId/activities/:activityId/achievements/:achievementId',
+  integrationServiceController.exporterAchievements
+)
+
+/**
  *
  */
 router.post('/company', integrationServiceController.create)
