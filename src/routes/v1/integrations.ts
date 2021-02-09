@@ -71,10 +71,17 @@ router.post('/crops', integrationServiceController.exporterCrops)
 /**
  * @swagger
  * path:
- *  /v1/exporters/crops:
+ *  /v1/exporters/crops/{cropId}/activities/{activityId}/achievements/{achievementId}:
  *    post:
- *      summary: Exporter data crop in third party service
+ *      summary: Exporter data achievements to third party service
  *      tags: [Exporter]
+ *      parameters:
+ *        - in: path
+ *          name: cropId
+ *        - in: path
+ *          name: activityId
+ *        - in: path
+ *          name: achievementId
  *      requestBody:
  *         content:
  *           application/json:
@@ -83,13 +90,6 @@ router.post('/crops', integrationServiceController.exporterCrops)
  *               properties:
  *                  erpAgent:
  *                    type: string
- *                  crops:
- *                    type: array
- *                    items:
- *                       type: object
- *                       properties:
- *                          id:
- *                            type: string
  *      responses:
  *       '200':
  *         description: Exporter Successfully.
