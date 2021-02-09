@@ -2,6 +2,7 @@
 
 import { Request, Response } from 'express'
 import models from '../models'
+import supply from '../models/supply'
 import { typesSupplies } from '../utils/Constants'
 
 const Supply = models.Supply
@@ -19,11 +20,18 @@ class SuppliesController {
         ? Number(req.query.skip)
         : 0
 
-    if (req.query.q) {      
+    if (req.query.q) {
+     filter = {
+        $text: { $search: req.query.q.toLowerCase() }
+      }
+      console.log(filter) 
+    }
+    
+     /*if (req.query.q) {      
       filter = {
         name: { $regex: new RegExp('.*' + req.query.q.toLowerCase()+'.*', 'i')},
       }
-    }
+    } */
 
     if (type) {
       filter.typeId = { $in: type.types }
