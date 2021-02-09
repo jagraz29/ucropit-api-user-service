@@ -24,6 +24,7 @@ class UserService {
     const config = await UserConfigService.create(configs)
 
     user.config = config._id
+    user.email = user.email.toLocaleLowerCase()
 
     const newUser = new User(user)
 
