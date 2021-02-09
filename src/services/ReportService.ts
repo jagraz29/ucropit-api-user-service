@@ -742,12 +742,12 @@ class ReportService {
         )
         if (
           lotsSelected.length > 0 &&
-          lotsSelected.signers &&
-          lotsSelected.signers.length > 0
+          achievement.signers &&
+          achievement.signers.length > 0
         ) {
           const dateLast =
-            lotsSelected.signers.pop().dateSigned ||
-            lotsSelected.signers.pop()._id.getTimestamp()
+            achievement.signers.pop().dateSigned ||
+            achievement.signers.pop()._id.getTimestamp()
           dates.push(dateLast)
         }
       }
