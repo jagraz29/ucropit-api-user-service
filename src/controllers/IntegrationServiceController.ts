@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import IntegrationService from '../services/IntegrationService'
 import CropService from '../services/CropService'
 import CompanyService from '../services/CompanyService'
+import AchievementService from '../services/AchievementService'
 import UserConfigService from '../services/UserConfigService'
 
 class IntegrationServiceController {
@@ -108,6 +109,12 @@ class IntegrationServiceController {
         `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_EXPORTER_ACHIEVEMENTS}`
       )
 
+      await AchievementService.changeStatusSynchronized(
+        response.achievementId,
+        response.erpAgent
+      )
+
+      console.log(response)
       return res.status(200).json(response)
     }
 

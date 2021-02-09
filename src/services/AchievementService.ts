@@ -18,7 +18,7 @@ interface IAchievement {
 }
 
 class AchievementService extends ServiceBase {
-  public static async find (query) {
+  public static async find(query) {
     return Achievement.find(query)
       .populate('lots')
       .populate('files')
@@ -29,7 +29,7 @@ class AchievementService extends ServiceBase {
    *
    * @param string id
    */
-  public static async findById (id: string) {
+  public static async findById(id: string) {
     return Achievement.findById(id)
       .populate('lots')
       .populate('files')
@@ -42,7 +42,7 @@ class AchievementService extends ServiceBase {
    * @param IAchievement achievement
    * @param activity
    */
-  public static async store (achievement: IAchievement, activity) {
+  public static async store(achievement: IAchievement, activity) {
     achievement.percent = this.calcPercent(achievement.surface, activity)
     await this.addLotsAchievement(achievement.lots, activity)
 
@@ -58,7 +58,7 @@ class AchievementService extends ServiceBase {
    * @param Array lots
    * @param activity
    */
-  public static calcPercent (surface: number, activity) {
+  public static calcPercent(surface: number, activity) {
     const totalSurface = activity.lots.reduce(
       (a, b) => a + (b['surface'] || 0),
       0
@@ -67,7 +67,7 @@ class AchievementService extends ServiceBase {
     return Math.round((surface * 100) / totalSurface)
   }
 
-  public static async generatePdf (activity, crop) {
+  public static async generatePdf(activity, crop) {
     const pathPdf = this.getPathFilePdf(activity)
     const nameFile = `${activity.key}-${activity.type.name.es}-sing.pdf`
     const direction = `${process.env.BASE_URL}/${process.env.DIR_UPLOADS}/${process.env.DIR_FOLDER_PDF_SIGNS}/${activity.key}/${nameFile}`
@@ -93,8 +93,23 @@ class AchievementService extends ServiceBase {
     }
   }
 
-  public static getPathFilePdf (activity) {
+  public static getPathFilePdf(activity) {
     return `${basePath()}${process.env.DIR_PDF_SINGS}/${activity.key}`
+  }
+
+  /**
+   * Add services integration.
+   *
+   * @param id
+   * @param service
+   */
+  public static async changeStatusSynchronized(
+    id: string,
+    service: string
+  ): Promise<void> {
+    await Achievement.findByIdAndUpdate(id, {
+      synchronizedList: [{ service, isSynchronized: true }]
+    })
   }
 
   /**
@@ -102,7 +117,7 @@ class AchievementService extends ServiceBase {
    * @param Array lots
    * @param activity
    */
-  private static addLotsAchievement (lots: Array<string>, activity) {
+  private static addLotsAchievement(lots: Array<string>, activity) {
     if (activity.lotsMade.length === 0) {
       activity.lotsMade = lots
     } else {
