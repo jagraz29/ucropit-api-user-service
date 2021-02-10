@@ -53,7 +53,7 @@ class IntegrationService extends ServiceBase {
         target,
         data,
         (result) => resolve(result.data),
-        (error) => console.log(error)
+        (err) => reject(err)
       )
     })
   }
