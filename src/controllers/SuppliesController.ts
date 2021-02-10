@@ -22,7 +22,7 @@ class SuppliesController {
 
     if (req.query.q) {
      filter = {
-        $text: { $search: req.query.q.toLowerCase() }
+        $text: { $search: req.query.q }
       }
     }
 

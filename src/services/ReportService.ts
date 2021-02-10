@@ -162,6 +162,7 @@ class ReportService {
               this.calVolume(crop.unitType.name.en, crop.pay, crop.lots)
             ),
             surface: crop.surface,
+            pay: crop.pay,
             responsible: this.getMembersWithIdentifier(crop),
             date_sowing: crop.dateHarvest.toLocaleDateString('es-ES', {
               day: 'numeric',
@@ -738,16 +739,15 @@ class ReportService {
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
         const lotsSelected = achievement.lots.filter(
-          (lotSelected) => lotSelected._id.toString() === lot._id.toString()
+          (lotSelected) => lotSelected?._id.toString() === lot?._id.toString()
         )
         if (
           lotsSelected.length > 0 &&
-          achievement.signers &&
-          achievement.signers.length > 0
+          this.isCompleteSigners(achievement.signers)
         ) {
           const dateLast =
-            achievement.signers.pop().dateSigned ||
-            achievement.signers.pop()._id.getTimestamp()
+            achievement.signers.pop()?.dateSigned ||
+            achievement.signers.pop()?._id.getTimestamp()
           dates.push(dateLast)
         }
       }
@@ -1070,7 +1070,7 @@ class ReportService {
     let total = 0
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
-        if (this.isApprovedFileEvidence(achievement.files)) {
+        if (achievement.files.length > 0) {
           total += achievement.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
         }
       }
@@ -1096,6 +1096,7 @@ class ReportService {
   }
 
   private static isApprovedFileEvidence(files) {
+    console.log(files)
     for (const file of files) {
       if (file.settings && file.settings.fromLots) {
         return true

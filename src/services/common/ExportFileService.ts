@@ -21,6 +21,7 @@ const headerXls = {
     'crop_name',
     'volume',
     'surface',
+    'pay',
     'responsible',
     'date_sowing',
     'date_harvest',
@@ -94,6 +95,7 @@ const headerXls = {
     'Nombre del Cultivo',
     'Volumen TON (has x rinde en TON)',
     'has',
+    'Rinde',
     'Ing Responsable/s',
     'Fecha Estimada de Siembra',
     'Fecha Estimada de Cosecha',
@@ -188,12 +190,16 @@ const fields = [
     value: 'surface'
   },
   {
+    label: 'Rinde',
+    value: 'pay'
+  },
+  {
     label: 'Ing Responsable/s',
     value: 'responsible'
   },
   {
     label: 'Fecha estimada de Siembra',
-    value: 'date_sowing'
+    value: 'date_sowing' 
   },
   {
     label: 'Fecha Estimada de Cosecha',
