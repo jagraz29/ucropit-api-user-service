@@ -35,7 +35,6 @@ class SuppliesController {
       limit: req.query.limit >= 0 ? Number(req.query.limit) : 15,
     })
       .populate('typeId')
-      .sort('name')
       .lean()
 
     res.status(200).json(supplies)
