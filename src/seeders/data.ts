@@ -323,8 +323,8 @@ export const rolesData = [
   },
   {
     label: {
-      en: 'Proveedor',
-      es: 'Provider',
+      en: 'Provider',
+      es: 'Proveedor',
     },
     value: 'PROVIDER'
   },
