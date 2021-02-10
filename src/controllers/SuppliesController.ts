@@ -24,14 +24,7 @@ class SuppliesController {
      filter = {
         $text: { $search: req.query.q.toLowerCase() }
       }
-      console.log(filter) 
     }
-    
-     /*if (req.query.q) {      
-      filter = {
-        name: { $regex: new RegExp('.*' + req.query.q.toLowerCase()+'.*', 'i')},
-      }
-    } */
 
     if (type) {
       filter.typeId = { $in: type.types }
@@ -42,7 +35,6 @@ class SuppliesController {
       limit: req.query.limit >= 0 ? Number(req.query.limit) : 15,
     })
       .populate('typeId')
-      .sort('name')
       .lean()
 
     res.status(200).json(supplies)
