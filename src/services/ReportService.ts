@@ -162,6 +162,7 @@ class ReportService {
               this.calVolume(crop.unitType.name.en, crop.pay, crop.lots)
             ),
             surface: crop.surface,
+            pay: crop.pay,
             responsible: this.getMembersWithIdentifier(crop),
             date_sowing: crop.dateHarvest.toLocaleDateString('es-ES', {
               day: 'numeric',
