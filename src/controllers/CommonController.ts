@@ -6,7 +6,7 @@ const UnitType = models.UnitType
 const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
 const EvidenceConcepts = models.EvidenceConcept
-
+const Roles = models.Roles
 class CommonController {
   /**
    *
@@ -79,6 +79,20 @@ class CommonController {
     const evidenceConcepts = await EvidenceConcepts.find({})
 
     res.status(200).json(evidenceConcepts)
+  }
+
+  /**
+   * Get all collaborator roletypes
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async roles(req: Request, res: Response) {
+    const roles = await Roles.find({})
+
+    res.status(200).json(roles)
   }
 }
 

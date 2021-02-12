@@ -52,6 +52,7 @@ import { isNowGreaterThan } from '../utils/Date'
 const { Schema } = mongoose
 
 const ActivitySchema = new Schema({
+  _id: { type:  mongoose.Schema.Types.ObjectId, required: false },
   key: {
     type: String,
     required: false
@@ -170,7 +171,6 @@ const ActivitySchema = new Schema({
 
 ActivitySchema.pre('save', async function (next) {
   const activity = this
-
   /** Generate unique key */
   if (!activity.key) {
     activity.key = shortid.generate()

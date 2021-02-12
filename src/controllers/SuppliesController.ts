@@ -2,6 +2,7 @@
 
 import { Request, Response } from 'express'
 import models from '../models'
+import supply from '../models/supply'
 import { typesSupplies } from '../utils/Constants'
 
 const Supply = models.Supply
@@ -20,8 +21,8 @@ class SuppliesController {
         : 0
 
     if (req.query.q) {
-      filter = {
-        name: { $regex: new RegExp('^' + req.query.q.toLowerCase(), 'i') },
+     filter = {
+        $text: { $search: req.query.q }
       }
     }
 
@@ -34,7 +35,6 @@ class SuppliesController {
       limit: req.query.limit >= 0 ? Number(req.query.limit) : 15,
     })
       .populate('typeId')
-      .sort('name')
       .lean()
 
     res.status(200).json(supplies)

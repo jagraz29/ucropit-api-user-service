@@ -30,7 +30,7 @@ class ChartController {
    * @param req
    * @param res
    */
-  public async surfaceActivityAgreement (req: Request, res: Response) {
+  public async surfaceActivityAgreement(req: Request, res: Response) {
     let sum = 0
     const user: any = req.user
     const query: any = {
@@ -63,7 +63,7 @@ class ChartController {
     return res.status(200).json(dataChartAgreement)
   }
 
-  public async surfaceProgressAchievements (req: Request, res: Response) {
+  public async surfaceProgressAchievements(req: Request, res: Response) {
     let sum = 0
     const user: any = req.user
     const query: any = {
@@ -108,7 +108,7 @@ class ChartController {
    * @param req
    * @param res
    */
-  public async volumesCrops (req: Request, res: Response) {
+  public async volumesCrops(req: Request, res: Response) {
     const user: any = req.user
     const query: any = {
       cancelled: false,
@@ -146,7 +146,7 @@ class ChartController {
    * @param req
    * @param res
    */
-  public async dataGeneralCrops (req: Request, res: Response) {
+  public async dataGeneralCrops(req: Request, res: Response) {
     const user: any = req.user
     const query: any = {
       cancelled: false,
@@ -199,8 +199,8 @@ class ChartController {
       const totalSurfacesLots = CropService.sumSurfacesByLot(crop)
 
       return {
-        total_sust: totalSurfacesExplo,
-        total_explo: totalSurfacesSust,
+        total_sust: totalSurfacesSust,
+        total_explo: totalSurfacesExplo,
         total_surfaces: totalSurfacesLots
       }
     })

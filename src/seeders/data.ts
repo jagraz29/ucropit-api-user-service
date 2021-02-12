@@ -298,3 +298,48 @@ export const evidenceConcepts = [
     },
   },
 ]
+
+export const rolesData = [
+  {
+    label: {
+      en: 'Advisor',
+      es: 'Asesor',
+    },
+    value: 'PRODUCER_ADVISER'
+  },
+  {
+    label: {
+      en: 'Advisor promoter',
+      es: 'Asesor promotor',
+    },
+    value: 'PRODUCER_ADVISER_ENCOURAGED'
+  },
+  {
+    label: {
+      en: 'Producer',
+      es: 'Productor',
+    },
+    value: 'PRODUCER'
+  },
+  {
+    label: {
+      en: 'Provider',
+      es: 'Proveedor',
+    },
+    value: 'PROVIDER'
+  },
+  {
+    label: {
+      en: 'Marketer',
+      es: 'Comercializador',
+    },
+    value: 'MARKETER'
+  },
+  {
+    label: {
+      en: 'KAM',
+      es: 'KAM',
+    },
+    value: 'CAM'
+  },
+]

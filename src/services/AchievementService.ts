@@ -1,12 +1,13 @@
 import ServiceBase from './common/ServiceBase'
 import models from '../models'
 import PDF from '../utils/PDF'
-
+import mongoose from 'mongoose'
 import { basePath, fileExist, makeDirIfNotExists } from '../utils/Files'
 
 const Achievement = models.Achievement
 
 interface IAchievement {
+  _id?: String
   dateAchievement?: String
   surface?: number
   lots?: Array<string>
@@ -17,7 +18,7 @@ interface IAchievement {
 }
 
 class AchievementService extends ServiceBase {
-  public static async find(query) {
+  public static async find (query) {
     return Achievement.find(query)
       .populate('lots')
       .populate('files')
@@ -28,7 +29,7 @@ class AchievementService extends ServiceBase {
    *
    * @param string id
    */
-  public static async findById(id: string) {
+  public static async findById (id: string) {
     return Achievement.findById(id)
       .populate('lots')
       .populate('files')
@@ -41,9 +42,13 @@ class AchievementService extends ServiceBase {
    * @param IAchievement achievement
    * @param activity
    */
-  public static async store(achievement: IAchievement, activity) {
+  public static async store (achievement: IAchievement, activity) {
     achievement.percent = this.calcPercent(achievement.surface, activity)
     await this.addLotsAchievement(achievement.lots, activity)
+
+    if (!achievement._id) {
+      achievement._id = mongoose.Types.ObjectId()
+    }
 
     return Achievement.create(achievement)
   }
@@ -53,16 +58,11 @@ class AchievementService extends ServiceBase {
    * @param Array lots
    * @param activity
    */
-  public static calcPercent(surface: number, activity) {
-    const totalSurface = activity.lots.reduce(
-      (a, b) => a + (b['surface'] || 0),
-      0
-    )
-
-    return Math.round((surface * 100) / totalSurface)
+  public static calcPercent (surface: number, activity) {
+    return Math.round((surface * 100) / activity.surface)
   }
 
-  public static async generatePdf(activity, crop) {
+  public static async generatePdf (activity, crop) {
     const pathPdf = this.getPathFilePdf(activity)
     const nameFile = `${activity.key}-${activity.type.name.es}-sing.pdf`
     const direction = `${process.env.BASE_URL}/${process.env.DIR_UPLOADS}/${process.env.DIR_FOLDER_PDF_SIGNS}/${activity.key}/${nameFile}`
@@ -79,16 +79,16 @@ class AchievementService extends ServiceBase {
       pathFile: `${pathPdf}/${nameFile}`,
       files: activity.files,
       crop: crop,
-      activity: activity,
+      activity: activity
     })
 
     return {
       resultPDF,
-      publicPath: direction,
+      publicPath: direction
     }
   }
 
-  public static getPathFilePdf(activity) {
+  public static getPathFilePdf (activity) {
     return `${basePath()}${process.env.DIR_PDF_SINGS}/${activity.key}`
   }
 
@@ -97,7 +97,7 @@ class AchievementService extends ServiceBase {
    * @param Array lots
    * @param activity
    */
-  private static addLotsAchievement(lots: Array<string>, activity) {
+  private static addLotsAchievement (lots: Array<string>, activity) {
     if (activity.lotsMade.length === 0) {
       activity.lotsMade = lots
     } else {

@@ -1,11 +1,17 @@
 export const tagsTypeAgreement = {
   SUSTAIN: 'SUSTAIN',
-  EXPLO: 'EXPLO',
+  EXPLO: 'EXPLO'
 }
 
 export const VALID_FORMATS_FILES_IMAGES_PNG = 'png'
 export const VALID_FORMATS_FILES_IMAGES_JPG = 'jpg'
 export const VALID_FORMATS_FILES_DOCUMENTS = 'pdf'
+
+export const responsibleRoles = [
+  'PRODUCER',
+  'PRODUCER_ADVISER',
+  'PRODUCER_ADVISER_ENCOURAGED'
+]
 
 export const typesSupplies = [
   {
@@ -20,11 +26,11 @@ export const typesSupplies = [
       '346564643430633836343331',
       '346564643430633836343332',
       '346564643430633836343333',
-      '346564643430633836343333',
+      '346564643430633836343334',
       '346564643430633836343335',
       '346564643430633836343336',
-      '346564643430633836343337',
-    ],
+      '346564643430633836343337'
+    ]
   },
   {
     tag: 'ACT_APPLICATION',
@@ -33,8 +39,8 @@ export const typesSupplies = [
       '346564643430633836343230',
       '346564643430633836343231',
       '346564643430633836343232',
-      '346564643430633836343233',
-    ],
+      '346564643430633836343233'
+    ]
   },
   {
     tag: 'ACT_FERTILIZATION',
@@ -43,8 +49,8 @@ export const typesSupplies = [
       '346564643430633836343230',
       '346564643430633836343231',
       '346564643430633836343232',
-      '346564643430633836343233',
-    ],
+      '346564643430633836343233'
+    ]
   },
   {
     tag: 'ACT_TILLAGE',
@@ -53,7 +59,7 @@ export const typesSupplies = [
       '346564643430633836343230',
       '346564643430633836343231',
       '346564643430633836343232',
-      '346564643430633836343233',
-    ],
-  },
+      '346564643430633836343233'
+    ]
+  }
 ]

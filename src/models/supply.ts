@@ -28,5 +28,6 @@ const SupplySchema = new Schema({
   brand: String,
   compositon: String
 })
+SupplySchema.index({name: 'text', brand: 'text',company:'text'});
 
 export default mongoose.model('Supply', SupplySchema)
