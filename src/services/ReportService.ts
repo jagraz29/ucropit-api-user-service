@@ -834,7 +834,7 @@ class ReportService {
 
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
-        total += achievement.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
+        total += achievement.surface
       }
     }
 
@@ -981,7 +981,7 @@ class ReportService {
             (lotItem) => lotItem._id.toString() === lot._id.toString()
           )
 
-          if (lotSelected) return lotSelected.surface
+          if (lotSelected) return activity.surface
         }
         return undefined
       })
@@ -1114,7 +1114,7 @@ class ReportService {
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
         if (this.isCompleteSigners(achievement.signers)) {
-          total += achievement.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
+          total += achievement.surface
         }
       }
     }
@@ -1127,7 +1127,7 @@ class ReportService {
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
         if (achievement.files.length > 0) {
-          total += achievement.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
+          total += achievement.surface
         }
       }
     }
