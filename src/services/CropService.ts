@@ -321,7 +321,7 @@ class CropService extends ServiceBase {
    */
   public static async getCrop(id: string) {
     return Crop.findById(id)
-      .populate('lots.data')
+      .populate('lots')
       .populate('cropType')
       .populate('unitType')
       .populate({ path: 'company', populate: [{ path: 'files' }] })
