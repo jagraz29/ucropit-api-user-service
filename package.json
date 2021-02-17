@@ -10,7 +10,8 @@
     "test": "jest --verbose",
     "preinstall": "npx npm-force-resolutions",
     "seed": "node dist/src/seeders/index.js",
-    "sign:activity": "node dist/src/commands/sign.js"
+    "sign:activity": "node dist/src/commands/sign.js",
+    "insert:members": "node dist/src/commands/members.js"
   },
   "resolutions": {
     "graceful-fs": "4.2.4"
