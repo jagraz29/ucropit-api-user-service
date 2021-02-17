@@ -9,9 +9,11 @@ const CollaboratorRequest = models.CollaboratorRequest
 const addNewMembersInCrops = async (user: any, company: any) => {
   let crops = await Crop.find({
     cancelled: false,
-    'members.user': { $ne: user._id },
-    'members.identifier': { $ne: company.identifier }
-  }).limit(4)
+    $or: [
+      { 'members.user': { $ne: user._id } },
+      { 'members.identifier': { $ne: company.identifier } }
+    ]
+  })
 
   for (const crop of crops) {
     try {
