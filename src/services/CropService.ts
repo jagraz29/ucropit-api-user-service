@@ -656,12 +656,10 @@ class CropService extends ServiceBase {
    * @param result
    */
   public static async changeStatusSynchronized(result): Promise<void> {
-    for (const data of result) {
-      await Crop.updateOne(
-        { _id: data.cropId, 'synchronizedList.service': data.erpAgent },
-        { $set: { 'synchronizedList.$.isSynchronized': data.fullyProcessed } }
-      )
-    }
+    await Crop.updateOne(
+      { _id: result.cropId, 'synchronizedList.service': result.erpAgent },
+      { $set: { 'synchronizedList.$.isSynchronized': true } }
+    )
   }
 
   public static async addServiceSynchronized(data): Promise<boolean> {

@@ -65,7 +65,7 @@ class IntegrationServiceController {
 
     await CropService.addServiceSynchronized(data)
 
-    const result = await IntegrationService.export(
+    const [item] = await IntegrationService.export(
       {
         ...data,
         token: token,
@@ -74,9 +74,10 @@ class IntegrationServiceController {
       `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_EXPORTER_CROPS}`
     )
 
-    await CropService.changeStatusSynchronized(result)
+    await CropService.changeStatusSynchronized(item)
+    const log = await IntegrationService.createLog(item, item.cropId)
 
-    res.status(200).json('Ok')
+    res.status(200).json({ status: 'Ok', log })
   }
 
   /**

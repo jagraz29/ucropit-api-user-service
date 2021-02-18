@@ -1,4 +1,7 @@
 import ServiceBase from './common/ServiceBase'
+import models from '../models'
+
+const IntegrationLog = models.IntegrationLog
 
 interface IExportCrop {
   identifier: String | string
@@ -55,6 +58,30 @@ class IntegrationService extends ServiceBase {
         (result) => resolve(result.data),
         (err) => reject(err)
       )
+    })
+  }
+
+  /**
+   * Create Log Integration.
+   *
+   * @param any data
+   * @param string cropId
+   * @param string activityId
+   * @param string achievementId
+   *
+   * @returns Promise
+   */
+  public static createLog(
+    data: any,
+    cropId?: string,
+    activityId?: string,
+    achievementId?: string
+  ): Promise<any> {
+    return IntegrationLog.create({
+      log: data,
+      crop: cropId,
+      activity: activityId,
+      achievement: achievementId
     })
   }
 
