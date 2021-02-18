@@ -32,7 +32,7 @@ class IntegrationServiceController {
   public async create(req: Request, res: Response) {
     const data = req.body
 
-    await IntegrationService.create(
+    const response = await IntegrationService.create(
       data,
       `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_INTEGRATION_USER}`
     )
