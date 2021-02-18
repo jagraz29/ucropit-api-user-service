@@ -19,6 +19,7 @@ import { CropType } from './cropType'
 import { UnitType } from './unitType'
 
 import FileDocument from './documentFile'
+import IntegrationLog from './integrationLog'
 
 const connectDb = function () {
   return mongoose.connect(process.env.DATABASE_URL, {
@@ -48,7 +49,8 @@ const models = {
   SupplyType,
   EvidenceConcept,
   ServiceIntegration,
-  Roles
+  Roles,
+  IntegrationLog
 }
 
 export { connectDb }
