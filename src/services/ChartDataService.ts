@@ -38,7 +38,7 @@ class ChartDataService extends ServiceBase {
     const listSummarySurfaces: any = CropService.createDataCropToChartSurface(
       crops
     )
-
+    
     const sortDataList = this.sortData(listSummarySurfaces, allMonths).filter(
       (item) => item.total > 0
     )
@@ -46,7 +46,7 @@ class ChartDataService extends ServiceBase {
     const summarySortData = this.summaryTotalPerMonth(
       CropService.summaryData(sortDataList)
     )
-
+   
     const labels: any = summarySortData.map((item) => item.date)
     const data: any = summarySortData.map((item) =>
       Numbers.roundToTwo(item.total)
@@ -63,6 +63,7 @@ class ChartDataService extends ServiceBase {
           crop.done,
           tag
         )
+        
         const groupDataActivitiesFinished = ActivityService.groupSurfaceAndDateAchievements(
           crop.finished,
           tag
@@ -71,13 +72,16 @@ class ChartDataService extends ServiceBase {
         return groupDataActivitiesDone.concat(groupDataActivitiesFinished)
       })
 
-      const sortGroupData = this.sortData(_.flatten(dataCrop), allMonths)
-
+      const sortGroupData = this.sortData(_.flatten(dataCrop), allMonths).filter(
+        (item) => item.total > 0
+      )
+      
       const dataActivitiesSummary = this.summaryTotalPerMonth(
         CropService.summaryData(sortGroupData)
       )
 
-      const labels: any = dataActivitiesSummary.map((item) => item.date)
+      const labels : any = dataActivitiesSummary.map((item) => item.date)
+       
       const data: any = dataActivitiesSummary.map((item) =>
         Numbers.roundToTwo(item.total)
       )
@@ -90,6 +94,12 @@ class ChartDataService extends ServiceBase {
     }
 
     labels = this.mergeDataLabelsActivity(labels)
+
+    labels.sort(function(a, b){
+      let current = a.substr(3, 4).split(' ') + a.substr(0, 2).split(' ') 
+       let volumes = b.substr(3, 4).split(' ') + b.substr(0, 2).split(' ') 
+      return current - volumes
+      });
 
     const dataChartActivities = groupData.map((item) => {
       const data = this.dataActivity(item.data, labels, item.labels)
@@ -137,7 +147,6 @@ class ChartDataService extends ServiceBase {
     let total = 0
     return list.map((item) => {
       total += item.total
-
       return {
         date: item.date,
         total: total,

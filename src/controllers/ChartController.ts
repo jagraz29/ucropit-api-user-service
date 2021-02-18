@@ -96,9 +96,8 @@ class ChartController {
         ]
       })
       .lean()
-
+  
     const dataChartActivities = ChartService.generateDataActivities(crops)
-
     return res.status(200).json(dataChartActivities)
   }
 

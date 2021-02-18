@@ -264,7 +264,7 @@ class ActivityService extends ServiceBase {
             date: activity.achievements[0].dateAchievement.toLocaleDateString(
               'en-US',
               {
-                month: 'long'
+                year: 'numeric', month: '2-digit'
               }
             )
           }
@@ -280,7 +280,7 @@ class ActivityService extends ServiceBase {
           return {
             total: total,
             date: activity.dateObservation.toLocaleDateString('en-US', {
-              month: 'long'
+              year: 'numeric', month: '2-digit'
             })
           }
         }
