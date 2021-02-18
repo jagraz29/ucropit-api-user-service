@@ -87,7 +87,7 @@ class CropService extends ServiceBase {
       return {
         total: this.calVolume(crop.unitType.key, crop.pay, crop.surface),
         date: crop.dateHarvest.toLocaleDateString('en-US', {
-          month: 'long'
+          year: 'numeric', month: '2-digit'
         })
       }
     })
