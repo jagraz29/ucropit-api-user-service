@@ -58,13 +58,9 @@ class AchievementService extends ServiceBase {
    * @param Array lots
    * @param activity
    */
-  public static calcPercent(surface: number, activity) {
-    const totalSurface = activity.lots.reduce(
-      (a, b) => a + (b['surface'] || 0),
-      0
-    )
 
-    return Math.round((surface * 100) / totalSurface)
+  public static calcPercent(surface: number, activity) {
+    return Math.round((surface * 100) / activity.surface)
   }
 
   public static async generatePdf(activity, crop) {

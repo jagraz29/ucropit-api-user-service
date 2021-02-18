@@ -360,7 +360,7 @@ class CropService extends ServiceBase {
    */
   public static async getCrop(id: string) {
     return Crop.findById(id)
-      .populate('lots.data', '-area -__v')
+      .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
       .populate({ path: 'company', populate: [{ path: 'files' }] })

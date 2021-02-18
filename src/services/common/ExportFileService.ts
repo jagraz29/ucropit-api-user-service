@@ -21,6 +21,7 @@ const headerXls = {
     'crop_name',
     'volume',
     'surface',
+    'pay',
     'responsible',
     'date_sowing',
     'date_harvest',
@@ -35,10 +36,12 @@ const headerXls = {
     'link_pdf_ots_agreement_sus',
     'names_signers_sustainability_agreements',
     'total_surface_sus',
+    'date_sign_achievement_by_lot_sus',
     'link_land_use_agreement',
     'link_pdf_ots_agreement_explo',
     'names_signers_land_use',
     'total_surface_explo',
+    'date_sign_achievement_by_lot_explo',
     'surface_planned_sowing',
     'date_achievement_sowing',
     'surface_achievement_sowing',
@@ -94,6 +97,7 @@ const headerXls = {
     'Nombre del Cultivo',
     'Volumen TON (has x rinde en TON)',
     'has',
+    'Rinde',
     'Ing Responsable/s',
     'Fecha Estimada de Siembra',
     'Fecha Estimada de Cosecha',
@@ -108,10 +112,12 @@ const headerXls = {
     'Lista de HASH de firmas ACUERDOS SUSTENTABILIDAD ',
     'Nombre Firmantes ACUERDOS SUSTENTABILIDAD',
     'HAS ACUERDO SUSTENTABILIDAD',
+    'Fecha de Firma del lote ACUERDO SUSTENTABILIDAD',
     'Documentos de Acuerdo de Uso de Suelo',
     'Lista de HASH de firmas ACUERDOS de USO DE SUELO',
     'Nombre Firmantes ACUERDOS de USO DE SUELO',
     'HAS ACUERDOS de USO DE SUELO',
+    'Fecha de Firma del lote ACUERDOS de USO DE SUELO',
     'Superficie de Planificacion de la ACTIVIDAD SIEMBRA',
     'Fecha de realizacion del lote ACTIVIDAD SIEMBRA',
     'Superficie de la Realizacion de la ACTIVIDAD SIEMBRA',
@@ -186,6 +192,10 @@ const fields = [
   {
     label: 'has',
     value: 'surface'
+  },
+  {
+    label: 'Rinde',
+    value: 'pay'
   },
   {
     label: 'Ing Responsable/s',

@@ -82,7 +82,7 @@ class ActivityService extends ServiceBase {
           { path: 'owner' }
         ]
       })
-      .populate({ path: 'lots', select: '-area -__v' })
+      .populate({ path: 'lots' })
       .populate({ path: 'lotsMade', select: '-area -__v' })
       .populate('files')
       .populate({

@@ -4,7 +4,8 @@ import GeoLocationService from '../services/GeoLocationService'
 import Numbers from '../utils/Numbers'
 
 import { tagsTypeAgreement, responsibleRoles } from '../utils/Constants'
-import activity from '../models/activity'
+import Achievement from '../models/achievement'
+import Activity from '../models/activity'
 
 const Company = models.Company
 
@@ -162,6 +163,7 @@ class ReportService {
               this.calVolume(crop.unitType.name.en, crop.pay, crop.lots)
             ),
             surface: crop.surface,
+            pay: crop.pay,
             responsible: this.getMembersWithIdentifier(crop),
             date_sowing: crop.dateHarvest.toLocaleDateString('es-ES', {
               day: 'numeric',
@@ -212,6 +214,11 @@ class ReportService {
               lot,
               tagsTypeAgreement.SUSTAIN
             ),
+            date_sign_achievement_by_lot_sus: await this.lastDateSignAchievementByLotAgreement(
+              crop,
+              lot,
+              tagsTypeAgreement.SUSTAIN
+            ),
             link_land_use_agreement: this.generateStaticDownloads(
               crop.finished,
               tagsTypeAgreement.EXPLO
@@ -238,6 +245,11 @@ class ReportService {
               lot,
               tagsTypeAgreement.EXPLO
             ),
+            date_sign_achievement_by_lot_explo: await this.lastDateSignAchievementByLotAgreement(
+              crop,
+              lot,
+              tagsTypeAgreement.EXPLO
+            ),
             surface_planned_sowing: this.surfacePlannedByActivity(
               crop,
               lot,
@@ -256,7 +268,7 @@ class ReportService {
               crop,
               'ACT_SOWING'
             ),
-            date_sign_achievement_by_lot_sowing: this.lastDateSignAchievementByLot(
+            date_sign_achievement_by_lot_sowing: await this.lastDateSignAchievementByLot(
               crop,
               lot,
               'ACT_SOWING'
@@ -296,7 +308,7 @@ class ReportService {
               crop,
               'ACT_HARVEST'
             ),
-            date_sign_achievement_by_lot_harvest: this.lastDateSignAchievementByLot(
+            date_sign_achievement_by_lot_harvest: await this.lastDateSignAchievementByLot(
               crop,
               lot,
               'ACT_HARVEST'
@@ -336,7 +348,7 @@ class ReportService {
               crop,
               'ACT_APPLICATION'
             ),
-            date_sign_achievement_by_lot_application: this.lastDateSignAchievementByLot(
+            date_sign_achievement_by_lot_application: await this.lastDateSignAchievementByLot(
               crop,
               lot,
               'ACT_APPLICATION'
@@ -378,7 +390,7 @@ class ReportService {
               crop,
               'ACT_FERTILIZATION'
             ),
-            date_sign_achievement_by_lot_fertilization: this.lastDateSignAchievementByLot(
+            date_sign_achievement_by_lot_fertilization: await this.lastDateSignAchievementByLot(
               crop,
               lot,
               'ACT_FERTILIZATION'
@@ -418,7 +430,7 @@ class ReportService {
               crop,
               'ACT_TILLAGE'
             ),
-            date_sign_achievement_by_lot_tillage: this.lastDateSignAchievementByLot(
+            date_sign_achievement_by_lot_tillage: await this.lastDateSignAchievementByLot(
               crop,
               lot,
               'ACT_TILLAGE'
@@ -706,13 +718,38 @@ class ReportService {
       : ''
   }
 
-  private static lastDateSignAchievementByLot(crop, lot, typeActivity) {
-    const datesDone = this.getDateLastSigned(
+  private static async lastDateSignAchievementByLotAgreement(
+    crop,
+    lot,
+    typeAgreement
+  ) {
+    const datesFinished = await this.getDateLastSignedAgreement(
+      crop.finished.filter(
+        (activity) =>
+          activity.type.tag === 'ACT_AGREEMENTS' &&
+          activity.typeAgreement.key === typeAgreement
+      ),
+      lot
+    )
+
+    const lastDate = datesFinished.length > 0 ? datesFinished[0] : null
+
+    return lastDate
+      ? lastDate.toLocaleDateString('es-ES', {
+          day: 'numeric',
+          year: 'numeric',
+          month: 'long'
+        })
+      : ''
+  }
+
+  private static async lastDateSignAchievementByLot(crop, lot, typeActivity) {
+    const datesDone = await this.getDateLastSigned(
       crop.done.filter((activity) => activity.type.tag === typeActivity),
       lot
     )
 
-    const datesFinished = this.getDateLastSigned(
+    const datesFinished = await this.getDateLastSigned(
       crop.finished.filter((activity) => activity.type.tag === typeActivity),
       lot
     )
@@ -721,7 +758,7 @@ class ReportService {
 
     const lastDate =
       mergedList.length > 0 && mergedList !== undefined
-        ? datesDone.concat(datesFinished).pop()
+        ? datesDone.concat(datesFinished)[0]
         : null
 
     return lastDate
@@ -733,27 +770,46 @@ class ReportService {
       : ''
   }
 
-  private static getDateLastSigned(activities, lot) {
+  private static async getDateLastSignedAgreement(activities, lot) {
+    let dates = []
+
+    for (const activity of activities) {
+      const lotsSelected = activity.lots.filter(
+        (lotSelected) => lotSelected?._id.toString() === lot?._id.toString()
+      )
+
+      if (lotsSelected.length > 0 && this.isCompleteSigners(activity.signers)) {
+        const activityObject = await Activity.findById(activity._id)
+        const dateLast = activityObject.signers.pop()._id.getTimestamp()
+        dates.push(dateLast)
+      }
+    }
+
+    return dates.filter((date) => date)
+  }
+
+  private static async getDateLastSigned(activities, lot) {
     let dates = []
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
         const lotsSelected = achievement.lots.filter(
-          (lotSelected) => lotSelected._id.toString() === lot._id.toString()
+          (lotSelected) => lotSelected?._id.toString() === lot?._id.toString()
         )
+
         if (
           lotsSelected.length > 0 &&
-          achievement.signers &&
-          achievement.signers.length > 0
+          this.isCompleteSigners(achievement.signers)
         ) {
+          const achievementsObject = await Achievement.findById(achievement._id)
           const dateLast =
-            achievement.signers.pop().dateSigned ||
-            achievement.signers.pop()._id.getTimestamp()
+            achievementsObject.signers.pop()?.dateSigned ||
+            achievementsObject.signers.pop()?._id.getTimestamp()
           dates.push(dateLast)
         }
       }
     }
 
-    return dates
+    return dates.filter((date) => date)
   }
 
   private static getDateLastAchievement(activities, lot): any {
@@ -778,7 +834,7 @@ class ReportService {
 
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
-        total += achievement.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
+        total += achievement.surface
       }
     }
 
@@ -925,7 +981,7 @@ class ReportService {
             (lotItem) => lotItem._id.toString() === lot._id.toString()
           )
 
-          if (lotSelected) return lotSelected.surface
+          if (lotSelected) return activity.surface
         }
         return undefined
       })
@@ -1058,7 +1114,7 @@ class ReportService {
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
         if (this.isCompleteSigners(achievement.signers)) {
-          total += achievement.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
+          total += achievement.surface
         }
       }
     }
@@ -1070,8 +1126,8 @@ class ReportService {
     let total = 0
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
-        if (this.isApprovedFileEvidence(achievement.files)) {
-          total += achievement.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
+        if (achievement.files.length > 0) {
+          total += achievement.surface
         }
       }
     }
@@ -1096,6 +1152,7 @@ class ReportService {
   }
 
   private static isApprovedFileEvidence(files) {
+    console.log(files)
     for (const file of files) {
       if (file.settings && file.settings.fromLots) {
         return true
