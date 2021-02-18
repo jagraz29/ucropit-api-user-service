@@ -13,6 +13,7 @@ import fs from 'fs'
 import models from '../models'
 
 const Lot = models.Lot
+const Crop = models.Crop
 
 class ReportsController {
   /**
@@ -48,6 +49,20 @@ class ReportsController {
       res.attachment('dashboard_soja_sustentable.csv')
       res.status(200).send(pathFile)
     }
+
+    res.download(pathFile)
+  }
+
+  public async generateDataSet(req: Request, res: Response) {
+    const mode: any = req.query.mode || 'xls'
+
+    let crops = await Crop.find({ cancelled: false })
+      .populate('lots.data')
+      .populate('cropType')
+
+    const cropsData = ReportService.generateDataSet(crops)
+
+    const pathFile = ExportFile.dataSetExport(cropsData, 'xls')
 
     res.download(pathFile)
   }

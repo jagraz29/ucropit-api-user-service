@@ -467,6 +467,32 @@ class ReportService {
     return _.flatten(_.flatten(await Promise.all(reports)))
   }
 
+  public static generateDataSet(crops: Array<any>) {
+    const dataCrops = crops.map((crop) => {
+      const dataCropTransform = crop.lots.map((data) => {
+        const dataLot = data.data.map((lot) => {
+          return {
+            lotId: lot._id,
+            cropId: crop.id,
+            // coords: this.transformCRS(lot.coordinates),
+            state: true,
+            sowingDate: crop.dateCrop,
+            harvestDate: crop.dateHarvest,
+            cropType: crop.cropType.name.es,
+            seedGen: false,
+            pay: crop.pay
+          }
+        })
+        return dataLot
+      })
+      return _.flatten(dataCropTransform)
+    })
+
+    console.log(_.flatten(dataCrops))
+
+    return _.flatten(dataCrops)
+  }
+
   private static async getCompany(identifier) {
     return Company.findOne({ identifier: identifier })
   }
@@ -495,6 +521,18 @@ class ReportService {
     }
 
     return membersMails
+  }
+
+  private static transformCRS(coordinates) {
+    let pointString = '['
+
+    for (const point of coordinates) {
+      pointString += `(${point.latitude},${point.longitude}),`
+    }
+
+    pointString += ']'
+
+    return pointString
   }
 
   private static getPhonesProducers(crop) {

@@ -28,6 +28,8 @@ const authMiddleware = passport.authenticate('jwt', { session: false })
  */
 router.get('/crops', checkAuth, reportsController.generateCrops)
 
+router.get('/datasets/crops', reportsController.generateDataSet)
+
 router.post(
   '/crops/attachment',
   authMiddleware,
