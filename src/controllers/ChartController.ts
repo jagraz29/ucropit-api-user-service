@@ -2,6 +2,7 @@ import { Response, Request } from 'express'
 
 import CropService from '../services/CropService'
 import ChartService from '../services/ChartDataService'
+import ServiceBase from '../services/common/ServiceBase'
 import models from '../models'
 import Numbers from '../utils/Numbers'
 import _ from 'lodash'
@@ -23,7 +24,7 @@ let allMonths = [
   'December'
 ]
 
-class ChartController {
+class ChartController{
   /**
    * Data to Chart agreement's activity.
    *
@@ -121,14 +122,12 @@ class ChartController {
     const crops = await Crop.find(query).populate('unitType').lean()
 
     const listSummaryVolumes = CropService.getSummaryVolumes(crops)
+    
+    const ListData = ServiceBase.sortData(listSummaryVolumes, allMonths).filter(
+      (item) => item.total > 0
+    )
 
-    const sortData = listSummaryVolumes.sort(function (a, b) {
-      let currentDate = a.date.substr(3, 4).split(' ') + a.date.substr(0, 2).split(' ') 
-      let dateCrops = b.date.substr(3, 4).split(' ') + b.date.substr(0, 2).split(' ') 
-      return currentDate - dateCrops
-    })
-
-    const summarySortData = CropService.summaryData(sortData)
+    const summarySortData = CropService.summaryData(ListData)
 
     const labels = summarySortData.map((item) => item.date)
 

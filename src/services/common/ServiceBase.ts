@@ -130,7 +130,7 @@ class ServiceBase {
    */
   public static sortData(
     list: Array<any>,
-    sortReference: Array<any>
+    sortReference?: Array<any>
   ): Array<any> {
     const sortData = list.sort(function (a, b) {
       if (a.total > 0 && b.total > 0){
