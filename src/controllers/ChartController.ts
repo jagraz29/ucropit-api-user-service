@@ -123,9 +123,9 @@ class ChartController {
     const listSummaryVolumes = CropService.getSummaryVolumes(crops)
 
     const sortData = listSummaryVolumes.sort(function (a, b) {
-      let current = a.date.substr(3, 4).split(' ') + a.date.substr(0, 2).split(' ') 
-      let volumes = b.date.substr(3, 4).split(' ') + b.date.substr(0, 2).split(' ') 
-      return current - volumes
+      let currentDate = a.date.substr(3, 4).split(' ') + a.date.substr(0, 2).split(' ') 
+      let dateCrops = b.date.substr(3, 4).split(' ') + b.date.substr(0, 2).split(' ') 
+      return currentDate - dateCrops
     })
 
     const summarySortData = CropService.summaryData(sortData)

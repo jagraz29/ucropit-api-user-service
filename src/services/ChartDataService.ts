@@ -96,9 +96,9 @@ class ChartDataService extends ServiceBase {
     labels = this.mergeDataLabelsActivity(labels)
 
     labels.sort(function(a, b){
-      let current = a.substr(3, 4).split(' ') + a.substr(0, 2).split(' ') 
-       let volumes = b.substr(3, 4).split(' ') + b.substr(0, 2).split(' ') 
-      return current - volumes
+      let currentDate = a.substr(3, 4).split(' ') + a.substr(0, 2).split(' ') 
+       let cropDate = b.substr(3, 4).split(' ') + b.substr(0, 2).split(' ') 
+      return currentDate - cropDate
       });
 
     const dataChartActivities = groupData.map((item) => {
