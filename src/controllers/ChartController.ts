@@ -23,7 +23,7 @@ let allMonths = [
   'December'
 ]
 
-class ChartController {
+class ChartController{
   /**
    * Data to Chart agreement's activity.
    *
@@ -96,9 +96,8 @@ class ChartController {
         ]
       })
       .lean()
-
+  
     const dataChartActivities = ChartService.generateDataActivities(crops)
-
     return res.status(200).json(dataChartActivities)
   }
 
@@ -122,12 +121,12 @@ class ChartController {
     const crops = await Crop.find(query).populate('unitType').lean()
 
     const listSummaryVolumes = CropService.getSummaryVolumes(crops)
+    
+    const listDataCrops = ChartService.sortData(listSummaryVolumes, allMonths).filter(
+      (item) => item.total > 0
+    )
 
-    const sortData = listSummaryVolumes.sort(function (a, b) {
-      return allMonths.indexOf(a.date) - allMonths.indexOf(b.date)
-    })
-
-    const summarySortData = CropService.summaryData(sortData)
+    const summarySortData = CropService.summaryData(listDataCrops)
 
     const labels = summarySortData.map((item) => item.date)
 
