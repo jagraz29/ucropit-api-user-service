@@ -2,7 +2,6 @@ import { Response, Request } from 'express'
 
 import CropService from '../services/CropService'
 import ChartService from '../services/ChartDataService'
-import ServiceBase from '../services/common/ServiceBase'
 import models from '../models'
 import Numbers from '../utils/Numbers'
 import _ from 'lodash'
@@ -123,11 +122,11 @@ class ChartController{
 
     const listSummaryVolumes = CropService.getSummaryVolumes(crops)
     
-    const ListData = ServiceBase.sortData(listSummaryVolumes, allMonths).filter(
+    const listDataCrops = ChartService.sortData(listSummaryVolumes, allMonths).filter(
       (item) => item.total > 0
     )
 
-    const summarySortData = CropService.summaryData(ListData)
+    const summarySortData = CropService.summaryData(listDataCrops)
 
     const labels = summarySortData.map((item) => item.date)
 
