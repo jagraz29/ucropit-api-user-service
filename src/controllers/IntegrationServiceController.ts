@@ -95,6 +95,7 @@ class IntegrationServiceController {
 
     const crop: any = await CropService.findOneCrop(cropId)
 
+    console.log('marchando por aqui')
     if (CropService.serviceCropIsSynchronized(crop, data.erpAgent)) {
       const token: string = req.get('authorization').split(' ')[1]
       const userConfig = await UserConfigService.findById(user.config)
@@ -115,7 +116,7 @@ class IntegrationServiceController {
         response.erpAgent
       )
 
-      console.log(response)
+      console.log('respuesta',response)
       return res.status(200).json(response)
     }
 
