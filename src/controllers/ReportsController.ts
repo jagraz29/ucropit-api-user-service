@@ -5,6 +5,7 @@ import ReportService from '../services/ReportService'
 import ExportFile from '../services/common/ExportFileService'
 import Company from '../services/CompanyService'
 import EmailService from '../services/EmailService'
+import { getFullPath } from '../utils/Files'
 
 import { roles, errors } from '../types/common'
 
@@ -54,15 +55,13 @@ class ReportsController {
   }
 
   public async generateDataSet(req: Request, res: Response) {
-    const mode: any = req.query.mode || 'xls'
+    const mode: any = req.query.mode || 'json'
 
-    let crops = await Crop.find({ cancelled: false })
-      .populate('lots.data')
-      .populate('cropType')
+    let crops = await CropService.getAll()
 
-    const cropsData = ReportService.generateDataSet(crops)
+    const dataset = ReportService.generateDataSet(crops)
 
-    const pathFile = ExportFile.dataSetExport(cropsData, 'xls')
+    const pathFile = ExportFile.dataSetExport(dataset, mode)
 
     res.download(pathFile)
   }

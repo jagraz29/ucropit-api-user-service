@@ -3,7 +3,7 @@ import { Parser } from 'json2csv'
 import fs from 'fs'
 import { getFullPath } from '../../utils/Files'
 import { reportHeaderXls, fieldsCSV } from '../../types/reports'
-import { dataSetHeaderXls, dataSetFieldsCSV } from '../../types/dataset'
+import { dataSetFieldsCSV } from '../../types/dataset'
 
 export interface OptionsXls {
   fields?: Object | Array<String>
@@ -36,14 +36,38 @@ class ExportFileService {
   }
 
   /**
-   * Data Set export.
+   * Export data set.
    *
    * @param Array data
    * @param string mode
    */
   public static dataSetExport(data: Array<any>, mode: string | any) {
-    return this.exportXls(data, dataSetHeaderXls, 'dataset_crop.xlsx')
+    if (mode === 'csv') {
+      return this.exportCsv(data, dataSetFieldsCSV)
+    }
+
+    return this.exportJson(data)
   }
+
+  /**
+   * Export Data in JSON.
+   *
+   * @param data
+   * @param nameFile
+   *
+   * @return string
+   */
+  public static exportJson(data: any, nameFile?: string): string {
+    const dataString: string = JSON.stringify(data, null, 2)
+    const fileName = nameFile || 'dataset.json'
+
+    const fileFullPath = `${getFullPath(`/uploads/tmp/${fileName}`)}`
+
+    fs.writeFileSync(fileFullPath, dataString)
+
+    return fileFullPath
+  }
+
   /**
    *
    * @param data

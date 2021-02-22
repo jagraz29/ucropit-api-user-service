@@ -26,11 +26,11 @@ export const dataSetHeaderXls = {
 export const dataSetFieldsCSV = [
   {
     label: 'Lot_ID',
-    value: 'lotId'
+    value: 'lot_id'
   },
   {
     label: 'CampaignID',
-    value: 'cropId'
+    value: 'campaign_id'
   },
   {
     label: 'Coords',
@@ -41,8 +41,12 @@ export const dataSetFieldsCSV = [
     value: 'state'
   },
   {
-    label: 'SowingDate',
-    value: 'sowingDate'
+    label: 'Sowing Surfaces',
+    value: 'sowing_surfaces'
+  },
+  {
+    label: 'Sowing Dates',
+    value: 'sowing_date'
   },
   {
     label: 'HarvestDate',
@@ -58,6 +62,6 @@ export const dataSetFieldsCSV = [
   },
   {
     label: 'Yield',
-    value: 'pay'
+    value: 'yield'
   }
 ]
