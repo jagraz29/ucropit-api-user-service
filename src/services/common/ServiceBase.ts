@@ -140,10 +140,14 @@ class ServiceBase {
    */
   public static sortData(
     list: Array<any>,
-    sortReference: Array<any>
+    sortReference?: Array<any>
   ): Array<any> {
     const sortData = list.sort(function (a, b) {
-      return sortReference.indexOf(a.date) - sortReference.indexOf(b.date)
+      if (a.total > 0 && b.total > 0){
+        let currentDate = a.date.substr(3, 4).split(' ') + a.date.substr(0, 2).split(' ') 
+        let cropDate = b.date.substr(3, 4).split(' ') + b.date.substr(0, 2).split(' ') 
+        return currentDate - cropDate
+      }
     })
 
     return sortData
