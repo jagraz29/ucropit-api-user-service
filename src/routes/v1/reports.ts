@@ -41,7 +41,38 @@ router.get('/crops', checkAuth, reportsController.generateCrops)
  *          content:
  *            application/json:
  *             schema:
- *                $ref: '#/components/schemas/Crop'
+ *                type: object
+ *                properties:
+ *                  lot_id:
+ *                    type: string
+ *                  campaign_id:
+ *                    type: string
+ *                  coords:
+ *                     type: array
+ *                     items:
+ *                        type: array
+ *                        items:
+ *                          type: integer
+ *                  state:
+ *                    type: string
+ *                  sowing_surfaces:
+ *                     type: array
+ *                     items:
+ *                        type: string
+ *                  sowing_date:
+ *                     type: array
+ *                     items:
+ *                        type: string
+ *                  harvest_date:
+ *                     type: array
+ *                     items:
+ *                        type: string
+ *                  cropType:
+ *                    type: string
+ *                  seed_gen:
+ *                    type: string
+ *                  yield:
+ *                    type: string
  *        "404":
  *          description: Not Found Resources
  *        "500":
