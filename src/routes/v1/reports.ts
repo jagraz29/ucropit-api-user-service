@@ -28,7 +28,26 @@ const authMiddleware = passport.authenticate('jwt', { session: false })
  */
 router.get('/crops', checkAuth, reportsController.generateCrops)
 
-router.get('/datasets/crops', reportsController.generateDataSet)
+/**
+ * @swagger
+ * path:
+ *  /v1/reports/datasets/crops:
+ *    get:
+ *      summary: Download dataset to Json file.
+ *      tags: [Reports]
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          content:
+ *            application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Crop'
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.get('/datasets/crops', checkAuth, reportsController.generateDataSet)
 
 router.post(
   '/crops/attachment',
