@@ -9,11 +9,15 @@ import {
   agreementTypesData,
   supplyTypesData,
   evidenceConcepts,
-  rolesData,
-  servicesIntegration
+  rolesData
 } from './data'
 
-import { suppliesData, fertilizers, pesticides } from './suppliesData'
+import {
+  suppliesData,
+  fertilizers,
+  pesticides,
+  phytotherapeutic
+} from './suppliesData'
 
 const CropType = models.CropType
 const UnitType = models.UnitType
@@ -160,6 +164,19 @@ const seedersSupplyPesticides = async (flag?) => {
   return true
 }
 
+const seedersSupplyPhytotherapeutic = async (flag?) => {
+  if (flag && flag !== '--phytothera') return
+  console.log(`${chalk.green('=====Registering Supply Phytotherapeutic====')}`)
+
+  for (const supplyType of phytotherapeutic) {
+    await Supply.create(supplyType)
+  }
+
+  console.log(`${chalk.green('=====Registered Supply Phytotherapeutic====')}`)
+
+  return true
+}
+
 const seedersSupplyType = async (flag?) => {
   if (flag && flag !== '--supplyType') return
   console.log(`${chalk.green('=====Registering SupplyType====')}`)
@@ -219,7 +236,7 @@ const seedersServiceIntegrations = async (flag?) => {
   console.log(`${chalk.green('=====Registering Service Integrations====')}`)
   const services = await ServiceIntegration.find({})
 
-  const servicesIntegrationSeed = servicesIntegration.filter(
+  const servicesIntegrationSeed = ServiceIntegration.filter(
     (item) => !services.find((element) => item.code === element.code)
   )
 
@@ -247,6 +264,7 @@ const seedersServiceIntegrations = async (flag?) => {
       await seedersSupply(flag)
       await seedersSupplyFertilizers(flag)
       await seedersSupplyPesticides(flag)
+      await seedersSupplyPhytotherapeutic(flag)
       await seedersSupplyType(flag)
       await seedersUnitType(flag)
       await seedersCropType(flag)
