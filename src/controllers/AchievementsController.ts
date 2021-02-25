@@ -11,6 +11,7 @@ import CropService from '../services/CropService'
 import BlockChainServices from '../services/BlockChainService'
 import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
 import UserConfigService from '../services/UserConfigService'
+import IntegrationService from '../services/IntegrationService'
 
 import models from '../models'
 
@@ -69,6 +70,7 @@ class AchievementsController {
     const user: any = req.user
     const data = JSON.parse(req.body.data)
     const crop = await Crop.findById(data.crop)
+    const userConfig = await UserConfigService.findById(user.config)
 
     await validateAchievement(data)
 
@@ -102,6 +104,17 @@ class AchievementsController {
         `achievements/${achievement.key}`
       )
     }
+
+    await IntegrationService.exportAchievement(
+      {
+        cropId: data.crop,
+        activityId: data.activity,
+        achievementId: achievement._id,
+        erpAgent: 'auravant',
+        identifier: userConfig.companySelected.identifier
+      },
+      req
+    )
 
     res.status(201).json(achievement)
   }

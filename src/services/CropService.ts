@@ -87,7 +87,8 @@ class CropService extends ServiceBase {
       return {
         total: this.calVolume(crop.unitType.key, crop.pay, crop.surface),
         date: crop.dateHarvest.toLocaleDateString('en-US', {
-          year: 'numeric', month: '2-digit'
+          year: 'numeric',
+          month: '2-digit'
         })
       }
     })
@@ -167,7 +168,8 @@ class CropService extends ServiceBase {
       total += activity.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
 
       date = crop.dateCrop.toLocaleDateString('en-US', {
-        year: 'numeric', month: '2-digit'
+        year: 'numeric',
+        month: '2-digit'
       })
     }
 
@@ -686,6 +688,8 @@ class CropService extends ServiceBase {
   }
 
   public static serviceCropIsSynchronized(crop: any, service: any): boolean {
+    console.log(service)
+    console.log(crop)
     return (
       service &&
       crop.synchronizedList.filter((item) => item.service === service).length >

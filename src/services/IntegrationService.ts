@@ -1,4 +1,7 @@
+import { Request } from 'express'
 import ServiceBase from './common/ServiceBase'
+import CropService from './CropService'
+import AchievementService from './AchievementService'
 import models from '../models'
 
 const IntegrationLog = models.IntegrationLog
@@ -7,9 +10,11 @@ interface IExportCrop {
   identifier: String | string
   erpAgent: String | string
   crops?: Array<String | string | any>
-  token?: String | string
+  token?: String | string | any
+  cropId?: String | string | any
   achievementId?: String | string | any
   activityId?: String | string | any
+  user?: any
 }
 
 interface IExportIntegration {
@@ -83,6 +88,43 @@ class IntegrationService extends ServiceBase {
       activity: activityId,
       achievement: achievementId
     })
+  }
+
+  public static async exportAchievement(dataExport: IExportCrop, req: Request) {
+    const crop = await CropService.findOneCrop(dataExport.cropId)
+    if (
+      crop &&
+      CropService.serviceCropIsSynchronized(crop, dataExport.erpAgent)
+    ) {
+      const token: string = req.get('authorization').split(' ')[1]
+
+      const response = await IntegrationService.export(
+        {
+          token: token,
+          erpAgent: dataExport.erpAgent,
+          identifier: dataExport.identifier,
+          achievementId: dataExport.achievementId,
+          activityId: dataExport.activityId
+        },
+        `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_EXPORTER_ACHIEVEMENTS}`
+      )
+
+      await AchievementService.changeStatusSynchronized(
+        response.achievementId,
+        response.erpAgent
+      )
+
+      await this.createLog(
+        response,
+        dataExport.cropId,
+        response.activityId,
+        response.achievementId
+      )
+
+      return response
+    }
+
+    return null
   }
 
   private static dummyResponse(data) {
