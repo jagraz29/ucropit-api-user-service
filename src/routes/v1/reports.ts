@@ -78,7 +78,7 @@ router.get('/crops', checkAuth, reportsController.generateCrops)
  *        "500":
  *          description: Server error
  */
-router.get('/datasets/crops', checkAuth, reportsController.generateDataSet)
+router.get('/datasets/crops', reportsController.generateDataSet)
 
 router.post(
   '/crops/attachment',

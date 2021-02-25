@@ -483,6 +483,16 @@ class ReportService {
             coords: lot.coordinates,
             state: 'Done',
             sowing_surfaces: this.getSurfacesSowing(crop, lot, 'ACT_SOWING'),
+            cant_lots_in_achievements_sowing: this.getCantLotInAchievement(
+              crop,
+              lot,
+              'ACT_SOWING'
+            ),
+            list_complete_signed_achievements_sowing: this.getValidateAchievements(
+              crop,
+              lot,
+              'ACT_SOWING'
+            ),
             sowing_date: this.getListDates(crop, lot, 'ACT_SOWING'),
             harvest_date: this.getListDates(crop, lot, 'ACT_HARVEST'),
             cropType: crop.cropType.name.es,
@@ -526,6 +536,22 @@ class ReportService {
     return results
   }
 
+  private static getCantLotInAchievement(
+    crop: any,
+    lot: any,
+    type: string
+  ): Array<string> {
+    let listCantLots: Array<string> = []
+
+    const listAchievements = this.filterActivityBy(crop, lot, type)
+
+    for (const achievement of listAchievements) {
+      listCantLots.push(achievement.lots.length)
+    }
+
+    return listCantLots
+  }
+
   private static getListDates(
     crop: any,
     lot: any,
@@ -540,6 +566,24 @@ class ReportService {
     }
 
     return listDates
+  }
+
+  private static getValidateAchievements(
+    crop: any,
+    lot: any,
+    type: string
+  ): Array<any> {
+    let listValidate: Array<any> = []
+
+    const listAchievements = this.filterActivityBy(crop, lot, type)
+
+    for (const achievement of listAchievements) {
+      listValidate.push({
+        validate: this.isCompleteSigners(achievement.signers)
+      })
+    }
+
+    return listValidate
   }
 
   private static getListSeedGen(
