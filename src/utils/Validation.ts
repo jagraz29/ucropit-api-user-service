@@ -1,29 +1,26 @@
 import * as Joi from 'joi'
 import { FileArray } from 'express-fileupload'
 import { handleFileConvertJSON } from '../utils/ParseKmzFile'
+import { errors } from '../types/common'
 
 import JoiDate from '@hapi/joi-date'
 
 const JoiValidation = Joi.extend(JoiDate)
 
-export const validateCropStore = async crop => {
+export const validateCropStore = async (crop) => {
   const schema = Joi.object({
     name: Joi.string().required(),
     pay: Joi.number().required(),
     surface: Joi.number().required(),
     dateCrop: JoiValidation.date().required(),
-    dateHarvest: JoiValidation.date()
-      .greater(Joi.ref('dateCrop'))
-      .required(),
+    dateHarvest: JoiValidation.date().greater(Joi.ref('dateCrop')).required(),
     cropType: Joi.string().required(),
     unitType: Joi.string().required(),
     identifier: Joi.string().required(),
     lots: Joi.array()
       .items(
         Joi.object().keys({
-          names: Joi.array()
-            .items(Joi.string())
-            .required(),
+          names: Joi.array().items(Joi.string()).required(),
           tag: Joi.string().required()
         })
       )
@@ -33,22 +30,18 @@ export const validateCropStore = async crop => {
   return schema.validateAsync(crop)
 }
 
-export const validateActivityStore = async activity => {
+export const validateActivityStore = async (activity) => {
   const schema = Joi.object({
     _id: Joi.string().optional(),
     name: Joi.string().required(),
     dateStart: Joi.date().optional(),
-    dateEnd: Joi.date()
-      .min(Joi.ref('dateStart'))
-      .optional(),
+    dateEnd: Joi.date().min(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
     surface: Joi.number().optional(),
     type: Joi.string().required(),
     typeAgreement: Joi.string().optional(),
     status: Joi.string().optional(),
-    lots: Joi.array()
-      .items(Joi.string())
-      .optional(),
+    lots: Joi.array().items(Joi.string()).optional(),
     crop: Joi.string().optional(),
     dateObservation: Joi.date().optional(),
     unitType: Joi.string().optional(),
@@ -91,13 +84,11 @@ export const validateActivityStore = async activity => {
   return schema.validateAsync(activity)
 }
 
-export const validateActivityUpdate = async activity => {
+export const validateActivityUpdate = async (activity) => {
   const schema = Joi.object({
     name: Joi.string().optional(),
     dateStart: Joi.date().optional(),
-    dateEnd: Joi.date()
-      .min(Joi.ref('dateStart'))
-      .optional(),
+    dateEnd: Joi.date().min(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
     surface: Joi.number().optional(),
     type: Joi.string().optional(),
@@ -107,9 +98,7 @@ export const validateActivityUpdate = async activity => {
     pay: Joi.number().optional(),
     observation: Joi.string().optional(),
     status: Joi.string().optional(),
-    lots: Joi.array()
-      .items(Joi.string())
-      .optional(),
+    lots: Joi.array().items(Joi.string()).optional(),
     crop: Joi.string().optional(),
     supplies: Joi.array()
       .items(
@@ -148,15 +137,13 @@ export const validateActivityUpdate = async activity => {
   return schema.validateAsync(activity)
 }
 
-export const validateCompanyStore = async company => {
+export const validateCompanyStore = async (company) => {
   const schema = Joi.object({
     identifier: Joi.string().required(),
     typePerson: Joi.string().optional(),
     name: Joi.string().required(),
     address: Joi.string().required(),
-    addressFloor: Joi.string()
-      .allow('')
-      .optional(),
+    addressFloor: Joi.string().allow('').optional(),
     evidences: Joi.array()
       .items(
         Joi.object().keys({
@@ -171,15 +158,13 @@ export const validateCompanyStore = async company => {
   return schema.validateAsync(company)
 }
 
-export const validateCompanyUpdate = async company => {
+export const validateCompanyUpdate = async (company) => {
   const schema = Joi.object({
     identifier: Joi.string().optional(),
     typePerson: Joi.string().optional(),
     name: Joi.string().optional(),
     address: Joi.string().optional(),
-    addressFloor: Joi.string()
-      .allow('')
-      .optional(),
+    addressFloor: Joi.string().allow('').optional(),
     evidences: Joi.array()
       .items(
         Joi.object().keys({
@@ -194,14 +179,12 @@ export const validateCompanyUpdate = async company => {
   return schema.validateAsync(company)
 }
 
-export const validateAchievement = async achievement => {
+export const validateAchievement = async (achievement) => {
   const schema = Joi.object({
     _id: Joi.string().optional(),
     dateAchievement: Joi.date().required(),
     surface: Joi.number().required(),
-    lots: Joi.array()
-      .items(Joi.string())
-      .required(),
+    lots: Joi.array().items(Joi.string()).required(),
     activity: Joi.string().required(),
     crop: Joi.string().required(),
     supplies: Joi.array()
@@ -254,7 +237,7 @@ export const validateAchievement = async achievement => {
   return schema.validateAsync(achievement)
 }
 
-export const validateSignAchievement = async dataSign => {
+export const validateSignAchievement = async (dataSign) => {
   const schema = Joi.object({
     activityId: Joi.string().required(),
     cropId: Joi.string().required()
@@ -290,10 +273,19 @@ export const validateFilesWithEvidences = (files, evidences) => {
  */
 export const validateFormatKmz = async (files: FileArray) => {
   const result = await handleFileConvertJSON(files)
-  if (!result[0]) return { error: false }
+  if (!result[0]) {
+    return { error: false }
+  }
+
   for (const feature of result[0].features) {
     if (feature.geometry.type !== 'Polygon') {
-      return { error: true, message: 'KMZ format not allowed' }
+      return {
+        error: true,
+        message: 'KMZ format not allowed',
+        code:
+          errors.find((error) => error.key === '002') ||
+          'ERROR_INVALID_FORMAT_KMZ'
+      }
     }
   }
   return { error: false }

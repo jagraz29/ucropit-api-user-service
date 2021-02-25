@@ -73,7 +73,11 @@ class CropsController {
     let company = null
 
     if (validationKmz.error) {
-      return res.status(400).json(validationKmz)
+      return res.status(400).json({
+        error: true,
+        code: validationKmz.code,
+        message: validationKmz.message
+      })
     }
 
     company = (await CompanyService.search({ identifier: data.identifier }))[0]
