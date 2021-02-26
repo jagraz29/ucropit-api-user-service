@@ -273,9 +273,6 @@ export const validateFilesWithEvidences = (files, evidences) => {
  */
 export const validateFormatKmz = async (files: FileArray) => {
   const result = await handleFileConvertJSON(files)
-  if (!result[0]) {
-    return { error: false }
-  }
 
   for (const feature of result[0].features) {
     if (feature.geometry.type !== 'Polygon') {
@@ -283,7 +280,7 @@ export const validateFormatKmz = async (files: FileArray) => {
         error: true,
         message: 'KMZ format not allowed',
         code:
-          errors.find((error) => error.key === '002') ||
+          errors.find((error) => error.key === '002')?.code ||
           'ERROR_INVALID_FORMAT_KMZ'
       }
     }
