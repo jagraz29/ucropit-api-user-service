@@ -96,7 +96,6 @@ export const kmlJsonToArrayNames = function (data) {
 export const mapArraySurfacesAndArea = function (kmzJsonParsers) {
   const listLots = kmzJsonParsers.map((item) => {
     return item.features.map((lot) => {
-      console.log(lot)
       const flattenArr = _.flatten(lot.geometry.coordinates)
       const areaSquare = geolib.getAreaOfPolygon(flattenArr)
       const surface = geolib.convertArea(areaSquare, 'ha').toFixed(2)
