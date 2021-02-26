@@ -3,7 +3,7 @@ import {
   handleFileConvertJSON,
   mapArraySurfacesAndArea
 } from '../utils/ParseKmzFile'
-
+import { validateFormatKmz } from '../utils/Validation'
 import models from '../models'
 import LotService from '../services/LotService'
 
@@ -18,7 +18,7 @@ class LotsController {
    *
    * @return Response
    */
-  public async index (req: Request, res: Response) {
+  public async index(req: Request, res: Response) {
     const lots = await Lot.find({})
 
     res.status(200).json(lots)
@@ -32,7 +32,7 @@ class LotsController {
    *
    * @return Response
    */
-  public async show (req: Request, res: Response) {
+  public async show(req: Request, res: Response) {
     const lot = await Lot.findById(req.params.id)
 
     res.status(200).json(lot)
@@ -46,7 +46,7 @@ class LotsController {
    *
    * @return Response
    */
-  public async create (req: Request, res: Response) {
+  public async create(req: Request, res: Response) {
     const { names, tag } = req.body
 
     const lots = await LotService.store(req, { names, tag })
@@ -60,7 +60,7 @@ class LotsController {
    * @param req
    * @param res
    */
-  public async update (req: Request, res: Response) {
+  public async update(req: Request, res: Response) {
     await Lot.findByIdAndUpdate(req.params.id, req.body)
     const lot = await Lot.findById(req.params.id)
 
@@ -75,7 +75,11 @@ class LotsController {
    *
    * @return Response
    */
-  public async surfaces (req: Request, res: Response) {
+  public async surfaces(req: Request, res: Response) {
+    const validationKmz = await validateFormatKmz(req.files)
+    if (validationKmz.error) {
+      return res.status(400).json(validationKmz.code)
+    }
     const result = await handleFileConvertJSON(req.files)
     const listNamesLots = mapArraySurfacesAndArea(result)
 
@@ -90,7 +94,7 @@ class LotsController {
    *
    * @return Response
    */
-  public async delete (req: Request, res: Response) {
+  public async delete(req: Request, res: Response) {
     const lot = await Lot.findByIdAndDelete(req.params.id)
 
     res.status(200).json({

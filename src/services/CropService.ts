@@ -87,7 +87,8 @@ class CropService extends ServiceBase {
       return {
         total: this.calVolume(crop.unitType.key, crop.pay, crop.surface),
         date: crop.dateHarvest.toLocaleDateString('en-US', {
-          month: 'long'
+          year: 'numeric',
+          month: '2-digit'
         })
       }
     })
@@ -111,7 +112,6 @@ class CropService extends ServiceBase {
         const index = summary.findIndex((item) => item.date === date)
         summary[index].total += data.total
       }
-
       total = 0
     }
 
@@ -168,7 +168,8 @@ class CropService extends ServiceBase {
       total += activity.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
 
       date = crop.dateCrop.toLocaleDateString('en-US', {
-        month: 'long'
+        year: 'numeric',
+        month: '2-digit'
       })
     }
 
@@ -321,7 +322,7 @@ class CropService extends ServiceBase {
    */
   public static async getCrop(id: string) {
     return Crop.findById(id)
-      .populate('lots.data', '-area -__v')
+      .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
       .populate({ path: 'company', populate: [{ path: 'files' }] })

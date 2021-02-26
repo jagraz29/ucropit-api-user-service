@@ -43,13 +43,12 @@ class CropCollaboratorsController {
             identifier
           })
 
-          const request = new CollaboratorRequest({
+          const request = await CollaboratorRequest.create({
             user: user._id,
             company: company._id
           })
 
           user.collaboratorRequest.push(request._id)
-          await request.save()
         }
       } else {
         user.companies.push({
