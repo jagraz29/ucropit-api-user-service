@@ -122,4 +122,9 @@ router.post(
 
 router.post('/company', integrationServiceController.create)
 
+/**
+ *this is crops data for screen
+ */
+router.get('/cropReport/:cropId', integrationServiceController.getCropSyncAchievements)
+
 export default router
