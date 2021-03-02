@@ -136,7 +136,7 @@ class PDF {
     const pageSigners = pdfDoc.addPage()
 
     // Se agrega los firmantes
-    const signers = await this.generateSignersTemplate(activity.signers)
+    const signers = await this.generateSignersTemplate(activity.achievement.signers)
 
     pageSigners.drawText(`${signers}`, {
       x: 150,
