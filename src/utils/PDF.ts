@@ -181,10 +181,9 @@ class PDF {
         `
   }
 
-  public static async generateActivityTemplate(activity) {
+  public static generateActivityTemplate(activity) {
     return `
-    
-    Actividad Ac: ${activity.type.name.es} ${
+    Actividad: ${activity.type.name.es} ${
       activity.typeAgreement ? activity.typeAgreement.name.es : ''
     }
     ${activity.pay || ''} ${activity.unitType ? activity.unitType.name.es : ''}
@@ -354,7 +353,7 @@ class PDF {
       }
     }
 
-    return users 
+    return users
   }
 
   private static listSupplies(supplies) {
@@ -398,6 +397,7 @@ class PDF {
   private static readImagesJpgFiles(files: any) {
     return files
       .map((item) => {
+        console.log(item)
         const arrayNameFile = item.nameFile.split('.')
         if (arrayNameFile[1].match(VALID_FORMATS_FILES_IMAGES_JPG) !== null) {
           const path = item.pathIntermediate ? item.pathIntermediate : item.path
