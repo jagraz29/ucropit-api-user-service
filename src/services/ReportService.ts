@@ -3,7 +3,11 @@ import _ from 'lodash'
 import GeoLocationService from '../services/GeoLocationService'
 import Numbers from '../utils/Numbers'
 
-import { tagsTypeAgreement, responsibleRoles } from '../utils/Constants'
+import {
+  tagsTypeAgreement,
+  responsibleRoles,
+  supplyTypesSeedGen
+} from '../utils/Constants'
 import Achievement from '../models/achievement'
 import Activity from '../models/activity'
 
@@ -467,6 +471,212 @@ class ReportService {
     return _.flatten(_.flatten(await Promise.all(reports)))
   }
 
+  public static generateDataSet(crops: Array<any>) {
+    const cropsClean = this.cleanCrops(crops)
+
+    const dataSet = cropsClean.map((crop) => {
+      const dataLots = crop.lots.map((item) => {
+        const itemData = item.data.map((lot) => {
+          return {
+            lot_id: lot._id.toString(),
+            campaign_id: crop._id.toString(),
+            coords: lot.coordinates,
+            state: 'Done',
+            sowing_surfaces: this.getSurfacesSowing(crop, lot, 'ACT_SOWING'),
+            cant_lots_in_achievements_sowing: this.getCantLotInAchievement(
+              crop,
+              lot,
+              'ACT_SOWING'
+            ),
+            list_complete_signed_achievements_sowing: this.getValidateAchievements(
+              crop,
+              lot,
+              'ACT_SOWING'
+            ),
+            sowing_date: this.getListDates(crop, lot, 'ACT_SOWING'),
+            harvest_date: this.getListDates(crop, lot, 'ACT_HARVEST'),
+            cropType: crop.cropType.name.es,
+            seed_gen: this.getListSeedGen(crop, lot, 'ACT_SOWING'),
+            yield: this.getPayLot(crop, lot, 'ACT_HARVEST')
+          }
+        })
+        return itemData
+      })
+
+      return dataLots
+    })
+
+    return _.flatten(_.flatten(dataSet))
+  }
+
+  private static filterActivityBy(crop: any, lot: any, type: string) {
+    let results = []
+    const activitiesDone = crop.done.filter(
+      (activity) => activity.type.tag === type
+    )
+
+    const activitiesFinished = crop.finished.filter(
+      (activity) => activity.type.tag === type
+    )
+
+    const activities = [...activitiesDone, ...activitiesFinished]
+
+    if (activities.length > 0) {
+      const achievements = activities.map((item) => {
+        return item.achievements.filter((achievement) =>
+          achievement.lots.find(
+            (lotMade) => lotMade._id.toString() === lot._id.toString()
+          )
+        )
+      })
+
+      results = _.flatten(achievements)
+    }
+
+    return results
+  }
+
+  private static getCantLotInAchievement(
+    crop: any,
+    lot: any,
+    type: string
+  ): Array<string> {
+    let listCantLots: Array<string> = []
+
+    const listAchievements = this.filterActivityBy(crop, lot, type)
+
+    for (const achievement of listAchievements) {
+      listCantLots.push(achievement.lots.length)
+    }
+
+    return listCantLots
+  }
+
+  private static getListDates(
+    crop: any,
+    lot: any,
+    type: string
+  ): Array<string> {
+    let listDates: Array<string> = []
+
+    const listAchievements = this.filterActivityBy(crop, lot, type)
+
+    for (const achievement of listAchievements) {
+      listDates.push(achievement.dateAchievement.toLocaleDateString('es-ES'))
+    }
+
+    return listDates
+  }
+
+  private static getValidateAchievements(
+    crop: any,
+    lot: any,
+    type: string
+  ): Array<any> {
+    let listValidate: Array<any> = []
+
+    const listAchievements = this.filterActivityBy(crop, lot, type)
+
+    for (const achievement of listAchievements) {
+      listValidate.push({
+        validate: this.isCompleteSigners(achievement.signers)
+      })
+    }
+
+    return listValidate
+  }
+
+  private static getListSeedGen(
+    crop: any,
+    lot: any,
+    type: string
+  ): Array<string> {
+    let list: Array<string> = []
+
+    const achievements = this.filterActivityBy(crop, lot, type)
+
+    for (const achievement of achievements) {
+      for (const supply of achievement.supplies) {
+        if (supplyTypesSeedGen.includes(supply.typeId.toString())) {
+          list.push(`${supply.name} - ${supply.quantity} bls/h`)
+        }
+      }
+    }
+
+    return list
+  }
+
+  private static getSurfacesSowing(
+    crop: any,
+    lot: any,
+    type: string
+  ): Array<number> {
+    let list: Array<number> = []
+
+    const achievements = this.filterActivityBy(crop, lot, type)
+
+    for (const achievement of achievements) {
+      list.push(achievement.surface)
+    }
+
+    return list
+  }
+
+  private static getPayLot(crop: any, lot: any, type: string): Array<number> {
+    let result: Array<number> = []
+
+    const achievements = this.filterActivityBy(crop, lot, type)
+
+    for (const achievement of achievements) {
+      result.push(
+        achievement.destination.reduce((a, b) => a + (b['tonsHarvest'] || 0), 0)
+      )
+    }
+
+    return result
+  }
+
+  private static cleanCrops(crops: any) {
+    return crops.filter(
+      (crop) =>
+        this.checkAgreements(crop.finished) &&
+        (this.isContainActivity(crop, 'ACT_SOWING') ||
+          this.isContainActivity(crop, 'ACT_HARVEST'))
+    )
+  }
+
+  private static checkAgreements(activities: Array<any>): Boolean {
+    const agreements = activities.filter(
+      (activity) =>
+        activity.typeAgreement &&
+        (activity.typeAgreement.key === 'EXPLO' ||
+          activity.typeAgreement.key === 'SUSTAIN')
+    )
+
+    if (agreements.length > 0) {
+      return true
+    }
+    return false
+  }
+
+  private static isContainActivity(crop: any, type): Boolean {
+    const activitiesDone = crop.done.filter(
+      (activity) => activity.type && activity.type.tag === type
+    )
+
+    const activitiesFinished = crop.finished.filter(
+      (activity) => activity.type && activity.type.tag === type
+    )
+
+    const activities = [...activitiesDone, ...activitiesFinished]
+
+    if (activities.length > 0) {
+      return true
+    }
+
+    return false
+  }
+
   private static async getCompany(identifier) {
     return Company.findOne({ identifier: identifier })
   }
@@ -495,6 +705,18 @@ class ReportService {
     }
 
     return membersMails
+  }
+
+  private static transformCRS(coordinates) {
+    let pointString = '['
+
+    for (const point of coordinates) {
+      pointString += `(${point.latitude},${point.longitude}),`
+    }
+
+    pointString += ']'
+
+    return pointString
   }
 
   private static getPhonesProducers(crop) {

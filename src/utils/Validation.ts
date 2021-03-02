@@ -1,4 +1,7 @@
 import * as Joi from 'joi'
+import { FileArray } from 'express-fileupload'
+import { handleFileConvertJSON } from '../utils/ParseKmzFile'
+import { errors } from '../types/common'
 
 import JoiDate from '@hapi/joi-date'
 
@@ -261,5 +264,27 @@ export const validateFilesWithEvidences = (files, evidences) => {
     return { error: true, message: 'Length files and evidences must equal' }
   }
 
+  return { error: false }
+}
+
+/**
+ * Check kmz valid format.
+ *
+ * @param FileArray files
+ */
+export const validateFormatKmz = async (files: FileArray) => {
+  const result = await handleFileConvertJSON(files)
+
+  for (const feature of result[0].features) {
+    if (feature.geometry.type !== 'Polygon') {
+      return {
+        error: true,
+        message: 'KMZ format not allowed',
+        code:
+          errors.find((error) => error.key === '002')?.code ||
+          'ERROR_INVALID_FORMAT_KMZ'
+      }
+    }
+  }
   return { error: false }
 }

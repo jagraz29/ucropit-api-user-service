@@ -41,6 +41,25 @@ router.get('/crops', integrationServiceController.cropData)
 /**
  * @swagger
  * path:
+ *  /v1/exporters/exporters/logs/{id}:
+ *    post:
+ *      summary: Detail Log exporter
+ *      tags: [Exporter]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *      responses:
+ *        '200':
+ *          description: Exporter Successfully.
+ *        '500':
+ *          description: Error to Server.
+ */
+router.get('/logs/:cropId', integrationServiceController.detailExport)
+
+/**
+ * @swagger
+ * path:
  *  /v1/exporters/crops:
  *    post:
  *      summary: Exporter data crop in third party service
@@ -101,9 +120,6 @@ router.post(
   integrationServiceController.exporterAchievements
 )
 
-/**
- *
- */
 router.post('/company', integrationServiceController.create)
 
 export default router

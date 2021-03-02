@@ -9,7 +9,8 @@ import {
   agreementTypesData,
   supplyTypesData,
   evidenceConcepts,
-  rolesData
+  rolesData,
+  servicesIntegration
 } from './data'
 
 import {
@@ -236,7 +237,7 @@ const seedersServiceIntegrations = async (flag?) => {
   console.log(`${chalk.green('=====Registering Service Integrations====')}`)
   const services = await ServiceIntegration.find({})
 
-  const servicesIntegrationSeed = ServiceIntegration.filter(
+  const servicesIntegrationSeed = servicesIntegration.filter(
     (item) => !services.find((element) => item.code === element.code)
   )
 

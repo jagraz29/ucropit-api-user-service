@@ -33,7 +33,7 @@ class UsersController {
     if (pin) user.pin = pin
 
     user = await user.save()
-    await user.populate('config').execPopulate()
+    await user.populate('config').populate('collaboratorRequest').execPopulate()
     res.json(user)
   }
 

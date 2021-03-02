@@ -81,10 +81,9 @@ class AuthController {
         async function (err, isMatch) {
           if (err) res.status(500).json({ error: err.message })
 
-          user.verifyToken = null
-          await user.save()
-
           if (isMatch) {
+            user.verifyToken = null
+            await user.save()
             const token = user.generateAuthToken()
             res.json({ user, token })
           } else {

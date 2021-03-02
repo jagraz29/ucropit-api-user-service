@@ -29,6 +29,14 @@ const dummyDataResponse = false
 
 class IntegrationService extends ServiceBase {
   /**
+   * Get detail log Integration.
+   *
+   * @param cropId
+   */
+  public static getLogIntegration(cropId: string) {
+    return IntegrationLog.find({ crop: cropId })
+  }
+  /**
    *
    * @param data
    */

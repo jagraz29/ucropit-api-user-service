@@ -22,6 +22,22 @@ class IntegrationServiceController {
   }
 
   /**
+   * Get Detail Log Exporters.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return {Response}
+   */
+  public async detailExport(req: Request, res: Response) {
+    const { cropId } = req.params
+
+    const logs = await IntegrationService.getLogIntegration(cropId)
+
+    res.status(200).json(logs)
+  }
+
+  /**
    * Added service integration.
    *
    * @param Request req
@@ -115,7 +131,7 @@ class IntegrationServiceController {
         response.erpAgent
       )
 
-      console.log('respuesta',response)
+      console.log('respuesta', response)
       return res.status(200).json(response)
     }
 
