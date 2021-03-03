@@ -14,7 +14,7 @@ import fs from 'fs'
 import models from '../models'
 
 const Lot = models.Lot
-const Crop = models.Crop 
+const Crop = models.Crop
 
 class ReportsController {
   /**
@@ -113,7 +113,7 @@ class ReportsController {
     return res.status(200).json('Ok')
   }
 
-    /**
+  /**
    * Send export file report in email.
    *
    * @param req
@@ -133,7 +133,6 @@ class ReportsController {
         identifier: identifier
       },
       rolesReportSowingBilling
-      
     )
 
     if (crops.length === 0) {
