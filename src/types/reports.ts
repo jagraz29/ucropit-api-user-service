@@ -364,3 +364,26 @@ export const fieldsCSV = [
     value: 'phone_producers'
   }
 ]
+
+export const reportHeaderXlsSowingBilling = {
+  fields: [
+    'cuit',
+    'business_name',
+    'crop',
+    'crop_name',
+    'responsible',
+    'surface_total',
+    'total_surface_signed_sowing',
+    'date_sign_achievement_by_lot_sowing'
+  ],
+  fieldNames: [
+    'CUIT Productor',
+    'RAZÓN SOCIAL Productor',
+    'Cultivo',
+    'Nombre del Cultivo',
+    'CUIT Colaborador con ROL Asesor Promotor',
+    'HECTÁREAS TOTALES EN KMZ',
+    'HECTÁREAS de Realización de siembra',
+    'FECHA FINAL de Firma de Realización',
+  ]
+}

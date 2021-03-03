@@ -2,7 +2,7 @@ import json2xlsx from 'node-json-xlsx'
 import { Parser } from 'json2csv'
 import fs from 'fs'
 import { getFullPath } from '../../utils/Files'
-import { reportHeaderXls, fieldsCSV } from '../../types/reports'
+import { reportHeaderXls, fieldsCSV, reportHeaderXlsSowingBilling } from '../../types/reports'
 import { dataSetFieldsCSV } from '../../types/dataset'
 
 export interface OptionsXls {
@@ -27,6 +27,25 @@ class ExportFileService {
         data,
         reportHeaderXls,
         'dashboard_soja_sustentable.xlsx'
+      )
+    }
+
+    if (mode === 'csv') {
+      return this.exportCsv(data, fieldsCSV)
+    }
+  }
+
+  /**
+   *
+   * @param data
+   * @param mode
+   */
+  public static modeExportSowingBilling(data: Array<any>, mode: string | any) {
+    if (mode === 'xls') {
+      return this.exportXls(
+        data,
+        reportHeaderXlsSowingBilling,
+        'reporte_siembras_facturacion.xlsx'
       )
     }
 

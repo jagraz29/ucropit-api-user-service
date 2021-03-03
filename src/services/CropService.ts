@@ -223,7 +223,7 @@ class CropService extends ServiceBase {
     roles: Array<string>
   ) {
     let crops = (await this.findAll(query))
-      .map((crop) => {
+      /*.map((crop) => {
         if (
           crop.members.find(
             (member) =>
@@ -235,8 +235,7 @@ class CropService extends ServiceBase {
           return crop
         }
       })
-      .filter((crop) => crop)
-
+      .filter((crop) => crop)*/
     return crops
   }
 

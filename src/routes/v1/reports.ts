@@ -9,7 +9,7 @@ const authMiddleware = passport.authenticate('jwt', { session: false })
 
 /**
  * @swagger
- * path:
+ * path: 
  *  /v1/reports/crops:
  *    get:
  *      summary: Download reports
@@ -84,6 +84,12 @@ router.post(
   '/crops/attachment',
   authMiddleware,
   reportsController.sendFileReport
+)
+
+router.post(
+  '/crops/attachment/sowingBilling',
+  authMiddleware,
+  reportsController.sendFileReportSowingBilling
 )
 
 router.get('/map/lot', reportsController.showMap)

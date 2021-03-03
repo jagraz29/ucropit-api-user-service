@@ -6,7 +6,8 @@ import Numbers from '../utils/Numbers'
 import {
   tagsTypeAgreement,
   responsibleRoles,
-  supplyTypesSeedGen
+  supplyTypesSeedGen,
+  rolesAdvisorPromoter
 } from '../utils/Constants'
 import Achievement from '../models/achievement'
 import Activity from '../models/activity'
@@ -1374,7 +1375,6 @@ class ReportService {
   }
 
   private static isApprovedFileEvidence(files) {
-    console.log(files)
     for (const file of files) {
       if (file.settings && file.settings.fromLots) {
         return true
@@ -1383,6 +1383,57 @@ class ReportService {
 
     return false
   }
+
+  public static async generateReportsSowingBilling(crops) {
+    const reports = crops.map((crop) => {
+      const reportByCrop = crop.lots.map(async (item) => {
+        const reportByLot = item.data.map(async (lot) => {
+          this.getDateLastAchievement(
+            crop.done.filter((activity) => activity.type.tag === 'ACT_SOWING'),
+            lot
+          )
+          return {
+            cuit: crop.company?.identifier,
+            business_name: (await this.getCompany(crop.company?.identifier))
+              .name,
+            crop: crop.cropType.name.es,
+            crop_name: crop.name,
+            responsible: this.getMembersWithRol(crop),
+            surface_total: lot.surface,
+            total_surface_signed_sowing: this.sumSurfaceSigners(
+              crop,
+              'ACT_SOWING'
+            ),
+            date_sign_achievement_by_lot_sowing: await this.lastDateSignAchievementByLot(
+              crop,
+              lot,
+              'ACT_SOWING'
+            )
+          }
+        })
+
+        return Promise.all(reportByLot)
+      })
+
+      return Promise.all(reportByCrop)
+    })
+
+    return _.flatten(_.flatten(await Promise.all(reports)))
+  }
+
+  private static getMembersWithRol(crop) {
+    let membersNames = ''
+    const members = crop.members.filter((member) =>
+      rolesAdvisorPromoter.includes(member.type)
+    )
+
+    for (const member of members) {
+      membersNames += `${member.identifier} Asesor promotor,`
+    }
+
+    return membersNames
+  }
+
 }
 
 export default ReportService
