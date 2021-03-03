@@ -122,7 +122,7 @@ class ReportsController {
   public async sendFileReportSowingBilling(req: Request, res: Response) {
     const { email, identifier } = req.body
     const user: any = req.user
-    let crops = await CropService.cropsOnlySeeRoles(
+    let crops = await CropService.cropsOnlySeeRolesSowing(
       {
         cancelled: false,
         'members.user': user._id,
