@@ -3,6 +3,7 @@ import ServiceBase from './common/ServiceBase'
 import CropService from './CropService'
 import AchievementService from './AchievementService'
 import models from '../models'
+import integrationLog from '../models/integrationLog'
 
 const IntegrationLog = models.IntegrationLog
 
@@ -23,6 +24,28 @@ interface IExportIntegration {
   erpAgent: String | string
   user?: String | string
   password?: String | string
+}
+
+interface IExportIntegrationLog {
+    lots: (lotEntity)[] | null;
+    supplies?: (suppliyEntity)[] | null;
+    applyForTheAgent: string;
+    _id: string;
+    erpAgentAchievementId: string;
+    processed: string;
+    fullyProcessed: string;
+    name: string;
+    ucropitAchievementId: string;
+    __v: string;
+    erpAgentResponse: string;
+}
+
+interface lotEntity {
+  id: string;
+}
+
+interface suppliyEntity {
+  id: string;
 }
 
 const dummyDataResponse = false
@@ -55,6 +78,23 @@ class IntegrationService extends ServiceBase {
       )
     })
   }
+
+  /**
+   * 
+   * @param id 
+   * @param logAchievement 
+   */
+  public static async updateIntegrationLog(crop: string, logAchievement: IExportIntegrationLog) {
+
+    const integrationsLogFind = await integrationLog.findOne({ crop: crop })
+
+    await integrationsLogFind.logAchievement.push(logAchievement)
+    await integrationsLogFind.save()
+
+    return integrationLog.findOne({ crop: crop })
+
+  }
+
   /**
    *
    * @param data
@@ -90,12 +130,14 @@ class IntegrationService extends ServiceBase {
     activityId?: string,
     achievementId?: string
   ): Promise<any> {
-    return IntegrationLog.create({
-      log: data,
-      crop: cropId,
-      activity: activityId,
-      achievement: achievementId
-    })
+    let dataLog=
+        {
+          log: data,
+          crop: cropId,
+          activity: activityId,
+          achievement: achievementId,
+        }
+    return IntegrationService.updateIntegrationLog(cropId,dataLog.log)
   }
 
   public static async exportAchievement(dataExport: IExportCrop, req: Request) {

@@ -148,7 +148,6 @@ class IntegrationServiceController {
   public async getCropSyncAchievements(req: Request, res: Response) {
     const { ids } = req.query
     const crop = await CropService.findOneCrop(ids.toString())
-    console.log('fatima',crop)
     const achievement = await AchievementService.find(ids)
     
     res.status(200).json(achievement)
