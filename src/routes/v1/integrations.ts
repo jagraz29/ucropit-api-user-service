@@ -55,7 +55,7 @@ router.get('/crops', integrationServiceController.cropData)
  *        '500':
  *          description: Error to Server.
  */
-router.get('/logs/:cropId', integrationServiceController.detailExport)
+router.get('/logs/:cropId/:service', integrationServiceController.detailExport)
 
 /**
  * @swagger
@@ -125,6 +125,9 @@ router.post('/company', integrationServiceController.create)
 /**
  *this is crops data for screen
  */
-router.get('/cropReport/:cropId', integrationServiceController.getCropSyncAchievements)
+router.get(
+  '/cropReport/:cropId',
+  integrationServiceController.getCropSyncAchievements
+)
 
 export default router

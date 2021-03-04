@@ -27,25 +27,25 @@ interface IExportIntegration {
 }
 
 interface IExportIntegrationLog {
-    lots: (lotEntity)[] | null;
-    supplies?: (suppliyEntity)[] | null;
-    applyForTheAgent: string;
-    _id: string;
-    erpAgentAchievementId: string;
-    processed: string;
-    fullyProcessed: string;
-    name: string;
-    ucropitAchievementId: string;
-    __v: string;
-    erpAgentResponse: string;
+  lots: lotEntity[] | null
+  supplies?: suppliyEntity[] | null
+  applyForTheAgent: string
+  _id: string
+  erpAgentAchievementId: string
+  processed: string
+  fullyProcessed: string
+  name: string
+  ucropitAchievementId: string
+  __v: string
+  erpAgentResponse: string
 }
 
 interface lotEntity {
-  id: string;
+  id: string
 }
 
 interface suppliyEntity {
-  id: string;
+  id: string
 }
 
 const dummyDataResponse = false
@@ -56,8 +56,15 @@ class IntegrationService extends ServiceBase {
    *
    * @param cropId
    */
-  public static getLogIntegration(cropId: string) {
-    return IntegrationLog.find({ crop: cropId })
+  public static async getLogIntegration(cropId: string, service: string) {
+    const integrationLogs = await IntegrationLog.find({
+      crop: cropId,
+      'log.erpAgent': service
+    })
+      .sort({ _id: -1 })
+      .limit(1)
+
+    return integrationLogs.map((item) => item.log)
   }
   /**
    *
@@ -80,19 +87,20 @@ class IntegrationService extends ServiceBase {
   }
 
   /**
-   * 
-   * @param id 
-   * @param logAchievement 
+   *
+   * @param id
+   * @param logAchievement
    */
-  public static async updateIntegrationLog(crop: string, logAchievement: IExportIntegrationLog) {
-
+  public static async updateIntegrationLog(
+    crop: string,
+    logAchievement: IExportIntegrationLog
+  ) {
     const integrationsLogFind = await integrationLog.findOne({ crop: crop })
 
-    let res =await integrationsLogFind.logAchievement.push(logAchievement)
+    let res = await integrationsLogFind.logAchievement.push(logAchievement)
     await integrationsLogFind.save()
-    
-    return integrationLog.findOne({ crop: crop })
 
+    return integrationLog.findOne({ crop: crop })
   }
 
   /**
@@ -130,16 +138,15 @@ class IntegrationService extends ServiceBase {
     activityId?: string,
     achievementId?: string
   ): Promise<any> {
-    let dataLog=
-        {
-          log: data,
-          crop: cropId,
-          activity: activityId,
-          achievement: achievementId,
-        }
-    return IntegrationService.updateIntegrationLog(cropId,dataLog.log)
+    let dataLog = {
+      log: data,
+      crop: cropId,
+      activity: activityId,
+      achievement: achievementId
+    }
+    return IntegrationService.updateIntegrationLog(cropId, dataLog.log)
   }
-  
+
   /**
    * Create Log Integration.
    *
@@ -163,9 +170,6 @@ class IntegrationService extends ServiceBase {
       achievement: achievementId
     })
   }
-
-
-
 
   public static async exportAchievement(dataExport: IExportCrop, req: Request) {
     const crop = await CropService.findOneCrop(dataExport.cropId)
@@ -191,7 +195,7 @@ class IntegrationService extends ServiceBase {
         response.erpAgent
       )
 
-      await this.updateLog(
+      await this.createLog(
         response,
         dataExport.cropId,
         response.activityId,

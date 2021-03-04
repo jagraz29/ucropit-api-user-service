@@ -30,9 +30,9 @@ class IntegrationServiceController {
    * @return {Response}
    */
   public async detailExport(req: Request, res: Response) {
-    const { cropId } = req.params
+    const { cropId, service } = req.params
 
-    const logs = await IntegrationService.getLogIntegration(cropId)
+    const logs = await IntegrationService.getLogIntegration(cropId, service)
 
     res.status(200).json(logs)
   }
@@ -91,6 +91,7 @@ class IntegrationServiceController {
     )
 
     await CropService.changeStatusSynchronized(item)
+
     const log = await IntegrationService.createLog(item, item.cropId)
 
     res.status(200).json({ status: 'Ok', log })
@@ -149,7 +150,7 @@ class IntegrationServiceController {
     const { ids } = req.query
     const crop = await CropService.findOneCrop(ids.toString())
     const achievement = await AchievementService.find(ids)
-    
+
     res.status(200).json(achievement)
   }
 }
