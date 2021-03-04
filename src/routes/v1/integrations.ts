@@ -41,13 +41,16 @@ router.get('/crops', integrationServiceController.cropData)
 /**
  * @swagger
  * path:
- *  /v1/exporters/exporters/logs/{id}:
- *    post:
+ *  /v1/exporters/exporters/logs/{id}/{service}:
+ *    get:
  *      summary: Detail Log exporter
  *      tags: [Exporter]
  *      parameters:
  *        - in: path
  *          name: id
+ *          required: true
+ *        - in: path
+ *          name: service
  *          required: true
  *      responses:
  *        '200':
