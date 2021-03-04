@@ -88,9 +88,9 @@ class IntegrationService extends ServiceBase {
 
     const integrationsLogFind = await integrationLog.findOne({ crop: crop })
 
-    await integrationsLogFind.logAchievement.push(logAchievement)
+    let res =await integrationsLogFind.logAchievement.push(logAchievement)
     await integrationsLogFind.save()
-
+    
     return integrationLog.findOne({ crop: crop })
 
   }
@@ -124,7 +124,7 @@ class IntegrationService extends ServiceBase {
    *
    * @returns Promise
    */
-  public static createLog(
+  public static updateLog(
     data: any,
     cropId?: string,
     activityId?: string,
@@ -139,6 +139,33 @@ class IntegrationService extends ServiceBase {
         }
     return IntegrationService.updateIntegrationLog(cropId,dataLog.log)
   }
+  
+  /**
+   * Create Log Integration.
+   *
+   * @param any data
+   * @param string cropId
+   * @param string activityId
+   * @param string achievementId
+   *
+   * @returns Promise
+   */
+  public static createLog(
+    data: any,
+    cropId?: string,
+    activityId?: string,
+    achievementId?: string
+  ): Promise<any> {
+    return IntegrationLog.create({
+      log: data,
+      crop: cropId,
+      activity: activityId,
+      achievement: achievementId
+    })
+  }
+
+
+
 
   public static async exportAchievement(dataExport: IExportCrop, req: Request) {
     const crop = await CropService.findOneCrop(dataExport.cropId)
@@ -164,7 +191,7 @@ class IntegrationService extends ServiceBase {
         response.erpAgent
       )
 
-      await this.createLog(
+      await this.updateLog(
         response,
         dataExport.cropId,
         response.activityId,
