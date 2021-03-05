@@ -1385,40 +1385,39 @@ class ReportService {
   }
 
   public static async generateReportsSowingBilling(crops) {
-    const reports = crops.map((crop) => {
-      const reportByCrop = crop.lots.map(async (item) => {
-        const reportByLot = item.data.map(async (lot) => {
-          this.getDateLastAchievement(
-            crop.done.filter((activity) => activity.type.tag === 'ACT_SOWING'),
-            lot
-          )
-          return {
-            cuit: crop.company?.identifier,
-            business_name: (await this.getCompany(crop.company?.identifier))
-              .name,
-            crop: crop.cropType.name.es,
-            crop_name: crop.name,
-            responsible: this.getMembersWithRol(crop),
-            surface_total: lot.surface,
-            total_surface_signed_sowing: this.sumSurfaceSigners(
-              crop,
-              'ACT_SOWING'
-            ),
-            date_sign_achievement_by_lot_sowing: await this.lastDateSignAchievementByLot(
-              crop,
-              lot,
-              'ACT_SOWING'
-            )
-          }
-        })
-
-        return Promise.all(reportByLot)
+    const filterCropsSowing = this.filterCropsSowing(crops)
+    const dataCropsSowing = filterCropsSowing.map((crop) => {
+       const activities = [...crop.done, ...crop.finished]
+       const dataActivities = activities.map(async (item) => {
+       const itemDataAchievements = item.achievements.map(async (achievement) => {
+        return {
+          cuit: crop.company?.identifier,
+          business_name: (await this.getCompany(crop.company?.identifier))
+          .name,
+          crop: crop.cropType.name.es,
+          crop_name: crop.name,
+          responsible: this.getMembersWithRol(crop),
+          surface_total: crop.surface,
+          total_surface_signed_sowing: achievement.surface,
+          date_sign_achievement_by_lot_sowing: achievement.dateAchievement.toLocaleDateString('es-ES', {
+            day: 'numeric',
+            year: 'numeric',
+            month: 'long'
+          }),
+        }
+       })
+       return Promise.all(itemDataAchievements)
       })
+      return Promise.all(dataActivities)
+     })
+     return _.flatten(_.flatten(await Promise.all(dataCropsSowing)))
+  }
 
-      return Promise.all(reportByCrop)
-    })
-
-    return _.flatten(_.flatten(await Promise.all(reports)))
+  private static filterCropsSowing(crops: any) {
+    return crops.filter(
+      (crop) =>
+        (this.isContainActivity(crop, 'ACT_SOWING'))
+    )
   }
 
   private static getMembersWithRol(crop) {

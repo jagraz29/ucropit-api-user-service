@@ -125,7 +125,7 @@ class ReportsController {
     let crops = await CropService.cropsOnlySeeRolesSowing(
       {
         cancelled: false,
-        'members.user': user._id,
+        'members.user': user._id, 
         'members.identifier': identifier
       },
       {
@@ -142,6 +142,9 @@ class ReportsController {
 
     const reports = await ReportService.generateReportsSowingBilling(crops)
 
+    /*var groupReports = reports.filter((arr, index, self) =>
+        index === self.findIndex((t) => (t.cuit === arr.cuit && t.crop_name === arr.crop_name)))*/
+        
     const pathFile = ExportFile.modeExportSowingBilling(reports, 'xls')
 
     await EmailService.sendWithAttach({

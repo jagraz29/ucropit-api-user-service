@@ -244,7 +244,7 @@ class CropService extends ServiceBase {
     filtering,
     roles: Array<string>
   ) {
-    let crops = (await this.findAllSowing(query))
+    let crops = (await this.findAllSowing(query)) 
       /*.map((crop) => {
         if (
           crop.members.find(
@@ -276,7 +276,7 @@ class CropService extends ServiceBase {
       .populate({
         path: 'done',
         populate: [
-          { path: 'collaborators' },
+          { path: 'collaborators' }, 
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots' },

@@ -40,7 +40,7 @@ class ExportFileService {
    * @param data
    * @param mode
    */
-  public static modeExportSowingBilling(data: Array<any>, mode: string | any) {
+  public static modeExportSowingBilling(data: Array<any>, mode: string | any) { 
     if (mode === 'xls') {
       return this.exportXls(
         data,
