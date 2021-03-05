@@ -141,9 +141,6 @@ class ReportsController {
     }
 
     const reports = await ReportService.generateReportsSowingBilling(crops)
-
-    /*var groupReports = reports.filter((arr, index, self) =>
-        index === self.findIndex((t) => (t.cuit === arr.cuit && t.crop_name === arr.crop_name)))*/
         
     const pathFile = ExportFile.modeExportSowingBilling(reports, 'xls')
 
