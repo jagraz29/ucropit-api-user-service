@@ -9,7 +9,8 @@ import {
   agreementTypesData,
   supplyTypesData,
   evidenceConcepts,
-  rolesData
+  rolesData,
+  servicesIntegration
 } from './data'
 
 import {
@@ -27,6 +28,7 @@ const SupplyType = models.SupplyType
 const Supply = models.Supply
 const EvidenceConcept = models.EvidenceConcept
 const Roles = models.Roles
+const ServiceIntegration = models.ServiceIntegration
 
 const CollaboratorRequest = models.CollaboratorRequest
 
@@ -228,6 +230,24 @@ const seedersEvidenceConcepts = async (flag?) => {
   console.log(`${chalk.green('=====Registered Evidence Concept====')}`)
   return true
 }
+
+const seedersServiceIntegrations = async (flag?) => {
+  if (flag && flag !== '--integrations') return
+
+  console.log(`${chalk.green('=====Registering Service Integrations====')}`)
+  const services = await ServiceIntegration.find({})
+
+  const servicesIntegrationSeed = servicesIntegration.filter(
+    (item) => !services.find((element) => item.code === element.code)
+  )
+
+  for (const serviceIntegration of servicesIntegrationSeed) {
+    await ServiceIntegration.create(serviceIntegration)
+  }
+
+  console.log(`${chalk.green('=====Registered Service Integrations ====')}`)
+  return true
+}
 ;(async () => {
   const connected = await connectDb()
 
@@ -252,6 +272,7 @@ const seedersEvidenceConcepts = async (flag?) => {
       await seedersActivitiesType(flag)
       await seedersTypeAgreement(flag)
       await seedersEvidenceConcepts(flag)
+      await seedersServiceIntegrations(flag)
     } catch (e) {
       console.log(e)
     }

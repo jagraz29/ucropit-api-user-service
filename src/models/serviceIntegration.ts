@@ -2,35 +2,34 @@
  * @swagger
  *  components:
  *    schemas:
- *       EvidenceConcept:
+ *       ServiceIntegration:
  *         type: object
  *         required:
  *           - code
  *           - name
+ *           - erpAgent
  *         properties:
  *           code:
  *             type: string
  *           name:
+ *             type: string
+ *           erpAgent:
  *             type: string
  */
 import mongoose from 'mongoose'
 
 const { Schema } = mongoose
 
-const EvidenceConcept = new Schema({
+const ServiceIntegrationSchema = new Schema({
   code: {
     type: String
   },
   name: {
-    en: {
-      type: String,
-      required: true
-    },
-    es: {
-      type: String,
-      required: true
-    }
+    type: String
+  },
+  erpAgent: {
+    type: String
   }
 })
 
-export default mongoose.model('EvidenceConcept', EvidenceConcept)
+export default mongoose.model('ServicesIntegrations', ServiceIntegrationSchema)

@@ -144,6 +144,25 @@ class CropsController {
   }
 
   /**
+   * Add integration Service.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async addIntegrationService(req: Request, res: Response) {
+    const crop = await Crop.findById(req.params.id)
+    const data = req.body
+
+    crop.synchronizedList.push(data)
+
+    await crop.save()
+
+    res.status(200).json(crop)
+  }
+
+  /**
    * Delete one crop.
    *
    * @param  Request req

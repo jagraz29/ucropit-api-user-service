@@ -13,12 +13,13 @@ import ApprovalRegisterSign from './ApprovalRegisterSign'
 import Supply from './supply'
 import SupplyType from './supplyType'
 import EvidenceConcept from './evidenceConcept'
+import ServiceIntegration from './serviceIntegration'
 import Roles from './Roles'
-
 import { CropType } from './cropType'
 import { UnitType } from './unitType'
 
 import FileDocument from './documentFile'
+import IntegrationLog from './integrationLog'
 
 const connectDb = function () {
   return mongoose.connect(process.env.DATABASE_URL, {
@@ -47,7 +48,9 @@ const models = {
   Supply,
   SupplyType,
   EvidenceConcept,
-  Roles
+  ServiceIntegration,
+  Roles,
+  IntegrationLog
 }
 
 export { connectDb }
