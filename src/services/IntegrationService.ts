@@ -64,7 +64,7 @@ class IntegrationService extends ServiceBase {
       .sort({ _id: -1 })
       .limit(1)
 
-    return integrationLogs.map((item) => item.log)
+    return integrationLogs
   }
   /**
    *
