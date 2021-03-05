@@ -171,6 +171,12 @@ class IntegrationService extends ServiceBase {
     })
   }
 
+  /**
+   * Integration Achievements with third party service.
+   *
+   * @param IExportCrop dataExport
+   * @param Request req
+   */
   public static async exportAchievement(dataExport: IExportCrop, req: Request) {
     const crop = await CropService.findOneCrop(dataExport.cropId)
     if (

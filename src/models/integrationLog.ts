@@ -14,6 +14,12 @@ const IntegrationLogSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Achievement'
     },
+    synchronized: {
+      type: Boolean
+    },
+    message: {
+      type: String
+    },
     log: {
       type: Schema.Types.Mixed
     },
