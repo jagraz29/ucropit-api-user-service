@@ -18,6 +18,7 @@ import charts from './charts'
 import files from './files'
 import supplies from './supplies'
 import offline from './offline'
+import integrations from './integrations'
 
 const router: express.Router = express.Router()
 
@@ -77,5 +78,8 @@ router.use('/supplies', supplies)
 
 // OFFLINE
 router.use('/offline', authMiddleware, offline)
+
+// API EXPORTER
+router.use('/exporters', authMiddleware, integrations)
 
 export default router

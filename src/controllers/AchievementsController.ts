@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import {
   validateAchievement,
   validateSignAchievement,
-  validateFilesWithEvidences,
+  validateFilesWithEvidences
 } from '../utils/Validation'
 
 import AchievementService from '../services/AchievementService'
@@ -10,12 +10,10 @@ import ActivityService from '../services/ActivityService'
 import CropService from '../services/CropService'
 import BlockChainServices from '../services/BlockChainService'
 import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
+import UserConfigService from '../services/UserConfigService'
+import IntegrationService from '../services/IntegrationService'
 
 import models from '../models'
-import { FileDocumentSchema } from '../models/documentFile'
-
-import UploadService from '../services/UploadService'
-import ImageService from '../services/ImageService'
 
 const Crop = models.Crop
 
@@ -69,8 +67,10 @@ class AchievementsController {
    * @return Response
    */
   public async create(req: Request, res: Response) {
-    const user = req.user
+    const user: any = req.user
     const data = JSON.parse(req.body.data)
+    const crop = await Crop.findById(data.crop)
+    const userConfig = await UserConfigService.findById(user.config)
 
     await validateAchievement(data)
 
@@ -91,9 +91,6 @@ class AchievementsController {
 
     if (activity.status[0].name.en !== 'DONE') {
       await ActivityService.changeStatus(activity, 'DONE')
-
-      const crop = await Crop.findById(data.crop)
-
       await CropService.removeActivities(activity, crop, 'toMake')
       await CropService.addActivities(activity, crop)
     }
@@ -107,6 +104,17 @@ class AchievementsController {
         `achievements/${achievement.key}`
       )
     }
+
+    await IntegrationService.exportAchievement(
+      {
+        cropId: data.crop,
+        activityId: data.activity,
+        achievementId: achievement._id,
+        erpAgent: 'auravant',
+        identifier: userConfig.companySelected.identifier
+      },
+      req
+    )
 
     res.status(201).json(achievement)
   }
@@ -153,7 +161,7 @@ class AchievementsController {
         pathPdf,
         nameFilePdf,
         nameFileOts,
-        pathOtsFile,
+        pathOtsFile
       } = await BlockChainServices.sign(crop, activity)
 
       const approvalRegisterSign = await ApprovalRegisterSingService.create({
@@ -163,7 +171,7 @@ class AchievementsController {
         nameFilePdf,
         nameFileOts,
         pathOtsFile,
-        activity,
+        activity
       })
 
       activity.approvalRegister = approvalRegisterSign._id

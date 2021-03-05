@@ -113,13 +113,23 @@ class ServiceBase {
     return true
   }
 
+  /**
+   * Make Request HTTP.
+   *
+   * @param method
+   * @param url
+   * @param values
+   * @param callback
+   * @param callbackError
+   */
   public static makeRequest(
     method: string,
     url: string,
     values: any,
-    callback: Function
+    callback: Function,
+    callbackError?: Function
   ) {
-    axios[method](url, values).then(callback)
+    axios[method](url, values).then(callback).catch(callbackError)
   }
 
   /**

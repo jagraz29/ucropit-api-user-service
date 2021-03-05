@@ -50,6 +50,11 @@ app.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler)
 
 app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
   console.log(err)
+
+  if (errorHandler.isErrorIntegration(err)) {
+    res.status(400).json(errorHandler.getCodeErrorIntegration(err))
+  }
+
   if (errorHandler.isCastErrorMongoose(err)) {
     res.status(404).json({
       err: {
