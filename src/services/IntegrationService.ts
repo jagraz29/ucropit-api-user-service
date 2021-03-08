@@ -60,9 +60,7 @@ class IntegrationService extends ServiceBase {
     const integrationLogs = await IntegrationLog.find({
       crop: cropId,
       'log.erpAgent': service
-    })
-      .sort({ _id: -1 })
-      .limit(1)
+    }).sort({ _id: -1 })
 
     return integrationLogs
   }
