@@ -1388,7 +1388,10 @@ class ReportService {
     const filterCropsSowing = this.filterCropsSowing(crops)
     const dataCropsSowing = filterCropsSowing.map((crop) => {
        const activities = [...crop.done, ...crop.finished]
-       const dataActivities = activities.map(async (item) => {
+       const activitiesFilter = activities.filter(
+        (activity) => activity.type.tag === 'ACT_SOWING'
+      )
+       const dataActivities = activitiesFilter.map(async (item) => {
        const itemDataAchievements = item.achievements.map(async (achievement) => {
         return {
           cuit: crop.company?.identifier,
@@ -1399,13 +1402,13 @@ class ReportService {
           responsible: this.getMembersWithRol(crop),
           surface_total: crop.surface,
           total_surface_signed_sowing: achievement.surface,
-          date_sign_achievement_by_lot_sowing: achievement.dateAchievement.toLocaleDateString('es-ES', {
-            day: 'numeric',
-            year: 'numeric',
-            month: 'long'
-          }),
+          date_sign_achievement_by_lot_sowing: await this.lastDateSignAchievement(
+            crop,
+            'ACT_SOWING'
+          ),
         }
        })
+       
        return Promise.all(itemDataAchievements)
       })
       return Promise.all(dataActivities)
@@ -1413,10 +1416,52 @@ class ReportService {
      return _.flatten(_.flatten(await Promise.all(dataCropsSowing)))
   }
 
-  private static filterCropsSowing(crops: any) {
+  private static async getDateLastSignedAchievement(activities) {
+    let dates = []
+    for (const activity of activities) {
+      for (const achievement of activity.achievements) {
+          const achievementsObject = await Achievement.findById(achievement._id)
+          const signersFalse = achievementsObject.signers.filter(
+            (obj) => obj.signed === false
+          )
+          
+          const dateLast = signersFalse.length === 0 ?
+            achievementsObject.signers.pop()?._id.getTimestamp() : null
+          dates.push(dateLast)
+      }
+    }
+    return dates.filter((date) => date)
+  }
+
+  private static async lastDateSignAchievement(crop, typeActivity) {
+    const datesDone = await this.getDateLastSignedAchievement(
+      crop.done.filter((activity) => activity.type.tag === typeActivity),
+      
+    )
+
+    const datesFinished = await this.getDateLastSignedAchievement(
+      crop.finished.filter((activity) => activity.type.tag === typeActivity),
+    )
+
+    const mergedList = datesDone.concat(datesFinished)
+
+    const lastDate =
+      mergedList.length > 0 ? datesDone.concat(datesFinished).pop() : null
+
+    return lastDate
+      ? lastDate.toLocaleDateString('es-ES', {
+          day: 'numeric',
+          year: 'numeric',
+          month: 'long'
+        })
+      : ''
+  }
+
+    private static filterCropsSowing(crops: any) {
     return crops.filter(
       (crop) =>
-        (this.isContainActivity(crop, 'ACT_SOWING'))
+      (this.checkAgreements(crop.finished) || this.checkAgreements(crop.done)) && 
+      (this.isContainActivitySowing(crop, 'ACT_SOWING'))
     )
   }
 
@@ -1433,6 +1478,21 @@ class ReportService {
     return membersNames
   }
 
+  private static isContainActivitySowing(crop: any, type): Boolean {
+    const activitiesDone = crop.done.filter(
+      (activity) => activity.type && activity.type.tag === type
+    )
+    const activitiesFinished = crop.finished.filter(
+      (activity) => activity.type && activity.type.tag === type
+    )
+    const activities = [...activitiesDone, ...activitiesFinished]
+
+    if (activities.length > 0) {
+      return true
+    }
+
+    return false
+  }
 }
 
 export default ReportService
