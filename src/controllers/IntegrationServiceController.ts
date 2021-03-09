@@ -53,6 +53,9 @@ class IntegrationServiceController {
       `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_INTEGRATION_USER}`
     )
 
+    console.log('RESPONSE ADD INTEGRATION SERVICE')
+    console.log(response)
+
     const addedServices = await CompanyService.addServiceIntegration(
       data.erpAgent,
       data.ucropitCompanyId
