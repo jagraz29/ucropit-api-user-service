@@ -303,6 +303,16 @@ export const servicesIntegration = [
   {
     code: 'AURAVANT',
     name: 'Auravant',
+    description:
+      'Es agricultura digital simple. Es innovación tecnológica que potencia el conocimiento agronómico y maximiza los resultados',
+    conditions: [
+      'actualizaciones específicas sobre los riesgos de enfermedades e insectos para los cultivos',
+      'notificaciones importantes sobre la fase de crecimiento de los cultivos',
+      'notificaciones sobre el momento óptimo de fumigación',
+      'notificaciones sobre mapas de biomasa disponibles',
+      'información meteorológica específica para cada campo',
+      'predicción meteorológica por hora'
+    ],
     erpAgent: 'auravant'
   }
 ]
