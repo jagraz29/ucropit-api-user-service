@@ -38,7 +38,6 @@ class ActivityService extends ServiceBase {
           { path: 'owner' }
         ]
       })
-      .populate('supplies.typeId')
       .populate('lots')
       .populate('lotsMade')
       .populate('files')

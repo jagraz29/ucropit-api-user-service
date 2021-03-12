@@ -324,6 +324,7 @@ class CropService extends ServiceBase {
         path: 'done',
         populate: [
           { path: 'type' },
+          { path: 'supplies.typeId' },
           { path: 'lots' },
           {
             path: 'achievements',
@@ -337,6 +338,7 @@ class CropService extends ServiceBase {
         populate: [
           { path: 'type' },
           { path: 'lots' },
+          { path: 'supplies.typeId' },
           {
             path: 'achievements',
             populate: [{ path: 'lots' }, { path: 'supplies.typeId' }]
