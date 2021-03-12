@@ -315,6 +315,39 @@ class CropService extends ServiceBase {
       })
   }
 
+  public static async getCropsByIds(ids: Array<string>) {
+    return Crop.find()
+      .populate('lots.data')
+      .populate('cropType')
+      .populate('unitType')
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'type' },
+          { path: 'lots' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'supplies.typeId' }]
+          }
+        ]
+      })
+      .populate('members.user')
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'type' },
+          { path: 'lots' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'supplies.typeId' }]
+          }
+        ]
+      })
+      .where('_id')
+      .in(ids)
+      .lean()
+  }
+
   /**
    *  Get One crop and json converter.
    *
@@ -610,6 +643,62 @@ class CropService extends ServiceBase {
     }
 
     return false
+  }
+
+  /**
+   * Change status synchronized data crop.
+   *
+   * @param result
+   */
+  public static async changeStatusSynchronized(result): Promise<void> {
+    await Crop.updateOne(
+      { _id: result.cropId, 'synchronizedList.service': result.erpAgent },
+      { $set: { 'synchronizedList.$.isSynchronized': true } }
+    )
+  }
+
+  public static async addServiceSynchronized(data): Promise<boolean> {
+    for (const item of data.crops) {
+      const crop = await Crop.findById(item.id)
+      if (!this.isServiceAdded(crop, item.erpAgent)) {
+        if (!crop.synchronizedList) {
+          const synchronized = []
+          synchronized.push({ service: data.erpAgent })
+          crop.synchronizedList = synchronized
+        } else {
+          if (
+            crop.synchronizedList.filter((el) => el.service === data.erpAgent)
+              .length === 0
+          ) {
+            crop.synchronizedList.push({ service: data.erpAgent })
+          }
+        }
+
+        await crop.save()
+      }
+    }
+
+    return true
+  }
+
+  public static serviceCropIsSynchronized(crop: any, service: any): boolean {
+    console.log(service)
+    console.log(crop)
+    return (
+      service &&
+      crop.synchronizedList.filter((item) => item.service === service).length >
+        0 &&
+      crop.synchronizedList.find((item) => item.service === service)
+        .isSynchronized
+    )
+  }
+
+  private static isServiceAdded(crop: any, service: string) {
+    return (
+      crop.synchronizedList &&
+      crop.synchronizedList.filter((item) => item.service === service).length >
+        0
+    )
   }
 
   /**

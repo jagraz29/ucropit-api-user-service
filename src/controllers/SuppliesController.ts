@@ -21,7 +21,7 @@ class SuppliesController {
         : 0
 
     if (req.query.q) {
-     filter = {
+      filter = {
         $text: { $search: req.query.q }
       }
     }
@@ -32,7 +32,7 @@ class SuppliesController {
 
     const supplies = await Supply.find(filter, undefined, {
       skip,
-      limit: req.query.limit >= 0 ? Number(req.query.limit) : 15,
+      limit: req.query.limit >= 0 ? Number(req.query.limit) : 15
     })
       .populate('typeId')
       .lean()
