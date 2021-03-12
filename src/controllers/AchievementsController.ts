@@ -3,6 +3,7 @@ import {
   validateAchievement,
   validateSignAchievement,
   validateFilesWithEvidences,
+  validateExtensionFile
 } from '../utils/Validation'
 
 import AchievementService from '../services/AchievementService'
@@ -12,10 +13,6 @@ import BlockChainServices from '../services/BlockChainService'
 import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
 
 import models from '../models'
-import { FileDocumentSchema } from '../models/documentFile'
-
-import UploadService from '../services/UploadService'
-import ImageService from '../services/ImageService'
 
 const Crop = models.Crop
 
@@ -74,13 +71,19 @@ class AchievementsController {
 
     await validateAchievement(data)
 
+    const validationExtensionFile = validateExtensionFile(req.files)
+
+    if (validationExtensionFile.error) {
+      return res.status(400).json(validationExtensionFile.code)
+    }
+
     const validationFiles = validateFilesWithEvidences(
       req.files,
       data.evidences
     )
 
     if (validationFiles.error) {
-      res.status(400).json(validationFiles)
+      return res.status(400).json(validationFiles)
     }
 
     const activity = await ActivityService.findActivityById(data.activity)
@@ -153,7 +156,7 @@ class AchievementsController {
         pathPdf,
         nameFilePdf,
         nameFileOts,
-        pathOtsFile,
+        pathOtsFile
       } = await BlockChainServices.sign(crop, activity)
 
       const approvalRegisterSign = await ApprovalRegisterSingService.create({
@@ -163,7 +166,7 @@ class AchievementsController {
         nameFilePdf,
         nameFileOts,
         pathOtsFile,
-        activity,
+        activity
       })
 
       activity.approvalRegister = approvalRegisterSign._id
