@@ -3,6 +3,7 @@ import {
   validateActivityStore,
   validateActivityUpdate,
   validateFilesWithEvidences,
+  validateExtensionFile
 } from '../utils/Validation'
 
 import ActivityService from '../services/ActivityService'
@@ -32,7 +33,7 @@ class ActivitiesController {
   public async index(req: Request | any, res: Response) {
     let activities = []
     const { ids } = req.query
-    
+
     if (ids) {
       activities = await ActivityService.getActivitiesByIds(JSON.parse(ids))
     } else {
@@ -69,6 +70,12 @@ class ActivitiesController {
     const data = JSON.parse(req.body.data)
 
     await validateActivityStore(data)
+
+    const validationExtensionFile = validateExtensionFile(req.files)
+
+    if (validationExtensionFile.error) {
+      return res.status(400).json(validationExtensionFile.code)
+    }
 
     const validationFiles = validateFilesWithEvidences(
       req.files,
@@ -113,6 +120,13 @@ class ActivitiesController {
 
     const { status } = data
     await validateActivityUpdate(data)
+
+    const validationExtensionFile = validateExtensionFile(req.files)
+
+    if (validationExtensionFile.error) {
+      return res.status(400).json(validationExtensionFile.code)
+    }
+
     const validationFiles = validateFilesWithEvidences(
       req.files,
       data.evidences
@@ -184,7 +198,7 @@ class ActivitiesController {
         pathPdf,
         nameFilePdf,
         nameFileOts,
-        pathOtsFile,
+        pathOtsFile
       } = await BlockChainServices.sign(crop, activity)
 
       const approvalRegisterSign = await ApprovalRegisterSingService.create({
@@ -194,7 +208,7 @@ class ActivitiesController {
         nameFilePdf,
         nameFileOts,
         pathOtsFile,
-        activity,
+        activity
       })
 
       activity.approvalRegister = approvalRegisterSign._id
@@ -251,7 +265,7 @@ class ActivitiesController {
     const activity = await Activity.findByIdAndDelete(req.params.id)
 
     res.status(200).json({
-      message: 'deleted successfully',
+      message: 'deleted successfully'
     })
   }
 
@@ -284,7 +298,7 @@ class ActivitiesController {
     }
 
     res.status(200).json({
-      message: 'deleted file successfully',
+      message: 'deleted file successfully'
     })
   }
 }

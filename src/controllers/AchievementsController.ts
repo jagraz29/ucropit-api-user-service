@@ -2,7 +2,8 @@ import { Request, Response } from 'express'
 import {
   validateAchievement,
   validateSignAchievement,
-  validateFilesWithEvidences
+  validateFilesWithEvidences,
+  validateExtensionFile
 } from '../utils/Validation'
 
 import AchievementService from '../services/AchievementService'
@@ -74,13 +75,19 @@ class AchievementsController {
 
     await validateAchievement(data)
 
+    const validationExtensionFile = validateExtensionFile(req.files)
+
+    if (validationExtensionFile.error) {
+      return res.status(400).json(validationExtensionFile.code)
+    }
+
     const validationFiles = validateFilesWithEvidences(
       req.files,
       data.evidences
     )
 
     if (validationFiles.error) {
-      res.status(400).json(validationFiles)
+      return res.status(400).json(validationFiles)
     }
 
     const activity = await ActivityService.findActivityById(data.activity)
