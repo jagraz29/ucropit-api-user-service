@@ -38,6 +38,7 @@ class ActivityService extends ServiceBase {
           { path: 'owner' }
         ]
       })
+      .populate('supplies.typeId')
       .populate('lots')
       .populate('lotsMade')
       .populate('files')
@@ -262,7 +263,8 @@ class ActivityService extends ServiceBase {
             date: activity.achievements[0].dateAchievement.toLocaleDateString(
               'en-US',
               {
-                year: 'numeric', month: '2-digit'
+                year: 'numeric',
+                month: '2-digit'
               }
             )
           }
@@ -278,7 +280,8 @@ class ActivityService extends ServiceBase {
           return {
             total: total,
             date: activity.dateObservation.toLocaleDateString('en-US', {
-              year: 'numeric', month: '2-digit'
+              year: 'numeric',
+              month: '2-digit'
             })
           }
         }
