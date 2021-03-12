@@ -296,29 +296,31 @@ class PDF {
       }
 
       // Embed JPG files
-      if (imagesJpgBytes.length > 0) {
-        for (const image of imagesJpgBytes) {
-          // Add a blank page to images
-          const jpgImage = await pdfDoc.embedJpg(image.file)
-          const jpgDims = jpgImage.scale(0.5)
-          // Add a blank page to the document
-          const pageJpg = pdfDoc.addPage()
+      // if (imagesJpgBytes.length > 0) {
+      //   for (const image of imagesJpgBytes) {
+      //     // Add a blank page to images
+      //     const jpgImage = await pdfDoc.embedJpg(image.file)
+      //     console.log('RESPONSE LIBRARY')
+      //     console.log(jpgImage)
+      //     const jpgDims = jpgImage.scale(0.5)
+      //     // Add a blank page to the document
+      //     const pageJpg = pdfDoc.addPage()
 
-          pageJpg.drawText(`${image.date}`, {
-            x: 150,
-            y: pageJpg.getHeight() - 4 * 12,
-            size: 12,
-            color: rgb(0, 0.53, 0.71)
-          })
+      //     pageJpg.drawText(`${image.date}`, {
+      //       x: 150,
+      //       y: pageJpg.getHeight() - 4 * 12,
+      //       size: 12,
+      //       color: rgb(0, 0.53, 0.71)
+      //     })
 
-          pageJpg.drawImage(jpgImage, {
-            x: pageJpg.getWidth() / 2 - jpgDims.width / 2 + 75,
-            y: pageJpg.getHeight() / 2 - jpgDims.height,
-            width: jpgDims.width,
-            height: jpgDims.height
-          })
-        }
-      }
+      //     pageJpg.drawImage(jpgImage, {
+      //       x: pageJpg.getWidth() / 2 - jpgDims.width / 2 + 75,
+      //       y: pageJpg.getHeight() / 2 - jpgDims.height / 2,
+      //       width: jpgDims.width,
+      //       height: jpgDims.height
+      //     })
+      //   }
+      // }
 
       // Embed PDF document
       if (pdfListBytes.length > 0) {

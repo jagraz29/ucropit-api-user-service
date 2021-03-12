@@ -12,7 +12,7 @@ class BlockChainServices {
    * @param activity
    * @param user
    */
-  public static async sign (crop, activity): Promise<any> {
+  public static async sign(crop, activity): Promise<any> {
     await makeDirIfNotExists(
       `${basePath()}${process.env.DIR_PDF_SINGS}/${activity.key}`
     )
@@ -46,7 +46,7 @@ class BlockChainServices {
     })
   }
 
-  public static async saveOtsFile (
+  public static async saveOtsFile(
     fileOtsBytes: any,
     nameFile,
     path: string
