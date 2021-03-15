@@ -88,7 +88,7 @@ class PDF {
               companyProducer ? companyProducer[0].identifier : ''
             }</li>
             <li>Razón Social: ${
-              companyProducer ? companyProducer[0].identifier : ''
+              companyProducer ? companyProducer[0].name : ''
             }</li>
             <li>Superficie Total: ${crop.surface}</li>
             <li>Fecha de Siembra Estimada: ${crop.dateCrop.toLocaleDateString(
