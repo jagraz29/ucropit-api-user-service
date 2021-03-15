@@ -2,13 +2,14 @@ import fs from 'fs'
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 import { getFullPath } from '../utils/Files'
 import sha256 from 'sha256'
+import _ from 'lodash'
 import CompanyService from '../services/CompanyService'
 import models from '../models'
 
 import {
   VALID_FORMATS_FILES_IMAGES_PNG,
   VALID_FORMATS_FILES_IMAGES_JPG,
-  VALID_FORMATS_FILES_DOCUMENTS,
+  VALID_FORMATS_FILES_DOCUMENTS
 } from '../utils/Constants'
 
 const User = models.User
@@ -44,7 +45,7 @@ class PDF {
       y: height - 4 * fontSize,
       size: fontSize,
       font: timesRomanFont,
-      color: rgb(0, 0.53, 0.71),
+      color: rgb(0, 0.53, 0.71)
     })
 
     pageActivity.drawText(`${this.generateActivityTemplate(activity)}`, {
@@ -52,7 +53,7 @@ class PDF {
       y: height - 4 * fontSize,
       size: fontSize,
       font: timesRomanFont,
-      color: rgb(0, 0.53, 0.71),
+      color: rgb(0, 0.53, 0.71)
     })
 
     pageLotsSelected.drawText(`${this.generateLotsSelected(activity)}`, {
@@ -60,7 +61,7 @@ class PDF {
       y: height - 4 * fontSize,
       size: fontSize,
       font: timesRomanFont,
-      color: rgb(0, 0.53, 0.71),
+      color: rgb(0, 0.53, 0.71)
     })
 
     pageAchievement.drawText(`${await this.listAchievements(activity)}`, {
@@ -68,7 +69,7 @@ class PDF {
       y: height - 4 * fontSize,
       size: fontSize,
       font: timesRomanFont,
-      color: rgb(0, 0.53, 0.71),
+      color: rgb(0, 0.53, 0.71)
     })
 
     if (activity.achievements.length > 0) {
@@ -93,28 +94,28 @@ class PDF {
             x: page.getWidth() / 2 - pngDims.width / 2 + 75,
             y: page.getHeight() / 2 - pngDims.height,
             width: pngDims.width,
-            height: pngDims.height,
+            height: pngDims.height
           })
         }
       }
 
       // Embed JPG files
-      if (imagesJpgBytes.length > 0) {
-        for (const image of imagesJpgBytes) {
-          // Add a blank page to images
-          const jpgImage = await pdfDoc.embedJpg(image.file)
-          const jpgDims = jpgImage.scale(0.5)
-          // Add a blank page to the document
-          const pageJpg = pdfDoc.addPage()
+      // if (imagesJpgBytes.length > 0) {
+      //   for (const image of imagesJpgBytes) {
+      //     // Add a blank page to images
+      //     const jpgImage = await pdfDoc.embedJpg(image.file)
+      //     const jpgDims = jpgImage.scale(0.5)
+      //     // Add a blank page to the document
+      //     const pageJpg = pdfDoc.addPage()
 
-          pageJpg.drawImage(jpgImage, {
-            x: page.getWidth() / 2 - jpgDims.width / 2 + 75,
-            y: page.getHeight() / 2 - jpgDims.height,
-            width: jpgDims.width,
-            height: jpgDims.height,
-          })
-        }
-      }
+      //     pageJpg.drawImage(jpgImage, {
+      //       x: page.getWidth() / 2 - jpgDims.width / 2 + 75,
+      //       y: page.getHeight() / 2 - jpgDims.height,
+      //       width: jpgDims.width,
+      //       height: jpgDims.height
+      //     })
+      //   }
+      // }
 
       // Embed PDF document
       if (pdfListBytes.length > 0) {
@@ -126,7 +127,7 @@ class PDF {
           newPage.drawPage(pdfEmbedFile, {
             ...pdfEmbedFileDims,
             x: page.getWidth() / 2 - pdfEmbedFileDims.width / 2,
-            y: page.getHeight() - pdfEmbedFileDims.height - 150,
+            y: page.getHeight() - pdfEmbedFileDims.height - 150
           })
         }
       }
@@ -136,14 +137,14 @@ class PDF {
     const pageSigners = pdfDoc.addPage()
 
     // Se agrega los firmantes
-    const signers = await this.generateSignersTemplate(activity.signers)
+    const signers = await this.generateSignersTemplate(activity)
 
     pageSigners.drawText(`${signers}`, {
       x: 150,
       y: height - 4 * fontSize,
       size: fontSize,
       font: timesRomanFont,
-      color: rgb(0, 0.53, 0.71),
+      color: rgb(0, 0.53, 0.71)
     })
 
     // Serialize the PDFDocument to bytes (a Uint8Array)
@@ -155,7 +156,7 @@ class PDF {
 
     return Promise.resolve({
       hash,
-      path: pathFile,
+      path: pathFile
     })
   }
 
@@ -171,12 +172,12 @@ class PDF {
         Fecha Siembra Estimada: ${crop.dateCrop.toLocaleDateString('es-ES', {
           year: 'numeric',
           month: 'long',
-          day: 'numeric',
+          day: 'numeric'
         })}
         Fecha Cosecha Estimada: ${crop.dateHarvest.toLocaleDateString('es-ES', {
           year: 'numeric',
           month: 'long',
-          day: 'numeric',
+          day: 'numeric'
         })}
         `
   }
@@ -193,7 +194,7 @@ class PDF {
         ? activity.dateObservation.toLocaleDateString('es-ES', {
             year: 'numeric',
             month: 'long',
-            day: 'numeric',
+            day: 'numeric'
           })
         : ''
     }
@@ -217,8 +218,17 @@ class PDF {
     `
   }
 
-  public static async generateSignersTemplate(signers) {
-    const listSigners = await this.listSigners(signers)
+  public static async generateSignersTemplate(activity) {
+    let listSigners = ''
+    if (activity.achievements.length > 0) {
+      const signers = activity.achievements.map((item) => item.signers)
+      listSigners = await this.listSigners(
+        _.uniqBy(_.flatten(signers), 'email')
+      )
+    } else {
+      listSigners = await this.listSigners(activity.signers)
+    }
+
     return `
     --------------------------------------------------
     Las siguientes personas expresaron su acuerdo a las declaraciones expresadas ene este documento:
@@ -237,7 +247,7 @@ class PDF {
         {
           year: 'numeric',
           month: 'long',
-          day: 'numeric',
+          day: 'numeric'
         }
       )}
         Lotes Seleccionados: ${this.createStringLot(achievement.lots)}
@@ -273,69 +283,56 @@ class PDF {
             x: 150,
             y: pagePng.getHeight() - 4 * 12,
             size: 12,
-            color: rgb(0, 0.53, 0.71),
+            color: rgb(0, 0.53, 0.71)
           })
 
           pagePng.drawImage(pngImage, {
             x: pagePng.getWidth() / 2 - pngDims.width / 2 + 75,
             y: pagePng.getHeight() / 2 - pngDims.height,
             width: pngDims.width,
-            height: pngDims.height,
+            height: pngDims.height
           })
         }
       }
 
       // Embed JPG files
-      if (imagesJpgBytes.length > 0) {
-        for (const image of imagesJpgBytes) {
-          // Add a blank page to images
-          const jpgImage = await pdfDoc.embedJpg(image.file)
-          const jpgDims = jpgImage.scale(0.5)
-          // Add a blank page to the document
-          const pageJpg = pdfDoc.addPage()
+      // if (imagesJpgBytes.length > 0) {
+      //   for (const image of imagesJpgBytes) {
+      //     // Add a blank page to images
+      //     const jpgImage = await pdfDoc.embedJpg(image.file)
+      //     console.log('RESPONSE LIBRARY')
+      //     console.log(jpgImage)
+      //     const jpgDims = jpgImage.scale(0.5)
+      //     // Add a blank page to the document
+      //     const pageJpg = pdfDoc.addPage()
 
-          pageJpg.drawText(`${image.date}`, {
-            x: 150,
-            y: pageJpg.getHeight() - 4 * 12,
-            size: 12,
-            color: rgb(0, 0.53, 0.71),
-          })
+      //     pageJpg.drawText(`${image.date}`, {
+      //       x: 150,
+      //       y: pageJpg.getHeight() - 4 * 12,
+      //       size: 12,
+      //       color: rgb(0, 0.53, 0.71)
+      //     })
 
-          pageJpg.drawImage(jpgImage, {
-            x: pageJpg.getWidth() / 2 - jpgDims.width / 2 + 75,
-            y: pageJpg.getHeight() / 2 - jpgDims.height,
-            width: jpgDims.width,
-            height: jpgDims.height,
-          })
-        }
-      }
+      //     pageJpg.drawImage(jpgImage, {
+      //       x: pageJpg.getWidth() / 2 - jpgDims.width / 2 + 75,
+      //       y: pageJpg.getHeight() / 2 - jpgDims.height / 2,
+      //       width: jpgDims.width,
+      //       height: jpgDims.height
+      //     })
+      //   }
+      // }
 
       // Embed PDF document
       if (pdfListBytes.length > 0) {
         for (const pdfItemByte of pdfListBytes) {
-          const useLoadPdf = await PDFDocument.load(pdfItemByte.file)
-
-          const preamble = await pdfDoc.embedPage(useLoadPdf.getPages()[1], {
-            left: 55,
-            bottom: 485,
-            right: 300,
-            top: 575,
-          })
-          const pdfEmbedFileDims = preamble.scale(0.3)
+          const [pdfEmbedFile] = await pdfDoc.embedPdf(pdfItemByte.file)
+          const pdfEmbedFileDims = pdfEmbedFile.scale(0.3)
 
           const newPage = pdfDoc.addPage()
-
-          newPage.drawText(`${pdfItemByte.date}`, {
-            x: 150,
-            y: newPage.getHeight() - 4 * 12,
-            size: 12,
-            color: rgb(0, 0.53, 0.71),
-          })
-
-          newPage.drawPage(preamble, {
+          newPage.drawPage(pdfEmbedFile, {
             ...pdfEmbedFileDims,
             x: newPage.getWidth() / 2 - pdfEmbedFileDims.width / 2,
-            y: newPage.getHeight() - pdfEmbedFileDims.height - 150,
+            y: newPage.getHeight() - pdfEmbedFileDims.height - 150
           })
         }
       }
@@ -384,9 +381,7 @@ class PDF {
           const path = item.pathIntermediate ? item.pathIntermediate : item.path
           return {
             file: fs.readFileSync(getFullPath(`${path}`)),
-            date: `Fecha de evidencia: ${item.date.toLocaleDateString(
-              'es-ES'
-            )}`,
+            date: `Fecha de evidencia: ${item.date.toLocaleDateString('es-ES')}`
           }
         }
         return undefined
@@ -403,7 +398,7 @@ class PDF {
           const path = item.pathIntermediate ? item.pathIntermediate : item.path
           return {
             file: fs.readFileSync(getFullPath(`${path}`)),
-            date: `Fecha de evidencia ${item.date.toLocaleDateString('es-ES')}`,
+            date: `Fecha de evidencia ${item.date.toLocaleDateString('es-ES')}`
           }
         }
         return undefined
@@ -419,7 +414,7 @@ class PDF {
         if (arrayNameFile[1].match(VALID_FORMATS_FILES_DOCUMENTS) !== null) {
           return {
             file: fs.readFileSync(getFullPath(`${item.path}`)),
-            date: `Fecha de evidencia ${item.date.toLocaleDateString('es-ES')}`,
+            date: `Fecha de evidencia ${item.date.toLocaleDateString('es-ES')}`
           }
         }
         return undefined

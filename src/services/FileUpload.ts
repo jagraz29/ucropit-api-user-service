@@ -1,18 +1,16 @@
 import { UploadedFile } from 'express-fileupload'
-import { getFullPath, makeDirIfNotExists } from '../utils/Files'
-
-const VALID_FORMATS_FILES = `text.*|image.*|application/pdf|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/octet-stream|application/vnd.google-earth.kmz|application/vnd.google-earth.kml`
+import { getFullPath, VALID_FORMATS_FILES } from '../utils/Files'
 
 class FileUpload {
   private files
   private destination: string
 
-  constructor (files, destination: string) {
+  constructor(files, destination: string) {
     this.files = files
     this.destination = destination
   }
 
-  public async store (): Promise<any> {
+  public async store(): Promise<any> {
     if (Object.keys(this.files).length === 0) {
       throw new Error('No files were uploaded.')
     }
@@ -44,7 +42,7 @@ class FileUpload {
     return Array.isArray(result[0]) ? result[0] : result
   }
 
-  async save (file: UploadedFile) {
+  async save(file: UploadedFile) {
     if (!this.validTypes(file)) {
       throw new Error('File extension is rejected')
     }
@@ -68,7 +66,7 @@ class FileUpload {
     })
   }
 
-  validTypes (file) {
+  validTypes(file) {
     return file.mimetype.match(VALID_FORMATS_FILES) !== null
   }
 }

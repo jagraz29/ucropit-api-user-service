@@ -53,7 +53,18 @@ const CompanySchema = new Schema({
   },
   files: {
     type: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }]
-  }
+  },
+  servicesIntegrations: [
+    {
+      service: {
+        type: String
+      },
+      integrate: {
+        type: Boolean,
+        default: true
+      }
+    }
+  ]
 })
 
 export default mongoose.model('Company', CompanySchema)

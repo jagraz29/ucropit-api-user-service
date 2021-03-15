@@ -18,7 +18,7 @@ class CompanyService extends ServiceBase {
    *
    * @param query
    */
-  public static async search (query) {
+  public static async search(query) {
     return Company.find(query)
   }
 
@@ -27,7 +27,7 @@ class CompanyService extends ServiceBase {
    *
    * @param string id
    */
-  public static async findById (id: string) {
+  public static async findById(id: string) {
     return Company.findById(id).populate('files')
   }
 
@@ -38,7 +38,7 @@ class CompanyService extends ServiceBase {
    * @param files
    * @param user
    */
-  public static async store (
+  public static async store(
     company: ICompany,
     files: FileArray,
     evidences,
@@ -60,7 +60,7 @@ class CompanyService extends ServiceBase {
 
     if (companyCreated) {
       const exists = await user.companies.findIndex(
-        el => el.identifier === companyCreated.identifier
+        (el) => el.identifier === companyCreated.identifier
       )
 
       if (exists > -1) {
@@ -86,9 +86,26 @@ class CompanyService extends ServiceBase {
     )
   }
 
-  public static async updated (company: ICompany, id: string) {
+  public static async updated(company: ICompany, id: string) {
     await Company.findByIdAndUpdate(id, company)
     return Company.findById(id)
+  }
+
+  public static async addServiceIntegration(service: string, id: string) {
+    const company = await Company.findById(id)
+    const isServiceIntegration = company.servicesIntegrations.find(
+      (item) => item.service === service
+    )
+
+    if (!isServiceIntegration) {
+      company.servicesIntegrations.push({
+        service: service
+      })
+
+      return company.save()
+    }
+
+    return { error: true }
   }
 }
 

@@ -209,6 +209,38 @@ router.put('/:id', cropsController.update)
 /**
  * @swagger
  * path:
+ *  /v1/crops/{id}/integrations:
+ *    put:
+ *      summary: Update a crop add integration service
+ *      tags: [Crops]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      requestBody:
+ *        content:
+ *          application/json:
+ *              schema:
+ *               type: object
+ *               properties:
+ *                  service:
+ *                    type: string
+ *      responses:
+ *       '201':
+ *         description: Update success a crop.
+ *         content:
+ *            application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Crop'
+ *
+ *       '500':
+ *         description: Error to Server.
+ *
+ */
+router.put('/:id/integrations', cropsController.addIntegrationService)
+
+/**
+ * @swagger
+ * path:
  *  /v1/crops/{id}:
  *    delete:
  *      summary: Delete a crop

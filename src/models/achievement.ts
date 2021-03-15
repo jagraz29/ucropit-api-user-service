@@ -30,7 +30,7 @@ import mongoose, { Schema } from 'mongoose'
 import shortid from 'shortid'
 
 const AchievementSchema: Schema = new Schema({
-  _id: { type:  mongoose.Schema.Types.ObjectId, required: false },
+  _id: { type: mongoose.Schema.Types.ObjectId, required: false },
   key: {
     type: String,
     required: false
@@ -108,6 +108,17 @@ const AchievementSchema: Schema = new Schema({
       },
       dateSigned: {
         type: Date
+      }
+    }
+  ],
+  synchronizedList: [
+    {
+      service: {
+        type: String
+      },
+      isSynchronized: {
+        type: Boolean,
+        default: false
       }
     }
   ]
