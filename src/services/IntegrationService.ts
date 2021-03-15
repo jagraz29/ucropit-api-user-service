@@ -188,6 +188,7 @@ class IntegrationService extends ServiceBase {
           token: token,
           erpAgent: dataExport.erpAgent,
           identifier: dataExport.identifier,
+          cropId: dataExport.cropId,
           achievementId: dataExport.achievementId,
           activityId: dataExport.activityId
         },
