@@ -2,6 +2,8 @@ import * as Joi from 'joi'
 import { FileArray } from 'express-fileupload'
 import { handleFileConvertJSON } from '../utils/ParseKmzFile'
 import { errors } from '../types/common'
+import { VALID_FORMATS_DOCUMENTS } from './Files'
+import _ from 'lodash'
 
 import JoiDate from '@hapi/joi-date'
 
@@ -187,13 +189,14 @@ export const validateAchievement = async (achievement) => {
     lots: Joi.array().items(Joi.string()).required(),
     activity: Joi.string().required(),
     crop: Joi.string().required(),
+    erpAgent: Joi.string().optional(),
     supplies: Joi.array()
       .items(
         Joi.object().keys({
           name: Joi.string().required(),
           unit: Joi.string().required(),
           quantity: Joi.number().required(),
-          typeId: Joi.string().required(),
+          typeId: Joi.string().optional(),
           icon: Joi.string().optional(),
           total: Joi.number().required()
         })
@@ -286,4 +289,49 @@ export const validateFormatKmz = async (files: FileArray) => {
     }
   }
   return { error: false }
+}
+export const validateExtensionFile = (files) => {
+  if (!files) {
+    return { error: false }
+  }
+  const isValidTypes = Object.keys(files).map((key) => {
+    if (files[key].length > 0) {
+      return files[key].map((file) => {
+        if (!validTypes(file)) {
+          return {
+            error: true
+          }
+        }
+        return {
+          error: false
+        }
+      })
+    }
+
+    if (!validTypes(files[key])) {
+      return {
+        error: true
+      }
+    }
+
+    return {
+      error: false
+    }
+  })
+
+  if (_.flatten(isValidTypes).some((check) => check.error === true)) {
+    return {
+      error: true,
+      message: 'Any File extension not allowed',
+      code:
+        errors.find((error) => error.key === '003')?.code ||
+        'ERROR_FILE_EXTENSION'
+    }
+  }
+
+  return { error: false }
+}
+
+function validTypes(file) {
+  return file.mimetype.match(VALID_FORMATS_DOCUMENTS) !== null
 }

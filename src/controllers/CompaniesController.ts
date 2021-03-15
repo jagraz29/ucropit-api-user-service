@@ -22,7 +22,7 @@ class CompaniesController {
    *
    * @return {Response}
    */
-  public async index (req: Request, res: Response) {
+  public async index(req: Request, res: Response) {
     const { query } = req
 
     const companies = await CompanyService.search(query)
@@ -39,10 +39,24 @@ class CompaniesController {
    *
    * @return {Response}
    */
-  public async show (req: Request, res: Response) {
+  public async show(req: Request, res: Response) {
     const company = await Company.findById(req.params.id).populate('files')
 
     res.status(200).json(company)
+  }
+
+  /**
+   * Show list integration services.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return {Response}
+   */
+  public async showIntegrations(req: Request, res: Response) {
+    const company = await Company.findById(req.params.id)
+
+    res.status(200).json(company.servicesIntegrations)
   }
 
   /**
@@ -53,7 +67,7 @@ class CompaniesController {
    *
    * @return {Response}
    */
-  public async create (req, res: Response) {
+  public async create(req, res: Response) {
     const user = req.user
     const data = JSON.parse(req.body.data)
 
@@ -95,7 +109,7 @@ class CompaniesController {
    *
    * @return {Response}
    */
-  public async update (req: Request, res: Response) {
+  public async update(req: Request, res: Response) {
     const user = req.user
     const { id } = req.params
     const data = JSON.parse(req.body.data)
@@ -134,7 +148,7 @@ class CompaniesController {
    *
    * @return {Response}
    */
-  public async delete (req: Request, res: Response) {
+  public async delete(req: Request, res: Response) {
     const company = await Company.findByIdAndDelete(req.params.id)
 
     res.status(200).json({
@@ -150,7 +164,7 @@ class CompaniesController {
    *
    * @return {Response}
    */
-  public async removeFile (req: Request, res: Response) {
+  public async removeFile(req: Request, res: Response) {
     const { id, fileId } = req.params
 
     const company = await Company.findOne({ _id: id })
