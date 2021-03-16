@@ -125,6 +125,10 @@ router.post(
 
 router.post('/company', integrationServiceController.create)
 
+router.put(
+  '/company/:id/services/:service',
+  integrationServiceController.unlink
+)
 /**
  *this is crops data for screen
  */

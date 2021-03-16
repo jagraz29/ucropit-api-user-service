@@ -107,6 +107,20 @@ class CompanyService extends ServiceBase {
 
     return { error: true }
   }
+
+  public static async removeServiceIntegration(service: string, id: string) {
+    const company = await Company.findById(id)
+
+    const isServiceIntegration = company.servicesIntegrations.find(
+      (item) => item.service === service
+    )
+
+    return Company.update(
+      { _id: id },
+      { $pull: { servicesIntegrations: { _id: isServiceIntegration._id } } },
+      { safe: true, multi: true }
+    )
+  }
 }
 
 export default CompanyService

@@ -65,6 +65,22 @@ class IntegrationServiceController {
   }
 
   /**
+   * Unlink service integration.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return {Response}
+   */
+  public async unlink(req: Request, res: Response) {
+    const { id, service } = req.params
+
+    await CompanyService.removeServiceIntegration(service, id)
+
+    res.status(200).json('Ok')
+  }
+
+  /**
    * Export data crop to third party service.
    *
    * @param Request req
