@@ -684,8 +684,6 @@ class CropService extends ServiceBase {
   }
 
   public static serviceCropIsSynchronized(crop: any, service: any): boolean {
-    console.log(service)
-    console.log(crop)
     return (
       service &&
       crop.synchronizedList.filter((item) => item.service === service).length >

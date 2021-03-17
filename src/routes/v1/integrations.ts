@@ -60,6 +60,11 @@ router.get('/crops', integrationServiceController.cropData)
  */
 router.get('/logs/:cropId/:service', integrationServiceController.detailExport)
 
+router.get(
+  '/company/:identifier/:service',
+  integrationServiceController.accountService
+)
+
 /**
  * @swagger
  * path:
@@ -125,9 +130,13 @@ router.post(
 
 router.post('/company', integrationServiceController.create)
 
-/**
- *this is crops data for screen
- */
+router.put('/company/:identifier', integrationServiceController.update)
+
+router.put(
+  '/company/:id/services/:service/:identifier',
+  integrationServiceController.unlink
+)
+
 router.get(
   '/cropReport/:cropId',
   integrationServiceController.getCropSyncAchievements
