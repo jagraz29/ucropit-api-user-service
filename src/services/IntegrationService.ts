@@ -4,6 +4,7 @@ import CropService from './CropService'
 import AchievementService from './AchievementService'
 import models from '../models'
 import integrationLog from '../models/integrationLog'
+import CompanyService from './CompanyService'
 
 const IntegrationLog = models.IntegrationLog
 
@@ -74,6 +75,38 @@ class IntegrationService extends ServiceBase {
         'post',
         target,
         data,
+        (result) => {
+          resolve(result.data)
+        },
+        (err) => {
+          reject(err)
+        }
+      )
+    })
+  }
+
+  public static update(data: any, target: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.makeRequest(
+        'put',
+        target,
+        data,
+        (result) => {
+          resolve(result.data)
+        },
+        (err) => {
+          reject(err)
+        }
+      )
+    })
+  }
+
+  public static findAccount(target: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.makeRequest(
+        'get',
+        target,
+        {},
         (result) => {
           resolve(result.data)
         },
@@ -177,9 +210,16 @@ class IntegrationService extends ServiceBase {
    */
   public static async exportAchievement(dataExport: IExportCrop, req: Request) {
     const crop = await CropService.findOneCrop(dataExport.cropId)
+
+    const isServiceCompany = await CompanyService.isAdderService(
+      dataExport.erpAgent,
+      dataExport.identifier
+    )
+
     if (
       crop &&
-      CropService.serviceCropIsSynchronized(crop, dataExport.erpAgent)
+      CropService.serviceCropIsSynchronized(crop, dataExport.erpAgent) &&
+      isServiceCompany
     ) {
       const token: string = req.get('authorization').split(' ')[1]
 
@@ -211,6 +251,25 @@ class IntegrationService extends ServiceBase {
     }
 
     return null
+  }
+
+  /**
+   * Delete account Service Integration.
+   *
+   * @param target
+   *
+   * @returns
+   */
+  public static delete(target: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.makeRequest(
+        'delete',
+        target,
+        {},
+        (result) => resolve(result.data),
+        (err) => reject(err)
+      )
+    })
   }
 
   private static dummyResponse(data) {

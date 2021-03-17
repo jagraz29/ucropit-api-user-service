@@ -38,6 +38,25 @@ class IntegrationServiceController {
   }
 
   /**
+   * Get Account Integration Service
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return {Response}
+   */
+  public async accountService(req: Request, res: Response) {
+    const { identifier, service } = req.params
+    const {
+      data: { user, password }
+    } = await IntegrationService.findAccount(
+      `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_INTEGRATION_USER}/${service}/${identifier}`
+    )
+
+    res.status(200).json({ user, password })
+  }
+
+  /**
    * Added service integration.
    *
    * @param Request req
@@ -65,6 +84,32 @@ class IntegrationServiceController {
   }
 
   /**
+   * Update Credentials Account Service Integration
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return {Response}
+   */
+  public async update(req: Request, res: Response) {
+    const data = req.body
+
+    const response = await IntegrationService.update(
+      {
+        user: data.user,
+        password: data.password
+      },
+      `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_INTEGRATION_USER}/${data.erpAgent}/${data.identifier}`
+    )
+
+    if (response.error) {
+      return res.status(400).json('ERROR_SERVICES_UPDATE')
+    }
+
+    res.status(200).json('Ok')
+  }
+
+  /**
    * Unlink service integration.
    *
    * @param Request req
@@ -73,7 +118,11 @@ class IntegrationServiceController {
    * @return {Response}
    */
   public async unlink(req: Request, res: Response) {
-    const { id, service } = req.params
+    const { id, service, identifier } = req.params
+
+    const response = await IntegrationService.delete(
+      `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_INTEGRATION_USER}/${service}/${identifier}`
+    )
 
     await CompanyService.removeServiceIntegration(service, id)
 
