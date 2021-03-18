@@ -260,9 +260,13 @@ class ReportService {
               lot,
               'ACT_SOWING'
             ),
-            date_achievement_sowing: this.lastDateAchievementByLot(
+            /*date_achievement_sowing: this.lastDateAchievementByLot(
               crop,
               lot,
+              'ACT_SOWING'
+            ),*/
+            date_achievement_sowing: await this.lastDateSignAchievement(
+              crop,
               'ACT_SOWING'
             ),
             surface_achievement_sowing: this.surfaceAchievementsActivity(
@@ -478,7 +482,7 @@ class ReportService {
     const dataSet = cropsClean.map((crop) => {
       const dataLots = crop.lots.map((item) => {
         const itemData = item.data.map((lot) => {
-          return {
+          return { 
             lot_id: lot._id.toString(),
             campaign_id: crop._id.toString(),
             coords: lot.coordinates,
@@ -1050,6 +1054,7 @@ class ReportService {
     }
 
     return dates
+
   }
 
   private static sumSurfaceAchievements(activities): number {
@@ -1385,7 +1390,7 @@ class ReportService {
   }
 
   public static async generateReportsSowingBilling(crops) {
-    const filterCropsSowing = this.filterCropsSowing(crops)
+    const filterCropsSowing = this.filterCropsSowing(crops, 'ACT_SOWING')
     const dataCropsSowing = filterCropsSowing.map((crop) => {
        const activities = [...crop.done, ...crop.finished]
        const activitiesFilter = activities.filter(
@@ -1457,11 +1462,11 @@ class ReportService {
       : ''
   }
 
-    private static filterCropsSowing(crops: any) {
+    private static filterCropsSowing(crops: any, type) {
     return crops.filter(
       (crop) =>
       (this.checkAgreements(crop.finished) || this.checkAgreements(crop.done)) && 
-      (this.isContainActivitySowing(crop, 'ACT_SOWING'))
+      (this.isContainActivityBilling(crop, type))
     )
   }
 
@@ -1478,7 +1483,7 @@ class ReportService {
     return membersNames
   }
 
-  private static isContainActivitySowing(crop: any, type): Boolean {
+  private static isContainActivityBilling(crop: any, type): Boolean {
     const activitiesDone = crop.done.filter(
       (activity) => activity.type && activity.type.tag === type
     )
@@ -1492,6 +1497,38 @@ class ReportService {
     }
 
     return false
+  }
+
+  public static async generateReportsAplicationBilling(crops) {
+    const filterCropsSowing = this.filterCropsSowing(crops, 'ACT_APPLICATION')
+    const dataCropsSowing = filterCropsSowing.map((crop) => {
+       const activities = [...crop.done, ...crop.finished]
+       const activitiesFilter = activities.filter(
+        (activity) => activity.type.tag === 'ACT_APPLICATION'
+      )
+       const dataActivities = activitiesFilter.map(async (item) => {
+       const itemDataAchievements = item.achievements.map(async (achievement) => {
+        return {
+          cuit: crop.company?.identifier,
+          business_name: (await this.getCompany(crop.company?.identifier))
+          .name,
+          crop: crop.cropType.name.es,
+          crop_name: crop.name,
+          responsible: this.getMembersWithRol(crop),
+          surface_total: crop.surface,
+          total_surface_signed_aplication: achievement.surface,
+          date_sign_achievement_by_lot_aplication: await this.lastDateSignAchievement(
+            crop,
+            'ACT_APPLICATION'
+          ),
+        }
+       })
+       
+       return Promise.all(itemDataAchievements)
+      })
+      return Promise.all(dataActivities)
+     })
+     return _.flatten(_.flatten(await Promise.all(dataCropsSowing)))
   }
 }
 

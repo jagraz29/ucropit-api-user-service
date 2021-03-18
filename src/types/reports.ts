@@ -18,7 +18,7 @@ export const reportHeaderXls = {
     'name_lot',
     'surface_total',
     'link_sustainability_agreements',
-    'link_pdf_ots_agreement_sus',
+    'link_pdf_ots_agreement_sus', 
     'names_signers_sustainability_agreements',
     'total_surface_sus',
     'date_sign_achievement_by_lot_sus',
@@ -385,5 +385,28 @@ export const reportHeaderXlsSowingBilling = {
     'HECTÁREAS TOTALES EN KMZ',
     'HECTÁREAS de Realización de siembra',
     'FECHA FINAL de Firma de Realización',
+  ]
+}
+
+export const reportHeaderXlsAplicationBilling = {
+  fields: [
+    'cuit',
+    'business_name',
+    'crop',
+    'crop_name',
+    'responsible',
+    'surface_total',
+    'total_surface_signed_aplication',
+    'date_sign_achievement_by_lot_aplication'
+  ],
+  fieldNames: [
+    'CUIT Productor',
+    'RAZÓN SOCIAL Productor',
+    'Cultivo',
+    'Nombre del Cultivo',
+    'CUIT Colaborador con ROL Asesor Promotor',
+    'HECTÁREAS TOTALES EN KMZ',
+    'HECTÁREAS de Realización de Aplicaciones',
+    'FECHA FINAL de Firma de Realización de Aplicaciones',
   ]
 }
