@@ -5,14 +5,16 @@ import EmailService from '../services/EmailService'
 const User = models.User
 
 class CollaboratorsNotificationsController {
-  public async notify(req: Request, res: Response) {
-    var host = process.env.BASE_URL;
+  public async notify (req: Request, res: Response) {
+    const host = process.env.BASE_URL
+
     const { email, identifier, cropname, role } = req.body
     const user = await User.findOne({ email }).populate('config')
+
     await EmailService.send({
       template: 'notification-collab',
       to: user.email,
-      data: { user, cropname, identifier, role, host},
+      data: { user, cropname, identifier, role, host }
     })
 
     res.json({ user })

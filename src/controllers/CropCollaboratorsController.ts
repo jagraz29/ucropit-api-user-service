@@ -1,10 +1,11 @@
-'use strict'
-
 import UserService from '../services/UserService'
+import NotificationService from '../services/NotificationService'
 import User from '../models/user'
 import Company from '../models/company'
 import Crop from '../models/crop'
 import CollaboratorRequest from '../models/collaboratorRequest'
+import { emailTemplates } from '../types/common'
+import RoleService from '../services/RolesService'
 
 const PRODUCERS_ROLES = [
   'PRODUCER',
@@ -66,7 +67,18 @@ class CropCollaboratorsController {
         type
       })
 
-      // enviar mail de invitacion
+      const role = await RoleService.findOne({ value: type })
+
+      await NotificationService.email(
+        emailTemplates.NOTIFICATION_COLLABORATOR,
+        user,
+        {
+          user,
+          cropname: crop.name,
+          identifier: identifier,
+          role: role.label.es
+        }
+      )
 
       await crop.save()
       await user.save()

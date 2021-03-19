@@ -15,7 +15,13 @@ export const responsibleRoles = [
 
 export const typesSupplies = [
   {
+    tag: 'ACT_HARVEST',
+    value: 'harvest',
+    types: []
+  },
+  {
     tag: 'ACT_SOWING',
+    value: 'sowing',
     types: [
       '346564643430633836343130',
       '346564643430633836343230',
@@ -35,6 +41,7 @@ export const typesSupplies = [
   },
   {
     tag: 'ACT_APPLICATION',
+    value: 'application',
     types: [
       '346564643430633836343130',
       '346564643430633836343230',
@@ -45,6 +52,7 @@ export const typesSupplies = [
   },
   {
     tag: 'ACT_FERTILIZATION',
+    value: 'fertilization',
     types: [
       '346564643430633836343130',
       '346564643430633836343230',
@@ -55,6 +63,7 @@ export const typesSupplies = [
   },
   {
     tag: 'ACT_TILLAGE',
+    value: 'tillage',
     types: [
       '346564643430633836343130',
       '346564643430633836343230',
