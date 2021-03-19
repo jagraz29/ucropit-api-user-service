@@ -1,22 +1,29 @@
 style(type="text/css").
-    {
-        width: '50px';
-        background: #000;
+    a {
+        text-decoration: none;
+    }
+    .link {
+        background: #30a01b;
         border-radius: 5px;
         height: 52px;
         font-weight: bold;
-        font-size: 36px;
+        font-size: 18px;
         text-align: center;
-        color: ##30A01B;
-}
+        color: white;
+        padding: 16px;
+    }
+
 p Hola #{name},
 
 p El registro de aplicación de la actividad de #{activity} - #{cropName} requiere de tu aprobación. 
 
 p Para acceder a la misma haga click aquí:
 
-a(href='exp://ucropit-app:3000') 
-    p Abrir en la app
+br
+
+a.link(href=url) Abrir enlace
+
+br
 
 p En caso que tenga alguna duda entre en contacto con nosotros.
 

@@ -56,7 +56,7 @@ class IntegrationService extends ServiceBase {
    *
    * @param cropId
    */
-  public static async getLogIntegration(cropId: string, service: string) {
+  public static async getLogIntegration (cropId: string, service: string) {
     const integrationLogs = await IntegrationLog.find({
       crop: cropId,
       'log.erpAgent': service
@@ -68,16 +68,16 @@ class IntegrationService extends ServiceBase {
    *
    * @param data
    */
-  public static create(data: IExportIntegration, target: string) {
+  public static create (data: IExportIntegration, target: string) {
     return new Promise((resolve, reject) => {
       this.makeRequest(
         'post',
         target,
         data,
-        (result) => {
+        result => {
           resolve(result.data)
         },
-        (err) => {
+        err => {
           reject(err)
         }
       )
@@ -89,7 +89,7 @@ class IntegrationService extends ServiceBase {
    * @param id
    * @param logAchievement
    */
-  public static async updateIntegrationLog(
+  public static async updateIntegrationLog (
     crop: string,
     logAchievement: IExportIntegrationLog
   ) {
@@ -105,7 +105,7 @@ class IntegrationService extends ServiceBase {
    *
    * @param data
    */
-  public static export(data: IExportCrop, target: string) {
+  public static export (data: IExportCrop, target: string) {
     if (dummyDataResponse) {
       return this.dummyResponse(data)
     }
@@ -114,8 +114,8 @@ class IntegrationService extends ServiceBase {
         'post',
         target,
         data,
-        (result) => resolve(result.data),
-        (err) => reject(err)
+        result => resolve(result.data),
+        err => reject(err)
       )
     })
   }
@@ -130,7 +130,7 @@ class IntegrationService extends ServiceBase {
    *
    * @returns Promise
    */
-  public static updateLog(
+  public static updateLog (
     data: any,
     cropId?: string,
     activityId?: string,
@@ -155,7 +155,7 @@ class IntegrationService extends ServiceBase {
    *
    * @returns Promise
    */
-  public static createLog(
+  public static createLog (
     data: any,
     cropId?: string,
     activityId?: string,
@@ -175,7 +175,10 @@ class IntegrationService extends ServiceBase {
    * @param IExportCrop dataExport
    * @param Request req
    */
-  public static async exportAchievement(dataExport: IExportCrop, req: Request) {
+  public static async exportAchievement (
+    dataExport: IExportCrop,
+    req: Request
+  ) {
     const crop = await CropService.findOneCrop(dataExport.cropId)
     if (
       crop &&
@@ -213,8 +216,8 @@ class IntegrationService extends ServiceBase {
     return null
   }
 
-  private static dummyResponse(data) {
-    return data.crops.map((item) => {
+  private static dummyResponse (data) {
+    return data.crops.map(item => {
       return {
         cropId: item.id,
         erpAgent: 'auravant',

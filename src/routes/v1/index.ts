@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
 const authMiddleware = passport.authenticate('jwt', { session: false })
 
 router.get('/fast-links', (req, res: Response) => {
-  res.render('fast-links')
+  res.render('fast-links', { url: process.env.SCHEMA_URL })
 })
 
 // AUTH
