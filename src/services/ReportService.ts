@@ -479,6 +479,7 @@ class ReportService {
         const itemData = item.data.map((lot) => {
           return {
             lot_id: lot._id.toString(),
+            name_lot: lot.name,
             campaign_id: crop._id.toString(),
             coords: lot.coordinates,
             state: 'Done',
