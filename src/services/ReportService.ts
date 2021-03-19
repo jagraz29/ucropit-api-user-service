@@ -458,7 +458,23 @@ class ReportService {
             ),
 
             mail_producers: this.getMailsProducers(crop),
-            phone_producers: this.getPhonesProducers(crop)
+            phone_producers: this.getPhonesProducers(crop),
+            last_monitoring_date: await this.lastDateSignMonitoring(
+              crop,
+              'ACT_MONITORING'
+            ),
+            yield_unit_monitoring: Numbers.roundToTwo(
+              this.calVolumeMonitoring(crop.unitType.name.en, crop.pay, crop)
+            ),
+            yelds_monitoring: this.sumSurfaceSignersMonitoring(
+              crop,
+              'ACT_MONITORING'
+            ),
+            date_estimated_harvest: 0,
+            date_total_signature_monitor: await this.lastDateSignAchievement(
+              crop,
+              'ACT_MONITORING'
+            ),
           }
         })
 
@@ -469,6 +485,160 @@ class ReportService {
     })
 
     return _.flatten(_.flatten(await Promise.all(reports)))
+  }
+
+  private static calVolumeMonitoring(
+    unit: string,
+    pay: number,
+    crop: Array<any>
+  ): number {
+    const surfaces = this.sumSurfaceSignersMonitoring(
+      crop,
+      'ACT_MONITORING'
+    )
+    if (unit === 'Tons') {
+      return pay * surfaces
+    }
+
+    if (unit === 'Kilograms') {
+      return (pay / 1000) * surfaces
+    }
+
+    if (unit === 'Quintales') {
+      return (pay / 10) * surfaces
+    }
+
+    return 0
+  }
+
+  private static sumSurfaceCrop(crop: Array<any>): number {
+    
+    let sum = 0
+
+    sum = crop
+      .map((lot) => {
+        return {
+          total: lot.data.reduce((a, b) => a + (b['surface'] || 0), 0)
+        }
+      })
+      .reduce((a, b) => a + (b['total'] || 0), 0)
+
+    return sum
+  }
+
+  private static sumSurfaceSignersMonitoring(crop, type) {
+    const listActivitiesPending = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'pending'
+    )
+    const listActivitiesDone = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'done'
+    )
+    const listActivitiesFinished = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'finished'
+    )
+
+    const sumTotalActivitiesPending = this.getSurfaceMonitoring(listActivitiesPending)
+    const sumTotalActivitiesFinished = this.getSurfaceMonitoring(
+      listActivitiesFinished
+    )
+    const sumTotalActivitiesDone = this.getSurfaceMonitoring(
+      listActivitiesDone
+    )
+
+    return sumTotalActivitiesDone + sumTotalActivitiesFinished + sumTotalActivitiesPending
+  }
+
+  private static getActivitiesMonitoring(crop, type, status) {
+    return crop[status].length > 0
+      ? crop[status].filter((activity) => activity.type.tag === type)
+      : []
+  }
+
+  private static getSurfaceMonitoring(activities) {
+    let total = 0
+
+    for (const activity of activities) {
+      total += activity.surface
+    }
+
+    return total
+  }
+
+  private static async lastDateSignMonitoring(crop, typeActivity) {
+    const datesDone = await this.getDateLastSignedMonitoring(
+      crop.done.filter((activity) => activity.type.tag === typeActivity),
+      
+    )
+
+    const datesFinished = await this.getDateLastSignedMonitoring(
+      crop.finished.filter((activity) => activity.type.tag === typeActivity),
+    )
+
+    const mergedList = datesDone.concat(datesFinished)
+
+    const lastDate =
+      mergedList.length > 0 ? datesDone.concat(datesFinished).pop() : null
+
+    return lastDate
+      ? lastDate.toLocaleDateString('es-ES', {
+          day: 'numeric',
+          year: 'numeric',
+          month: 'long'
+        })
+      : ''
+  }
+
+  private static async getDateLastSignedMonitoring(activities) {
+    let dates = []
+    for (const activity of activities) {
+          const dateLast = activity.signers.pop()?._id.getTimestamp() 
+          dates.push(dateLast)
+    }
+    return dates.filter((date) => date)
+  }
+
+  private static async getDateLastSignedAchievement(activities) {
+    let dates = []
+    for (const activity of activities) {
+      const activityObject = await Activity.findById(activity._id)
+      const signersFalse = activityObject.signers.filter(
+        (obj) => obj.signed === false
+      )
+      const dateLast = signersFalse.length === 0 ?
+      activityObject.signers.pop()?._id.getTimestamp() : null
+      dates.push(dateLast)
+    }
+    return dates.filter((date) => date)
+  }
+
+  private static async lastDateSignAchievement(crop, typeActivity) {
+    const datesDone = await this.getDateLastSignedAchievement(
+      crop.done.filter((activity) => activity.type.tag === typeActivity),
+      
+    )
+
+    const datesFinished = await this.getDateLastSignedAchievement(
+      crop.finished.filter((activity) => activity.type.tag === typeActivity),
+    )
+
+    const mergedList = datesDone.concat(datesFinished)
+
+    const lastDate =
+      mergedList.length > 0 ? datesDone.concat(datesFinished).pop() : null
+
+    return lastDate
+      ? lastDate.toLocaleDateString('es-ES', {
+          day: 'numeric',
+          year: 'numeric',
+          month: 'long'
+        })
+      : ''
   }
 
   public static generateDataSet(crops: Array<any>) {
