@@ -13,7 +13,7 @@ class ActivitiesNotificationsController {
     await EmailService.send({
       template: 'notification-activity',
       to: user.email,
-      data: { name, activity, cropName, host }
+      data: { name, activity, cropname, host }
     })
 
     res.json({ user })

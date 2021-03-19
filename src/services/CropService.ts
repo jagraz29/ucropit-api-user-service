@@ -433,13 +433,17 @@ class CropService extends ServiceBase {
     
     const activityName = await ActivityType.findOne({tag:"ACT_MONITORING"})    
 
-    const activitiesPending = crop.pending.filter(item => item.name === activityName.name.es|| item.name === activityName.name.en)
+    function filterActivity(item) {
+      return item.name === activityName.name.es|| item.name === activityName.name.en
+    }
 
-    const activitiesToMake = crop.toMake.filter(item => item.name === activityName.name.es|| item.name === activityName.name.en)
+    const activitiesPending = crop.pending.filter(item => filterActivity(item))
 
-    const activitiesDone = crop.done.filter(item => item.name === activityName.name.es|| item.name === activityName.name.en)
+    const activitiesToMake = crop.toMake.filter(item => filterActivity(item))
 
-    const activitiesFinished = crop.finished.filter(item => item.name === activityName.name.es|| item.name === activityName.name.en)
+    const activitiesDone = crop.done.filter(item => filterActivity(item))
+
+    const activitiesFinished = crop.finished.filter(item => filterActivity(item))
 
     const activitiesMerged = [...activitiesPending, ...activitiesFinished, ...activitiesToMake, ...activitiesDone ]
 
