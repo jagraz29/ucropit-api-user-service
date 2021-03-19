@@ -125,8 +125,8 @@ class ServiceBase {
   public static makeRequest(
     method: string,
     url: string,
-    values: any,
-    callback: Function,
+    values?: any,
+    callback?: Function,
     callbackError?: Function
   ) {
     axios[method](url, values).then(callback).catch(callbackError)
@@ -143,9 +143,11 @@ class ServiceBase {
     sortReference?: Array<any>
   ): Array<any> {
     const sortData = list.sort(function (a, b) {
-      if (a.total > 0 && b.total > 0){
-        let currentDate = a.date.substr(3, 4).split(' ') + a.date.substr(0, 2).split(' ') 
-        let cropDate = b.date.substr(3, 4).split(' ') + b.date.substr(0, 2).split(' ') 
+      if (a.total > 0 && b.total > 0) {
+        let currentDate =
+          a.date.substr(3, 4).split(' ') + a.date.substr(0, 2).split(' ')
+        let cropDate =
+          b.date.substr(3, 4).split(' ') + b.date.substr(0, 2).split(' ')
         return currentDate - cropDate
       }
     })

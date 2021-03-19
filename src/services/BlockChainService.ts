@@ -1,5 +1,5 @@
 import fs from 'fs'
-import PDF from '../utils/PDF'
+import PDF from '../utils/pdf/PDF'
 import Stamp from '../utils/Stamp'
 
 import { basePath, makeDirIfNotExists } from '../utils/Files'
@@ -22,9 +22,8 @@ class BlockChainServices {
       activity.key
     }`
 
-    const { hash, path } = await PDF.generate({
+    const { hash, path } = await PDF.generatePdfSign({
       pathFile: `${pathToSave}/${nameFile}`,
-      files: activity.files,
       crop: crop,
       activity: activity
     })
