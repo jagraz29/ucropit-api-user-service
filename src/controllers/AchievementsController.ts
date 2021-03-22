@@ -18,6 +18,7 @@ import models from '../models'
 import NotificationService from '../services/NotificationService'
 import { emailTemplates } from '../types/common'
 import { typesSupplies } from '../utils/Constants'
+import agenda from '../jobs'
 
 const Crop = models.Crop
 
@@ -119,20 +120,44 @@ class AchievementsController {
       return !el.signed && user.email !== el.email
     })
 
-    for (let signer of signers) {
-      const type = typesSupplies.find(el => activity.type.tag === el.tag).value
+    const type = typesSupplies.find(el => activity.type.tag === el.tag).value
+    const url = `${process.env.BASE_URL}/${process.env.FAST_LINK_URL}?url=activities/${crop._id}/${type}/common/detail/${achievement._id}/${activity._id}/true%5C?tag%5C=${activity.type.tag}`
 
+    for (let signer of signers) {
       await NotificationService.email(
         emailTemplates.NOTIFICATION_ACTIVITY,
         signer,
         {
           name: signer.fullName,
           cropName: crop.name,
-          url: `${process.env.BASE_URL}/${process.env.FAST_LINK_URL}?url=activities/${crop._id}/${type}/common/detail/${achievement._id}/${activity._id}/true%5C?tag%5C=${activity.type.tag}`,
+          url,
           activity: activity.type.name.es
         }
       )
     }
+
+    const agendaData = {
+      url,
+      cropName: crop.name,
+      achievement: achievement._id,
+      activityLabel: activity.type.name.es,
+      activity: activity._id
+    }
+
+    await agenda.cancel({ data: agendaData })
+    const reminder = agenda.create('reminder-activity-email', {
+      cropName: crop.name,
+      achievement: achievement._id,
+      activityLabel: activity.type.name.es,
+      activity: activity._id
+    })
+
+    await reminder.repeatEvery('15 minutes', {
+      skipImmediate: true,
+      timezone: 'America/Argentina/Buenos_Aires'
+    })
+
+    await reminder.save()
 
     await IntegrationService.exportAchievement(
       {

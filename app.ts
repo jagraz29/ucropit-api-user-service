@@ -1,4 +1,5 @@
 require('dotenv').config()
+require('./src/jobs')
 
 import express, { Application, Request, Response, NextFunction } from 'express'
 import { basePath } from './src/utils/Files'
