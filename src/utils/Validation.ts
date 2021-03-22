@@ -72,6 +72,17 @@ export const validateActivityStore = async (activity) => {
         })
       )
       .optional(),
+    storages: Joi.array()
+      .items(
+        Joi.object().keys({
+          unitType: Joi.string().required(),
+          tonsHarvest: Joi.number().required(),
+          storageType: Joi.string().required(),
+          icon: Joi.string().optional(),
+          label: Joi.string().optional()
+        })
+      )
+      .optional(),
     signers: Joi.array().items(
       Joi.object().keys({
         userId: Joi.string().required(),
@@ -122,6 +133,17 @@ export const validateActivityUpdate = async (activity) => {
           date: Joi.date().required(),
           settings: Joi.optional(),
           meta: Joi.optional()
+        })
+      )
+      .optional(),
+    storages: Joi.array()
+      .items(
+        Joi.object().keys({
+          unitType: Joi.string().required(),
+          tonsHarvest: Joi.number().required(),
+          storageType: Joi.string().required(),
+          icon: Joi.string().optional(),
+          label: Joi.string().optional()
         })
       )
       .optional(),

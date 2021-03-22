@@ -361,3 +361,34 @@ export const rolesData = [
     value: 'CAM'
   }
 ]
+
+export const storageTypes = [
+  {
+    name: {
+      en: 'Silobags',
+      es: 'Silobolsas'
+    },
+    key: 'SILO_BAG'
+  },
+  {
+    name: {
+      en: 'Silo',
+      es: 'Silo'
+    },
+    key: 'SILO'
+  },
+  {
+    name: {
+      en: 'Out of program delivery',
+      es: 'Entrega fuera de programa'
+    },
+    key: 'DELIVERY_OUT_OF_PROGRAM'
+  },
+  {
+    name: {
+      en: 'Delivery within the program',
+      es: 'Entrega dentro de programa'
+    },
+    key: 'DELIVERY_WITHIN_OF_PROGRAM'
+  }
+]

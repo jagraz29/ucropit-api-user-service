@@ -17,6 +17,7 @@ import ServiceIntegration from './serviceIntegration'
 import Roles from './Roles'
 import { CropType } from './cropType'
 import { UnitType } from './unitType'
+import TypeStorage from './typeStorage'
 
 import FileDocument from './documentFile'
 import IntegrationLog from './integrationLog'
@@ -50,7 +51,8 @@ const models = {
   EvidenceConcept,
   ServiceIntegration,
   Roles,
-  IntegrationLog
+  IntegrationLog,
+  TypeStorage
 }
 
 export { connectDb }
