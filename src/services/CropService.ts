@@ -625,8 +625,23 @@ class CropService extends ServiceBase {
     )
 
     const statusCrop = status.cropStatus
-    crop[statusCrop].push(activity._id)
+    if (!this.isExistActivity(activity, crop, statusCrop)) {
+      crop[statusCrop].push(activity._id)
+    }
+
     return crop.save()
+  }
+
+  public static isExistActivity(activity, crop, status: string): boolean {
+    if (
+      crop[status].find(
+        (item) => item._id.toString() === activity._id.toString()
+      )
+    ) {
+      return true
+    }
+
+    return false
   }
 
   public static async cancelled(cropId) {
