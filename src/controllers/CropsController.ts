@@ -102,6 +102,20 @@ class CropsController {
   }
 
   /**
+   * Show last monitoring
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+   public async showLastMonitoring(req: Request, res: Response) {
+    const monitoring = await CropService.getLastMonitoring(req.params.id)
+
+    res.status(200).json(monitoring)
+  }
+
+  /**
    * Update a crop
    *
    * @param Request req
