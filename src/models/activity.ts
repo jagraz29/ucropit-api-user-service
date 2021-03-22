@@ -69,6 +69,9 @@ const ActivitySchema = new Schema({
     type: Date,
     required: false
   },
+  dateHarvest: {
+    type: Date
+  },
   dateLimitValidation: {
     type: Date,
     required: false
