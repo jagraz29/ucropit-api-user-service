@@ -20,6 +20,20 @@ const router: express.Router = express.Router()
  */
 router.get('/', cropsController.index)
 
+
+/**
+ * @swagger
+ * path:
+ *  /v1/crops/lastMonitoring/{id}:
+ *    get:
+ *      summary: Show lastMonitoring
+ *      tags: [Activity]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ */
+ router.get('/lastMonitoring/:id', cropsController.showLastMonitoring)
+
 /**
  * @swagger
  * path:

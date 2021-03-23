@@ -79,6 +79,10 @@ const ActivitySchema = new Schema({
   dateObservation: {
     type: Date
   },
+  dateEstimatedHarvest: {
+    type: Date,
+    required: false
+  },
   observation: {
     type: String
   },
