@@ -115,4 +115,20 @@ router.get('/concepts', commonController.evidenceConcepts)
  */
 router.get('/integrations', commonController.serviceIntegration)
 
+/**
+ * @swagger
+ * /v1/commons/storagetypes:
+ *  get:
+ *   summary: Get all storages types
+ *   tags:
+ *      - Common
+ *   description: Storage Types
+ *   produces:
+ *     - application/json
+ *   responses:
+ *    '200':
+ *      description: Get all services integrations
+ */
+router.get('/storagetypes', commonController.storageTypes)
+
 export default router

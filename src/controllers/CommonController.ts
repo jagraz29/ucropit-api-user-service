@@ -8,6 +8,7 @@ const TypeAgreement = models.TypeAgreement
 const EvidenceConcepts = models.EvidenceConcept
 const Roles = models.Roles
 const ServiceIntegrations = models.ServiceIntegration
+const TypeStorage = models.TypeStorage
 
 class CommonController {
   /**
@@ -107,6 +108,18 @@ class CommonController {
     const services = await ServiceIntegrations.find({})
 
     res.status(200).json(services)
+  }
+
+  /**
+   * Get all storage types
+   *
+   * @param Request req
+   * @param Response res
+   */
+  public async storageTypes(req: Request, res: Response) {
+    const storageTypes = await TypeStorage.find({})
+
+    res.status(200).json(storageTypes)
   }
 }
 

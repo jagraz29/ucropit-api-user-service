@@ -52,7 +52,7 @@ import { isNowGreaterThan } from '../utils/Date'
 const { Schema } = mongoose
 
 const ActivitySchema = new Schema({
-  _id: { type:  mongoose.Schema.Types.ObjectId, required: false },
+  _id: { type: mongoose.Schema.Types.ObjectId, required: false },
   key: {
     type: String,
     required: false
@@ -68,6 +68,9 @@ const ActivitySchema = new Schema({
   dateEnd: {
     type: Date,
     required: false
+  },
+  dateHarvest: {
+    type: Date
   },
   dateLimitValidation: {
     type: Date,
@@ -165,6 +168,22 @@ const ActivitySchema = new Schema({
       },
       total: {
         type: Number
+      }
+    }
+  ],
+  storages: [
+    {
+      unitType: {
+        type: Schema.Types.ObjectId
+      },
+      tonsHarvest: {
+        type: Number
+      },
+      storageType: {
+        type: Schema.Types.ObjectId
+      },
+      label: {
+        type: String
       }
     }
   ],

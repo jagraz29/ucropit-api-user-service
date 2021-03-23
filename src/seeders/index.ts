@@ -10,7 +10,8 @@ import {
   supplyTypesData,
   evidenceConcepts,
   rolesData,
-  servicesIntegration
+  servicesIntegration,
+  storageTypes
 } from './data'
 
 import {
@@ -31,6 +32,7 @@ const Roles = models.Roles
 const ServiceIntegration = models.ServiceIntegration
 
 const CollaboratorRequest = models.CollaboratorRequest
+const TypeStorage = models.TypeStorage
 
 /**
  * Seeders CropType
@@ -248,6 +250,24 @@ const seedersServiceIntegrations = async (flag?) => {
   console.log(`${chalk.green('=====Registered Service Integrations ====')}`)
   return true
 }
+
+const seedersStorageTypes = async (flag?) => {
+  if (flag && flag !== '--storage-types') return
+
+  console.log(`${chalk.green('=====Registering Storage Types====')}`)
+  const typesStorage = await TypeStorage.find({})
+
+  const typesStorageSeed = storageTypes.filter(
+    (item) => !typesStorage.find((element) => item.key === element.key)
+  )
+
+  for (const typeStorage of typesStorageSeed) {
+    await TypeStorage.create(typeStorage)
+  }
+
+  console.log(`${chalk.green('=====Registered Storage Types ====')}`)
+  return true
+}
 ;(async () => {
   const connected = await connectDb()
 
@@ -273,6 +293,7 @@ const seedersServiceIntegrations = async (flag?) => {
       await seedersTypeAgreement(flag)
       await seedersEvidenceConcepts(flag)
       await seedersServiceIntegrations(flag)
+      await seedersStorageTypes(flag)
     } catch (e) {
       console.log(e)
     }

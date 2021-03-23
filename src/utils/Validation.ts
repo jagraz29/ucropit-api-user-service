@@ -39,6 +39,7 @@ export const validateActivityStore = async (activity) => {
     dateStart: Joi.date().optional(),
     dateEnd: Joi.date().min(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
+    dateHarvest: Joi.date().optional(),
     dateEstimatedHarvest: Joi.date().optional(),
     surface: Joi.number().optional(),
     type: Joi.string().required(),
@@ -73,6 +74,17 @@ export const validateActivityStore = async (activity) => {
         })
       )
       .optional(),
+    storages: Joi.array()
+      .items(
+        Joi.object().keys({
+          unitType: Joi.string().required(),
+          tonsHarvest: Joi.number().required(),
+          storageType: Joi.string().required(),
+          icon: Joi.string().optional(),
+          label: Joi.string().optional()
+        })
+      )
+      .optional(),
     signers: Joi.array().items(
       Joi.object().keys({
         userId: Joi.string().required(),
@@ -93,6 +105,7 @@ export const validateActivityUpdate = async (activity) => {
     dateStart: Joi.date().optional(),
     dateEnd: Joi.date().min(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
+    dateHarvest: Joi.date().optional(),
     dateEstimatedHarvest: Joi.date().optional(),
     surface: Joi.number().optional(),
     type: Joi.string().optional(),
@@ -124,6 +137,17 @@ export const validateActivityUpdate = async (activity) => {
           date: Joi.date().required(),
           settings: Joi.optional(),
           meta: Joi.optional()
+        })
+      )
+      .optional(),
+    storages: Joi.array()
+      .items(
+        Joi.object().keys({
+          unitType: Joi.string().required(),
+          tonsHarvest: Joi.number().required(),
+          storageType: Joi.string().required(),
+          icon: Joi.string().optional(),
+          label: Joi.string().optional()
         })
       )
       .optional(),
