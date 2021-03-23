@@ -1425,7 +1425,7 @@ class ReportService {
     private static filterCropsSowing(crops: any, type) {
     return crops.filter(
       (crop) =>
-      (this.checkAgreements(crop.finished) || this.checkAgreements(crop.done)) && 
+      ///(this.checkAgreements(crop.finished) || this.checkAgreements(crop.done)) && 
       (this.isContainActivityBilling(crop, type))
     )
   }
@@ -1458,13 +1458,47 @@ class ReportService {
 
     return false
   }
+  /*let crops = await CropService.getCropByActivities(activityType)
+  const totalSurface = crops
+    .flatMap((crop) => {
+      const activities = [
+        ...crop.done.filter((activity) => activity.type.tag === activityType),
+        ...crop.finished.filter(
+          (activity) => activity.type.tag === activityType
+        )
+      ]
+      return activities
+    })
+    .flatMap((activity) => {
+      return activity.achievements
+    })
+    .reduce((a, b) => a + b['surface'] || 0, 0)*/
+
+    /*public static async generateReportsAplicationBilling(crops) {
+      const dataCropAplication = crops.flatMap((crop) => { 
+        const activities = [
+          ...crop.done.filter((activity) => activity.type.tag === 'ACT_APPLICATION'),
+          ...crop.finished.filter(
+            (activity) => activity.type.tag === 'ACT_APPLICATION'
+          )
+        ]
+        return activities
+      }).flatMap((activity) => {
+        return activity.achievements
+      })
+      return dataCropAplication
+    }*/
 
   public static async generateReportsAplicationBilling(crops) {
     const filterCropsAplication= this.filterCropsSowing(crops, 'ACT_APPLICATION')
     const dataCropAplication = filterCropsAplication.map((crop) => {
-       const activities = [...crop.done, ...crop.finished]
+       const activities = [...crop.done.filter((activity) => activity.type.tag === 'ACT_APPLICATION'), 
+        ...crop.finished.filter((activity) => activity.type.tag === 'ACT_APPLICATION')]
        const dataActivities = activities.map(async (item) => {
        const itemDataAchievements = item.achievements.map(async (achievement) => {
+         //console.log("activities: ", activities)
+         //console.log("dataActivities: ", item)
+         //console.log("dataActivities: ", achievement)
         return {
           cuit: crop.company?.identifier,
           business_name: (await this.getCompany(crop.company?.identifier))
