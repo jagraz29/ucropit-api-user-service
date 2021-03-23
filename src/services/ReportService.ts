@@ -463,10 +463,8 @@ class ReportService {
               crop,
               'ACT_MONITORING'
             ),
-            yield_unit_monitoring: Numbers.roundToTwo(
-              this.calVolumeMonitoring(crop.unitType.name.en, crop.pay, crop)
-            ),
-            yelds_monitoring: this.sumSurfaceSignersMonitoring(
+            yield_unit_monitoring: this.unitMonitoring(crop,'ACT_MONITORING', crop.unitType.name.en), /*crop.unitType.name.en, */
+            yelds_monitoring: this.rindeMonitoring(
               crop,
               'ACT_MONITORING'
             ),
@@ -487,30 +485,6 @@ class ReportService {
     return _.flatten(_.flatten(await Promise.all(reports)))
   }
 
-  private static calVolumeMonitoring(
-    unit: string,
-    pay: number,
-    crop: Array<any>
-  ): number {
-    const surfaces = this.sumSurfaceSignersMonitoring(
-      crop,
-      'ACT_MONITORING'
-    )
-    if (unit === 'Tons') {
-      return pay * surfaces
-    }
-
-    if (unit === 'Kilograms') {
-      return (pay / 1000) * surfaces
-    }
-
-    if (unit === 'Quintales') {
-      return (pay / 10) * surfaces
-    }
-
-    return 0
-  }
-
   private static sumSurfaceCrop(crop: Array<any>): number {
     
     let sum = 0
@@ -526,7 +500,7 @@ class ReportService {
     return sum
   }
 
-  private static sumSurfaceSignersMonitoring(crop, type) {
+  private static unitMonitoring(crop, type, unit) {
     const listActivitiesPending = this.getActivitiesMonitoring(
       crop,
       type,
@@ -543,15 +517,45 @@ class ReportService {
       'finished'
     )
 
-    const sumTotalActivitiesPending = this.getSurfaceMonitoring(listActivitiesPending)
-    const sumTotalActivitiesFinished = this.getSurfaceMonitoring(
-      listActivitiesFinished
+    const listActivitiestoMake = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'toMake'
     )
-    const sumTotalActivitiesDone = this.getSurfaceMonitoring(
-      listActivitiesDone
+    
+    const activities = [...listActivitiesPending, ...listActivitiesDone, ...listActivitiesFinished, ...listActivitiestoMake]
+    return activities.length > 0 ? unit : null
+  }
+
+  private static rindeMonitoring(crop, type) {
+    const listActivitiesPending = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'pending'
+    )
+    const listActivitiesDone = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'done'
+    )
+    const listActivitiesFinished = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'finished'
     )
 
-    return sumTotalActivitiesDone + sumTotalActivitiesFinished + sumTotalActivitiesPending
+    const listActivitiestoMake = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'toMake'
+    )
+    let total = 0
+    const activities = [...listActivitiesPending, ...listActivitiesDone, ...listActivitiesFinished, ...listActivitiestoMake]
+    for (const activity of activities) {
+      total += activity.pay
+    }
+    
+    return activities.length > 0 ? total : null
   }
 
   private static getActivitiesMonitoring(crop, type, status) {
