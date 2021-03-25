@@ -153,14 +153,10 @@ class ReportService {
     const reports = crops.map((crop) => {
       const reportByCrop = crop.lots.map(async (item) => {
         const reportByLot = item.data.map(async (lot) => {
-          this.getDateLastAchievement(
-            crop.done.filter((activity) => activity.type.tag === 'ACT_SOWING'),
-            lot
-          )
           return {
             cuit: crop.company?.identifier,
             business_name: (await this.getCompany(crop.company?.identifier))
-              .name,
+              ?.name,
             crop: crop.cropType.name.es,
             crop_name: crop.name,
             volume: Numbers.roundToTwo(
