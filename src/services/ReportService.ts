@@ -524,7 +524,14 @@ class ReportService {
     )
     
     const activities = [...listActivitiesPending, ...listActivitiesDone, ...listActivitiesFinished, ...listActivitiestoMake]
-    return activities.length > 0 ? unit : null
+    let unitType = ''
+    if (activities.length > 0 ){
+      for (const activity of activities) {
+        unitType = activity.unitType.key
+      }
+    }
+    
+    return activities.length > 0 ? unit: null
   }
 
   private static rindeMonitoring(crop, type) {
@@ -554,7 +561,7 @@ class ReportService {
     for (const activity of activities) {
       total += activity.pay
     }
-    
+
     return activities.length > 0 ? total : null
   }
 
