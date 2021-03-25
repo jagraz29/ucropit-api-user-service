@@ -249,212 +249,212 @@ class ReportService {
               crop,
               lot,
               tagsTypeAgreement.EXPLO
-            )
-            // surface_planned_sowing: this.surfacePlannedByActivity(
-            //   crop,
-            //   lot,
-            //   'ACT_SOWING'
-            // ),
-            // date_achievement_sowing: this.lastDateAchievementByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_SOWING'
-            // ),
-            // surface_achievement_sowing: this.surfaceAchievementsActivity(
-            //   crop,
-            //   'ACT_SOWING'
-            // ),
-            // total_surface_signed_sowing: this.sumSurfaceSigners(
-            //   crop,
-            //   'ACT_SOWING'
-            // ),
-            // date_sign_achievement_by_lot_sowing: await this.lastDateSignAchievementByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_SOWING'
-            // ),
-            // total_surface_with_evidence_sowing: this.totalSurfacesAchievementsFileApproved(
-            //   crop,
-            //   'ACT_SOWING'
-            // ),
-            // link_pdf_ots_sowing: this.createLinkDownloadFilesSign(
-            //   crop.finished,
-            //   'Sowing'
-            // ),
-            // link_evidences_files_sowing: this.getEvidenceFiles(
-            //   crop,
-            //   'ACT_SOWING'
-            // ),
-            // cant_achievements_sowing: this.sumCantAchievementsByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_SOWING'
-            // ),
-            // surface_planned_harvest: this.surfacePlannedByActivity(
-            //   crop,
-            //   lot,
-            //   'ACT_HARVEST'
-            // ),
-            // date_achievement_harvest: this.lastDateAchievementByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_HARVEST'
-            // ),
-            // surface_achievement_harvest: this.surfaceAchievementsActivity(
-            //   crop,
-            //   'ACT_HARVEST'
-            // ),
-            // total_surface_signed_harvest: this.sumSurfaceSigners(
-            //   crop,
-            //   'ACT_HARVEST'
-            // ),
-            // date_sign_achievement_by_lot_harvest: await this.lastDateSignAchievementByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_HARVEST'
-            // ),
-            // total_surface_with_evidence_harvest: this.totalSurfacesAchievementsFileApproved(
-            //   crop,
-            //   'ACT_HARVEST'
-            // ),
-            // link_pdf_ots_harvest: this.createLinkDownloadFilesSign(
-            //   crop.finished,
-            //   'Harvest'
-            // ),
-            // link_evidences_files_harvest: this.getEvidenceFiles(
-            //   crop,
-            //   'ACT_HARVEST'
-            // ),
-            // cant_achievements_harvest: this.sumCantAchievementsByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_HARVEST'
-            // ),
-            // surface_planned_application: this.surfacePlannedByActivity(
-            //   crop,
-            //   lot,
-            //   'ACT_APPLICATION'
-            // ),
-            // date_achievement_application: this.lastDateAchievementByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_APPLICATION'
-            // ),
-            // surface_achievement_application: this.surfaceAchievementsActivity(
-            //   crop,
-            //   'ACT_APPLICATION'
-            // ),
-            // total_surface_signed_application: this.sumSurfaceSigners(
-            //   crop,
-            //   'ACT_APPLICATION'
-            // ),
-            // date_sign_achievement_by_lot_application: await this.lastDateSignAchievementByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_APPLICATION'
-            // ),
-            // total_surface_with_evidence_application: this.totalSurfacesAchievementsFileApproved(
-            //   crop,
-            //   'ACT_APPLICATION'
-            // ),
-            // link_pdf_ots_application: this.createLinkDownloadFilesSign(
-            //   crop.finished,
-            //   'Application'
-            // ),
+            ),
+            surface_planned_sowing: this.surfacePlannedByActivity(
+              crop,
+              lot,
+              'ACT_SOWING'
+            ),
+            date_achievement_sowing: this.lastDateAchievementByLot(
+              crop,
+              lot,
+              'ACT_SOWING'
+            ),
+            surface_achievement_sowing: this.surfaceAchievementsActivity(
+              crop,
+              'ACT_SOWING'
+            ),
+            total_surface_signed_sowing: this.sumSurfaceSigners(
+              crop,
+              'ACT_SOWING'
+            ),
+            date_sign_achievement_by_lot_sowing: await this.lastDateSignAchievementByLot(
+              crop,
+              lot,
+              'ACT_SOWING'
+            ),
+            total_surface_with_evidence_sowing: this.totalSurfacesAchievementsFileApproved(
+              crop,
+              'ACT_SOWING'
+            ),
+            link_pdf_ots_sowing: this.createLinkDownloadFilesSign(
+              crop.finished,
+              'Sowing'
+            ),
+            link_evidences_files_sowing: this.getEvidenceFiles(
+              crop,
+              'ACT_SOWING'
+            ),
+            cant_achievements_sowing: this.sumCantAchievementsByLot(
+              crop,
+              lot,
+              'ACT_SOWING'
+            ),
+            surface_planned_harvest: this.surfacePlannedByActivity(
+              crop,
+              lot,
+              'ACT_HARVEST'
+            ),
+            date_achievement_harvest: this.lastDateAchievementByLot(
+              crop,
+              lot,
+              'ACT_HARVEST'
+            ),
+            surface_achievement_harvest: this.surfaceAchievementsActivity(
+              crop,
+              'ACT_HARVEST'
+            ),
+            total_surface_signed_harvest: this.sumSurfaceSigners(
+              crop,
+              'ACT_HARVEST'
+            ),
+            date_sign_achievement_by_lot_harvest: await this.lastDateSignAchievementByLot(
+              crop,
+              lot,
+              'ACT_HARVEST'
+            ),
+            total_surface_with_evidence_harvest: this.totalSurfacesAchievementsFileApproved(
+              crop,
+              'ACT_HARVEST'
+            ),
+            link_pdf_ots_harvest: this.createLinkDownloadFilesSign(
+              crop.finished,
+              'Harvest'
+            ),
+            link_evidences_files_harvest: this.getEvidenceFiles(
+              crop,
+              'ACT_HARVEST'
+            ),
+            cant_achievements_harvest: this.sumCantAchievementsByLot(
+              crop,
+              lot,
+              'ACT_HARVEST'
+            ),
+            surface_planned_application: this.surfacePlannedByActivity(
+              crop,
+              lot,
+              'ACT_APPLICATION'
+            ),
+            date_achievement_application: this.lastDateAchievementByLot(
+              crop,
+              lot,
+              'ACT_APPLICATION'
+            ),
+            surface_achievement_application: this.surfaceAchievementsActivity(
+              crop,
+              'ACT_APPLICATION'
+            ),
+            total_surface_signed_application: this.sumSurfaceSigners(
+              crop,
+              'ACT_APPLICATION'
+            ),
+            date_sign_achievement_by_lot_application: await this.lastDateSignAchievementByLot(
+              crop,
+              lot,
+              'ACT_APPLICATION'
+            ),
+            total_surface_with_evidence_application: this.totalSurfacesAchievementsFileApproved(
+              crop,
+              'ACT_APPLICATION'
+            ),
+            link_pdf_ots_application: this.createLinkDownloadFilesSign(
+              crop.finished,
+              'Application'
+            ),
 
-            // link_evidences_files_application: this.getEvidenceFiles(
-            //   crop,
-            //   'ACT_APPLICATION'
-            // ),
+            link_evidences_files_application: this.getEvidenceFiles(
+              crop,
+              'ACT_APPLICATION'
+            ),
 
-            // cant_achievements_application: this.sumCantAchievementsByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_APPLICATION'
-            // ),
-            // surface_planned_fertilization: this.surfacePlannedByActivity(
-            //   crop,
-            //   lot,
-            //   'ACT_FERTILIZATION'
-            // ),
-            // date_achievement_fertilization: this.lastDateAchievementByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_FERTILIZATION'
-            // ),
-            // surface_achievement_fertilization: this.surfaceAchievementsActivity(
-            //   crop,
-            //   'ACT_FERTILIZATION'
-            // ),
-            // total_surface_signed_fertilization: this.sumSurfaceSigners(
-            //   crop,
-            //   'ACT_FERTILIZATION'
-            // ),
-            // date_sign_achievement_by_lot_fertilization: await this.lastDateSignAchievementByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_FERTILIZATION'
-            // ),
-            // total_surface_with_evidence_fertilization: this.totalSurfacesAchievementsFileApproved(
-            //   crop,
-            //   'ACT_FERTILIZATION'
-            // ),
-            // link_pdf_ots_fertilization: this.createLinkDownloadFilesSign(
-            //   crop.finished,
-            //   'Fertilization'
-            // ),
-            // link_evidences_files_fertilization: this.getEvidenceFiles(
-            //   crop,
-            //   'ACT_FERTILIZATION'
-            // ),
-            // cant_achievements_fertilization: this.sumCantAchievementsByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_FERTILIZATION'
-            // ),
-            // surface_planned_tillage: this.surfacePlannedByActivity(
-            //   crop,
-            //   lot,
-            //   'ACT_TILLAGE'
-            // ),
-            // date_achievement_tillage: this.lastDateAchievementByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_TILLAGE'
-            // ),
-            // surface_achievement_tillage: this.surfaceAchievementsActivity(
-            //   crop,
-            //   'ACT_TILLAGE'
-            // ),
-            // total_surface_signed_tillage: this.sumSurfaceSigners(
-            //   crop,
-            //   'ACT_TILLAGE'
-            // ),
-            // date_sign_achievement_by_lot_tillage: await this.lastDateSignAchievementByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_TILLAGE'
-            // ),
-            // total_surface_with_evidence_tillage: this.totalSurfacesAchievementsFileApproved(
-            //   crop,
-            //   'ACT_TILLAGE'
-            // ),
-            // link_pdf_ots_tillage: this.createLinkDownloadFilesSign(
-            //   crop.finished,
-            //   'Tillage'
-            // ),
-            // link_evidences_files_tillage: this.getEvidenceFiles(
-            //   crop,
-            //   'ACT_TILLAGE'
-            // ),
-            // cant_achievements_tillage: this.sumCantAchievementsByLot(
-            //   crop,
-            //   lot,
-            //   'ACT_TILLAGE'
-            // ),
+            cant_achievements_application: this.sumCantAchievementsByLot(
+              crop,
+              lot,
+              'ACT_APPLICATION'
+            ),
+            surface_planned_fertilization: this.surfacePlannedByActivity(
+              crop,
+              lot,
+              'ACT_FERTILIZATION'
+            ),
+            date_achievement_fertilization: this.lastDateAchievementByLot(
+              crop,
+              lot,
+              'ACT_FERTILIZATION'
+            ),
+            surface_achievement_fertilization: this.surfaceAchievementsActivity(
+              crop,
+              'ACT_FERTILIZATION'
+            ),
+            total_surface_signed_fertilization: this.sumSurfaceSigners(
+              crop,
+              'ACT_FERTILIZATION'
+            ),
+            date_sign_achievement_by_lot_fertilization: await this.lastDateSignAchievementByLot(
+              crop,
+              lot,
+              'ACT_FERTILIZATION'
+            ),
+            total_surface_with_evidence_fertilization: this.totalSurfacesAchievementsFileApproved(
+              crop,
+              'ACT_FERTILIZATION'
+            ),
+            link_pdf_ots_fertilization: this.createLinkDownloadFilesSign(
+              crop.finished,
+              'Fertilization'
+            ),
+            link_evidences_files_fertilization: this.getEvidenceFiles(
+              crop,
+              'ACT_FERTILIZATION'
+            ),
+            cant_achievements_fertilization: this.sumCantAchievementsByLot(
+              crop,
+              lot,
+              'ACT_FERTILIZATION'
+            ),
+            surface_planned_tillage: this.surfacePlannedByActivity(
+              crop,
+              lot,
+              'ACT_TILLAGE'
+            ),
+            date_achievement_tillage: this.lastDateAchievementByLot(
+              crop,
+              lot,
+              'ACT_TILLAGE'
+            ),
+            surface_achievement_tillage: this.surfaceAchievementsActivity(
+              crop,
+              'ACT_TILLAGE'
+            ),
+            total_surface_signed_tillage: this.sumSurfaceSigners(
+              crop,
+              'ACT_TILLAGE'
+            ),
+            date_sign_achievement_by_lot_tillage: await this.lastDateSignAchievementByLot(
+              crop,
+              lot,
+              'ACT_TILLAGE'
+            ),
+            total_surface_with_evidence_tillage: this.totalSurfacesAchievementsFileApproved(
+              crop,
+              'ACT_TILLAGE'
+            ),
+            link_pdf_ots_tillage: this.createLinkDownloadFilesSign(
+              crop.finished,
+              'Tillage'
+            ),
+            link_evidences_files_tillage: this.getEvidenceFiles(
+              crop,
+              'ACT_TILLAGE'
+            ),
+            cant_achievements_tillage: this.sumCantAchievementsByLot(
+              crop,
+              lot,
+              'ACT_TILLAGE'
+            ),
 
-            // mail_producers: this.getMailsProducers(crop),
-            // phone_producers: this.getPhonesProducers(crop)
+            mail_producers: this.getMailsProducers(crop),
+            phone_producers: this.getPhonesProducers(crop)
           }
         })
 
