@@ -16,7 +16,7 @@ let allMonths: Array<string> = [
   'September',
   'October',
   'November',
-  'December',
+  'December'
 ]
 
 const activitiesTags: Array<string> = [
@@ -25,7 +25,7 @@ const activitiesTags: Array<string> = [
   'ACT_APPLICATION',
   'ACT_FERTILIZATION',
   'ACT_TILLAGE',
-  'ACT_MONITORING',
+  'ACT_MONITORING'
 ]
 
 class ChartDataService extends ServiceBase {
@@ -38,7 +38,7 @@ class ChartDataService extends ServiceBase {
     const listSummarySurfaces: any = CropService.createDataCropToChartSurface(
       crops
     )
-    
+
     const sortDataList = this.sortData(listSummarySurfaces, allMonths).filter(
       (item) => item.total > 0
     )
@@ -46,7 +46,7 @@ class ChartDataService extends ServiceBase {
     const summarySortData = this.summaryTotalPerMonth(
       CropService.summaryData(sortDataList)
     )
-   
+
     const labels: any = summarySortData.map((item) => item.date)
     const data: any = summarySortData.map((item) =>
       Numbers.roundToTwo(item.total)
@@ -63,7 +63,7 @@ class ChartDataService extends ServiceBase {
           crop.done,
           tag
         )
-        
+
         const groupDataActivitiesFinished = ActivityService.groupSurfaceAndDateAchievements(
           crop.finished,
           tag
@@ -72,16 +72,17 @@ class ChartDataService extends ServiceBase {
         return groupDataActivitiesDone.concat(groupDataActivitiesFinished)
       })
 
-      const sortGroupData = this.sortData(_.flatten(dataCrop), allMonths).filter(
-        (item) => item.total > 0
-      )
-      
+      const sortGroupData = this.sortData(
+        _.flatten(dataCrop),
+        allMonths
+      ).filter((item) => item.total > 0)
+
       const dataActivitiesSummary = this.summaryTotalPerMonth(
         CropService.summaryData(sortGroupData)
       )
 
-      const labels : any = dataActivitiesSummary.map((item) => item.date)
-       
+      const labels: any = dataActivitiesSummary.map((item) => item.date)
+
       const data: any = dataActivitiesSummary.map((item) =>
         Numbers.roundToTwo(item.total)
       )
@@ -95,18 +96,18 @@ class ChartDataService extends ServiceBase {
 
     labels = this.mergeDataLabelsActivity(labels)
 
-    labels.sort(function(a, b){
-      let currentDate = a.substr(3, 4).split(' ') + a.substr(0, 2).split(' ') 
-      let cropDate = b.substr(3, 4).split(' ') + b.substr(0, 2).split(' ') 
+    labels.sort(function (a, b) {
+      let currentDate = a.substr(3, 4).split(' ') + a.substr(0, 2).split(' ')
+      let cropDate = b.substr(3, 4).split(' ') + b.substr(0, 2).split(' ')
       return currentDate - cropDate
-      });
+    })
 
     const dataChartActivities = groupData.map((item) => {
       const data = this.dataActivity(item.data, labels, item.labels)
 
       return {
         tag: item.tag,
-        data: data,
+        data: data
       }
     })
 
@@ -149,7 +150,7 @@ class ChartDataService extends ServiceBase {
       total += item.total
       return {
         date: item.date,
-        total: total,
+        total: total
       }
     })
   }
