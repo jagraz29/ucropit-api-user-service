@@ -6,14 +6,15 @@ const User = models.User
 const Company = models.Company
 const CollaboratorRequest = models.CollaboratorRequest
 
-const addNewMembersInCrops = async (user: any, company: any) => {
-  let crops = await Crop.find({
-    cancelled: false,
-    $or: [
-      { 'members.user': { $ne: user._id } },
-      { 'members.identifier': { $ne: company.identifier } }
-    ]
-  })
+const addNewMembersInCrops = async (
+  user: any,
+  company: any,
+  companyIdFilter?: string,
+  rol?: string
+) => {
+  const query = createQueryFilterCrop(user, company, companyIdFilter)
+
+  let crops = await Crop.find(query)
 
   for (const crop of crops) {
     try {
@@ -41,7 +42,7 @@ const addNewMembersInCrops = async (user: any, company: any) => {
         user: user._id,
         producer: false,
         identifier: company.identifier,
-        type: 'CAM'
+        type: rol || 'CAM'
       })
 
       await crop.save()
@@ -54,17 +55,48 @@ const addNewMembersInCrops = async (user: any, company: any) => {
   }
 }
 
+function createQueryFilterCrop(user, company, identifierFilter?: string) {
+  const queryFilter: any = {
+    cancelled: false
+  }
+
+  if (identifierFilter) {
+    queryFilter.identifier = identifierFilter
+  } else {
+    queryFilter.$or = [
+      { 'members.user': { $ne: user._id } },
+      { 'members.identifier': { $ne: company.identifier } }
+    ]
+  }
+
+  return queryFilter
+}
+
 ;(async () => {
   const connected = await connectDb()
 
   if (connected) {
+    console.log(process.argv)
+    let cuitFilter = null
+    let rolType = null
     const paramsUser = process.argv[2].split('--')
     const paramsCompany = process.argv[3].split('--')
+    const argCuitFiltering = process.argv.find((arg) => arg.includes('cuit:'))
+    const argRol = process.argv.find((arg) => arg.includes('rol:'))
+
+    if (argCuitFiltering) {
+      cuitFilter = argCuitFiltering.split('cuit:')[1]
+    }
+
+    if (argRol) {
+      rolType = argRol.split('rol:')[1]
+    }
+
     const user = await User.findOne({ email: paramsUser[1] })
     const company = await Company.findOne({ identifier: paramsCompany[1] })
     if (user && company) {
       console.log(`${chalk.green('Process Update all Crops...')}`)
-      await addNewMembersInCrops(user, company)
+      await addNewMembersInCrops(user, company, cuitFilter, rolType)
       console.log(`${chalk.green('Finished Update all Crops...')}`)
     }
   }
