@@ -57,16 +57,15 @@ const addNewMembersInCrops = async (
 
 function createQueryFilterCrop(user, company, identifierFilter?: string) {
   const queryFilter: any = {
-    cancelled: false
+    cancelled: false,
+    $or: [
+      { 'members.user': { $ne: user._id } },
+      { 'members.identifier': { $ne: company.identifier } }
+    ]
   }
 
   if (identifierFilter) {
     queryFilter.identifier = identifierFilter
-  } else {
-    queryFilter.$or = [
-      { 'members.user': { $ne: user._id } },
-      { 'members.identifier': { $ne: company.identifier } }
-    ]
   }
 
   return queryFilter
@@ -76,7 +75,6 @@ function createQueryFilterCrop(user, company, identifierFilter?: string) {
   const connected = await connectDb()
 
   if (connected) {
-    console.log(process.argv)
     let cuitFilter = null
     let rolType = null
     const paramsUser = process.argv[2].split('--')
