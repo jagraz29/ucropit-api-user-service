@@ -157,10 +157,11 @@ class ReportService {
             crop.done.filter((activity) => activity.type.tag === 'ACT_SOWING'),
             lot
           )
+          
           return {
             cuit: crop.company?.identifier,
             business_name: (await this.getCompany(crop.company?.identifier))
-              .name,
+            ?.name,
             crop: crop.cropType.name.es,
             crop_name: crop.name,
             volume: Numbers.roundToTwo(
@@ -464,10 +465,14 @@ class ReportService {
               'ACT_MONITORING'
             ),
             yield_unit_monitoring: this.unitMonitoring(crop,'ACT_MONITORING', crop.unitType.name.en), /*crop.unitType.name.en, */
-            yelds_monitoring: this.rindeMonitoring(
+            yelds_monitoring: /*this.rindeMonitoringa(
               crop,
+              crop.lots,
               'ACT_MONITORING'
-            ),
+            ),*/
+           
+              this.calVolumeMonitoring(crop.unitType.name.en, crop.pay, lot, crop)
+            ,
             date_estimated_harvest: 0,
             date_total_signature_monitor: await this.lastDateSignAchievement(
               crop,
@@ -485,11 +490,46 @@ class ReportService {
     return _.flatten(_.flatten(await Promise.all(reports)))
   }
 
-  private static sumSurfaceCrop(crop: Array<any>): number {
+  private static calVolumeMonitoring(
+    unit,
+    pay,
+    lots,
+    crop
+  ): number {
+    const listActivitiesDone = this.getActivitiesMonitoring(
+      crop,
+      'ACT_MONITORING',
+      'done'
+    )
+    const listActivitiesFinished = this.getActivitiesMonitoring(
+      crop,
+      'ACT_MONITORING',
+      'finished'
+    )
+
+    let total = 0
+    const activities = [ ...listActivitiesDone, ...listActivitiesFinished]
+    console.log("activities pay ", activities)
+    console.log("crop.pay: ", pay)
+    if (activities.length > 0) {
+      const surfaceLot = activities
+      .map((activity) => {
+          const lotSelected = activity.lots.find(
+            (lotItem) => lotItem._id.toString() === lots._id.toString()
+          )
+          if (lotSelected) return activity.pay
+      })
+      .filter((item) => item)
+
+    return surfaceLot[0] || 0
+  }
     
+  }
+
+  private static sumSurfaceLotsCropMonitorig(lots: Array<any>): number {
     let sum = 0
 
-    sum = crop
+    sum = lots
       .map((lot) => {
         return {
           total: lot.data.reduce((a, b) => a + (b['surface'] || 0), 0)
@@ -499,7 +539,45 @@ class ReportService {
 
     return sum
   }
+  
+  private static filterActivityByMonitoring(crop: any, lot: any, type: string) {
+    let results = []
+    const activitiesDone = crop.done.filter(
+      (activity) => activity.type.tag === type
+    )
 
+    const activitiesFinished = crop.finished.filter(
+      (activity) => activity.type.tag === type
+    )
+
+    const activities = [...activitiesDone, ...activitiesFinished]
+
+    if (activities.length > 0) {
+
+      const surfaceLot = activities
+      .map((activity) => {
+          const lotSelected = activity.lots.find(
+            (lotItem) => lotItem._id.toString() === lot._id.toString()
+          )
+          if (lotSelected) return activity.pay
+      })
+      .filter((item) => item)
+
+      const achievements = activities.map((item) => {
+        console.log("item: ", item)
+        return item.lots.find(
+          (lotMade) => lotMade._id?.toString() === lot._id?.toString()
+        )
+      })
+      .filter((lot) => lot)
+      console.log("_.flatten(achievements)", _.flatten(achievements))
+      results = _.flatten(achievements)
+    }
+
+    return results
+  }
+
+  
   private static unitMonitoring(crop, type, unit) {
     const listActivitiesPending = this.getActivitiesMonitoring(
       crop,
@@ -534,12 +612,8 @@ class ReportService {
     return activities.length > 0 ? unit: null
   }
 
-  private static rindeMonitoring(crop, type) {
-    const listActivitiesPending = this.getActivitiesMonitoring(
-      crop,
-      type,
-      'pending'
-    )
+  private static rindeMonitoringa(crop, lot, type) {
+
     const listActivitiesDone = this.getActivitiesMonitoring(
       crop,
       type,
@@ -551,19 +625,19 @@ class ReportService {
       'finished'
     )
 
-    const listActivitiestoMake = this.getActivitiesMonitoring(
-      crop,
-      type,
-      'toMake'
-    )
     let total = 0
-    const activities = [...listActivitiesPending, ...listActivitiesDone, ...listActivitiesFinished, ...listActivitiestoMake]
+    const activities = [ ...listActivitiesDone, ...listActivitiesFinished]
+    if (activities.length > 0) {
     for (const activity of activities) {
+      for (const lot of activity.lots)
+      console.log("Lotes ", lot)
       total += activity.pay
     }
+  }
 
     return activities.length > 0 ? total : null
   }
+
 
   private static getActivitiesMonitoring(crop, type, status) {
     return crop[status].length > 0
