@@ -121,7 +121,7 @@ class AchievementsController {
     })
 
     const type = typesSupplies.find(el => activity.type.tag === el.tag).value
-    const url = `${process.env.BASE_URL}/${process.env.FAST_LINK_URL}?url=activities/${crop._id}/${type}/common/detail/${achievement._id}/${activity._id}/true%5C?tag%5C=${activity.type.tag}`
+    const url = `${process.env.BASE_URL}/${process.env.FAST_LINK_URL}?url=activities/${crop._id}/${type}/common/detail/${achievement._id}/${activity._id}/true?tag=${activity.type.tag}`
 
     for (let signer of signers) {
       await NotificationService.email(
@@ -152,7 +152,7 @@ class AchievementsController {
       activity: activity._id
     })
 
-    await reminder.repeatEvery('15 minutes', {
+    await reminder.repeatEvery('1 day', {
       skipImmediate: true,
       timezone: 'America/Argentina/Buenos_Aires'
     })
