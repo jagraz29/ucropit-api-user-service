@@ -118,7 +118,7 @@ class CropsController {
    *
    * @return Response
    */
-   public async showLastMonitoring(req: Request, res: Response) {
+  public async showLastMonitoring(req: Request, res: Response) {
     const monitoring = await CropService.getLastMonitoring(req.params.id)
 
     res.status(200).json(monitoring)

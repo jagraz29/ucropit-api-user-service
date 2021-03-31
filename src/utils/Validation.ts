@@ -296,7 +296,7 @@ export const validateFilesWithEvidences = (files, evidences) => {
 }
 
 export const validateNotEqualNameLot = (lotNames) => {
-  const listNames = lotNames.flatMap((item) => item.names)
+  const listNames = _.flatten(lotNames.map((item) => item.names))
 
   const existName = listNames.filter(
     (item, index) => listNames.indexOf(item) !== index
