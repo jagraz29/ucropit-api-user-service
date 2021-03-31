@@ -152,7 +152,7 @@ class AchievementsController {
       activity: activity._id
     })
 
-    await reminder.repeatEvery('1 day', {
+    await reminder.repeatEvery('2 day', {
       skipImmediate: true,
       timezone: 'America/Argentina/Buenos_Aires'
     })
