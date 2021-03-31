@@ -295,6 +295,25 @@ export const validateFilesWithEvidences = (files, evidences) => {
   return { error: false }
 }
 
+export const validateNotEqualNameLot = (lotNames) => {
+  const listNames = lotNames.flatMap((item) => item.names)
+
+  const existName = listNames.filter(
+    (item, index) => listNames.indexOf(item) !== index
+  )
+  if (existName.length > 0) {
+    return {
+      error: true,
+      message: 'KMZ names lot duplicate',
+      code:
+        errors.find((error) => error.key === '004')?.code ||
+        'NAME_LOT_DUPLICATED'
+    }
+  }
+
+  return { error: false }
+}
+
 /**
  * Check kmz valid format.
  *
