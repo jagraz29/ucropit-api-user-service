@@ -430,31 +430,42 @@ class CropService extends ServiceBase {
 
   public static async getLastMonitoring(cropId: string) {
     const crop = await CropService.findOneCrop(cropId)
-    
-    const activityName = await ActivityType.findOne({tag:"ACT_MONITORING"})    
+
+    const activityName = await ActivityType.findOne({ tag: 'ACT_MONITORING' })
 
     function filterActivity(item) {
-      return item.name === activityName.name.es|| item.name === activityName.name.en
+      return (
+        item.name === activityName.name.es || item.name === activityName.name.en
+      )
     }
 
-    const activitiesPending = crop.pending.filter(item => filterActivity(item))
+    const activitiesPending = crop.pending.filter((item) =>
+      filterActivity(item)
+    )
 
-    const activitiesToMake = crop.toMake.filter(item => filterActivity(item))
+    const activitiesToMake = crop.toMake.filter((item) => filterActivity(item))
 
-    const activitiesDone = crop.done.filter(item => filterActivity(item))
+    const activitiesDone = crop.done.filter((item) => filterActivity(item))
 
-    const activitiesFinished = crop.finished.filter(item => filterActivity(item))
+    const activitiesFinished = crop.finished.filter((item) =>
+      filterActivity(item)
+    )
 
-    const activitiesMerged = [...activitiesPending, ...activitiesFinished, ...activitiesToMake, ...activitiesDone ]
+    const activitiesMerged = [
+      ...activitiesPending,
+      ...activitiesFinished,
+      ...activitiesToMake,
+      ...activitiesDone
+    ]
 
     const activitiesSorted = activitiesMerged.sort((a, b) => {
       if (a._id.getTimestamp() < b._id.getTimestamp()) {
-        return 1;
+        return 1
       }
       if (a._id.getTimestamp() > b._id.getTimestamp()) {
-        return -1;
+        return -1
       }
-      return 0;
+      return 0
     })
     return activitiesSorted[0]
   }
