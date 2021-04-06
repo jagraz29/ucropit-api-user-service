@@ -11,7 +11,8 @@
     "preinstall": "npx npm-force-resolutions",
     "seed": "node dist/src/seeders/index.js",
     "sign:activity": "node dist/src/commands/sign.js",
-    "insert:members": "node dist/src/commands/members.js"
+    "insert:members": "node dist/src/commands/members.js",
+    "add:harvest:date": "node dist/src/commands/monitoringHarvestDate.js"
   },
   "resolutions": {
     "graceful-fs": "4.2.4"
