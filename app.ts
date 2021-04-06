@@ -42,7 +42,7 @@ app.use(
 
 app.use(express.static('public'))
 
-app.set('view engine', 'pug')
+app.set('view engine', 'pug') 
 app.set('views', path.join(basePath(), 'views'))
 
 app.use('/v1', routes)
