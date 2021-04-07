@@ -1,0 +1,44 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title Document
+    body 
+        div.container
+
+            button(id='fast-link-button' onclick="openAppLink()" url=url) 
+                p Abrir en 
+                img(src="https://ucrop.it/wp-content/uploads/2019/09/ucrop.gmail_.png")
+
+style(type="text/css").
+    button {
+        border: none;
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #fast-link-button {
+        background: #30a01b;
+        border-radius: 5px;
+        height: 52px;
+        font-weight: bold;
+        font-size: 18px;
+        text-align: center;
+        color: white;
+        padding: 16px;
+    }
+
+script
+    include script.js

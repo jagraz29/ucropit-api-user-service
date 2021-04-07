@@ -1,0 +1,11 @@
+{
+    "apps": [
+      {
+        "name": "ucropdevapi",
+        "script": "npx",
+        "interpreter": "none",
+        "args": "node dist/server.js -p 3001",
+        "bundledWebRuntime": true
+      }
+    ]
+  }

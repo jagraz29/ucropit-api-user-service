@@ -1,43 +1,31 @@
-# UCROP.IT API
+<div style="text-align: center">
+    <h1>UCROP.IT API </h1>
+</div>
 
-## Dependencies instalation
+<p>
+  This is the repo of main UCROP.IT api, this are build with <a href="https://nodejs.dev/">NodeJS</a>, <a href="https://www.typescriptlang.org/">TypeScript</a> and <a href="https://www.mongodb.com/">MongoDB </a>.
+</p>
 
-```
-$ npm install
-```
+## Versions
 
-## Mysql
+- NodeJS version 14.8 or more
+- Typescript version 3.9.7
 
-In the repository there is the configuration for the connection to the database. It is defined in .env.example
+## 👨‍💻 Install project Development
 
-To configure and initialize the application:
+1. Clone the repo
+2. cp .env.example .env
+3. Complete environment variables
+4. npm install
+5. npm run dev (run server)
+6. npm run seed (seed initial data into DataBase)
+7. npm run seed -- --reset (Reset DataBase)
 
-```
-$ cp .env.example .env
-```
+## MongoDB in Docker
 
-If necessary, if you want to run the migrations that are queued:
+1. docker-compose up
+2. Add url in .env DATABASE_URL=mongodb://root:root@localhost:27018/production?authSource=admin
 
-```
-$ npm run db:migrate
-```
+## API Documentation Development
 
-to rollback migrations:
-
-```
-$ npm run migrate:undo
-```
-
-### Clarification:
-
-The sequelize client must be installed if you want to run the migrations.
-
-```
-$ npm i -g sequelize-cli
-```
-
-To run in development enviroment
-
-```
-$ npm run dev
-```
+- [API Documentation in Testing environment](https://devapi.ucrop.it/api-docs/#/)
