@@ -18,7 +18,7 @@ import Roles from './Roles'
 import { CropType } from './cropType'
 import { UnitType } from './unitType'
 import TypeStorage from './typeStorage'
-
+import Notification from './notification'
 import FileDocument from './documentFile'
 import IntegrationLog from './integrationLog'
 
@@ -52,7 +52,8 @@ const models = {
   ServiceIntegration,
   Roles,
   IntegrationLog,
-  TypeStorage
+  TypeStorage,
+  Notification
 }
 
 export { connectDb }

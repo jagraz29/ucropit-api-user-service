@@ -132,6 +132,10 @@ class AchievementsController {
           cropName: crop.name,
           url,
           activity: activity.type.name.es
+        },
+        {
+          title: 'Recordatorio para firmar',
+          content: 'Tenes realizaciones sin firmar'
         }
       )
     }
