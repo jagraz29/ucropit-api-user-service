@@ -6,6 +6,7 @@ import LotService from '../services/LotService'
 import ActivityService from '../services/ActivityService'
 
 import {
+  validateGetCrops,
   validateCropStore,
   validateFormatKmz,
   validateNotEqualNameLot
@@ -13,7 +14,8 @@ import {
 
 import { UserSchema } from '../models/user'
 
-const Crop = models.Crop
+const Crop     = models.Crop
+const CropType = models.CropType
 
 class CropsController {
   /**
@@ -26,10 +28,55 @@ class CropsController {
    * @return Response
    */
   public async index(req: Request | any, res: Response) {
-    const query: any = {
-      cancelled: false,
-      'members.identifier': req.query.identifier,
-      'members.user': req.user._id
+
+    let validationGetCrops = await validateGetCrops(req.query)
+
+    if( validationGetCrops.error ){
+
+      return res.status(400).json({
+        error : true,
+        code : validationGetCrops.code,
+        message : validationGetCrops.message
+      })
+
+    }
+
+    let query: any = {
+      cancelled : false,
+      'members.identifier' : req.query.identifier,
+      'members.user' : req.user._id
+    }
+
+    if( req.query.cropTypes ){
+
+      query.cropType = {
+        $in : req.query.cropTypes
+      }
+
+    }
+
+    if( req.query.companies ){
+
+      query.company = {
+        $in : req.query.companies
+      }
+
+    }
+
+    if( req.query.collaborators ){
+
+      query['members.user'] = {
+        $in : req.query.collaborators
+      }
+
+    }
+
+    if( req.query.cropVolume ){
+
+      query.pay = {
+        $gte : req.query.cropVolume
+      }
+
     }
 
     const crops = await Crop.find(query)
