@@ -9,6 +9,18 @@ import JoiDate from '@hapi/joi-date'
 
 const JoiValidation = Joi.extend(JoiDate)
 
+export const validateGetCrops = async (crop) => {
+  const schema = Joi.object({
+    identifier : Joi.number(),
+    cropTypes : Joi.array(),
+    companies : Joi.array(),
+    collaborators : Joi.array(),
+    cropVolume : Joi.number()
+  })
+
+  return schema.validateAsync(crop)
+}
+
 export const validateCropStore = async (crop) => {
   const schema = Joi.object({
     name: Joi.string().required(),
