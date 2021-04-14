@@ -9,7 +9,8 @@ class GeoLocationService extends ServiceBase {
         'get',
         `${geocodingApi}?latlng=${lat},${long}&key=${apiKey}`,
         {},
-        (result) => resolve(result.data.results)
+        (result) => resolve(result.data.results),
+        (error) => reject(error)
       )
     })
   }

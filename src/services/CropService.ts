@@ -4,6 +4,7 @@ import ServiceBase from './common/ServiceBase'
 import ActivityService from './ActivityService'
 const Crop = models.Crop
 const Activity = models.Activity
+const ActivityType = models.ActivityType
 
 interface ICrop {
   name: string
@@ -217,7 +218,7 @@ class CropService extends ServiceBase {
     return Promise.all(crops)
   }
 
-  public static async cropsOnlySeeRoles(
+  public static async cropsOnlySeeRoles (
     query: any,
     filtering,
     roles: Array<string>
@@ -328,6 +329,7 @@ class CropService extends ServiceBase {
         path: 'done',
         populate: [
           { path: 'type' },
+          { path: 'supplies.typeId' },
           { path: 'lots' },
           {
             path: 'achievements',
@@ -341,15 +343,10 @@ class CropService extends ServiceBase {
         populate: [
           { path: 'type' },
           { path: 'lots' },
+          { path: 'supplies.typeId' },
           {
             path: 'achievements',
-            populate: [
-              { path: 'lots' },
-              {
-                path: 'supplies',
-                populate: [{ path: 'supplytypes' }]
-              }
-            ]
+            populate: [{ path: 'lots' }, { path: 'supplies.typeId' }]
           }
         ]
       })
@@ -433,6 +430,48 @@ class CropService extends ServiceBase {
     crop = await this.changeStatusActivitiesRange(crop)
 
     return crop
+  }
+
+  public static async getLastMonitoring(cropId: string) {
+    const crop = await CropService.findOneCrop(cropId)
+
+    const activityName = await ActivityType.findOne({ tag: 'ACT_MONITORING' })
+
+    function filterActivity(item) {
+      return (
+        item.name === activityName.name.es || item.name === activityName.name.en
+      )
+    }
+
+    const activitiesPending = crop.pending.filter((item) =>
+      filterActivity(item)
+    )
+
+    const activitiesToMake = crop.toMake.filter((item) => filterActivity(item))
+
+    const activitiesDone = crop.done.filter((item) => filterActivity(item))
+
+    const activitiesFinished = crop.finished.filter((item) =>
+      filterActivity(item)
+    )
+
+    const activitiesMerged = [
+      ...activitiesPending,
+      ...activitiesFinished,
+      ...activitiesToMake,
+      ...activitiesDone
+    ]
+
+    const activitiesSorted = activitiesMerged.sort((a, b) => {
+      if (a._id.getTimestamp() < b._id.getTimestamp()) {
+        return 1
+      }
+      if (a._id.getTimestamp() > b._id.getTimestamp()) {
+        return -1
+      }
+      return 0
+    })
+    return activitiesSorted[0]
   }
 
   /**
@@ -633,8 +672,23 @@ class CropService extends ServiceBase {
     )
 
     const statusCrop = status.cropStatus
-    crop[statusCrop].push(activity._id)
+    if (!this.isExistActivity(activity, crop, statusCrop)) {
+      crop[statusCrop].push(activity._id)
+    }
+
     return crop.save()
+  }
+
+  public static isExistActivity(activity, crop, status: string): boolean {
+    if (
+      crop[status].find(
+        (item) => item._id.toString() === activity._id.toString()
+      )
+    ) {
+      return true
+    }
+
+    return false
   }
 
   public static async cancelled(cropId) {
@@ -692,8 +746,6 @@ class CropService extends ServiceBase {
   }
 
   public static serviceCropIsSynchronized(crop: any, service: any): boolean {
-    console.log(service)
-    console.log(crop)
     return (
       service &&
       crop.synchronizedList.filter((item) => item.service === service).length >

@@ -91,6 +91,23 @@ class CompanyService extends ServiceBase {
     return Company.findById(id)
   }
 
+  public static async isAdderService(
+    service: string | any,
+    identifier: string | any
+  ): Promise<boolean> {
+    const company = await Company.findOne({ identifier })
+
+    const isServiceIntegration = company.servicesIntegrations.find(
+      (item) => item.service === service
+    )
+
+    if (!isServiceIntegration) {
+      return false
+    }
+
+    return true
+  }
+
   public static async addServiceIntegration(service: string, id: string) {
     const company = await Company.findById(id)
     const isServiceIntegration = company.servicesIntegrations.find(
@@ -106,6 +123,20 @@ class CompanyService extends ServiceBase {
     }
 
     return { error: true }
+  }
+
+  public static async removeServiceIntegration(service: string, id: string) {
+    const company = await Company.findById(id)
+
+    const isServiceIntegration = company.servicesIntegrations.find(
+      (item) => item.service === service
+    )
+
+    return Company.updateOne(
+      { _id: id },
+      { $pull: { servicesIntegrations: { _id: isServiceIntegration._id } } },
+      { safe: true, multi: true }
+    )
   }
 }
 

@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Response } from 'express'
 import 'express-async-errors'
 import users from './users'
 import profile from './profile'
@@ -27,6 +27,10 @@ router.get('/', (req, res) => {
 })
 
 const authMiddleware = passport.authenticate('jwt', { session: false })
+
+router.get('/fast-links', (req, res: Response) => {
+  res.render('fast-links', { url: process.env.SCHEMA_URL })
+})
 
 // AUTH
 router.use('/auth', auth)

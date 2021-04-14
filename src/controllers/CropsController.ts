@@ -5,7 +5,11 @@ import CompanyService from '../services/CompanyService'
 import LotService from '../services/LotService'
 import ActivityService from '../services/ActivityService'
 
-import { validateCropStore, validateFormatKmz } from '../utils/Validation'
+import {
+  validateCropStore,
+  validateFormatKmz,
+  validateNotEqualNameLot
+} from '../utils/Validation'
 
 import { UserSchema } from '../models/user'
 
@@ -69,6 +73,7 @@ class CropsController {
     const data = JSON.parse(req.body.data)
     await validateCropStore(data)
     const validationKmz = await validateFormatKmz(req.files)
+    const validationDuplicateName = validateNotEqualNameLot(data.lots)
 
     let company = null
 
@@ -78,6 +83,10 @@ class CropsController {
         code: validationKmz.code,
         message: validationKmz.message
       })
+    }
+
+    if (validationDuplicateName.error) {
+      return res.status(400).json(validationDuplicateName.code)
     }
 
     company = (await CompanyService.search({ identifier: data.identifier }))[0]
@@ -99,6 +108,20 @@ class CropsController {
     )
 
     res.status(201).json(crop)
+  }
+
+  /**
+   * Show last monitoring
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async showLastMonitoring(req: Request, res: Response) {
+    const monitoring = await CropService.getLastMonitoring(req.params.id)
+
+    res.status(200).json(monitoring)
   }
 
   /**

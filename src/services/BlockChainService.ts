@@ -1,5 +1,5 @@
 import fs from 'fs'
-import PDF from '../utils/PDF'
+import PDF from '../utils/pdf/PDF'
 import Stamp from '../utils/Stamp'
 
 import { basePath, makeDirIfNotExists } from '../utils/Files'
@@ -12,7 +12,7 @@ class BlockChainServices {
    * @param activity
    * @param user
    */
-  public static async sign (crop, activity): Promise<any> {
+  public static async sign(crop, activity): Promise<any> {
     await makeDirIfNotExists(
       `${basePath()}${process.env.DIR_PDF_SINGS}/${activity.key}`
     )
@@ -22,9 +22,8 @@ class BlockChainServices {
       activity.key
     }`
 
-    const { hash, path } = await PDF.generate({
+    const { hash, path } = await PDF.generatePdfSign({
       pathFile: `${pathToSave}/${nameFile}`,
-      files: activity.files,
       crop: crop,
       activity: activity
     })
@@ -46,7 +45,7 @@ class BlockChainServices {
     })
   }
 
-  public static async saveOtsFile (
+  public static async saveOtsFile(
     fileOtsBytes: any,
     nameFile,
     path: string

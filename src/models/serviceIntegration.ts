@@ -27,6 +27,10 @@ const ServiceIntegrationSchema = new Schema({
   name: {
     type: String
   },
+  description: {
+    type: String
+  },
+  conditions: [String],
   erpAgent: {
     type: String
   }

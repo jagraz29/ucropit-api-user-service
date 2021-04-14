@@ -303,6 +303,16 @@ export const servicesIntegration = [
   {
     code: 'AURAVANT',
     name: 'Auravant',
+    description:
+      'Es agricultura digital simple. Es innovación tecnológica que potencia el conocimiento agronómico y maximiza los resultados',
+    conditions: [
+      'actualizaciones específicas sobre los riesgos de enfermedades e insectos para los cultivos',
+      'notificaciones importantes sobre la fase de crecimiento de los cultivos',
+      'notificaciones sobre el momento óptimo de fumigación',
+      'notificaciones sobre mapas de biomasa disponibles',
+      'información meteorológica específica para cada campo',
+      'predicción meteorológica por hora'
+    ],
     erpAgent: 'auravant'
   }
 ]
@@ -349,5 +359,36 @@ export const rolesData = [
       es: 'KAM'
     },
     value: 'CAM'
+  }
+]
+
+export const storageTypes = [
+  {
+    name: {
+      en: 'Silobags',
+      es: 'Silobolsas'
+    },
+    key: 'SILO_BAG'
+  },
+  {
+    name: {
+      en: 'Silo',
+      es: 'Silo'
+    },
+    key: 'SILO'
+  },
+  {
+    name: {
+      en: 'Out of program delivery',
+      es: 'Entrega fuera de programa'
+    },
+    key: 'DELIVERY_OUT_OF_PROGRAM'
+  },
+  {
+    name: {
+      en: 'Delivery within the program',
+      es: 'Entrega dentro de programa'
+    },
+    key: 'DELIVERY_WITHIN_OF_PROGRAM'
   }
 ]

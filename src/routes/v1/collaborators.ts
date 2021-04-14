@@ -1,5 +1,6 @@
 import express from 'express'
 import collaboratorRequestController from '../../controllers/CollaboratorRequestController'
+import CollaboratorsNotificationsController from '../../controllers/CollaboratorsNotificationsController'
 
 const router: express.Router = express.Router()
 
@@ -61,5 +62,30 @@ router.get('/', collaboratorRequestController.index)
  *
  */
 router.put('/:id', collaboratorRequestController.update)
+
+/**
+ * @swagger
+ * /v1/collaborators/notify:
+ *  post:
+ *   security: []
+ *   summary: send notification email to the newly added collaborator of the crop
+ *   tags: [Auth]
+ *   description: send notification email to the newly added collaborator of the crop
+ *   requestBody:
+ *     content:
+ *       application/json:
+ *         schema:
+ *           type: object
+ *           properties:
+ *            cropname:
+ *              type: string
+ *            email:
+ *              type: string
+ *            identifier:
+ *              type: string
+ *            role:
+ *              type: string
+ */
+router.post('/notify', CollaboratorsNotificationsController.notify)
 
 export default router

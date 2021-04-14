@@ -1,6 +1,6 @@
 import ServiceBase from './common/ServiceBase'
 import models from '../models'
-import PDF from '../utils/PDF'
+import PDF from '../utils/pdf/PDF'
 import mongoose from 'mongoose'
 import { basePath, fileExist, makeDirIfNotExists } from '../utils/Files'
 
@@ -35,6 +35,7 @@ class AchievementService extends ServiceBase {
       .populate('files')
       .populate('signers')
       .populate('destination')
+      .populate('supplies.typeId')
   }
 
   /**
@@ -76,9 +77,8 @@ class AchievementService extends ServiceBase {
 
     await makeDirIfNotExists(pathPdf)
 
-    const resultPDF = await PDF.generate({
+    const resultPDF = await PDF.generatePdfSign({
       pathFile: `${pathPdf}/${nameFile}`,
-      files: activity.files,
       crop: crop,
       activity: activity
     })

@@ -2,6 +2,8 @@ import * as Joi from 'joi'
 import { FileArray } from 'express-fileupload'
 import { handleFileConvertJSON } from '../utils/ParseKmzFile'
 import { errors } from '../types/common'
+import { VALID_FORMATS_DOCUMENTS } from './Files'
+import _ from 'lodash'
 
 import JoiDate from '@hapi/joi-date'
 
@@ -37,6 +39,8 @@ export const validateActivityStore = async (activity) => {
     dateStart: Joi.date().optional(),
     dateEnd: Joi.date().min(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
+    dateHarvest: Joi.date().optional(),
+    dateEstimatedHarvest: Joi.date().optional(),
     surface: Joi.number().optional(),
     type: Joi.string().required(),
     typeAgreement: Joi.string().optional(),
@@ -70,6 +74,17 @@ export const validateActivityStore = async (activity) => {
         })
       )
       .optional(),
+    storages: Joi.array()
+      .items(
+        Joi.object().keys({
+          unitType: Joi.string().required(),
+          tonsHarvest: Joi.number().required(),
+          storageType: Joi.string().required(),
+          icon: Joi.string().optional(),
+          label: Joi.string().optional()
+        })
+      )
+      .optional(),
     signers: Joi.array().items(
       Joi.object().keys({
         userId: Joi.string().required(),
@@ -90,6 +105,8 @@ export const validateActivityUpdate = async (activity) => {
     dateStart: Joi.date().optional(),
     dateEnd: Joi.date().min(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
+    dateHarvest: Joi.date().optional(),
+    dateEstimatedHarvest: Joi.date().optional(),
     surface: Joi.number().optional(),
     type: Joi.string().optional(),
     typeAgreement: Joi.string().optional(),
@@ -120,6 +137,17 @@ export const validateActivityUpdate = async (activity) => {
           date: Joi.date().required(),
           settings: Joi.optional(),
           meta: Joi.optional()
+        })
+      )
+      .optional(),
+    storages: Joi.array()
+      .items(
+        Joi.object().keys({
+          unitType: Joi.string().required(),
+          tonsHarvest: Joi.number().required(),
+          storageType: Joi.string().required(),
+          icon: Joi.string().optional(),
+          label: Joi.string().optional()
         })
       )
       .optional(),
@@ -267,6 +295,25 @@ export const validateFilesWithEvidences = (files, evidences) => {
   return { error: false }
 }
 
+export const validateNotEqualNameLot = (lotNames) => {
+  const listNames = _.flatten(lotNames.map((item) => item.names))
+
+  const existName = listNames.filter(
+    (item, index) => listNames.indexOf(item) !== index
+  )
+  if (existName.length > 0) {
+    return {
+      error: true,
+      message: 'KMZ names lot duplicate',
+      code:
+        errors.find((error) => error.key === '004')?.code ||
+        'NAME_LOT_DUPLICATED'
+    }
+  }
+
+  return { error: false }
+}
+
 /**
  * Check kmz valid format.
  *
@@ -287,4 +334,49 @@ export const validateFormatKmz = async (files: FileArray) => {
     }
   }
   return { error: false }
+}
+export const validateExtensionFile = (files) => {
+  if (!files) {
+    return { error: false }
+  }
+  const isValidTypes = Object.keys(files).map((key) => {
+    if (files[key].length > 0) {
+      return files[key].map((file) => {
+        if (!validTypes(file)) {
+          return {
+            error: true
+          }
+        }
+        return {
+          error: false
+        }
+      })
+    }
+
+    if (!validTypes(files[key])) {
+      return {
+        error: true
+      }
+    }
+
+    return {
+      error: false
+    }
+  })
+
+  if (_.flatten(isValidTypes).some((check) => check.error === true)) {
+    return {
+      error: true,
+      message: 'Any File extension not allowed',
+      code:
+        errors.find((error) => error.key === '003')?.code ||
+        'ERROR_FILE_EXTENSION'
+    }
+  }
+
+  return { error: false }
+}
+
+function validTypes(file) {
+  return file.mimetype.match(VALID_FORMATS_DOCUMENTS) !== null
 }

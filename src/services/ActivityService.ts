@@ -253,7 +253,11 @@ class ActivityService extends ServiceBase {
   public static groupSurfaceAndDateAchievements(activities, type) {
     return activities
       .map((activity) => {
-        if (this.isActivityType(activity, type) && type !== 'ACT_MONITORING') {
+        if (
+          this.isActivityType(activity, type) &&
+          type !== 'ACT_MONITORING' &&
+          type !== 'ACT_HARVEST'
+        ) {
           const total = this.sumSurfacesByLotsAchievements(
             activity.achievements
           )
@@ -262,15 +266,14 @@ class ActivityService extends ServiceBase {
             date: activity.achievements[0].dateAchievement.toLocaleDateString(
               'en-US',
               {
-                year: 'numeric', month: '2-digit'
+                year: 'numeric',
+                month: '2-digit'
               }
             )
           }
         }
 
         if (this.isActivityType(activity, type) && type === 'ACT_MONITORING') {
-          console.log(type)
-          console.log(activity)
           let total = 0
 
           total += activity.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
@@ -278,11 +281,25 @@ class ActivityService extends ServiceBase {
           return {
             total: total,
             date: activity.dateObservation.toLocaleDateString('en-US', {
-              year: 'numeric', month: '2-digit'
+              year: 'numeric',
+              month: '2-digit'
             })
           }
         }
 
+        if (this.isActivityType(activity, type) && type === 'ACT_HARVEST') {
+          let total = 0
+
+          total += activity.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
+
+          return {
+            total: total,
+            date: activity?.dateHarvest.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: '2-digit'
+            })
+          }
+        }
         return undefined
       })
       .filter((activity) => activity)

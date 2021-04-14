@@ -4,7 +4,7 @@ export const tagsTypeAgreement = {
 }
 
 export const VALID_FORMATS_FILES_IMAGES_PNG = 'png'
-export const VALID_FORMATS_FILES_IMAGES_JPG = 'jpg'
+export const VALID_FORMATS_FILES_IMAGES_JPG = 'jpg|jpeg'
 export const VALID_FORMATS_FILES_DOCUMENTS = 'pdf'
 
 export const responsibleRoles = [
@@ -15,7 +15,13 @@ export const responsibleRoles = [
 
 export const typesSupplies = [
   {
+    tag: 'ACT_HARVEST',
+    value: 'harvest',
+    types: []
+  },
+  {
     tag: 'ACT_SOWING',
+    value: 'sowing',
     types: [
       '346564643430633836343130',
       '346564643430633836343230',
@@ -29,11 +35,13 @@ export const typesSupplies = [
       '346564643430633836343334',
       '346564643430633836343335',
       '346564643430633836343336',
-      '346564643430633836343337'
+      '346564643430633836343337',
+      '604a66451780599686eda512'
     ]
   },
   {
     tag: 'ACT_APPLICATION',
+    value: 'application',
     types: [
       '346564643430633836343130',
       '346564643430633836343230',
@@ -44,6 +52,7 @@ export const typesSupplies = [
   },
   {
     tag: 'ACT_FERTILIZATION',
+    value: 'fertilization',
     types: [
       '346564643430633836343130',
       '346564643430633836343230',
@@ -54,6 +63,7 @@ export const typesSupplies = [
   },
   {
     tag: 'ACT_TILLAGE',
+    value: 'tillage',
     types: [
       '346564643430633836343130',
       '346564643430633836343230',

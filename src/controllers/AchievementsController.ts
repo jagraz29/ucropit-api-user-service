@@ -2,7 +2,8 @@ import { Request, Response } from 'express'
 import {
   validateAchievement,
   validateSignAchievement,
-  validateFilesWithEvidences
+  validateFilesWithEvidences,
+  validateExtensionFile
 } from '../utils/Validation'
 
 import AchievementService from '../services/AchievementService'
@@ -14,6 +15,10 @@ import UserConfigService from '../services/UserConfigService'
 import IntegrationService from '../services/IntegrationService'
 
 import models from '../models'
+import NotificationService from '../services/NotificationService'
+import { emailTemplates } from '../types/common'
+import { typesSupplies } from '../utils/Constants'
+import agenda from '../jobs'
 
 const Crop = models.Crop
 
@@ -26,7 +31,7 @@ class AchievementsController {
    *
    * @return Response
    */
-  public async index(req: Request, res: Response) {
+  public async index (req: Request, res: Response) {
     const { activityId } = req.query
 
     if (activityId) {
@@ -50,7 +55,7 @@ class AchievementsController {
    *
    * @returns Response
    */
-  public async show(req: Request, res: Response) {
+  public async show (req: Request, res: Response) {
     const { id } = req.params
 
     const achievement = await AchievementService.findById(id)
@@ -66,7 +71,7 @@ class AchievementsController {
    *
    * @return Response
    */
-  public async create(req: Request, res: Response) {
+  public async create (req: Request, res: Response) {
     const user: any = req.user
     const data = JSON.parse(req.body.data)
     const crop = await Crop.findById(data.crop)
@@ -74,13 +79,19 @@ class AchievementsController {
 
     await validateAchievement(data)
 
+    const validationExtensionFile = validateExtensionFile(req.files)
+
+    if (validationExtensionFile.error) {
+      return res.status(400).json(validationExtensionFile.code)
+    }
+
     const validationFiles = validateFilesWithEvidences(
       req.files,
       data.evidences
     )
 
     if (validationFiles.error) {
-      res.status(400).json(validationFiles)
+      return res.status(400).json(validationFiles)
     }
 
     const activity = await ActivityService.findActivityById(data.activity)
@@ -105,6 +116,53 @@ class AchievementsController {
       )
     }
 
+    const signers = achievement.signers.filter(el => {
+      return !el.signed && user.email !== el.email
+    })
+
+    const type = typesSupplies.find(el => activity.type.tag === el.tag).value
+    const url = `${process.env.BASE_URL}/${process.env.FAST_LINK_URL}?url=activities/${crop._id}/${type}/common/detail/${achievement._id}/${activity._id}/true?tag=${activity.type.tag}`
+
+    for (let signer of signers) {
+      await NotificationService.email(
+        emailTemplates.NOTIFICATION_ACTIVITY,
+        signer,
+        {
+          name: signer.fullName,
+          cropName: crop.name,
+          url,
+          activity: activity.type.name.es
+        },
+        {
+          title: 'Recordatorio para firmar',
+          content: 'Tenes realizaciones sin firmar'
+        }
+      )
+    }
+
+    const agendaData = {
+      url,
+      cropName: crop.name,
+      achievement: achievement._id,
+      activityLabel: activity.type.name.es,
+      activity: activity._id
+    }
+
+    await agenda.cancel({ data: agendaData })
+    const reminder = agenda.create('reminder-activity-email', {
+      cropName: crop.name,
+      achievement: achievement._id,
+      activityLabel: activity.type.name.es,
+      activity: activity._id
+    })
+
+    await reminder.repeatEvery('2 day', {
+      skipImmediate: true,
+      timezone: 'America/Argentina/Buenos_Aires'
+    })
+
+    await reminder.save()
+
     await IntegrationService.exportAchievement(
       {
         cropId: data.crop,
@@ -127,7 +185,7 @@ class AchievementsController {
    *
    * @return Response
    */
-  public async signAchievement(req: Request, res: Response) {
+  public async signAchievement (req: Request, res: Response) {
     const user = req.user
     const { id } = req.params
 
@@ -190,7 +248,7 @@ class AchievementsController {
    * @param Request req
    * @param Response res
    */
-  public async makePdf(req: Request, res: Response) {
+  public async makePdf (req: Request, res: Response) {
     const { idActivity, idCrop } = req.params
 
     const activity = await ActivityService.findActivityById(idActivity)
