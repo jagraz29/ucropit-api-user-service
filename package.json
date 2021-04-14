@@ -6,7 +6,7 @@
   "scripts": {
     "tsc": "tsc",
     "dev": "DEBUG=email-templates tsc -w & nodemon -q -w dist dist/server.js",
-    "env:windows": "cross-env DEBUG=email-templates tsc -w & nodemon -q -w dist dist/server.js",
+    "dev:windows": "cross-env DEBUG=email-templates tsc -w & nodemon -q -w dist dist/server.js",
     "start": "nodemon -q -w dist dist/server.js",
     "test": "jest --verbose",
     "preinstall": "npx npm-force-resolutions",
