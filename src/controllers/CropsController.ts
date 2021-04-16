@@ -30,7 +30,6 @@ class CropsController {
   public async index(req: Request | any, res: Response) {
     let query: any = {
       cancelled: false,
-      'members.identifier': req.query.identifier,
       'members.user': req.user._id
     }
 
@@ -41,7 +40,7 @@ class CropsController {
     }
 
     if (req.query.companies) {
-      query.company = {
+      query["members.identifier"] = {
         $in: req.query.companies
       }
     }
@@ -56,6 +55,24 @@ class CropsController {
       query.pay = {
         $gte: req.query.cropVolume
       }
+    }
+
+    if (req.query.getAll) {
+      query.$or = [{
+        'members.type' : 'KAM'
+      },{
+        'members.type' : 'CAM'
+      }]
+    }
+
+    if (
+      !req.query.cropTypes &&
+      !req.query.companies &&
+      !req.query.collaborators &&
+      !req.query.cropVolume &&
+      !req.query.getAll
+    ) {
+      query["members.identifier"] = req.query.identifier;
     }
 
     const crops = await Crop.find(query)
