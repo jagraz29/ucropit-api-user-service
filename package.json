@@ -13,7 +13,8 @@
     "seed": "node dist/src/seeders/index.js",
     "sign:activity": "node dist/src/commands/sign.js",
     "insert:members": "node dist/src/commands/members.js",
-    "add:harvest:date": "node dist/src/commands/monitoringHarvestDate.js"
+    "add:harvest:date": "node dist/src/commands/monitoringHarvestDate.js",
+    "delete:signer:ghost": "node dist/src/commands/deleteGhostSigner.js"
   },
   "resolutions": {
     "graceful-fs": "4.2.4"
@@ -42,6 +43,7 @@
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "chalk": "^4.1.0",
+    "commander": "^7.2.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "email-templates": "^7.1.0",
