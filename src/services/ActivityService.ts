@@ -201,7 +201,7 @@ class ActivityService extends ServiceBase {
       .populate('typeAgreement')
   }
 
-  public static async isCompleteSingers(activity) {
+  public static isCompleteSingers(activity) {
     const signers = activity.signers.filter((item) => !item.signed)
 
     if (signers.length > 0) {

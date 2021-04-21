@@ -105,10 +105,10 @@ function logSigners(list: Signer[], activity, crop, message?: string): void {
   console.log(`${chalk.red(message)}`)
   list.forEach((item) => {
     console.log('=======================')
-    console.log(`User ID: ${item.userId}`)
-    console.log(`User email: ${item.email}`)
-    console.log(`User fullName: ${item.fullName}`)
-    console.log(`User Signed: ${item.signed}`)
+    console.log(`User ID: ${item?.userId}`)
+    console.log(`User email: ${item?.email}`)
+    console.log(`User fullName: ${item?.fullName}`)
+    console.log(`User Signed: ${item?.signed}`)
     console.log('=======================')
   })
 }
@@ -191,18 +191,23 @@ async function getCropsWithActivitiesDone<T>(): Promise<Array<T>> {
 }
 
 ;(async () => {
-  const connected = await connectDb()
+  try {
+    const connected = await connectDb()
 
-  if (connected) {
-    const options: OptionValues = program.opts()
+    if (connected) {
+      const options: OptionValues = program.opts()
 
-    if (options.clean) {
-      await deleteGhostUsers()
+      if (options.clean) {
+        await deleteGhostUsers()
+      }
+
+      if (options.list) {
+        await searchGhostUsers()
+      }
     }
-
-    if (options.list) {
-      await searchGhostUsers()
-    }
+  } catch (error) {
+    console.log(error)
   }
+
   process.exit()
 })()
