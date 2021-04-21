@@ -6,6 +6,7 @@ import { Signer } from '../interfaces/Signer'
 import { uniqByPropMap } from '../utils/List'
 import ActivityService from '../services/ActivityService'
 import AchievementService from '../services/AchievementService'
+import { Achievement } from '../models/achievement'
 const Crop = models.Crop
 
 const program = new Command()
@@ -33,7 +34,7 @@ async function searchGhostUsers(): Promise<void> {
     done.forEach((activity) => {
       const { achievements, signers } = activity
       if (existAchievements(achievements)) {
-        achievements.forEach((achievement) => {
+        achievements.forEach((achievement: Achievement) => {
           const { signers } = achievement
           const duplicates: Signer[] = findDuplicateSigners(signers)
           logSigners(duplicates, activity, crop, 'USERS DUPLICATE')
@@ -168,7 +169,7 @@ function isDuplicateSigners(signers: Signer[]): boolean {
  *
  * @returns boolean
  */
-function existAchievements(achievements: Object[]): boolean {
+function existAchievements(achievements: Achievement[]): boolean {
   return achievements.length > 0
 }
 
