@@ -3,6 +3,7 @@ import models, { connectDb } from '../models'
 import chalk from 'chalk'
 import BlockChainServices from '../services/BlockChainService'
 import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
+import { Command, OptionValues } from 'commander'
 
 const Crop = models.Crop
 
@@ -65,7 +66,7 @@ const createSignCrops = async () => {
   }
 }
 
-(async () => {
+;(async () => {
   const connected = await connectDb()
 
   if (connected) {
