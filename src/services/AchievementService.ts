@@ -3,6 +3,7 @@ import models from '../models'
 import PDF from '../utils/pdf/PDF'
 import mongoose from 'mongoose'
 import { basePath, fileExist, makeDirIfNotExists } from '../utils/Files'
+import { Signer } from '../interfaces/Signer'
 
 const Achievement = models.Achievement
 
@@ -106,6 +107,13 @@ class AchievementService extends ServiceBase {
     await Achievement.findByIdAndUpdate(id, {
       synchronizedList: [{ service, isSynchronized: true }]
     })
+  }
+
+  public static async updateSigners(signers: Signer[], achievementId: string) {
+    return Achievement.updateOne(
+      { _id: achievementId },
+      { $set: { signers: signers } }
+    )
   }
 
   /**

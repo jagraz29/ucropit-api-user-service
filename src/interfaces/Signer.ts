@@ -5,4 +5,5 @@ export interface Signer {
   email: string
   type: string
   signed?: boolean
+  dateSigned?: Date
 }

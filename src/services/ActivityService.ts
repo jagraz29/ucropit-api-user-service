@@ -2,6 +2,7 @@ import ServiceBase from './common/ServiceBase'
 import models from '../models'
 import mongoose from 'mongoose'
 import { statusActivities } from '../utils/Status'
+import { Signer } from '../interfaces/Signer'
 
 const Activity = models.Activity
 const ActivityType = models.ActivityType
@@ -132,6 +133,16 @@ class ActivityService extends ServiceBase {
     await Activity.findByIdAndUpdate(id, activity)
 
     return Activity.findOne({ _id: id })
+  }
+
+  public static async updateSigners(
+    signers: Signer[],
+    activityId: string
+  ): Promise<void> {
+    await Activity.updateOne(
+      { _id: activityId },
+      { $set: { signers: signers } }
+    )
   }
 
   public static async getByTag(tag: string) {

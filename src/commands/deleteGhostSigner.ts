@@ -2,6 +2,10 @@ require('dotenv').config()
 import models, { connectDb } from '../models'
 import chalk from 'chalk'
 import { Command, OptionValues } from 'commander'
+import { Signer } from '../interfaces/Signer'
+import { uniqByPropMap } from '../utils/List'
+import ActivityService from '../services/ActivityService'
+import AchievementService from '../services/AchievementService'
 const Crop = models.Crop
 
 const program = new Command()
@@ -11,8 +15,8 @@ program
   .description(
     'Use command for search and delete ghost user signer in achievements'
   )
-  .option('-d, --delete', 'Delete all users ghost signers')
-  .option('-s, --search', 'List all users ghost signers')
+  .option('-c, --clean', 'Delete all users ghost signers')
+  .option('-l, --list', 'List all users ghost signers')
 
 program.parse(process.argv)
 
@@ -24,14 +28,18 @@ async function searchGhostUsers(): Promise<void> {
   const crops: any = await getCropsWithActivitiesDone()
 
   crops.forEach((crop) => {
-    crop.done.forEach((activity) => {
-      if (activity.achievements.length > 0) {
-        activity.achievements.forEach((achievement) => {
-          const duplicates = findDuplicateSigners(achievement.signers)
+    const { done } = crop
+
+    done.forEach((activity) => {
+      const { achievements, signers } = activity
+      if (existAchievements(achievements)) {
+        achievements.forEach((achievement) => {
+          const { signers } = achievement
+          const duplicates: Signer[] = findDuplicateSigners(signers)
           listDuplicateSigners(duplicates, activity, crop)
         })
       } else {
-        const duplicates = findDuplicateSigners(activity.signers)
+        const duplicates: Signer[] = findDuplicateSigners(signers)
         listDuplicateSigners(duplicates, activity, crop)
       }
     })
@@ -39,23 +47,62 @@ async function searchGhostUsers(): Promise<void> {
 }
 
 /**
- * Delete User Ghost
+ * For User Ghost And clean duplicate.
  */
 async function deleteGhostUsers(): Promise<void> {
   console.log(`${chalk.yellow('DELETE USERS GHOST')}`)
+  const crops: any = await getCropsWithActivitiesDone()
+
+  for (const crop of crops) {
+    const { done } = crop
+    for (const activity of done) {
+      const { achievements, signers } = activity
+      if (existAchievements(achievements)) {
+        const listCleaned: Signer[] = await cleanSignersAchievement(activity)
+        console.log(listCleaned)
+      } else if (isDuplicateSigners(signers)) {
+        const listCleaned: Signer[] = cleanDuplicateSigners(signers)
+        await ActivityService.updateSigners(listCleaned, activity._id)
+        console.log(listCleaned)
+      }
+    }
+  }
 }
 
 /**
+ * Clean list Signers when duplicate signers.
+ *
+ * @param activity
+ * @returns
+ */
+async function cleanSignersAchievement(activity): Promise<Signer[]> {
+  const { achievements } = activity
+  const cleanerSigners = achievements
+    .map(async (achievement) => {
+      const { signers } = achievement
+      if (isDuplicateSigners(signers)) {
+        const listCleaned: Signer[] = cleanDuplicateSigners(signers)
+        await AchievementService.updateSigners(listCleaned, achievement._id)
+        return listCleaned
+      }
+    })
+    .filter((signers) => signers)
+
+  return Promise.all(cleanerSigners)
+}
+
+/**
+ * Log List Signers.
  *
  * @param list
  */
-function listDuplicateSigners(list, activity, crop): void {
+function listDuplicateSigners(list: Signer[], activity, crop): void {
   console.log('=======================')
   console.log(`${chalk.green(`CROP ID: ${crop._id}`)}`)
   console.log(`${chalk.green(`ACTIVITY ID: ${activity._id}`)}`)
   console.log(`${chalk.green(`ACTIVITY NAME: ${activity.name}`)}`)
   console.log('=======================')
-  console.log(`${chalk.red('USER DUPLICATE')}`)
+  console.log(`${chalk.red('USERS DUPLICATE')}`)
   list.forEach((item) => {
     console.log('=======================')
     console.log(`User ID: ${item.userId}`)
@@ -66,25 +113,55 @@ function listDuplicateSigners(list, activity, crop): void {
   })
 }
 
-function findDuplicateSigners(signers) {
+function cleanDuplicateSigners(signers: Signer[]): Signer[] {
+  const orderSigners = signers.sort(function (after, current) {
+    return Number(after.signed) - Number(current.signed)
+  })
+
+  const uniqueByUser = uniqByPropMap('email')
+  const uniqueSigner = uniqueByUser<Signer>(orderSigners)
+
+  console.log(`${chalk.green('List Signers Cleaned')}`)
+  return uniqueSigner
+}
+
+/**
+ * Find Duplicate Signers and return list.
+ *
+ * @param Signer[] signers
+ *
+ * @returns Array
+ */
+function findDuplicateSigners(signers: Signer[]): Array<Signer> {
   const lookup = signers.reduce((a, e) => {
-    a[e.userId] = ++a[e.userId] || 0
+    a[e.email] = ++a[e.email] || 0
     return a
   }, {})
 
-  return signers.filter((e) => lookup[e.userId])
+  return signers.filter((e) => lookup[e.email])
 }
 
-function isDuplicateSigners(signers): boolean {
-  const signersId = signers.map(function (item) {
-    return item.userId
-  })
+/**
+ * Check Exist Duplicate Users.
+ *
+ * @param Signer[]  signers
+ *
+ * @returns Array
+ */
+function isDuplicateSigners(signers: Signer[]): boolean {
+  const signersId = signers.map((item: Signer) => item.userId)
 
-  const isDuplicate = signersId.some(function (item, index) {
-    return signersId.indexOf(item) !== index
-  })
+  return signersId.some((item, index) => signersId.indexOf(item) !== index)
+}
 
-  return isDuplicate
+/**
+ * Check Exist Achievements.
+ *
+ * @param achievements
+ * @returns
+ */
+function existAchievements(achievements): boolean {
+  return achievements.length > 0
 }
 
 async function getCropsWithActivitiesDone<T>(): Promise<Array<T>> {
