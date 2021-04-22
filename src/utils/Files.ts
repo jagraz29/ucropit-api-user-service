@@ -29,7 +29,9 @@ export function removeFile(dir: string) {
 
 export async function removeFiles(dirs: Array<string>): Promise<boolean> {
   for (const path of dirs) {
-    this.removeFile(path)
+    if (fileExist(path)) {
+      removeFile(path)
+    }
   }
 
   return true
