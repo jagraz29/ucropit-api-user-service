@@ -60,9 +60,11 @@ async function deleteGhostUsers(): Promise<void> {
       const { achievements, signers } = activity
       if (existAchievements(achievements)) {
         const listCleaned: Signer[] = await cleanSignersAchievement(activity)
+        console.log(listCleaned)
         logSigners(listCleaned, activity, crop, 'SIGNERS CLEANED')
       } else if (isDuplicateSigners(signers)) {
         const listCleaned: Signer[] = cleanDuplicateSigners(signers)
+        console.log(listCleaned)
         await ActivityService.updateSigners(listCleaned, activity._id)
         logSigners(listCleaned, activity, crop, 'SIGNERS CLEANED')
       }
@@ -79,7 +81,7 @@ async function deleteGhostUsers(): Promise<void> {
 async function cleanSignersAchievement(activity): Promise<Signer[]> {
   const { achievements } = activity
   const cleanerSigners = achievements
-    .map(async (achievement) => {
+    .flatMap(async (achievement: Achievement) => {
       const { signers } = achievement
       if (isDuplicateSigners(signers)) {
         const listCleaned: Signer[] = cleanDuplicateSigners(signers)
@@ -98,20 +100,22 @@ async function cleanSignersAchievement(activity): Promise<Signer[]> {
  * @param list
  */
 function logSigners(list: Signer[], activity, crop, message?: string): void {
-  console.log('=======================')
-  console.log(`${chalk.green(`CROP ID: ${crop._id}`)}`)
-  console.log(`${chalk.green(`ACTIVITY ID: ${activity._id}`)}`)
-  console.log(`${chalk.green(`ACTIVITY NAME: ${activity.name}`)}`)
-  console.log('=======================')
-  console.log(`${chalk.red(message)}`)
-  list.forEach((item) => {
+  if (list.length > 0) {
     console.log('=======================')
-    console.log(`User ID: ${item?.userId}`)
-    console.log(`User email: ${item?.email}`)
-    console.log(`User fullName: ${item?.fullName}`)
-    console.log(`User Signed: ${item?.signed}`)
+    console.log(`${chalk.green(`CROP ID: ${crop._id}`)}`)
+    console.log(`${chalk.green(`ACTIVITY ID: ${activity._id}`)}`)
+    console.log(`${chalk.green(`ACTIVITY NAME: ${activity.name}`)}`)
     console.log('=======================')
-  })
+    console.log(`${chalk.red(message)}`)
+    list.forEach((item) => {
+      console.log('=======================')
+      console.log(`User ID: ${item?.userId}`)
+      console.log(`User email: ${item?.email}`)
+      console.log(`User fullName: ${item?.fullName}`)
+      console.log(`User Signed: ${item?.signed}`)
+      console.log('=======================')
+    })
+  }
 }
 
 /**

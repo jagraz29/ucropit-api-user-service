@@ -48,7 +48,9 @@ async function signActivities(status: string): Promise<void> {
         await stampBlockChain(activity, crop)
         await changeStatusActivityInCrop(activity, crop)
       }
-
+      console.log(
+        `${chalk.green(`PROCESS SIGNED ACTIVITY: ${activity.type.name.es}`)}`
+      )
       console.log(`${chalk.green(`ACTIVITY SIGNED: ${activity.id}`)}`)
     }
   }
@@ -62,7 +64,9 @@ async function signActivities(status: string): Promise<void> {
  * @returns boolean
  */
 function activityReadyStamp(activity): boolean {
-  return ActivityService.isCompleteSingers(activity.signers)
+  return (
+    !activity.approvalRegister && ActivityService.isCompleteSingers(activity)
+  )
 }
 
 /**
@@ -74,6 +78,7 @@ function activityReadyStamp(activity): boolean {
  */
 function activityAchievementsReadyStamp(activity): boolean {
   return (
+    !activity.approvalRegister &&
     ActivityService.isCompleteSignersAchievements(activity) &&
     ActivityService.isCompletePercentAchievement(activity)
   )
@@ -106,6 +111,7 @@ async function getCropsByStatusActivities(status: string) {
       populate: [
         { path: 'collaborators' },
         { path: 'type' },
+        { path: 'unitType' },
         { path: 'typeAgreement' },
         { path: 'lots' },
         { path: 'files' },
