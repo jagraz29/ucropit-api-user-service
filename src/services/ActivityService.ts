@@ -118,7 +118,9 @@ class ActivityService extends ServiceBase {
       activity._id = mongoose.Types.ObjectId()
     }
 
-    return Activity.create(activity)
+    const activityModel = await Activity.create(activity)
+
+    return this.findActivityById(activityModel._id)
   }
 
   public static async update(id: string, activity: IActivity) {
