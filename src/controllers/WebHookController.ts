@@ -1,8 +1,13 @@
 import { Request, Response } from 'express'
 import {
   ResponseOkProps,
-  ResponseFailure
+  ImageSatelliteProps
 } from '../interfaces/SatelliteImageRequest'
+import models from '../models'
+
+const Lot = models.Lot
+const SatelliteFile = models.SatelliteFile
+const FileDocument = models.FileDocument
 
 class WebHookController {
   /**
@@ -17,9 +22,30 @@ class WebHookController {
     req: Request,
     res: Response
   ): Promise<void> {
-    const content: ResponseOkProps[] | ResponseFailure = req.body
+    const content: Array<ResponseOkProps> = req.body
 
-    console.log(content)
+    for (const responseOK of content) {
+      const lot = await Lot.findById(responseOK.lotId)
+
+      const satelliteImages = responseOK.images.map(
+        async (data: ImageSatelliteProps) => {
+          const fileDocument = await FileDocument.create({
+            nameFile: data.nameFile,
+            date: data.date
+          })
+          return SatelliteFile.create({
+            status: responseOK.status_ok,
+            date: data.date,
+            typeImage: data.type,
+            file: fileDocument._id
+          })
+        }
+      )
+      const satelliteFiles = await Promise.all(satelliteImages)
+
+      lot.satelliteFiles = satelliteFiles
+      await lot.save()
+    }
 
     res.status(200).json('Ok')
   }

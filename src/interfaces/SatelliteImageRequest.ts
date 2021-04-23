@@ -5,25 +5,17 @@ export interface RequestProps {
   customOptions: Object
 }
 
-interface FormatPropsNamesImages {
-  RGB: string
-  NDVI: string
-}
-
-export interface ImageSatellite {
-  prev: FormatPropsNamesImages
-  post: FormatPropsNamesImages
+export interface ImageSatelliteProps {
+  nameFile: string
+  date: string
+  type: string
 }
 
 export interface ResponseOkProps {
-  status_ok: string
+  status_ok: boolean
   lotId: string
   customObject?: any
-  file_names: ImageSatellite
-  dates: {
-    prev: string
-    post: string
-  }
+  images: Array<ImageSatelliteProps>
 }
 
 export interface ResponseFailure {}

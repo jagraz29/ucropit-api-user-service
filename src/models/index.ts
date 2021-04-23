@@ -21,6 +21,7 @@ import TypeStorage from './typeStorage'
 import Notification from './notification'
 import FileDocument from './documentFile'
 import IntegrationLog from './integrationLog'
+import SatelliteFile from './satelliteFileLot'
 
 const connectDb = function () {
   return mongoose.connect(process.env.DATABASE_URL, {
@@ -53,7 +54,8 @@ const models = {
   Roles,
   IntegrationLog,
   TypeStorage,
-  Notification
+  Notification,
+  SatelliteFile
 }
 
 export { connectDb }
