@@ -1,0 +1,42 @@
+export const ReportsSignersByCompaniesHeaderXls = {
+  fields: [
+    'identifier_company',
+    'identifier_producer',
+    'name_producer',
+    'crop',
+    'crop_name',
+    'surface_crop',
+    'user_signed_id',
+    'name_signed',
+    'sign_ACT_AGREEMENTS',
+    'sign_request_ACT_AGREEMENTS',
+    'sign_ACT_SOWING',
+    'sign_request_ACT_SOWING',
+    'sign_ACT_APPLICATION',
+    'sign_request_ACT_APPLICATION',
+    'sign_ACT_MONITORING',
+    'sign_request_ACT_MONITORING',
+    'sign_ACT_HARVEST',
+    'sign_request_ACT_HARVEST'
+  ],
+  fieldNames: [
+    'CUIT Licencia',
+    'CUIT Productor',
+    'Razon Social Productor',
+    'Tipo de Cultivo',
+    'Nombre del Cultivo',
+    'Hectareas KMZ del cultivo',
+    'Id del Usuario',
+    'Colaboradores del cultivo como firmantes',
+    'Firmas en acuerdos',
+    'Firmas solicitadas en acuerdos',
+    'Firmas en siembra',
+    'Firmas solicitadas en siembra',
+    'Firmas en aplicaciones',
+    'Firmas solicitadas en aplicaciones',
+    'Firmas en monitoreo',
+    'Firmas solicitadas en monitoreo',
+    'Firmas en cosecha',
+    'Firmas solicitadas en cosecha'
+  ]
+}

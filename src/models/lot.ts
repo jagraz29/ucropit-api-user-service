@@ -75,7 +75,6 @@ LotSchema.virtual('coordinateForGoogle').get(function () {
       lng: coordinate[0]
     }
   })
-
   return coordinatesForGoogle
 })
 

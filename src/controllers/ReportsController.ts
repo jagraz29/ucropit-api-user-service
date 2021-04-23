@@ -5,7 +5,11 @@ import ReportService from '../services/ReportService'
 import ExportFile from '../services/common/ExportFileService'
 import Company from '../services/CompanyService'
 import EmailService from '../services/EmailService'
-import { getFullPath } from '../utils/Files'
+import { ReportsSignersByCompaniesHeaderXls } from '../types/'
+
+import { CropRepository } from '../repository'
+import { structJsonForXls } from '../utils'
+import { ReportSignersByCompany } from '../interfaces'
 
 import { roles, errors } from '../types/common'
 
@@ -105,6 +109,45 @@ class ReportsController {
       files: [
         {
           filename: 'report.xlsx',
+          content: fs.readFileSync(pathFile)
+        }
+      ]
+    })
+
+    return res.status(200).json('Ok')
+  }
+
+  /**
+   * Send export file report by companies in email.
+   *
+   * @param req
+   * @param res
+   */
+  public async reportsSignersByCompanies(req: Request, res: Response) {
+    const email: string = req.query.email as string
+    const identifier: string = req.query.identifier as string
+
+    let crops = await CropRepository.findAllCropsByCompanies(identifier)
+
+    if (!crops) {
+      const error = errors.find((error) => error.key === '001')
+      return res.status(400).json(error.code)
+    }
+
+    const reports: Array<ReportSignersByCompany> = structJsonForXls(crops)
+    const pathFile = ExportFile.exportXls(
+      reports,
+      ReportsSignersByCompaniesHeaderXls,
+      'signers_by_companies.xlsx'
+    )
+
+    await EmailService.sendWithAttach({
+      template: 'export-file',
+      to: email,
+      data: {},
+      files: [
+        {
+          filename: 'signers_by_companies.xlsx',
           content: fs.readFileSync(pathFile)
         }
       ]
