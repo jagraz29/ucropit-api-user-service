@@ -6,6 +6,7 @@ import LotService from '../services/LotService'
 import ActivityService from '../services/ActivityService'
 
 import {
+  validateGetCrops,
   validateCropStore,
   validateFormatKmz,
   validateNotEqualNameLot
@@ -14,6 +15,7 @@ import {
 import { UserSchema } from '../models/user'
 
 const Crop = models.Crop
+const CropType = models.CropType
 
 class CropsController {
   /**
@@ -25,11 +27,55 @@ class CropsController {
    *
    * @return Response
    */
-  public async index(req: Request | any, res: Response) {
-    const query: any = {
+  public async index (req: Request | any, res: Response) {
+    let query: any = {
       cancelled: false,
-      'members.identifier': req.query.identifier,
       'members.user': req.user._id
+    }
+
+    if (req.query.cropTypes) {
+      query.cropType = {
+        $in: req.query.cropTypes
+      }
+    }
+
+    if (req.query.companies) {
+      query['members.identifier'] = {
+        $in: req.query.companies
+      }
+    }
+
+    if (req.query.collaborators) {
+      query['members.user'] = {
+        $in: req.query.collaborators
+      }
+    }
+
+    if (req.query.cropVolume) {
+      query.pay = {
+        $gte: req.query.cropVolume
+      }
+    }
+
+    if (req.query.getAll) {
+      query.$or = [
+        {
+          'members.type': 'KAM'
+        },
+        {
+          'members.type': 'CAM'
+        }
+      ]
+    }
+
+    if (
+      !req.query.cropTypes &&
+      !req.query.companies &&
+      !req.query.collaborators &&
+      !req.query.cropVolume &&
+      !req.query.getAll
+    ) {
+      query['members.identifier'] = req.query.identifier
     }
 
     const crops = await Crop.find(query)
@@ -53,7 +99,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async show(req: Request, res: Response) {
+  public async show (req: Request, res: Response) {
     const { id } = req.params
     const crop = await CropService.getCrop(id)
 
@@ -68,7 +114,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async create(req: Request | any, res: Response) {
+  public async create (req: Request | any, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     await validateCropStore(data)
@@ -118,7 +164,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async showLastMonitoring(req: Request, res: Response) {
+  public async showLastMonitoring (req: Request, res: Response) {
     const monitoring = await CropService.getLastMonitoring(req.params.id)
 
     res.status(200).json(monitoring)
@@ -132,7 +178,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async update(req: Request, res: Response) {
+  public async update (req: Request, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     let company = null
@@ -156,7 +202,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async enableOffline(req: Request, res: Response) {
+  public async enableOffline (req: Request, res: Response) {
     const crop = await Crop.findById(req.params.id)
 
     crop.downloaded = req.body.downloaded
@@ -174,7 +220,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async addIntegrationService(req: Request, res: Response) {
+  public async addIntegrationService (req: Request, res: Response) {
     const crop = await Crop.findById(req.params.id)
     const data = req.body
 
@@ -193,7 +239,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async delete(req: Request, res: Response) {
+  public async delete (req: Request, res: Response) {
     const isCancelled = await CropService.cancelled(req.params.id)
 
     if (!isCancelled) {
