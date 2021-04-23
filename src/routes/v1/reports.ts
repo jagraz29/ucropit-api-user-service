@@ -86,6 +86,38 @@ router.post(
   reportsController.sendFileReport
 )
 
+/**
+ * @swagger
+ * path:
+ *  /v1/reports/validations/companies:
+ *    post:
+ *      summary: Request send email with report the crops of company.
+ *      tags: [Reports]
+ *      parameters:
+ *        - in: query
+ *          name: identifier
+ *          required: true
+ *          schema:
+ *            type: string
+ *        - in: query
+ *          name: email
+ *          required: true
+ *          schema:
+ *            type: string
+ *      responses:
+ *        "200":
+ *          description: ok
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.post(
+  '/validations/companies',
+  // authMiddleware,
+  reportsController.reportsSignersByCompanies
+)
+
 router.get('/map/lot', reportsController.showMap)
 
 export default router
