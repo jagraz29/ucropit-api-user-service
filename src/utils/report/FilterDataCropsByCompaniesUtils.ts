@@ -57,7 +57,7 @@ const getDataActivities = (activities): Object[] => {
 const setTypeActivityInSigners = (signers, typeActivity: string): Object[] => {
   return signers.map(({ signed, userId, fullName, email }) => {
     return {
-      userSignedId : userId,
+      userSignedId: userId,
       nameSigned: fullName,
       emailSigned: email,
       typeActivity,
