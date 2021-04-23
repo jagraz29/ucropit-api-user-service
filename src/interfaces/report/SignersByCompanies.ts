@@ -1,6 +1,5 @@
 export interface ReportSignersByCompany {
   identifier_company: string
-  // nameCompany: string
   identifier_producer: string
   name_producer: string
   crop: string

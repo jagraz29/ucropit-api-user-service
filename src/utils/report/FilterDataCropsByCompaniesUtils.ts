@@ -3,7 +3,6 @@ export const filterDataCropsByCompanies = (crops, identifierCompany: string): Ob
     const { identifier: identifierProducer, lots, done, finished } = crop
     const reportPartial = {
       identifierCompany,
-        // not found name licency
       identifierProducer,
       nameProducer: crop.company ? crop.company.name : '',
       nameCropType: crop.cropType ? crop.cropType.name.es : '',

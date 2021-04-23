@@ -1,7 +1,6 @@
 export const ReportsSignersByCompaniesHeaderXls = {
   fields: [
     'identifier_company',
-    // 'nameCompany',
     'identifier_producer',
     'name_producer',
     'crop',
@@ -22,7 +21,6 @@ export const ReportsSignersByCompaniesHeaderXls = {
   ],
   fieldNames: [
     'CUIT Licencia',
-    // 'Razon Social Licencia',
     'CUIT Productor',
     'Razon Social Productor',
     'Tipo de Cultivo',
