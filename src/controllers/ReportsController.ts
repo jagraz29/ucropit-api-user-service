@@ -5,7 +5,15 @@ import ReportService from '../services/ReportService'
 import ExportFile from '../services/common/ExportFileService'
 import Company from '../services/CompanyService'
 import EmailService from '../services/EmailService'
+import { ReportsSignersByCompaniesHeaderXls } from '../types/'
 import { getFullPath } from '../utils/Files'
+
+// Refactor Structure
+import { ReportValidationsByCompaniesService } from '../services'
+import { CropRepository } from '../repository'
+import { structJsonForXls } from '../utils'
+import { ReportSignersByCompany } from '../interfaces'
+
 
 import { roles, errors } from '../types/common'
 
@@ -113,7 +121,42 @@ class ReportsController {
     return res.status(200).json('Ok')
   }
 
-  public async showMap(req: Request, res: Response) {
+  /**
+   * Send export file report by companies in email.
+   *
+   * @param req
+   * @param res
+   */
+  public async reportsSignersByCompanies (req: Request, res: Response) {
+    const { identifier, email } = req.query
+
+    let crops = await CropRepository.findAllCropsByCompanies(identifier)
+
+    if (!crops) {
+      const error = errors.find((error) => error.key === '001')
+      return res.status(400).json(error.code)
+    }
+
+    const reports: Array<ReportSignersByCompany> = structJsonForXls(crops)
+    console.log(reports)
+    const pathFile = ExportFile.exportXls(reports, ReportsSignersByCompaniesHeaderXls, 'signers_by_companies.xlsx')
+
+    await EmailService.sendWithAttach({
+      template: 'export-file',
+      to: email,
+      data: {},
+      files: [
+        {
+          filename: 'signers_by_companies.xlsx',
+          content: fs.readFileSync(pathFile)
+        }
+      ]
+    })
+
+    return res.status(200).json('Ok')
+  }
+
+  public async showMap (req: Request, res: Response) {
     const { id } = req.query
 
     if (!id) res.status(403).json({ error: 'MUST PASS ID LOT' })
