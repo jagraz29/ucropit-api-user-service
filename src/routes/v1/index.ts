@@ -19,6 +19,7 @@ import files from './files'
 import supplies from './supplies'
 import offline from './offline'
 import integrations from './integrations'
+import webhooks from './webhooks'
 
 const router: express.Router = express.Router()
 
@@ -85,5 +86,8 @@ router.use('/offline', authMiddleware, offline)
 
 // API EXPORTER
 router.use('/exporters', authMiddleware, integrations)
+
+// WEBHOOKS SERVICES
+router.use('/webhooks', webhooks)
 
 export default router

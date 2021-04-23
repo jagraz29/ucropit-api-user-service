@@ -37,7 +37,7 @@ export const FileDocumentSchema = new Schema(
     },
     path: {
       type: String,
-      required: true
+      required: false
     },
     name: {
       type: String
