@@ -11,7 +11,7 @@ export const structJsonForXls = (crops): Array<ReportSignersByCompany> => {
     return signers.map(({ nameSigned, userSignedId, activities }) => {
       return {
         identifier_company: identifierCompany,
-                // nameCompany: string,
+        // nameCompany: string,
         identifier_producer: identifierProducer,
         name_producer: nameProducer,
         crop: nameCropType,

@@ -6,10 +6,7 @@ import ExportFile from '../services/common/ExportFileService'
 import Company from '../services/CompanyService'
 import EmailService from '../services/EmailService'
 import { ReportsSignersByCompaniesHeaderXls } from '../types/'
-import { getFullPath } from '../utils/Files'
 
-// Refactor Structure
-import { ReportValidationsByCompaniesService } from '../services'
 import { CropRepository } from '../repository'
 import { structJsonForXls } from '../utils'
 import { ReportSignersByCompany } from '../interfaces'
@@ -138,7 +135,6 @@ class ReportsController {
     }
 
     const reports: Array<ReportSignersByCompany> = structJsonForXls(crops)
-    console.log(reports)
     const pathFile = ExportFile.exportXls(reports, ReportsSignersByCompaniesHeaderXls, 'signers_by_companies.xlsx')
 
     await EmailService.sendWithAttach({

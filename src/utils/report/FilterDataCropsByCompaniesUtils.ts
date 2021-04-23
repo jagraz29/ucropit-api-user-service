@@ -10,7 +10,7 @@ export const filterDataCropsByCompanies = (crops, identifierCompany: string): Ob
       nameCrop: crop.name,
       surfaceCrop: calculateSurfaceLots(lots)
     }
-    const activities = [...getDataActivities(done/*,identifierCompany*/), ...getDataActivities(finished/*,identifierCompany*/)]
+    const activities = [...getDataActivities(done), ...getDataActivities(finished)]
     return { ...reportPartial, signers: setSignersToRows(activities) }
   })
 }
@@ -28,7 +28,7 @@ const setSignersToRows = (activities): Object[] => {
     }
     let elementRow = result.find((elem) => elem.userSignedId.toString() === userSignedId.toString())
     let activity = elementRow.activities.find((elem) => elem.typeActivity === typeActivity)
-    if (activity/* !== undefined*/) {
+    if (activity) {
       activity.signed += signed ? 1 : 0
       activity.signRequest += 1
     } else {
@@ -38,12 +38,11 @@ const setSignersToRows = (activities): Object[] => {
   return result
 }
 
-const getDataActivities = (activities/*,identifierCompany: string*/): Object[] => {
+const getDataActivities = (activities): Object[] => {
   return activities.flatMap(({ typeAgreement, achievements, type: { tag: TypeActivity }, signers }) => {
     const key = typeAgreement ? typeAgreement.key : null
     let responseWithAgreements: Object[] = []
     let responseWithOutAgreements: Object[] = []
-    // const identifier = TypeAgreement.visible.includes(identifierCompany)
     let signersSet: Object[] = !!achievements.length ? achievements.flatMap(({ signers }) => signers) : signers
     if (TypeActivity === 'ACT_AGREEMENTS') {
       if (key === 'SUSTAIN' || key === 'SEED_USE') {

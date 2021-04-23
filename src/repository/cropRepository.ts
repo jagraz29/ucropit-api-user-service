@@ -9,7 +9,7 @@ export class CropRepository {
     *
     * @param crops
     */
-    const cropsInstance = await Crop.find({ cancelled: false,'members.identifier': identifier })//.limit(2)
+    const cropsInstance = await Crop.find({ cancelled: false,'members.identifier': identifier })
         .populate('lots.data')
         .populate('cropType')
         .populate('unitType')
