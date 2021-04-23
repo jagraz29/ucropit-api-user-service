@@ -11,7 +11,6 @@ import { CropRepository } from '../repository'
 import { structJsonForXls } from '../utils'
 import { ReportSignersByCompany } from '../interfaces'
 
-
 import { roles, errors } from '../types/common'
 
 import fs from 'fs'
@@ -124,8 +123,9 @@ class ReportsController {
    * @param req
    * @param res
    */
-  public async reportsSignersByCompanies (req: Request, res: Response) {
-    const { identifier, email } = req.query
+  public async reportsSignersByCompanies(req: Request, res: Response) {
+    const email: string = req.query.email as string
+    const identifier: string = req.query.identifier as string
 
     let crops = await CropRepository.findAllCropsByCompanies(identifier)
 
@@ -135,7 +135,11 @@ class ReportsController {
     }
 
     const reports: Array<ReportSignersByCompany> = structJsonForXls(crops)
-    const pathFile = ExportFile.exportXls(reports, ReportsSignersByCompaniesHeaderXls, 'signers_by_companies.xlsx')
+    const pathFile = ExportFile.exportXls(
+      reports,
+      ReportsSignersByCompaniesHeaderXls,
+      'signers_by_companies.xlsx'
+    )
 
     await EmailService.sendWithAttach({
       template: 'export-file',
@@ -152,7 +156,7 @@ class ReportsController {
     return res.status(200).json('Ok')
   }
 
-  public async showMap (req: Request, res: Response) {
+  public async showMap(req: Request, res: Response) {
     const { id } = req.query
 
     if (!id) res.status(403).json({ error: 'MUST PASS ID LOT' })
