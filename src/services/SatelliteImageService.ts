@@ -4,6 +4,7 @@ import {
   SENSING_REMOTE_URL,
   SENSING_ENDPOINT_REQUEST
 } from '../utils/Constants'
+import { Lot } from '../models/lot'
 
 class SatelliteImageService extends ServiceBase {
   /**
@@ -52,7 +53,7 @@ class SatelliteImageService extends ServiceBase {
    * @returns SatelliteImageService
    */
   public static createPayload(activity) {
-    this.requestProps = activity.lots.map((lot) => {
+    this.requestProps = activity.lots.map((lot: Lot) => {
       return {
         lotId: lot._id,
         harvestDate: this.formatDateHarvest(activity.dateHarvest),

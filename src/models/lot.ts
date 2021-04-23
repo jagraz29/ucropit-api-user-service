@@ -34,6 +34,14 @@ import { getCenterOfBounds } from 'geolib'
 
 const { Schema } = mongoose
 
+export interface Lot extends mongoose.Document {
+  _id: string
+  name: string
+  area: any
+  surface: Number
+  status: boolean
+}
+
 const LotSchema = new Schema(
   {
     name: {
@@ -95,4 +103,4 @@ LotSchema.virtual('centerBoundGoogle').get(function () {
   }
 })
 
-export default mongoose.model('Lot', LotSchema)
+export default mongoose.model<Lot>('Lot', LotSchema)
