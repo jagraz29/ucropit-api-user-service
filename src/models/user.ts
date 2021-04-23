@@ -48,45 +48,45 @@ export interface UserSchema extends mongoose.Document {
 const userSchema = new mongoose.Schema(
   {
     firstName: {
-      type: String,
+      type: String
     },
     lastName: {
-      type: String,
+      type: String
     },
     phone: {
-      type: String,
+      type: String
     },
     email: {
       type: String,
-      unique: true,
+      unique: true
     },
     pin: {
-      type: String,
+      type: String
     },
     verifyToken: {
-      type: String,
+      type: String
     },
     avatar: { type: String, required: false },
     collaboratorRequest: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'CollaboratorRequest',
-      },
+        ref: 'CollaboratorRequest'
+      }
     ],
     companies: [
       {
         company: {
           type: Schema.Types.ObjectId,
-          ref: 'Company',
+          ref: 'Company'
         },
         isAdmin: {
           type: Boolean,
-          default: true,
+          default: true
         },
-        identifier: String,
-      },
+        identifier: String
+      }
     ],
-    config: { type: Schema.Types.ObjectId, ref: 'UserConfig' },
+    config: { type: Schema.Types.ObjectId, ref: 'UserConfig' }
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
