@@ -1,6 +1,6 @@
 export interface FileDocumentProps {
-  nameFile: string
-  date: Date | string
+  nameFile?: string
+  date?: Date | string
   path?: string
   name?: string
   pathThumbnails?: string

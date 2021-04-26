@@ -28,12 +28,10 @@ const { Schema } = mongoose
 export const FileDocumentSchema = new Schema(
   {
     nameFile: {
-      type: String,
-      required: true
+      type: String
     },
     date: {
-      type: Date,
-      required: true
+      type: Date
     },
     path: {
       type: String,

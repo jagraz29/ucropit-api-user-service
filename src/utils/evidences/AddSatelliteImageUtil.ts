@@ -4,6 +4,7 @@ import {
 } from '../../interfaces/SatelliteImageRequest'
 
 import LotRepository from '../../repositories/lotRepository'
+import ActivityRepository from '../../repositories/activityRepository'
 import FileDocumentRepository from '../../repositories/fileDocumentRepository'
 
 /**
@@ -11,7 +12,7 @@ import FileDocumentRepository from '../../repositories/fileDocumentRepository'
  *
  * @param ResponseOkProps[] response
  */
-export const addSatelliteImageInLots = async (
+export const addSatelliteImageInActivity = async (
   response: Array<ResponseOkProps>
 ): Promise<void> => {
   for (const responseOK of response) {
@@ -42,13 +43,22 @@ const responseHasImages = (response: ResponseOkProps): boolean => {
 const responseWithoutImages = async (
   response: ResponseOkProps
 ): Promise<void> => {
-  const lot = await LotRepository.findById(response.lotId)
-  const satelliteFile = await FileDocumentRepository.createSatelliteImage({
-    status: response.status_ok,
-    description: response.description
+  const { activityId } = response.customOptions
+  const { lotId, description } = response
+  const lot = await LotRepository.findById(lotId)
+  const activity = ActivityRepository.findById(activityId)
+
+  const fileDocument = await FileDocumentRepository.create({
+    meta: {
+      lotId: lot._id,
+      nameLot: lot.name,
+      description: description
+    },
+    isSatelliteImage: true
   })
-  lot.satelliteFiles.push(satelliteFile)
-  await lot.save()
+  activity.files.push(fileDocument)
+
+  await activity.save()
 }
 
 /**
@@ -57,25 +67,29 @@ const responseWithoutImages = async (
  * @param ResponseOkProps response
  */
 const responseWithImages = async (response: ResponseOkProps): Promise<void> => {
-  const lot = await LotRepository.findById(response.lotId)
+  const { lotId, images } = response
+  const { activityId } = response.customOptions
 
-  const satelliteImages = response.images.map(
+  const lot = await LotRepository.findById(lotId)
+  const activity = ActivityRepository.findById(activityId)
+
+  const satelliteImages = images.map(
     async ({ nameFile, date, type }: ImageSatelliteProps) => {
       const fileDocument = await FileDocumentRepository.create({
         nameFile: nameFile,
         date: date,
+        meta: {
+          lotId: lot._id,
+          nameLot: lot.name,
+          typeImage: type
+        },
         isSatelliteImage: true
       })
-      return FileDocumentRepository.createSatelliteImage({
-        status: response.status_ok,
-        date: date,
-        typeImage: type,
-        file: fileDocument._id
-      })
+
+      activity.files.push(fileDocument)
+
+      return activity.save()
     }
   )
-  const satelliteFiles = await Promise.all(satelliteImages)
-
-  lot.satelliteFiles = satelliteFiles
-  await lot.save()
+  await Promise.all(satelliteImages)
 }

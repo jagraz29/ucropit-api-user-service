@@ -40,7 +40,6 @@ export interface Lot extends mongoose.Document {
   area: any
   surface: Number
   status: boolean
-  satelliteFiles?: Array<any>
 }
 
 const LotSchema = new Schema(
@@ -61,8 +60,7 @@ const LotSchema = new Schema(
     surface: {
       type: Number,
       require: true
-    },
-    satelliteFiles: [{ type: Schema.Types.ObjectId, ref: 'SatelliteFile' }]
+    }
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )

@@ -15,6 +15,6 @@ export interface ResponseOkProps {
   status_ok: boolean
   lotId: string
   description?: string
-  customObject?: any
+  customOptions?: any
   images?: Array<ImageSatelliteProps>
 }

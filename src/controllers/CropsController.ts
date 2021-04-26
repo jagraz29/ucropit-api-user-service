@@ -4,6 +4,7 @@ import CropService from '../services/CropService'
 import CompanyService from '../services/CompanyService'
 import LotService from '../services/LotService'
 import ActivityService from '../services/ActivityService'
+import { CropRepository } from '../repositories'
 
 import {
   validateGetCrops,
@@ -27,7 +28,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async index (req: Request | any, res: Response) {
+  public async index(req: Request | any, res: Response) {
     let query: any = {
       cancelled: false,
       'members.user': req.user._id
@@ -99,9 +100,9 @@ class CropsController {
    *
    * @return Response
    */
-  public async show (req: Request, res: Response) {
+  public async show(req: Request, res: Response) {
     const { id } = req.params
-    const crop = await CropService.getCrop(id)
+    const crop = await CropRepository.findById(id)
 
     res.status(200).json(crop)
   }
@@ -114,7 +115,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async create (req: Request | any, res: Response) {
+  public async create(req: Request | any, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     await validateCropStore(data)
@@ -164,7 +165,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async showLastMonitoring (req: Request, res: Response) {
+  public async showLastMonitoring(req: Request, res: Response) {
     const monitoring = await CropService.getLastMonitoring(req.params.id)
 
     res.status(200).json(monitoring)
@@ -178,7 +179,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async update (req: Request, res: Response) {
+  public async update(req: Request, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     let company = null
@@ -202,7 +203,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async enableOffline (req: Request, res: Response) {
+  public async enableOffline(req: Request, res: Response) {
     const crop = await Crop.findById(req.params.id)
 
     crop.downloaded = req.body.downloaded
@@ -220,7 +221,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async addIntegrationService (req: Request, res: Response) {
+  public async addIntegrationService(req: Request, res: Response) {
     const crop = await Crop.findById(req.params.id)
     const data = req.body
 
@@ -239,7 +240,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async delete (req: Request, res: Response) {
+  public async delete(req: Request, res: Response) {
     const isCancelled = await CropService.cancelled(req.params.id)
 
     if (!isCancelled) {
