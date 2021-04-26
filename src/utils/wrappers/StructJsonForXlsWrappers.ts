@@ -1,4 +1,5 @@
 import { ReportSignersByCompany } from '../../interfaces'
+import _ from 'lodash'
 
 interface SingForTypeActivity {
   signed: Number
@@ -6,7 +7,7 @@ interface SingForTypeActivity {
 }
 
 export const structJsonForXls = (crops): Array<ReportSignersByCompany> => {
-  return crops.flatMap((crop) => {
+  return _.flatten(crops.map((crop) => {
     const { identifierCompany, identifierProducer, nameProducer, nameCropType, nameCrop, surfaceCrop, signers } = crop
     return signers.map(({ nameSigned, userSignedId, activities }) => {
       return {
@@ -30,7 +31,7 @@ export const structJsonForXls = (crops): Array<ReportSignersByCompany> => {
         sign_request_ACT_HARVEST: singForTypeActivity(activities,'ACT_HARVEST').signRequest
       }
     })
-  })
+  }))
 }
 
 const singForTypeActivity = (activities, typeActivityParam: string): SingForTypeActivity => {
