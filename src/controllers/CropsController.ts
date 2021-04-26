@@ -30,56 +30,53 @@ class CropsController {
    */
   public async index(req: Request | any, res: Response) {
     let query: any = {
-      cancelled: false,
-      'members.user': req.user._id
-    }
-
-    if (req.query.cropTypes) {
-      query.cropType = {
-        $in: req.query.cropTypes
-      }
-    }
-
-    if (req.query.companies) {
-      query['members.identifier'] = {
-        $in: req.query.companies
-      }
-    }
-
-    if (req.query.collaborators) {
-      query['members.user'] = {
-        $in: req.query.collaborators
-      }
-    }
-
-    if (req.query.cropVolume) {
-      query.pay = {
-        $gte: req.query.cropVolume
-      }
-    }
-
-    if (req.query.getAll) {
-      query.$or = [
+      $and : [
         {
-          'members.type': 'KAM'
+          cancelled: false
         },
         {
-          'members.type': 'CAM'
-        }
+          'members.user': req.user._id
+        },
+        {
+          'members.identifier': req.query.identifier
+        },
       ]
     }
 
-    if (
-      !req.query.cropTypes &&
-      !req.query.companies &&
-      !req.query.collaborators &&
-      !req.query.cropVolume &&
-      !req.query.getAll
-    ) {
-      query['members.identifier'] = req.query.identifier
+    if (req.query.cropTypes) {
+      query['$and'].push({
+        cropType : {
+          $in: req.query.cropTypes
+        }
+      })
+    }
+
+    if (req.query.companies) {
+      query['$and'].push({
+        company : {
+          $in: req.query.companies
+        }
+      })
+    }
+
+    if (req.query.collaborators) {
+      query['$and'].push({
+        'members.user' : {
+          $in: req.query.collaborators
+        }
+      })
+    }
+
+    if (req.query.cropVolume) {
+      query['$and'].push({
+        pay : {
+          $gte: req.query.cropVolume
+        }
+      })
     }
 
     const crops = await Crop.find(query)
+      .populate('company')
       .populate('cropType')
       .populate('unitType')
       .populate('pending')

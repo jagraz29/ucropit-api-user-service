@@ -129,14 +129,13 @@ userSchema.methods.comparePassword = function (
   if (!this[field]) return cb(null, false)
 
   const fieldToCompare: string = this[field]
-  bcrypt.compare(
-    candidatePassword,
-    fieldToCompare,
-    function (err, isMatch: boolean) {
-      if (err) return cb(err)
-      cb(null, isMatch)
-    }
-  )
+  bcrypt.compare(candidatePassword, fieldToCompare, function (
+    err,
+    isMatch: boolean
+  ) {
+    if (err) return cb(err)
+    cb(null, isMatch)
+  })
 }
 
 userSchema.methods.generateAuthToken = function (): string {
