@@ -51,6 +51,9 @@ export const FileDocumentSchema = new Schema(
     description: {
       type: String
     },
+    isSatelliteImage: {
+      type: Boolean
+    },
     settings: {
       type: Schema.Types.Mixed
     },
@@ -78,6 +81,13 @@ FileDocumentSchema.virtual('imagePathThumbnails').get(function () {
   }
 
   return `${process.env.BASE_URL}/${this.path}`
+})
+
+FileDocumentSchema.virtual('imageSatellite').get(function () {
+  if (this.isSatelliteImage) {
+    return `${process.env.BASE_URL_IMAGES}/${this.nameFile}`
+  }
+  return ''
 })
 
 export default mongoose.model('FileDocument', FileDocumentSchema)

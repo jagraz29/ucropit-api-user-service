@@ -14,8 +14,7 @@ export interface ImageSatelliteProps {
 export interface ResponseOkProps {
   status_ok: boolean
   lotId: string
+  description?: string
   customObject?: any
-  images: Array<ImageSatelliteProps>
+  images?: Array<ImageSatelliteProps>
 }
-
-export interface ResponseFailure {}

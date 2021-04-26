@@ -5,6 +5,7 @@ export interface SatelliteFile extends mongoose.Document {
   status: string
   date: Date
   typeImage: string
+  description?: string
   file?: any
 }
 
@@ -16,6 +17,9 @@ const SatelliteFileSchema = new Schema({
     type: Date
   },
   typeImage: {
+    type: String
+  },
+  description: {
     type: String
   },
   file: { type: Schema.Types.ObjectId, ref: 'FileDocument' }

@@ -106,6 +106,7 @@ class ActivitiesController {
     await CropService.addActivities(activity, crop)
 
     if (activity.isDone() && activity.type.tag === ACTIVITY_HARVEST) {
+      console.log('ENVIA AL SERVICIO IMAGEN SATELITAL')
       await SatelliteImageService.createPayload(activity).send()
     }
 
@@ -171,6 +172,7 @@ class ActivitiesController {
     }
 
     if (activity.isDone() && activity.type.tag === ACTIVITY_HARVEST) {
+      console.log('ENVIA AL SERVICIO IMAGEN SATELITAL')
       await SatelliteImageService.createPayload(activity).send()
     }
 
