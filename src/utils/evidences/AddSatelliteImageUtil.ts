@@ -46,7 +46,7 @@ const responseWithoutImages = async (
   const { activityId } = response.customOptions
   const { lotId, description } = response
   const lot = await LotRepository.findById(lotId)
-  const activity = ActivityRepository.findById(activityId)
+  const activity = await ActivityRepository.findById(activityId)
 
   const fileDocument = await FileDocumentRepository.create({
     meta: {
@@ -71,25 +71,23 @@ const responseWithImages = async (response: ResponseOkProps): Promise<void> => {
   const { activityId } = response.customOptions
 
   const lot = await LotRepository.findById(lotId)
-  const activity = ActivityRepository.findById(activityId)
+  const activity = await ActivityRepository.findById(activityId)
 
-  const satelliteImages = images.map(
-    async ({ nameFile, date, type }: ImageSatelliteProps) => {
-      const fileDocument = await FileDocumentRepository.create({
-        nameFile: nameFile,
-        date: date,
-        meta: {
-          lotId: lot._id,
-          nameLot: lot.name,
-          typeImage: type
-        },
-        isSatelliteImage: true
-      })
+  for (const image of images) {
+    const { nameFile, date, type } = image
+    const fileDocument = await FileDocumentRepository.create({
+      nameFile: nameFile,
+      date: date,
+      meta: {
+        lotId: lot._id,
+        nameLot: lot.name,
+        typeImage: type
+      },
+      isSatelliteImage: true
+    })
 
-      activity.files.push(fileDocument)
+    activity.satelliteImages.push(fileDocument)
 
-      return activity.save()
-    }
-  )
-  await Promise.all(satelliteImages)
+    await activity.save()
+  }
 }

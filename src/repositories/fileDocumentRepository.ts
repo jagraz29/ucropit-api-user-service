@@ -1,7 +1,7 @@
 import models from '../models'
 import { FileDocumentProps } from '../interfaces/FileDocument'
 
-const { FileDocument, SatelliteFile } = models
+const { FileDocument } = models
 
 class FileDocumentRepository {
   /**
@@ -12,15 +12,6 @@ class FileDocumentRepository {
    */
   public static create(data: FileDocumentProps) {
     return FileDocument.create(data)
-  }
-
-  /**
-   *
-   * @param data
-   * @returns
-   */
-  public static createSatelliteImage(data) {
-    return SatelliteFile.create(data)
   }
 }
 export default FileDocumentRepository

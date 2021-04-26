@@ -187,6 +187,7 @@ const ActivitySchema = new Schema({
     }
   ],
   files: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }],
+  satelliteImages: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }],
   achievements: [{ type: Schema.Types.ObjectId, ref: 'Achievement' }],
   user: { type: Schema.Types.ObjectId, ref: 'User' }
 })
