@@ -7,6 +7,7 @@ import { uniqByPropMap } from '../utils/List'
 import ActivityService from '../services/ActivityService'
 import AchievementService from '../services/AchievementService'
 import { Achievement } from '../models/achievement'
+import { flatten } from 'lodash'
 const Crop = models.Crop
 
 const program = new Command()
@@ -60,11 +61,9 @@ async function deleteGhostUsers(): Promise<void> {
       const { achievements, signers } = activity
       if (existAchievements(achievements)) {
         const listCleaned: Signer[] = await cleanSignersAchievement(activity)
-        console.log(listCleaned)
         logSigners(listCleaned, activity, crop, 'SIGNERS CLEANED')
       } else if (isDuplicateSigners(signers)) {
         const listCleaned: Signer[] = cleanDuplicateSigners(signers)
-        console.log(listCleaned)
         await ActivityService.updateSigners(listCleaned, activity._id)
         logSigners(listCleaned, activity, crop, 'SIGNERS CLEANED')
       }
@@ -80,8 +79,8 @@ async function deleteGhostUsers(): Promise<void> {
  */
 async function cleanSignersAchievement(activity): Promise<Signer[]> {
   const { achievements } = activity
-  const cleanerSigners = achievements
-    .flatMap(async (achievement: Achievement) => {
+  const cleanerSigners = flatten(
+    achievements.map(async (achievement: Achievement) => {
       const { signers } = achievement
       if (isDuplicateSigners(signers)) {
         const listCleaned: Signer[] = cleanDuplicateSigners(signers)
@@ -89,7 +88,7 @@ async function cleanSignersAchievement(activity): Promise<Signer[]> {
         return listCleaned
       }
     })
-    .filter((signers) => signers)
+  ).filter((signers) => signers)
 
   return Promise.all(cleanerSigners)
 }
@@ -145,12 +144,12 @@ function cleanDuplicateSigners(signers: Signer[]): Signer[] {
  * @returns Array
  */
 function findDuplicateSigners(signers: Signer[]): Array<Signer> {
-  const lookup = signers.reduce((a, e) => {
-    a[e.email] = ++a[e.email] || 0
-    return a
+  const lookup = signers.reduce((prev, item) => {
+    prev[item.email] = ++prev[item.email] || 0
+    return prev
   }, {})
 
-  return signers.filter((e) => lookup[e.email])
+  return signers.filter((signer) => lookup[signer.email])
 }
 
 /**
