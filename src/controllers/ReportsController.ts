@@ -130,8 +130,8 @@ class ReportsController {
     let crops = await CropRepository.findAllCropsByCompanies(identifier)
 
     if (!crops) {
-      const error = errors.find((error) => error.key === '001')
-      return res.status(400).json(error.code)
+      const error = errors.find((error) => error.key === '005')
+      return res.status(404).json(error.code)
     }
 
     const reports: Array<ReportSignersByCompany> = structJsonForXls(crops)
