@@ -30,7 +30,7 @@ class CropsController {
    */
   public async index(req: Request | any, res: Response) {
     let query: any = {
-      $and : [
+      $and: [
         {
           cancelled: false
         },
@@ -39,13 +39,13 @@ class CropsController {
         },
         {
           'members.identifier': req.query.identifier
-        },
+        }
       ]
     }
 
     if (req.query.cropTypes) {
       query['$and'].push({
-        cropType : {
+        cropType: {
           $in: req.query.cropTypes
         }
       })
@@ -53,7 +53,7 @@ class CropsController {
 
     if (req.query.companies) {
       query['$and'].push({
-        company : {
+        company: {
           $in: req.query.companies
         }
       })
@@ -61,7 +61,7 @@ class CropsController {
 
     if (req.query.collaborators) {
       query['$and'].push({
-        'members.user' : {
+        'members.user': {
           $in: req.query.collaborators
         }
       })
@@ -69,7 +69,7 @@ class CropsController {
 
     if (req.query.cropVolume) {
       query['$and'].push({
-        pay : {
+        pay: {
           $gte: req.query.cropVolume
         }
       })
@@ -102,6 +102,10 @@ class CropsController {
     const crop = await CropService.getCrop(id)
 
     res.status(200).json(crop)
+  }
+
+  public async evidences(req: Request, res: Response) {
+    const { id } = req.params
   }
 
   /**

@@ -21,6 +21,10 @@ const router: express.Router = express.Router()
  *                  lotId:
  *                    type: string
  *                    description: ID Lot
+ *                  description:
+ *                    type: string
+ *                    required: false
+ *                    description: Only pass when not found satellite images
  *                  customOptions:
  *                    type: object
  *                    required: false

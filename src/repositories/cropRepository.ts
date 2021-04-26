@@ -65,4 +65,6 @@ export class CropRepository {
       ? filterDataCropsByCompanies(cropsInstance, identifier)
       : null
   }
+
+  public static async findAllEvidencesByCropId(cropId: string) {}
 }
