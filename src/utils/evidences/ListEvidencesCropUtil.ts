@@ -1,5 +1,6 @@
 import { flatten } from 'lodash'
-export const listEvidencesCrop = (crop) => {
+import { Evidence } from '../../interfaces/Evidence'
+export const listEvidencesCrop = (crop): Evidence[] => {
   const activities = [...crop.done, ...crop.finished]
 
   const filesEvidences = flatten(

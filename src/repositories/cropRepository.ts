@@ -1,3 +1,4 @@
+import { Evidence } from '../interfaces/Evidence'
 import models from '../models'
 const { Crop } = models
 
@@ -66,7 +67,9 @@ export class CropRepository {
       : null
   }
 
-  public static async findAllEvidencesByCropId(cropId: string) {
+  public static async findAllEvidencesByCropId(
+    cropId: string
+  ): Promise<Evidence[]> {
     const cropsInstance = await Crop.findById(cropId)
       .populate({
         path: 'done',

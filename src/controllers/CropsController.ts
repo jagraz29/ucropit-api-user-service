@@ -15,6 +15,7 @@ import {
 } from '../utils/Validation'
 
 import { UserSchema } from '../models/user'
+import { Evidence } from '../interfaces/Evidence'
 
 const Crop = models.Crop
 const CropType = models.CropType
@@ -116,7 +117,9 @@ class CropsController {
   public async evidences(req: Request, res: Response) {
     const { id } = req.params
 
-    const evidences = await CropRepository.findAllEvidencesByCropId(id)
+    const evidences: Evidence[] = await CropRepository.findAllEvidencesByCropId(
+      id
+    )
 
     if (!evidences) {
       const error = errors.find((error) => error.key === '005')
