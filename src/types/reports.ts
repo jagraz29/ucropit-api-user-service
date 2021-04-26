@@ -73,7 +73,12 @@ export const reportHeaderXls = {
     'link_evidences_files_tillage',
     'cant_achievements_tillage',
     'mail_producers',
-    'phone_producers'
+    'phone_producers',
+    'last_monitoring_date',
+    'yield_unit_monitoring',
+    'yelds_monitoring',
+    'date_estimated_harvest',
+    'date_total_signature_monitor'
   ],
   fieldNames: [
     'CUIT',
@@ -149,7 +154,12 @@ export const reportHeaderXls = {
     'Link evidencias Labores',
     'Cantidad de realización por Lote de ACTIVIDAD LABORES',
     'Mail de los Productores',
-    'Teléfono de los Producuctores'
+    'Teléfono de los Producuctores',
+    'Última fecha de monitoreo',
+    'Unidad de rinde',
+    'Rinde',
+    'Fecha Estimada de cosecha',
+    'Fecha de firma total del monitoreo',
   ]
 }
 
