@@ -20,7 +20,6 @@ const router: express.Router = express.Router()
  */
 router.get('/', cropsController.index)
 
-
 /**
  * @swagger
  * path:
@@ -32,7 +31,7 @@ router.get('/', cropsController.index)
  *        - in: path
  *          name: id
  */
- router.get('/lastMonitoring/:id', cropsController.showLastMonitoring)
+router.get('/lastMonitoring/:id', cropsController.showLastMonitoring)
 
 /**
  * @swagger
@@ -57,6 +56,8 @@ router.get('/', cropsController.index)
  *          description: Server error
  */
 router.get('/:id', cropsController.show)
+
+router.get('/:id/evidences', cropsController.evidences)
 
 /**
  * @swagger

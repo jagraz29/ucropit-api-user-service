@@ -1,7 +1,7 @@
 import models from '../models'
 const { Crop } = models
 
-import { filterDataCropsByCompanies } from '../utils'
+import { filterDataCropsByCompanies, listEvidencesCrop } from '../utils'
 
 export class CropRepository {
   public static async findAllCropsByCompanies(
@@ -66,5 +66,33 @@ export class CropRepository {
       : null
   }
 
-  public static async findAllEvidencesByCropId(cropId: string) {}
+  public static async findAllEvidencesByCropId(cropId: string) {
+    const cropsInstance = await Crop.findById(cropId)
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'files' },
+          { path: 'satelliteImages' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'files' }]
+          }
+        ]
+      })
+      .populate('members.user')
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'files' },
+          { path: 'satelliteImages' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'files' }]
+          }
+        ]
+      })
+      .lean({ virtuals: true })
+
+    return !!cropsInstance ? listEvidencesCrop(cropsInstance) : null
+  }
 }

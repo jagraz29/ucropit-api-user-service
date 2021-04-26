@@ -22,6 +22,7 @@
  *                $ref: '#/components/schemas/User'
  */
 import mongoose from 'mongoose'
+import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
 
 const { Schema } = mongoose
 
@@ -87,5 +88,7 @@ FileDocumentSchema.virtual('imageSatellite').get(function () {
   }
   return ''
 })
+
+FileDocumentSchema.plugin(mongooseLeanVirtuals)
 
 export default mongoose.model('FileDocument', FileDocumentSchema)

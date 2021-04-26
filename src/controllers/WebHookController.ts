@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { ResponseOkProps } from '../interfaces/SatelliteImageRequest'
-import { addSatelliteImageInActivity } from '../utils/evidences/AddSatelliteImageUtil'
+import { addSatelliteImageInActivity } from '../utils'
 
 class WebHookController {
   /**

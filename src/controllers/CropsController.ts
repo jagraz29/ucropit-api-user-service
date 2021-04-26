@@ -5,6 +5,7 @@ import CompanyService from '../services/CompanyService'
 import LotService from '../services/LotService'
 import ActivityService from '../services/ActivityService'
 import { CropRepository } from '../repositories'
+import { errors } from '../types/common'
 
 import {
   validateGetCrops,
@@ -104,8 +105,25 @@ class CropsController {
     res.status(200).json(crop)
   }
 
+  /**
+   * Get all crops evidences
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @returns
+   */
   public async evidences(req: Request, res: Response) {
     const { id } = req.params
+
+    const evidences = await CropRepository.findAllEvidencesByCropId(id)
+
+    if (!evidences) {
+      const error = errors.find((error) => error.key === '005')
+      return res.status(404).json(error.code)
+    }
+
+    res.status(200).json(evidences)
   }
 
   /**
