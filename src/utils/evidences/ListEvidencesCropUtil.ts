@@ -5,7 +5,7 @@ export const listEvidencesCrop = (crop): Evidence[] => {
 
   const filesEvidences = flatten(
     activities.map((activity) => {
-      return [...activity.files, ...activity.satelliteImages]
+      return [...activity.files]
     })
   )
 
