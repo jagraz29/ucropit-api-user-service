@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export const filterDataCropsByCompanies = (crops, identifierCompany: string): Object[] => {
   return crops.map((crop) => {
     const { identifier: identifierProducer, lots, done, finished } = crop
@@ -38,11 +40,11 @@ const setSignersToRows = (activities): Object[] => {
 }
 
 const getDataActivities = (activities): Object[] => {
-  return activities.flatMap(({ typeAgreement, achievements, type: { tag: TypeActivity }, signers }) => {
+  return _.flatten(activities.map(({ typeAgreement, achievements, type: { tag: TypeActivity }, signers }) => {
     const key = typeAgreement ? typeAgreement.key : null
     let responseWithAgreements: Object[] = []
     let responseWithOutAgreements: Object[] = []
-    let signersSet: Object[] = !!achievements.length ? achievements.flatMap(({ signers }) => signers) : signers
+    let signersSet: Object[] = !!achievements.length ? _.flatten(achievements.map(({ signers }) => signers)) : signers
     if (TypeActivity === 'ACT_AGREEMENTS') {
       if (key === 'SUSTAIN' || key === 'SEED_USE') {
         responseWithAgreements = setTypeActivityInSigners(signersSet,TypeActivity)
@@ -51,7 +53,7 @@ const getDataActivities = (activities): Object[] => {
       responseWithOutAgreements = setTypeActivityInSigners(signersSet,TypeActivity)
     }
     return [...responseWithAgreements, ...responseWithOutAgreements]
-  }).filter(item => item)
+  }).filter(item => item))
 }
 
 const setTypeActivityInSigners = (signers, typeActivity: string): Object[] => {
@@ -67,9 +69,9 @@ const setTypeActivityInSigners = (signers, typeActivity: string): Object[] => {
 }
 
 const calculateSurfaceLots = (lots): Number => {
-  return lots.flatMap(({ data }) => {
+  return _.flatten(lots.map(({ data }) => {
     let sum: Number = 0
     return data.map(({ surface }) => sum += surface)
             .reduce((a, b) => a + b, 0)
-  }).filter(item => item)[0]
+  }).filter(item => item))[0]
 }
