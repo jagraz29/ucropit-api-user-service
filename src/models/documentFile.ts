@@ -23,6 +23,7 @@
  */
 import mongoose from 'mongoose'
 import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
+import moment from 'moment'
 
 const { Schema } = mongoose
 
@@ -66,6 +67,10 @@ export const FileDocumentSchema = new Schema(
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
+
+FileDocumentSchema.virtual('dateFormat').get(function () {
+  return moment(this.date).format('DD/MM/YYYY')
+})
 
 FileDocumentSchema.virtual('imagePathIntermediate').get(function () {
   if (this.pathIntermediate) {

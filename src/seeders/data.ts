@@ -296,6 +296,13 @@ export const evidenceConcepts = [
       en: 'Dispatch Form',
       es: 'Remito'
     }
+  },
+  {
+    code: '0007',
+    name: {
+      en: 'Satelital image',
+      es: 'Imagen Satelital'
+    }
   }
 ]
 

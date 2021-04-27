@@ -6,6 +6,7 @@ import {
 import LotRepository from '../../repositories/lotRepository'
 import ActivityRepository from '../../repositories/activityRepository'
 import FileDocumentRepository from '../../repositories/fileDocumentRepository'
+import CommonRepository from '../../repositories/commonRepository'
 
 /**
  * Add satellite images.
@@ -47,8 +48,14 @@ const responseWithoutImages = async (
   const { lotId, description } = response
   const lot = await LotRepository.findById(lotId)
   const activity = await ActivityRepository.findById(activityId)
+  const concept: string = (
+    await CommonRepository.findEvidenceConceptBy({
+      code: '0007'
+    })
+  )[0]?.name['es']
 
   const fileDocument = await FileDocumentRepository.create({
+    description: concept,
     meta: {
       lotId: lot._id,
       nameLot: lot.name,
@@ -72,21 +79,28 @@ const responseWithImages = async (response: ResponseOkProps): Promise<void> => {
 
   const lot = await LotRepository.findById(lotId)
   const activity = await ActivityRepository.findById(activityId)
+  const concept: string = (
+    await CommonRepository.findEvidenceConceptBy({
+      code: '0007'
+    })
+  )[0]?.name['es']
 
   for (const image of images) {
-    const { nameFile, date, type } = image
+    const { nameFile, date, type, tag } = image
     const fileDocument = await FileDocumentRepository.create({
       nameFile: nameFile,
       date: date,
+      description: concept,
       meta: {
         lotId: lot._id,
         nameLot: lot.name,
-        typeImage: type
+        typeImage: type,
+        tag: tag
       },
       isSatelliteImage: true
     })
 
-    activity.satelliteImages.push(fileDocument)
+    activity.files.push(fileDocument)
 
     await activity.save()
   }

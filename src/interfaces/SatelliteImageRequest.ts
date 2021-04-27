@@ -9,6 +9,7 @@ export interface ImageSatelliteProps {
   nameFile: string
   date: string
   type: string
+  tag?: string
 }
 
 export interface ResponseOkProps {
