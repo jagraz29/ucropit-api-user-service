@@ -1,6 +1,7 @@
 import express from 'express'
 import webHookController from '../../controllers/WebHookController'
 const router: express.Router = express.Router()
+import { checkToken } from '../../utils/auth/foreignAuth'
 
 /**
  * @swagger

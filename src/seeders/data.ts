@@ -399,3 +399,10 @@ export const storageTypes = [
     key: 'DELIVERY_WITHIN_OF_PROGRAM'
   }
 ]
+
+export const foreignCredentials = [
+  {
+    credentialKey: 'sensing',
+    credentialSecret: 'sensing-secret'
+  }
+]

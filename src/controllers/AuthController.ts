@@ -6,6 +6,7 @@ import UserConfigService from '../services/UserConfigService'
 import numbers from '../utils/Numbers'
 
 const User = models.User
+const ForeignCredential = models.ForeignCredential
 
 class AuthController {
   public async me(req, res: Response) {
@@ -109,6 +110,31 @@ class AuthController {
     const responseUser = await UserConfigService.findUserWithConfigs(user._id)
 
     res.json({ user: responseUser })
+  }
+
+  public async authForeignService(req: Request, res: Response) {
+    const { credentialKey, credentialSecret } = req.body
+
+    const credential = await ForeignCredential.findOne({ credentialKey })
+
+    if (!credential) {
+      return res.status(404).json({ error: 'ERR_NOT_FOUND' })
+    }
+
+    credential.comparePassword(
+      credentialSecret,
+      'credentialSecret',
+      async function (err, isMatch) {
+        if (err) res.status(500).json({ error: err.message })
+
+        if (isMatch) {
+          const token = credential.generateAuthToken()
+          res.json({ token })
+        } else {
+          res.status(401).json({ error: 'NOT_MATCH_VALID' })
+        }
+      }
+    )
   }
 }
 
