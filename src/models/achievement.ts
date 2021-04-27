@@ -26,8 +26,39 @@
  *              type: array
  */
 
-import mongoose, { Schema } from 'mongoose'
+import mongoose, { Schema, Document } from 'mongoose'
 import shortid from 'shortid'
+import { Signer } from '../interfaces/Signer'
+
+interface Supplies {
+  name?: string
+  unit?: string
+  quantity?: Number
+  typeId?: string
+  icon?: string
+  total?: Number
+}
+
+interface Destination {
+  name?: string
+  unit?: string
+  quantity?: Number
+  typeId?: string
+  icon?: string
+  total?: Number
+}
+
+export interface Achievement {
+  _id: string
+  key: string
+  dateAchievement?: Date
+  surface?: Number
+  percent?: Number
+  supplies?: Array<Supplies>
+  destination?: Array<Destination>
+  signers?: Array<Signer>
+  synchronizedList: Array<{ service: string; isSynchronized: Boolean }>
+}
 
 const AchievementSchema: Schema = new Schema({
   _id: { type: mongoose.Schema.Types.ObjectId, required: false },
@@ -133,4 +164,4 @@ AchievementSchema.pre('save', async function (next: Function) {
   }
 })
 
-export default mongoose.model('Achievement', AchievementSchema)
+export default mongoose.model<Achievement>('Achievement', AchievementSchema)
