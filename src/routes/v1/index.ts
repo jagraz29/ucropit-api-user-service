@@ -20,7 +20,6 @@ import supplies from './supplies'
 import offline from './offline'
 import integrations from './integrations'
 import webhooks from './webhooks'
-import { checkToken } from '../../utils/auth/foreignAuth'
 
 const router: express.Router = express.Router()
 
@@ -89,6 +88,6 @@ router.use('/offline', authMiddleware, offline)
 router.use('/exporters', authMiddleware, integrations)
 
 // WEBHOOKS SERVICES
-router.use('/webhooks', checkToken, webhooks)
+router.use('/webhooks', webhooks)
 
 export default router
