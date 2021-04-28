@@ -23,8 +23,9 @@ class AuthController {
     if (user && user.config.fromInvitation && !user.firstName) {
       return res.status(404).json({ error: 'ERR_USER_NOT_FOUND' })
     }
-
-    if (user) {
+    if (user.isInactive){
+      res.status(403).json({ error: 'ERR_USER_INACTIVE' })
+    } else if (user) {
       const code = numbers.getRandom()
 
       user.verifyToken = code
