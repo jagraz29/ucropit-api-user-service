@@ -284,9 +284,6 @@ class LotService {
 
     }))
 
-    console.log('********************')
-    console.log('END 1')
-
     return newCompanies
   }
 }
