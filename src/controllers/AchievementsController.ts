@@ -186,6 +186,7 @@ class AchievementsController {
    * @return Response
    */
   public async signAchievement(req: Request, res: Response) {
+    req.setTimeout(0)
     const user = req.user
     const { id } = req.params
 
