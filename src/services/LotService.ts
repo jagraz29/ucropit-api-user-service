@@ -71,8 +71,60 @@ class LotService extends ServiceBase {
         toStored.push(asyncLot)
       }
 
+      let lots = await Promise.all(toStored)
+
+      let newLots:any = await Promise.all(lots.map(async (lot, index) => {
+
+        let newLot: any = {}
+
+        const centroid: any = this.getCentroid(lot.area)
+
+        const locationData: any = await this.getLocationData(centroid.latitude, centroid.longitude)
+
+        const staticMapImageUrl: string = StaticMapService.getStaticMapImageUrl({
+          center : {
+            latitude : centroid.latitude,
+            longitude : centroid.longitude,
+          },
+          maptype : 'satellite',
+          zoom : 14,
+          size : '250x250',
+          path : {
+            color : '0xff0000ff',
+            weight : 8,
+            area : lot.area
+          }
+        })
+
+        const imagePath: string = await this.downloadStaticMap(staticMapImageUrl, 'public/uploads/map-static/' + lot._id, 'normal.png')
+
+        const dataToUpdate: any = {
+          countryName : locationData.country,
+          provinceName : locationData.province,
+          cityName : locationData.city,
+          image : {
+            normal : imagePath.replace('public', '')
+          }
+        }
+
+        await Lot.updateOne({ _id: lot._id }, { $set: dataToUpdate })
+
+        newLot = {
+          ...lot.toJSON(),
+          countryName: locationData.country,
+          provinceName: locationData.province,
+          cityName: locationData.city,
+          image: {
+            normal : imagePath.replace('public', '')
+          }
+        }
+
+        return newLot
+
+      }))
+
       toCrop.push({
-        lots: await Promise.all(toStored),
+        lots: newLots,
         tag: element.tag
       })
       toStored = []
@@ -144,6 +196,115 @@ class LotService extends ServiceBase {
   }
 
   /**
+   * Get Centroid.
+   *
+   * @param area
+   */
+  private static getCentroid (area) {
+    return geolib.getCenter(area.map((element) => {
+      return {
+        latitude: element[1],
+        longitude: element[0],
+      }
+    }))
+  }
+
+  /**
+   * Get Location data with google api.
+   *
+   * @param latitude
+   * @param longitude
+   */
+  private static async getLocationData (latitude, longitude) {
+    const responseReverseGeocoding: any = await GeoLocationService.getLocationByCoordinates(
+      latitude,
+      longitude
+    )
+
+    let locationData: any = {
+      country: '',
+      province: '',
+      city: ''
+    }
+
+    responseReverseGeocoding[0].address_components.map(
+      (addressComponent) => {
+        if (addressComponent.types.indexOf('country') !== -1) {
+          locationData.country = addressComponent.long_name
+        }
+
+        if (
+          addressComponent.types.indexOf(
+            'administrative_area_level_1'
+          ) !== -1
+        ) {
+          locationData.province = addressComponent.long_name
+        }
+
+        if(addressComponent.types.indexOf(
+          'locality'
+        ) !== -1){
+          locationData.city = addressComponent.long_name
+        }else if (
+          addressComponent.types.indexOf(
+            'administrative_area_level_2'
+          ) !== -1
+        ) {
+          locationData.city = addressComponent.long_name
+        }
+      }
+    )
+
+    return locationData
+  }
+
+  /**
+   * Download static map image.
+   *
+   * @param url
+   * @param path
+   * @param fileName
+   */
+  private static async downloadStaticMap (url, path, fileName) {
+    if (!fs.existsSync('public/uploads/map-static')){
+      fs.mkdirSync('public/uploads/map-static')
+    }
+
+    if (!fs.existsSync(path)){
+      fs.mkdirSync(path)
+    }
+
+    /*
+    const responseStaticImage = await new Promise((resolve, reject) => {
+      this.makeRequest('get', url, { responseType: 'stream' },
+        (result) => resolve(result.data.results),
+        (error) => reject(error)
+      )
+    })
+    */
+
+    //NEED TO DO THIS BECAUSE THE REQUEST SERVICE NOT RECEIVE CONFIG PARAMS, WE NEED TO ADD responseType PARAM
+
+    const axiosStaticImageConfig: any = {
+      method: 'GET',
+      url: url,
+      responseType: 'stream'
+    }
+
+    const responseStaticImage: any = await axios(axiosStaticImageConfig)
+
+    let imagePath = path + '/' + fileName
+
+    await new Promise((resolve: any) => {
+      responseStaticImage.data.pipe(fs.createWriteStream(imagePath)).on('close', () => {
+        resolve()
+      })
+    })
+
+    return imagePath
+  }
+
+  /**
    *
    * @param lot
    */
@@ -170,49 +331,9 @@ class LotService extends ServiceBase {
 
         let newLot: any = {}
 
-        let centroid: any = geolib.getCenter(lot.area.map((element) => {
-          return {
-            latitude: element[1],
-            longitude: element[0],
-          }
-        }))
+        const centroid: any = this.getCentroid(lot.area)
 
-        const responseReverseGeocoding: any = await GeoLocationService.getLocationByCoordinates(
-          centroid.latitude,
-          centroid.longitude
-        )
-
-        let country: string = ''
-        let province: string = ''
-        let city: string = ''
-
-        responseReverseGeocoding[0].address_components.map(
-          (addressComponent) => {
-            if (addressComponent.types.indexOf('country') !== -1) {
-              country = addressComponent.long_name
-            }
-
-            if (
-              addressComponent.types.indexOf(
-                'administrative_area_level_1'
-              ) !== -1
-            ) {
-              province = addressComponent.long_name
-            }
-
-            if(addressComponent.types.indexOf(
-              'locality'
-            ) !== -1){
-              city = addressComponent.long_name
-            }else if (
-              addressComponent.types.indexOf(
-                'administrative_area_level_2'
-              ) !== -1
-            ) {
-              city = addressComponent.long_name
-            }
-          }
-        )
+        const locationData: any = await this.getLocationData(centroid.latitude, centroid.longitude)
 
         const staticMapImageUrl: string = StaticMapService.getStaticMapImageUrl({
           center : {
@@ -229,45 +350,12 @@ class LotService extends ServiceBase {
           }
         })
 
-        if (!fs.existsSync('public/uploads/map-static')){
-          fs.mkdirSync('public/uploads/map-static')
-        }
-
-        if (!fs.existsSync('public/uploads/map-static/' + lot._id)){
-          fs.mkdirSync('public/uploads/map-static/' + lot._id)
-        }
-
-        /*
-        const responseStaticImage = await new Promise((resolve, reject) => {
-          this.makeRequest('get', staticMapImageUrl, { responseType: 'stream' },
-            (result) => resolve(result.data.results),
-            (error) => reject(error)
-          )
-        })
-        */
-
-        //NEED TO DO THIS BECAUSE THE REQUEST SERVICE NOT RECEIVE CONFIG PARAMS, WE NEED TO ADD responseType PARAM
-
-        const axiosStaticImageConfig: any = {
-          method: 'GET',
-          url: staticMapImageUrl,
-          responseType: 'stream'
-        }
-
-        let responseStaticImage: any = await axios(axiosStaticImageConfig)
-
-        let imagePath = 'public/uploads/map-static/' + lot._id + '/normal.png'
-
-        await new Promise((resolve: any) => {
-          responseStaticImage.data.pipe(fs.createWriteStream(imagePath)).on('close', () => {
-            resolve()
-          })
-        })
+        const imagePath: string = await this.downloadStaticMap(staticMapImageUrl, 'public/uploads/map-static/' + lot._id, 'normal.png')
 
         const dataToUpdate: any = {
-          countryName : country,
-          provinceName : province,
-          cityName : city,
+          countryName : locationData.country,
+          provinceName : locationData.province,
+          cityName : locationData.city,
           image : {
             normal : imagePath.replace('public', '')
           }
@@ -277,9 +365,9 @@ class LotService extends ServiceBase {
 
         newLot = {
           ...lot,
-          countryName: country,
-          provinceName: province,
-          cityName: city,
+          countryName: locationData.country,
+          provinceName: locationData.province,
+          cityName: locationData.city,
           image: {
             normal : imagePath.replace('public', '')
           }
