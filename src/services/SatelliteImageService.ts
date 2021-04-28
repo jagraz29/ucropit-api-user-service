@@ -6,6 +6,8 @@ import {
 } from '../utils/Constants'
 import { Lot } from '../models/lot'
 
+const ENABLED_REMOTE_SENSING = process.env.ENABLED_REQUEST_SENSING
+
 class SatelliteImageService extends ServiceBase {
   /**
    * @param RequestProps[] RequestProps
@@ -18,7 +20,7 @@ class SatelliteImageService extends ServiceBase {
    * @returns boolean
    */
   public static isReady(): boolean {
-    if (this.requestProps.length > 0) {
+    if (this.requestProps.length > 0 && !ENABLED_REMOTE_SENSING) {
       return true
     }
     return false
