@@ -6,7 +6,10 @@ import * as geolib from 'geolib'
 import _ from 'lodash'
 import axios from 'axios'
 
+import ServiceBase from './common/ServiceBase'
 import { handleFileConvertJSON } from '../utils/ParseKmzFile'
+import GeoLocationService from '../services/GeoLocationService'
+import StaticMapService from '../services/StaticMapService'
 
 interface ILot {
   name: String
@@ -15,7 +18,7 @@ interface ILot {
   tag?: String
 }
 
-class LotService {
+class LotService extends ServiceBase {
   public static async store (req: Request, lotsNames) {
 
     const jsonParserKmz = await handleFileConvertJSON(req.files)
@@ -156,9 +159,6 @@ class LotService {
    * @returns Array
    */
   public static async storeLotImagesAndCountries (companies: Array<any>) {
-    let staticUrl =
-    'https://maps.googleapis.com/maps/api/staticmap?center=:latitude,:longitude&zoom=14&size=250x250&maptype=satellite&path=:path&key='
-
     const newCompanies: any = await Promise.all(companies.map(async (lots) => {
       let newLots:any = {
         ...lots,
@@ -177,20 +177,16 @@ class LotService {
           }
         }))
 
-        const url: string = process.env.GOOGLE_API_GEOCODING + '?latlng=' + centroid.latitude + ',' + centroid.longitude + '&sensor=true&key=' + process.env.GOOGLE_API_KEY
-
-        const axiosReverseGeocodingConfig: any = {
-          method: 'GET',
-          url: url
-        }
-
-        let responseReverseGeocoding: any = await axios(axiosReverseGeocodingConfig)
+        const responseReverseGeocoding: any = await GeoLocationService.getLocationByCoordinates(
+          centroid.latitude,
+          centroid.longitude
+        )
 
         let country: string = ''
         let province: string = ''
         let city: string = ''
 
-        responseReverseGeocoding.data.results[0].address_components.map(
+        responseReverseGeocoding[0].address_components.map(
           (addressComponent) => {
             if (addressComponent.types.indexOf('country') !== -1) {
               country = addressComponent.long_name
@@ -218,18 +214,20 @@ class LotService {
           }
         )
 
-        let path: string = 'color:0xff0000ff|weight:8'
-
-        lot.area.map((element) => {
-          path = path + '|' + element[1] + ',' + element[0]
+        const staticMapImageUrl: string = StaticMapService.getStaticMapImageUrl({
+          center : {
+            latitude : centroid.latitude,
+            longitude : centroid.longitude,
+          },
+          maptype : 'satellite',
+          zoom : 14,
+          size : '250x250',
+          path : {
+            color : '0xff0000ff',
+            weight : 8,
+            area : lot.area
+          }
         })
-
-        const staticImageUrl: string =
-          staticUrl
-            .replace(':latitude', centroid.latitude)
-            .replace(':longitude', centroid.longitude)
-            .replace(':path', path) +
-          process.env.GOOGLE_API_KEY
 
         if (!fs.existsSync('public/uploads/map-static')){
           fs.mkdirSync('public/uploads/map-static')
@@ -239,9 +237,20 @@ class LotService {
           fs.mkdirSync('public/uploads/map-static/' + lot._id)
         }
 
+        /*
+        const responseStaticImage = await new Promise((resolve, reject) => {
+          this.makeRequest('get', staticMapImageUrl, { responseType: 'stream' },
+            (result) => resolve(result.data.results),
+            (error) => reject(error)
+          )
+        })
+        */
+
+        //NEED TO DO THIS BECAUSE THE REQUEST SERVICE NOT RECEIVE CONFIG PARAMS, WE NEED TO ADD responseType PARAM
+
         const axiosStaticImageConfig: any = {
           method: 'GET',
-          url: staticImageUrl,
+          url: staticMapImageUrl,
           responseType: 'stream'
         }
 
