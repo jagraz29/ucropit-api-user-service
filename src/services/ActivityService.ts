@@ -274,6 +274,7 @@ class ActivityService extends ServiceBase {
           const total = this.sumSurfacesByLotsAchievements(
             activity.achievements
           )
+
           return {
             total: total,
             date: activity.achievements[0].dateAchievement?.toLocaleDateString(
@@ -301,6 +302,8 @@ class ActivityService extends ServiceBase {
         }
 
         if (this.isActivityType(activity, type) && type === 'ACT_HARVEST') {
+          if(!activity?.dateHarvest) return undefined
+
           let total = 0
 
           total += activity.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
