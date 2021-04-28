@@ -19,8 +19,6 @@ export const addSatelliteImageInActivity = async (
   for (const responseOK of response) {
     if (responseHasImages(responseOK)) {
       await responseWithImages(responseOK)
-    } else {
-      await responseWithoutImages(responseOK)
     }
   }
 }
