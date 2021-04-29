@@ -1,7 +1,8 @@
 import BaseError from './base-error'
 import mongoose from 'mongoose'
 import { ErrorIntegration } from './type'
-import { codeIntegrations } from './error-code'
+import { codeIntegrations, codeDocumentNotFound } from './error-code'
+import { DocumentNotFound } from './error-custom'
 
 class ErrorHandler {
   public async handleError(err: Error): Promise<void> {
@@ -22,6 +23,17 @@ class ErrorHandler {
     if (error instanceof BaseError) {
       return error.isOperational
     }
+    return false
+  }
+
+  public isErrorNotFoundDocument(error: Error) {
+    if (
+      error instanceof DocumentNotFound &&
+      codeDocumentNotFound.includes(error.name)
+    ) {
+      return true
+    }
+
     return false
   }
 

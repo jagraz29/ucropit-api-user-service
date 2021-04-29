@@ -1,12 +1,9 @@
-import {
-  ResponseOkProps,
-  ImageSatelliteProps
-} from '../../interfaces/SatelliteImageRequest'
-
+import { ResponseOkProps } from '../../interfaces/SatelliteImageRequest'
 import LotRepository from '../../repositories/lotRepository'
 import ActivityRepository from '../../repositories/activityRepository'
 import FileDocumentRepository from '../../repositories/fileDocumentRepository'
 import CommonRepository from '../../repositories/commonRepository'
+import { DocumentNotFound } from '../../loggin/error-custom'
 
 /**
  * Add satellite images.
@@ -35,38 +32,6 @@ const responseHasImages = (response: ResponseOkProps): boolean => {
 }
 
 /**
- * Create Satellite Image Without images.
- *
- * @param ResponseOkProps response
- */
-const responseWithoutImages = async (
-  response: ResponseOkProps
-): Promise<void> => {
-  const { activityId } = response.customOptions
-  const { lotId, description } = response
-  const lot = await LotRepository.findById(lotId)
-  const activity = await ActivityRepository.findById(activityId)
-  const concept: string = (
-    await CommonRepository.findEvidenceConceptBy({
-      code: '0007'
-    })
-  )[0]?.name['es']
-
-  const fileDocument = await FileDocumentRepository.create({
-    description: concept,
-    meta: {
-      lotId: lot._id,
-      nameLot: lot.name,
-      description: description
-    },
-    isSatelliteImage: true
-  })
-  activity.files.push(fileDocument)
-
-  await activity.save()
-}
-
-/**
  * Create Satellite Image With images.
  *
  * @param ResponseOkProps response
@@ -76,7 +41,21 @@ const responseWithImages = async (response: ResponseOkProps): Promise<void> => {
   const { activityId } = response.customOptions
 
   const lot = await LotRepository.findById(lotId)
+
+  if (!lot) {
+    throw new DocumentNotFound('LOT_NOT_FOUND', 404, 'Lot Not Found', false)
+  }
   const activity = await ActivityRepository.findById(activityId)
+
+  if (!activity) {
+    throw new DocumentNotFound(
+      'ACTIVITY_NOT_FOUND',
+      404,
+      'Activity Not Found',
+      false
+    )
+  }
+
   const concept: string = (
     await CommonRepository.findEvidenceConceptBy({
       code: '0007'
