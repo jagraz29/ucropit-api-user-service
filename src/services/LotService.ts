@@ -366,7 +366,7 @@ class LotService extends ServiceBase {
 
       newLots.data = await Promise.all(lots.data.map(async (lot, index) => {
 
-        //if(lot.image?.normal) return lot
+        if(lot.image?.normal) return lot
 
         let newLot: any = {}
 
