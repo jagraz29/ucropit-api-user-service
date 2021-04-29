@@ -18,7 +18,8 @@ jobTypes.forEach(type => {
 })
 
 if (jobTypes.length) {
-  if (process.env.AGENDA) {
+
+  if (process.env.AGENDA === 'on') {
     agenda
       .start()
       .then(async () => {
