@@ -67,7 +67,6 @@ const CompanySchema = new Schema({
   ],
   contacts: [
     {
-      identifier: String,
       type: {
         type: String,
         default: 'CONTACT_REPRESENTATIVE'

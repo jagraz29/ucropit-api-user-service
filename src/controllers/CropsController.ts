@@ -28,6 +28,7 @@ class CropsController {
    * @return Response
    */
   public async index (req: Request | any, res: Response) {
+    console.log('here')
     let query: any = {
       $and : [
         {
