@@ -81,13 +81,15 @@ class LotService extends ServiceBase {
 
         const locationData: any = await this.getLocationData(centroid.latitude, centroid.longitude)
 
+        const zoom = this.calculateZoomForStaticMap(centroid, lot.area)
+
         const staticMapImageUrl: string = StaticMapService.getStaticMapImageUrl({
           center : {
             latitude : centroid.latitude,
             longitude : centroid.longitude,
           },
           maptype : 'satellite',
-          zoom : 14,
+          zoom : zoom,
           size : '250x250',
           path : {
             color : '0xff0000ff',
@@ -210,6 +212,43 @@ class LotService extends ServiceBase {
   }
 
   /**
+   * Calculate zoom for static map image.
+   *
+   * @param centroid
+   * @param area
+   */
+  private static calculateZoomForStaticMap (centroid, area) {
+    let maxDistance: number = 0
+
+    area.map((element) => {
+      let elementCoords: any = {
+        latitude: element[1],
+        longitude: element[0],
+      }
+
+      let distance = geolib.getDistance(centroid, elementCoords)
+
+      if(distance > maxDistance){
+        maxDistance = distance
+      }
+    })
+
+    let zoom = 12
+
+    if(maxDistance <= 200){
+      zoom = 16
+    }else if(maxDistance <= 400){
+      zoom = 15
+    }else if(maxDistance <= 1000){
+      zoom = 14
+    }else if(maxDistance <= 2000){
+      zoom = 13
+    }
+
+    return zoom
+  }
+
+  /**
    * Get Location data with google api.
    *
    * @param latitude
@@ -327,7 +366,7 @@ class LotService extends ServiceBase {
 
       newLots.data = await Promise.all(lots.data.map(async (lot, index) => {
 
-        if(lot.image?.normal) return lot
+        //if(lot.image?.normal) return lot
 
         let newLot: any = {}
 
@@ -335,13 +374,15 @@ class LotService extends ServiceBase {
 
         const locationData: any = await this.getLocationData(centroid.latitude, centroid.longitude)
 
+        const zoom = this.calculateZoomForStaticMap(centroid, lot.area)
+
         const staticMapImageUrl: string = StaticMapService.getStaticMapImageUrl({
           center : {
             latitude : centroid.latitude,
             longitude : centroid.longitude,
           },
           maptype : 'satellite',
-          zoom : 14,
+          zoom : zoom,
           size : '250x250',
           path : {
             color : '0xff0000ff',
