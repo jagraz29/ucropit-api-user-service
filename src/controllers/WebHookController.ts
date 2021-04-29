@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { ResponseOkProps } from '../interfaces/SatelliteImageRequest'
 import { addSatelliteImageInActivity } from '../utils'
+import { validateResponseSatelliteImages } from '../utils/Validation'
 
 class WebHookController {
   /**
@@ -16,6 +17,8 @@ class WebHookController {
     res: Response
   ): Promise<void> {
     const content: Array<ResponseOkProps> = req.body
+
+    await validateResponseSatelliteImages(content)
 
     await addSatelliteImageInActivity(content)
 

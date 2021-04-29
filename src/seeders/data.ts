@@ -300,7 +300,21 @@ export const evidenceConcepts = [
   {
     code: '0007',
     name: {
-      en: 'Satelital image',
+      en: 'Seeds Bill',
+      es: 'Factura Semillas'
+    }
+  },
+  {
+    code: '0008',
+    name: {
+      en: 'Seed Royalties',
+      es: 'Facturas Regalias'
+    }
+  },
+  {
+    code: '0009',
+    name: {
+      en: 'Satellite Image',
       es: 'Imagen Satelital'
     }
   }

@@ -58,7 +58,7 @@ const responseWithImages = async (response: ResponseOkProps): Promise<void> => {
 
   const concept: string = (
     await CommonRepository.findEvidenceConceptBy({
-      code: '0007'
+      code: '0009'
     })
   )[0]?.name['es']
 

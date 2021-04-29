@@ -20,7 +20,8 @@ class SatelliteImageService extends ServiceBase {
    * @returns boolean
    */
   public static isReady(): boolean {
-    if (this.requestProps.length > 0 && !ENABLED_REMOTE_SENSING) {
+    console.log(!!ENABLED_REMOTE_SENSING)
+    if (this.requestProps.length > 0 && ENABLED_REMOTE_SENSING) {
       return true
     }
     return false
