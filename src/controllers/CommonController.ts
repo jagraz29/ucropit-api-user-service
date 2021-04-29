@@ -80,7 +80,7 @@ class CommonController {
    */
   public async evidenceConcepts(req: Request, res: Response) {
     const evidenceConcepts = (await EvidenceConcepts.find({})).filter(
-      (evidence) => evidence.code !== '0007'
+      (evidence) => evidence.code !== '0009'
     )
 
     res.status(200).json(evidenceConcepts)
