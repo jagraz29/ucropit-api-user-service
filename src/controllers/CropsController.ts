@@ -3,7 +3,6 @@ import models from '../models'
 import CropService from '../services/CropService'
 import LotService from '../services/LotService'
 import CompanyService from '../services/CompanyService'
-import LotService from '../services/LotService'
 import ActivityService from '../services/ActivityService'
 
 import {
