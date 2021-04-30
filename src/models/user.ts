@@ -66,6 +66,11 @@ const userSchema = new mongoose.Schema(
     verifyToken: {
       type: String
     },
+    isInactive: {
+      type: Boolean,
+      default: false
+
+    },
     avatar: { type: String, required: false },
     collaboratorRequest: [
       {
