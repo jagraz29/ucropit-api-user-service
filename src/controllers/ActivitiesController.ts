@@ -186,6 +186,7 @@ class ActivitiesController {
    * @return Response
    */
   public async sign(req: Request, res: Response) {
+    req.setTimeout(0)
     const { id, cropId } = req.params
     const user: UserSchema = req.user
 
@@ -198,7 +199,7 @@ class ActivitiesController {
 
     activity = await ActivityService.signUserAndUpdateSing(activity, user)
 
-    const isCompleteSigned = await ActivityService.isCompleteSingers(activity)
+    const isCompleteSigned = ActivityService.isCompleteSingers(activity)
 
     if (isCompleteSigned) {
       const crop = await Crop.findById(cropId).populate('cropType')
