@@ -21,12 +21,24 @@
  *             type: double
  *           tag:
  *             type: string
+ *           image:
+ *             type: schema
+ *           countryName:
+ *             type: string
+ *           provinceName:
+ *             type: string
+ *           cityName:
+ *             type: string
  *         example:
  *            name: Lote 1
  *            area: []
  *            status: 0
  *            surface: 45.5
  *            tag: Tag Name
+ *            image: { normal : '' }
+ *            countryName: Argentina
+ *            provinceName: Buenos Aires
+ *            cityName: 9 de Julio
  */
 import mongoose from 'mongoose'
 import _ from 'lodash'
@@ -41,6 +53,12 @@ export interface Lot extends mongoose.Document {
   surface: Number
   status: boolean
 }
+
+const file = new mongoose.Schema({
+  normal: {
+    type: String
+  }
+})
 
 const LotSchema = new Schema(
   {
@@ -60,6 +78,22 @@ const LotSchema = new Schema(
     surface: {
       type: Number,
       require: true
+    },
+    image: {
+      type: file,
+      default: null
+    },
+    countryName: {
+      type: String,
+      default: null
+    },
+    provinceName: {
+      type: String,
+      default: null
+    },
+    cityName: {
+      type: String,
+      default: null
     }
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }

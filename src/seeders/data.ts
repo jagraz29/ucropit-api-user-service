@@ -380,6 +380,14 @@ export const rolesData = [
       es: 'KAM'
     },
     value: 'CAM'
+  },
+  {
+    label: {
+      en: 'Commercial contact',
+      es: 'Contacto comercial'
+    },
+    value: 'CONTACT_REPRESENTATIVE',
+    isInactive: true
   }
 ]
 
