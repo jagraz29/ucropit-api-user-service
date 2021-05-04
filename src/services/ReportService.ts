@@ -443,7 +443,8 @@ class ReportService {
             phone_producers: this.getPhonesProducers(crop),
             last_monitoring_date: await this.lastDateSignMonitoring(
               crop,
-              'ACT_MONITORING'
+              'ACT_MONITORING',
+              lot
             ),
             yield_unit_monitoring: this.unitMonitoring(
               crop,
@@ -506,7 +507,7 @@ class ReportService {
         })
         .filter((item) => item)
 
-      return surfaceLot[0] || 0
+      return surfaceLot.pop() || 0
     }
   }
 
@@ -562,11 +563,6 @@ class ReportService {
   }
 
   private static unitMonitoring(crop, type, lotParam) {
-    const listActivitiesPending = this.getActivitiesMonitoring(
-      crop,
-      type,
-      'pending'
-    )
     const listActivitiesDone = this.getActivitiesMonitoring(crop, type, 'done')
     const listActivitiesFinished = this.getActivitiesMonitoring(
       crop,
@@ -574,18 +570,7 @@ class ReportService {
       'finished'
     )
 
-    const listActivitiestoMake = this.getActivitiesMonitoring(
-      crop,
-      type,
-      'toMake'
-    )
-
-    const activities = [
-      ...listActivitiesPending,
-      ...listActivitiesDone,
-      ...listActivitiesFinished,
-      ...listActivitiestoMake
-    ]
+    const activities = [...listActivitiesDone, ...listActivitiesFinished]
     let unitTypes: Array<String> = []
     activities.map((activity) => {
       if (
@@ -597,7 +582,7 @@ class ReportService {
       }
     })
 
-    return activities.length > 0 ? unitTypes.join() : null
+    return activities.length > 0 ? unitTypes.pop() : null
   }
 
   private static async lastDateSignActivitiesFinish(
@@ -668,21 +653,42 @@ class ReportService {
     return total
   }
 
-  private static async lastDateSignMonitoring(crop, typeActivity) {
-    const datesDone = await this.getDateLastSignedMonitoring(
-      crop.done.filter((activity) => activity.type.tag === typeActivity)
+  private static async lastDateSignMonitoring(crop, type, lot) {
+    const activitiesDone = this.getActivitiesMonitoring(crop, type, 'done')
+    const activitiesFinished = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'finished'
     )
 
-    const datesFinished = await this.getDateLastSignedMonitoring(
-      crop.finished.filter((activity) => activity.type.tag === typeActivity)
+    const activities = [...activitiesDone, ...activitiesFinished]
+    const activitiesSorter = this.sortActivityBySigned(activities)
+
+    let datesLastMonitoring = activitiesSorter
+      .map(async ({ lots, _id }) => {
+        const activity = await Activity.findById(_id)
+        if (lots.find(({ _id }) => _id.toString() === lot._id.toString())) {
+          const signer = activity.signers[0]
+          const dateSigned = signer._id.getTimestamp()
+
+          return moment(dateSigned).format('DD/MM/YYYY')
+        }
+      })
+      .filter((item) => item)
+
+    const datesList = (await Promise.all(datesLastMonitoring)).filter(
+      (item) => item
     )
 
-    const mergedList = datesDone.concat(datesFinished)
+    return datesList.length > 0 ? datesList[0] : null
+  }
 
-    const lastDate =
-      mergedList.length > 0 ? datesDone.concat(datesFinished).pop() : null
-
-    return lastDate ? moment(lastDate).format('DD/MM/YYYY') : ''
+  private static sortActivityBySigned(activities) {
+    return activities.sort(function (prev, next) {
+      return (
+        prev.signers[0]._id.getTimestamp() - next.signers[0]._id.getTimestamp()
+      )
+    })
   }
 
   private static async getDateLastSignedMonitoring(activities) {
