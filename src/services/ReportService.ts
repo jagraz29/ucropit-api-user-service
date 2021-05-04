@@ -599,8 +599,8 @@ class ReportService {
           if (this.isCompleteSigners(activity.signers)) {
             const lastSigner = activity.signers[activity.signers.length - 1]
             if (lastSigner) {
-              const date = lastSigner.dateSigned
-                ? lastSigner.dateSigned
+              const date = lastSigner?.dateSigned
+                ? lastSigner?.dateSigned
                 : lastSigner._id.getTimestamp()
 
               return moment(date).format('DD/MM/YYYY')
@@ -667,9 +667,9 @@ class ReportService {
     let datesLastMonitoring = activitiesSorter
       .map(async ({ lots, _id }) => {
         const activity = await Activity.findById(_id)
-        if (lots.find(({ _id }) => _id.toString() === lot._id.toString())) {
+        if (lots.find(({ _id }) => _id.toString() === lot?._id.toString())) {
           const signer = activity.signers[0]
-          const dateSigned = signer._id.getTimestamp()
+          const dateSigned = signer?._id.getTimestamp()
 
           return moment(dateSigned).format('DD/MM/YYYY')
         }
@@ -685,8 +685,16 @@ class ReportService {
 
   private static sortActivityBySigned(activities) {
     return activities.sort(function (prev, next) {
+      const signerActivityPrev = prev.signers[0]
+      const signerActivityNext = next.signers[0]
+
+      if (signerActivityPrev?.dateSigned && signerActivityNext?.dateSigned) {
+        return signerActivityPrev?.dateSigned - signerActivityNext?.dateSigned
+      }
+
       return (
-        prev.signers[0]._id.getTimestamp() - next.signers[0]._id.getTimestamp()
+        signerActivityPrev?._id.getTimestamp() -
+        signerActivityNext?._id.getTimestamp()
       )
     })
   }
