@@ -461,7 +461,7 @@ class ReportService {
             date_estimated_harvest: moment(crop.dateHarvest).format(
               'DD/MM/YYYY'
             ),
-            date_total_signature_monitor: this.lastDateSignActivitiesFinish(
+            date_total_signature_monitor: await this.lastDateSignActivitiesFinish(
               crop,
               'ACT_MONITORING',
               lot
@@ -598,25 +598,34 @@ class ReportService {
     return activities.length > 0 ? unitTypes.join() : null
   }
 
-  private static lastDateSignActivitiesFinish(crop, type, { _id: id }): String {
+  private static async lastDateSignActivitiesFinish(
+    crop,
+    type,
+    lot
+  ): Promise<String> {
     const activities = this.getActivitiesMonitoring(crop, type, 'finished')
 
     let lastDateSign: Array<String> = activities
-      .map(({ lots, signers }) => {
-        if (lots.find(({ _id }) => _id.toString() === id.toString())) {
-          if (this.isCompleteSigners(signers)) {
-            const lastSigner = signers[signers.length - 1]
-            const date = lastSigner.dateSigned
-              ? lastSigner.dateSigned
-              : lastSigner._id.getTimestamp()
+      .map(async ({ lots, _id }) => {
+        const activity = await Activity.findById(_id)
+        if (lots.find(({ _id }) => _id.toString() === lot._id.toString())) {
+          if (this.isCompleteSigners(activity.signers)) {
+            const lastSigner = activity.signers[activity.signers.length - 1]
+            if (lastSigner) {
+              const date = lastSigner.dateSigned
+                ? lastSigner.dateSigned
+                : lastSigner._id.getTimestamp()
 
-            return moment(date).format('DD/MM/YYYY')
+              return moment(date).format('DD/MM/YYYY')
+            }
           }
         }
       })
       .filter((item) => item)
 
-    return activities.length > 0 ? lastDateSign.pop() : null
+    const datesList = (await Promise.all(lastDateSign)).filter((item) => item)
+
+    return datesList.length > 0 ? datesList.pop() : null
   }
 
   private static rindeMonitoringa(crop, lot, type) {
