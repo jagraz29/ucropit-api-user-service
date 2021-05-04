@@ -458,8 +458,10 @@ class ReportService {
               crop
             ),
 
-            date_estimated_harvest: moment(crop.dateHarvest).format(
-              'DD/MM/YYYY'
+            date_estimated_harvest: await this.asyncGetHarvestDateMonitoring(
+              crop,
+              'ACT_MONITORING',
+              lot
             ),
             date_total_signature_monitor: await this.lastDateSignActivitiesFinish(
               crop,
@@ -1556,6 +1558,39 @@ class ReportService {
     )
 
     return sumTotalActivitiesDone + sumTotalActivitiesFinished
+  }
+
+  private static async asyncGetHarvestDateMonitoring(
+    crop,
+    type,
+    lot
+  ): Promise<String> {
+    const activitiesDone = this.getActivitiesMonitoring(crop, type, 'done')
+    const activitiesFinished = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'finished'
+    )
+
+    const activities = [...activitiesDone, ...activitiesFinished]
+
+    let datesHarvestEstimated = activities
+      .map(async ({ lots, _id }) => {
+        const activity = await Activity.findById(_id)
+        if (lots.find(({ _id }) => _id.toString() === lot._id.toString())) {
+          const dateHarvestEstimated =
+            activity.dateEstimatedHarvest ?? crop.dateHarvest
+
+          return moment(dateHarvestEstimated).format('DD/MM/YYYY')
+        }
+      })
+      .filter((item) => item)
+
+    const datesList = (await Promise.all(datesHarvestEstimated)).filter(
+      (item) => item
+    )
+
+    return datesList.length > 0 ? datesList.pop() : null
   }
 
   private static getNameSigner(activities) {
