@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import models from '../models'
 import CropService from '../services/CropService'
-import CompanyService from '../services/CompanyService'
 import LotService from '../services/LotService'
+import CompanyService from '../services/CompanyService'
 import ActivityService from '../services/ActivityService'
 
 import {
@@ -100,8 +100,14 @@ class CropsController {
   public async show (req: Request, res: Response) {
     const { id } = req.params
     const crop = await CropService.getCrop(id)
+    const lots = await LotService.storeLotImagesAndCountries(crop.lots)
 
-    res.status(200).json(crop)
+    const newCrop = {
+      ...crop,
+      lots
+    }
+
+    res.status(200).json(newCrop)
   }
 
   /**
