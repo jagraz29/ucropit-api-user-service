@@ -450,12 +450,14 @@ class ReportService {
               'ACT_MONITORING',
               lot
             ),
+
             yelds_monitoring: this.calVolumeMonitoring(
               crop.unitType.name.en,
               crop.pay,
               lot,
               crop
             ),
+
             date_estimated_harvest: moment(crop.dateHarvest).format(
               'DD/MM/YYYY'
             ),
@@ -592,12 +594,6 @@ class ReportService {
         unitTypes.push(activity.unitType.name.es)
       }
     })
-    // let unitType = ''
-    // if (activities.length > 0) {
-    //   for (const activity of activities) {
-    //     unitType = activity.unitType.key
-    //   }
-    // }
 
     return activities.length > 0 ? unitTypes.join() : null
   }
@@ -608,24 +604,19 @@ class ReportService {
     let lastDateSign: Array<String> = activities
       .map(({ lots, signers }) => {
         if (lots.find(({ _id }) => _id.toString() === id.toString())) {
-          const dateLAst: moment.Moment = signers.map(
-            ({ signed, dateSigned, _id }) => {
-              if (signed) {
-                let date =
-                  dateSigned === undefined ? _id.getTimestamp() : dateSigned
-                return moment(date, 'DD.MM.YYYY')
-              }
-            }
-          )
-          return moment
-            .min(dateLAst)
-            .locale('es')
-            .format('D [de] MMMM [de] YYYY')
+          if (this.isCompleteSigners(signers)) {
+            const lastSigner = signers[signers.length - 1]
+            const date = lastSigner.dateSigned
+              ? lastSigner.dateSigned
+              : lastSigner._id.getTimestamp()
+
+            return moment(date).format('DD/MM/YYYY')
+          }
         }
       })
       .filter((item) => item)
 
-    return activities.length > 0 ? lastDateSign.join() : null
+    return activities.length > 0 ? lastDateSign.pop() : null
   }
 
   private static rindeMonitoringa(crop, lot, type) {
