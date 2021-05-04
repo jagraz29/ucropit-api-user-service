@@ -178,13 +178,15 @@ const ActivitySchema = new Schema({
   storages: [
     {
       unitType: {
-        type: Schema.Types.ObjectId
+        type: Schema.Types.ObjectId,
+        ref: 'UnitType'
       },
       tonsHarvest: {
         type: Number
       },
       storageType: {
-        type: Schema.Types.ObjectId
+        type: Schema.Types.ObjectId,
+        ref: 'TypeStorage'
       },
       label: {
         type: String

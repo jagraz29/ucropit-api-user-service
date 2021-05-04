@@ -5,6 +5,9 @@ import LotService from '../services/LotService'
 import CompanyService from '../services/CompanyService'
 import ActivityService from '../services/ActivityService'
 
+import { CropRepository } from '../repository'
+import { getActivitiesOrderedByDateUtils } from '../utils'
+
 import {
   validateGetCrops,
   validateCropStore,
@@ -13,6 +16,8 @@ import {
 } from '../utils/Validation'
 
 import { UserSchema } from '../models/user'
+import { errors } from '../types/common'
+import { ReportSignersByCompany } from '../interfaces'
 
 const Crop = models.Crop
 const CropType = models.CropType
@@ -108,6 +113,27 @@ class CropsController {
     }
 
     res.status(200).json(newCrop)
+  }
+
+  /**
+   * Get one crop.
+   *
+   * @param  Request req
+   * @param  Response res
+   *
+   * @return Response
+   */
+  public async getCropWithActivities (req: Request, res: Response) {
+    const { id } = req.params
+    const crop = await CropRepository.getCropWithActivities(id)
+
+    if (!crop) {
+      const error = errors.find((error) => error.key === '005')
+      return res.status(404).json(error.code)
+    }
+    const activities: Array<ReportSignersByCompany> = getActivitiesOrderedByDateUtils(crop)
+
+    res.status(200).json(activities)
   }
 
   /**
