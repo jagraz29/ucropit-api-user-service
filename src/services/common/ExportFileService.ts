@@ -1,6 +1,7 @@
 import json2xlsx from 'node-json-xlsx'
 import { Parser } from 'json2csv'
 import fs from 'fs'
+import moment from 'moment'
 import { getFullPath } from '../../utils/Files'
 import { reportHeaderXls, fieldsCSV } from '../../types/reports'
 import { dataSetFieldsCSV } from '../../types/dataset'
@@ -22,11 +23,12 @@ class ExportFileService {
    * @param mode
    */
   public static modeExport(data: Array<any>, mode: string | any) {
+    const today = moment()
     if (mode === 'xls') {
       return this.exportXls(
         data,
         reportHeaderXls,
-        'dashboard_soja_sustentable.xlsx'
+        `dashboard_soja_sustentable_${today.format('DD-MM-YYYY')}.xlsx`
       )
     }
 
