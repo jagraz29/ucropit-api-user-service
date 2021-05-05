@@ -94,7 +94,7 @@ const AchievementSchema: Schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'SupplyType'
       },
-      supplie: {
+      supply: {
         type: Schema.Types.ObjectId,
         ref: 'Supply'
       },
