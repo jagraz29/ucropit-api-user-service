@@ -132,4 +132,30 @@ router.post(
   authController.pin
 )
 
+/**
+ * @swagger
+ * /v1/auth/foreign:
+ *  post:
+ *   security: []
+ *   summary: Auth foreign services
+ *   tags: [Auth]
+ *   description: Auth a foreign services
+ *   responses:
+ *     '200':
+ *        description: token success authenticate
+ *     '404':
+ *        description: credentials doesn't exists
+ *   requestBody:
+ *     content:
+ *       application/json:
+ *         schema:
+ *           type: object
+ *           properties:
+ *            credentialKey:
+ *              type: string
+ *            credentialSecret:
+ *              type: string
+ */
+router.post('/foreign', authController.authForeignService)
+
 export default router

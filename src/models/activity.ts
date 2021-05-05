@@ -47,7 +47,6 @@
  */
 import mongoose from 'mongoose'
 import shortid from 'shortid'
-import { isNowGreaterThan } from '../utils/Date'
 
 const { Schema } = mongoose
 
@@ -212,6 +211,10 @@ ActivitySchema.pre('save', async function (next) {
     activity.key = shortid.generate()
   }
 })
+
+ActivitySchema.methods.isDone = function () {
+  return this.status[0].name.en === 'DONE'
+}
 
 ActivitySchema.methods.setExpired = function () {
   this.status[0].name.en = 'EXPIRED'

@@ -4,8 +4,8 @@ import CropService from '../services/CropService'
 import LotService from '../services/LotService'
 import CompanyService from '../services/CompanyService'
 import ActivityService from '../services/ActivityService'
-
-import { CropRepository } from '../repository'
+import { CropRepository } from '../repositories'
+import { errors } from '../types/common'
 import { getActivitiesOrderedByDateUtils } from '../utils'
 
 import {
@@ -16,7 +16,7 @@ import {
 } from '../utils/Validation'
 
 import { UserSchema } from '../models/user'
-import { errors } from '../types/common'
+import { Evidence } from '../interfaces/Evidence'
 import { ReportSignersByCompany } from '../interfaces'
 
 const Crop = models.Crop
@@ -32,10 +32,9 @@ class CropsController {
    *
    * @return Response
    */
-  public async index (req: Request | any, res: Response) {
-    console.log('here')
+  public async index(req: Request | any, res: Response) {
     let query: any = {
-      $and : [
+      $and: [
         {
           cancelled: false
         },
@@ -44,13 +43,13 @@ class CropsController {
         },
         {
           'members.identifier': req.query.identifier
-        },
+        }
       ]
     }
 
     if (req.query.cropTypes) {
       query['$and'].push({
-        cropType : {
+        cropType: {
           $in: req.query.cropTypes
         }
       })
@@ -58,7 +57,7 @@ class CropsController {
 
     if (req.query.companies) {
       query['$and'].push({
-        company : {
+        company: {
           $in: req.query.companies
         }
       })
@@ -66,7 +65,7 @@ class CropsController {
 
     if (req.query.collaborators) {
       query['$and'].push({
-        'members.user' : {
+        'members.user': {
           $in: req.query.collaborators
         }
       })
@@ -74,7 +73,7 @@ class CropsController {
 
     if (req.query.cropVolume) {
       query['$and'].push({
-        pay : {
+        pay: {
           $gte: req.query.cropVolume
         }
       })
@@ -102,7 +101,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async show (req: Request, res: Response) {
+  public async show(req: Request, res: Response) {
     const { id } = req.params
     const crop = await CropService.getCrop(id)
     const lots = await LotService.storeLotImagesAndCountries(crop.lots)
@@ -116,14 +115,36 @@ class CropsController {
   }
 
   /**
-   * Get one crop.
+   * Get all crops evidences
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @returns
+   */
+  public async evidences(req: Request, res: Response) {
+    const { id } = req.params
+
+    const evidences: Evidence[] = await CropRepository.findAllEvidencesByCropId(
+      id
+    )
+
+    if (!evidences) {
+      const error = errors.find((error) => error.key === '005')
+      return res.status(404).json(error.code)
+    }
+
+    res.status(200).json(evidences)
+  }
+
+  /* Get one crop.
    *
    * @param  Request req
    * @param  Response res
    *
    * @return Response
    */
-  public async getCropWithActivities (req: Request, res: Response) {
+  public async getCropWithActivities(req: Request, res: Response) {
     const { id } = req.params
     const crop = await CropRepository.getCropWithActivities(id)
 
@@ -131,7 +152,9 @@ class CropsController {
       const error = errors.find((error) => error.key === '005')
       return res.status(404).json(error.code)
     }
-    const activities: Array<ReportSignersByCompany> = getActivitiesOrderedByDateUtils(crop)
+    const activities: Array<ReportSignersByCompany> = getActivitiesOrderedByDateUtils(
+      crop
+    )
 
     res.status(200).json(activities)
   }
@@ -144,7 +167,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async create (req: Request | any, res: Response) {
+  public async create(req: Request | any, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     await validateCropStore(data)
@@ -194,7 +217,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async showLastMonitoring (req: Request, res: Response) {
+  public async showLastMonitoring(req: Request, res: Response) {
     const monitoring = await CropService.getLastMonitoring(req.params.id)
 
     res.status(200).json(monitoring)
@@ -208,7 +231,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async update (req: Request, res: Response) {
+  public async update(req: Request, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     let company = null
@@ -232,7 +255,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async enableOffline (req: Request, res: Response) {
+  public async enableOffline(req: Request, res: Response) {
     const crop = await Crop.findById(req.params.id)
 
     crop.downloaded = req.body.downloaded
@@ -250,7 +273,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async addIntegrationService (req: Request, res: Response) {
+  public async addIntegrationService(req: Request, res: Response) {
     const crop = await Crop.findById(req.params.id)
     const data = req.body
 
@@ -269,7 +292,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async delete (req: Request, res: Response) {
+  public async delete(req: Request, res: Response) {
     const isCancelled = await CropService.cancelled(req.params.id)
 
     if (!isCancelled) {

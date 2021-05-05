@@ -22,22 +22,22 @@
  *                $ref: '#/components/schemas/User'
  */
 import mongoose from 'mongoose'
+import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
+import moment from 'moment'
 
 const { Schema } = mongoose
 
 export const FileDocumentSchema = new Schema(
   {
     nameFile: {
-      type: String,
-      required: true
+      type: String
     },
     date: {
-      type: Date,
-      required: true
+      type: Date
     },
     path: {
       type: String,
-      required: true
+      required: false
     },
     name: {
       type: String
@@ -50,6 +50,9 @@ export const FileDocumentSchema = new Schema(
     },
     description: {
       type: String
+    },
+    isSatelliteImage: {
+      type: Boolean
     },
     settings: {
       type: Schema.Types.Mixed
@@ -65,6 +68,10 @@ export const FileDocumentSchema = new Schema(
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
 
+FileDocumentSchema.virtual('dateFormat').get(function () {
+  return moment(this.date).format('DD/MM/YYYY')
+})
+
 FileDocumentSchema.virtual('imagePathIntermediate').get(function () {
   if (this.pathIntermediate) {
     return `${process.env.BASE_URL}/${this.pathIntermediate}`
@@ -79,5 +86,14 @@ FileDocumentSchema.virtual('imagePathThumbnails').get(function () {
 
   return `${process.env.BASE_URL}/${this.path}`
 })
+
+FileDocumentSchema.virtual('imageSatellite').get(function () {
+  if (this.isSatelliteImage) {
+    return `${process.env.BASE_URL_IMAGES}/${this.nameFile}`
+  }
+  return ''
+})
+
+FileDocumentSchema.plugin(mongooseLeanVirtuals)
 
 export default mongoose.model('FileDocument', FileDocumentSchema)

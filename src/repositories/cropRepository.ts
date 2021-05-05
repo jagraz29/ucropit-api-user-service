@@ -1,7 +1,12 @@
+import { Evidence } from '../interfaces/Evidence'
 import models from '../models'
 const { Crop } = models
 
-import { filterDataCropsByCompanies, joinActivitiesByCrop } from '../utils'
+import {
+  filterDataCropsByCompanies,
+  joinActivitiesByCrop,
+  listEvidencesCrop
+} from '../utils'
 
 export class CropRepository {
   public static async findAllCropsByCompanies(
@@ -66,12 +71,45 @@ export class CropRepository {
       : null
   }
 
+  public static async findAllEvidencesByCropId(
+    cropId: string
+  ): Promise<Evidence[]> {
+    const cropsInstance = await Crop.findById(cropId)
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'files' },
+          { path: 'satelliteImages' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'files' }]
+          }
+        ]
+      })
+      .populate('members.user')
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'files' },
+          { path: 'satelliteImages' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'files' }]
+          }
+        ]
+      })
+      .lean({ virtuals: true })
+
+    return !!cropsInstance ? listEvidencesCrop(cropsInstance) : null
+  }
   /**
    *  Get One crop and json converter.
    *
    * @param string id
    */
-  public static async getCropWithActivities(id: string): Promise<Object[] | null> {
+  public static async getCropWithActivities(
+    id: string
+  ): Promise<Object[] | null> {
     const cropInstance = await Crop.findById(id)
       .populate('lots.data')
       .populate('cropType')
@@ -123,7 +161,11 @@ export class CropRepository {
           { path: 'files' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }, { path: 'supplies', populate: [{ path: 'typeId' }] }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           },
           {
             path: 'supplies',
@@ -154,14 +196,16 @@ export class CropRepository {
           },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }, { path: 'supplies', populate: [{ path: 'typeId' }] }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           }
         ]
       })
       .populate('members.user')
       .lean()
-    return cropInstance
-      ? joinActivitiesByCrop(cropInstance)
-      : null
+    return cropInstance ? joinActivitiesByCrop(cropInstance) : null
   }
 }

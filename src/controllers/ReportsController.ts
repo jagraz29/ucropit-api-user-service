@@ -8,7 +8,7 @@ import Company from '../services/CompanyService'
 import EmailService from '../services/EmailService'
 import { ReportsSignersByCompaniesHeaderXls } from '../types/'
 
-import { CropRepository } from '../repository'
+import { CropRepository } from '../repositories'
 import { structJsonForXls } from '../utils'
 import { ReportSignersByCompany } from '../interfaces'
 
