@@ -15,9 +15,13 @@ import path from 'path'
 
 const app: Application = express()
 
+if (process.env.NODE_ENV !== 'local') {
+ 
+}
+
 Sentry.init({
   dsn:
-    'https://673094ae713245a0af2e22148de27f27@o478047.ingest.sentry.io/5519962'
+    'https://07781985e6084c509ea11ab221afe082@o617969.ingest.sentry.io/5751081'
 })
 
 import jwt from './src/utils/auth/strategies/jwt'
@@ -42,7 +46,7 @@ app.use(
 
 app.use(express.static('public'))
 
-app.set('view engine', 'pug') 
+app.set('view engine', 'pug')
 app.set('views', path.join(basePath(), 'views'))
 
 app.use('/v1', routes)
