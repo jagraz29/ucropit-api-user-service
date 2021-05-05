@@ -16,13 +16,11 @@ import path from 'path'
 const app: Application = express()
 
 if (process.env.NODE_ENV !== 'local') {
- 
+  Sentry.init({
+    dsn:
+      'https://07781985e6084c509ea11ab221afe082@o617969.ingest.sentry.io/5751081'
+  })
 }
-
-Sentry.init({
-  dsn:
-    'https://07781985e6084c509ea11ab221afe082@o617969.ingest.sentry.io/5751081'
-})
 
 import jwt from './src/utils/auth/strategies/jwt'
 
