@@ -21,6 +21,8 @@ import {
   phytotherapeutic
 } from './suppliesData'
 
+import { activesPrinciples } from './activesPrinciplesData'
+
 const CropType = models.CropType
 const UnitType = models.UnitType
 const ActivityType = models.ActivityType
@@ -33,6 +35,7 @@ const ServiceIntegration = models.ServiceIntegration
 
 const CollaboratorRequest = models.CollaboratorRequest
 const TypeStorage = models.TypeStorage
+const ActivePrinciple = models.ActivePrinciple
 
 /**
  * Seeders CropType
@@ -268,6 +271,33 @@ const seedersStorageTypes = async (flag?) => {
   console.log(`${chalk.green('=====Registered Storage Types ====')}`)
   return true
 }
+
+const seedersActivePrinciples = async (flag?) => {
+  if (flag && flag !== '--active-principles') return
+
+  console.log(`${chalk.green('=====Registering Actives Principles ====')}`)
+  const activePrinciples = await ActivePrinciple.find({})
+
+  const activesPrincipleSeed = activesPrinciples.filter(
+    (item) =>
+      !activePrinciples.find(
+        (element) => element.name.es === item.active_principle_es
+      )
+  )
+
+  for (const activePrinciple of activesPrincipleSeed) {
+    await ActivePrinciple.create({
+      name: {
+        es: activePrinciple.active_principle_es
+      },
+      eiq: Number(activePrinciple.eiq.replace(/,/g, '.'))
+    })
+  }
+
+  console.log(`${chalk.green('=====Registered Actives Principles ====')}`)
+  return true
+}
+
 ;(async () => {
   const connected = await connectDb()
 
@@ -294,6 +324,7 @@ const seedersStorageTypes = async (flag?) => {
       await seedersEvidenceConcepts(flag)
       await seedersServiceIntegrations(flag)
       await seedersStorageTypes(flag)
+      await seedersActivePrinciples(flag)
     } catch (e) {
       console.log(e)
     }
