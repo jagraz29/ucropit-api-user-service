@@ -107,9 +107,7 @@ export class CropRepository {
    *
    * @param string id
    */
-  public static async getCropWithActivities(
-    id: string
-  ): Promise<Object[] | null> {
+  public static async getCropWithActivities(id: string) {
     const cropInstance = await Crop.findById(id)
       .populate('lots.data')
       .populate('cropType')

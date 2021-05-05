@@ -302,7 +302,7 @@ class ActivityService extends ServiceBase {
         }
 
         if (this.isActivityType(activity, type) && type === 'ACT_HARVEST') {
-          if(!activity?.dateHarvest) return undefined
+          if (!activity?.dateHarvest) return undefined
 
           let total = 0
 
@@ -337,6 +337,20 @@ class ActivityService extends ServiceBase {
     }
 
     return false
+  }
+
+  /* Add services integration.
+   *
+   * @param id
+   * @param service
+   */
+  public static async changeStatusSynchronized(
+    id: string,
+    service: string
+  ): Promise<void> {
+    await Activity.findByIdAndUpdate(id, {
+      synchronizedList: [{ service, isSynchronized: true }]
+    })
   }
 }
 

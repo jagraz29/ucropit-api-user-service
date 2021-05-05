@@ -5,6 +5,7 @@ import AchievementService from './AchievementService'
 import models from '../models'
 import integrationLog from '../models/integrationLog'
 import CompanyService from './CompanyService'
+import ActivityService from './ActivityService'
 
 const IntegrationLog = models.IntegrationLog
 
@@ -274,6 +275,13 @@ class IntegrationService extends ServiceBase {
         },
         `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_EXPORTER_ACHIEVEMENTS}`
       )
+
+      await ActivityService.changeStatusSynchronized(
+        response.activityId,
+        response.erpAgent
+      )
+
+      await this.createLog(response, dataExport.cropId, response.activityId)
 
       return response
     }
