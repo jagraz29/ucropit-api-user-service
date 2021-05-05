@@ -154,12 +154,12 @@ export const reportHeaderXls = {
     'Link evidencias Labores',
     'Cantidad de realización por Lote de ACTIVIDAD LABORES',
     'Mail de los Productores',
-    'Teléfono de los Producuctores',
+    'Teléfono de los Productores',
     'Última fecha de monitoreo',
     'Unidad de rinde',
     'Rinde',
     'Fecha Estimada de cosecha',
-    'Fecha de firma total del monitoreo',
+    'Fecha de firma total del monitoreo'
   ]
 }
 

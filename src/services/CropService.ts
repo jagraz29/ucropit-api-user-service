@@ -43,8 +43,8 @@ const statusActivities: Array<any> = [
 ]
 
 class CropService extends ServiceBase {
-  public static createDataCropToChartSurface (crops) {
-    const listSurfacesData = crops.map(crop => {
+  public static createDataCropToChartSurface(crops) {
+    const listSurfacesData = crops.map((crop) => {
       const sumSurfaceExplo: any = this.sumSurfacesAndDateActivitiesAgreement(
         crop.finished,
         'ACT_AGREEMENTS',
@@ -83,8 +83,8 @@ class CropService extends ServiceBase {
     return this.summaryData(listSurfacesData)
   }
 
-  public static getSummaryVolumes (crops) {
-    const listVolumes = crops.map(crop => {
+  public static getSummaryVolumes(crops) {
+    const listVolumes = crops.map((crop) => {
       return {
         total: this.calVolume(crop.unitType.key, crop.pay, crop.surface),
         date: crop.dateHarvest.toLocaleDateString('en-US', {
@@ -97,7 +97,7 @@ class CropService extends ServiceBase {
     return this.summaryData(listVolumes)
   }
 
-  public static summaryData (list) {
+  public static summaryData(list) {
     let total = 0
     let date = ''
     let summary = []
@@ -110,7 +110,7 @@ class CropService extends ServiceBase {
           date
         })
       } else {
-        const index = summary.findIndex(item => item.date === date)
+        const index = summary.findIndex((item) => item.date === date)
         summary[index].total += data.total
       }
       total = 0
@@ -119,12 +119,8 @@ class CropService extends ServiceBase {
     return summary
   }
 
-  public static sumSurfacesActivityAgreement (
-    activities,
-    type,
-    typeAgreement?
-  ) {
-    const filterActivity = activities.filter(activity => {
+  public static sumSurfacesActivityAgreement(activities, type, typeAgreement?) {
+    const filterActivity = activities.filter((activity) => {
       return (
         activity.type.tag === type &&
         typeAgreement &&
@@ -141,25 +137,25 @@ class CropService extends ServiceBase {
     return total
   }
 
-  public static sumSurfacesByLot (crop) {
-    const totalPerLot = crop.lots.map(lot => {
+  public static sumSurfacesByLot(crop) {
+    const totalPerLot = crop.lots.map((lot) => {
       return this.sumSurfacesLot(lot)
     })
 
     return totalPerLot.reduce((a, b) => a + b, 0)
   }
 
-  public static sumSurfacesLot (lot) {
+  public static sumSurfacesLot(lot) {
     return lot.data.reduce((a, b) => a + (b['surface'] || 0), 0)
   }
 
-  public static sumSurfacesAndDateActivitiesAgreement (
+  public static sumSurfacesAndDateActivitiesAgreement(
     activities,
     type,
     typeAgreement,
     crop
   ) {
-    const filterActivity = activities.filter(activity => {
+    const filterActivity = activities.filter((activity) => {
       return (
         activity.type.tag === type &&
         typeAgreement &&
@@ -187,11 +183,7 @@ class CropService extends ServiceBase {
    * @param pay
    * @param surfaces
    */
-  public static calVolume (
-    unit: string,
-    pay: number,
-    surfaces: number
-  ): number {
+  public static calVolume(unit: string, pay: number, surfaces: number): number {
     if (unit === 'kg') {
       return (pay / 1000) * surfaces
     }
@@ -212,10 +204,10 @@ class CropService extends ServiceBase {
    *
    * @param query
    */
-  public static async getAll (query?) {
+  public static async getAll(query?) {
     let crops = await this.findAll(query)
 
-    crops = crops.map(async crop => {
+    crops = crops.map(async (crop) => {
       crop = await this.expiredActivities(crop)
 
       crop = await this.changeStatusActivitiesRange(crop)
@@ -226,25 +218,8 @@ class CropService extends ServiceBase {
     return Promise.all(crops)
   }
 
-  public static async cropsOnlySeeRoles (
-    query: any,
-    filtering,
-    roles: Array<string>
-  ) {
-    let crops = (await this.findAll(query))
-      .map(crop => {
-        if (
-          crop.members.find(
-            member =>
-              member.user._id.toString() === filtering.user.toString() &&
-              member.identifier === filtering.identifier &&
-              roles.includes(member.type)
-          )
-        ) {
-          return crop
-        }
-      })
-      .filter(crop => crop)
+  public static async cropsOnlySeeRoles(query: any) {
+    let crops = await this.findAll(query)
 
     return crops
   }
@@ -254,7 +229,7 @@ class CropService extends ServiceBase {
    *
    * @param query
    */
-  public static async findAll (query) {
+  public static async findAll(query) {
     return Crop.find(query)
       .populate('lots.data')
       .populate('cropType')
@@ -328,7 +303,7 @@ class CropService extends ServiceBase {
       })
   }
 
-  public static async getCropsByIds (ids: Array<string>) {
+  public static async getCropsByIds(ids: Array<string>) {
     return Crop.find()
       .populate('lots.data')
       .populate('cropType')
@@ -368,7 +343,7 @@ class CropService extends ServiceBase {
    *
    * @param string id
    */
-  public static async getCrop (id: string) {
+  public static async getCrop(id: string) {
     return Crop.findById(id)
       .populate('lots.data')
       .populate('cropType')
@@ -434,7 +409,7 @@ class CropService extends ServiceBase {
    *
    * @param cropId
    */
-  public static async getCropById (cropId: string) {
+  public static async getCropById(cropId: string) {
     let crop = await this.findOneCrop(cropId)
 
     crop = await this.expiredActivities(crop)
@@ -444,24 +419,26 @@ class CropService extends ServiceBase {
     return crop
   }
 
-  public static async getLastMonitoring (cropId: string) {
+  public static async getLastMonitoring(cropId: string) {
     const crop = await CropService.findOneCrop(cropId)
 
     const activityName = await ActivityType.findOne({ tag: 'ACT_MONITORING' })
 
-    function filterActivity (item) {
+    function filterActivity(item) {
       return (
         item.name === activityName.name.es || item.name === activityName.name.en
       )
     }
 
-    const activitiesPending = crop.pending.filter(item => filterActivity(item))
+    const activitiesPending = crop.pending.filter((item) =>
+      filterActivity(item)
+    )
 
-    const activitiesToMake = crop.toMake.filter(item => filterActivity(item))
+    const activitiesToMake = crop.toMake.filter((item) => filterActivity(item))
 
-    const activitiesDone = crop.done.filter(item => filterActivity(item))
+    const activitiesDone = crop.done.filter((item) => filterActivity(item))
 
-    const activitiesFinished = crop.finished.filter(item =>
+    const activitiesFinished = crop.finished.filter((item) =>
       filterActivity(item)
     )
 
@@ -489,7 +466,7 @@ class CropService extends ServiceBase {
    *
    * @param cropId
    */
-  public static async findOneCrop (cropId: string) {
+  public static async findOneCrop(cropId: string) {
     return Crop.findById(cropId)
       .populate('lots.data')
       .populate('cropType')
@@ -568,7 +545,7 @@ class CropService extends ServiceBase {
    *
    * @param crop
    */
-  public static async expiredActivities (crop: any) {
+  public static async expiredActivities(crop: any) {
     let activitiesToMake = await this.checkListActivitiesExpired(crop, 'toMake')
 
     crop.toMake = await Promise.all(activitiesToMake)
@@ -576,18 +553,18 @@ class CropService extends ServiceBase {
     return crop
   }
 
-  public static filterCropByIdentifier (identifier: string | any, crops) {
+  public static filterCropByIdentifier(identifier: string | any, crops) {
     return crops
-      .map(crop => {
+      .map((crop) => {
         if (
-          crop.members.filter(member => member.identifier === identifier)
+          crop.members.filter((member) => member.identifier === identifier)
             .length > 0
         ) {
           return crop
         }
         return undefined
       })
-      .filter(crop => crop)
+      .filter((crop) => crop)
   }
 
   /**
@@ -597,13 +574,13 @@ class CropService extends ServiceBase {
    *
    * @return Promise
    */
-  public static async changeStatusActivitiesRange (crop: any): Promise<void> {
+  public static async changeStatusActivitiesRange(crop: any): Promise<void> {
     const listActivitiesExpired = (
       await this.listActivitiesExpiredRange(crop, 'done')
-    ).filter(activity => activity)
+    ).filter((activity) => activity)
     const listActivitiesFinished = (
       await this.listActivitiesFinishedRange(crop, 'done')
-    ).filter(activity => activity)
+    ).filter((activity) => activity)
 
     if (listActivitiesExpired.length > 0) {
       for (let activity of listActivitiesExpired) {
@@ -623,7 +600,7 @@ class CropService extends ServiceBase {
     return this.findOneCrop(crop._id)
   }
 
-  public static async handleDataCrop (
+  public static async handleDataCrop(
     data,
     company,
     lotsData,
@@ -642,7 +619,7 @@ class CropService extends ServiceBase {
           })
           tagIndex = item.tag
         } else {
-          const index = lotsArray.findIndex(x => x.tag === item.tag)
+          const index = lotsArray.findIndex((x) => x.tag === item.tag)
           lotsArray[index].data.push(lot._id)
         }
       }
@@ -665,24 +642,20 @@ class CropService extends ServiceBase {
     return newCrop
   }
 
-  public static async store (crop: ICrop) {
+  public static async store(crop: ICrop) {
     const newCrop = new Crop(crop)
     return newCrop.save()
   }
 
-  public static async removeActivities (
-    activity,
-    crop,
-    statusCrop = 'pending'
-  ) {
+  public static async removeActivities(activity, crop, statusCrop = 'pending') {
     crop[statusCrop].pull(activity._id)
 
     return crop.save()
   }
 
-  public static async addActivities (activity, crop) {
+  public static async addActivities(activity, crop) {
     const status = statusActivities.find(
-      item => item.name === activity.status[0].name.en
+      (item) => item.name === activity.status[0].name.en
     )
 
     const statusCrop = status.cropStatus
@@ -693,9 +666,11 @@ class CropService extends ServiceBase {
     return crop.save()
   }
 
-  public static isExistActivity (activity, crop, status: string): boolean {
+  public static isExistActivity(activity, crop, status: string): boolean {
     if (
-      crop[status].find(item => item._id.toString() === activity._id.toString())
+      crop[status].find(
+        (item) => item._id.toString() === activity._id.toString()
+      )
     ) {
       return true
     }
@@ -703,7 +678,7 @@ class CropService extends ServiceBase {
     return false
   }
 
-  public static async cancelled (cropId) {
+  public static async cancelled(cropId) {
     const crop = await Crop.findById(cropId)
 
     if (
@@ -726,14 +701,14 @@ class CropService extends ServiceBase {
    *
    * @param result
    */
-  public static async changeStatusSynchronized (result): Promise<void> {
+  public static async changeStatusSynchronized(result): Promise<void> {
     await Crop.updateOne(
       { _id: result.cropId, 'synchronizedList.service': result.erpAgent },
       { $set: { 'synchronizedList.$.isSynchronized': true } }
     )
   }
 
-  public static async addServiceSynchronized (data): Promise<boolean> {
+  public static async addServiceSynchronized(data): Promise<boolean> {
     for (const item of data.crops) {
       const crop = await Crop.findById(item.id)
       if (!this.isServiceAdded(crop, item.erpAgent)) {
@@ -743,7 +718,7 @@ class CropService extends ServiceBase {
           crop.synchronizedList = synchronized
         } else {
           if (
-            crop.synchronizedList.filter(el => el.service === data.erpAgent)
+            crop.synchronizedList.filter((el) => el.service === data.erpAgent)
               .length === 0
           ) {
             crop.synchronizedList.push({ service: data.erpAgent })
@@ -757,20 +732,21 @@ class CropService extends ServiceBase {
     return true
   }
 
-  public static serviceCropIsSynchronized (crop: any, service: any): boolean {
+  public static serviceCropIsSynchronized(crop: any, service: any): boolean {
     return (
       service &&
-      crop.synchronizedList.filter(item => item.service === service).length >
+      crop.synchronizedList.filter((item) => item.service === service).length >
         0 &&
-      crop.synchronizedList.find(item => item.service === service)
+      crop.synchronizedList.find((item) => item.service === service)
         .isSynchronized
     )
   }
 
-  private static isServiceAdded (crop: any, service: string) {
+  private static isServiceAdded(crop: any, service: string) {
     return (
       crop.synchronizedList &&
-      crop.synchronizedList.filter(item => item.service === service).length > 0
+      crop.synchronizedList.filter((item) => item.service === service).length >
+        0
     )
   }
 
@@ -779,7 +755,7 @@ class CropService extends ServiceBase {
    * @param crop
    * @param statusCrop
    */
-  private static async listActivitiesExpiredRange (crop, statusCrop: string) {
+  private static async listActivitiesExpiredRange(crop, statusCrop: string) {
     const activities = crop[statusCrop].map(async (activity: any) => {
       if (
         this.isExpiredActivity(activity, statusCrop) &&
@@ -799,7 +775,7 @@ class CropService extends ServiceBase {
    * @param crop
    * @param statusCrop
    */
-  private static async listActivitiesFinishedRange (crop, statusCrop: string) {
+  private static async listActivitiesFinishedRange(crop, statusCrop: string) {
     const activities = crop[statusCrop].map(async (activity: any) => {
       if (
         !this.isExpiredActivity(activity, statusCrop) &&
@@ -819,7 +795,7 @@ class CropService extends ServiceBase {
    *
    * @param activity
    */
-  private static checkCompleteSignedEachAchievements (activity: any): boolean {
+  private static checkCompleteSignedEachAchievements(activity: any): boolean {
     let completeSigned = true
     for (const achievement of activity.achievements) {
       if (!this.isCompleteSignsUsers(achievement)) {
@@ -836,7 +812,7 @@ class CropService extends ServiceBase {
    * @param crop
    * @param statusCrop
    */
-  private static async checkListActivitiesExpired (crop, statusCrop: string) {
+  private static async checkListActivitiesExpired(crop, statusCrop: string) {
     return crop[statusCrop].map(async (activity: any) => {
       if (this.isExpiredActivity(activity)) {
         activity.status[0].name.en = 'EXPIRED'
@@ -855,7 +831,7 @@ class CropService extends ServiceBase {
    *
    * @param activity
    */
-  private static isExpiredActivity (activity, status?): boolean {
+  private static isExpiredActivity(activity, status?): boolean {
     if (
       (activity.dateLimitValidation &&
         isNowGreaterThan(activity.dateLimitValidation) &&
@@ -875,7 +851,7 @@ class CropService extends ServiceBase {
    *
    * @return boolean
    */
-  private static isTotalPercentAchievements (activity): boolean {
+  private static isTotalPercentAchievements(activity): boolean {
     if (!activity.achievements || activity.achievements.length === 0) {
       return false
     }
@@ -895,7 +871,7 @@ class CropService extends ServiceBase {
    *
    * @param activity
    */
-  private static async expiredActivity (activity) {
+  private static async expiredActivity(activity) {
     const activityInstance = await Activity.findById(activity._id)
 
     activityInstance.setExpired()

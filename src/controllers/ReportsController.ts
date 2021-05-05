@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import moment from 'moment'
 
 import CropService from '../services/CropService'
 import ReportService from '../services/ReportService'
@@ -80,18 +81,11 @@ class ReportsController {
     const { email, identifier } = req.body
     const user: any = req.user
 
-    let crops = await CropService.cropsOnlySeeRoles(
-      {
-        cancelled: false,
-        'members.user': user._id,
-        'members.identifier': identifier
-      },
-      {
-        user: user._id,
-        identifier: identifier
-      },
-      roles
-    )
+    let crops = await CropService.cropsOnlySeeRoles({
+      cancelled: false,
+      'members.user': user._id,
+      'members.identifier': identifier
+    })
 
     if (crops.length === 0) {
       const error = errors.find((error) => error.key === '001')
@@ -102,13 +96,17 @@ class ReportsController {
 
     const pathFile = ExportFile.modeExport(reports, 'xls')
 
+    const today = moment()
+
     await EmailService.sendWithAttach({
       template: 'export-file',
       to: email,
       data: {},
       files: [
         {
-          filename: 'report.xlsx',
+          filename: `report_global_${identifier}_${today.format(
+            'DD-MM-YYYY'
+          )}.xlsx`,
           content: fs.readFileSync(pathFile)
         }
       ]
