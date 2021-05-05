@@ -191,7 +191,18 @@ const ActivitySchema = new Schema({
   ],
   files: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }],
   achievements: [{ type: Schema.Types.ObjectId, ref: 'Achievement' }],
-  user: { type: Schema.Types.ObjectId, ref: 'User' }
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
+  synchronizedList: [
+    {
+      service: {
+        type: String
+      },
+      isSynchronized: {
+        type: Boolean,
+        default: false
+      }
+    }
+  ]
 })
 
 ActivitySchema.pre('save', async function (next) {
