@@ -57,6 +57,28 @@ router.get('/lastMonitoring/:id', cropsController.showLastMonitoring)
  */
 router.get('/:id', cropsController.show)
 
+/**
+ * @swagger
+ * path:
+ *  /v1/crops/{id}/evidences:
+ *    get:
+ *      summary: Show a crop's evidences
+ *      tags: [Crops]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          content:
+ *            application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Crop'
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
 router.get('/:id/evidences', cropsController.evidences)
 
 /**
