@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose'
-import { ActivePrinciples } from '../interfaces/activePrinciples'
+import { ActivePrinciples } from '../interfaces/supplies'
 
 const ActivePrincipleSchema: Schema = new Schema({
   name: {

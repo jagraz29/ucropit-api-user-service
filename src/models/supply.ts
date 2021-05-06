@@ -26,8 +26,25 @@ const SupplySchema = new Schema({
   },
   unit: String,
   brand: String,
-  compositon: String
+  compositon: String,
+  activesPrinciples: [
+    {
+      activePrinciple: {
+        type: Schema.Types.ObjectId,
+        ref: 'ActivePrinciple'
+      },
+      eiqActivePrinciple: {
+        type: Number
+      },
+      eiq: {
+        type: Number
+      },
+      composition: {
+        type: Number
+      }
+    }
+  ]
 })
-SupplySchema.index({name: 'text', brand: 'text',company:'text'});
+SupplySchema.index({ name: 'text', brand: 'text', company: 'text' })
 
 export default mongoose.model('Supply', SupplySchema)
