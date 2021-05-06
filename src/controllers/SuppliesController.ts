@@ -35,7 +35,7 @@ class SuppliesController {
       limit: req.query.limit >= 0 ? Number(req.query.limit) : 15
     })
       .populate('typeId')
-      .populate('activesPrinciples.activesPrinciples')
+      .populate('activesPrinciples.activePrinciple')
       .lean()
 
     res.status(200).json(supplies)
