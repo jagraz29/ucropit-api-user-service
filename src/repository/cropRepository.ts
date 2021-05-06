@@ -4,9 +4,7 @@ const { Crop } = models
 import { filterDataCropsByCompanies, joinActivitiesByCrop } from '../utils'
 
 export class CropRepository {
-  public static async findAllCropsByCompanies(
-    identifier: string
-  ): Promise<Object[] | null> {
+  public static async findAllCropsByCompanies(identifier: string) {
     /**
      *
      * @param crops
@@ -71,7 +69,7 @@ export class CropRepository {
    *
    * @param string id
    */
-  public static async getCropWithActivities(id: string): Promise<Object[] | null> {
+  public static async getCropWithActivities(id: string) {
     const cropInstance = await Crop.findById(id)
       .populate('lots.data')
       .populate('cropType')
@@ -123,7 +121,11 @@ export class CropRepository {
           { path: 'files' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }, { path: 'supplies', populate: [{ path: 'typeId' }] }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           },
           {
             path: 'supplies',
@@ -154,15 +156,17 @@ export class CropRepository {
           },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }, { path: 'supplies', populate: [{ path: 'typeId' }] }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           }
         ]
       })
       .populate('members.user')
       .lean()
-    return cropInstance
-      ? joinActivitiesByCrop(cropInstance)
-      : null
+    return cropInstance ? joinActivitiesByCrop(cropInstance) : null
   }
 
   /**
@@ -170,17 +174,18 @@ export class CropRepository {
    *
    * @param string id
    */
-  public static async findAllCropsByCompanyAndCropType(identifier: string, cropType: string, company: string): Promise<Object[] | null> {
+  public static async findAllCropsByCompanyAndCropType(
+    identifier: string,
+    cropType: string,
+    company: string
+  ) {
     const cropsInstance = await Crop.find({
       cancelled: false,
       'members.identifier': identifier,
-      'cropType' : cropType,
-      'company' : company
-    })
-      .populate('unitType')
+      cropType: cropType,
+      company: company
+    }).populate('unitType')
 
-    return !!cropsInstance.length
-      ? cropsInstance
-      : null
+    return !!cropsInstance.length ? cropsInstance : null
   }
 }

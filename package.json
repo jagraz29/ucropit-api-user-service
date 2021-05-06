@@ -14,7 +14,8 @@
     "sign:activity": "node dist/src/commands/sign.js",
     "insert:members": "node dist/src/commands/members.js",
     "add:harvest:date": "node dist/src/commands/monitoringHarvestDate.js",
-    "delete:signer:ghost": "node dist/src/commands/deleteGhostSigner.js"
+    "delete:signer:ghost": "node dist/src/commands/deleteGhostSigner.js",
+    "add:active-ingredients:supply": "node dist/src/commands/activePrinciplesSupplies.js"
   },
   "resolutions": {
     "graceful-fs": "4.2.4"
