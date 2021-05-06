@@ -107,9 +107,7 @@ export class CropRepository {
    *
    * @param string id
    */
-  public static async getCropWithActivities(
-    id: string
-  ): Promise<Object[] | null> {
+  public static async getCropWithActivities(id: string) {
     const cropInstance = await Crop.findById(id)
       .populate('lots.data')
       .populate('cropType')
@@ -207,5 +205,25 @@ export class CropRepository {
       .populate('members.user')
       .lean()
     return cropInstance ? joinActivitiesByCrop(cropInstance) : null
+  }
+
+  /**
+   *  Get All crops by identifier and type.
+   *
+   * @param string id
+   */
+  public static async findAllCropsByCompanyAndCropType(
+    identifier: string,
+    cropType: string,
+    company: string
+  ): Promise<Object[] | null> {
+    const cropsInstance = await Crop.find({
+      cancelled: false,
+      'members.identifier': identifier,
+      cropType: cropType,
+      company: company
+    }).populate('unitType')
+
+    return !!cropsInstance.length ? cropsInstance : null
   }
 }

@@ -66,14 +66,17 @@ export const validateActivityStore = async (activity) => {
     observation: Joi.string().optional(),
     supplies: Joi.array()
       .items(
-        Joi.object().keys({
-          name: Joi.string().required(),
-          unit: Joi.string().required(),
-          quantity: Joi.number().required(),
-          typeId: Joi.string().required(),
-          icon: Joi.string().optional(),
-          total: Joi.number().required()
-        })
+        Joi.object()
+          .keys({
+            name: Joi.string().required(),
+            unit: Joi.string().required(),
+            quantity: Joi.number().required(),
+            typeId: Joi.string().required(),
+            supply: Joi.string().required(),
+            icon: Joi.string().optional(),
+            total: Joi.number().required()
+          })
+          .unknown()
       )
       .optional(),
     evidences: Joi.array()
@@ -132,14 +135,17 @@ export const validateActivityUpdate = async (activity) => {
     crop: Joi.string().optional(),
     supplies: Joi.array()
       .items(
-        Joi.object().keys({
-          name: Joi.string().required(),
-          unit: Joi.string().required(),
-          quantity: Joi.number().required(),
-          typeId: Joi.string().required(),
-          icon: Joi.string().optional(),
-          total: Joi.number().required()
-        })
+        Joi.object()
+          .keys({
+            name: Joi.string().required(),
+            unit: Joi.string().required(),
+            quantity: Joi.number().required(),
+            typeId: Joi.string().required(),
+            supply: Joi.string().required(),
+            icon: Joi.string().optional(),
+            total: Joi.number().required()
+          })
+          .unknown()
       )
       .optional(),
     evidences: Joi.array()
@@ -231,14 +237,17 @@ export const validateAchievement = async (achievement) => {
     erpAgent: Joi.string().optional(),
     supplies: Joi.array()
       .items(
-        Joi.object().keys({
-          name: Joi.string().required(),
-          unit: Joi.string().required(),
-          quantity: Joi.number().required(),
-          typeId: Joi.string().optional(),
-          icon: Joi.string().optional(),
-          total: Joi.number().required()
-        })
+        Joi.object()
+          .keys({
+            name: Joi.string().required(),
+            unit: Joi.string().required(),
+            quantity: Joi.number().required(),
+            supply: Joi.string().required(),
+            typeId: Joi.string().optional(),
+            icon: Joi.string().optional(),
+            total: Joi.number().required()
+          })
+          .unknown()
       )
       .optional(),
     destination: Joi.array()
