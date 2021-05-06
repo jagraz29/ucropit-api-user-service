@@ -38,6 +38,7 @@ async function updateActivePrincipleSimpleSupply(
     )
     console.log(`${chalk.green(`NAME: ${supply.name}`)}`)
     console.log(`${chalk.green(`CODE: ${supply.code}`)}`)
+    console.log(activesPrinciples)
     await SupplyRepository.updateOne(supply._id, {
       $set: { activesPrinciples: activesPrinciples }
     })
@@ -52,8 +53,8 @@ async function updateActivePrincipleSimpleSupply(
 async function updateActivePrincipleCompoundSupply(
   supply: Supply
 ): Promise<void> {
-  const listAsync = createCompoundActivePrinciples(supply)
-
+  const listAsync = await createCompoundActivePrinciples(supply)
+  console.log(listAsync)
   console.log(`${chalk.green(`NAME: ${supply.name}`)}`)
   console.log(`${chalk.green(`CODE: ${supply.code}`)}`)
   await SupplyRepository.updateOne(supply._id, {
