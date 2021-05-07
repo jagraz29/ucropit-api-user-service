@@ -228,7 +228,10 @@ class IntegrationService extends ServiceBase {
    * @param Request req
    */
   public static async exportAchievement(dataExport: IExportCrop, req: Request) {
-    if (this.isEnabledExportData(dataExport)) {
+    const isEnabledExportData: Boolean = await this.isEnabledExportData(
+      dataExport
+    )
+    if (isEnabledExportData) {
       const token: string = req.get('authorization').split(' ')[1]
 
       const response = await IntegrationService.export(
@@ -262,7 +265,11 @@ class IntegrationService extends ServiceBase {
   }
 
   public static async exportActivity(dataExport: IExportCrop, req: Request) {
-    if (this.isEnabledExportData(dataExport)) {
+    const isEnabledExportData: Boolean = await this.isEnabledExportData(
+      dataExport
+    )
+
+    if (isEnabledExportData) {
       const token: string = req.get('authorization').split(' ')[1]
 
       const response = await IntegrationService.export(
