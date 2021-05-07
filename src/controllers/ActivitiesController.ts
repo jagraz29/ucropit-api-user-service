@@ -191,7 +191,7 @@ class ActivitiesController {
 
       await IntegrationService.exportActivity(
         {
-          cropId: data.crop._id,
+          cropId: data.crop,
           activityId: activity._id,
           erpAgent: 'auravant',
           identifier: companySelected.identifier
