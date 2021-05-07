@@ -6,11 +6,11 @@ import ReportService from '../services/ReportService'
 import ExportFile from '../services/common/ExportFileService'
 import Company from '../services/CompanyService'
 import EmailService from '../services/EmailService'
-import { ReportsSignersByCompaniesHeaderXls } from '../types/'
+import { ReportsSignersByCompaniesHeaderXls, ReportsEiqHeaderXls } from '../types/'
 
 import { CropRepository } from '../repository'
-import { structJsonForXls } from '../utils'
-import { ReportSignersByCompany } from '../interfaces'
+import { structJsonForXls, structJsonForEiqXls, getCropPipelineEiqReportUtils } from '../utils'
+import { ReportSignersByCompany, ReportEiq } from '../interfaces'
 
 import { roles, errors } from '../types/common'
 
@@ -146,6 +146,48 @@ class ReportsController {
       files: [
         {
           filename: 'signers_by_companies.xlsx',
+          content: fs.readFileSync(pathFile)
+        }
+      ]
+    })
+
+    return res.status(200).json('Ok')
+  }
+
+  /**
+   * Send export file report by eiq in email.
+   *
+   * @param req
+   * @param res
+   */
+  public async reportsEiq(req: Request, res: Response) {
+    const email: string = req.query.email as string
+    const identifier: string = req.query.identifier as string
+
+    const cropPipeline: any = getCropPipelineEiqReportUtils({identifier})
+
+    let crops = await CropRepository.findCrops(cropPipeline)
+
+    const reports: Array<ReportEiq> = structJsonForEiqXls(crops)
+
+    if (!reports) {
+      const error = errors.find((error) => error.key === '005')
+      return res.status(404).json(error.code)
+    }
+
+    const pathFile = ExportFile.exportXls(
+      reports,
+      ReportsEiqHeaderXls,
+      'EIQ.xlsx'
+    )
+
+    await EmailService.sendWithAttach({
+      template: 'export-file',
+      to: email,
+      data: {},
+      files: [
+        {
+          filename: 'EIQ.xlsx',
           content: fs.readFileSync(pathFile)
         }
       ]

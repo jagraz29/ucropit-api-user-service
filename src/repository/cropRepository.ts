@@ -183,4 +183,17 @@ export class CropRepository {
       ? cropsInstance
       : null
   }
+
+  /**
+   *  Get crops.
+   *
+   * @param object pipeline
+   */
+  public static async findCrops(pipeline: any) {
+    const cropsInstance = await Crop.aggregate(pipeline)
+
+    return !!cropsInstance.length
+      ? cropsInstance
+      : null
+  }
 }
