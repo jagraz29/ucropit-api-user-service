@@ -63,6 +63,7 @@
     "mkdirp": "^1.0.4",
     "moment": "^2.29.1",
     "mongoose": "^5.9.25",
+    "mongoose-lean-virtuals": "^0.8.0",
     "morgan": "^1.10.0",
     "node-json-xlsx": "^0.2.2",
     "nodemailer": "^6.4.11",

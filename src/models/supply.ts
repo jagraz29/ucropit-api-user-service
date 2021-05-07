@@ -13,6 +13,7 @@
  *             type: string
  */
 import mongoose from 'mongoose'
+import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
 
 const { Schema } = mongoose
 
@@ -56,5 +57,7 @@ SupplySchema.virtual('eiqTotal').get(function () {
   }
   return 0
 })
+
+SupplySchema.plugin(mongooseLeanVirtuals)
 
 export default mongoose.model('Supply', SupplySchema)

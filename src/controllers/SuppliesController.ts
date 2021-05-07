@@ -36,7 +36,7 @@ class SuppliesController {
     })
       .populate('typeId')
       .populate('activesPrinciples.activePrinciple')
-      .lean()
+      .lean({ virtuals: true })
 
     res.status(200).json(supplies)
   }
