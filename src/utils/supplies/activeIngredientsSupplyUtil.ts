@@ -1,23 +1,23 @@
 import {
   Supply,
-  ActivePrinciples,
-  ActivePrinciplesSupply
+  ActiveIngredient,
+  ActiveIngredientsSupply
 } from '../../interfaces/supplies'
 import SupplyRepository from '../../repository/supplyRepository'
-export function createListSimpleActivePrinciples(
+export function createListSimpleActiveIngredients(
   supply: Supply,
-  activePrinciple: ActivePrinciples
-): ActivePrinciplesSupply[] {
+  activeIngredient: ActiveIngredient
+): ActiveIngredientsSupply[] {
   let list = []
   const composition: string = supply.compositon.replace(/,/g, '.')
 
   if (!isCompositionNotNumber(composition)) {
     list.push({
-      activePrinciple: activePrinciple._id,
-      eiqActivePrinciple: activePrinciple.eiq,
+      activeIngredient: activeIngredient._id,
+      eiqActiveIngredient: activeIngredient.eiq,
       composition: Number(supply.compositon.replace(/,/g, '.')),
       eiq:
-        (activePrinciple.eiq * Number(supply.compositon.replace(/,/g, '.'))) /
+        (activeIngredient.eiq * Number(supply.compositon.replace(/,/g, '.'))) /
         100
     })
   }
@@ -25,10 +25,10 @@ export function createListSimpleActivePrinciples(
   return list
 }
 
-export async function createCompoundActivePrinciples(
+export async function createCompoundActiveIngredients(
   supply: Supply
-): Promise<ActivePrinciplesSupply[]> {
-  let list: Array<ActivePrinciplesSupply> = []
+): Promise<ActiveIngredientsSupply[]> {
+  let list: Array<ActiveIngredientsSupply> = []
   const compoundName = supply.name.split('+').map((name) => name.trim())
   const compoundComposition = supply.compositon
     .split('+')
@@ -36,23 +36,23 @@ export async function createCompoundActivePrinciples(
     .filter((item) => item !== '')
 
   if (compoundName.length === compoundComposition.length) {
-    const listActivePrinciples = compoundName.map(async (name, index) => {
-      const activePrinciple = await SupplyRepository.getOneActivePrinciple({
+    const listActiveIngredients = compoundName.map(async (name, index) => {
+      const activeIngredient = await SupplyRepository.getOneActiveIngredient({
         'name.es': name
       })
       const composition = compoundComposition[index].replace(/,/g, '.')
 
-      if (activePrinciple && !isCompositionNotNumber(composition)) {
+      if (activeIngredient && !isCompositionNotNumber(composition)) {
         return {
-          activePrinciple: activePrinciple._id,
-          eiqActivePrinciple: activePrinciple.eiq,
+          activeIngredient: activeIngredient._id,
+          eiqActiveIngredient: activeIngredient.eiq,
           composition: Number(composition),
-          eiq: (activePrinciple.eiq * Number(composition)) / 100
+          eiq: (activeIngredient.eiq * Number(composition)) / 100
         }
       }
     })
 
-    list = (await Promise.all(listActivePrinciples)).filter((item) => item)
+    list = (await Promise.all(listActiveIngredients)).filter((item) => item)
   }
 
   return list

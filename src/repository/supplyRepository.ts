@@ -1,5 +1,5 @@
 import models from '../models'
-const { Supply, ActivePrinciple } = models
+const { Supply, ActiveIngredient } = models
 
 class SupplyRepository {
   /**
@@ -32,8 +32,8 @@ class SupplyRepository {
    *
    * @returns
    */
-  public static async getOneActivePrinciple(query) {
-    return ActivePrinciple.findOne(query)
+  public static async getOneActiveIngredient(query) {
+    return ActiveIngredient.findOne(query)
   }
 }
 

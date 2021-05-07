@@ -21,7 +21,7 @@ import TypeStorage from './typeStorage'
 import Notification from './notification'
 import FileDocument from './documentFile'
 import IntegrationLog from './integrationLog'
-import ActivePrinciple from './activePrinciples'
+import ActiveIngredient from './activeIngredient'
 
 const connectDb = function () {
   return mongoose.connect(process.env.DATABASE_URL, {
@@ -55,7 +55,7 @@ const models = {
   IntegrationLog,
   TypeStorage,
   Notification,
-  ActivePrinciple
+  ActiveIngredient
 }
 
 export { connectDb }

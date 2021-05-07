@@ -35,7 +35,7 @@ const ServiceIntegration = models.ServiceIntegration
 
 const CollaboratorRequest = models.CollaboratorRequest
 const TypeStorage = models.TypeStorage
-const ActivePrinciple = models.ActivePrinciple
+const ActiveIngredient = models.ActiveIngredient
 
 /**
  * Seeders CropType
@@ -276,21 +276,21 @@ const seedersActivePrinciples = async (flag?) => {
   if (flag && flag !== '--active-principles') return
 
   console.log(`${chalk.green('=====Registering Actives Principles ====')}`)
-  const activePrinciples = await ActivePrinciple.find({})
+  const activeIngredients = await ActiveIngredient.find({})
 
-  const activesPrincipleSeed = activesPrinciples.filter(
+  const activeIngredientsSeed = activesPrinciples.filter(
     (item) =>
-      !activePrinciples.find(
+      !activeIngredients.find(
         (element) => element.name.es === item.active_principle_es
       )
   )
 
-  for (const activePrinciple of activesPrincipleSeed) {
-    await ActivePrinciple.create({
+  for (const activeIngredient of activeIngredientsSeed) {
+    await ActiveIngredient.create({
       name: {
-        es: activePrinciple.active_principle_es
+        es: activeIngredient.active_principle_es
       },
-      eiq: Number(activePrinciple.eiq.replace(/,/g, '.'))
+      eiq: Number(activeIngredient.eiq.replace(/,/g, '.'))
     })
   }
 

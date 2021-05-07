@@ -2,13 +2,13 @@ require('dotenv').config()
 import { connectDb } from '../models'
 import chalk from 'chalk'
 import { Command, OptionValues } from 'commander'
-import { Supply, ActivePrinciples } from '../interfaces/supplies'
+import { Supply, ActiveIngredient } from '../interfaces/supplies'
 import { supplyTypesEIQ } from '../utils/Constants'
 import SupplyRepository from '../repository/supplyRepository'
 import {
   isSupplyCompoundIngredient,
-  createListSimpleActivePrinciples,
-  createCompoundActivePrinciples
+  createListSimpleActiveIngredients,
+  createCompoundActiveIngredients
 } from '../utils'
 
 const program = new Command()
@@ -25,22 +25,22 @@ program.parse(process.argv)
  *
  * @param Supply supply
  */
-async function updateActivePrincipleSimpleSupply(
+async function updateActiveIngredientsSimpleSupply(
   supply: Supply
 ): Promise<void> {
-  const activePrinciple = await SupplyRepository.getOneActivePrinciple({
+  const activePrinciple = await SupplyRepository.getOneActiveIngredient({
     'name.es': supply.name
   })
   if (activePrinciple) {
-    const activesPrinciples = createListSimpleActivePrinciples(
+    const activeIngredients = createListSimpleActiveIngredients(
       supply,
       activePrinciple
     )
     console.log(`${chalk.green(`NAME: ${supply.name}`)}`)
     console.log(`${chalk.green(`CODE: ${supply.code}`)}`)
-    console.log(activesPrinciples)
+    console.log(activeIngredients)
     await SupplyRepository.updateOne(supply._id, {
-      $set: { activesPrinciples: activesPrinciples }
+      $set: { activeIngredients: activeIngredients }
     })
   }
 }
@@ -50,22 +50,25 @@ async function updateActivePrincipleSimpleSupply(
  *
  * @param Supply supply
  */
-async function updateActivePrincipleCompoundSupply(
+async function updateActiveIngredientsCompoundSupply(
   supply: Supply
 ): Promise<void> {
-  const listAsync = await createCompoundActivePrinciples(supply)
-  console.log(listAsync)
+  const listAsyncActiveIngredients = await createCompoundActiveIngredients(
+    supply
+  )
+
   console.log(`${chalk.green(`NAME: ${supply.name}`)}`)
   console.log(`${chalk.green(`CODE: ${supply.code}`)}`)
+  console.log(listAsyncActiveIngredients)
   await SupplyRepository.updateOne(supply._id, {
-    $set: { activesPrinciples: listAsync }
+    $set: { activeIngredients: listAsyncActiveIngredients }
   })
 }
 
 /**
- *
+ * Update Supplies list.
  */
-async function updateActivePrinciples() {
+async function updateSupplies() {
   console.log(`${chalk.yellow('ADD ACTIVE INGREDIENTS')}`)
   const supplies = await SupplyRepository.getSuppliesBySupplyTypes(
     supplyTypesEIQ
@@ -73,9 +76,9 @@ async function updateActivePrinciples() {
 
   for (const supply of supplies) {
     if (!isSupplyCompoundIngredient(supply)) {
-      await updateActivePrincipleSimpleSupply(supply)
+      await updateActiveIngredientsSimpleSupply(supply)
     } else {
-      await updateActivePrincipleCompoundSupply(supply)
+      await updateActiveIngredientsCompoundSupply(supply)
     }
   }
 
@@ -89,7 +92,7 @@ async function updateActivePrinciples() {
       const options: OptionValues = program.opts()
 
       if (options.add) {
-        await updateActivePrinciples()
+        await updateSupplies()
       }
     }
   } catch (error) {

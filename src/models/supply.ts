@@ -28,13 +28,13 @@ const SupplySchema = new Schema({
   unit: String,
   brand: String,
   compositon: String,
-  activesPrinciples: [
+  activeIngredients: [
     {
-      activePrinciple: {
+      activeIngredient: {
         type: Schema.Types.ObjectId,
-        ref: 'ActivePrinciple'
+        ref: 'ActiveIngredient'
       },
-      eiqActivePrinciple: {
+      eiqActiveIngredient: {
         type: Number
       },
       eiq: {

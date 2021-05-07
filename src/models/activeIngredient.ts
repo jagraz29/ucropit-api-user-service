@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose'
-import { ActivePrinciples } from '../interfaces/supplies'
+import { ActiveIngredient } from '../interfaces/supplies'
 
 const ActivePrincipleSchema: Schema = new Schema({
   name: {
@@ -22,7 +22,7 @@ const ActivePrincipleSchema: Schema = new Schema({
   }
 })
 
-export default mongoose.model<ActivePrinciples>(
-  'ActivePrinciple',
+export default mongoose.model<ActiveIngredient>(
+  'ActiveIngredient',
   ActivePrincipleSchema
 )

@@ -1,1 +1,1 @@
-export * from './activePrinciplesSupplyUtil'
+export * from './activeIngredientsSupplyUtil'

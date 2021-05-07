@@ -1,2 +1,2 @@
-export * from './ActivePrinciples'
+export * from './ActiveIngredient'
 export * from './Supply'
