@@ -162,6 +162,10 @@ const ActivitySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'SupplyType'
       },
+      supply: {
+        type: Schema.Types.ObjectId,
+        ref: 'Supply'
+      },
       icon: {
         type: String
       },

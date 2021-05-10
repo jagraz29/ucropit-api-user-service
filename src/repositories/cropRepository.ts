@@ -206,4 +206,23 @@ export class CropRepository {
       .lean()
     return cropInstance ? joinActivitiesByCrop(cropInstance) : null
   }
+
+  /**
+   *  Get All crops by identifier and type.
+   *
+   * @param string id
+   */
+  public static async findAllCropsByCompanyAndCropType(identifier: string, cropType: string, company: string): Promise<Object[] | null> {
+    const cropsInstance = await Crop.find({
+      cancelled: false,
+      'members.identifier': identifier,
+      'cropType' : cropType,
+      'company' : company
+    })
+      .populate('unitType')
+
+    return !!cropsInstance.length
+      ? cropsInstance
+      : null
+  }
 }
