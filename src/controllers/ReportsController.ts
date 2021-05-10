@@ -9,7 +9,7 @@ import EmailService from '../services/EmailService'
 import { ReportsSignersByCompaniesHeaderXls, ReportsEiqHeaderXls } from '../types/'
 
 import { CropRepository } from '../repository'
-import { structJsonForXls, structJsonForEiqXls, getCropPipelineEiqReportUtils } from '../utils'
+import { structJsonForXls, getCropPipelineEiqReportUtils } from '../utils'
 import { ReportSignersByCompany, ReportEiq } from '../interfaces'
 
 import { roles, errors } from '../types/common'
@@ -166,17 +166,15 @@ class ReportsController {
 
     const cropPipeline: any = getCropPipelineEiqReportUtils({identifier})
 
-    let crops = await CropRepository.findCrops(cropPipeline)
+    const report = await CropRepository.findCrops(cropPipeline)
 
-    const reports: Array<ReportEiq> = structJsonForEiqXls(crops)
-
-    if (!reports) {
+    if (!report) {
       const error = errors.find((error) => error.key === '005')
       return res.status(404).json(error.code)
     }
 
     const pathFile = ExportFile.exportXls(
-      reports,
+      report,
       ReportsEiqHeaderXls,
       'EIQ.xlsx'
     )
