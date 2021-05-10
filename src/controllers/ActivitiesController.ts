@@ -325,16 +325,14 @@ class ActivitiesController {
         document.nameFile
       }`
 
-      if (fileExist(filePath)) {
-        removeFile(filePath)
+      if (fileExist(filePath)) removeFile(filePath)
 
-        const fileRemove = await FileDocument.findByIdAndDelete(document._id)
+      const fileRemove = await FileDocument.findByIdAndDelete(document._id)
 
-        if (fileRemove) {
-          const documentFiles = activity.toJSON().files
+      if (fileRemove) {
+        const documentFiles = activity.toJSON().files
 
-          files = files.filter(item => item.toString() !== document._id.toString())
-        }
+        files = files.filter(item => item.toString() !== document._id.toString())
       }
 
       return Promise
