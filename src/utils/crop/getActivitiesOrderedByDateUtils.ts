@@ -21,9 +21,6 @@ export const getActivitiesOrderedByDateUtils = ({ activities, surface: surfaceCr
 
     let percent: number = 0
 
-    let signed: number = !!achievements.length ? _.flatten(achievements.map(({ signers }) => signers)).length : signers.length
-    let signedIf: number = !!achievements.length ? _.flatten(achievements.map(({ signers }) => signers.signed === true)).length : signers.length
-
     if (TypeActivity === 'ACT_SOWING' || TypeActivity === 'ACT_APPLICATION') {
       let surfaceAux = !!achievements.length ? achievements.reduce((a,b) => a + b.surface,0) : 0
       percent = (surfaceAux / surface) * 100
@@ -35,6 +32,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities, surface: surfaceCr
 
     return {
       dateOrder: dateEnd ? dateEnd : _id.getTimestamp(),
+      _id,
       name,
       percent,
       dateStart: dateStart ? dateStart : null,
@@ -42,15 +40,29 @@ export const getActivitiesOrderedByDateUtils = ({ activities, surface: surfaceCr
       lots: lots.length,
       surface,
       volume: surface * (pay ? pay : 0),
-      yields: pay ? pay : 0,
+      pay: pay ? pay : 0,
       dateObservation: dateObservation ? dateObservation : null,
-      signed,
-      signedIf,
+      signed: !achievements.length ? signers.length : null,
+      signedIf: !achievements.length ? _.flatten(signers.map(({ signed }) => signed === true)).length : null,
       supplies,
-      storages: storages.map(({ tonsHarvest, storageType: { name: { es: storageTypeNAme } } }) => { return { tonsHarvest, storageTypeNAme }}),
-      achievements: achievements.map(({ dateAchievement, lots, surface }) => { return { dateAchievement, lots: lots.length, surface, supplies }})
+      storages: storages ? storages.map(({ tonsHarvest, storageType: { name: { es: storageTypeNAme } } }) => { return { tonsHarvest, storageTypeNAme }}) : [],
+      achievements: getDataAchievements(achievements)
     }
   }).filter(item => item)
 
   return activitiesRes.sort((a, b) => moment(a.dateOrder).diff(moment(b.dateOrder)))
+}
+
+const getDataAchievements = (achievements): Object[] => {
+  return achievements.map(({ dateAchievement, lots, surface, signers, supplies, _id }) => {
+    return {
+      _id,
+      dateAchievement,
+      lots: lots.length,
+      surface,
+      supplies,
+      signed: signers.length,
+      signedIf: _.flatten(signers.map(({ signed }) => signed === true)).length
+    }
+  }).filter((item) => item)
 }

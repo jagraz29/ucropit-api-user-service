@@ -61,6 +61,54 @@ router.get('/:id', cropsController.show)
 /**
  * @swagger
  * path:
+ *  /v1/crops/{nameFile}/pdf-history-crop:
+ *    get:
+ *      summary: Show a crop
+ *      tags: [Crops]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          content:
+ *            application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Crop'
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.get('/:nameFile/pdf-history-crop', cropsController.pdfHistoryCrop)
+
+/**
+ * @swagger
+ * path:
+ *  /v1/crops/{id}/generate-pdf-history:
+ *    get:
+ *      summary: Show a crop
+ *      tags: [Crops]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          content:
+ *            application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Crop'
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.post('/:id/generate-pdf-history', cropsController.generatePdfHistoryCrop)
+
+/**
+ * @swagger
+ * path:
  *  /v1/crops/{id}/activities:
  *    get:
  *      summary: Show a crop
