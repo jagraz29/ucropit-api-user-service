@@ -1,5 +1,7 @@
 export const ReportsEiqHeaderXls = {
   fields: [
+    'activityId',
+    'achievementId',
     'identifier',
     'companyName',
     'cropTypeName',
@@ -23,6 +25,8 @@ export const ReportsEiqHeaderXls = {
     'evidences',
   ],
   fieldNames: [
+    'ACTIVITY ID',
+    'ACHIEVEMENT ID',
     'CUIT',
     'Empresa',
     'Cultivo',

@@ -70,6 +70,11 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
       }
     },{
       $lookup: lookupFiles
+    },{
+      $unwind: {
+        path: '$supplies',
+        preserveNullAndEmptyArrays: true
+      }
     }],
     as: 'achievements'
   }
@@ -82,11 +87,6 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
       'activityFinishedIds': '$finished',
     },
     pipeline: [{
-      $unwind: {
-        path: '$supplies',
-        preserveNullAndEmptyArrays: true
-      }
-    },{
       $lookup: lookupActivityType
     },{
       $unwind: {
@@ -148,6 +148,8 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
   }
 
   const pipelineProyect: any = {
+    activityId: '$activities._id',
+    achievementId: '$activities.achievements._id',
     identifier: 1,
     companyName: '$company.name',
     cropTypeName: '$cropType.name.es',
@@ -158,22 +160,22 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
     },
     cropLotTag: '$lots.tag',
     lotName: '$activities.achievements.lots.name',
-    supplieName: '$activities.supplies.name',
-    supplieUnit: '$activities.supplies.unit',
+    supplieName: '$activities.achievements.supplies.name',
+    supplieUnit: '$activities.achievements.supplies.unit',
     scheduleDate: {
       $dateToString: {
         format: '%d/%m/%Y',
         date: '$activities.dateStart'
       }
     },
-    supplieQuantity: '$activities.supplies.quantity',
+    supplieQuantity: '$activities.achievements.supplies.quantity',
     achievementDate: {
       $dateToString: {
         format: '%d/%m/%Y',
         date: '$activities.achievements.dateAchievement'
       }
     },
-    supplieTotal: '$activities.supplies.total',
+    supplieTotal: '$activities.achievements.supplies.total',
     lotSurface: '$activities.achievements.lots.surface',
     evidences: {
       $reduce : {
@@ -207,11 +209,11 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
         if: {
           $and: [{
             $gt: [{
-              $size: ['$activities.supplies']
+              $size: ['$activities.achievements']
             }, 0]
           },{
             $gt: [{
-              $size: ['$activities.achievements']
+              $size: ['$activities.achievements.supplies']
             }, 0]
           }]
         },
