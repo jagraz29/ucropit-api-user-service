@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 export const filterDataCropsByCompanies = (crops, identifierCompany: string): Object[] => {
   return crops.map((crop) => {
-    const { identifier: identifierProducer, lots, done, finished } = crop
+    const { identifier: identifierProducer, lots, activities: activitiesCrop } = crop
     const reportPartial = {
       identifierCompany,
       identifierProducer,
@@ -11,7 +11,7 @@ export const filterDataCropsByCompanies = (crops, identifierCompany: string): Ob
       nameCrop: crop.name,
       surfaceCrop: calculateSurfaceLots(lots)
     }
-    const activities = [...getDataActivities(done), ...getDataActivities(finished)]
+    const activities = getDataActivities(activitiesCrop)
     return { ...reportPartial, signers: setSignersToRows(activities) }
   })
 }
@@ -40,19 +40,23 @@ const setSignersToRows = (activities): Object[] => {
 }
 
 const getDataActivities = (activities): Object[] => {
-  return _.flatten(activities.map(({ typeAgreement, achievements, type: { tag: TypeActivity }, signers }) => {
-    const key = typeAgreement ? typeAgreement.key : null
-    let responseWithAgreements: Object[] = []
-    let responseWithOutAgreements: Object[] = []
-    let signersSet: Object[] = !!achievements.length ? _.flatten(achievements.map(({ signers }) => signers)) : signers
-    if (TypeActivity === 'ACT_AGREEMENTS') {
-      if (key === 'SUSTAIN' || key === 'SEED_USE') {
-        responseWithAgreements = setTypeActivityInSigners(signersSet,TypeActivity)
+  return _.flatten(activities.map(({ typeAgreement, achievements, type: { tag: TypeActivity }, signers, status }) => {
+    const { name: { en } } = status[0]
+
+    if (en === 'DONE' || en === 'FINISHED') {
+      const key = typeAgreement ? typeAgreement.key : null
+      let responseWithAgreements: Object[] = []
+      let responseWithOutAgreements: Object[] = []
+      let signersSet: Object[] = !!achievements.length ? _.flatten(achievements.map(({ signers }) => signers)) : signers
+      if (TypeActivity === 'ACT_AGREEMENTS') {
+        if (key === 'SUSTAIN' || key === 'SEED_USE') {
+          responseWithAgreements = setTypeActivityInSigners(signersSet,TypeActivity)
+        }
+      } else {
+        responseWithOutAgreements = setTypeActivityInSigners(signersSet,TypeActivity)
       }
-    } else {
-      responseWithOutAgreements = setTypeActivityInSigners(signersSet,TypeActivity)
+      return [...responseWithAgreements, ...responseWithOutAgreements]
     }
-    return [...responseWithAgreements, ...responseWithOutAgreements]
   }).filter(item => item))
 }
 
