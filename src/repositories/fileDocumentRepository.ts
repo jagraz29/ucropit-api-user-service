@@ -1,4 +1,5 @@
 import models from '../models'
+import { FileDocumentProps } from '../interfaces/FileDocument'
 const { FileDocument } = models
 
 interface FileDocument {
@@ -14,10 +15,8 @@ export class FileDocumentRepository {
    *
    * @param dataFile
    */
-  public static async createFile (dataFile: FileDocument): Promise<Object[] | null> {
+  public static async createFile(dataFile: FileDocumentProps) {
     const fileDocumentInstance = await FileDocument.create(dataFile)
-    return fileDocumentInstance
-      ? fileDocumentInstance
-      : null
+    return fileDocumentInstance ? fileDocumentInstance : null
   }
 }

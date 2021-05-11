@@ -14,7 +14,8 @@
     "sign:activity": "node dist/src/commands/sign.js",
     "insert:members": "node dist/src/commands/members.js",
     "add:harvest:date": "node dist/src/commands/monitoringHarvestDate.js",
-    "delete:signer:ghost": "node dist/src/commands/deleteGhostSigner.js"
+    "delete:signer:ghost": "node dist/src/commands/deleteGhostSigner.js",
+    "add:active-ingredients:supply": "node dist/src/commands/activeIngredientsSupplies.js"
   },
   "resolutions": {
     "graceful-fs": "4.2.4"
@@ -64,6 +65,7 @@
     "mkdirp": "^1.0.4",
     "moment": "^2.29.1",
     "mongoose": "^5.9.25",
+    "mongoose-lean-virtuals": "^0.8.0",
     "morgan": "^1.10.0",
     "node-json-xlsx": "^0.2.2",
     "nodemailer": "^6.4.11",
