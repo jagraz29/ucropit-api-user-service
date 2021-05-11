@@ -18,7 +18,8 @@ import {
   basePath,
   getActivitiesOrderedByDateUtils,
   makeDirIfNotExists,
-  calculateDataCropUtils
+  calculateDataCropUtils,
+  calculateTheoreticalPotentialUtils
 } from '../utils'
 
 import {
@@ -119,10 +120,16 @@ class CropsController {
     const { id } = req.params
     const crop = await CropService.getCrop(id)
     const lots = await LotService.storeLotImagesAndCountries(crop.lots)
+    const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
+    const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
 
     const newCrop = {
       ...crop,
-      lots
+      lots,
+      company: {
+        ...crop.company,
+        theoriticalPotential
+      }
     }
 
     res.status(200).json(newCrop)
