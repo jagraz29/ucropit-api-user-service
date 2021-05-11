@@ -9,13 +9,13 @@ import {
 } from '../utils'
 
 export class CropRepository {
+  /**
+   *
+   * @param identifier
+   */
   public static async findAllCropsByCompanies(
     identifier: string
   ): Promise<Object[] | null> {
-    /**
-     *
-     * @param crops
-     */
     const cropsInstance = await Crop.find({
       cancelled: false,
       'members.identifier': identifier
@@ -23,51 +23,100 @@ export class CropRepository {
       .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
-      .populate('company')
+      .populate({ path: 'company', populate: [{ path: 'files' }] })
+      .populate({
+        path: 'pending',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots', select: '-area -__v' },
+          { path: 'files' },
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }]
+          },
+          {
+            path: 'storages',
+            populate: [{ path: 'storageType' }]
+          }
+        ]
+      })
+      .populate({
+        path: 'toMake',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots', select: '-area -__v' },
+          { path: 'files' },
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }]
+          },
+          {
+            path: 'storages',
+            populate: [{ path: 'storageType' }]
+          }
+        ]
+      })
       .populate({
         path: 'done',
         populate: [
           { path: 'collaborators' },
           { path: 'type' },
           { path: 'typeAgreement' },
-          { path: 'lots' },
+          { path: 'lots', select: '-area -__v' },
           { path: 'files' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           },
-          { path: 'lotsMade' },
-          { path: 'user' },
-          { path: 'unitType' }
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }]
+          },
+          {
+            path: 'storages',
+            populate: [{ path: 'storageType' }]
+          },
+          { path: 'lotsMade' }
         ]
       })
-      .populate('members.user')
       .populate({
         path: 'finished',
         populate: [
           { path: 'collaborators' },
           { path: 'type' },
           { path: 'typeAgreement' },
-          { path: 'lots' },
+          { path: 'lots', select: '-area -__v' },
           { path: 'files' },
-          { path: 'user' },
-          { path: 'unitType' },
           {
-            path: 'approvalRegister',
-            populate: [
-              { path: 'filePdf' },
-              { path: 'fileOts' },
-              { path: 'activity' }
-            ]
+            path: 'supplies',
+            populate: [{ path: 'typeId' }]
+          },
+          {
+            path: 'storages',
+            populate: [{ path: 'storageType' }]
           },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           }
         ]
       })
+      .populate('members.user')
+      .lean()
     return !!cropsInstance.length
-      ? filterDataCropsByCompanies(cropsInstance, identifier)
+      ? cropsInstance.map((crop) => joinActivitiesByCrop(crop))
       : null
   }
 
@@ -105,7 +154,7 @@ export class CropRepository {
   /**
    *  Get One crop and json converter.
    *
-   * @param string id
+   * @param id
    */
   public static async getCropWithActivities(id: string) {
     const cropInstance = await Crop.findById(id)

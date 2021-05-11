@@ -1,17 +1,22 @@
 import models from '../models'
 import { FileDocumentProps } from '../interfaces/FileDocument'
-
 const { FileDocument } = models
 
-class FileDocumentRepository {
+interface FileDocument {
+  nameFile: String
+  path: String
+  user?: String | any
+  date: Date
+}
+
+export class FileDocumentRepository {
   /**
+   *  Set history file.
    *
-   * @param data
-   *
-   * @returns
+   * @param dataFile
    */
-  public static create(data: FileDocumentProps) {
-    return FileDocument.create(data)
+  public static async createFile(dataFile: FileDocumentProps) {
+    const fileDocumentInstance = await FileDocument.create(dataFile)
+    return fileDocumentInstance ? fileDocumentInstance : null
   }
 }
-export default FileDocumentRepository

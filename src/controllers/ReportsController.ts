@@ -1,4 +1,10 @@
 import { Request, Response } from 'express'
+import {
+  ReasonPhrases,
+  StatusCodes,
+  getReasonPhrase,
+  getStatusCode
+} from 'http-status-codes'
 import moment from 'moment'
 
 import CropService from '../services/CropService'
@@ -9,7 +15,8 @@ import EmailService from '../services/EmailService'
 import { ReportsSignersByCompaniesHeaderXls } from '../types/'
 
 import { CropRepository } from '../repositories'
-import { structJsonForXls } from '../utils'
+import { structJsonForXls, filterDataCropsByCompanies } from '../utils'
+
 import { ReportSignersByCompany } from '../interfaces'
 
 import { roles, errors } from '../types/common'
@@ -128,11 +135,13 @@ class ReportsController {
     let crops = await CropRepository.findAllCropsByCompanies(identifier)
 
     if (!crops) {
-      const error = errors.find((error) => error.key === '005')
-      return res.status(404).json(error.code)
+      return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
     }
 
-    const reports: Array<ReportSignersByCompany> = structJsonForXls(crops)
+    let cropsByCompanies = await filterDataCropsByCompanies(crops, identifier)
+
+    const reports: Array<ReportSignersByCompany> =
+      structJsonForXls(cropsByCompanies)
     const pathFile = ExportFile.exportXls(
       reports,
       ReportsSignersByCompaniesHeaderXls,
@@ -151,7 +160,7 @@ class ReportsController {
       ]
     })
 
-    return res.status(200).json('Ok')
+    return res.status(StatusCodes.OK).send(ReasonPhrases.OK)
   }
 
   public async showMap(req: Request, res: Response) {
