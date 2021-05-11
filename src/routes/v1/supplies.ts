@@ -11,6 +11,22 @@ const router: express.Router = express.Router()
  *   summary: Get all supplies list
  *   tags:
  *      - Supply
+ *   parameters:
+ *        - in: query
+ *          name: q
+ *          required: false
+ *          schema:
+ *            type: string
+ *        - in: query
+ *          name: skip
+ *          required: false
+ *          schema:
+ *            type: string
+ *        - in: query
+ *          name: tag
+ *          required: false
+ *          schema:
+ *            type: string
  *   description: Supplies
  *   produces:
  *     - application/json

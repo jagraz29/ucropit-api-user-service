@@ -22,6 +22,8 @@ import {
   phytotherapeutic
 } from './suppliesData'
 
+import { activesPrinciples } from './activesPrinciplesData'
+
 const CropType = models.CropType
 const UnitType = models.UnitType
 const ActivityType = models.ActivityType
@@ -34,6 +36,8 @@ const ServiceIntegration = models.ServiceIntegration
 
 const CollaboratorRequest = models.CollaboratorRequest
 const TypeStorage = models.TypeStorage
+const ActiveIngredient = models.ActiveIngredient
+
 const ForeignCredential = models.ForeignCredential
 
 /**
@@ -271,6 +275,32 @@ const seedersStorageTypes = async (flag?) => {
   return true
 }
 
+const seedersActivePrinciples = async (flag?) => {
+  if (flag && flag !== '--active-principles') return
+
+  console.log(`${chalk.green('=====Registering Actives Principles ====')}`)
+  const activeIngredients = await ActiveIngredient.find({})
+
+  const activeIngredientsSeed = activesPrinciples.filter(
+    (item) =>
+      !activeIngredients.find(
+        (element) => element.name.es === item.active_principle_es
+      )
+  )
+
+  for (const activeIngredient of activeIngredientsSeed) {
+    await ActiveIngredient.create({
+      name: {
+        es: activeIngredient.active_principle_es
+      },
+      eiq: Number(activeIngredient.eiq.replace(/,/g, '.'))
+    })
+  }
+
+  console.log(`${chalk.green('=====Registered Actives Principles ====')}`)
+  return true
+}
+
 const seedersForeignCredentials = async (flag?) => {
   if (flag && flag !== '--foreign-credentials') return
 
@@ -291,6 +321,7 @@ const seedersForeignCredentials = async (flag?) => {
   console.log(`${chalk.green('=====Registered Foreign Credentials ====')}`)
   return true
 }
+
 ;(async () => {
   const connected = await connectDb()
 
@@ -317,6 +348,7 @@ const seedersForeignCredentials = async (flag?) => {
       await seedersEvidenceConcepts(flag)
       await seedersServiceIntegrations(flag)
       await seedersStorageTypes(flag)
+      await seedersActivePrinciples(flag)
       await seedersForeignCredentials(flag)
     } catch (e) {
       console.log(e)
