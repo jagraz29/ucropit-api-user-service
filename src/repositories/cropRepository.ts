@@ -284,8 +284,6 @@ export class CropRepository {
   public static async findCrops(pipeline: any) {
     const cropsInstance = await Crop.aggregate(pipeline)
 
-    return !!cropsInstance.length
-      ? cropsInstance
-      : null
+    return !!cropsInstance.length ? cropsInstance : null
   }
 }

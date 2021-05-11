@@ -3,7 +3,7 @@ import {
   ActiveIngredient,
   ActiveIngredientsSupply
 } from '../../interfaces/supplies'
-import SupplyRepository from '../../repository/supplyRepository'
+import SupplyRepository from '../../repositories/supplyRepository'
 export function createListSimpleActiveIngredients(
   supply: Supply,
   activeIngredient: ActiveIngredient
