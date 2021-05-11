@@ -1,0 +1,23 @@
+<style type="text/css">
+    .dataContainer{
+        padding: 18px;
+        float:inherit;
+    }
+    .dataValue{
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14,32px;
+        float:right;
+    }
+</style>
+<div>
+    {{#each array}}
+        <div class="dataContainer">
+            <p class="dataValue"></p><img src={{lot}} height="100" width="100"/>
+                {{location}}</p>
+        </div>
+    {{/each}}
+
+</div>

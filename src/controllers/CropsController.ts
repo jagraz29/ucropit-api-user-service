@@ -1,4 +1,11 @@
 import { Request, Response } from 'express'
+import {
+  ReasonPhrases,
+  StatusCodes,
+  getReasonPhrase,
+  getStatusCode
+} from 'http-status-codes'
+
 import models from '../models'
 import CropService from '../services/CropService'
 import LotService from '../services/LotService'
@@ -6,7 +13,8 @@ import CompanyService from '../services/CompanyService'
 import ActivityService from '../services/ActivityService'
 
 import { CropRepository } from '../repository'
-import { getActivitiesOrderedByDateUtils } from '../utils'
+import { PdfService } from '../services'
+import { basePath, getActivitiesOrderedByDateUtils, makeDirIfNotExists, calculateDataCropUtils } from '../utils'
 
 import {
   validateGetCrops,
@@ -18,6 +26,7 @@ import {
 import { UserSchema } from '../models/user'
 import { errors } from '../types/common'
 import { ReportSignersByCompany } from '../interfaces'
+import path from 'path'
 
 const Crop = models.Crop
 const CropType = models.CropType
@@ -43,7 +52,7 @@ class CropsController {
         },
         {
           'members.identifier': req.query.identifier
-        },
+        }
       ]
     }
 
@@ -127,12 +136,75 @@ class CropsController {
     const crop = await CropRepository.getCropWithActivities(id)
 
     if (!crop) {
-      const error = errors.find((error) => error.key === '005')
-      return res.status(404).json(error.code)
+      return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
     }
     const activities: Array<ReportSignersByCompany> = getActivitiesOrderedByDateUtils(crop)
 
-    res.status(200).json(activities)
+    res.status(StatusCodes.OK).json(activities)
+  }
+
+  /**
+   * Generate pdf crop history.
+   *
+   * @param  Request req
+   * @param  Response res
+   *
+   * @return Response
+   */
+  public async generatePdfHistoryCrop (req: Request, res: Response) {
+    const { params: { id } } = req
+    // se obtienes crop con sus actividades
+    const crop = await CropRepository.getCropWithActivities(id)
+
+    if (!crop) {
+      return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
+    }
+
+    // aca estara la libreria a nivel de crop con el recurso de actividades
+    const dataCrop = calculateDataCropUtils(crop)
+
+    // // aca esta la libreria a nivel de actividades
+    const activities: Array<ReportSignersByCompany> = getActivitiesOrderedByDateUtils(crop)
+
+    // aca se obtienen todos los crop de la company
+    // const crops = await CropRepository.getCropWithActivities(crop.contactocomercial)
+
+    // aca se calcula el potencial teorico
+    // const eiq = calculateEiq(crops)
+
+    // // aca se unen el ptencial teorico con lo del crop ya calculado
+    // dataPdf = { crop, eiq, date: new Date() }
+    const dataPDF = {
+      array: [
+        {
+          lot: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEu24ChRXtuv9btEVw3LTxt0vVvQDcbQbEnQ&usqp=CAU",
+          location: "Santa Eugenia Navarro, Buenos Aires"
+        },
+        {
+          lot: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEu24ChRXtuv9btEVw3LTxt0vVvQDcbQbEnQ&usqp=CAU",
+          location: "Santa Eugenia Navarro, Buenos Aires"
+        }
+      ]
+    }
+
+    // // aca se utiliza el service para generar el pdf, este debe devoler el path para descargar el pdf
+    const nameFile = await PdfService.generatePdf('pdf-crop-history',dataPDF,'pdf-crop-history', 'company')
+
+    // este debe devoler el endpoint para descargar el pdf como respuesta del endpoint
+    res.status(StatusCodes.OK).send({ nameFile })
+
+  }
+
+  /**
+   * Get pdf crop history.
+   *
+   * @param  Request req
+   *
+   * @return Response
+   * @param res
+   */
+  public async pdfHistoryCrop ({ params: { nameFile } }: Request, res: Response) {
+    res.sendFile(path.resolve(`public/uploads/pdf-crop-history/${nameFile}`))
   }
 
   /**
