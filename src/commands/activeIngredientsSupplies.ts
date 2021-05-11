@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import { Command, OptionValues } from 'commander'
 import { Supply, ActiveIngredient } from '../interfaces/supplies'
 import { supplyTypesEIQ } from '../utils/Constants'
-import SupplyRepository from '../repository/supplyRepository'
+import SupplyRepository from '../repositories/supplyRepository'
 import {
   isSupplyCompoundIngredient,
   createListSimpleActiveIngredients,

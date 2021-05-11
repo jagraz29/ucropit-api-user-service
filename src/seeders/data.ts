@@ -296,6 +296,27 @@ export const evidenceConcepts = [
       en: 'Dispatch Form',
       es: 'Remito'
     }
+  },
+  {
+    code: '0007',
+    name: {
+      en: 'Seeds Bill',
+      es: 'Factura Semillas'
+    }
+  },
+  {
+    code: '0008',
+    name: {
+      en: 'Seed Royalties',
+      es: 'Facturas Regalias'
+    }
+  },
+  {
+    code: '0009',
+    name: {
+      en: 'Satellite Image',
+      es: 'Imagen Satelital'
+    }
   }
 ]
 
@@ -398,5 +419,12 @@ export const storageTypes = [
       es: 'Entrega dentro de programa'
     },
     key: 'DELIVERY_WITHIN_OF_PROGRAM'
+  }
+]
+
+export const foreignCredentials = [
+  {
+    credentialKey: 'sensing',
+    credentialSecret: 'sensing-secret'
   }
 ]

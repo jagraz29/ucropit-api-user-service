@@ -55,16 +55,16 @@ class ServiceBase {
    * @param document
    * @param filePath
    */
-  public static async removeFiles(fileId: string, document, filePath: string) {
+  public static async removeFiles(fileId: string, document: any, filePath: string) {
     if (fileExist(filePath)) {
       removeFile(filePath)
 
       const fileRemove = await FileDocument.findByIdAndDelete(fileId)
 
       if (fileRemove) {
-        const files = remove(document.files, function (item) {
-          return item === fileId
-        })
+        const documentFiles = document.toJSON().files
+
+        const files = document.files.filter(item => item.toString() !== fileId.toString())
 
         document.files = files
 
