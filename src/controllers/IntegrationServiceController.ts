@@ -4,6 +4,7 @@ import CropService from '../services/CropService'
 import CompanyService from '../services/CompanyService'
 import AchievementService from '../services/AchievementService'
 import UserConfigService from '../services/UserConfigService'
+import { ResponseIntegration } from '../interfaces/integrations'
 
 class IntegrationServiceController {
   /**
@@ -141,23 +142,33 @@ class IntegrationServiceController {
     const token: string = req.get('authorization').split(' ')[1]
     const user: any = req.user
     const data = req.body
+    let responseIntegration: ResponseIntegration = {}
 
     const userConfig = await UserConfigService.findById(user.config)
 
     await CropService.addServiceSynchronized(data)
 
-    const [item] = await IntegrationService.export(
-      {
-        ...data,
-        token: token,
-        identifier: userConfig.companySelected.identifier
-      },
-      `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_EXPORTER_CROPS}`
+    try {
+      const [item] = await IntegrationService.export(
+        {
+          ...data,
+          token: token,
+          identifier: userConfig.companySelected.identifier
+        },
+        `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_EXPORTER_CROPS}`
+      )
+      responseIntegration = item
+    } catch (error) {
+      console.log('ERROR AL SINCRONIZAR CON EL SERVICIO DE TERCERO')
+      console.log(error)
+    }
+
+    await CropService.changeStatusSynchronized(responseIntegration)
+
+    const log = await IntegrationService.createLog(
+      responseIntegration,
+      responseIntegration.cropId
     )
-
-    await CropService.changeStatusSynchronized(item)
-
-    const log = await IntegrationService.createLog(item, item.cropId)
 
     res.status(200).json({ status: 'Ok', log })
   }
