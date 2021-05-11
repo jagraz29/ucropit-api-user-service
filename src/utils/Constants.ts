@@ -7,6 +7,11 @@ export const VALID_FORMATS_FILES_IMAGES_PNG = 'png'
 export const VALID_FORMATS_FILES_IMAGES_JPG = 'jpg|jpeg'
 export const VALID_FORMATS_FILES_DOCUMENTS = 'pdf'
 
+export const ACTIVITY_HARVEST = 'ACT_HARVEST'
+
+export const SENSING_REMOTE_URL = `${process.env.SERVICE_REMOTE_SENSING_URL}`
+export const SENSING_ENDPOINT_REQUEST = `${process.env.ENDPOINT_REQUEST}`
+
 export const responsibleRoles = [
   'PRODUCER',
   'PRODUCER_ADVISER',

@@ -17,12 +17,13 @@ import {
   ReportsEiqHeaderXls
 } from '../types/'
 
-import { CropRepository } from '../repository'
+import { CropRepository } from '../repositories'
 import {
   structJsonForXls,
   getCropPipelineEiqReportUtils,
   filterDataCropsByCompanies
 } from '../utils'
+
 import { ReportSignersByCompany, ReportEiq } from '../interfaces'
 
 import { roles, errors } from '../types/common'
@@ -42,7 +43,7 @@ class ReportsController {
    *
    * @return Response
    */
-  public async generateCrops (req: Request, res: Response) {
+  public async generateCrops(req: Request, res: Response) {
     const cuit = req.query.cuit
     const mode: any = req.query.mode || 'xls'
 
@@ -72,7 +73,7 @@ class ReportsController {
     res.download(pathFile)
   }
 
-  public async generateDataSet (req: Request, res: Response) {
+  public async generateDataSet(req: Request, res: Response) {
     const mode: any = req.query.mode || 'json'
 
     let crops = await CropService.getAll()
@@ -90,7 +91,7 @@ class ReportsController {
    * @param req
    * @param res
    */
-  public async sendFileReport (req: Request, res: Response) {
+  public async sendFileReport(req: Request, res: Response) {
     const { email, identifier } = req.body
     const user: any = req.user
 
@@ -101,7 +102,7 @@ class ReportsController {
     })
 
     if (crops.length === 0) {
-      const error = errors.find(error => error.key === '001')
+      const error = errors.find((error) => error.key === '001')
       return res.status(400).json(error.code)
     }
 
@@ -134,7 +135,7 @@ class ReportsController {
    * @param req
    * @param res
    */
-  public async reportsSignersByCompanies (req: Request, res: Response) {
+  public async reportsSignersByCompanies(req: Request, res: Response) {
     const email: string = req.query.email as string
     const identifier: string = req.query.identifier as string
 
@@ -144,11 +145,11 @@ class ReportsController {
       return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
     }
 
-    let cropsByCompanies = await filterDataCropsByCompanies(crops, identifier)
+    let cropsByCompanies = filterDataCropsByCompanies(crops, identifier)
 
-    const reports: Array<ReportSignersByCompany> = structJsonForXls(
-      cropsByCompanies
-    )
+    const reports: Array<ReportSignersByCompany> =
+      structJsonForXls(cropsByCompanies)
+
     const pathFile = ExportFile.exportXls(
       reports,
       ReportsSignersByCompaniesHeaderXls,
@@ -176,7 +177,7 @@ class ReportsController {
    * @param req
    * @param res
    */
-  public async reportsEiq (req: Request, res: Response) {
+  public async reportsEiq(req: Request, res: Response) {
     const email: string = req.query.email as string
     const identifier: string = req.query.identifier as string
 
@@ -185,7 +186,7 @@ class ReportsController {
     const report = await CropRepository.findCrops(cropPipeline)
 
     if (!report) {
-      const error = errors.find(error => error.key === '005')
+      const error = errors.find((error) => error.key === '005')
       return res.status(404).json(error.code)
     }
 
@@ -210,7 +211,7 @@ class ReportsController {
     return res.status(200).json('Ok')
   }
 
-  public async showMap (req: Request, res: Response) {
+  public async showMap(req: Request, res: Response) {
     const { id } = req.query
 
     if (!id) res.status(403).json({ error: 'MUST PASS ID LOT' })

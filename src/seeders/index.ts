@@ -11,7 +11,8 @@ import {
   evidenceConcepts,
   rolesData,
   servicesIntegration,
-  storageTypes
+  storageTypes,
+  foreignCredentials
 } from './data'
 
 import {
@@ -33,6 +34,7 @@ const ServiceIntegration = models.ServiceIntegration
 
 const CollaboratorRequest = models.CollaboratorRequest
 const TypeStorage = models.TypeStorage
+const ForeignCredential = models.ForeignCredential
 
 /**
  * Seeders CropType
@@ -268,6 +270,27 @@ const seedersStorageTypes = async (flag?) => {
   console.log(`${chalk.green('=====Registered Storage Types ====')}`)
   return true
 }
+
+const seedersForeignCredentials = async (flag?) => {
+  if (flag && flag !== '--foreign-credentials') return
+
+  console.log(`${chalk.green('=====Registering Foreign Credentials====')}`)
+  const credentials = await ForeignCredential.find({})
+
+  const credentialsSeed = foreignCredentials.filter(
+    (item) =>
+      !credentials.find(
+        (element) => item.credentialKey === element.credentialKey
+      )
+  )
+
+  for (const credential of credentialsSeed) {
+    await ForeignCredential.create(credential)
+  }
+
+  console.log(`${chalk.green('=====Registered Foreign Credentials ====')}`)
+  return true
+}
 ;(async () => {
   const connected = await connectDb()
 
@@ -294,6 +317,7 @@ const seedersStorageTypes = async (flag?) => {
       await seedersEvidenceConcepts(flag)
       await seedersServiceIntegrations(flag)
       await seedersStorageTypes(flag)
+      await seedersForeignCredentials(flag)
     } catch (e) {
       console.log(e)
     }

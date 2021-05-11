@@ -4,16 +4,16 @@ const passportJWT = require('passport-jwt')
 const JWTStrategy = passportJWT.Strategy
 const ExtractJWT = passportJWT.ExtractJwt
 
-import models from '../../../models'
+import models from '../../../../models'
 
 const User = models.User
 
-const opts = {
+const optsUser = {
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.AUTH_KEY_JWT
 }
 
-const strategy = new JWTStrategy(opts, async (payload, next) => {
+const strategy = new JWTStrategy(optsUser, async (payload, next) => {
   try {
     const user = await User.findById(payload.id)
     next(null, user)

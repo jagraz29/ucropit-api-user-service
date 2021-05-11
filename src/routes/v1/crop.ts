@@ -20,7 +20,6 @@ const router: express.Router = express.Router()
  */
 router.get('/', cropsController.index)
 
-
 /**
  * @swagger
  * path:
@@ -32,7 +31,7 @@ router.get('/', cropsController.index)
  *        - in: path
  *          name: id
  */
- router.get('/lastMonitoring/:id', cropsController.showLastMonitoring)
+router.get('/lastMonitoring/:id', cropsController.showLastMonitoring)
 
 /**
  * @swagger
@@ -61,9 +60,9 @@ router.get('/:id', cropsController.show)
 /**
  * @swagger
  * path:
- *  /v1/crops/{nameFile}/pdf-history-crop:
+ *  /v1/crops/{id}/evidences:
  *    get:
- *      summary: Show a crop
+ *      summary: Show a crop's evidences
  *      tags: [Crops]
  *      parameters:
  *        - in: path
@@ -80,6 +79,8 @@ router.get('/:id', cropsController.show)
  *        "500":
  *          description: Server error
  */
+router.get('/:id/evidences', cropsController.evidences)
+
 router.get('/:nameFile/pdf-history-crop', cropsController.pdfHistoryCrop)
 
 /**

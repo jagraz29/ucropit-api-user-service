@@ -58,6 +58,15 @@ app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
     res.status(400).json(errorHandler.getCodeErrorIntegration(err))
   }
 
+  if (errorHandler.isErrorNotFoundDocument(err)) {
+    return res.status(404).json({
+      err: {
+        message: err.message,
+        code: err.name
+      }
+    })
+  }
+
   if (errorHandler.isCastErrorMongoose(err)) {
     res.status(404).json({
       err: {

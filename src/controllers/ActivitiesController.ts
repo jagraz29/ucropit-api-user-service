@@ -10,9 +10,12 @@ import ActivityService from '../services/ActivityService'
 import CropService from '../services/CropService'
 import BlockChainServices from '../services/BlockChainService'
 import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
+import SatelliteImageService from '../services/SatelliteImageService'
 import models from '../models'
 
 import { getPathFileByType, getFullPath, fileExist, removeFile } from '../utils/Files'
+
+import { ACTIVITY_HARVEST } from '../utils/Constants'
 
 const Activity = models.Activity
 const FileDocument = models.FileDocument
@@ -102,6 +105,10 @@ class ActivitiesController {
 
     await CropService.addActivities(activity, crop)
 
+    if (activity.isDone() && activity.type.tag === ACTIVITY_HARVEST) {
+      await SatelliteImageService.createPayload(activity).send()
+    }
+
     res.status(201).json(activity)
   }
 
@@ -161,6 +168,10 @@ class ActivitiesController {
       const statusCropRemove = 'pending'
       await CropService.removeActivities(activity, crop, statusCropRemove)
       await CropService.addActivities(activity, crop)
+    }
+
+    if (activity.isDone() && activity.type.tag === ACTIVITY_HARVEST) {
+      await SatelliteImageService.createPayload(activity).send()
     }
 
     res.status(200).json(activity)
