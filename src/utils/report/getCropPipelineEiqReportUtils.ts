@@ -22,7 +22,7 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
     pipeline: [{
       $match: {
         $expr: {
-          $in : ['$_id', '$$lotIds']
+          $in: ['$_id', '$$lotIds']
         }
       }
     }],
@@ -37,7 +37,7 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
     pipeline: [{
       $match: {
         $expr: {
-          $in : ['$_id', '$$fileIds']
+          $in: ['$_id', '$$fileIds']
         }
       }
     },{
@@ -59,7 +59,10 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
     pipeline: [{
       $match: {
         $expr: {
-          $in : ['$_id', '$$achievementsIds']
+          $in: ['$_id', '$$achievementsIds']
+        },
+        'signers.signed': {
+          $nin: [false]
         }
       }
     },{
@@ -97,11 +100,11 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
       $match: {
         $expr: {
           $or: [{
-            $in : ['$_id', '$$activityToMakeIds']
+            $in: ['$_id', '$$activityToMakeIds']
           },{
-            $in : ['$_id', '$$activityDoneIds']
+            $in: ['$_id', '$$activityDoneIds']
           },{
-            $in : ['$_id', '$$activityFinishedIds']
+            $in: ['$_id', '$$activityFinishedIds']
           }]
         },
         'activityType.tag' : 'ACT_APPLICATION'
@@ -155,6 +158,8 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
     cropTypeName: '$cropType.name.es',
     cropName: '$name',
     activityTypeName: '$activities.activityType.name.es',
+    provinceName: '$activities.achievements.lots.provinceName',
+    cityName: '$activities.achievements.lots.cityName',
     kmzLocation: {
       $concat: [process.env.BASE_URL, '/v1/reports/map/lot?id=', { $toString: '$activities.achievements.lots._id' }]
     },
