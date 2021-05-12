@@ -61,7 +61,9 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
         $expr: {
           $in: ['$_id', '$$achievementsIds']
         },
-        'signers.signed': true
+        'signers.signed': {
+          $nin: [false]
+        }
       }
     },{
       $lookup: lookupLots
