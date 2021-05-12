@@ -226,6 +226,8 @@ class ReportsController {
 
     const report = await CropRepository.findCrops(cropPipeline)
 
+    /*
+
     if (!report) {
       const error = errors.find((error) => error.key === '005')
       return res.status(404).json(error.code)
@@ -249,7 +251,9 @@ class ReportsController {
       ]
     })
 
-    return res.status(200).json('Ok')
+    */
+
+    return res.status(200).json(report)
   }
 
   public async showMap(req: Request, res: Response) {
