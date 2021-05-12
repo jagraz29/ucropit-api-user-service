@@ -21,7 +21,8 @@ import { CropRepository } from '../repositories'
 import {
   structJsonForXls,
   getCropPipelineEiqReportUtils,
-  filterDataCropsByCompanies
+  filterDataCropsByCompanies,
+  getCropPipelineDmReportUtils
 } from '../utils'
 
 import { ReportSignersByCompany, ReportEiq } from '../interfaces'
@@ -203,6 +204,46 @@ class ReportsController {
       files: [
         {
           filename: 'EIQ.xlsx',
+          content: fs.readFileSync(pathFile)
+        }
+      ]
+    })
+
+    return res.status(200).json('Ok')
+  }
+
+  /**
+   * Send export file DM report in email.
+   *
+   * @param req
+   * @param res
+   */
+  public async reportsDm(req: Request, res: Response) {
+    const email: string = req.query.email as string
+    const identifier: string = req.query.identifier as string
+
+    const cropPipeline: any = getCropPipelineDmReportUtils({ identifier })
+
+    const report = await CropRepository.findCrops(cropPipeline)
+
+    if (!report) {
+      const error = errors.find((error) => error.key === '005')
+      return res.status(404).json(error.code)
+    }
+
+    const pathFile = ExportFile.exportXls(
+      report,
+      ReportsEiqHeaderXls,
+      'DM.xlsx'
+    )
+
+    await EmailService.sendWithAttach({
+      template: 'export-file',
+      to: email,
+      data: {},
+      files: [
+        {
+          filename: 'DM.xlsx',
           content: fs.readFileSync(pathFile)
         }
       ]
