@@ -4,7 +4,7 @@ const apiKey = process.env.GOOGLE_API_KEY
 
 class StaticMapService extends ServiceBase {
   public static getStaticMapImageUrl (data) {
-    let path: string = `color:${data.path.color}|weight:${data.path.weight}`
+    let path: string = `fillcolor:${data.path.fillcolor}|color:${data.path.color}|weight:${data.path.weight}`
 
     data.path.area.map((element) => {
       path = path + '|' + element[1] + ',' + element[0]
