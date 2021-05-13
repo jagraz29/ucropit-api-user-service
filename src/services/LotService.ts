@@ -96,8 +96,9 @@ class LotService extends ServiceBase {
               zoom: zoom,
               size: '250x250',
               path: {
+                fillcolor: '0xAA000033',
                 color: '0xff0000ff',
-                weight: 6,
+                weight: 1,
                 area: lot.area
               }
             }
@@ -374,7 +375,7 @@ class LotService extends ServiceBase {
 
         newLots.data = await Promise.all(
           lots.data.map(async (lot, index) => {
-            if (lot.image?.normal) return lot
+            //if (lot.image?.normal) return lot
 
             let newLot: any = {}
 
@@ -397,12 +398,15 @@ class LotService extends ServiceBase {
                 zoom: zoom,
                 size: '250x250',
                 path: {
+                  fillcolor: '0xAA000033',
                   color: '0xff0000ff',
-                  weight: 6,
+                  weight: 1,
                   area: lot.area
                 }
               }
             )
+
+            console.log(staticMapImageUrl)
 
             const imagePath: string = await this.downloadStaticMap(
               staticMapImageUrl,
