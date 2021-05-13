@@ -9,24 +9,30 @@ const { Supply, Achievement } = models
 const program = new Command()
 
 program
-  .description('Descripción de lo que hace este comando')
+  .description('Use command for update suplies achievements')
   .option('-u, --updated', 'Descripcion de lo que hace esta opcion')
 
 program.parse(process.argv)
 
 async function execUpdateSupply() {
   console.log('EXEC COMMAND')
-  console.log(data)
+  //console.log(data)
+
   for (const item of data) {
     const achievement = await Achievement.findById(item.achievementId)
 
     console.log(achievement.supplies.id(item.SupplyIdApplied))
-  }
-  //   data.map(async (item) => {
-  //     const achievement = await Supply.findOne(item.achievementId)
+    let supplies = achievement.supplies.id(item.SupplyIdApplied)
 
-  //     console.log(achievement)
-  //   })
+    if(supplies.length){
+      let id = supplies._id
+      await achievement.insert(item.supply)
+      //await achievement.update({"supplies._id" : id },{"$set" : {"supplies._id" : ObjectId(item.supply) } )
+      await achievement.remove({'supplies._id': ObjectId(id)});
+    }
+    
+  }
+  
 }
 ;(async () => {
   try {
