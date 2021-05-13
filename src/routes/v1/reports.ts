@@ -150,6 +150,38 @@ router.post(
   reportsController.reportsEiq
 )
 
+/**
+ * @swagger
+ * path:
+ *  /v1/reports/dm:
+ *    post:
+ *      summary: Request send email with DM report.
+ *      tags: [Reports]
+ *      parameters:
+ *        - in: query
+ *          name: identifier
+ *          required: true
+ *          schema:
+ *            type: string
+ *        - in: query
+ *          name: email
+ *          required: true
+ *          schema:
+ *            type: string
+ *      responses:
+ *        "200":
+ *          description: ok
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.post(
+  '/dm',
+  // authMiddleware,
+  reportsController.reportsDm
+)
+
 router.get('/map/lot', reportsController.showMap)
 
 export default router
