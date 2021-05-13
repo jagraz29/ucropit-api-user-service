@@ -37,11 +37,12 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
             $in: ['$_id', '$$activityDoneIds']
           },{
             $in: ['$_id', '$$activityFinishedIds']
-          },{
-            $in: ['$typeAgreement.visible', [identifier]]
           }]
         },
         'typeAgreement.key' : 'SEED_USE',
+        /*'typeAgreement.visible': {
+          $in: [identifier]
+        },*/
       }
     }],
     as: 'activities'
