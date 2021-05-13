@@ -14,7 +14,8 @@ import Company from '../services/CompanyService'
 import EmailService from '../services/EmailService'
 import {
   ReportsSignersByCompaniesHeaderXls,
-  ReportsEiqHeaderXls
+  ReportsEiqHeaderXls,
+  ReportsDmHeaderXls
 } from '../types/'
 
 import { CropRepository } from '../repositories'
@@ -25,7 +26,11 @@ import {
   getCropPipelineDmReportUtils
 } from '../utils'
 
-import { ReportSignersByCompany, ReportEiq } from '../interfaces'
+import {
+  ReportSignersByCompany,
+  ReportEiq,
+  ReportDm
+} from '../interfaces'
 
 import { roles, errors } from '../types/common'
 
@@ -184,7 +189,7 @@ class ReportsController {
 
     const cropPipeline: any = getCropPipelineEiqReportUtils({ identifier })
 
-    const report = await CropRepository.findCrops(cropPipeline)
+    const report: Array<ReportEiq> = await CropRepository.findCrops(cropPipeline)
 
     if (!report) {
       const error = errors.find((error) => error.key === '005')
@@ -224,9 +229,7 @@ class ReportsController {
 
     const cropPipeline: any = getCropPipelineDmReportUtils({ identifier })
 
-    const report = await CropRepository.findCrops(cropPipeline)
-
-    /*
+    const report: Array<ReportDm> = await CropRepository.findCrops(cropPipeline)
 
     if (!report) {
       const error = errors.find((error) => error.key === '005')
@@ -235,7 +238,7 @@ class ReportsController {
 
     const pathFile = ExportFile.exportXls(
       report,
-      ReportsEiqHeaderXls,
+      ReportsDmHeaderXls,
       'DM.xlsx'
     )
 
@@ -251,9 +254,7 @@ class ReportsController {
       ]
     })
 
-    */
-
-    return res.status(200).json(report)
+    return res.status(200).json('Ok')
   }
 
   public async showMap(req: Request, res: Response) {

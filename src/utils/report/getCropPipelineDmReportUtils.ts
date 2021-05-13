@@ -40,9 +40,9 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
           }]
         },
         'typeAgreement.key' : 'SEED_USE',
-        /*'typeAgreement.visible': {
+        'typeAgreement.visible': {
           $in: [identifier]
-        },*/
+        },
       }
     }],
     as: 'activities'
@@ -63,6 +63,26 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
     as: 'activityType'
   }
 
+  const lookupFiles: any = {
+    from: 'filedocuments',
+    let: {
+      'fileIds': '$files',
+    },
+    pipeline: [{
+      $match: {
+        $expr: {
+          $in: ['$_id', '$$fileIds']
+        }
+      }
+    },{
+      $project: {
+        _id: 1,
+        description: 1
+      }
+    }],
+    as: 'files'
+  }
+
   const lookupAchievements: any = {
     from: 'achievements',
     let: {
@@ -77,6 +97,8 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
           $nin: [false]
         }
       }
+    },{
+      $lookup: lookupFiles
     },{
       $unwind: {
         path: '$supplies',
@@ -140,13 +162,52 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
   }
 
   const pipelineProyect: any = {
+    cropId: '$_id',
     activityId: '$activities._id',
     achievementId: '$activities.achievements._id',
     identifier: 1,
     companyName: '$company.name',
     cropName: '$name',
     cropLotTag: '$lots.tag',
-    supplieName: '$activities.achievements.supplies.name'
+    supplyId: '$activities.achievements.supplies._id',
+    supplieName: '$activities.achievements.supplies.name',
+    activitySurface: '$activities.surface',
+    kilogramsPlanified: {
+      $round: [{
+        $multiply: [ '$activities.surface', '$activities.achievements.supplies.total' ]
+      }, 2]
+    },
+    densityPlanified: '$activities.achievements.supplies.quantity',
+    sowingDate: {
+      $dateToString: {
+        format: '%d/%m/%Y',
+        date: '$activities.dateStart'
+      }
+    },
+    kilogramsSowined: '$activities.achievements.supplies.total',
+    haSowined: '$activities.achievements.surface',
+    sowingDensity: {
+      $round: [{
+        $divide: [ '$activities.achievements.supplies.total', '$activities.achievements.surface' ]
+      }, 2]
+    },
+    paymentType: {
+      $reduce : {
+        input: '$activities.achievements.files',
+        initialValue: '',
+        in: {
+          $cond: {
+            if: {
+              $eq: [ '$$value', '' ]
+            },
+            then: '$$this.description',
+            else: {
+              $concat: ['$$value', ', ', '$$this.description']
+            }
+          }
+        }
+       }
+    },
 
     /*
     cropTypeName: '$cropType.name.es',
@@ -197,7 +258,6 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
   const pipeline: Array<any> = [{
     $match : {
       'cancelled': false,
-      'members.identifier': identifier,
     }
   },{
     $lookup: lookupActivitiesFilter

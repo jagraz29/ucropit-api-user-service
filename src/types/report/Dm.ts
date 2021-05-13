@@ -1,0 +1,40 @@
+export const ReportsDmHeaderXls = {
+  fields: [
+    'cropId',
+    'activityId',
+    'achievementId',
+    'identifier',
+    'companyName',
+    'cropName',
+    'cropLotTag',
+    'supplyId',
+    'supplieName',
+    'activitySurface',
+    'kilogramsPlanified',
+    'densityPlanified',
+    'sowingDate',
+    'kilogramsSowined',
+    'haSowined',
+    'sowingDensity',
+    'paymentType'
+  ],
+  fieldNames: [
+    'CROP ID',
+    'ACTIVITY ID',
+    'ACHIEVEMENT ID',
+    'CUIT',
+    'Empresa',
+    'Nombre de campaña',
+    'Campo',
+    'SUPPLY ID',
+    'Insumo',
+    'Ha Planificadas',
+    'Kg Planificados',
+    'Densidad Planificada',
+    'Fecha de siembra',
+    'Kg Sembrados',
+    'Ha Sembradas',
+    'Densidad de siembra',
+    'Tipo de pago'
+  ]
+}
