@@ -49,8 +49,8 @@ const SupplySchema = new Schema({
 SupplySchema.index({ name: 'text', brand: 'text', company: 'text' })
 
 SupplySchema.virtual('eiqTotal').get(function () {
-  if (this.activesPrinciples) {
-    return this.activesPrinciples.reduce(
+  if (this.activeIngredients) {
+    return this.activeIngredients.reduce(
       (prev, next) => prev + (next['eiq'] || 0),
       0
     )

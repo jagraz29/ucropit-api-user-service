@@ -2,7 +2,11 @@ require('dotenv').config()
 import { connectDb } from '../models'
 import chalk from 'chalk'
 import { Command, OptionValues } from 'commander'
-import { Supply, ActiveIngredient } from '../interfaces/supplies'
+import {
+  Supply,
+  ActiveIngredient,
+  ActiveIngredientUnified as ActiveIngredientStandard
+} from '../interfaces/supplies'
 import { supplyTypesEIQ } from '../utils/Constants'
 import SupplyRepository from '../repositories/supplyRepository'
 import {
@@ -10,6 +14,7 @@ import {
   createListSimpleActiveIngredients,
   createCompoundActiveIngredients
 } from '../utils'
+import { activeIngredientUnified } from '../types/activeIngredients'
 
 const program = new Command()
 
@@ -28,20 +33,29 @@ program.parse(process.argv)
 async function updateActiveIngredientsSimpleSupply(
   supply: Supply
 ): Promise<void> {
-  const activePrinciple = await SupplyRepository.getOneActiveIngredient({
-    'name.es': supply.name
-  })
-  if (activePrinciple) {
-    const activeIngredients = createListSimpleActiveIngredients(
-      supply,
-      activePrinciple
+  const activeIngredientStandard: ActiveIngredientStandard =
+    activeIngredientUnified.find(
+      (ingredient) => supply.name.trim() === ingredient.active_principle.trim()
     )
-    console.log(`${chalk.green(`NAME: ${supply.name}`)}`)
-    console.log(`${chalk.green(`CODE: ${supply.code}`)}`)
-    console.log(activeIngredients)
-    await SupplyRepository.updateOne(supply._id, {
-      $set: { activeIngredients: activeIngredients }
-    })
+
+  if (activeIngredientStandard) {
+    const activePrinciple: ActiveIngredient =
+      await SupplyRepository.getOneActiveIngredient({
+        'name.es': activeIngredientStandard.active_ingredient_unified
+      })
+
+    if (activePrinciple) {
+      const activeIngredients = createListSimpleActiveIngredients(
+        supply,
+        activePrinciple
+      )
+      console.log(`${chalk.green(`NAME: ${supply.name}`)}`)
+      console.log(`${chalk.green(`CODE: ${supply.code}`)}`)
+      console.log(activeIngredients)
+      await SupplyRepository.updateOne(supply._id, {
+        $set: { activeIngredients: activeIngredients }
+      })
+    }
   }
 }
 
