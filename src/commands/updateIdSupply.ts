@@ -10,7 +10,7 @@ const program = new Command()
 
 program
   .description('Use command for update suplies achievements')
-  .option('-u, --updated', 'Descripcion de lo que hace esta opcion')
+  .option('-u, --updated', 'Update all supplies id in achievements')
 
 program.parse(process.argv)
 
