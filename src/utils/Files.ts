@@ -27,7 +27,19 @@ export function removeFile(dir: string) {
   fs.unlinkSync(dir)
 }
 
-export async function removeFiles(dirs: Array<string>): Promise<boolean> {
+export function moveFile(oldPath: string,newPath: string) {
+  fs.renameSync(oldPath, newPath)
+}
+
+export function readFile (path: string) {
+  return fs.readFileSync(`${basePath()}/${path}`, { encoding: 'utf-8' })
+}
+
+export function readFileBuffer (path: string) {
+  return fs.readFileSync(`${basePath()}/${path}`)
+}
+
+export async function removeFiles (dirs: Array<string>): Promise<boolean> {
   for (const path of dirs) {
     if (fileExist(path)) {
       removeFile(path)

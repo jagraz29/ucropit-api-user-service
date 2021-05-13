@@ -209,14 +209,12 @@ export class CropRepository {
    *
    * @param string id
    */
-  public static async findAllCropsByCompanyAndCropType(identifier: string, cropType: string, company: string): Promise<Object[] | null> {
+  public static async findAllCropsByCompanyAndCropType ({ cropType, company }): Promise<Object[] | null> {
     const cropsInstance = await Crop.find({
       cancelled: false,
-      'members.identifier': identifier,
-      'cropType' : cropType,
-      'company' : company
-    })
-      .populate('unitType')
+      cropType,
+      company
+    }).populate('unitType')
 
     return !!cropsInstance.length
       ? cropsInstance

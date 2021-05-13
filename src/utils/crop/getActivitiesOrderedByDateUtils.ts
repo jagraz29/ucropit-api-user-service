@@ -16,7 +16,8 @@ export const getActivitiesOrderedByDateUtils = ({ activities, surface: surfaceCr
       dateEnd,
       supplies,
       pay,
-      dateObservation
+      dateObservation,
+      status
     } = activity
 
     let percent: number = 0
@@ -32,6 +33,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities, surface: surfaceCr
 
     return {
       dateOrder: dateEnd ? dateEnd : _id.getTimestamp(),
+      status: status[0].name.es,
       _id,
       name,
       percent,
@@ -45,7 +47,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities, surface: surfaceCr
       signed: !achievements.length ? signers.length : null,
       signedIf: !achievements.length ? _.flatten(signers.map(({ signed }) => signed === true)).length : null,
       supplies,
-      storages: storages ? storages.map(({ tonsHarvest, storageType: { name: { es: storageTypeNAme } } }) => { return { tonsHarvest, storageTypeNAme }}) : [],
+      storages: storages ? storages.map(({ tonsHarvest, storageType: { name: { es: storageTypeName } } }) => { return { tonsHarvest, storageTypeName }}) : [],
       achievements: getDataAchievements(achievements)
     }
   }).filter(item => item)

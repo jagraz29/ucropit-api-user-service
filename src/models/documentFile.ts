@@ -51,6 +51,10 @@ export const FileDocumentSchema = new Schema(
     description: {
       type: String
     },
+    cropId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Crop'
+    },
     settings: {
       type: Schema.Types.Mixed
     },

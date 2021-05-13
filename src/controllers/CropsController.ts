@@ -14,7 +14,7 @@ import ActivityService from '../services/ActivityService'
 
 import { CropRepository } from '../repository'
 import { PdfService } from '../services'
-import { basePath, getActivitiesOrderedByDateUtils, makeDirIfNotExists, calculateDataCropUtils } from '../utils'
+import { basePath, getActivitiesOrderedByDateUtils, makeDirIfNotExists, calculateDataCropUtils, calculateTheoreticalPotentialUtils } from '../utils'
 
 import {
   validateGetCrops,
@@ -27,6 +27,7 @@ import { UserSchema } from '../models/user'
 import { errors } from '../types/common'
 import { ReportSignersByCompany } from '../interfaces'
 import path from 'path'
+import util from 'util'
 
 const Crop = models.Crop
 const CropType = models.CropType
@@ -159,40 +160,38 @@ class CropsController {
     if (!crop) {
       return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
     }
-
-    // aca estara la libreria a nivel de crop con el recurso de actividades
-    const dataCrop = calculateDataCropUtils(crop)
-
-    // // aca esta la libreria a nivel de actividades
-    const activities: Array<ReportSignersByCompany> = getActivitiesOrderedByDateUtils(crop)
-
-    // aca se obtienen todos los crop de la company
-    // const crops = await CropRepository.getCropWithActivities(crop.contactocomercial)
+    // aca se obtienen todos los crop de la company y el tipo de cultivo
+    const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
 
     // aca se calcula el potencial teorico
-    // const eiq = calculateEiq(crops)
+    const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
 
-    // // aca se unen el ptencial teorico con lo del crop ya calculado
-    // dataPdf = { crop, eiq, date: new Date() }
+    // aca estara la libreria a nivel de crop
+    const dataCrop = calculateDataCropUtils(crop)
+
+    // aca esta la libreria a nivel de actividades
+    const activities: Array<ReportSignersByCompany> = getActivitiesOrderedByDateUtils(crop)
+
+    // aca se unen el ptencial teorico con lo del crop ya calculado
+    const dataPdf = { dataCrop, theoriticalPotential, activities, date: new Date() }
+    console.log(util.inspect(dataPdf, { showHidden: false, depth: null }))
     const dataPDF = {
       array: [
         {
-          lot: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEu24ChRXtuv9btEVw3LTxt0vVvQDcbQbEnQ&usqp=CAU",
-          location: "Santa Eugenia Navarro, Buenos Aires"
+          lot: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEu24ChRXtuv9btEVw3LTxt0vVvQDcbQbEnQ&usqp=CAU',
+          location: 'Santa Eugenia Navarro, Buenos Aires'
         },
         {
-          lot: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEu24ChRXtuv9btEVw3LTxt0vVvQDcbQbEnQ&usqp=CAU",
-          location: "Santa Eugenia Navarro, Buenos Aires"
+          lot: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEu24ChRXtuv9btEVw3LTxt0vVvQDcbQbEnQ&usqp=CAU',
+          location: 'Santa Eugenia Navarro, Buenos Aires'
         }
       ]
     }
 
     // // aca se utiliza el service para generar el pdf, este debe devoler el path para descargar el pdf
-    const nameFile = await PdfService.generatePdf('pdf-crop-history',dataPDF,'pdf-crop-history', 'company')
+    const nameFile = await PdfService.generatePdf('pdf-crop-history',dataPDF,'pdf-crop-history', 'company', crop)
 
-    // este debe devoler el endpoint para descargar el pdf como respuesta del endpoint
     res.status(StatusCodes.OK).send({ nameFile })
-
   }
 
   /**
