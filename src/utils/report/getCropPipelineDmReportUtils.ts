@@ -14,6 +14,29 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
     as: 'typeAgreement'
   }
 
+  const lookupFilesActivity: any = {
+    from: 'filedocuments',
+    let: {
+      'fileIds': '$files',
+    },
+    pipeline: [{
+      $match: {
+        $expr: {
+          $in: ['$_id', '$$fileIds']
+        },
+        'description' : {
+          $in: ['Facturas Regalias', 'Factura Semillas']
+        },
+      }
+    },{
+      $project: {
+        _id: 1,
+        description: 1
+      }
+    }],
+    as: 'files'
+  }
+
   const lookupActivitiesFilter: any = {
     from: 'activities',
     let: {
@@ -44,6 +67,33 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
           $in: [identifier]
         },
       }
+    },{
+      $lookup: lookupFilesActivity
+    },{
+      $addFields: {
+        paymentType: {
+          $reduce : {
+            input: '$files',
+            initialValue: [],
+            in: {
+              $concatArrays: ['$$value', {
+                $cond: {
+                  if: {
+                    $in: ['$$this.description', '$$value.description']
+                  },
+                  then: [],
+                  else: ['$$this']
+                }
+              }]
+            }
+          }
+        }
+      }
+    },{
+      $unwind: {
+        path: '$paymentType',
+        preserveNullAndEmptyArrays: true
+      }
     }],
     as: 'activities'
   }
@@ -63,7 +113,7 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
     as: 'activityType'
   }
 
-  const lookupFiles: any = {
+  const lookupFilesAchievements: any = {
     from: 'filedocuments',
     let: {
       'fileIds': '$files',
@@ -98,7 +148,7 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
         }
       }
     },{
-      $lookup: lookupFiles
+      $lookup: lookupFilesAchievements
     },{
       $unwind: {
         path: '$supplies',
@@ -172,12 +222,29 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
     supplyId: '$activities.achievements.supplies._id',
     supplieName: '$activities.achievements.supplies.name',
     activitySurface: '$activities.surface',
+    activitySupply: 1,
     kilogramsPlanified: {
-      $round: [{
-        $multiply: [ '$activities.surface', '$activities.achievements.supplies.total' ]
-      }, 2]
+      $cond: {
+        if: {
+          $gte: ['$activitySupply.total', 0]
+        },
+        then: {
+          $round: [{
+            $multiply: [ '$activities.surface', '$activitySupply.total' ]
+          }, 2]
+        },
+        else: 0
+      }
     },
-    densityPlanified: '$activities.achievements.supplies.quantity',
+    densityPlanified: {
+      $cond: {
+        if: {
+          $gte: ['$activitySupply.quantity', 0]
+        },
+        then: '$activitySupply.quantity',
+        else: 0
+      }
+    },
     sowingDate: {
       $dateToString: {
         format: '%d/%m/%Y',
@@ -191,68 +258,7 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
         $divide: [ '$activities.achievements.supplies.total', '$activities.achievements.surface' ]
       }, 2]
     },
-    paymentType: {
-      $reduce : {
-        input: '$activities.achievements.files',
-        initialValue: '',
-        in: {
-          $cond: {
-            if: {
-              $eq: [ '$$value', '' ]
-            },
-            then: '$$this.description',
-            else: {
-              $concat: ['$$value', ', ', '$$this.description']
-            }
-          }
-        }
-       }
-    },
-
-    /*
-    cropTypeName: '$cropType.name.es',
-    activityTypeName: '$activities.activityType.name.es',
-    provinceName: '$activities.achievements.lots.provinceName',
-    cityName: '$activities.achievements.lots.cityName',
-    kmzLocation: {
-      $concat: [process.env.BASE_URL, '/v1/reports/map/lot?id=', { $toString: '$activities.achievements.lots._id' }]
-    },
-    lotName: '$activities.achievements.lots.name',
-    supplieName: '$activities.achievements.supplies.name',
-    supplieUnit: '$activities.achievements.supplies.unit',
-    scheduleDate: {
-      $dateToString: {
-        format: '%d/%m/%Y',
-        date: '$activities.dateStart'
-      }
-    },
-    supplieQuantity: '$activities.achievements.supplies.quantity',
-    achievementDate: {
-      $dateToString: {
-        format: '%d/%m/%Y',
-        date: '$activities.achievements.dateAchievement'
-      }
-    },
-    supplieTotal: '$activities.achievements.supplies.total',
-    lotSurface: '$activities.achievements.lots.surface',
-    evidences: {
-      $reduce : {
-        input: '$activities.achievements.files',
-        initialValue: '',
-        in: {
-          $cond: {
-            if: {
-              $eq: [ '$$value', '' ]
-            },
-            then: '$$this.filePath',
-            else: {
-              $concat: ['$$value', ', ', '$$this.filePath']
-            }
-          }
-        }
-      }
-    }
-    */
+    paymentType: '$paymentType'
   }
 
   const pipeline: Array<any> = [{
@@ -271,6 +277,26 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
         },
         then: '$$KEEP',
         else: '$$PRUNE'
+      }
+    }
+  },{
+    $addFields: {
+      paymentType: {
+        $reduce : {
+          input: '$activities.paymentType',
+          initialValue: '',
+          in: {
+            $cond: {
+              if: {
+                $eq: [ '$$value', '' ]
+              },
+              then: '$$this.description',
+              else: {
+                $concat: ['$$value', ', ', '$$this.description']
+              }
+            }
+          }
+        }
       }
     }
   },{
@@ -324,6 +350,21 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
   },{
     $unwind: {
       path: '$lots',
+      preserveNullAndEmptyArrays: true
+    }
+  },{
+    $addFields: {
+      activitySupply: {
+        $filter: {
+          input: '$activities.supplies',
+          as: 'supply',
+          cond: { $eq: [ '$$supply.name', '$activities.achievements.supplies.name' ] }
+        }
+      }
+    }
+  },{
+    $unwind: {
+      path: '$activitySupply',
       preserveNullAndEmptyArrays: true
     }
   },{
