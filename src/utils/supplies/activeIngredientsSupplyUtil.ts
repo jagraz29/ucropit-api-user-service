@@ -88,3 +88,21 @@ export function isSupplyCompoundIngredient(supply: Supply): boolean {
 function isCompositionNotNumber(composition: string): boolean {
   return Number.isNaN(Number(composition))
 }
+
+/**
+ * Calculate Achievement's EIQ Surface.
+ *
+ * @param Supply supply
+ * @param number surfaceAchievement
+ *
+ * @returns Number
+ */
+export function calculateEIQSurfaceAchievement(
+  supply: Supply,
+  surfaceAchievement: number
+): Number {
+  const result =
+    (Number(supply.total) * supply.supply?.eiqTotal) / surfaceAchievement
+
+  return !Number.isNaN(result) ? result : 0
+}
