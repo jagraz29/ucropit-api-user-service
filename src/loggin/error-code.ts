@@ -13,3 +13,5 @@ export const codeIntegrations = [
   'INVALID_CREDENTIALS_OF_USER_AURAVANT',
   'UNAUTHORIZED'
 ]
+
+export const codeDocumentNotFound = ['ACTIVITY_NOT_FOUND', 'LOT_NOT_FOUND']

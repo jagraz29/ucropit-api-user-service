@@ -246,6 +246,26 @@ router.delete('/:id/files/:fileId', activitiesController.removeFile)
 
 /**
  * @swagger
+ * path:
+ *  /v1/activities/{id}/files:
+ *    delete:
+ *      summary: Delete many files of activity
+ *      tags: [Activity]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      responses:
+ *        "200":
+ *          description: deleted files successfully
+ *        "404":
+ *          description: Not Found Files to delete
+ *        "500":
+ *          description: Server error
+ */
+router.delete('/:id/files', activitiesController.removeFiles)
+
+/**
+ * @swagger
  * /v1/activities/notify:
  *  post:
  *   security: []
