@@ -4,9 +4,6 @@ import chalk from 'chalk'
 import { Command, OptionValues } from 'commander'
 import { data } from './supplies/data'
 
-
-var ObjectId = require('mongodb').ObjectID;
-
 const { Supply, Achievement } = models
 
 const program = new Command()
@@ -22,17 +19,21 @@ async function execUpdateSupply() {
 
   for (const item of data) {
     const achievement = await Achievement.findById(item.achievementId)
+    const supply = await Supply.find({code:item.code})
+    
+    /* console.log(supply)
+    console.log(supply[0]._id) */
 
     let supplies = achievement.supplies.id(item.SupplyIdApplied)
 
     if(supplies != null && Object.keys(supplies).length >= 1){
-      
+
 
         await Achievement.updateOne(
           { _id : item.achievementId },
-          { $set: { "supplies.$[elem]._id" : item.supply } },
+          { $set: { "supplies.$[elem]._id" : supply[0]._id } },
           { arrayFilters: [ { "elem._id": { $gte: item.SupplyIdApplied } } ] }
-        )
+        ) 
       
     }
     
