@@ -1,9 +1,12 @@
 import {
   Supply,
   ActiveIngredient,
-  ActiveIngredientsSupply
+  ActiveIngredientsSupply,
+  ActiveIngredientUnified as ActiveIngredientStandard
 } from '../../interfaces/supplies'
+import { activeIngredientUnified } from '../../types/activeIngredients'
 import SupplyRepository from '../../repositories/supplyRepository'
+
 export function createListSimpleActiveIngredients(
   supply: Supply,
   activeIngredient: ActiveIngredient
@@ -37,17 +40,23 @@ export async function createCompoundActiveIngredients(
 
   if (compoundName.length === compoundComposition.length) {
     const listActiveIngredients = compoundName.map(async (name, index) => {
-      const activeIngredient = await SupplyRepository.getOneActiveIngredient({
-        'name.es': name
-      })
-      const composition = compoundComposition[index].replace(/,/g, '.')
+      const activeIngredientStandard: ActiveIngredientStandard =
+        activeIngredientUnified.find(
+          (ingredient) => name.trim() === ingredient.active_principle.trim()
+        )
+      if (activeIngredientStandard) {
+        const activeIngredient = await SupplyRepository.getOneActiveIngredient({
+          'name.es': activeIngredientStandard.active_ingredient_unified
+        })
+        const composition = compoundComposition[index].replace(/,/g, '.')
 
-      if (activeIngredient && !isCompositionNotNumber(composition)) {
-        return {
-          activeIngredient: activeIngredient._id,
-          eiqActiveIngredient: activeIngredient.eiq,
-          composition: Number(composition),
-          eiq: (activeIngredient.eiq * Number(composition)) / 100
+        if (activeIngredient && !isCompositionNotNumber(composition)) {
+          return {
+            activeIngredient: activeIngredient._id,
+            eiqActiveIngredient: activeIngredient.eiq,
+            composition: Number(composition),
+            eiq: (activeIngredient.eiq * Number(composition)) / 100
+          }
         }
       }
     })
