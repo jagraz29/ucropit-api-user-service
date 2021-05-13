@@ -1,4 +1,53 @@
 export const getCropPipelineEiqReportUtils = ({ identifier }) => {
+  const lookupActivityAgreement: any = {
+    from: 'typeagreements',
+    let: {
+      'typeAgreementId': '$typeAgreement',
+    },
+    pipeline: [{
+      $match: {
+        $expr: {
+          $eq: ['$_id', '$$typeAgreementId']
+        }
+      }
+    }],
+    as: 'typeAgreement'
+  }
+
+  const lookupActivitiesFilter: any = {
+    from: 'activities',
+    let: {
+      'activityToMakeIds': '$toMake',
+      'activityDoneIds': '$done',
+      'activityFinishedIds': '$finished',
+    },
+    pipeline: [{
+      $lookup: lookupActivityAgreement
+    },{
+      $unwind: {
+        path: '$typeAgreement',
+        preserveNullAndEmptyArrays: true
+      }
+    },{
+      $match: {
+        $expr: {
+          $or: [{
+            $in: ['$_id', '$$activityToMakeIds']
+          },{
+            $in: ['$_id', '$$activityDoneIds']
+          },{
+            $in: ['$_id', '$$activityFinishedIds']
+          }]
+        },
+        'typeAgreement.key' : 'RESPONSIBLE_USE',
+        'typeAgreement.visible': {
+          $in: [identifier]
+        },
+      }
+    }],
+    as: 'activities'
+  }
+
   const lookupActivityType: any = {
     from: 'activitytypes',
     let: {
@@ -151,6 +200,7 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
   }
 
   const pipelineProyect: any = {
+    cropId: '$_id',
     activityId: '$activities._id',
     achievementId: '$activities.achievements._id',
     identifier: 1,
@@ -165,6 +215,7 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
     },
     cropLotTag: '$lots.tag',
     lotName: '$activities.achievements.lots.name',
+    supplieId: '$activities.achievements.supplies._id',
     supplieName: '$activities.achievements.supplies.name',
     supplieUnit: '$activities.achievements.supplies.unit',
     scheduleDate: {
@@ -205,6 +256,20 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
     $match : {
       'cancelled': false,
       'members.identifier': identifier,
+    }
+  },{
+    $lookup: lookupActivitiesFilter
+  },{
+    $redact:{
+      $cond: {
+        if: {
+          $gt: [{
+            $size: ['$activities']
+          }, 0]
+        },
+        then: '$$KEEP',
+        else: '$$PRUNE'
+      }
     }
   },{
     $lookup: lookupActivities

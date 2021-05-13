@@ -1,5 +1,6 @@
 export const ReportsEiqHeaderXls = {
   fields: [
+    'cropId',
     'activityId',
     'achievementId',
     'identifier',
@@ -13,6 +14,7 @@ export const ReportsEiqHeaderXls = {
     'cropLotTag',
     'lotName',
     'supplieRegister',
+    'supplieId',
     'supplieName',
     'supplieUnit',
     'supplieEiq',
@@ -25,6 +27,7 @@ export const ReportsEiqHeaderXls = {
     'evidences',
   ],
   fieldNames: [
+    'CROP ID',
     'ACTIVITY ID',
     'ACHIEVEMENT ID',
     'CUIT',
@@ -38,6 +41,7 @@ export const ReportsEiqHeaderXls = {
     'Campo',
     'Lote',
     'Registro Insumo',
+    'SUPPLY ID',
     'Nombre Insumo',
     'Unidad',
     'EIQ Producto',
