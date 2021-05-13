@@ -10,3 +10,9 @@ export interface ActiveIngredientsSupply {
   composition: Number
   eiq: Number
 }
+
+export interface ActiveIngredientUnified {
+  active_principle: string
+  active_ingredient_unified: string
+  eiq: string
+}
