@@ -255,7 +255,6 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
   const pipeline: Array<any> = [{
     $match : {
       'cancelled': false,
-      'members.identifier': identifier,
     }
   },{
     $lookup: lookupActivitiesFilter
