@@ -2,14 +2,6 @@ import models from '../models'
 import { FileDocumentProps } from '../interfaces/FileDocument'
 const { FileDocument } = models
 
-interface FileDocument {
-  nameFile: String
-  path: String
-  user?: String | any
-  cropId?: String | any
-  date: Date
-}
-
 export class FileDocumentRepository {
   /**
    *  Set history file.
