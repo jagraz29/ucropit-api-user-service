@@ -15,8 +15,6 @@ program
 program.parse(process.argv)
 
 async function execUpdateSupply() {
-  console.log('EXEC COMMAND')
-
   for (const item of data) {
     const achievement = await Achievement.findById(item.achievementId)
     const supply = await Supply.find({ code: item.code })
