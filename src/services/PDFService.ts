@@ -4,7 +4,7 @@ import sha256File from 'sha256-file'
 import { basePath, makeDirIfNotExists, removeFile, moveFile, readFile } from '../utils'
 import { FileDocumentRepository } from '../repositories'
 
-export class PdfService {
+export class PDFService {
   public static async generatePdf (nameTemplate: string, context: object, nameDirectory: string, nameFile: string, { _id: cropId }): Promise<string | null> {
 
     const fileDocuments: Array<object> | null = await FileDocumentRepository.getFiles(cropId)
