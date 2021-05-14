@@ -1,7 +1,6 @@
-import _ from 'lodash'
 import moment from 'moment'
 
-export const getActivitiesOrderedByDateUtils = ({ activities, surface: surfaceCrop }) => {
+export const getActivitiesOrderedByDateUtils = ({ activities }) => {
   const activitiesRes = activities.map(activity => {
     const {
       _id,
@@ -23,12 +22,13 @@ export const getActivitiesOrderedByDateUtils = ({ activities, surface: surfaceCr
     let percent: number = 0
 
     if (TypeActivity === 'ACT_SOWING' || TypeActivity === 'ACT_APPLICATION') {
-      let surfaceAux = !!achievements.length ? achievements.reduce((a,b) => a + b.surface,0) : 0
-      percent = (surfaceAux / surface) * 100
+      percent = !!achievements.length
+        ? achievements.reduce((a, b) => a + b.percent, 0)
+        : 0
     }
     if (TypeActivity === 'ACT_MONITORING' || TypeActivity === 'ACT_HARVEST') {
-      let surfaceAux = !!achievements.length ? achievements.reduce((a,b) => a + b.surface,0) : surface
-      percent = (surfaceAux / surfaceCrop) * 100
+      const isSigned = signers.filter(({ signed }) => !signed)
+      percent = !isSigned.length ? 100 : 0
     }
 
     return {
@@ -45,7 +45,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities, surface: surfaceCr
       pay: pay ? pay : 0,
       dateObservation: dateObservation ? dateObservation : null,
       signed: !achievements.length ? signers.length : null,
-      signedIf: !achievements.length ? _.flatten(signers.map(({ signed }) => signed === true)).length : null,
+      signedIf: !achievements.length ? signers.filter(({ signed }) => !!signed).length : null,
       supplies,
       storages: storages ? storages.map(({ tonsHarvest, storageType: { name: { es: storageTypeName } } }) => { return { tonsHarvest, storageTypeName }}) : [],
       achievements: getDataAchievements(achievements)
@@ -64,7 +64,7 @@ const getDataAchievements = (achievements): Object[] => {
       surface,
       supplies,
       signed: signers.length,
-      signedIf: _.flatten(signers.map(({ signed }) => signed === true)).length
+      signedIf: signers.filter(({ signed }) => !!signed).length
     }
   }).filter((item) => item)
 }
