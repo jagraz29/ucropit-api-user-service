@@ -1,21 +1,14 @@
-import { Evidence } from '../interfaces/Evidence'
 import models from '../models'
 const { Crop } = models
 
-import {
-  filterDataCropsByCompanies,
-  joinActivitiesByCrop,
-  listEvidencesCrop
-} from '../utils'
+import { joinActivitiesByCrop, listEvidencesCrop } from '../utils'
 
 export class CropRepository {
   /**
    *
    * @param identifier
    */
-  public static async findAllCropsByCompanies(
-    identifier: string
-  ): Promise<Object[] | null> {
+  public static async findAllCropsByCompanies(identifier: string) {
     const cropsInstance = await Crop.find({
       cancelled: false,
       'members.identifier': identifier
@@ -120,37 +113,6 @@ export class CropRepository {
       : null
   }
 
-  public static async findAllEvidencesByCropId(
-    cropId: string
-  ): Promise<Evidence[]> {
-    const cropsInstance = await Crop.findById(cropId)
-      .populate({
-        path: 'done',
-        populate: [
-          { path: 'files' },
-          { path: 'satelliteImages' },
-          {
-            path: 'achievements',
-            populate: [{ path: 'files' }]
-          }
-        ]
-      })
-      .populate('members.user')
-      .populate({
-        path: 'finished',
-        populate: [
-          { path: 'files' },
-          { path: 'satelliteImages' },
-          {
-            path: 'achievements',
-            populate: [{ path: 'files' }]
-          }
-        ]
-      })
-      .lean({ virtuals: true })
-
-    return !!cropsInstance ? listEvidencesCrop(cropsInstance) : null
-  }
   /**
    *  Get One crop and json converter.
    *
@@ -252,7 +214,7 @@ export class CropRepository {
         ]
       })
       .populate('members.user')
-      .lean()
+      .lean({ virtual: true })
     return cropInstance ? joinActivitiesByCrop(cropInstance) : null
   }
 
@@ -261,16 +223,43 @@ export class CropRepository {
    *
    * @param string id
    */
-  public static async findAllCropsByCompanyAndCropType({cropType, company}) {
+  public static async findAllCropsByCompanyAndCropType({ cropType, company }) {
     const cropsInstance = await Crop.find({
       cancelled: false,
-      'cropType' : cropType._id,
-      'company' : company._id
-    })
-      .populate('unitType')
-      .lean()
+      cropType,
+      company
+    }).populate('unitType')
 
     return !!cropsInstance.length ? cropsInstance : null
+  }
+
+  public static async findAllEvidencesByCropId(cropId: string) {
+    const cropsInstance = await Crop.findById(cropId)
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'files' },
+          { path: 'satelliteImages' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'files' }]
+          }
+        ]
+      })
+      .populate('members.user')
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'files' },
+          { path: 'satelliteImages' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'files' }]
+          }
+        ]
+      })
+      .lean({ virtuals: true })
+    return !!cropsInstance ? listEvidencesCrop(cropsInstance) : null
   }
 
   /**

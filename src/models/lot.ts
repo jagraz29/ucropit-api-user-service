@@ -43,6 +43,7 @@
 import mongoose from 'mongoose'
 import _ from 'lodash'
 import { getCenterOfBounds } from 'geolib'
+import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
 
 const { Schema } = mongoose
 
@@ -135,5 +136,5 @@ LotSchema.virtual('centerBoundGoogle').get(function () {
     lng: centerBound.longitude
   }
 })
-
+LotSchema.plugin(mongooseLeanVirtuals)
 export default mongoose.model<Lot>('Lot', LotSchema)
