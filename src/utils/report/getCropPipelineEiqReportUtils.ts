@@ -322,11 +322,6 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
       preserveNullAndEmptyArrays: true
     }
   },{
-    $unwind: {
-      path: '$lots',
-      preserveNullAndEmptyArrays: true
-    }
-  },{
     $project: pipelineProyect
   },{
     $sort : {
