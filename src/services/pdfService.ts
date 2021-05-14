@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid'
 import pdf from 'handlebars-pdf'
-import sha256 from 'sha256'
-import { basePath, makeDirIfNotExists, removeFile, moveFile, readFile, readFileBuffer } from '../utils'
-import { FileDocumentRepository } from '../repository'
+import sha256File from 'sha256-file'
+import { basePath, makeDirIfNotExists, removeFile, moveFile, readFile } from '../utils'
+import { FileDocumentRepository } from '../repositories'
 
 export class PdfService {
   public static async generatePdf (nameTemplate: string, context: object, nameDirectory: string, nameFile: string, { _id: cropId }): Promise<string | null> {
@@ -24,23 +24,23 @@ export class PdfService {
       return fullName
     }
 
-    return this.findPdfExists(fullName,fileDocuments)
+    return this.findPdfExists(fullName,fileDocuments, cropId)
   }
 
-  private static async findPdfExists (fullName: string,fileDocuments: Array<object>) {
+  private static async findPdfExists (fullName: string,fileDocuments: Array<object>,cropId) {
     const filePdfTemp = `public/uploads/tmp/${fullName}`
     const pathCropHistory = `public/uploads/pdf-crop-history/`
-    const pdfTmpBuffer = readFileBuffer(filePdfTemp)
     const fileDocument = fileDocuments.find(({ nameFile }) => {
-      const pdfbuffer = readFileBuffer(`${pathCropHistory}${nameFile}`)
-      return sha256(pdfTmpBuffer) === sha256(pdfbuffer)
+      if (readFile(`${pathCropHistory}${nameFile}`)) {
+        return sha256File(filePdfTemp) === sha256File(`${pathCropHistory}${nameFile}`)
+      }
     })
     if (fileDocument) {
       removeFile(filePdfTemp)
       return fileDocument.nameFile
     }
-    moveFile(filePdfTemp,pathCropHistory)
-    await FileDocumentRepository.createFile({ nameFile: fullName, path: fullPath, date: new Date(), cropId })
+    await moveFile(filePdfTemp,`${pathCropHistory}${fullName}`)
+    await FileDocumentRepository.createFile({ nameFile: fullName, path: `${pathCropHistory}${fullName}`, date: new Date(), cropId })
     return fullName
   }
 }

@@ -1,7 +1,7 @@
 import models from '../models'
 const { Crop } = models
 
-import { joinActivitiesByCrop } from '../utils'
+import { joinActivitiesByCrop, listEvidencesCrop } from '../utils'
 
 export class CropRepository {
   /**
@@ -198,7 +198,7 @@ export class CropRepository {
         ]
       })
       .populate('members.user')
-      .lean()
+      .lean({ virtual: true })
     return cropInstance
       ? joinActivitiesByCrop(cropInstance)
       : null
@@ -219,5 +219,36 @@ export class CropRepository {
     return !!cropsInstance.length
       ? cropsInstance
       : null
+  }
+
+  public static async findAllEvidencesByCropId(
+    cropId: string
+  ): Promise<Evidence[]> {
+    const cropsInstance = await Crop.findById(cropId)
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'files' },
+          { path: 'satelliteImages' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'files' }]
+          }
+        ]
+      })
+      .populate('members.user')
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'files' },
+          { path: 'satelliteImages' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'files' }]
+          }
+        ]
+      })
+      .lean({ virtuals: true })
+    return !!cropsInstance ? listEvidencesCrop(cropsInstance) : null
   }
 }

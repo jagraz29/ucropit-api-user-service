@@ -11,8 +11,9 @@ import CropService from '../services/CropService'
 import LotService from '../services/LotService'
 import CompanyService from '../services/CompanyService'
 import ActivityService from '../services/ActivityService'
+import { Evidence } from '../interfaces'
 
-import { CropRepository } from '../repository'
+import { CropRepository } from '../repositories'
 import { PdfService } from '../services'
 import { basePath, getActivitiesOrderedByDateUtils, makeDirIfNotExists, calculateDataCropUtils, calculateTheoreticalPotentialUtils } from '../utils'
 
@@ -174,7 +175,7 @@ class CropsController {
 
     // aca se unen el ptencial teorico con lo del crop ya calculado
     const dataPdf = { dataCrop, theoriticalPotential, activities, date: new Date() }
-    console.log(util.inspect(dataPdf, { showHidden: false, depth: null }))
+    // console.log(util.inspect(JSON.stringify(dataPdf), { showHidden: false, depth: null }))
     const dataPDF = {
       array: [
         {
@@ -352,6 +353,25 @@ class CropsController {
     res.status(200).json({
       message: 'deleted successfuly'
     })
+  }
+  /**
+   * Get all crops evidences
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @returns
+   */
+  public async evidences (req: Request, res: Response) {
+    const { id } = req.params
+    const evidences: Evidence[] = await CropRepository.findAllEvidencesByCropId(
+      id
+    )
+    if (!evidences) {
+      const error = errors.find((error) => error.key === '005')
+      return res.status(404).json(error.code)
+    }
+    res.status(200).json(evidences)
   }
 }
 
