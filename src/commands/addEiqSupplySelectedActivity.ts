@@ -24,7 +24,6 @@ program.parse(process.argv)
  * Add Achievement's EIQ Surface
  */
 async function addEIQSupplySelectedInActivity() {
-  let eiqSurfacesSupply = []
   const activities = await ActivityRepository.getActivitiesFilterByName(
     NameActivity.Application
   )
@@ -36,27 +35,15 @@ async function addEIQSupplySelectedInActivity() {
   )
 
   for (const achievement of achievements) {
-    const { _id, supplies, surface } = achievement
-    for (const supplyApplied of supplies) {
-      if (supplyApplied.supply) {
-        const eiqSurface = calculateEIQSurfaceAchievement(
-          supplyApplied,
-          surface
-        )
-        eiqSurfacesSupply.push(eiqSurface)
-      }
-    }
-    const eiqSurfaceTotal = eiqSurfacesSupply.reduce(
-      (prev, next) => prev + (next || 0),
-      0
-    )
+    const eiqSurface = calculateEIQSurfaceAchievement(achievement)
     await AchievementRepository.updateAchievement(
-      { eiqSurface: eiqSurfaceTotal },
-      _id
+      { eiqSurface: eiqSurface },
+      achievement._id
     )
-    eiqSurfacesSupply = []
-    console.log(`${chalk.green(`UPDATE ACHIEVEMENT ID: ${_id}`)}`)
-    console.log(`${chalk.green(`EIQ SURFACE: ${eiqSurfaceTotal}`)}`)
+    if (eiqSurface > 0) {
+      console.log(`${chalk.green(`UPDATE ACHIEVEMENT ID: ${achievement._id}`)}`)
+      console.log(`${chalk.green(`EIQ SURFACE: ${eiqSurface}`)}`)
+    }
   }
 }
 ;(async () => {
