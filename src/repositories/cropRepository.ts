@@ -8,7 +8,7 @@ export class CropRepository {
    *
    * @param identifier
    */
-  public static async findAllCropsByCompanies (identifier: string): Promise<Object[] | null> {
+  public static async findAllCropsByCompanies(identifier: string) {
     const cropsInstance = await Crop.find({
       cancelled: false,
       'members.identifier': identifier
@@ -63,7 +63,11 @@ export class CropRepository {
           { path: 'files' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }, { path: 'supplies', populate: [{ path: 'typeId' }] }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           },
           {
             path: 'supplies',
@@ -94,14 +98,18 @@ export class CropRepository {
           },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }, { path: 'supplies', populate: [{ path: 'typeId' }] }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           }
         ]
       })
       .populate('members.user')
       .lean()
     return !!cropsInstance.length
-      ? cropsInstance.map(crop => joinActivitiesByCrop(crop))
+      ? cropsInstance.map((crop) => joinActivitiesByCrop(crop))
       : null
   }
 
@@ -110,7 +118,7 @@ export class CropRepository {
    *
    * @param id
    */
-  public static async getCropWithActivities (id: string): Promise<Object[] | null> {
+  public static async getCropWithActivities(id: string) {
     const cropInstance = await Crop.findById(id)
       .populate('lots.data')
       .populate('cropType')
@@ -162,7 +170,11 @@ export class CropRepository {
           { path: 'files' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }, { path: 'supplies', populate: [{ path: 'typeId' }] }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           },
           {
             path: 'supplies',
@@ -193,15 +205,17 @@ export class CropRepository {
           },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }, { path: 'supplies', populate: [{ path: 'typeId' }] }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           }
         ]
       })
       .populate('members.user')
       .lean({ virtual: true })
-    return cropInstance
-      ? joinActivitiesByCrop(cropInstance)
-      : null
+    return cropInstance ? joinActivitiesByCrop(cropInstance) : null
   }
 
   /**
@@ -209,21 +223,17 @@ export class CropRepository {
    *
    * @param string id
    */
-  public static async findAllCropsByCompanyAndCropType ({ cropType, company }): Promise<Object[] | null> {
+  public static async findAllCropsByCompanyAndCropType({ cropType, company }) {
     const cropsInstance = await Crop.find({
       cancelled: false,
       cropType,
       company
     }).populate('unitType')
 
-    return !!cropsInstance.length
-      ? cropsInstance
-      : null
+    return !!cropsInstance.length ? cropsInstance : null
   }
 
-  public static async findAllEvidencesByCropId(
-    cropId: string
-  ): Promise<Evidence[]> {
+  public static async findAllEvidencesByCropId(cropId: string) {
     const cropsInstance = await Crop.findById(cropId)
       .populate({
         path: 'done',
@@ -250,5 +260,16 @@ export class CropRepository {
       })
       .lean({ virtuals: true })
     return !!cropsInstance ? listEvidencesCrop(cropsInstance) : null
+  }
+
+  /**
+   *  Get crops.
+   *
+   * @param object pipeline
+   */
+  public static async findCrops(pipeline: any) {
+    const cropsInstance = await Crop.aggregate(pipeline)
+
+    return !!cropsInstance.length ? cropsInstance : null
   }
 }
