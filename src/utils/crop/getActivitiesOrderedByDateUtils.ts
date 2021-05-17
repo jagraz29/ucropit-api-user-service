@@ -28,9 +28,10 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           : 0
       }
       if (TypeActivity === 'ACT_MONITORING' || TypeActivity === 'ACT_HARVEST') {
+        console.log()
         const isSigned = signers.filter((item) => !item.signed)
 
-        percent = !(isSigned.length > 0) ? 100 : 0
+        percent = !(isSigned.length > 0) && signers.length !== 0 ? 100 : 0
       }
 
       return {
