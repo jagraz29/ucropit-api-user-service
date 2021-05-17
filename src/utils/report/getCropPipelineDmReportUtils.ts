@@ -113,6 +113,26 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
     as: 'activityType'
   }
 
+  const lookupLotsAchievements: any = {
+    from: 'lots',
+    let: {
+      'lotIds': '$lots',
+    },
+    pipeline: [{
+      $match: {
+        $expr: {
+          $in: ['$_id', '$$lotIds']
+        }
+      }
+    },{
+      $project: {
+        _id: 1,
+        name: 1
+      }
+    }],
+    as: 'lots'
+  }
+
   const lookupFilesAchievements: any = {
     from: 'filedocuments',
     let: {
@@ -148,6 +168,28 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
         }
       }
     },{
+      $lookup: lookupLotsAchievements
+    }/*,{
+      $addFields: {
+        lotsName: {
+          $reduce : {
+            input: '$lots',
+            initialValue: [],
+            in: {
+              $concatArrays: ['$$value', {
+                $cond: {
+                  if: {
+                    $in: ['$$this.name', '$$value.name']
+                  },
+                  then: [],
+                  else: ['$$this']
+                }
+              }]
+            }
+          }
+        }
+      }
+    }*/,{
       $lookup: lookupFilesAchievements
     },{
       $unwind: {
@@ -218,7 +260,7 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
     identifier: 1,
     companyName: '$company.name',
     cropName: '$name',
-    cropLotTag: '$lots.tag',
+    cropLotTag: '$activities.achievements.lots.name',
     supplyId: '$activities.achievements.supplies._id',
     supplieName: '$activities.achievements.supplies.name',
     activitySurface: '$activities.surface',
@@ -345,11 +387,6 @@ export const getCropPipelineDmReportUtils = ({ identifier }) => {
   },{
     $unwind: {
       path: '$company',
-      preserveNullAndEmptyArrays: true
-    }
-  },{
-    $unwind: {
-      path: '$lots',
       preserveNullAndEmptyArrays: true
     }
   },{

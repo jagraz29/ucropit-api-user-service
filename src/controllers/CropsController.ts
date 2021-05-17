@@ -14,7 +14,7 @@ import ActivityService from '../services/ActivityService'
 import { Evidence } from '../interfaces'
 
 import { CropRepository } from '../repositories'
-import { PdfService } from '../services'
+import { PDFService } from '../services'
 import { basePath, getActivitiesOrderedByDateUtils, makeDirIfNotExists, calculateDataCropUtils, calculateTheoreticalPotentialUtils } from '../utils'
 
 import {
@@ -190,7 +190,7 @@ class CropsController {
     }
 
     // // aca se utiliza el service para generar el pdf, este debe devoler el path para descargar el pdf
-    const nameFile = await PdfService.generatePdf('pdf-crop-history',dataPDF,'pdf-crop-history', 'company', crop)
+    const nameFile = await PDFService.generatePdf('pdf-crop-history',dataPDF,'pdf-crop-history', 'company', crop)
 
     res.status(StatusCodes.OK).send({ nameFile })
   }

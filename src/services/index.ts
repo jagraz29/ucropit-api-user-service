@@ -1,2 +1,2 @@
 export * from './report'
-export * from './pdfService'
+export * from './PDFService'
