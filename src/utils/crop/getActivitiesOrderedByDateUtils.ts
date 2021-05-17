@@ -1,25 +1,29 @@
 import moment from 'moment'
 
 export const getActivitiesOrderedByDateUtils = ({ activities }) => {
-  const activitiesRes = activities.map(activity => {
-    const {
-      _id,
-      achievements,
-      type: { tag: TypeActivity },
-      signers,
-      name,
-      lots,
-      surface,
-      storages,
-      dateStart,
-      dateEnd,
-      supplies,
-      pay,
-      dateObservation,
-      status
-    } = activity
+  const activitiesRes = activities.map(({
+    _id,
+    achievements,
+    type: { tag: TypeActivity },
+    signers,
+    name,
+    lots,
+    surface,
+    storages,
+    dateStart,
+    dateEnd,
+    supplies,
+    pay,
+    dateObservation,
+    status,
+    unitType
+  }) => {
 
     let percent: number = 0
+
+    if (TypeActivity === 'ACT_AGREEMENTS') {
+      return null
+    }
 
     if (TypeActivity === 'ACT_SOWING' || TypeActivity === 'ACT_APPLICATION') {
       percent = !!achievements.length
