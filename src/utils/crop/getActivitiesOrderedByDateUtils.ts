@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { calculateCropVolumeUtils, Numbers } from '../'
 
 export const getActivitiesOrderedByDateUtils = ({ activities }) => {
   const activitiesRes = activities
@@ -15,12 +16,14 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
         dateStart,
         dateEnd,
         supplies,
-        pay,
+        pay: payEntry,
         dateObservation,
         status,
         unitType
       }) => {
         let percent: number = 0
+        const pay = payEntry ? payEntry : 0
+        const { key: keyUnitType, name: nameUnitType } = unitType || {}
 
         if (TypeActivity === 'ACT_AGREEMENTS') {
           return null
@@ -48,12 +51,14 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           _id,
           name,
           percent,
+          unitType: nameUnitType ? nameUnitType.es : null,
+          tag: TypeActivity,
           dateStart: dateStart ? dateStart : null,
           dateEnd: dateEnd ? dateEnd : null,
           lots: lots.length,
           surface,
-          volume: surface * (pay ? pay : 0),
-          pay: pay ? pay : 0,
+          volume: Numbers.roundToTwo(calculateCropVolumeUtils(keyUnitType ,pay, surface)),
+          pay,
           dateObservation: dateObservation ? dateObservation : null,
           signed: !achievements.length ? signers.length : null,
           signedIf: !achievements.length

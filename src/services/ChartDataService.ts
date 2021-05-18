@@ -1,7 +1,7 @@
 import ServiceBase from './common/ServiceBase'
 import CropService from './CropService'
 import ActivityService from './ActivityService'
-import Numbers from '../utils/Numbers'
+import { Numbers } from '../utils'
 import _ from 'lodash'
 
 let allMonths: Array<string> = [
