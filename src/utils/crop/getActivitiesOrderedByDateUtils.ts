@@ -1,9 +1,10 @@
 import moment from 'moment'
+import { calculateCropVolumeUtils, Numbers } from '../'
 
 export const getActivitiesOrderedByDateUtils = ({ activities }) => {
   const activitiesRes = activities
-    .map((activity) => {
-      const {
+    .map(
+      ({
         _id,
         achievements,
         type: { tag: TypeActivity },
@@ -15,57 +16,71 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
         dateStart,
         dateEnd,
         supplies,
-        pay,
+        pay: payEntry,
         dateObservation,
-        status
-      } = activity
+        status,
+        unitType
+      }) => {
+        let percent: number = 0
+        const pay = payEntry ? payEntry : 0
+        const { key: keyUnitType, name: nameUnitType } = unitType || {}
 
-      let percent: number = 0
+        if (TypeActivity === 'ACT_AGREEMENTS') {
+          return null
+        }
 
-      if (TypeActivity === 'ACT_SOWING' || TypeActivity === 'ACT_APPLICATION') {
-        percent = !!achievements.length
-          ? achievements.reduce((a, b) => a + b.percent, 0)
-          : 0
-      }
-      if (TypeActivity === 'ACT_MONITORING' || TypeActivity === 'ACT_HARVEST') {
-        const isSigned = signers.filter((item) => !item.signed)
+        if (
+          TypeActivity === 'ACT_SOWING' ||
+          TypeActivity === 'ACT_APPLICATION'
+        ) {
+          percent = !!achievements.length
+            ? achievements.reduce((a, b) => a + b.percent, 0)
+            : 0
+        }
+        if (
+          TypeActivity === 'ACT_MONITORING' ||
+          TypeActivity === 'ACT_HARVEST'
+        ) {
+          const isSigned = signers.filter(({ signed }) => !signed)
+          percent = !(isSigned.length > 0) && signers.length !== 0 ? 100 : 0
+        }
 
-        percent = !(isSigned.length > 0) ? 100 : 0
-      }
-
-      return {
-        dateOrder: dateEnd ? dateEnd : _id.getTimestamp(),
-        status: status[0].name.es,
-        _id,
-        name,
-        percent,
-        dateStart: dateStart ? dateStart : null,
-        dateEnd: dateEnd ? dateEnd : null,
-        lots: lots.length,
-        surface,
-        volume: surface * (pay ? pay : 0),
-        pay: pay ? pay : 0,
-        dateObservation: dateObservation ? dateObservation : null,
-        signed: !achievements.length ? signers.length : null,
-        signedIf: !achievements.length
-          ? signers.filter(({ signed }) => !!signed).length
-          : null,
-        supplies,
-        storages: storages
-          ? storages.map(
-              ({
-                tonsHarvest,
-                storageType: {
-                  name: { es: storageTypeName }
+        return {
+          dateOrder: dateEnd ? dateEnd : _id.getTimestamp(),
+          status: status[0].name.es,
+          _id,
+          name,
+          percent,
+          unitType: nameUnitType ? nameUnitType.es : null,
+          tag: TypeActivity,
+          dateStart: dateStart ? dateStart : null,
+          dateEnd: dateEnd ? dateEnd : null,
+          lots: lots.length,
+          surface,
+          volume: Numbers.roundToTwo(calculateCropVolumeUtils(keyUnitType ,pay, surface)),
+          pay,
+          dateObservation: dateObservation ? dateObservation : null,
+          signed: !achievements.length ? signers.length : null,
+          signedIf: !achievements.length
+            ? signers.filter(({ signed }) => !!signed).length
+            : null,
+          supplies,
+          storages: storages
+            ? storages.map(
+                ({
+                  tonsHarvest,
+                  storageType: {
+                    name: { es: storageTypeName }
+                  }
+                }) => {
+                  return { tonsHarvest, storageTypeName }
                 }
-              }) => {
-                return { tonsHarvest, storageTypeName }
-              }
-            )
-          : [],
-        achievements: getDataAchievements(achievements)
+              )
+            : [],
+          achievements: getDataAchievements(achievements)
+        }
       }
-    })
+    )
     .filter((item) => item)
 
   return activitiesRes.sort((a, b) =>

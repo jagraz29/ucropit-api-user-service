@@ -128,6 +128,7 @@ export class CropRepository {
         path: 'pending',
         populate: [
           { path: 'collaborators' },
+          { path: 'unitType' },
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots', select: '-area -__v' },
@@ -146,6 +147,7 @@ export class CropRepository {
         path: 'toMake',
         populate: [
           { path: 'collaborators' },
+          { path: 'unitType' },
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots', select: '-area -__v' },
@@ -164,6 +166,7 @@ export class CropRepository {
         path: 'done',
         populate: [
           { path: 'collaborators' },
+          { path: 'unitType' },
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots', select: '-area -__v' },
@@ -191,6 +194,7 @@ export class CropRepository {
         path: 'finished',
         populate: [
           { path: 'collaborators' },
+          { path: 'unitType' },
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots', select: '-area -__v' },

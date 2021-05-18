@@ -3,7 +3,7 @@ import { Response, Request } from 'express'
 import CropService from '../services/CropService'
 import ChartService from '../services/ChartDataService'
 import models from '../models'
-import Numbers from '../utils/Numbers'
+import { Numbers } from '../utils'
 import _ from 'lodash'
 
 const Crop = models.Crop

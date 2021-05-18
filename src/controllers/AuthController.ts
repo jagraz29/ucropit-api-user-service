@@ -3,7 +3,7 @@ import models from '../models'
 import UserService from '../services/UserService'
 import EmailService from '../services/EmailService'
 import UserConfigService from '../services/UserConfigService'
-import numbers from '../utils/Numbers'
+import { Numbers } from '../utils'
 
 const User = models.User
 const ForeignCredential = models.ForeignCredential
@@ -30,7 +30,7 @@ class AuthController {
         return res.status(403).json({ error: 'ERR_USER_INACTIVE' })
       }
 
-      const code = numbers.getRandom()
+      const code = Numbers.getRandom()
 
       user.verifyToken = code
       await user.save()
@@ -52,7 +52,7 @@ class AuthController {
       email: req.body.email.toLocaleLowerCase()
     }).populate('config')
 
-    const code = numbers.getRandom()
+    const code = Numbers.getRandom()
 
     if (user && user.config.fromInvitation && !user.firstName) {
       user.firstName = firstName
