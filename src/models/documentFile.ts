@@ -57,6 +57,9 @@ export const FileDocumentSchema = new Schema(
     settings: {
       type: Schema.Types.Mixed
     },
+    isSatelliteImage: {
+      type: Boolean
+    },
     meta: {
       type: Schema.Types.Mixed
     },
