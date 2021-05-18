@@ -20,7 +20,7 @@ export class FileDocumentRepository {
    */
   public static async getFiles (cropId): Promise<Object[] | null> {
     const fileDocumentInstance = await FileDocument.find({ cropId })
-    return !!fileDocumentInstance.length
+    return fileDocumentInstance.length
       ? fileDocumentInstance
       : null
   }

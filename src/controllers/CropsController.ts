@@ -156,26 +156,26 @@ class CropsController {
   public async generatePdfHistoryCrop (req: Request, res: Response) {
     const { params: { id } } = req
     // se obtienes crop con sus actividades
-    const crop = await CropRepository.getCropWithActivities(id)
+    const cropWithActivities = await CropRepository.getCropWithActivities(id)
 
-    if (!crop) {
+    if (!cropWithActivities) {
       return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
     }
     // aca se obtienen todos los crop de la company y el tipo de cultivo
-    const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
+    const crops = await CropRepository.findAllCropsByCompanyAndCropType(cropWithActivities)
 
     // aca se calcula el potencial teorico
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
 
     // aca estara la libreria a nivel de crop
-    const dataCrop = calculateDataCropUtils(crop)
+    const dataCrop = calculateDataCropUtils(cropWithActivities)
 
     // aca esta la libreria a nivel de actividades
-    const activities: Array<ReportSignersByCompany> = getActivitiesOrderedByDateUtils(crop)
+    const activities: Array<ReportSignersByCompany> = getActivitiesOrderedByDateUtils(cropWithActivities)
 
     // aca se unen el ptencial teorico con lo del crop ya calculado
     const dataPdf = { dataCrop, theoriticalPotential, activities, date: new Date() }
-    // console.log(util.inspect(JSON.stringify(dataPdf), { showHidden: false, depth: null }))
+    console.log(util.inspect(/*JSON.stringify(*/dataPdf/*)*/, { showHidden: false, depth: null }))
     const dataPDF = {
       array: [
         {
@@ -190,7 +190,7 @@ class CropsController {
     }
 
     // // aca se utiliza el service para generar el pdf, este debe devoler el path para descargar el pdf
-    const nameFile = await PDFService.generatePdf('pdf-crop-history',dataPDF,'pdf-crop-history', 'company', crop)
+    const nameFile = await PDFService.generatePdf('pdf-crop-history',dataPDF,'pdf-crop-history', 'company', cropWithActivities)
 
     res.status(StatusCodes.OK).send({ nameFile })
   }

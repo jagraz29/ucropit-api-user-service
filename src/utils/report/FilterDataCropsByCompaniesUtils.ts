@@ -6,8 +6,8 @@ export const filterDataCropsByCompanies = (crops, identifierCompany: string): Ob
     const reportPartial = {
       identifierCompany,
       identifierProducer,
-      nameProducer: crop.company ? crop.company.name : '',
-      nameCropType: crop.cropType ? crop.cropType.name.es : '',
+      nameProducer: crop.company?.name ?? '',
+      nameCropType: crop.cropType?.name.es ?? '',
       nameCrop: crop.name,
       surfaceCrop: calculateSurfaceLots(lots)
     }
@@ -30,10 +30,10 @@ const setSignersToRows = (activities): Object[] => {
     let elementRow = result.find((elem) => elem.userSignedId.toString() === userSignedId.toString())
     let activity = elementRow.activities.find((elem) => elem.typeActivity === typeActivity)
     if (activity) {
-      activity.signed += signed ? 1 : 0
+      activity.signed += signed ?? 0
       activity.signRequest += 1
     } else {
-      elementRow.activities.push({ signed: signed ? 1 : 0, signRequest: 1, typeActivity })
+      elementRow.activities.push({ signed: signed ?? 0, signRequest: 1, typeActivity })
     }
   }
   return result
@@ -44,10 +44,10 @@ const getDataActivities = (activities): Object[] => {
     const { name: { en } } = status[0]
 
     if (en === 'DONE' || en === 'FINISHED') {
-      const key = typeAgreement ? typeAgreement.key : null
+      const key = typeAgreement?.key ?? null
       let responseWithAgreements: Object[] = []
       let responseWithOutAgreements: Object[] = []
-      let signersSet: Object[] = !!achievements.length ? _.flatten(achievements.map(({ signers }) => signers)) : signers
+      let signersSet: Object[] = achievements.length ? _.flatten(achievements.map(({ signers }) => signers)) : signers
       if (TypeActivity === 'ACT_AGREEMENTS') {
         if (key === 'SUSTAIN' || key === 'SEED_USE') {
           responseWithAgreements = setTypeActivityInSigners(signersSet,TypeActivity)
