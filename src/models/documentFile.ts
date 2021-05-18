@@ -32,12 +32,10 @@ export const FileDocumentSchema = new Schema(
       required: true
     },
     date: {
-      type: Date,
-      required: true
+      type: Date
     },
     path: {
-      type: String,
-      required: true
+      type: String
     },
     name: {
       type: String
