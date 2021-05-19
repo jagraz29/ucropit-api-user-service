@@ -17,16 +17,25 @@ program.parse(process.argv)
 async function execUpdateSupply() {
   for (const item of data) {
     const achievement = await Achievement.findById(item.achievementId)
-    const supply = await Supply.find({ code: item.code })
+    const supply = await Supply.findOne({ code: item.code })
 
-    let supplies = achievement.supplies.id(item.SupplyIdApplied)
+    let supplyApplied = achievement.supplies.id(item.supplyIdApplied)
 
-    if (supplies != null && Object.keys(supplies).length >= 1) {
-      await Achievement.updateOne(
+    if (
+      supply &&
+      !supplyApplied.supply &&
+      supplyApplied &&
+      Object.keys(supplyApplied).length >= 1
+    ) {
+      const result = await Achievement.updateOne(
         { _id: item.achievementId },
-        { $set: { 'supplies.$[elem]._id': supply[0]._id } },
-        { arrayFilters: [{ 'elem._id': { $gte: item.SupplyIdApplied } }] }
+        { $set: { 'supplies.$[elem].supply': supply._id } },
+        { arrayFilters: [{ 'elem._id': { $gte: item.supplyIdApplied } }] }
       )
+
+      console.log(result)
+      console.log(`${chalk.green(`ACHIEVEMENT ID: ${achievement._id}`)}`)
+      console.log(`${chalk.green(`SUPPLY APPLIED ID: ${supplyApplied._id}`)}`)
     }
   }
 }
