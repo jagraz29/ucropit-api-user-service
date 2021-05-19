@@ -5,6 +5,7 @@ import AchievementService from './AchievementService'
 import models from '../models'
 import integrationLog from '../models/integrationLog'
 import CompanyService from './CompanyService'
+import ActivityService from './ActivityService'
 
 const IntegrationLog = models.IntegrationLog
 
@@ -202,13 +203,9 @@ class IntegrationService extends ServiceBase {
     })
   }
 
-  /**
-   * Integration Achievements with third party service.
-   *
-   * @param IExportCrop dataExport
-   * @param Request req
-   */
-  public static async exportAchievement(dataExport: IExportCrop, req: Request) {
+  public static async isEnabledExportData(
+    dataExport: IExportCrop
+  ): Promise<Boolean> {
     const crop = await CropService.findOneCrop(dataExport.cropId)
 
     const isServiceCompany = await CompanyService.isAdderService(
@@ -216,11 +213,25 @@ class IntegrationService extends ServiceBase {
       dataExport.identifier
     )
 
-    if (
-      crop &&
-      CropService.serviceCropIsSynchronized(crop, dataExport.erpAgent) &&
-      isServiceCompany
-    ) {
+    const cropIsSynchronized = CropService.serviceCropIsSynchronized(
+      crop,
+      dataExport.erpAgent
+    )
+
+    return crop && cropIsSynchronized && isServiceCompany
+  }
+
+  /**
+   * Integration Achievements with third party service.
+   *
+   * @param IExportCrop dataExport
+   * @param Request req
+   */
+  public static async exportAchievement(dataExport: IExportCrop, req: Request) {
+    const isEnabledExportData: Boolean = await this.isEnabledExportData(
+      dataExport
+    )
+    if (isEnabledExportData) {
       const token: string = req.get('authorization').split(' ')[1]
 
       const response = await IntegrationService.export(
@@ -246,6 +257,38 @@ class IntegrationService extends ServiceBase {
         response.activityId,
         response.achievementId
       )
+
+      return response
+    }
+
+    return null
+  }
+
+  public static async exportActivity(dataExport: IExportCrop, req: Request) {
+    const isEnabledExportData: Boolean = await this.isEnabledExportData(
+      dataExport
+    )
+
+    if (isEnabledExportData) {
+      const token: string = req.get('authorization').split(' ')[1]
+
+      const response = await IntegrationService.export(
+        {
+          token: token,
+          erpAgent: dataExport.erpAgent,
+          identifier: dataExport.identifier,
+          cropId: dataExport.cropId,
+          activityId: dataExport.activityId
+        },
+        `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_EXPORTER_ACHIEVEMENTS}`
+      )
+
+      await ActivityService.changeStatusSynchronized(
+        response.activityId,
+        response.erpAgent
+      )
+
+      await this.createLog(response, dataExport.cropId, response.activityId)
 
       return response
     }
