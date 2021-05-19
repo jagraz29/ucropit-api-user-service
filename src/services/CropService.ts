@@ -735,17 +735,17 @@ class CropService extends ServiceBase {
   public static serviceCropIsSynchronized(crop: any, service: any): boolean {
     return (
       service &&
-      crop.synchronizedList.filter((item) => item.service === service).length >
+      crop?.synchronizedList.filter((item) => item.service === service).length >
         0 &&
-      crop.synchronizedList.find((item) => item.service === service)
+      crop?.synchronizedList.find((item) => item.service === service)
         .isSynchronized
     )
   }
 
   private static isServiceAdded(crop: any, service: string) {
     return (
-      crop.synchronizedList &&
-      crop.synchronizedList.filter((item) => item.service === service).length >
+      crop?.synchronizedList &&
+      crop?.synchronizedList.filter((item) => item.service === service).length >
         0
     )
   }

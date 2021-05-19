@@ -1,5 +1,6 @@
 export * from './cropRepository'
 export * from './fileDocumentRepository'
 export * from './activityRepository'
+export * from './achievementRepository'
 export * from './supplyRepository'
 export * from './lotRepository'
