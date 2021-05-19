@@ -78,6 +78,9 @@ const AchievementSchema: Schema = new Schema({
     type: Number,
     default: 0
   },
+  eiqSurface: {
+    type: Number
+  },
   lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
   supplies: [
     {

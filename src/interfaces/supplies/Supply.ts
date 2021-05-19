@@ -9,7 +9,8 @@ export interface Supply {
   compositon?: string
   quantity?: Number
   activesPrinciples?: Array<any>
-  supply?: string
+  supply?: string | any
   icon?: string
-  total?: Number
+  total?: Number | number
+  eiqTotal?: Number | number
 }
