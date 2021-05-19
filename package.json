@@ -14,7 +14,8 @@
     "sign:activity": "node dist/src/commands/sign.js",
     "insert:members": "node dist/src/commands/members.js",
     "add:harvest:date": "node dist/src/commands/monitoringHarvestDate.js",
-    "delete:signer:ghost": "node dist/src/commands/deleteGhostSigner.js"
+    "delete:signer:ghost": "node dist/src/commands/deleteGhostSigner.js",
+    "add:active-ingredients:supply": "node dist/src/commands/activeIngredientsSupplies.js"
   },
   "resolutions": {
     "graceful-fs": "4.2.4"
@@ -53,7 +54,9 @@
     "express-openapi-validator": "^3.16.7",
     "form-data": "^3.0.0",
     "geolib": "^3.3.1",
+    "handlebars-pdf": "^1.0.1",
     "html-pdf-node": "^1.0.7",
+    "http-status-codes": "^2.1.4",
     "javascript-opentimestamps": "^0.4.5",
     "joi": "^17.2.0",
     "json2csv": "^5.0.3",
@@ -75,8 +78,10 @@
     "pug": "^3.0.0",
     "puppeteer": "^5.4.1",
     "sha256": "^0.2.0",
+    "sha256-file": "^1.0.0",
     "sharp": "^0.26.3",
-    "shortid": "^2.2.15"
+    "shortid": "^2.2.15",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",

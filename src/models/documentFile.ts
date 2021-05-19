@@ -23,21 +23,20 @@
  */
 import mongoose from 'mongoose'
 import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
-import moment from 'moment'
 
 const { Schema } = mongoose
 
 export const FileDocumentSchema = new Schema(
   {
     nameFile: {
-      type: String
+      type: String,
+      required: true
     },
     date: {
       type: Date
     },
     path: {
-      type: String,
-      required: false
+      type: String
     },
     name: {
       type: String
@@ -51,11 +50,15 @@ export const FileDocumentSchema = new Schema(
     description: {
       type: String
     },
-    isSatelliteImage: {
-      type: Boolean
+    cropId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Crop'
     },
     settings: {
       type: Schema.Types.Mixed
+    },
+    isSatelliteImage: {
+      type: Boolean
     },
     meta: {
       type: Schema.Types.Mixed
@@ -67,10 +70,6 @@ export const FileDocumentSchema = new Schema(
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
-
-FileDocumentSchema.virtual('dateFormat').get(function () {
-  return moment(this.date).format('DD/MM/YYYY')
-})
 
 FileDocumentSchema.virtual('imagePathIntermediate').get(function () {
   if (this.pathIntermediate) {

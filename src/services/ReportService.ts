@@ -2,7 +2,7 @@ import models from '../models'
 import _ from 'lodash'
 import moment from 'moment'
 import GeoLocationService from '../services/GeoLocationService'
-import Numbers from '../utils/Numbers'
+import { Numbers } from '../utils'
 
 import {
   tagsTypeAgreement,

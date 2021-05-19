@@ -1,56 +1,105 @@
-import _ from 'lodash'
 import moment from 'moment'
+import { calculateCropVolumeUtils, Numbers } from '../'
 
-export const getActivitiesOrderedByDateUtils = ({ activities, surface: surfaceCrop }) => {
-  const activitiesRes = activities.map(activity => {
-    const {
-      _id,
-      achievements,
-      type: { tag: TypeActivity },
-      signers,
-      name,
-      lots,
-      surface,
-      storages,
-      dateStart,
-      dateEnd,
-      supplies,
-      pay,
-      dateObservation
-    } = activity
+export const getActivitiesOrderedByDateUtils = ({ activities }) => {
+  const activitiesRes = activities
+    .map(
+      ({
+        _id,
+        achievements,
+        type: { tag: TypeActivity },
+        signers,
+        name,
+        lots,
+        surface,
+        storages,
+        dateStart,
+        dateEnd,
+        supplies,
+        pay: payEntry,
+        dateObservation,
+        status,
+        unitType
+      }) => {
+        let percent: number = 0
+        const pay = payEntry ? payEntry : 0
+        const { key: keyUnitType, name: nameUnitType } = unitType || {}
 
-    let percent: number = 0
+        if (TypeActivity === 'ACT_AGREEMENTS') {
+          return null
+        }
 
-    let signed: number = !!achievements.length ? _.flatten(achievements.map(({ signers }) => signers)).length : signers.length
-    let signedIf: number = !!achievements.length ? _.flatten(achievements.map(({ signers }) => signers.signed === true)).length : signers.length
+        if (
+          TypeActivity === 'ACT_SOWING' ||
+          TypeActivity === 'ACT_APPLICATION'
+        ) {
+          percent = !!achievements.length
+            ? achievements.reduce((a, b) => a + b.percent, 0)
+            : 0
+        }
+        if (
+          TypeActivity === 'ACT_MONITORING' ||
+          TypeActivity === 'ACT_HARVEST'
+        ) {
+          const isSigned = signers.filter(({ signed }) => !signed)
+          percent = !(isSigned.length > 0) && signers.length !== 0 ? 100 : 0
+        }
 
-    if (TypeActivity === 'ACT_SOWING' || TypeActivity === 'ACT_APPLICATION') {
-      let surfaceAux = !!achievements.length ? achievements.reduce((a,b) => a + b.surface,0) : 0
-      percent = (surfaceAux / surface) * 100
-    }
-    if (TypeActivity === 'ACT_MONITORING' || TypeActivity === 'ACT_HARVEST') {
-      let surfaceAux = !!achievements.length ? achievements.reduce((a,b) => a + b.surface,0) : surface
-      percent = (surfaceAux / surfaceCrop) * 100
-    }
+        return {
+          dateOrder: dateEnd ? dateEnd : _id.getTimestamp(),
+          status: status[0].name.es,
+          _id,
+          name,
+          percent,
+          unitType: nameUnitType ? nameUnitType.es : null,
+          tag: TypeActivity,
+          dateStart: dateStart ? dateStart : null,
+          dateEnd: dateEnd ? dateEnd : null,
+          lots: lots.length,
+          surface,
+          volume: Numbers.roundToTwo(calculateCropVolumeUtils(keyUnitType ,pay, surface)),
+          pay,
+          dateObservation: dateObservation ? dateObservation : null,
+          signed: !achievements.length ? signers.length : null,
+          signedIf: !achievements.length
+            ? signers.filter(({ signed }) => !!signed).length
+            : null,
+          supplies,
+          storages: storages
+            ? storages.map(
+                ({
+                  tonsHarvest,
+                  storageType: {
+                    name: { es: storageTypeName }
+                  }
+                }) => {
+                  return { tonsHarvest, storageTypeName }
+                }
+              )
+            : [],
+          achievements: getDataAchievements(achievements)
+        }
+      }
+    )
+    .filter((item) => item)
 
-    return {
-      dateOrder: dateEnd ? dateEnd : _id.getTimestamp(),
-      name,
-      percent,
-      dateStart: dateStart ? dateStart : null,
-      dateEnd: dateEnd ? dateEnd : null,
-      lots: lots.length,
-      surface,
-      volume: surface * (pay ? pay : 0),
-      yields: pay ? pay : 0,
-      dateObservation: dateObservation ? dateObservation : null,
-      signed,
-      signedIf,
-      supplies,
-      storages: storages.map(({ tonsHarvest, storageType: { name: { es: storageTypeNAme } } }) => { return { tonsHarvest, storageTypeNAme }}),
-      achievements: achievements.map(({ dateAchievement, lots, surface }) => { return { dateAchievement, lots: lots.length, surface, supplies }})
-    }
-  }).filter(item => item)
+  return activitiesRes.sort((a, b) =>
+    moment(a.dateOrder).diff(moment(b.dateOrder))
+  )
+}
 
-  return activitiesRes.sort((a, b) => moment(a.dateOrder).diff(moment(b.dateOrder)))
+const getDataAchievements = (achievements): Object[] => {
+  return achievements
+    .map(({ dateAchievement, lots, surface, signers, supplies, _id }) => {
+      return {
+        _id,
+        dateAchievement,
+        lots: lots.length,
+        surface,
+        supplies,
+        signed: signers.length,
+        signedIf: signers.filter(({ signed }) => !!signed).length
+      }
+    })
+    .filter((item) => item)
 }

@@ -1,7 +1,7 @@
 import { ResponseOkProps } from '../../interfaces/SatelliteImageRequest'
 import LotRepository from '../../repositories/lotRepository'
 import ActivityRepository from '../../repositories/activityRepository'
-import FileDocumentRepository from '../../repositories/fileDocumentRepository'
+import { FileDocumentRepository } from '../../repositories/fileDocumentRepository'
 import CommonRepository from '../../repositories/commonRepository'
 import { DocumentNotFound } from '../../loggin/error-custom'
 
@@ -64,7 +64,7 @@ const responseWithImages = async (response: ResponseOkProps): Promise<void> => {
 
   for (const image of images) {
     const { nameFile, date, type, tag } = image
-    const fileDocument = await FileDocumentRepository.create({
+    const fileDocument = await FileDocumentRepository.createFile({
       nameFile: nameFile,
       date: date,
       description: concept,
