@@ -11,6 +11,8 @@ import CropService from '../services/CropService'
 import BlockChainServices from '../services/BlockChainService'
 import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
 import SatelliteImageService from '../services/SatelliteImageService'
+import IntegrationService from '../services/IntegrationService'
+import UserConfigService from '../services/UserConfigService'
 import models from '../models'
 
 import { getPathFileByType, getFullPath, fileExist, removeFile } from '../utils/Files'
@@ -74,6 +76,8 @@ class ActivitiesController {
 
     await validateActivityStore(data)
 
+    const { companySelected } = await UserConfigService.findById(user.config)
+
     const validationExtensionFile = validateExtensionFile(req.files)
 
     if (validationExtensionFile.error) {
@@ -107,6 +111,16 @@ class ActivitiesController {
 
     if (activity.isDone() && activity.type.tag === ACTIVITY_HARVEST) {
       await SatelliteImageService.createPayload(activity).send()
+
+      await IntegrationService.exportActivity(
+        {
+          cropId: data.crop._id,
+          activityId: activity._id,
+          erpAgent: 'auravant',
+          identifier: companySelected.identifier
+        },
+        req
+      )
     }
 
     res.status(201).json(activity)
@@ -125,6 +139,8 @@ class ActivitiesController {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
 
+    const { companySelected } = await UserConfigService.findById(user.config)
+
     const { status } = data
     await validateActivityUpdate(data)
 
@@ -142,6 +158,7 @@ class ActivitiesController {
     if (validationFiles.error) {
       res.status(400).json(validationFiles)
     }
+
     let activity = await ActivityService.findActivityById(id)
     if (data.signers) {
       const listSigners = ActivityService.getSigners(data.signers, activity)
@@ -172,6 +189,16 @@ class ActivitiesController {
 
     if (activity.isDone() && activity.type.tag === ACTIVITY_HARVEST) {
       await SatelliteImageService.createPayload(activity).send()
+
+      await IntegrationService.exportActivity(
+        {
+          cropId: data.crop,
+          activityId: activity._id,
+          erpAgent: 'auravant',
+          identifier: companySelected.identifier
+        },
+        req
+      )
     }
 
     res.status(200).json(activity)
