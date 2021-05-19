@@ -218,7 +218,7 @@ export class CropRepository {
         ]
       })
       .populate('members.user')
-      // .lean({ virtuals: true })
+      .lean(/*{ virtuals: true }*/)
     return cropInstance ? joinActivitiesByCrop(cropInstance) : null
   }
 

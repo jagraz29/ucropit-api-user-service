@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { StatusActivities, TypeActivities, TypeAgreement } from '../../interfaces'
 
 export const filterDataCropsByCompanies = (crops, identifierCompany: string): Object[] => {
   return crops.map((crop) => {
@@ -43,13 +44,13 @@ const getDataActivities = (activities): Object[] => {
   return _.flatten(activities.map(({ typeAgreement, achievements, type: { tag: TypeActivity }, signers, status }) => {
     const { name: { en } } = status[0]
 
-    if (en === 'DONE' || en === 'FINISHED') {
+    if (en === StatusActivities.DONE || en === StatusActivities.FINISHED) {
       const key = typeAgreement?.key ?? null
       let responseWithAgreements: Object[] = []
       let responseWithOutAgreements: Object[] = []
       let signersSet: Object[] = achievements.length ? _.flatten(achievements.map(({ signers }) => signers)) : signers
-      if (TypeActivity === 'ACT_AGREEMENTS') {
-        if (key === 'SUSTAIN' || key === 'SEED_USE') {
+      if (TypeActivity === TypeActivities.ACT_AGREEMENTS) {
+        if (key === TypeAgreement.SUSTAIN || key === TypeAgreement.SEED_USE) {
           responseWithAgreements = setTypeActivityInSigners(signersSet,TypeActivity)
         }
       } else {

@@ -1,5 +1,6 @@
 import moment from 'moment'
 import { calculateCropVolumeUtils, Numbers } from '../'
+import { TypeActivitiesWithAchievements, TypeActivitiesWithOutAchievements, TypeActivities } from '../../interfaces'
 
 export const getActivitiesOrderedByDateUtils = ({ activities }) => {
   const activitiesRes = activities
@@ -25,22 +26,16 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
         const pay = payEntry ?? 0
         const { key: keyUnitType, name: nameUnitType } = unitType || {}
 
-        if (TypeActivity === 'ACT_AGREEMENTS') {
+        if (TypeActivity === TypeActivities.ACT_AGREEMENTS) {
           return null
         }
 
-        if (
-          TypeActivity === 'ACT_SOWING' ||
-          TypeActivity === 'ACT_APPLICATION'
-        ) {
+        if (TypeActivitiesWithAchievements[TypeActivity]) {
           percent = achievements.length
             ? achievements.reduce((a, b) => a + b.percent, 0)
             : 0
         }
-        if (
-          TypeActivity === 'ACT_MONITORING' ||
-          TypeActivity === 'ACT_HARVEST'
-        ) {
+        if (TypeActivitiesWithOutAchievements[TypeActivity]) {
           const isSigned = signers.filter(({ signed }) => !signed)
           percent = !(isSigned.length > 0) && signers.length !== 0 ? 100 : 0
         }
@@ -57,7 +52,9 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           dateEnd: dateEnd ?? null,
           lots: lots.length,
           surface,
-          volume: Numbers.roundToTwo(calculateCropVolumeUtils(keyUnitType ,pay, surface)),
+          volume: Numbers.roundToTwo(
+            calculateCropVolumeUtils(keyUnitType, pay, surface)
+          ),
           pay,
           dateObservation: dateObservation ?? null,
           signed: !achievements.length ? signers.length : null,

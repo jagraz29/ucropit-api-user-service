@@ -15,7 +15,13 @@ import { Evidence } from '../interfaces'
 
 import { CropRepository } from '../repositories'
 import { PDFService } from '../services'
-import { basePath, getActivitiesOrderedByDateUtils, makeDirIfNotExists, calculateDataCropUtils, calculateTheoreticalPotentialUtils } from '../utils'
+import {
+  basePath,
+  getActivitiesOrderedByDateUtils,
+  makeDirIfNotExists,
+  calculateDataCropUtils,
+  calculateTheoreticalPotentialUtils
+} from '../utils'
 
 import {
   validateGetCrops,
@@ -29,6 +35,7 @@ import { errors } from '../types/common'
 import { ReportSignersByCompany } from '../interfaces'
 import path from 'path'
 import util from 'util'
+import moment from 'moment'
 
 const Crop = models.Crop
 const CropType = models.CropType
@@ -43,9 +50,9 @@ class CropsController {
    *
    * @return Response
    */
-  public async index (req: Request | any, res: Response) {
+  public async index(req: Request | any, res: Response) {
     let query: any = {
-      $and : [
+      $and: [
         {
           cancelled: false
         },
@@ -60,7 +67,7 @@ class CropsController {
 
     if (req.query.cropTypes) {
       query['$and'].push({
-        cropType : {
+        cropType: {
           $in: req.query.cropTypes
         }
       })
@@ -68,7 +75,7 @@ class CropsController {
 
     if (req.query.companies) {
       query['$and'].push({
-        company : {
+        company: {
           $in: req.query.companies
         }
       })
@@ -76,7 +83,7 @@ class CropsController {
 
     if (req.query.collaborators) {
       query['$and'].push({
-        'members.user' : {
+        'members.user': {
           $in: req.query.collaborators
         }
       })
@@ -84,7 +91,7 @@ class CropsController {
 
     if (req.query.cropVolume) {
       query['$and'].push({
-        pay : {
+        pay: {
           $gte: req.query.cropVolume
         }
       })
@@ -112,15 +119,23 @@ class CropsController {
    *
    * @return Response
    */
-  public async show (req: Request, res: Response) {
+  public async show(req: Request, res: Response) {
     const { id } = req.params
     const crop = await CropService.getCrop(id)
     const lots = await LotService.storeLotImagesAndCountries(crop.lots)
+    const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
+    const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
 
     const newCrop = {
       ...crop,
-      lots
+      lots,
+      company: {
+        ...crop.company,
+        theoriticalPotential
+      }
     }
+
+    console.log(newCrop)
 
     res.status(200).json(newCrop)
   }
@@ -133,14 +148,15 @@ class CropsController {
    *
    * @return Response
    */
-  public async getCropWithActivities (req: Request, res: Response) {
+  public async getCropWithActivities(req: Request, res: Response) {
     const { id } = req.params
     const crop = await CropRepository.getCropWithActivities(id)
 
     if (!crop) {
       return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
     }
-    const activities: Array<ReportSignersByCompany> = getActivitiesOrderedByDateUtils(crop)
+    const activities: Array<ReportSignersByCompany> =
+      getActivitiesOrderedByDateUtils(crop)
 
     res.status(StatusCodes.OK).json(activities)
   }
@@ -153,29 +169,37 @@ class CropsController {
    *
    * @return Response
    */
-  public async generatePdfHistoryCrop (req: Request, res: Response) {
-    const { params: { id } } = req
+  public async generatePdfHistoryCrop(req: Request, res: Response) {
+    const {
+      params: { id }
+    } = req
     // se obtienes crop con sus actividades
-    const cropWithActivities = await CropRepository.getCropWithActivities(id)
+    const crop = await CropRepository.getCropWithActivities(id)
 
-    if (!cropWithActivities) {
+    if (!crop) {
       return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
     }
     // aca se obtienen todos los crop de la company y el tipo de cultivo
-    const crops = await CropRepository.findAllCropsByCompanyAndCropType(cropWithActivities)
+    const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
 
     // aca se calcula el potencial teorico
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
 
     // aca estara la libreria a nivel de crop
-    const dataCrop = calculateDataCropUtils(cropWithActivities)
+    const dataCrop = calculateDataCropUtils(crop)
 
     // aca esta la libreria a nivel de actividades
-    const activities: Array<ReportSignersByCompany> = getActivitiesOrderedByDateUtils(cropWithActivities)
+    const activities: Array<ReportSignersByCompany> =
+      getActivitiesOrderedByDateUtils(crop)
 
     // aca se unen el ptencial teorico con lo del crop ya calculado
-    const dataPdf = { dataCrop, theoriticalPotential, activities, date: new Date() }
-    console.log(util.inspect(/*JSON.stringify(*/dataPdf/*)*/, { showHidden: false, depth: null }))
+    const dataPdf = {
+      dataCrop,
+      theoriticalPotential,
+      activities,
+      dateCreatePdf: moment().format('DD/MM/YYYY')
+    }
+    console.log(util.inspect(JSON.stringify(dataPdf), { showHidden: false, depth: null }))
     const dataPDF = {
       array: [
         {
@@ -190,7 +214,13 @@ class CropsController {
     }
 
     // // aca se utiliza el service para generar el pdf, este debe devoler el path para descargar el pdf
-    const nameFile = await PDFService.generatePdf('pdf-crop-history',dataPDF,'pdf-crop-history', 'company', cropWithActivities)
+    const nameFile = await PDFService.generatePdf(
+      'pdf-crop-history',
+      dataPDF,
+      'pdf-crop-history',
+      'company',
+      crop
+    )
 
     res.status(StatusCodes.OK).send({ nameFile })
   }
@@ -203,7 +233,10 @@ class CropsController {
    * @return Response
    * @param res
    */
-  public async pdfHistoryCrop ({ params: { nameFile } }: Request, res: Response) {
+  public async pdfHistoryCrop(
+    { params: { nameFile } }: Request,
+    res: Response
+  ) {
     res.sendFile(path.resolve(`public/uploads/pdf-crop-history/${nameFile}`))
   }
 
@@ -215,7 +248,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async create (req: Request | any, res: Response) {
+  public async create(req: Request | any, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     await validateCropStore(data)
@@ -265,7 +298,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async showLastMonitoring (req: Request, res: Response) {
+  public async showLastMonitoring(req: Request, res: Response) {
     const monitoring = await CropService.getLastMonitoring(req.params.id)
 
     res.status(200).json(monitoring)
@@ -279,7 +312,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async update (req: Request, res: Response) {
+  public async update(req: Request, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     let company = null
@@ -303,7 +336,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async enableOffline (req: Request, res: Response) {
+  public async enableOffline(req: Request, res: Response) {
     const crop = await Crop.findById(req.params.id)
 
     crop.downloaded = req.body.downloaded
@@ -321,7 +354,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async addIntegrationService (req: Request, res: Response) {
+  public async addIntegrationService(req: Request, res: Response) {
     const crop = await Crop.findById(req.params.id)
     const data = req.body
 
@@ -340,7 +373,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async delete (req: Request, res: Response) {
+  public async delete(req: Request, res: Response) {
     const isCancelled = await CropService.cancelled(req.params.id)
 
     if (!isCancelled) {
@@ -362,7 +395,7 @@ class CropsController {
    *
    * @returns
    */
-  public async evidences (req: Request, res: Response) {
+  public async evidences(req: Request, res: Response) {
     const { id } = req.params
     const evidences: Evidence[] = await CropRepository.findAllEvidencesByCropId(
       id
