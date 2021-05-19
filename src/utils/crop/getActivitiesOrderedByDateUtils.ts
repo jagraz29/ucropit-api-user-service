@@ -31,7 +31,9 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
 
         if (
           TypeActivity === 'ACT_SOWING' ||
-          TypeActivity === 'ACT_APPLICATION'
+          TypeActivity === 'ACT_APPLICATION' ||
+          TypeActivity === 'ACT_TILLAGE' ||
+          TypeActivity === 'ACT_FERTILIZATION'
         ) {
           percent = !!achievements.length
             ? achievements.reduce((a, b) => a + b.percent, 0)
@@ -57,7 +59,9 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           dateEnd: dateEnd ? dateEnd : null,
           lots: lots.length,
           surface,
-          volume: Numbers.roundToTwo(calculateCropVolumeUtils(keyUnitType ,pay, surface)),
+          volume: Numbers.roundToTwo(
+            calculateCropVolumeUtils(keyUnitType, pay, surface)
+          ),
           pay,
           dateObservation: dateObservation ? dateObservation : null,
           signed: !achievements.length ? signers.length : null,
