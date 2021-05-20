@@ -21,19 +21,12 @@ async function execUpdateSupply() {
 
     let supplyApplied = achievement.supplies.id(item.supplyIdApplied)
 
-    if (
-      supply &&
-      !supplyApplied.supply &&
-      supplyApplied &&
-      Object.keys(supplyApplied).length >= 1
-    ) {
-      const result = await Achievement.updateOne(
-        { _id: item.achievementId },
-        { $set: { 'supplies.$[elem].supply': supply._id } },
-        { arrayFilters: [{ 'elem._id': { $gte: item.supplyIdApplied } }] }
+    if (supply && supplyApplied && Object.keys(supplyApplied).length >= 1) {
+      await Achievement.findOneAndUpdate(
+        { _id: item.achievementId, 'supplies._id': supplyApplied._id },
+        { $set: { 'supplies.$.supply': supply._id } }
       )
 
-      console.log(result)
       console.log(`${chalk.green(`ACHIEVEMENT ID: ${achievement._id}`)}`)
       console.log(`${chalk.green(`SUPPLY APPLIED ID: ${supplyApplied._id}`)}`)
     }
