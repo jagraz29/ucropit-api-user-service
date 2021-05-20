@@ -276,4 +276,128 @@ export class CropRepository {
 
     return !!cropsInstance.length ? cropsInstance : null
   }
+
+  /**
+   *
+   * @param query
+   * @param type
+   */
+  public static async findCropsFilterActivityForBilling(query, type) {
+    const cropsInstance = await this.getCropWithPopulates(query, 'find')
+
+    return !!cropsInstance.length ? joinActivitiesByCrop(cropsInstance) : null
+  }
+
+  /**
+   *
+   * @param query
+   * @returns
+   */
+  private static async getCropWithPopulates(
+    query,
+    method: string,
+    isVirtuals?: boolean
+  ) {
+    const queryCrops = Crop[method](query)
+      .populate('lots.data')
+      .populate('cropType')
+      .populate('unitType')
+      .populate({ path: 'company', populate: [{ path: 'files' }] })
+      .populate({
+        path: 'pending',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots', select: '-area -__v' },
+          { path: 'files' },
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }]
+          },
+          {
+            path: 'storages',
+            populate: [{ path: 'storageType' }]
+          }
+        ]
+      })
+      .populate({
+        path: 'toMake',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots', select: '-area -__v' },
+          { path: 'files' },
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }]
+          },
+          {
+            path: 'storages',
+            populate: [{ path: 'storageType' }]
+          }
+        ]
+      })
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots', select: '-area -__v' },
+          { path: 'files' },
+          {
+            path: 'achievements',
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
+          },
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }]
+          },
+          {
+            path: 'storages',
+            populate: [{ path: 'storageType' }]
+          },
+          { path: 'lotsMade' }
+        ]
+      })
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots', select: '-area -__v' },
+          { path: 'files' },
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }]
+          },
+          {
+            path: 'storages',
+            populate: [{ path: 'storageType' }]
+          },
+          {
+            path: 'achievements',
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
+          }
+        ]
+      })
+      .populate('members.user')
+
+    if (isVirtuals) {
+      return queryCrops.lean({ virtuals: true })
+    }
+
+    return queryCrops.lean()
+  }
 }

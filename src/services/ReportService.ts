@@ -82,10 +82,8 @@ class ReportService {
           'Harvest'
         ),
         surfaces_signed_harvest: this.sumSurfaceSigners(crop, 'Harvest'),
-        surfaces_files_approved_harvest: this.totalSurfacesAchievementsFileApproved(
-          crop,
-          'Harvest'
-        ),
+        surfaces_files_approved_harvest:
+          this.totalSurfacesAchievementsFileApproved(crop, 'Harvest'),
         link_pdf_ots_harvest: this.createLinkDownloadFilesSign(
           crop.finished,
           'Harvest'
@@ -99,10 +97,8 @@ class ReportService {
           crop,
           'Application'
         ),
-        surfaces_files_approved_application: this.totalSurfacesAchievementsFileApproved(
-          crop,
-          'Application'
-        ),
+        surfaces_files_approved_application:
+          this.totalSurfacesAchievementsFileApproved(crop, 'Application'),
         link_pdf_ots_application: this.createLinkDownloadFilesSign(
           crop.finished,
           'Application'
@@ -116,10 +112,8 @@ class ReportService {
           crop,
           'Fertilization'
         ),
-        surfaces_files_approved_fertilization: this.totalSurfacesAchievementsFileApproved(
-          crop,
-          'Fertilization'
-        ),
+        surfaces_files_approved_fertilization:
+          this.totalSurfacesAchievementsFileApproved(crop, 'Fertilization'),
         link_pdf_ots_fertilization: this.createLinkDownloadFilesSign(
           crop.finished,
           'Fertilization'
@@ -130,10 +124,8 @@ class ReportService {
           'Tillage'
         ),
         surfaces_signed_tillage: this.sumSurfaceSigners(crop, 'Tillage'),
-        surfaces_files_approved_tillage: this.totalSurfacesAchievementsFileApproved(
-          crop,
-          'Tillage'
-        ),
+        surfaces_files_approved_tillage:
+          this.totalSurfacesAchievementsFileApproved(crop, 'Tillage'),
         link_pdf_ots_tillage: this.createLinkDownloadFilesSign(
           crop.finished,
           'Tillage'
@@ -201,11 +193,12 @@ class ReportService {
               lot,
               tagsTypeAgreement.SUSTAIN
             ),
-            date_sign_achievement_by_lot_sus: await this.lastDateSignAchievementByLotAgreement(
-              crop,
-              lot,
-              tagsTypeAgreement.SUSTAIN
-            ),
+            date_sign_achievement_by_lot_sus:
+              await this.lastDateSignAchievementByLotAgreement(
+                crop,
+                lot,
+                tagsTypeAgreement.SUSTAIN
+              ),
             link_land_use_agreement: this.generateStaticDownloads(
               crop.finished,
               tagsTypeAgreement.EXPLO
@@ -232,11 +225,12 @@ class ReportService {
               lot,
               tagsTypeAgreement.EXPLO
             ),
-            date_sign_achievement_by_lot_explo: await this.lastDateSignAchievementByLotAgreement(
-              crop,
-              lot,
-              tagsTypeAgreement.EXPLO
-            ),
+            date_sign_achievement_by_lot_explo:
+              await this.lastDateSignAchievementByLotAgreement(
+                crop,
+                lot,
+                tagsTypeAgreement.EXPLO
+              ),
             surface_planned_sowing: this.surfacePlannedByActivity(
               crop,
               lot,
@@ -259,15 +253,10 @@ class ReportService {
               crop,
               'ACT_SOWING'
             ),
-            date_sign_achievement_by_lot_sowing: await this.lastDateSignAchievementByLot(
-              crop,
-              lot,
-              'ACT_SOWING'
-            ),
-            total_surface_with_evidence_sowing: this.totalSurfacesAchievementsFileApproved(
-              crop,
-              'ACT_SOWING'
-            ),
+            date_sign_achievement_by_lot_sowing:
+              await this.lastDateSignAchievementByLot(crop, lot, 'ACT_SOWING'),
+            total_surface_with_evidence_sowing:
+              this.totalSurfacesAchievementsFileApproved(crop, 'ACT_SOWING'),
             link_pdf_ots_sowing: this.createLinkDownloadFilesSign(
               crop.finished,
               'Sowing'
@@ -299,15 +288,10 @@ class ReportService {
               crop,
               'ACT_HARVEST'
             ),
-            date_sign_achievement_by_lot_harvest: await this.lastDateSignAchievementByLot(
-              crop,
-              lot,
-              'ACT_HARVEST'
-            ),
-            total_surface_with_evidence_harvest: this.totalSurfacesAchievementsFileApproved(
-              crop,
-              'ACT_HARVEST'
-            ),
+            date_sign_achievement_by_lot_harvest:
+              await this.lastDateSignAchievementByLot(crop, lot, 'ACT_HARVEST'),
+            total_surface_with_evidence_harvest:
+              this.totalSurfacesAchievementsFileApproved(crop, 'ACT_HARVEST'),
             link_pdf_ots_harvest: this.createLinkDownloadFilesSign(
               crop.finished,
               'Harvest'
@@ -339,15 +323,17 @@ class ReportService {
               crop,
               'ACT_APPLICATION'
             ),
-            date_sign_achievement_by_lot_application: await this.lastDateSignAchievementByLot(
-              crop,
-              lot,
-              'ACT_APPLICATION'
-            ),
-            total_surface_with_evidence_application: this.totalSurfacesAchievementsFileApproved(
-              crop,
-              'ACT_APPLICATION'
-            ),
+            date_sign_achievement_by_lot_application:
+              await this.lastDateSignAchievementByLot(
+                crop,
+                lot,
+                'ACT_APPLICATION'
+              ),
+            total_surface_with_evidence_application:
+              this.totalSurfacesAchievementsFileApproved(
+                crop,
+                'ACT_APPLICATION'
+              ),
             link_pdf_ots_application: this.createLinkDownloadFilesSign(
               crop.finished,
               'Application'
@@ -381,15 +367,17 @@ class ReportService {
               crop,
               'ACT_FERTILIZATION'
             ),
-            date_sign_achievement_by_lot_fertilization: await this.lastDateSignAchievementByLot(
-              crop,
-              lot,
-              'ACT_FERTILIZATION'
-            ),
-            total_surface_with_evidence_fertilization: this.totalSurfacesAchievementsFileApproved(
-              crop,
-              'ACT_FERTILIZATION'
-            ),
+            date_sign_achievement_by_lot_fertilization:
+              await this.lastDateSignAchievementByLot(
+                crop,
+                lot,
+                'ACT_FERTILIZATION'
+              ),
+            total_surface_with_evidence_fertilization:
+              this.totalSurfacesAchievementsFileApproved(
+                crop,
+                'ACT_FERTILIZATION'
+              ),
             link_pdf_ots_fertilization: this.createLinkDownloadFilesSign(
               crop.finished,
               'Fertilization'
@@ -421,15 +409,10 @@ class ReportService {
               crop,
               'ACT_TILLAGE'
             ),
-            date_sign_achievement_by_lot_tillage: await this.lastDateSignAchievementByLot(
-              crop,
-              lot,
-              'ACT_TILLAGE'
-            ),
-            total_surface_with_evidence_tillage: this.totalSurfacesAchievementsFileApproved(
-              crop,
-              'ACT_TILLAGE'
-            ),
+            date_sign_achievement_by_lot_tillage:
+              await this.lastDateSignAchievementByLot(crop, lot, 'ACT_TILLAGE'),
+            total_surface_with_evidence_tillage:
+              this.totalSurfacesAchievementsFileApproved(crop, 'ACT_TILLAGE'),
             link_pdf_ots_tillage: this.createLinkDownloadFilesSign(
               crop.finished,
               'Tillage'
@@ -469,11 +452,12 @@ class ReportService {
               'ACT_MONITORING',
               lot
             ),
-            date_total_signature_monitor: await this.lastDateSignActivitiesFinish(
-              crop,
-              'ACT_MONITORING',
-              lot
-            )
+            date_total_signature_monitor:
+              await this.lastDateSignActivitiesFinish(
+                crop,
+                'ACT_MONITORING',
+                lot
+              )
           }
         })
 
@@ -758,7 +742,7 @@ class ReportService {
     const dataSet = cropsClean.map((crop) => {
       const dataLots = crop.lots.map((item) => {
         const itemData = item.data.map((lot) => {
-          return { 
+          return {
             lot_id: lot._id.toString(),
             campaign_id: crop._id.toString(),
             coords: lot.coordinates,
@@ -769,11 +753,8 @@ class ReportService {
               lot,
               'ACT_SOWING'
             ),
-            list_complete_signed_achievements_sowing: this.getValidateAchievements(
-              crop,
-              lot,
-              'ACT_SOWING'
-            ),
+            list_complete_signed_achievements_sowing:
+              this.getValidateAchievements(crop, lot, 'ACT_SOWING'),
             sowing_date: this.getListDates(crop, lot, 'ACT_SOWING'),
             harvest_date: this.getListDates(crop, lot, 'ACT_HARVEST'),
             cropType: crop.cropType.name.es,
@@ -1037,10 +1018,8 @@ class ReportService {
     if (lot.centerBound) {
       const { latitude, longitude } = lot.centerBound
 
-      const resultAddress: any = await GeoLocationService.getLocationByCoordinates(
-        latitude,
-        longitude
-      )
+      const resultAddress: any =
+        await GeoLocationService.getLocationByCoordinates(latitude, longitude)
 
       if (
         resultAddress.length > 0 &&
@@ -1324,7 +1303,6 @@ class ReportService {
     }
 
     return dates
-
   }
 
   private static sumSurfaceAchievements(activities): number {
@@ -1683,10 +1661,6 @@ class ReportService {
   }
 
   private static isApprovedFileEvidence(files) {
-<<<<<<< HEAD
-    // console.log(files)
-=======
->>>>>>> cbaaff4094221dc9373c43d3baed2c7d4b4057dd
     for (const file of files) {
       if (file.settings && file.settings.fromLots) {
         return true
@@ -1699,41 +1673,39 @@ class ReportService {
   public static async generateReportsSowingBilling(crops) {
     const filterCropsSowing = this.filterCropsSowing(crops, 'ACT_SOWING')
     const dataCropsSowing = filterCropsSowing.map((crop) => {
-       const activities = [...crop.done, ...crop.finished]
-       const activitiesFilter = activities.filter(
+      const activities = [...crop.done, ...crop.finished]
+      const activitiesFilter = activities.filter(
         (activity) => activity.type.tag === 'ACT_SOWING'
       )
-       const dataActivities = activitiesFilter.map(async (item) => {
-       const itemDataAchievements = item.achievements.map(async (achievement) => {
-        return {
-          cuit: crop.company?.identifier,
-          business_name: (await this.getCompany(crop.company?.identifier))
-          .name,
-          crop: crop.cropType.name.es,
-          crop_name: crop.name,
-          responsible: this.getMembersWithRol(crop),
-          surface_total: crop.surface,
-          total_surface_signed_sowing: achievement.surface,
-          date_sign_achievement_by_lot_sowing: await this.lastDateSignAchievement(
-            achievement,
-            'ACT_SOWING'
-          ),
-        }
-       })
-       
-       return Promise.all(itemDataAchievements)
+      const dataActivities = activitiesFilter.map(async (item) => {
+        const itemDataAchievements = item.achievements.map(
+          async (achievement) => {
+            return {
+              cuit: crop.company?.identifier,
+              business_name: (await this.getCompany(crop.company?.identifier))
+                .name,
+              crop: crop.cropType.name.es,
+              crop_name: crop.name,
+              responsible: this.getMembersWithRol(crop),
+              surface_total: crop.surface,
+              total_surface_signed_sowing: achievement.surface,
+              date_sign_achievement_by_lot_sowing:
+                await this.lastDateSignAchievement(achievement, 'ACT_SOWING')
+            }
+          }
+        )
+
+        return Promise.all(itemDataAchievements)
       })
       return Promise.all(dataActivities)
-     })
-     return _.flatten(_.flatten(await Promise.all(dataCropsSowing)))
+    })
+    return _.flatten(_.flatten(await Promise.all(dataCropsSowing)))
   }
 
-
-    private static filterCropsSowing(crops: any, type) {
-    return crops.filter(
-      (crop) =>
-      ///(this.checkAgreements(crop.finished) || this.checkAgreements(crop.done)) && 
-      (this.isContainActivityBilling(crop, type))
+  private static filterCropsSowing(crops: any, type) {
+    return crops.filter((crop) =>
+      ///(this.checkAgreements(crop.finished) || this.checkAgreements(crop.done)) &&
+      this.isContainActivityBilling(crop, type)
     )
   }
 
@@ -1781,7 +1753,7 @@ class ReportService {
     })
     .reduce((a, b) => a + b['surface'] || 0, 0)*/
 
-    /*public static async generateReportsAplicationBilling(crops) {
+  /*public static async generateReportsAplicationBilling(crops) {
       const dataCropAplication = crops.flatMap((crop) => { 
         const activities = [
           ...crop.done.filter((activity) => activity.type.tag === 'ACT_APPLICATION'),
@@ -1797,74 +1769,85 @@ class ReportService {
     }*/
 
   public static async generateReportsAplicationBilling(crops) {
-    const filterCropsAplication= this.filterCropsSowing(crops, 'ACT_APPLICATION')
+    const filterCropsAplication = this.filterCropsSowing(
+      crops,
+      'ACT_APPLICATION'
+    )
     const dataCropAplication = filterCropsAplication.map((crop) => {
-       const activities = [...crop.done.filter((activity) => activity.type.tag === 'ACT_APPLICATION'), 
-        ...crop.finished.filter((activity) => activity.type.tag === 'ACT_APPLICATION')]
-       const dataActivities = activities.map(async (item) => {
-       const itemDataAchievements = item.achievements.map(async (achievement) => {
-         //console.log("activities: ", activities)
-         //console.log("dataActivities: ", item)
-         //console.log("dataActivities: ", achievement)
-        return {
-          cuit: crop.company?.identifier,
-          business_name: (await this.getCompany(crop.company?.identifier))
-          .name,
-          crop: crop.cropType.name.es,
-          crop_name: crop.name,
-          responsible: this.getMembersWithRol(crop),
-          surface_total: crop.surface,
-          total_surface_signed_aplication: achievement.surface,
-          date_sign_achievement_by_lot_aplication: await this.lastDateSignAchievement(
-            achievement,
-            'ACT_APPLICATION'
-          ),
-        }
-       })
-       
-       return Promise.all(itemDataAchievements)
+      const activities = [
+        ...crop.done.filter(
+          (activity) => activity.type.tag === 'ACT_APPLICATION'
+        ),
+        ...crop.finished.filter(
+          (activity) => activity.type.tag === 'ACT_APPLICATION'
+        )
+      ]
+      const dataActivities = activities.map(async (item) => {
+        const itemDataAchievements = item.achievements.map(
+          async (achievement) => {
+            //console.log("activities: ", activities)
+            //console.log("dataActivities: ", item)
+            //console.log("dataActivities: ", achievement)
+            return {
+              cuit: crop.company?.identifier,
+              business_name: (await this.getCompany(crop.company?.identifier))
+                .name,
+              crop: crop.cropType.name.es,
+              crop_name: crop.name,
+              responsible: this.getMembersWithRol(crop),
+              surface_total: crop.surface,
+              total_surface_signed_aplication: achievement.surface,
+              date_sign_achievement_by_lot_aplication:
+                await this.lastDateSignAchievement(
+                  achievement,
+                  'ACT_APPLICATION'
+                )
+            }
+          }
+        )
+
+        return Promise.all(itemDataAchievements)
       })
       return Promise.all(dataActivities)
-     })
-     return _.flatten(_.flatten(await Promise.all(dataCropAplication)))
+    })
+    return _.flatten(_.flatten(await Promise.all(dataCropAplication)))
   }
 
-  private static async getDateLastSignedAchievement(achievements) {
-    let dates = []
-    const achievementsObject = await Achievement.findById(achievements._id)
-    if (this.isCompleteSigners(achievementsObject.signers)){
-            
-      const dateLast = achievementsObject.signers.pop()._id.getTimestamp()
-      dates.push(dateLast)
-    }
-    //for (const activity of activities) {
-      /*for (const achievement of achievements) {
-          const achievementsObject = await Achievement.findById(achievement._id)
-         
-          if (this.isCompleteSigners(achievementsObject.signers)){
-            
-            const dateLast = achievementsObject.signers.pop()._id.getTimestamp()
-            dates.push(dateLast)
-          }
-      }*/
-    //}
-    return dates.filter((date) => date)
-  }
+  // private static async getDateLastSignedAchievement(achievements) {
+  //   let dates = []
+  //   const achievementsObject = await Achievement.findById(achievements._id)
+  //   if (this.isCompleteSigners(achievementsObject.signers)) {
+  //     const dateLast = achievementsObject.signers.pop()._id.getTimestamp()
+  //     dates.push(dateLast)
+  //   }
+  //   //for (const activity of activities) {
+  //   /*for (const achievement of achievements) {
+  //         const achievementsObject = await Achievement.findById(achievement._id)
 
-  private static async lastDateSignAchievement(achievement, typeActivity) {
-    const datesFinished = await this.getDateLastSignedAchievement(
-      achievement//crop.finished.filter((activity) => activity.type.tag === typeActivity),
-    )
-    const lastDate = datesFinished.length > 0 ? datesFinished[0] : null
+  //         if (this.isCompleteSigners(achievementsObject.signers)){
 
-    return lastDate
-      ? lastDate.toLocaleDateString('es-ES', {
-          day: 'numeric',
-          year: 'numeric',
-          month: 'long'
-        })
-      : ''
-  }
+  //           const dateLast = achievementsObject.signers.pop()._id.getTimestamp()
+  //           dates.push(dateLast)
+  //         }
+  //     }*/
+  //   //}
+  //   return dates.filter((date) => date)
+  // }
+
+  // private static async lastDateSignAchievement(achievement, typeActivity) {
+  //   const datesFinished = await this.getDateLastSignedAchievement(
+  //     achievement //crop.finished.filter((activity) => activity.type.tag === typeActivity),
+  //   )
+  //   const lastDate = datesFinished.length > 0 ? datesFinished[0] : null
+
+  //   return lastDate
+  //     ? lastDate.toLocaleDateString('es-ES', {
+  //         day: 'numeric',
+  //         year: 'numeric',
+  //         month: 'long'
+  //       })
+  //     : ''
+  // }
 }
 
 export default ReportService

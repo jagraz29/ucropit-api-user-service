@@ -26,7 +26,12 @@ import {
   getCropPipelineDmReportUtils
 } from '../utils'
 
-import { ReportSignersByCompany, ReportEiq, ReportDm } from '../interfaces'
+import {
+  ReportSignersByCompany,
+  ReportEiq,
+  ReportDm,
+  UserAuth
+} from '../interfaces'
 
 import { roles, errors, rolesReportSowingBilling } from '../types/common'
 
@@ -257,21 +262,21 @@ class ReportsController {
    * @param req
    * @param res
    */
-  public async sendFileReportSowingBilling(req: Request, res: Response) {
-    const { email, identifier } = req.body
-    const user: any = req.user
-    let crops = await CropService.cropsOnlySeeRolesSowing(
+  public async sendFileReportBilling(req: Request, res: Response) {
+    const email: string = req.query.email as string
+    const identifier: string = req.query.identifier as string
+    const type: string = req.query.typeActivity as string
+
+    let crops = await CropRepository.findCropsFilterActivityForBilling(
       {
         cancelled: false,
-        'members.user': user._id,
         'members.identifier': identifier
       },
-      {
-        user: user._id,
-        identifier: identifier
-      },
-      rolesReportSowingBilling
+      type
     )
+
+    console.log(crops)
+    return
 
     if (crops.length === 0) {
       const error = errors.find((error) => error.key === '001')
