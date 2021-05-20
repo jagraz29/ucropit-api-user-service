@@ -182,6 +182,18 @@ router.post(
   reportsController.reportsDm
 )
 
+router.post(
+  '/crops/attachment/sowingBilling',
+  // authMiddleware,
+  reportsController.sendFileReportSowingBilling
+)
+
+router.post(
+  '/crops/attachment/applicationBilling',
+  // authMiddleware,
+  reportsController.sendFileReportApplicationBilling
+)
+
 router.get('/map/lot', reportsController.showMap)
 
 export default router

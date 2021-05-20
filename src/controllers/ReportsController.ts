@@ -26,13 +26,9 @@ import {
   getCropPipelineDmReportUtils
 } from '../utils'
 
-import {
-  ReportSignersByCompany,
-  ReportEiq,
-  ReportDm
-} from '../interfaces'
+import { ReportSignersByCompany, ReportEiq, ReportDm } from '../interfaces'
 
-import { roles, errors } from '../types/common'
+import { roles, errors, rolesReportSowingBilling } from '../types/common'
 
 import fs from 'fs'
 
@@ -189,7 +185,9 @@ class ReportsController {
 
     const cropPipeline: any = getCropPipelineEiqReportUtils({ identifier })
 
-    const report: Array<ReportEiq> = await CropRepository.findCrops(cropPipeline)
+    const report: Array<ReportEiq> = await CropRepository.findCrops(
+      cropPipeline
+    )
 
     if (!report) {
       const error = errors.find((error) => error.key === '005')
@@ -236,11 +234,7 @@ class ReportsController {
       return res.status(404).json(error.code)
     }
 
-    const pathFile = ExportFile.exportXls(
-      report,
-      ReportsDmHeaderXls,
-      'DM.xlsx'
-    )
+    const pathFile = ExportFile.exportXls(report, ReportsDmHeaderXls, 'DM.xlsx')
 
     await EmailService.sendWithAttach({
       template: 'export-file',
@@ -249,6 +243,93 @@ class ReportsController {
       files: [
         {
           filename: 'DM.xlsx',
+          content: fs.readFileSync(pathFile)
+        }
+      ]
+    })
+
+    return res.status(200).json('Ok')
+  }
+
+  /**
+   * Send export file report in email.
+   *
+   * @param req
+   * @param res
+   */
+  public async sendFileReportSowingBilling(req: Request, res: Response) {
+    const { email, identifier } = req.body
+    const user: any = req.user
+    let crops = await CropService.cropsOnlySeeRolesSowing(
+      {
+        cancelled: false,
+        'members.user': user._id,
+        'members.identifier': identifier
+      },
+      {
+        user: user._id,
+        identifier: identifier
+      },
+      rolesReportSowingBilling
+    )
+
+    if (crops.length === 0) {
+      const error = errors.find((error) => error.key === '001')
+      return res.status(400).json(error.code)
+    }
+
+    const reports = await ReportService.generateReportsSowingBilling(crops)
+
+    const pathFile = ExportFile.modeExportSowingBilling(reports, 'xls')
+
+    await EmailService.sendWithAttach({
+      template: 'export-file',
+      to: email,
+      data: {},
+      files: [
+        {
+          filename: 'report.xlsx',
+          content: fs.readFileSync(pathFile)
+        }
+      ]
+    })
+
+    return res.status(200).json('Ok')
+  }
+
+  public async sendFileReportApplicationBilling(req: Request, res: Response) {
+    console.log('sendFileReportAplicationBilling')
+    const { email, identifier } = req.body
+    const user: any = req.user
+    let crops = await CropService.cropsOnlySeeRolesSowing(
+      {
+        cancelled: false,
+        'members.user': user._id,
+        'members.identifier': identifier
+      },
+      {
+        user: user._id,
+        identifier: identifier
+      },
+      rolesReportSowingBilling
+    )
+
+    if (crops.length === 0) {
+      const error = errors.find((error) => error.key === '001')
+      return res.status(400).json(error.code)
+    }
+
+    const reports = await ReportService.generateReportsAplicationBilling(crops)
+
+    const pathFile = ExportFile.modeExportAplicationBilling(reports, 'xls')
+
+    await EmailService.sendWithAttach({
+      template: 'export-file',
+      to: email,
+      data: {},
+      files: [
+        {
+          filename: 'report.xlsx',
           content: fs.readFileSync(pathFile)
         }
       ]

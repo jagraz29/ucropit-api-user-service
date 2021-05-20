@@ -7,7 +7,8 @@ import { Numbers } from '../utils'
 import {
   tagsTypeAgreement,
   responsibleRoles,
-  supplyTypesSeedGen
+  supplyTypesSeedGen,
+  rolesAdvisorPromoter
 } from '../utils/Constants'
 import Achievement from '../models/achievement'
 import Activity from '../models/activity'
@@ -241,9 +242,13 @@ class ReportService {
               lot,
               'ACT_SOWING'
             ),
-            date_achievement_sowing: this.lastDateAchievementByLot(
+            /*date_achievement_sowing: this.lastDateAchievementByLot(
               crop,
               lot,
+              'ACT_SOWING'
+            ),*/
+            date_achievement_sowing: await this.lastDateSignAchievement(
+              crop,
               'ACT_SOWING'
             ),
             surface_achievement_sowing: this.surfaceAchievementsActivity(
@@ -753,7 +758,7 @@ class ReportService {
     const dataSet = cropsClean.map((crop) => {
       const dataLots = crop.lots.map((item) => {
         const itemData = item.data.map((lot) => {
-          return {
+          return { 
             lot_id: lot._id.toString(),
             campaign_id: crop._id.toString(),
             coords: lot.coordinates,
@@ -1319,6 +1324,7 @@ class ReportService {
     }
 
     return dates
+
   }
 
   private static sumSurfaceAchievements(activities): number {
@@ -1677,7 +1683,10 @@ class ReportService {
   }
 
   private static isApprovedFileEvidence(files) {
+<<<<<<< HEAD
     // console.log(files)
+=======
+>>>>>>> cbaaff4094221dc9373c43d3baed2c7d4b4057dd
     for (const file of files) {
       if (file.settings && file.settings.fromLots) {
         return true
@@ -1685,6 +1694,176 @@ class ReportService {
     }
 
     return false
+  }
+
+  public static async generateReportsSowingBilling(crops) {
+    const filterCropsSowing = this.filterCropsSowing(crops, 'ACT_SOWING')
+    const dataCropsSowing = filterCropsSowing.map((crop) => {
+       const activities = [...crop.done, ...crop.finished]
+       const activitiesFilter = activities.filter(
+        (activity) => activity.type.tag === 'ACT_SOWING'
+      )
+       const dataActivities = activitiesFilter.map(async (item) => {
+       const itemDataAchievements = item.achievements.map(async (achievement) => {
+        return {
+          cuit: crop.company?.identifier,
+          business_name: (await this.getCompany(crop.company?.identifier))
+          .name,
+          crop: crop.cropType.name.es,
+          crop_name: crop.name,
+          responsible: this.getMembersWithRol(crop),
+          surface_total: crop.surface,
+          total_surface_signed_sowing: achievement.surface,
+          date_sign_achievement_by_lot_sowing: await this.lastDateSignAchievement(
+            achievement,
+            'ACT_SOWING'
+          ),
+        }
+       })
+       
+       return Promise.all(itemDataAchievements)
+      })
+      return Promise.all(dataActivities)
+     })
+     return _.flatten(_.flatten(await Promise.all(dataCropsSowing)))
+  }
+
+
+    private static filterCropsSowing(crops: any, type) {
+    return crops.filter(
+      (crop) =>
+      ///(this.checkAgreements(crop.finished) || this.checkAgreements(crop.done)) && 
+      (this.isContainActivityBilling(crop, type))
+    )
+  }
+
+  private static getMembersWithRol(crop) {
+    let membersNames = ''
+    const members = crop.members.filter((member) =>
+      rolesAdvisorPromoter.includes(member.type)
+    )
+
+    for (const member of members) {
+      membersNames += `${member.identifier} Asesor promotor,`
+    }
+
+    return membersNames
+  }
+
+  private static isContainActivityBilling(crop: any, type): Boolean {
+    const activitiesDone = crop.done.filter(
+      (activity) => activity.type && activity.type.tag === type
+    )
+    const activitiesFinished = crop.finished.filter(
+      (activity) => activity.type && activity.type.tag === type
+    )
+    const activities = [...activitiesDone, ...activitiesFinished]
+
+    if (activities.length > 0) {
+      return true
+    }
+
+    return false
+  }
+  /*let crops = await CropService.getCropByActivities(activityType)
+  const totalSurface = crops
+    .flatMap((crop) => {
+      const activities = [
+        ...crop.done.filter((activity) => activity.type.tag === activityType),
+        ...crop.finished.filter(
+          (activity) => activity.type.tag === activityType
+        )
+      ]
+      return activities
+    })
+    .flatMap((activity) => {
+      return activity.achievements
+    })
+    .reduce((a, b) => a + b['surface'] || 0, 0)*/
+
+    /*public static async generateReportsAplicationBilling(crops) {
+      const dataCropAplication = crops.flatMap((crop) => { 
+        const activities = [
+          ...crop.done.filter((activity) => activity.type.tag === 'ACT_APPLICATION'),
+          ...crop.finished.filter(
+            (activity) => activity.type.tag === 'ACT_APPLICATION'
+          )
+        ]
+        return activities
+      }).flatMap((activity) => {
+        return activity.achievements
+      })
+      return dataCropAplication
+    }*/
+
+  public static async generateReportsAplicationBilling(crops) {
+    const filterCropsAplication= this.filterCropsSowing(crops, 'ACT_APPLICATION')
+    const dataCropAplication = filterCropsAplication.map((crop) => {
+       const activities = [...crop.done.filter((activity) => activity.type.tag === 'ACT_APPLICATION'), 
+        ...crop.finished.filter((activity) => activity.type.tag === 'ACT_APPLICATION')]
+       const dataActivities = activities.map(async (item) => {
+       const itemDataAchievements = item.achievements.map(async (achievement) => {
+         //console.log("activities: ", activities)
+         //console.log("dataActivities: ", item)
+         //console.log("dataActivities: ", achievement)
+        return {
+          cuit: crop.company?.identifier,
+          business_name: (await this.getCompany(crop.company?.identifier))
+          .name,
+          crop: crop.cropType.name.es,
+          crop_name: crop.name,
+          responsible: this.getMembersWithRol(crop),
+          surface_total: crop.surface,
+          total_surface_signed_aplication: achievement.surface,
+          date_sign_achievement_by_lot_aplication: await this.lastDateSignAchievement(
+            achievement,
+            'ACT_APPLICATION'
+          ),
+        }
+       })
+       
+       return Promise.all(itemDataAchievements)
+      })
+      return Promise.all(dataActivities)
+     })
+     return _.flatten(_.flatten(await Promise.all(dataCropAplication)))
+  }
+
+  private static async getDateLastSignedAchievement(achievements) {
+    let dates = []
+    const achievementsObject = await Achievement.findById(achievements._id)
+    if (this.isCompleteSigners(achievementsObject.signers)){
+            
+      const dateLast = achievementsObject.signers.pop()._id.getTimestamp()
+      dates.push(dateLast)
+    }
+    //for (const activity of activities) {
+      /*for (const achievement of achievements) {
+          const achievementsObject = await Achievement.findById(achievement._id)
+         
+          if (this.isCompleteSigners(achievementsObject.signers)){
+            
+            const dateLast = achievementsObject.signers.pop()._id.getTimestamp()
+            dates.push(dateLast)
+          }
+      }*/
+    //}
+    return dates.filter((date) => date)
+  }
+
+  private static async lastDateSignAchievement(achievement, typeActivity) {
+    const datesFinished = await this.getDateLastSignedAchievement(
+      achievement//crop.finished.filter((activity) => activity.type.tag === typeActivity),
+    )
+    const lastDate = datesFinished.length > 0 ? datesFinished[0] : null
+
+    return lastDate
+      ? lastDate.toLocaleDateString('es-ES', {
+          day: 'numeric',
+          year: 'numeric',
+          month: 'long'
+        })
+      : ''
   }
 }
 

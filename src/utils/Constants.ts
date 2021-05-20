@@ -18,6 +18,11 @@ export const responsibleRoles = [
   'PRODUCER_ADVISER_ENCOURAGED'
 ]
 
+export const rolesAdvisorPromoter = [
+  'PRODUCER_ADVISER_ENCOURAGED'
+]
+
+
 export const typesSupplies = [
   {
     tag: 'ACT_HARVEST',
