@@ -214,7 +214,7 @@ class ReportsController {
       ]
     })
 
-    return res.status(200).json(report)
+    return res.status(200).json('Ok')
   }
 
   /**
