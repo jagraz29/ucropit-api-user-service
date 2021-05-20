@@ -20,7 +20,7 @@ export const ReportsEiqHeaderXls = {
     'supplieEiq',
     'scheduleDate',
     'supplieQuantity',
-    'supplieEiqQuantity',
+    'supplieEiqPlanified',
     'achievementDate',
     'supplieTotal',
     'lotSurface',
