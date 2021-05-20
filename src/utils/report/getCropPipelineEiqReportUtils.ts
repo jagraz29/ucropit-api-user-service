@@ -251,7 +251,7 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
     lotName: '$activities.achievements.lots.name',
     supplieCode: '$activities.achievements.supply.code',
     supplieId: '$activities.achievements.supply._id',
-    supplieName: '$activities.achievements.supplies.name',
+    supplieName: '$activities.achievements.supply.brand',
     supplieUnit: '$activities.achievements.supplies.unit',
     supplieEiq: {
       $round: ['$activities.achievements.supplieEiq', 2]
