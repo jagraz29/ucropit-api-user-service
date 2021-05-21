@@ -89,6 +89,8 @@
         text-align: center;
         vertical-align: center;
         color: #66BB6A;
+        margin-top: 5%;
+        margin-left: 20%;
     }
 
     .disclaimer {
@@ -413,7 +415,7 @@
         padding-bottom: 10px;
     }
 
-    activity-framed-h1 {
+    .activity-framed-h1 {
         font-family: sans-serif;
         font-size: 18px;
         font-style: normal;
@@ -523,7 +525,7 @@
                     Bitácora al {{ dateCreatePdf }}
                 </div>
                 <div class="text-title">
-                    {{dataCrop.name}} <br>{{moment dataCrop.dateCrop format="MMM DD, YYYY"}}
+                    {{dataCrop.name}} <br>{{moment dataCrop.dateCrop format="DD/MM/YYYY"}}
                 </div>
                 <div class="text-company">
                     {{company}}
@@ -642,13 +644,29 @@
 {{#each activities}}
     {{#ifNotCond tag "ACT_AGREEMENTS" }}
             <div class="activity-header">
-                <img class="activity-type-img" src="https://static.thenounproject.com/png/420338-200.png" width="26" height="26" />
+                {{#switch tag}}
+                    {{#case "ACT_SOWING"}}
+                        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/truck.png" width="26" height="26" />
+                    {{/case}}
+                    {{#case "ACT_MONITORING"}}
+                        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/eye.png" width="26" height="26" />
+                    {{/case}}
+                    {{#case "ACT_APPLICATION"}}
+                        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/flask.png" width="26" height="26" />
+                    {{/case}}
+                    {{#case "ACT_HARVEST"}}
+                        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/harvest.png" width="26" height="26" />
+                    {{/case}}
+                    {{#case "ACT_AGREEMENTS"}}
+                        <img class="activity-type-img" src="https://static.thenounproject.com/png/420338-200.png" width="26" height="26" />
+                    {{/case}}
+                {{/switch}}
                 <div class="activity-title">{{name}}</div>
             </div>
             <div class="activity-frame">
                 <div>
                     <div class="date-activity">
-                        <i class="fa fa-check"></i>{{today}}
+                        <i class="fa fa-check"></i>{{moment dateOrder format="DD/MM/YYYY"}}
                     </div>
                     <h3 class="activity-framed-h1">{{name}}</h3>
                     <div class="activity-lots">{{lots}} lotes</div>
@@ -675,7 +693,7 @@
                 <div class="activity-validations">
                     <div>
                         <div class="validation-title">Validaciones</div>
-                        <div><span class="validation-date">{{moment dateOrder format="MMM DD, YYYY"}}</span></div>
+                        <div><span class="validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
                         <div class="validation-name">Santiago Casares</div>
                         <divclass="backup-docs">Productor - 30-20771364-9
                     </div>
@@ -693,27 +711,29 @@
         <div class="activity-title">Aplicaciones</div>
     </div>
     {{#each activities}}
-        {{#if supplies }}
-            {{#each supplies}}
-                <div class="activity-frame">
-                    <div>
-                        <div class="date-activity">
-                            <i class="fa fa-check"></i>{{today}}
-                        </div>
-                        <h3 class="activity-framed-h1">{{name}}</h3>
-                        <div class="activity-lots">{{lots}}</div>
-                        <div class="spokesman-data">Evidencias</div>
-                        <div class="backup-docs">documentacion de respaldo</div>
-                        {{#each files}}
-                            <div><img src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
-                                      height="25" width="25" />
-                                <a href={{path}}>{{name}}</a>
+        {{#each achievements}}
+            {{#if supplies }}
+                {{#each supplies}}
+                    <div class="activity-frame">
+                        <div>
+                            <div class="date-activity">
+                                <i class="fa fa-check"></i>{{today}}
                             </div>
-                        {{/each}}
+                            <h3 class="activity-framed-h1">{{name}}</h3>
+                            <div class="activity-lots">{{lots}}</div>
+                            <div class="spokesman-data">Evidencias</div>
+                            <div class="backup-docs">documentacion de respaldo</div>
+                            {{#each files}}
+                                <div><img src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
+                                          height="25" width="25" />
+                                    <a href={{path}}>{{name}}</a>
+                                </div>
+                            {{/each}}
+                        </div>
                     </div>
-                </div>
-            {{/each}}
-        {{/if}}
+                {{/each}}
+            {{/if}}
+        {{/each}}
     {{/each}}
 
 </div>

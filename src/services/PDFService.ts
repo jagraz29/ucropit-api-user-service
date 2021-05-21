@@ -3,7 +3,6 @@ import Handlebars from 'handlebars'
 import pdf from 'html-pdf-node'
 import sha256 from 'sha256'
 import {
-  basePath,
   makeDirIfNotExists,
   readFileBytes,
   saveFile,
@@ -14,7 +13,7 @@ import { setScriptPdf } from '../helpers'
 import { FileDocumentProps } from '../interfaces'
 
 export class PDFService {
-  public static async generatePdf(
+  public static async generatePdf (
     nameTemplate: string,
     context: object,
     directory: string,
@@ -24,7 +23,7 @@ export class PDFService {
     const fileDocuments: Array<FileDocumentProps> | null =
       await FileDocumentRepository.getFiles(cropId)
 
-    const path: string = `${basePath()}public/uploads/${directory}/`
+    const path: string = `public/uploads/${directory}/`
     await makeDirIfNotExists(path)
     const fullName: string = `${nameFile}-${uuidv4()}.pdf`
     const pathFile: string = `${path}${fullName}`
@@ -32,9 +31,9 @@ export class PDFService {
     const hbs: string = readFile(`views/pdf/${nameTemplate}.hbs`)
     const handlebarsWithScript = setScriptPdf(Handlebars)
     const template = handlebarsWithScript.compile(hbs)
-    const html = template(context)
-    console.log(html)
-    const pdfBytes = pdf.generatePdf({ content: html }, { format: 'A4' })
+    const content = template(context)
+    // console.log(content)
+    const pdfBytes = await pdf.generatePdf({ content }, { format: 'A4' })
 
     if (!fileDocuments) {
       saveFile(pathFile, pdfBytes)
@@ -50,24 +49,25 @@ export class PDFService {
     return this.findAndSavePdfExists(directory, fullName, fileDocuments, cropId, pdfBytes)
   }
 
-  private static async findAndSavePdfExists(
+  private static async findAndSavePdfExists (
     directory: string,
     fullName: string,
     fileDocuments: Array<FileDocumentProps>,
     cropId,
     pdfBytes
   ) {
-    const pathFile = `${basePath()}public/uploads/${directory}/`
+    const pathFile = `public/uploads/${directory}/`
     const fileDocument = fileDocuments.find(({ nameFile }) => {
       const oldPdfBytes = readFileBytes(`${pathFile}${nameFile}`)
       if (oldPdfBytes) {
+        console.log(sha256(pdfBytes),sha256(oldPdfBytes))
         return sha256(pdfBytes) === sha256(oldPdfBytes)
       }
     })
     if (fileDocument) {
       return fileDocument.nameFile
     }
-    saveFile(pathFile, pdfBytes)
+    saveFile(`${pathFile}${fullName}`, pdfBytes)
     await FileDocumentRepository.createFile({
       nameFile: fullName,
       path: `${pathFile}${fullName}`,

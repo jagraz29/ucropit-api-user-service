@@ -27,8 +27,8 @@ export function removeFile (dir: string) {
   fs.unlinkSync(dir)
 }
 
-export function saveFile (pathFile: string,pdfBytes: string) {
-  fs.writeFileSync(pathFile, pdfBytes)
+export function saveFile (path: string,pdfBytes: string) {
+  fs.writeFileSync(`${basePath()}${path}`, pdfBytes)
 }
 
 export function readFile (path: string) {
