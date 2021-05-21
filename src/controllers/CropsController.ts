@@ -20,7 +20,8 @@ import {
   getActivitiesOrderedByDateUtils,
   makeDirIfNotExists,
   calculateDataCropUtils,
-  calculateTheoreticalPotentialUtils
+  calculateTheoreticalPotentialUtils,
+  calculateCropVolumeUtils
 } from '../utils'
 
 import {
@@ -124,9 +125,15 @@ class CropsController {
     const lots = await LotService.storeLotImagesAndCountries(crop.lots)
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
+    const volume = calculateCropVolumeUtils(
+      crop.unitType.key,
+      crop.pay,
+      crop.surface
+    )
 
     const newCrop = {
       ...crop,
+      volume,
       lots,
       company: {
         ...crop.company,
