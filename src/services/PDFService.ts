@@ -12,7 +12,7 @@ import { FileDocumentRepository } from '../repositories'
 import { FileDocumentProps } from '../interfaces/FileDocument'
 
 export class PDFService {
-  public static async generatePdf(
+  public static async generatePdf (
     nameTemplate: string,
     context: object,
     nameDirectory: string,

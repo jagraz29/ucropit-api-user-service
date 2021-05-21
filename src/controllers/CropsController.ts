@@ -35,6 +35,7 @@ import { errors } from '../types/common'
 import { ReportSignersByCompany } from '../interfaces'
 import path from 'path'
 import util from 'util'
+import moment from 'moment'
 
 const Crop = models.Crop
 const CropType = models.CropType
@@ -196,9 +197,9 @@ class CropsController {
       dataCrop,
       theoriticalPotential,
       activities,
-      date: new Date()
+      dateCreatePdf: moment().format('DD/MM/YYYY')
     }
-    // console.log(util.inspect(JSON.stringify(dataPdf), { showHidden: false, depth: null }))
+    console.log(util.inspect(JSON.stringify(dataPdf), { showHidden: false, depth: null }))
     const dataPDF = {
       array: [
         {

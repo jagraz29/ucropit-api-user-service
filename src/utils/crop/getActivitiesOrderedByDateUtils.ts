@@ -1,5 +1,6 @@
 import moment from 'moment'
 import { calculateCropVolumeUtils, Numbers } from '../'
+import { TypeActivitiesWithAchievements, TypeActivitiesWithOutAchievements, TypeActivities } from '../../interfaces'
 
 export const getActivitiesOrderedByDateUtils = ({ activities }) => {
   const activitiesRes = activities
@@ -22,27 +23,19 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
         unitType
       }) => {
         let percent: number = 0
-        const pay = payEntry ? payEntry : 0
+        const pay = payEntry ?? 0
         const { key: keyUnitType, name: nameUnitType } = unitType || {}
 
-        if (TypeActivity === 'ACT_AGREEMENTS') {
+        if (TypeActivity === TypeActivities.ACT_AGREEMENTS) {
           return null
         }
 
-        if (
-          TypeActivity === 'ACT_SOWING' ||
-          TypeActivity === 'ACT_APPLICATION' ||
-          TypeActivity === 'ACT_TILLAGE' ||
-          TypeActivity === 'ACT_FERTILIZATION'
-        ) {
-          percent = !!achievements.length
+        if (TypeActivitiesWithAchievements[TypeActivity]) {
+          percent = achievements.length
             ? achievements.reduce((a, b) => a + b.percent, 0)
             : 0
         }
-        if (
-          TypeActivity === 'ACT_MONITORING' ||
-          TypeActivity === 'ACT_HARVEST'
-        ) {
+        if (TypeActivitiesWithOutAchievements[TypeActivity]) {
           const isSigned = signers.filter(({ signed }) => !signed)
           percent = !(isSigned.length > 0) && signers.length !== 0 ? 100 : 0
         }
@@ -53,35 +46,24 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           _id,
           name,
           percent,
-          unitType: nameUnitType ? nameUnitType.es : null,
+          unitType: nameUnitType?.es ?? null,
           tag: TypeActivity,
-          dateStart: dateStart ? dateStart : null,
-          dateEnd: dateEnd ? dateEnd : null,
+          dateStart: dateStart ?? null,
+          dateEnd: dateEnd ?? null,
           lots: lots.length,
           surface,
           volume: Numbers.roundToTwo(
             calculateCropVolumeUtils(keyUnitType, pay, surface)
           ),
           pay,
-          dateObservation: dateObservation ? dateObservation : null,
+          dateObservation: dateObservation ?? null,
           signed: !achievements.length ? signers.length : null,
           signedIf: !achievements.length
-            ? signers.filter(({ signed }) => !!signed).length
+            ? signers.filter(({ signed }) => signed).length
             : null,
           supplies,
-          storages: storages
-            ? storages.map(
-                ({
-                  tonsHarvest,
-                  storageType: {
-                    name: { es: storageTypeName }
-                  }
-                }) => {
-                  return { tonsHarvest, storageTypeName }
-                }
-              )
-            : [],
-          achievements: getDataAchievements(achievements)
+          storages: storages ? getStorages(storages) : [],
+          achievements: getAchievements(achievements)
         }
       }
     )
@@ -92,9 +74,33 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
   )
 }
 
-const getDataAchievements = (achievements): Object[] => {
+const getStorages = (storages): Object[] => {
+  return storages.map(
+    ({
+       tonsHarvest,
+       storageType: {
+         name: { es: storageTypeName }
+       }
+     }) => {
+      return {
+        tonsHarvest,
+        storageTypeName
+      }
+    }
+  )
+}
+
+const getAchievements = (achievements): Object[] => {
   return achievements
-    .map(({ dateAchievement, lots, surface, signers, supplies, _id }) => {
+    .map(
+    ({
+      dateAchievement,
+      lots,
+      surface,
+      signers,
+      supplies,
+      _id
+    }) => {
       return {
         _id,
         dateAchievement,
@@ -102,7 +108,7 @@ const getDataAchievements = (achievements): Object[] => {
         surface,
         supplies,
         signed: signers.length,
-        signedIf: signers.filter(({ signed }) => !!signed).length
+        signedIf: signers.filter(({ signed }) => signed).length
       }
     })
     .filter((item) => item)

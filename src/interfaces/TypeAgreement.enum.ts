@@ -1,0 +1,8 @@
+export enum TypeAgreement {
+  SUSTAIN= 'SUSTAIN',
+  SEED_USE= 'SEED_USE',
+  COTTON_BETS= 'COTTON_BETS',
+  EXPLO= 'EXPLO',
+  FINAN= 'FINAN',
+  COMMER= 'COMMER'
+}

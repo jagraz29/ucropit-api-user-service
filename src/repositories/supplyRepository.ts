@@ -15,7 +15,7 @@ class SupplyRepository {
       .populate('typeId')
       .populate('activesPrinciples.activePrinciple')
 
-    return !!supplies.length ? supplies : null
+    return supplies.length ? supplies : null
   }
 
   /**
