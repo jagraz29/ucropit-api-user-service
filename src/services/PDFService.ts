@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import Handlebars from 'handlebars'
-import pdf from 'html-pdf-node'
+import Puppeteer from 'puppeteer'
 import sha256 from 'sha256'
 import {
   makeDirIfNotExists,
@@ -31,9 +31,16 @@ export class PDFService {
     const hbs: string = readFile(`views/pdf/${nameTemplate}.hbs`)
     const handlebarsWithScript = setScriptPdf(Handlebars)
     const template = handlebarsWithScript.compile(hbs)
-    const content = template(context)
+    const html = template(context)
     // console.log(content)
-    const pdfBytes = await pdf.generatePdf({ content }, { format: 'A4' })
+
+    const browser = await Puppeteer.launch()
+    const page = await browser.newPage()
+    await page.setContent(html)
+    const pdfBytes = await page.pdf({
+      format: 'A4',
+      printBackground: true
+    })
 
     if (!fileDocuments) {
       saveFile(pathFile, pdfBytes)
