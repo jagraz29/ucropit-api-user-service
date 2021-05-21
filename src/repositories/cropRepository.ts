@@ -1,7 +1,11 @@
 import models from '../models'
 const { Crop } = models
 
-import { joinActivitiesByCrop, listEvidencesCrop } from '../utils'
+import {
+  joinActivitiesByCrop,
+  listEvidencesCrop,
+  joinActivitiesFilterTypeWithCrop
+} from '../utils'
 
 export class CropRepository {
   /**
@@ -285,7 +289,9 @@ export class CropRepository {
   public static async findCropsFilterActivityForBilling(query, type) {
     const cropsInstance = await this.getCropWithPopulates(query, 'find')
 
-    return !!cropsInstance.length ? joinActivitiesByCrop(cropsInstance) : null
+    return !!cropsInstance.length
+      ? joinActivitiesFilterTypeWithCrop(cropsInstance, type)
+      : null
   }
 
   /**
@@ -302,6 +308,7 @@ export class CropRepository {
       .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
+      .populate('company')
       .populate({ path: 'company', populate: [{ path: 'files' }] })
       .populate({
         path: 'pending',

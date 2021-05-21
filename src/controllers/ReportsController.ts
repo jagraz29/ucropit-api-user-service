@@ -15,7 +15,8 @@ import EmailService from '../services/EmailService'
 import {
   ReportsSignersByCompaniesHeaderXls,
   ReportsEiqHeaderXls,
-  ReportsDmHeaderXls
+  ReportsDmHeaderXls,
+  reportHeaderBillingXls
 } from '../types/'
 
 import { CropRepository } from '../repositories'
@@ -23,7 +24,8 @@ import {
   structJsonForXls,
   getCropPipelineEiqReportUtils,
   filterDataCropsByCompanies,
-  getCropPipelineDmReportUtils
+  getCropPipelineDmReportUtils,
+  getDataCropsForBilling
 } from '../utils'
 
 import {
@@ -33,7 +35,12 @@ import {
   UserAuth
 } from '../interfaces'
 
-import { roles, errors, rolesReportSowingBilling } from '../types/common'
+import {
+  roles,
+  errors,
+  rolesReportSowingBilling,
+  typeActivityMap
+} from '../types/common'
 
 import fs from 'fs'
 
@@ -275,17 +282,17 @@ class ReportsController {
       type
     )
 
-    console.log(crops)
-    return
-
-    if (crops.length === 0) {
-      const error = errors.find((error) => error.key === '001')
-      return res.status(400).json(error.code)
+    if (!crops) {
+      return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
     }
 
-    const reports = await ReportService.generateReportsSowingBilling(crops)
+    const report = getDataCropsForBilling(crops)
 
-    const pathFile = ExportFile.modeExportSowingBilling(reports, 'xls')
+    const pathFile = ExportFile.exportXls(
+      report,
+      reportHeaderBillingXls,
+      `BILLING_${typeActivityMap[type]}.xlsx`
+    )
 
     await EmailService.sendWithAttach({
       template: 'export-file',
@@ -293,7 +300,7 @@ class ReportsController {
       data: {},
       files: [
         {
-          filename: 'report.xlsx',
+          filename: `BILLING_${typeActivityMap[type]}.xlsx`,
           content: fs.readFileSync(pathFile)
         }
       ]

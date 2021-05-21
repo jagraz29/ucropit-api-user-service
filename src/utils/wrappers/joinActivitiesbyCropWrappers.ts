@@ -1,3 +1,4 @@
+import { flatten } from 'lodash'
 export const joinActivitiesByCrop = (crop) => {
   const { done, finished, toMake, pending } = crop
   delete crop.done
@@ -8,21 +9,25 @@ export const joinActivitiesByCrop = (crop) => {
 }
 
 export const joinActivitiesFilterTypeWithCrop = (crops, type) => {
-  return crops.map((crop) => {
-    const { done, finished } = crop
+  const cropsWrapper = flatten(
+    crops.map((crop) => {
+      const { done, finished } = crop
 
-    delete crop.done
-    delete crop.finished
-    delete crop.toMake
-    delete crop.pending
+      delete crop.done
+      delete crop.finished
+      delete crop.toMake
+      delete crop.pending
 
-    const doneFiltering = filterActivitiesByType(done, type)
-    const finishedFiltering = filterActivitiesByType(finished, type)
+      const doneFiltering = filterActivitiesByType(done, type)
+      const finishedFiltering = filterActivitiesByType(finished, type)
 
-    return { ...crop, activities: [...doneFiltering, ...finishedFiltering] }
-  })
+      return { ...crop, activities: [...doneFiltering, ...finishedFiltering] }
+    })
+  )
+
+  return cropsWrapper
 }
 
-const filterActivitiesByType = (activities, type) => {
+export const filterActivitiesByType = (activities, type) => {
   return activities.filter((activity) => activity.type.tag === type)
 }

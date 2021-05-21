@@ -134,8 +134,6 @@ class CropsController {
       }
     }
 
-    console.log(newCrop)
-
     res.status(200).json(newCrop)
   }
 
