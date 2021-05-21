@@ -163,16 +163,20 @@ class AchievementsController {
 
     await reminder.save()
 
-    await IntegrationService.exportAchievement(
-      {
-        cropId: data.crop,
-        activityId: data.activity,
-        achievementId: achievement._id,
-        erpAgent: 'auravant',
-        identifier: userConfig.companySelected.identifier
-      },
-      req
-    )
+    try {
+      await IntegrationService.exportAchievement(
+        {
+          cropId: data.crop,
+          activityId: data.activity,
+          achievementId: achievement._id,
+          erpAgent: 'auravant',
+          identifier: userConfig.companySelected.identifier
+        },
+        req
+      )
+    } catch (error) {
+      console.log(error)
+    }
 
     res.status(201).json(achievement)
   }
@@ -206,22 +210,14 @@ class AchievementsController {
 
     activity = await ActivityService.findActivityById(activityId)
 
-    const isCompleteSigned = ActivityService.isCompleteSignersAchievements(
-      activity
-    )
-    const isCompletePercent = ActivityService.isCompletePercentAchievement(
-      activity
-    )
+    const isCompleteSigned =
+      ActivityService.isCompleteSignersAchievements(activity)
+    const isCompletePercent =
+      ActivityService.isCompletePercentAchievement(activity)
 
     if (isCompleteSigned && isCompletePercent) {
-      const {
-        ots,
-        hash,
-        pathPdf,
-        nameFilePdf,
-        nameFileOts,
-        pathOtsFile
-      } = await BlockChainServices.sign(crop, activity)
+      const { ots, hash, pathPdf, nameFilePdf, nameFileOts, pathOtsFile } =
+        await BlockChainServices.sign(crop, activity)
 
       const approvalRegisterSign = await ApprovalRegisterSingService.create({
         ots,
