@@ -16,6 +16,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
         storages,
         dateStart,
         dateEnd,
+        typeAgreement,
         supplies,
         pay: payEntry,
         dateObservation,
@@ -26,9 +27,9 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
         const pay = payEntry ?? 0
         const { key: keyUnitType, name: nameUnitType } = unitType || {}
 
-        if (TypeActivity === TypeActivities.ACT_AGREEMENTS) {
-          return null
-        }
+        // if (TypeActivity === TypeActivities.ACT_AGREEMENTS) {
+        //   return null
+        // }
 
         if (TypeActivitiesWithAchievements[TypeActivity]) {
           percent = achievements.length
@@ -46,6 +47,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           _id,
           name,
           percent,
+          typeAgreement,
           unitType: nameUnitType?.es ?? null,
           tag: TypeActivity,
           dateStart: dateStart ?? null,

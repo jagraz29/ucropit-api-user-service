@@ -1,73 +1,76 @@
 import { v4 as uuidv4 } from 'uuid'
-import pdf from 'handlebars-pdf'
-import sha256File from 'sha256-file'
+import Handlebars from 'handlebars'
+import pdf from 'html-pdf-node'
+import sha256 from 'sha256'
 import {
   basePath,
   makeDirIfNotExists,
-  removeFile,
-  moveFile,
+  readFileBytes,
+  saveFile,
   readFile
 } from '../utils'
 import { FileDocumentRepository } from '../repositories'
-import { FileDocumentProps } from '../interfaces/FileDocument'
+import { setScriptPdf } from '../helpers'
+import { FileDocumentProps } from '../interfaces'
 
 export class PDFService {
-  public static async generatePdf (
+  public static async generatePdf(
     nameTemplate: string,
     context: object,
-    nameDirectory: string,
+    directory: string,
     nameFile: string,
     { _id: cropId }
   ): Promise<string | null> {
-    const fileDocuments: Array<object> | null =
+    const fileDocuments: Array<FileDocumentProps> | null =
       await FileDocumentRepository.getFiles(cropId)
-    const directory: string = fileDocuments ? 'tmp' : nameDirectory
 
     const path: string = `${basePath()}public/uploads/${directory}/`
     await makeDirIfNotExists(path)
     const fullName: string = `${nameFile}-${uuidv4()}.pdf`
-    const fullPath: string = `${path}${fullName}`
+    const pathFile: string = `${path}${fullName}`
 
-    const template: string = readFile(`views/pdf/${nameTemplate}.hbs`)
-
-    await pdf.create({ template, context, path: fullPath })
+    const hbs: string = readFile(`views/pdf/${nameTemplate}.hbs`)
+    const handlebarsWithScript = setScriptPdf(Handlebars)
+    const template = handlebarsWithScript.compile(hbs)
+    const html = template(context)
+    console.log(html)
+    const pdfBytes = pdf.generatePdf({ content: html }, { format: 'A4' })
 
     if (!fileDocuments) {
+      saveFile(pathFile, pdfBytes)
       await FileDocumentRepository.createFile({
         nameFile: fullName,
-        path: fullPath,
+        path: pathFile,
         date: new Date(),
         cropId
       })
       return fullName
     }
 
-    return this.findPdfExists(fullName, fileDocuments, cropId)
+    return this.findAndSavePdfExists(directory, fullName, fileDocuments, cropId, pdfBytes)
   }
 
-  private static async findPdfExists(
+  private static async findAndSavePdfExists(
+    directory: string,
     fullName: string,
     fileDocuments: Array<FileDocumentProps>,
-    cropId
+    cropId,
+    pdfBytes
   ) {
-    const filePdfTemp = `public/uploads/tmp/${fullName}`
-    const pathCropHistory = `public/uploads/pdf-crop-history/`
+    const pathFile = `${basePath()}public/uploads/${directory}/`
     const fileDocument = fileDocuments.find(({ nameFile }) => {
-      if (readFile(`${pathCropHistory}${nameFile}`)) {
-        return (
-          sha256File(filePdfTemp) ===
-          sha256File(`${pathCropHistory}${nameFile}`)
-        )
+      const oldPdfBytes = readFileBytes(`${pathFile}${nameFile}`)
+      if (oldPdfBytes) {
+        return sha256(pdfBytes) === sha256(oldPdfBytes)
       }
     })
     if (fileDocument) {
-      removeFile(filePdfTemp)
       return fileDocument.nameFile
     }
-    await moveFile(filePdfTemp, `${pathCropHistory}${fullName}`)
+    saveFile(pathFile, pdfBytes)
     await FileDocumentRepository.createFile({
       nameFile: fullName,
-      path: `${pathCropHistory}${fullName}`,
+      path: `${pathFile}${fullName}`,
       date: new Date(),
       cropId
     })

@@ -27,13 +27,19 @@ export function removeFile (dir: string) {
   fs.unlinkSync(dir)
 }
 
-export function moveFile (oldPath: string,newPath: string) {
-  fs.renameSync(oldPath, newPath)
+export function saveFile (pathFile: string,pdfBytes: string) {
+  fs.writeFileSync(pathFile, pdfBytes)
 }
 
 export function readFile (path: string) {
   if (fileExist(path)) {
     return fs.readFileSync(`${basePath()}${path}`, { encoding: 'utf-8' })
+  }
+  return null
+}
+export function readFileBytes (path: string) {
+  if (fileExist(path)) {
+    return fs.readFileSync(`${basePath()}${path}`)
   }
   return null
 }
