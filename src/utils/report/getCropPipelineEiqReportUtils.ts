@@ -323,7 +323,12 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
       }
     },
     supplieTotal: '$activities.achievements.supplies.total',
-    lotSurface: '$activities.achievements.lots.surface',
+    lotSurface: '$activities.achievements.surface',
+    eiqAchievement: {
+      $round: [{
+        $multiply: ['$activities.achievements.supplieEiq', '$activities.achievements.supplies.total']
+      }, 2]
+    },
     evidences: {
       $reduce : {
         input: '$activities.achievements.files',
