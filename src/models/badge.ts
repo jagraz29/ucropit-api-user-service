@@ -34,7 +34,7 @@
  */
 
 import mongoose from 'mongoose'
-import { BadgeTypes } from '../interfaces'
+import { IBadge, BadgeTypes } from '../interfaces'
 
 const { Schema } = mongoose
 
@@ -69,4 +69,4 @@ const BadgeSchema = new Schema({
   }
 })
 
-export default mongoose.model('Badge', BadgeSchema)
+export default mongoose.model<IBadge>('Badge', BadgeSchema)

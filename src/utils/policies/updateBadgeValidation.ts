@@ -13,7 +13,7 @@ export const updateBadgeValidationPolicy = (req: Request | any, res: Response, n
     image: Joi.string(),
   })
 
-  const { error } = schema.validate(req.body)
+  const { error } = schema.validate({...req.params, ...req.body})
 
   if(error){
     return res.status(404).json(error)

@@ -16,6 +16,9 @@ class BadgesController {
     const dataToFind: any = {
       query: {},
       populate: [],
+      limit: 0,
+      skip: 0,
+      sort: {},
     }
 
     const badges = await BadgeRepository.getBadges(dataToFind)
@@ -70,7 +73,7 @@ class BadgesController {
     res.status(200).json(badge)
   }
 
-    /**
+  /**
    *
    * Update badge.
    *
@@ -82,6 +85,9 @@ class BadgesController {
   public async update(req: Request | any, res: Response) {
     const {
       badgeId,
+    } = req.params
+
+    const {
       type,
       nameEs,
       nameEn,
@@ -107,17 +113,61 @@ class BadgesController {
     }
 
     const dataToUpdate: any = {
-      type,
+      type: type !== undefined ? type : badges[0].type,
       name: {
-        es: nameEs,
-        en: nameEn,
-        pt: namePt,
+        es: nameEs !== undefined ? nameEs : badges[0].name.es,
+        en: nameEn !== undefined ? nameEn : badges[0].name.en,
+        pt: namePt !== undefined ? namePt : badges[0].name.pt,
       },
-      goalReach,
-      image,
+      goalReach: goalReach !== undefined ? goalReach : badges[0].goalReach,
+      image: image !== undefined ? image : badges[0].image,
     }
 
     const badge = await BadgeRepository.updateOneBadge(query, dataToUpdate)
+
+    res.status(200).json(badge)
+  }
+
+  /**
+   *
+   * Delete badge.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async delete(req: Request | any, res: Response) {
+    const {
+      badgeId,
+    } = req.params
+
+    const {
+      type,
+      nameEs,
+      nameEn,
+      namePt,
+      goalReach,
+      image,
+    } = req.body
+
+    const dataToFind: any = {
+      query: {
+        _id: badgeId,
+      }
+    }
+
+    const badges = await BadgeRepository.getBadges(dataToFind)
+
+    if(!badges.length){
+      return res.status(404).json(errors.find((error) => error.key === '007').code)
+    }
+
+    const dataToDelete: any = {
+      _id: badgeId
+    }
+
+    const badge = await BadgeRepository.deleteOneBadge(dataToDelete)
 
     res.status(200).json(badge)
   }

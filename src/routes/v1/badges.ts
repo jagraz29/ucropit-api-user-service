@@ -2,7 +2,8 @@ import express from 'express'
 import badgesController from '../../controllers/BadgesController'
 import {
 	createBadgeValidationPolicy,
-	updateBadgeValidationPolicy
+	updateBadgeValidationPolicy,
+	deleteBadgeValidationPolicy,
 } from '../../utils'
 
 const router: express.Router = express.Router()
@@ -78,20 +79,19 @@ router.post('/', [createBadgeValidationPolicy], badgesController.create)
 /**
  * @swagger
  * path:
- *  /v1/badges/{id}:
+ *  /v1/badges/{badgeId}:
  *    put:
  *      summary: Update a Badge
  *      tags: [Badge]
+ *      parameters:
+ *        - in: path
+ *          name: badgeId
  *      requestBody:
  *        content:
  *          multipart/form-data:
  *              schema:
  *               type: object
  *               properties:
- *                  badgeId:
- *                     type: string
- *                     required: true
- *                     description: Badge ID
  *                  type:
  *                     type: string
  *                     description: Badge type
@@ -113,7 +113,7 @@ router.post('/', [createBadgeValidationPolicy], badgesController.create)
  *
  *      responses:
  *       '201':
- *         description: Create a new Badge.
+ *         description: Update a Badge.
  *         content:
  *         application/json:
  *             schema:
@@ -123,26 +123,31 @@ router.post('/', [createBadgeValidationPolicy], badgesController.create)
  *         description: Error to Server.
  *
  */
-router.put('/:id', [updateBadgeValidationPolicy], badgesController.update)
+router.put('/:badgeId', [updateBadgeValidationPolicy], badgesController.update)
 
 /**
  * @swagger
  * path:
- *  /v1/badges/{id}:
+ *  /v1/badges/{badgeId}:
  *    delete:
- *      summary: Delete activity
- *      tags: [Activity]
+ *      summary: Delete a Badge
+ *      tags: [Badge]
  *      parameters:
  *        - in: path
- *          name: id
+ *          name: badgeId
+ *
  *      responses:
- *        "200":
- *          description: Delete success
- *        "404":
- *          description: Not Found Resources
- *        "500":
- *          description: Server error
+ *       '201':
+ *         description: Delete a Badge.
+ *         content:
+ *         application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Badge'
+ *
+ *       '500':
+ *         description: Error to Server.
+ *
  */
-//router.delete('/:id', badgesController.delete)
+router.delete('/:badgeId', [deleteBadgeValidationPolicy], badgesController.delete)
 
 export default router
