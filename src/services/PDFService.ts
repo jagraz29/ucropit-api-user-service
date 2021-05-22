@@ -32,7 +32,7 @@ export class PDFService {
     const handlebarsWithScript = setScriptPdf(Handlebars)
     const template = handlebarsWithScript.compile(hbs)
     const html = template(context)
-    // console.log(content)
+    // console.log(html)
 
     const browser = await Puppeteer.launch()
     const page = await browser.newPage()
