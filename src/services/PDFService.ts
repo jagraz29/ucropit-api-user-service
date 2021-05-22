@@ -37,9 +37,16 @@ export class PDFService {
     const browser = await Puppeteer.launch()
     const page = await browser.newPage()
     await page.setContent(html)
+    // await page.addStyleTag({ path: 'style.css' })
     const pdfBytes = await page.pdf({
-      format: 'A4',
-      printBackground: true
+      format: 'Letter',
+      printBackground: true,
+      margin: {
+        // top: "70px",
+        // bottom: "10%",
+        left: "70px",
+        right: "70px"
+      }
     })
 
     if (!fileDocuments) {
