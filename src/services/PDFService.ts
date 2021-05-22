@@ -28,7 +28,7 @@ export class PDFService {
     const fullName: string = `${nameFile}-${uuidv4()}.pdf`
     const pathFile: string = `${path}${fullName}`
 
-    const hbs: string = readFile(`views/pdf/${nameTemplate}.hbs`)
+    const hbs: string = readFile(`views/pdf/html/${nameTemplate}.hbs`)
     const handlebarsWithScript = setScriptPdf(Handlebars)
     const template = handlebarsWithScript.compile(hbs)
     const html = template(context)
@@ -37,9 +37,9 @@ export class PDFService {
     const browser = await Puppeteer.launch()
     const page = await browser.newPage()
     await page.setContent(html)
-    // await page.addStyleTag({ path: 'style.css' })
+    // await page.addStyleTag({ path: `views/pdf/css/style.css` })
     const pdfBytes = await page.pdf({
-      format: 'Letter',
+      format: 'A4',
       printBackground: true,
       margin: {
         // top: "70px",
@@ -74,7 +74,7 @@ export class PDFService {
     const fileDocument = fileDocuments.find(({ nameFile }) => {
       const oldPdfBytes = readFileBytes(`${pathFile}${nameFile}`)
       if (oldPdfBytes) {
-        console.log(sha256(pdfBytes),sha256(oldPdfBytes))
+        // console.log(sha256(pdfBytes),sha256(oldPdfBytes))
         return sha256(pdfBytes) === sha256(oldPdfBytes)
       }
     })
