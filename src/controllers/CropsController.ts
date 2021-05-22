@@ -20,7 +20,8 @@ import {
   getActivitiesOrderedByDateUtils,
   makeDirIfNotExists,
   calculateDataCropUtils,
-  calculateTheoreticalPotentialUtils
+  calculateTheoreticalPotentialUtils,
+  calculateCropVolumeUtils
 } from '../utils'
 
 import {
@@ -125,17 +126,21 @@ class CropsController {
     const lots = await LotService.storeLotImagesAndCountries(crop.lots)
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
+    const volume = calculateCropVolumeUtils(
+      crop.unitType.key,
+      crop.pay,
+      crop.surface
+    )
 
     const newCrop = {
       ...crop,
+      volume,
       lots,
       company: {
         ...crop.company,
         theoriticalPotential
       }
     }
-
-    console.log(newCrop)
 
     res.status(200).json(newCrop)
   }
@@ -199,24 +204,11 @@ class CropsController {
       activities,
       dateCreatePdf: moment().format('DD/MM/YYYY')
     }
-    console.log(util.inspect(JSON.stringify(dataPdf), { showHidden: false, depth: null }))
-    const dataPDF = {
-      array: [
-        {
-          lot: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEu24ChRXtuv9btEVw3LTxt0vVvQDcbQbEnQ&usqp=CAU',
-          location: 'Santa Eugenia Navarro, Buenos Aires'
-        },
-        {
-          lot: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEu24ChRXtuv9btEVw3LTxt0vVvQDcbQbEnQ&usqp=CAU',
-          location: 'Santa Eugenia Navarro, Buenos Aires'
-        }
-      ]
-    }
-
-    // // aca se utiliza el service para generar el pdf, este debe devoler el path para descargar el pdf
+    // console.log(util.inspect(JSON.stringify(dataPdf), { showHidden: false, depth: null }))
+    // aca se utiliza el service para generar el pdf, este debe devoler el path para descargar el pdf
     const nameFile = await PDFService.generatePdf(
       'pdf-crop-history',
-      dataPDF,
+      dataPdf,
       'pdf-crop-history',
       'company',
       crop

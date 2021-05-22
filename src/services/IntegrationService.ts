@@ -231,6 +231,7 @@ class IntegrationService extends ServiceBase {
     const isEnabledExportData: Boolean = await this.isEnabledExportData(
       dataExport
     )
+
     if (isEnabledExportData) {
       const token: string = req.get('authorization').split(' ')[1]
 

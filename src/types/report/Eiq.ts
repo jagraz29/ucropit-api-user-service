@@ -24,6 +24,7 @@ export const ReportsEiqHeaderXls = {
     'achievementDate',
     'supplieTotal',
     'lotSurface',
+    'eiqAchievement',
     'evidences',
   ],
   fieldNames: [
@@ -51,6 +52,7 @@ export const ReportsEiqHeaderXls = {
     'Fecha Realizacion',
     'Unidades Realizadas',
     'Ha Realizadas',
+    'EIQ Realización',
     'Evidencias',
   ]
 }
