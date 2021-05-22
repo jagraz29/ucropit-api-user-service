@@ -1,5 +1,5 @@
 import models from '../models'
-import { FileDocumentProps } from '../interfaces/FileDocument'
+import { FileDocumentProps } from '../interfaces'
 const { FileDocument } = models
 
 export class FileDocumentRepository {

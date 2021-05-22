@@ -49,7 +49,7 @@ router.use('/lots', authMiddleware, lots)
 router.use('/commons', authMiddleware, common)
 
 // CROPS
-router.use('/crops', authMiddleware, crop)
+router.use('/crops',/* authMiddleware,*/ crop)
 
 // CROPS
 router.use('/crops', authMiddleware, cropCollaborators)
