@@ -74,7 +74,7 @@ router.use('/collaborators', authMiddleware, collaborators)
 router.use('/charts', authMiddleware, charts)
 
 // BADGES
-router.use('/badges', /*authMiddleware,*/ badges)
+router.use('/badges', authMiddleware, badges)
 
 // REPORTS
 router.use('/reports', reports)
