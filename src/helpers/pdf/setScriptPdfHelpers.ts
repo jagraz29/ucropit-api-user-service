@@ -1,8 +1,11 @@
 import MomentHandlebars from 'helper-moment'
+import helpers from 'handlebars-helpers'
 
 export const setScriptPdf = handlebars => {
 
   handlebars.registerHelper('moment', MomentHandlebars)
+  handlebars.registerHelper(helpers.regex())
+  handlebars.registerHelper(helpers.string())
   handlebars.registerHelper('switch', (value, options) => {
     this.switch_value = value
     this.switch_break = false
