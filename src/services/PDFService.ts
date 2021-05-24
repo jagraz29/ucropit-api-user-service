@@ -32,14 +32,21 @@ export class PDFService {
     const handlebarsWithScript = setScriptPdf(Handlebars)
     const template = handlebarsWithScript.compile(hbs)
     const html = template(context)
-    // console.log(content)
+    // console.log(html)
 
     const browser = await Puppeteer.launch()
     const page = await browser.newPage()
     await page.setContent(html)
+    // await page.addStyleTag({ path: `views/pdf/css/style.css` })
     const pdfBytes = await page.pdf({
       format: 'A4',
-      printBackground: true
+      printBackground: true,
+      margin: {
+        // top: "70px",
+        // bottom: "10%",
+        left: "70px",
+        right: "70px"
+      }
     })
 
     if (!fileDocuments) {
@@ -67,7 +74,7 @@ export class PDFService {
     const fileDocument = fileDocuments.find(({ nameFile }) => {
       const oldPdfBytes = readFileBytes(`${pathFile}${nameFile}`)
       if (oldPdfBytes) {
-        console.log(sha256(pdfBytes),sha256(oldPdfBytes))
+        // console.log(sha256(pdfBytes),sha256(oldPdfBytes))
         return sha256(pdfBytes) === sha256(oldPdfBytes)
       }
     })
