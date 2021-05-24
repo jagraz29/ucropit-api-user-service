@@ -176,7 +176,8 @@ export class CropRepository {
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies', populate: [{ path: 'typeId' }] }
+              { path: 'supplies.supply' },
+              { path: 'supplies.typeId' }
             ]
           },
           {
@@ -212,7 +213,8 @@ export class CropRepository {
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies', populate: [{ path: 'typeId' }] }
+              { path: 'supplies.supply' },
+              { path: 'supplies.typeId' }
             ]
           }
         ]
