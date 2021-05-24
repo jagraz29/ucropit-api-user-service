@@ -28,7 +28,7 @@ export class PDFService {
     const fullName: string = `${nameFile}-${uuidv4()}.pdf`
     const pathFile: string = `${path}${fullName}`
 
-    const hbs: string = readFile(`views/pdf/html/${nameTemplate}.hbs`)
+    const hbs: string = readFile(`views/pdf/${nameTemplate}.hbs`)
     const handlebarsWithScript = setScriptPdf(Handlebars)
     const template = handlebarsWithScript.compile(hbs)
     const html = template(context)
