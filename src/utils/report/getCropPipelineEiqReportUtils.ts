@@ -248,7 +248,9 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
       $concat: [process.env.BASE_URL, '/v1/reports/map/lot?id=', { $toString: '$activities.achievements.lots._id' }]
     },
     cropLotTag: '$lots.tag',
-    lotName: '$activities.achievements.lots.name',
+    lotName: {
+      $concat: ['$activities.achievements.lots.name', ' - ', { $toString: '$activities.achievements.lots.surface' }, ' has']
+    },
     supplieCode: '$activities.achievements.supply.code',
     supplieId: '$activities.achievements.supply._id',
     supplieName: '$activities.achievements.supply.brand',
