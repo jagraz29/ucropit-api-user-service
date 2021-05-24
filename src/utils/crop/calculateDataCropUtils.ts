@@ -25,6 +25,24 @@ export const calculateDataCropUtils = ({
     dateCrop,
     name,
     cropTypeKey,
-    company
+    company,
+    lots: lots.length ? getLots(lots[0].data) : []
   }
+}
+const getLots = (lots): Object[] => {
+  return lots.map(
+    ({
+       provinceName,
+       cityName,
+       countryName,
+       image: { normal: path }
+     }) => {
+      return {
+        provinceName,
+        cityName,
+        countryName,
+        image: `${process.env.BASE_URL}${process.env.DIR_STORAGE}${path}`
+      }
+    }
+  )
 }
