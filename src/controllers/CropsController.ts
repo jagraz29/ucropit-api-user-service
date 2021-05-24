@@ -379,6 +379,7 @@ class CropsController {
       message: 'deleted successfuly'
     })
   }
+  
   /**
    * Get all crops evidences
    *
