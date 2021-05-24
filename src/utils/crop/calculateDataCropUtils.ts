@@ -26,6 +26,7 @@ export const calculateDataCropUtils = ({
     name,
     cropTypeKey,
     company,
+    lotsQuantity: lots.length ? lots[0].data.length : 0,
     lots: lots.length ? getLots(lots[0].data) : []
   }
 }
@@ -35,13 +36,17 @@ const getLots = (lots): Object[] => {
        provinceName,
        cityName,
        countryName,
-       image: { normal: path }
+       surface,
+       image
      }) => {
+      const { normal: path } = image || {}
+      const imageLot = path ? `${process.env.BASE_URL}${process.env.DIR_STORAGE}${path}` : null
       return {
         provinceName,
         cityName,
         countryName,
-        image: `${process.env.BASE_URL}${process.env.DIR_STORAGE}${path}`
+        surface,
+        image: imageLot
       }
     }
   )

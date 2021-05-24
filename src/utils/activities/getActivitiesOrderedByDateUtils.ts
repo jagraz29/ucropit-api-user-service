@@ -1,6 +1,8 @@
 import moment from 'moment'
 import { calculateCropVolumeUtils, Numbers } from '../'
 import { TypeActivitiesWithAchievements, TypeActivitiesWithOutAchievements, TypeActivities } from '../../interfaces'
+import { getAchievements } from '../achievements'
+import util from 'util'
 
 export const getActivitiesOrderedByDateUtils = ({ activities }) => {
   const activitiesRes = activities
@@ -92,26 +94,27 @@ const getStorages = (storages): Object[] => {
   )
 }
 
-const getAchievements = (achievements): Object[] => {
-  return achievements
-    .map(
-    ({
-      dateAchievement,
-      lots,
-      surface,
-      signers,
-      supplies,
-      _id
-    }) => {
-      return {
-        _id,
-        dateAchievement,
-        lots: lots.length,
-        surface,
-        supplies,
-        signed: signers.length,
-        signedIf: signers.filter(({ signed }) => signed).length
-      }
-    })
-    .filter((item) => item)
-}
+// const getAchievements = (achievements): Object[] => {
+//   return achievements
+//     .map(
+//     ({
+//       dateAchievement,
+//       lots,
+//       surface,
+//       signers,
+//       supplies,
+//       _id
+//     }) => {
+//       // console.log(util.inspect(supplies, { showHidden: false, depth: null }))
+//       return {
+//         _id,
+//         dateAchievement,
+//         lots: lots.length,
+//         surface,
+//         supplies,
+//         signed: signers.length,
+//         signedIf: signers.filter(({ signed }) => signed).length
+//       }
+//     })
+//     .filter((item) => item)
+// }

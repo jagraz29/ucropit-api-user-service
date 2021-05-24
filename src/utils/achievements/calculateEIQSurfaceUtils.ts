@@ -1,4 +1,4 @@
-import { Achievement } from '../../interfaces/Achievement'
+import { Achievement } from '../../interfaces'
 
 /**
  * Calculate Achievement's EIQ Surface.
