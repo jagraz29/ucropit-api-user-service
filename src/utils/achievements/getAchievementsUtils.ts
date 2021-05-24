@@ -1,5 +1,6 @@
 import { Achievement } from '../../interfaces'
 import { calculateEIQSurfaceAchievement } from '.'
+import { Numbers } from '../Numbers'
 
 /**
  * Get Achievement's.
@@ -21,13 +22,14 @@ export const getAchievements = (achievements): Achievement[] => {
             _id
         } = achievement
       const eiq = calculateEIQSurfaceAchievement(achievement)
+      // console.log(Numbers.roundToTwo(eiq))
       return {
         _id,
         dateAchievement,
         lots: lots.length,
         surface,
         supplies,
-        eiq,
+        eiq: Numbers.roundToTwo(eiq),
         signed: signers.length,
         signedIf: signers.filter(({ signed }) => signed).length
       }

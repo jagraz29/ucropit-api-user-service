@@ -25,6 +25,7 @@ export interface Achievement {
   dateAchievement?: Date
   surface?: Number | number
   percent?: Number
+  eiq?: number
   supplies?: Array<Supplies>
   destination?: Array<Destination>
   signers?: Array<Signer>

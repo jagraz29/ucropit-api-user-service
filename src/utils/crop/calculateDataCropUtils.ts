@@ -12,10 +12,13 @@ export const calculateDataCropUtils = ({
     company,
     unitType,
     cropType: { key: cropTypeKey }
-  }): Object => {
+  }, activitiesWithEiq): Object => {
   const pay = payEntry ?? 0
+  let eiq: number = 0
   const { key: keyUnitType, name: nameUnitType } = unitType || {}
+  eiq = activitiesWithEiq.reduce((a, b) => a + b.eiq, 0)
   // console.log(util.inspect(lots, { showHidden: false, depth: null }))
+
   return {
     surface,
     volume: Numbers.roundToTwo(
@@ -24,6 +27,7 @@ export const calculateDataCropUtils = ({
     pay,
     dateCrop,
     name,
+    eiq: Numbers.roundToTwo(eiq),
     cropTypeKey,
     company,
     lotsQuantity: lots.length ? lots[0].data.length : 0,
