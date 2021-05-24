@@ -1,12 +1,12 @@
-import * as Joi from "joi";
-import { FileArray } from "express-fileupload";
-import { handleFileConvertJSON } from "../utils/ParseKmzFile";
-import { errors } from "../types/common";
-import { VALID_FORMATS_DOCUMENTS } from "./Files";
-import { ResponseOkProps } from "../interfaces/SatelliteImageRequest";
-import _ from "lodash";
+import * as Joi from 'joi';
+import { FileArray } from 'express-fileupload';
+import { handleFileConvertJSON } from '../utils/ParseKmzFile';
+import { errors } from '../types/common';
+import { VALID_FORMATS_DOCUMENTS } from './Files';
+import { ResponseOkProps } from '../interfaces/SatelliteImageRequest';
+import _ from 'lodash';
 
-import JoiDate from "@hapi/joi-date";
+import JoiDate from '@hapi/joi-date';
 
 const JoiValidation = Joi.extend(JoiDate);
 
@@ -28,7 +28,7 @@ export const validateCropStore = async (crop) => {
     pay: Joi.number().required(),
     surface: Joi.number().required(),
     dateCrop: JoiValidation.date().required(),
-    dateHarvest: JoiValidation.date().greater(Joi.ref("dateCrop")).required(),
+    dateHarvest: JoiValidation.date().greater(Joi.ref('dateCrop')).required(),
     cropType: Joi.string().required(),
     unitType: Joi.string().required(),
     identifier: Joi.string().required(),
@@ -50,7 +50,7 @@ export const validateActivityStore = async (activity) => {
     _id: Joi.string().optional(),
     name: Joi.string().required(),
     dateStart: Joi.date().optional(),
-    dateEnd: Joi.date().min(Joi.ref("dateStart")).optional(),
+    dateEnd: Joi.date().min(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
     dateHarvest: Joi.date().optional(),
     dateEstimatedHarvest: Joi.date().optional(),
@@ -119,7 +119,7 @@ export const validateActivityUpdate = async (activity) => {
   const schema = Joi.object({
     name: Joi.string().optional(),
     dateStart: Joi.date().optional(),
-    dateEnd: Joi.date().min(Joi.ref("dateStart")).optional(),
+    dateEnd: Joi.date().min(Joi.ref('dateStart')).optional(),
     dateLimitValidation: Joi.date().optional(),
     dateHarvest: Joi.date().optional(),
     dateEstimatedHarvest: Joi.date().optional(),
@@ -190,7 +190,7 @@ export const validateCompanyStore = async (company) => {
     typePerson: Joi.string().optional(),
     name: Joi.string().required(),
     address: Joi.string().required(),
-    addressFloor: Joi.string().allow("").optional(),
+    addressFloor: Joi.string().allow('').optional(),
     evidences: Joi.array()
       .items(
         Joi.object().keys({
@@ -211,7 +211,7 @@ export const validateCompanyUpdate = async (company) => {
     typePerson: Joi.string().optional(),
     name: Joi.string().optional(),
     address: Joi.string().optional(),
-    addressFloor: Joi.string().allow("").optional(),
+    addressFloor: Joi.string().allow('').optional(),
     evidences: Joi.array()
       .items(
         Joi.object().keys({
@@ -331,7 +331,7 @@ export const validateFilesWithEvidences = (files, evidences) => {
   }
 
   if ((files && !evidences) || (!files && evidences)) {
-    return { error: true, message: "Not complete evidences" };
+    return { error: true, message: 'Not complete evidences' };
   }
 
   if (!Array.isArray(files.files)) {
@@ -339,7 +339,7 @@ export const validateFilesWithEvidences = (files, evidences) => {
   }
 
   if (files.files.length !== evidences.length) {
-    return { error: true, message: "Length files and evidences must equal" };
+    return { error: true, message: 'Length files and evidences must equal' };
   }
 
   return { error: false };
@@ -354,10 +354,10 @@ export const validateNotEqualNameLot = (lotNames) => {
   if (existName.length > 0) {
     return {
       error: true,
-      message: "KMZ names lot duplicate",
+      message: 'KMZ names lot duplicate',
       code:
-        errors.find((error) => error.key === "004")?.code ||
-        "NAME_LOT_DUPLICATED",
+        errors.find((error) => error.key === '004')?.code ||
+        'NAME_LOT_DUPLICATED',
     };
   }
 
@@ -373,13 +373,13 @@ export const validateFormatKmz = async (files: FileArray) => {
   const result = await handleFileConvertJSON(files);
 
   for (const feature of result[0].features) {
-    if (feature.geometry.type !== "Polygon") {
+    if (feature.geometry.type !== 'Polygon') {
       return {
         error: true,
-        message: "KMZ format not allowed",
+        message: 'KMZ format not allowed',
         code:
-          errors.find((error) => error.key === "002")?.code ||
-          "ERROR_INVALID_FORMAT_KMZ",
+          errors.find((error) => error.key === '002')?.code ||
+          'ERROR_INVALID_FORMAT_KMZ',
       };
     }
   }
@@ -417,10 +417,10 @@ export const validateExtensionFile = (files) => {
   if (_.flatten(isValidTypes).some((check) => check.error === true)) {
     return {
       error: true,
-      message: "Any File extension not allowed",
+      message: 'Any File extension not allowed',
       code:
-        errors.find((error) => error.key === "003")?.code ||
-        "ERROR_FILE_EXTENSION",
+        errors.find((error) => error.key === '003')?.code ||
+        'ERROR_FILE_EXTENSION',
     };
   }
 
