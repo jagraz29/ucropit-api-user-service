@@ -1,8 +1,8 @@
 import models from '../models'
 
-const { Badge } = models
+const { TypeAgreement } = models
 
-export class BadgeRepository {
+export class TypeAgreementRepository {
   /**
    *
    * @param query
@@ -13,14 +13,14 @@ export class BadgeRepository {
    *
    * @returns
    */
-  public static async getBadges({
+  public static async getTypeAgreements({
     query,
     limit,
     skip,
     sort,
     populate,
   }: any): Promise<any> {
-    return Badge
+    return TypeAgreement
       .find(query ? query : {})
       .populate(populate ? populate : [])
       .limit(limit ? limit : 0)
@@ -34,8 +34,8 @@ export class BadgeRepository {
    *
    * @returns
    */
-  public static async createBadge(dataToCreate: any): Promise<any> {
-    return Badge.create(dataToCreate)
+  public static async createTypeAgreement(dataToCreate: any): Promise<any> {
+    return TypeAgreement.create(dataToCreate)
   }
 
   /**
@@ -45,8 +45,8 @@ export class BadgeRepository {
    *
    * @returns
    */
-  public static async updateOneBadge(query: any, dataToUpdate: any): Promise<any> {
-    return Badge.updateOne(query, dataToUpdate)
+  public static async updateOneTypeAgreement(query: any, dataToUpdate: any): Promise<any> {
+    return TypeAgreement.updateOne(query, dataToUpdate)
   }
 
   /**
@@ -55,7 +55,7 @@ export class BadgeRepository {
    *
    * @returns
    */
-  public static async deleteOneBadge(query: any): Promise<any> {
-    return Badge.deleteOne(query)
+  public static async deleteOneTypeAgreement(query: any): Promise<any> {
+    return TypeAgreement.deleteOne(query)
   }
 }

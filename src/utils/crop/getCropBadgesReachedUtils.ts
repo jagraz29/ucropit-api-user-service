@@ -1,14 +1,7 @@
 import {
-  ActivityRepository,
-  BadgeRepository,
-  CropRepository
-} from '../../repositories'
-import {
-  TypeActivities,
   TypeAgreement,
   CropTypes,
   BadgeTypes,
-  IBadge
 } from '../../interfaces'
 import {
   calculateLegalLandUseBadge,
@@ -19,77 +12,21 @@ import {
   calculateResponsibleUsePhytosanitaryBadge,
 } from '../../utils'
 
-export const addCropBadgesReached = async ({
-  _id,
-  toMake,
-  done,
-  finished,
-  cropType,
-  surface,
-  eiq,
-}) => {
-  const dataToFindActivities: any = {
-    query: {
-      _id: {
-        $in: [...toMake, ...done, ...finished],
-      },
-      'signers.signed': {
-        $nin: [false],
-      },
-    },
-    populate: [{
-      path: 'type',
-      match: {
-        tag: TypeActivities.ACT_AGREEMENTS,
-      },
-    },{
-      path: 'typeAgreement',
-    }],
-  }
-
-  let activities = await ActivityRepository.getActivities(dataToFindActivities)
-
-  activities = activities.filter((activity) => activity.type && activity.typeAgreement)
-
-  let typeAgreements: Array<any> = []
-
-  let exploActivitiesSurfaces: number = 0
-  let sustainActivitiesSurfaces: number = 0
-  let seedUseActivitiesSurfaces: number = 0
-  let responsibleUseActivitiesSurfaces: number = 0
-
-  activities.map((activity) => {
-    if(activity.typeAgreement.key === TypeAgreement.EXPLO){
-      exploActivitiesSurfaces += activity.surface
-    }
-
-    if(activity.typeAgreement.key === TypeAgreement.SUSTAIN){
-      sustainActivitiesSurfaces += activity.surface
-    }
-
-    if(
-      activity.typeAgreement.key === TypeAgreement.SEED_USE &&
-      (
-        cropType.key === CropTypes.SOY ||
-        cropType.key === CropTypes.COTTON
-      )
-    ){
-      seedUseActivitiesSurfaces += activity.surface
-    }
-
-    if(activity.typeAgreement.key === TypeAgreement.RESPONSIBLE_USE){
-      responsibleUseActivitiesSurfaces += activity.surface
-    }
-
-    typeAgreements.push(activity.typeAgreement)
-  })
-
-  const dataToFindBadges: any = {
-    query: {},
-  }
-
-  const badges = await BadgeRepository.getBadges(dataToFindBadges)
-
+export const getCropBadgesReached = (
+  typeAgreements,
+  badges,
+  {
+    exploActivitiesSurfaces,
+    sustainActivitiesSurfaces,
+    seedUseActivitiesSurfaces,
+    responsibleUseActivitiesSurfaces,
+  },
+  {
+    cropType,
+    surface,
+  },
+  cropEiq,
+) => {
   let badgesToAdd: Array<any> = []
 
   badges.map((badge) => {
@@ -154,7 +91,7 @@ export const addCropBadgesReached = async ({
     }
 
     if(badge.type === BadgeTypes.RESPOSIBLE_USE_PHYTOSANITARY){
-      let allowBadge = calculateResponsibleUsePhytosanitaryBadge(eiq, badge)
+      let allowBadge = calculateResponsibleUsePhytosanitaryBadge(cropEiq, badge)
 
       if(allowBadge){
         badgesToAdd.push({
@@ -165,16 +102,5 @@ export const addCropBadgesReached = async ({
     }
   })
 
-  const query: any = {
-    _id
-  }
-
-  const dataToUpdate: any = {
-    badges: badgesToAdd
-  }
-
-  await CropRepository.updateOneCrop(query, dataToUpdate)
-
-  return
-
+  return badgesToAdd
 }

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { BadgeRepository } from '../repositories'
 import { errors } from '../types/common'
 
@@ -23,7 +24,7 @@ class BadgesController {
 
     const badges = await BadgeRepository.getBadges(dataToFind)
 
-    res.status(200).json(badges)
+    res.status(StatusCodes.OK).json(badges)
   }
 
   /**
@@ -54,7 +55,10 @@ class BadgesController {
     const badges = await BadgeRepository.getBadges(dataToFind)
 
     if(badges.length){
-      return res.status(404).json(errors.find((error) => error.key === '006').code)
+      return res.status(StatusCodes.CONFLICT).json({
+        error: ReasonPhrases.CONFLICT,
+        description: errors.find((error) => error.key === '006').code
+      })
     }
 
     const dataToCreate: any = {
@@ -70,7 +74,7 @@ class BadgesController {
 
     const badge = await BadgeRepository.createBadge(dataToCreate)
 
-    res.status(200).json(badge)
+    res.status(StatusCodes.OK).json(badge)
   }
 
   /**
@@ -105,7 +109,10 @@ class BadgesController {
     const badges = await BadgeRepository.getBadges(dataToFind)
 
     if(!badges.length){
-      return res.status(404).json(errors.find((error) => error.key === '007').code)
+      return res.status(StatusCodes.CONFLICT).json({
+        error: ReasonPhrases.CONFLICT,
+        description: errors.find((error) => error.key === '007').code
+      })
     }
 
     const query: any = {
@@ -125,7 +132,7 @@ class BadgesController {
 
     const badge = await BadgeRepository.updateOneBadge(query, dataToUpdate)
 
-    res.status(200).json(badge)
+    res.status(StatusCodes.OK).json(badge)
   }
 
   /**
@@ -160,7 +167,10 @@ class BadgesController {
     const badges = await BadgeRepository.getBadges(dataToFind)
 
     if(!badges.length){
-      return res.status(404).json(errors.find((error) => error.key === '007').code)
+      return res.status(StatusCodes.CONFLICT).json({
+        error: ReasonPhrases.CONFLICT,
+        description: errors.find((error) => error.key === '007').code
+      })
     }
 
     const dataToDelete: any = {
@@ -169,7 +179,7 @@ class BadgesController {
 
     const badge = await BadgeRepository.deleteOneBadge(dataToDelete)
 
-    res.status(200).json(badge)
+    res.status(StatusCodes.OK).json(badge)
   }
 }
 

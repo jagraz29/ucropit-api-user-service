@@ -59,7 +59,7 @@ export class ActivityRepository {
     skip,
     sort,
     populate,
-  }): Promise<any> {
+  }: any): Promise<any> {
     return Activity
       .find(query ? query : {})
       .populate(populate ? populate : [])
