@@ -128,11 +128,17 @@ const CropSchema = new Schema({
     {
       typeAgreement: {
         type: Schema.Types.ObjectId,
-        ref: 'TypeAgreement'
+        ref: 'TypeAgreement',
+        require: true
       },
       badge: {
         type: Schema.Types.ObjectId,
-        ref: 'Badge'
+        ref: 'Badge',
+        require: true
+      },
+      surfaceTotal: {
+        type: Number,
+        require: true
       },
     }
   ],

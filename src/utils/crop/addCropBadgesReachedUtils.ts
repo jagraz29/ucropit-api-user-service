@@ -33,6 +33,9 @@ export const addCropBadgesReached = async ({
       _id: {
         $in: [...toMake, ...done, ...finished],
       },
+      'signers.signed': {
+        $nin: [false],
+      },
     },
     populate: [{
       path: 'type',
@@ -41,11 +44,6 @@ export const addCropBadgesReached = async ({
       },
     },{
       path: 'typeAgreement',
-      match: {
-        'signers.signed': {
-          $nin: [false],
-        },
-      },
     }],
   }
 
@@ -101,7 +99,8 @@ export const addCropBadgesReached = async ({
       if(allowBadge){
         badgesToAdd.push({
           badge: badge._id,
-          typeAgreement: typeAgreements.filter((typeAgreement) => typeAgreement.key === TypeAgreement.EXPLO)[0]._id
+          typeAgreement: typeAgreements.filter((typeAgreement) => typeAgreement.key === TypeAgreement.EXPLO)[0]._id,
+          surfaceTotal: exploActivitiesSurfaces
         })
       }
     }
@@ -112,7 +111,8 @@ export const addCropBadgesReached = async ({
       if(allowBadge){
         badgesToAdd.push({
           badge: badge._id,
-          typeAgreement: typeAgreements.filter((typeAgreement) => typeAgreement.key === TypeAgreement.SUSTAIN)[0]._id
+          typeAgreement: typeAgreements.filter((typeAgreement) => typeAgreement.key === TypeAgreement.SUSTAIN)[0]._id,
+          surfaceTotal: sustainActivitiesSurfaces
         })
       }
     }
@@ -123,29 +123,32 @@ export const addCropBadgesReached = async ({
       if(allowBadge){
         badgesToAdd.push({
           badge: badge._id,
-          typeAgreement: typeAgreements.filter((typeAgreement) => typeAgreement.key === TypeAgreement.SUSTAIN)[0]._id
+          typeAgreement: typeAgreements.filter((typeAgreement) => typeAgreement.key === TypeAgreement.SUSTAIN)[0]._id,
+          surfaceTotal: sustainActivitiesSurfaces
         })
       }
     }
 
-    if(badge.type === BadgeTypes.LEGAL_SEED_USE_SOY){
+    if(cropType.key === CropTypes.SOY && badge.type === BadgeTypes.LEGAL_SEED_USE_SOY){
       let allowBadge = calculateLegalSeedUseSoyBadge(seedUseActivitiesSurfaces, surface, badge)
 
       if(allowBadge){
         badgesToAdd.push({
           badge: badge._id,
-          typeAgreement: typeAgreements.filter((typeAgreement) => typeAgreement.key === TypeAgreement.SEED_USE)[0]._id
+          typeAgreement: typeAgreements.filter((typeAgreement) => typeAgreement.key === TypeAgreement.SEED_USE)[0]._id,
+          surfaceTotal: seedUseActivitiesSurfaces
         })
       }
     }
 
-    if(badge.type === BadgeTypes.LEGAL_SEED_USE_COTTON){
+    if(cropType.key === CropTypes.COTTON && badge.type === BadgeTypes.LEGAL_SEED_USE_COTTON){
       let allowBadge = calculateLegalSeedUseCottonBadge(seedUseActivitiesSurfaces, surface, badge)
 
       if(allowBadge){
         badgesToAdd.push({
           badge: badge._id,
-          typeAgreement: typeAgreements.filter((typeAgreement) => typeAgreement.key === TypeAgreement.SEED_USE)[0]._id
+          typeAgreement: typeAgreements.filter((typeAgreement) => typeAgreement.key === TypeAgreement.SEED_USE)[0]._id,
+          surfaceTotal: seedUseActivitiesSurfaces
         })
       }
     }
