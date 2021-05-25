@@ -1,6 +1,8 @@
 import moment from 'moment'
 import { calculateCropVolumeUtils, Numbers } from '../'
-import { TypeActivitiesWithAchievements, TypeActivitiesWithOutAchievements, TypeActivities } from '../../interfaces'
+import { TypeActivitiesWithAchievements, TypeActivitiesWithOutAchievements, TypeActivities, Achievement } from '../../interfaces'
+import { getAchievements } from '../achievements'
+import util from 'util'
 
 export const getActivitiesOrderedByDateUtils = ({ activities }) => {
   const activitiesRes = activities
@@ -24,12 +26,19 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
         unitType
       }) => {
         let percent: number = 0
+        let eiq: number = 0
+        let achievementsWithEiq: Achievement[] = []
         const pay = payEntry ?? 0
         const { key: keyUnitType, name: nameUnitType } = unitType || {}
 
         // if (TypeActivity === TypeActivities.ACT_AGREEMENTS) {
         //   return null
         // }
+
+        achievementsWithEiq = getAchievements(achievements)
+        eiq = achievementsWithEiq.length
+          ? achievementsWithEiq.reduce((a, b) => a + b.eiq, 0)
+          : 0
 
         if (TypeActivitiesWithAchievements[TypeActivity]) {
           percent = achievements.length
@@ -46,13 +55,15 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           status: status[0].name.es,
           _id,
           name,
+          eiq: Numbers.roundToTwo(eiq),
           percent,
           typeAgreement,
           unitType: nameUnitType?.es ?? null,
           tag: TypeActivity,
           dateStart: dateStart ?? null,
           dateEnd: dateEnd ?? null,
-          lots: lots.length,
+          lots: lots,
+          lotsQuantity: lots.length,
           surface,
           volume: Numbers.roundToTwo(
             calculateCropVolumeUtils(keyUnitType, pay, surface)
@@ -65,7 +76,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
             : null,
           supplies,
           storages: storages ? getStorages(storages) : [],
-          achievements: getAchievements(achievements)
+          achievements: achievementsWithEiq
         }
       }
     )
@@ -90,28 +101,4 @@ const getStorages = (storages): Object[] => {
       }
     }
   )
-}
-
-const getAchievements = (achievements): Object[] => {
-  return achievements
-    .map(
-    ({
-      dateAchievement,
-      lots,
-      surface,
-      signers,
-      supplies,
-      _id
-    }) => {
-      return {
-        _id,
-        dateAchievement,
-        lots: lots.length,
-        surface,
-        supplies,
-        signed: signers.length,
-        signedIf: signers.filter(({ signed }) => signed).length
-      }
-    })
-    .filter((item) => item)
 }

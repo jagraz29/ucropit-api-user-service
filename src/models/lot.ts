@@ -101,7 +101,8 @@ const LotSchema = new Schema(
 )
 
 LotSchema.virtual('coordinates').get(function () {
-  const coordinates = this.area.map((coordinate) => {
+  const area = this.area ? this.area : []
+  const coordinates = area.map((coordinate) => {
     return {
       latitude: coordinate[1],
       longitude: coordinate[0]
@@ -112,7 +113,8 @@ LotSchema.virtual('coordinates').get(function () {
 })
 
 LotSchema.virtual('coordinateForGoogle').get(function () {
-  const coordinatesForGoogle = this.area.map((coordinate) => {
+  const area = this.area ? this.area : []
+  const coordinatesForGoogle = area.map((coordinate) => {
     return {
       lat: coordinate[1],
       lng: coordinate[0]

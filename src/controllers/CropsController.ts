@@ -190,12 +190,12 @@ class CropsController {
     // aca se calcula el potencial teorico
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
 
-    // aca estara la libreria a nivel de crop
-    const dataCrop = calculateDataCropUtils(crop)
-
     // aca esta la libreria a nivel de actividades
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
+
+    // aca estara la libreria a nivel de crop
+    const dataCrop = calculateDataCropUtils(crop,activities)
 
     // aca se unen el ptencial teorico con lo del crop ya calculado
     const dataPdf = {
@@ -204,7 +204,7 @@ class CropsController {
       activities,
       dateCreatePdf: moment().format('DD/MM/YYYY')
     }
-    console.log(util.inspect(dataCrop, { showHidden: false, depth: null }))
+    // console.log(util.inspect(dataCrop, { showHidden: false, depth: null }))
     // console.log(util.inspect(JSON.stringify(dataPdf), { showHidden: false, depth: null }))
     // aca se utiliza el service para generar el pdf, este debe devoler el path para descargar el pdf
     const nameFile = await PDFService.generatePdf(
