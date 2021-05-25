@@ -6,7 +6,7 @@ interface Supplies {
   quantity?: Number
   typeId?: string
   icon?: string
-  total?: Number
+  total?: number
   supply?: any
 }
 
@@ -16,7 +16,7 @@ interface Destination {
   quantity?: Number
   typeId?: string
   icon?: string
-  total?: Number
+  total?: number
 }
 
 export interface Achievement {
@@ -25,6 +25,7 @@ export interface Achievement {
   dateAchievement?: Date
   surface?: Number | number
   percent?: Number
+  eiq?: number
   supplies?: Array<Supplies>
   destination?: Array<Destination>
   signers?: Array<Signer>

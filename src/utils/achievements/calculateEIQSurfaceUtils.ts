@@ -1,4 +1,4 @@
-import { Achievement } from '../../interfaces/Achievement'
+import { Achievement } from '../../interfaces'
 
 /**
  * Calculate Achievement's EIQ Surface.
@@ -13,9 +13,9 @@ export function calculateEIQSurfaceAchievement({
   surface
 }: Achievement) {
   let eiqTotalSupplies = []
-  for (const supplyApplied of supplies) {
-    if (supplyApplied.supply) {
-      eiqTotalSupplies.push(supplyApplied.supply.eiqTotal || 0)
+  for (const { supply, total } of supplies) {
+    if (supply) {
+      eiqTotalSupplies.push((supply.eiqTotal || 0) * total)
     }
   }
   const eiqTotal = eiqTotalSupplies.reduce(

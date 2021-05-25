@@ -1,6 +1,7 @@
 import util from 'util'
 import { Numbers } from '../Numbers'
 import { calculateCropVolumeUtils } from './calculateCropVolumeUtils'
+import { getLots } from '../lots'
 
 export const calculateDataCropUtils = ({
     surface,
@@ -12,10 +13,13 @@ export const calculateDataCropUtils = ({
     company,
     unitType,
     cropType: { key: cropTypeKey }
-  }): Object => {
+  }, activitiesWithEiq): Object => {
   const pay = payEntry ?? 0
+  let eiq: number = 0
   const { key: keyUnitType, name: nameUnitType } = unitType || {}
+  eiq = activitiesWithEiq.reduce((a, b) => a + b.eiq, 0)
   // console.log(util.inspect(lots, { showHidden: false, depth: null }))
+
   return {
     surface,
     volume: Numbers.roundToTwo(
@@ -24,25 +28,10 @@ export const calculateDataCropUtils = ({
     pay,
     dateCrop,
     name,
+    eiq: Numbers.roundToTwo(eiq),
     cropTypeKey,
     company,
-    lots: lots.length ? getLots(lots[0].data) : []
+    lotsQuantity: lots.length ? lots[0].data.length : 0,
+    lots: lots.length ? getLots(lots[0].data,activitiesWithEiq) : []
   }
-}
-const getLots = (lots): Object[] => {
-  return lots.map(
-    ({
-       provinceName,
-       cityName,
-       countryName,
-       image: { normal: path }
-     }) => {
-      return {
-        provinceName,
-        cityName,
-        countryName,
-        image: `${process.env.BASE_URL}${process.env.DIR_STORAGE}${path}`
-      }
-    }
-  )
 }
