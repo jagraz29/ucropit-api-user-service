@@ -13,7 +13,7 @@ import { setScriptPdf } from '../helpers'
 import { FileDocumentProps } from '../interfaces'
 
 export class PDFService {
-  public static async generatePdf (
+  public static async generatePdf(
     nameTemplate: string,
     context: object,
     directory: string,
