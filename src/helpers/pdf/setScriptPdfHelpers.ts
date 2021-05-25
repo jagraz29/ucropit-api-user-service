@@ -4,8 +4,9 @@ import helpers from 'handlebars-helpers'
 export const setScriptPdf = handlebars => {
 
   handlebars.registerHelper('moment', MomentHandlebars)
-  handlebars.registerHelper(helpers.regex())
   handlebars.registerHelper(helpers.string())
+  handlebars.registerHelper(helpers.comparison())
+  handlebars.registerHelper(helpers.array())
   handlebars.registerHelper('switch', (value, options) => {
     this.switch_value = value
     this.switch_break = false
@@ -21,18 +22,6 @@ export const setScriptPdf = handlebars => {
     if (this.switch_break === false) {
       return options.fn(this)
     }
-  })
-  handlebars.registerHelper('ifCond', (v1, v2, options) => {
-    if (v1 === v2) {
-      return options.fn(this)
-    }
-    return options.inverse(this)
-  })
-  handlebars.registerHelper('ifNotCond', (v1, v2, options) => {
-    if (v1 !== v2) {
-      return options.fn(this)
-    }
-    return options.inverse(this)
   })
 
   return handlebars
