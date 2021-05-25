@@ -1,4 +1,5 @@
 export interface IBadge {
+  _id: string
   type: string
   name: {
     es: string

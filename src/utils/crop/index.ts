@@ -1,3 +1,3 @@
 export * from './calculateDataCropUtils'
 export * from './calculateCropVolumeUtils'
-export * from './getCropBadgesReachedUtils'
+export * from './addCropBadgesReachedUtils'

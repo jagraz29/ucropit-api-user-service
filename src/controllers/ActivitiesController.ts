@@ -5,6 +5,7 @@ import {
   validateFilesWithEvidences,
   validateExtensionFile
 } from '../utils/Validation'
+import { addCropBadgesReached } from '../utils'
 
 import ActivityService from '../services/ActivityService'
 import CropService from '../services/CropService'
@@ -255,6 +256,7 @@ class ActivitiesController {
       await ActivityService.changeStatus(activity, 'FINISHED')
       await CropService.removeActivities(activity, crop, 'done')
       await CropService.addActivities(activity, crop)
+      await addCropBadgesReached(crop)
     }
 
     res.status(200).json(activity)

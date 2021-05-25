@@ -14,11 +14,11 @@ export class BadgeRepository {
    * @returns
    */
   public static async getBadges({
-      query,
-      limit,
-      skip,
-      sort,
-      populate,
+    query,
+    limit,
+    skip,
+    sort,
+    populate,
   }): Promise<any> {
     return Badge
       .find(query ? query : {})

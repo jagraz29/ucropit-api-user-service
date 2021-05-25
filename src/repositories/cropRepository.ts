@@ -278,4 +278,15 @@ export class CropRepository {
 
     return cropsInstance.length ? cropsInstance : null
   }
+
+  /**
+   *
+   * @param query
+   * @param dataToUpdate
+   *
+   * @returns
+   */
+  public static async updateOneCrop(query: any, dataToUpdate: any): Promise<any> {
+    return Crop.updateOne(query, dataToUpdate)
+  }
 }

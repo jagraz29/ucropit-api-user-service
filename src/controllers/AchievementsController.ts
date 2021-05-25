@@ -5,8 +5,6 @@ import {
   validateFilesWithEvidences,
   validateExtensionFile
 } from '../utils/Validation'
-import { getCropBadgesReached } from '../utils'
-
 
 import AchievementService from '../services/AchievementService'
 import ActivityService from '../services/ActivityService'
@@ -218,9 +216,6 @@ class AchievementsController {
       ActivityService.isCompletePercentAchievement(activity)
 
     if (isCompleteSigned && isCompletePercent) {
-      console.log('**************************')
-      console.log('HERE')
-
       const { ots, hash, pathPdf, nameFilePdf, nameFileOts, pathOtsFile } =
         await BlockChainServices.sign(crop, activity)
 
@@ -239,7 +234,6 @@ class AchievementsController {
       await ActivityService.changeStatus(activity, 'FINISHED')
       await CropService.removeActivities(activity, crop, 'done')
       await CropService.addActivities(activity, crop)
-      await getCropBadgesReached(crop)
     }
 
     res.status(200).json(achievement)
