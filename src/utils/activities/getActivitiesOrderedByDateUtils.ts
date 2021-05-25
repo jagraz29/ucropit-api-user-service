@@ -62,7 +62,8 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           tag: TypeActivity,
           dateStart: dateStart ?? null,
           dateEnd: dateEnd ?? null,
-          lots: lots.length,
+          lots: lots,
+          lotsQuantity: lots.length,
           surface,
           volume: Numbers.roundToTwo(
             calculateCropVolumeUtils(keyUnitType, pay, surface)

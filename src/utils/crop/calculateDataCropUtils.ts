@@ -1,6 +1,7 @@
 import util from 'util'
 import { Numbers } from '../Numbers'
 import { calculateCropVolumeUtils } from './calculateCropVolumeUtils'
+import { getLots } from '../lots'
 
 export const calculateDataCropUtils = ({
     surface,
@@ -31,27 +32,6 @@ export const calculateDataCropUtils = ({
     cropTypeKey,
     company,
     lotsQuantity: lots.length ? lots[0].data.length : 0,
-    lots: lots.length ? getLots(lots[0].data) : []
+    lots: lots.length ? getLots(lots[0].data,activitiesWithEiq) : []
   }
-}
-const getLots = (lots): Object[] => {
-  return lots.map(
-    ({
-       provinceName,
-       cityName,
-       countryName,
-       surface,
-       image
-     }) => {
-      const { normal: path } = image || {}
-      const imageLot = path ? `${process.env.BASE_URL}${process.env.DIR_STORAGE}${path}` : null
-      return {
-        provinceName,
-        cityName,
-        countryName,
-        surface,
-        image: imageLot
-      }
-    }
-  )
 }

@@ -204,7 +204,7 @@ class CropsController {
       activities,
       dateCreatePdf: moment().format('DD/MM/YYYY')
     }
-    console.log(util.inspect(dataCrop, { showHidden: false, depth: null }))
+    // console.log(util.inspect(dataCrop, { showHidden: false, depth: null }))
     // console.log(util.inspect(JSON.stringify(dataPdf), { showHidden: false, depth: null }))
     // aca se utiliza el service para generar el pdf, este debe devoler el path para descargar el pdf
     const nameFile = await PDFService.generatePdf(

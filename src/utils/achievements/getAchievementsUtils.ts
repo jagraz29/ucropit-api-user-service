@@ -22,11 +22,11 @@ export const getAchievements = (achievements): Achievement[] => {
             _id
         } = achievement
       const eiq = calculateEIQSurfaceAchievement(achievement)
-      // console.log(Numbers.roundToTwo(eiq))
       return {
         _id,
         dateAchievement,
-        lots: lots.length,
+        lots: lots,
+        lotsQuantity: lots.length,
         surface,
         supplies,
         eiq: Numbers.roundToTwo(eiq),
