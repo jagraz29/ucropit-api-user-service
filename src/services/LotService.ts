@@ -104,7 +104,7 @@ class LotService extends ServiceBase {
             }
           )
 
-          const imagePath: string = await this.downloadStaticMap(
+          const imagePath: any = await this.downloadStaticMap(
             staticMapImageUrl,
             'public/uploads/map-static/' + lot._id,
             'normal.png'
@@ -115,7 +115,7 @@ class LotService extends ServiceBase {
             provinceName: locationData.province,
             cityName: locationData.city,
             image: {
-              normal: imagePath.replace('public', '')
+              normal: imagePath ? imagePath.replace('public', '') : ''
             }
           }
 
@@ -127,7 +127,7 @@ class LotService extends ServiceBase {
             provinceName: locationData.province,
             cityName: locationData.city,
             image: {
-              normal: imagePath.replace('public', '')
+              normal: imagePath ? imagePath.replace('public', '') : ''
             }
           }
 
@@ -336,7 +336,15 @@ class LotService extends ServiceBase {
       responseType: 'stream'
     }
 
-    const responseStaticImage: any = await axios(axiosStaticImageConfig)
+    let responseStaticImage: any
+
+    try{
+      responseStaticImage = await axios(axiosStaticImageConfig)
+    }catch(error){
+      console.log('ERROR GET SATELITE IMAGE')
+      console.log(error)
+      return false
+    }
 
     let imagePath = path + '/' + fileName
 
@@ -406,9 +414,7 @@ class LotService extends ServiceBase {
               }
             )
 
-            console.log(staticMapImageUrl)
-
-            const imagePath: string = await this.downloadStaticMap(
+            const imagePath: any = await this.downloadStaticMap(
               staticMapImageUrl,
               'public/uploads/map-static/' + lot._id,
               'normal.png'
@@ -419,7 +425,7 @@ class LotService extends ServiceBase {
               provinceName: locationData.province,
               cityName: locationData.city,
               image: {
-                normal: imagePath.replace('public', '')
+                normal: imagePath ? imagePath.replace('public', '') : ''
               }
             }
 
@@ -431,7 +437,7 @@ class LotService extends ServiceBase {
               provinceName: locationData.province,
               cityName: locationData.city,
               image: {
-                normal: imagePath.replace('public', '')
+                normal: imagePath ? imagePath.replace('public', '') : ''
               }
             }
 
