@@ -108,7 +108,7 @@ export class CropRepository {
       })
       .populate('members.user')
       .lean()
-    return !!cropsInstance.length
+    return cropsInstance.length
       ? cropsInstance.map((crop) => joinActivitiesByCrop(crop))
       : null
   }
@@ -176,7 +176,8 @@ export class CropRepository {
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies', populate: [{ path: 'typeId' }] }
+              { path: 'supplies.supply' },
+              { path: 'supplies.typeId' }
             ]
           },
           {
@@ -212,13 +213,14 @@ export class CropRepository {
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies', populate: [{ path: 'typeId' }] }
+              { path: 'supplies.supply' },
+              { path: 'supplies.typeId' }
             ]
           }
         ]
       })
       .populate('members.user')
-      .lean({ virtual: true })
+      .lean({ virtuals: true })
     return cropInstance ? joinActivitiesByCrop(cropInstance) : null
   }
 
@@ -234,7 +236,7 @@ export class CropRepository {
       company
     }).populate('unitType')
 
-    return !!cropsInstance.length ? cropsInstance : null
+    return cropsInstance.length ? cropsInstance : null
   }
 
   public static async findAllEvidencesByCropId(cropId: string) {
@@ -263,7 +265,7 @@ export class CropRepository {
         ]
       })
       .lean({ virtuals: true })
-    return !!cropsInstance ? listEvidencesCrop(cropsInstance) : null
+    return cropsInstance ? listEvidencesCrop(cropsInstance) : null
   }
 
   /**
@@ -274,6 +276,6 @@ export class CropRepository {
   public static async findCrops(pipeline: any) {
     const cropsInstance = await Crop.aggregate(pipeline)
 
-    return !!cropsInstance.length ? cropsInstance : null
+    return cropsInstance.length ? cropsInstance : null
   }
 }
