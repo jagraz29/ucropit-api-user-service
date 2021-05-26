@@ -104,7 +104,7 @@ class LotService extends ServiceBase {
             }
           )
 
-          const imagePath: any = await this.downloadStaticMap(
+          const imagePath: string | boolean = await this.downloadStaticMap(
             staticMapImageUrl,
             'public/uploads/map-static/' + lot._id,
             'normal.png'
@@ -414,7 +414,7 @@ class LotService extends ServiceBase {
               }
             )
 
-            const imagePath: any = await this.downloadStaticMap(
+            const imagePath: string | boolean = await this.downloadStaticMap(
               staticMapImageUrl,
               'public/uploads/map-static/' + lot._id,
               'normal.png'
