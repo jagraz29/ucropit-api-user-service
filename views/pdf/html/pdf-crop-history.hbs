@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div class="fill">
     <div class="row">
         <div class="column">
@@ -60,9 +61,10 @@
             </div>
             <div class="eiq">
                 <div class="center">
-                    EIQ: {{dataCrop.eiq}}
+                   EIQ: {{dataCrop.eiq}}
                 </div>
             </div>
+            
             {{!-- cropStats --}}
             <div class="dataContainer">
                 <div class="dataNames">Sup Neta</div>
@@ -184,83 +186,81 @@
             </div>
         </div>
     </div>
-    {{/is}}        
+    {{/is}}
     {{/each}}
 </div>
 
-    {{#each activities}}
-    {{#isnt tag "ACT_AGREEMENTS" }}
-    <div class="activity-header">
-        {{#switch tag}}
-        {{#case "ACT_SOWING"}}
-        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/truck.png" width="26"
-            height="26" />
-        {{/case}}
-        {{#case "ACT_MONITORING"}}
-        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/eye.png" width="26"
-            height="26" />
-        {{/case}}
-        {{#case "ACT_APPLICATION"}}
-        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/flask.png" width="26"
-            height="26" />
-        {{/case}}
-        {{#case "ACT_HARVEST"}}
-        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/harvest.png"
-            width="26" height="26" />
-        {{/case}}
-        {{#case "ACT_AGREEMENTS"}}
-        <img class="activity-type-img" src="https://static.thenounproject.com/png/420338-200.png" width="26"
-            height="26" />
-        {{/case}}
-        {{/switch}}
-        <div class="activity-title">{{name}}</div>
-    </div>
-    <div class="activity-frame">
-        <div class="row">
-            <div class="column">
-                <div class="date-activity">
-                    <i class="fa fa-check"></i>{{moment dateOrder format="DD/MM/YYYY"}}
-                </div>
-                <h3 class="activity-framed-h1">{{name}}</h3>
-                <div class="activity-lots">{{lotsQuantity}} lotes</div>
-                <div class="spokesman-data">Evidencias</div>
-                <div class="backup-docs">documentacion de respaldo</div>
-                {{#each files}}
-                <div><img
-                        src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
-                        height="25" width="25" />
-                    <a href={{path}}>{{name}}</a>
-                </div>
-                {{/each}}
+{{#each activities}}
+{{#isnt tag "ACT_AGREEMENTS" }}
+<div class="activity-header">
+    {{#switch tag}}
+    {{#case "ACT_SOWING"}}
+    <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/truck.png" width="26"
+        height="26" />
+    {{/case}}
+    {{#case "ACT_MONITORING"}}
+    <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/eye.png" width="26"
+        height="26" />
+    {{/case}}
+    {{#case "ACT_APPLICATION"}}
+    <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/flask.png" width="26"
+        height="26" />
+    {{/case}}
+    {{#case "ACT_HARVEST"}}
+    <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/harvest.png" width="26"
+        height="26" />
+    {{/case}}
+    {{#case "ACT_AGREEMENTS"}}
+    <img class="activity-type-img" src="https://static.thenounproject.com/png/420338-200.png" width="26" height="26" />
+    {{/case}}
+    {{/switch}}
+    <div class="activity-title">{{name}}</div>
+</div>
+<div class="activity-frame">
+    <div class="row">
+        <div class="column">
+            <div class="date-activity">
+                <i class="fa fa-check"></i>{{moment dateOrder format="DD/MM/YYYY"}}
             </div>
-            <div class="column">
-                <div class="activity-validations">
-                    <div class="validation-title">Validaciones</div>
-                    <div><span class="validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
-                    <div class="validation-name">Santiago Casares</div>
-                    <divclass="backup-docs">Productor - 30-20771364-9
-                </div>
+            <h3 class="activity-framed-h1">{{name}}</h3>
+            <div class="activity-lots">{{lotsQuantity}} lotes</div>
+            <div class="spokesman-data">Evidencias</div>
+            <div class="backup-docs">documentacion de respaldo</div>
+            {{#each files}}
+            <div><img src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
+                    height="25" width="25" />
+                <a href={{path}}>{{name}}</a>
+            </div>
+            {{/each}}
+        </div>
+        <div class="column">
+            <div class="activity-validations">
+                <div class="validation-title">Validaciones</div>
+                <div><span class="validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
+                <div class="validation-name">Santiago Casares</div>
+                <divclass="backup-docs">Productor - 30-20771364-9
             </div>
         </div>
-        <div class="row">
-            <div class="activity-frame-lots">
-                {{#if lots}}
-                {{#each lots}}
+    </div>
+    <div class="row">
+        <div class="activity-frame-lots">
+            {{#if lots}}
+            {{#each lots}}
 
-                <div class="card">
-                    <img src={{image.normal}} alt="crop" class="activity-lots-image">
-                    <div class="container">
-                        <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
-                        <p class="type-pic-card">Dentro del lote</p>
-                    </div>
+            <div class="card">
+                <img src={{image.normal}} alt="crop" class="activity-lots-image">
+                <div class="container">
+                    <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
+                    <p class="type-pic-card">Dentro del lote</p>
                 </div>
-                {{/each}}
-                {{/if}}
             </div>
+            {{/each}}
+            {{/if}}
         </div>
     </div>
-    {{/isnt}}        
-    {{/each}}
+</div>
+{{/isnt}}
+{{/each}}
 </div>
 
 <div class="activities">
@@ -279,7 +279,7 @@
     {{/each}}
     {{/each}}
 
-    
+
     {{#each activities}}
     {{#each achievements}}
     {{#if supplies }}
@@ -342,29 +342,31 @@
         <div class="row">
             <div class="column">
                 <div class="date-activity">
-                <div class="activity-lots">{{dataCrop.lotsQuantity}} Lotes</div>
-                {{#each dataCrop.lots}}
+                    <div class="activity-lots">{{dataCrop.lotsQuantity}} Lotes</div>
+                    {{#each dataCrop.lots}}
                     <div class="spokesman-data">{{provinceName}} ({{surface}} has.)</div>
-                {{/each}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="activity-frame-lots">
-                {{#each dataCrop.lots}}
-
-                <div class="card">
-                    <img src={{image}} alt="crop" class="activity-lots-image">
-                    <div class="container">
-                        <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
-                        <p class="type-pic-card">Dentro del lote</p>
-                    </div>
+                    {{/each}}
                 </div>
-                {{/each}}
+            </div>
+            <div class="row">
+                <div class="activity-frame-lots">
+                    {{#each dataCrop.lots}}
+
+                    <div class="card">
+                        <img src={{image}} alt="crop" class="activity-lots-image">
+                        <div class="container">
+                            <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
+                            <p class="type-pic-card">Dentro del lote</p>
+                            <div class="eiq">
+                                <div class="center">
+                                    EIQ: {{eiq}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
             </div>
         </div>
-    </div>      
-
-
-
-</div>
+    </div>
 </div>
