@@ -42,9 +42,9 @@ const setSignersToRows = (activities): Object[] => {
 
 const getDataActivities = (activities): Object[] => {
   return _.flatten(activities.map(({ typeAgreement, achievements, type: { tag: TypeActivity }, signers, status }) => {
-    const { name: { en } } = status[0]
+    const { name: { en: StatusActivity } } = status[0]
 
-    if (en === StatusActivities.DONE || en === StatusActivities.FINISHED) {
+    if (StatusActivity === StatusActivities.DONE || StatusActivity === StatusActivities.FINISHED) {
       const key = typeAgreement?.key ?? null
       let responseWithAgreements: Object[] = []
       let responseWithOutAgreements: Object[] = []

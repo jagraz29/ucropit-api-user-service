@@ -9,7 +9,7 @@ import CropService from '../services/CropService'
 import LotService from '../services/LotService'
 import CompanyService from '../services/CompanyService'
 import ActivityService from '../services/ActivityService'
-import { Evidence } from '../interfaces'
+import { Evidence, ReportSignersByCompany } from '../interfaces'
 
 import { CropRepository } from '../repositories'
 import { PDFService } from '../services'
@@ -28,12 +28,10 @@ import {
 
 import { UserSchema } from '../models/user'
 import { errors } from '../types/common'
-import { ReportSignersByCompany } from '../interfaces'
 import path from 'path'
 import moment from 'moment'
 
 const Crop = models.Crop
-const CropType = models.CropType
 
 class CropsController {
   /**

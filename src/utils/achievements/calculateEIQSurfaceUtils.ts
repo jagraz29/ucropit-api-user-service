@@ -15,7 +15,7 @@ export function calculateEIQSurfaceAchievement({
   let eiqTotalSupplies = []
   for (const { supply, total } of supplies) {
     if (supply) {
-      eiqTotalSupplies.push((supply.eiqTotal || 0) * total)
+      eiqTotalSupplies.push((supply.eiqTotal || 0) * Number(total))
     }
   }
   const eiqTotal = eiqTotalSupplies.reduce(
