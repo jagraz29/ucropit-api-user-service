@@ -8,20 +8,19 @@ import { Achievement } from '../../interfaces'
  *
  * @returns Number
  */
-export function calculateEIQSurfaceAchievement({
+export function calculateEIQSurfaceAchievement ({
   supplies,
   surface
 }: Achievement) {
-  let eiqTotalSupplies = []
-  for (const { supply, total } of supplies) {
-    if (supply) {
-      eiqTotalSupplies.push((supply.eiqTotal || 0) * Number(total))
-    }
-  }
-  const eiqTotal = eiqTotalSupplies.reduce(
-    (prev, next) => prev + (next || 0),
+  const eiqTotalSupplies = supplies.reduce((
+    a,
+    { supply, total }) => {
+
+    if (supply) return a + (supply.eiqTotal || 0) * Number(total)
+    return 0
+  },
     0
   )
-  const result = eiqTotal / Number(surface)
-  return !Number.isNaN(result) ? result : 0
+  const eiqTotal = eiqTotalSupplies / Number(surface)
+  return !Number.isNaN(eiqTotal) ? eiqTotal : 0
 }
