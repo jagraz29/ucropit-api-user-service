@@ -19,7 +19,8 @@
 4. npm install
 5. npm run dev (run server)
 6. npm run seed (seed initial data into DataBase)
-7. npm run seed -- --reset (Reset DataBase)
+7. npm run seed -- --badges (add Badges)
+8. npm run seed -- --reset (Reset DataBase)
 
 ## MongoDB in Docker
 

@@ -24,6 +24,9 @@ import {
 
 import { activesPrinciples } from './activesPrinciplesData'
 
+import { badgesData } from './badgesData'
+
+const Badge = models.Badge
 const CropType = models.CropType
 const UnitType = models.UnitType
 const ActivityType = models.ActivityType
@@ -39,6 +42,26 @@ const TypeStorage = models.TypeStorage
 const ActiveIngredient = models.ActiveIngredient
 
 const ForeignCredential = models.ForeignCredential
+
+/**
+ * Seeders Badges
+ */
+const seedersBadges = async (flag?) => {
+  if (flag && flag !== '--badges') return
+  console.log(`${chalk.green('=====Registering Badges====')}`)
+
+  const badges = await Badge.find({})
+
+  const badgesSeed = badgesData.filter(
+    (item) => !badges.find((element) => item.type === element.type)
+  )
+
+  for (const badge of badgesSeed) {
+    await Badge.create(badge)
+  }
+  console.log(`${chalk.green('=====Registered Badges====')}`)
+  return true
+}
 
 /**
  * Seeders CropType
@@ -343,6 +366,7 @@ const seedersForeignCredentials = async (flag?) => {
       await seedersSupplyType(flag)
       await seedersUnitType(flag)
       await seedersCropType(flag)
+      await seedersBadges(flag)
       await seedersActivitiesType(flag)
       await seedersTypeAgreement(flag)
       await seedersEvidenceConcepts(flag)

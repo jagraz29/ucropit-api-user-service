@@ -21,7 +21,8 @@ import {
   makeDirIfNotExists,
   calculateDataCropUtils,
   calculateTheoreticalPotentialUtils,
-  calculateCropVolumeUtils
+  calculateCropVolumeUtils,
+  getCropBadgesByUserType,
 } from '../utils'
 
 import {
@@ -126,6 +127,7 @@ class CropsController {
     const lots = await LotService.storeLotImagesAndCountries(crop.lots)
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
+    const badges = getCropBadgesByUserType(req.user, crop)
     const volume = calculateCropVolumeUtils(
       crop.unitType.key,
       crop.pay,
@@ -139,7 +141,8 @@ class CropsController {
       company: {
         ...crop.company,
         theoriticalPotential
-      }
+      },
+      badges
     }
 
     res.status(200).json(newCrop)
