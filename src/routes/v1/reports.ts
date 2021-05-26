@@ -190,17 +190,17 @@ router.post(
  *      summary: Request send email with DM report.
  *      tags: [Reports]
  *      parameters:
- *        - in: body
+ *        - in: query
  *          name: identifier
  *          required: true
  *          schema:
  *            type: string
- *        - in: body
+ *        - in: query
  *          name: email
  *          required: true
  *          schema:
  *            type: string
- *        - in: body
+ *        - in: query
  *          name: typeActivity
  *          required: true
  *          schema:
@@ -213,17 +213,7 @@ router.post(
  *        "500":
  *          description: Server error
  */
-router.post(
-  '/billing',
-  authMiddleware,
-  reportsController.sendFileReportBilling
-)
-
-// router.post(
-//   '/crops/attachment/applicationBilling',
-//   // authMiddleware,
-//   reportsController.sendFileReportApplicationBilling
-// )
+router.post('/billing', authMiddleware, reportsController.sendFileReportBilling)
 
 router.get('/map/lot', reportsController.showMap)
 

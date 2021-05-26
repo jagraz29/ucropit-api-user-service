@@ -21,21 +21,27 @@ export const getDataCropsForBilling = (crops) => {
   return dataCropsBilling
 }
 
-const dataCropBillingAchievement = (activity, crop) => flatten(activity.achievements.map((achievement) => parseDataCropBilling(achievement, crop)))
+const dataCropBillingAchievement = (activity, crop) =>
+  flatten(
+    activity.achievements.map((achievement) =>
+      parseDataCropBilling(achievement, crop)
+    )
+  )
 
-const dataCropBillingActivity = (activity, crop) => parseDataCropBilling(activity, crop)
+const dataCropBillingActivity = (activity, crop) =>
+  parseDataCropBilling(activity, crop)
 
 const parseDataCropBilling = (activity, crop) => {
-    return {
-        cuit: crop.company?.identifier,
-        business_name: crop.company.name,
-        crop: crop.cropType.name.es,
-        crop_name: crop.name,
-        responsible: getMembersWithRol(crop),
-        surface_total: crop.surface,
-        total_surface_signed_sowing: activity.surface,
-        date_sign_achievement_by_lot_sowing: lastDateSign(activity)
-    }
+  return {
+    cuit: crop.company?.identifier,
+    business_name: crop.company.name,
+    crop: crop.cropType.name.es,
+    crop_name: crop.name,
+    responsible: getMembersWithRol(crop),
+    surface_total: crop.surface,
+    total_surface_signed: activity.surface,
+    date_sign_achievement_by_lot: lastDateSign(activity)
+  }
 }
 
 const activityHasListAchievement = (activity): boolean => {

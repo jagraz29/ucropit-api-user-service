@@ -25,7 +25,8 @@ import {
   getCropPipelineEiqReportUtils,
   filterDataCropsByCompanies,
   getCropPipelineDmReportUtils,
-  getDataCropsForBilling
+  getDataCropsForBilling,
+  validateTypeActivity
 } from '../utils'
 
 import {
@@ -270,14 +271,15 @@ class ReportsController {
    * @param req
    * @param res
    */
-  public async sendFileReportBilling (req: Request, res: Response) {
-    const email: string = req.body.email as string
-    const identifier: string = req.body.identifier as string
-    const type: string = req.body.typeActivity as TypeActivity
-    const typeActivityByValueWithFilter = Object.values(TypeActivity).filter(element => !['ACT_SOWING'].includes(element))
+  public async sendFileReportBilling(req: Request, res: Response) {
+    const email: string = req.query.email as string
+    const identifier: string = req.query.identifier as string
+    const type: TypeActivity = req.query.typeActivity as TypeActivity
 
-    if (!typeActivityByValueWithFilter.includes(type as TypeActivity)) {
-      return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ error: 'ERROR_INVALID_FIELD', param: 'typeActivity' })
+    if (!validateTypeActivity(type)) {
+      return res
+        .status(StatusCodes.UNPROCESSABLE_ENTITY)
+        .json({ error: 'ERROR_INVALID_FIELD', param: 'typeActivity' })
     }
 
     let crops = await CropRepository.findCropsFilterActivityForBilling(
@@ -289,7 +291,9 @@ class ReportsController {
     )
 
     if (!crops) {
-      return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND })
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: ReasonPhrases.NOT_FOUND })
     }
 
     const report: ReportBilling[] = getDataCropsForBilling(crops)
@@ -313,47 +317,6 @@ class ReportsController {
     })
 
     return res.json(ReasonPhrases.OK)
-  }
-
-  public async sendFileReportApplicationBilling(req: Request, res: Response) {
-    console.log('sendFileReportAplicationBilling')
-    const { email, identifier } = req.body
-    const user: any = req.user
-    let crops = await CropService.cropsOnlySeeRolesSowing(
-      {
-        cancelled: false,
-        'members.user': user._id,
-        'members.identifier': identifier
-      },
-      {
-        user: user._id,
-        identifier: identifier
-      },
-      rolesReportSowingBilling
-    )
-
-    if (crops.length === 0) {
-      const error = errors.find((error) => error.key === '001')
-      return res.status(400).json(error.code)
-    }
-
-    const reports = await ReportService.generateReportsAplicationBilling(crops)
-
-    const pathFile = ExportFile.modeExportAplicationBilling(reports, 'xls')
-
-    await EmailService.sendWithAttach({
-      template: 'export-file',
-      to: email,
-      data: {},
-      files: [
-        {
-          filename: 'report.xlsx',
-          content: fs.readFileSync(pathFile)
-        }
-      ]
-    })
-
-    return res.status(200).json('Ok')
   }
 
   public async showMap(req: Request, res: Response) {
