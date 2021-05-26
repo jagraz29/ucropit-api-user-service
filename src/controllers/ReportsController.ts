@@ -15,24 +15,34 @@ import EmailService from '../services/EmailService'
 import {
   ReportsSignersByCompaniesHeaderXls,
   ReportsEiqHeaderXls,
-  ReportsDmHeaderXls
+  ReportsDmHeaderXls,
+  reportHeaderBillingXls
 } from '../types/'
 
-import { CropRepository } from '../repositories'
+import { CropRepository, TypeActivity } from '../repositories'
 import {
   structJsonForXls,
   getCropPipelineEiqReportUtils,
   filterDataCropsByCompanies,
-  getCropPipelineDmReportUtils
+  getCropPipelineDmReportUtils,
+  getDataCropsForBilling,
+  validateTypeActivity
 } from '../utils'
 
 import {
   ReportSignersByCompany,
   ReportEiq,
-  ReportDm
+  ReportDm,
+  UserAuth,
+  ReportBilling
 } from '../interfaces'
 
-import { roles, errors } from '../types/common'
+import {
+  roles,
+  errors,
+  rolesReportSowingBilling,
+  typeActivityMap
+} from '../types/common'
 
 import fs from 'fs'
 
@@ -189,7 +199,9 @@ class ReportsController {
 
     const cropPipeline: any = getCropPipelineEiqReportUtils({ identifier })
 
-    const report: Array<ReportEiq> = await CropRepository.findCrops(cropPipeline)
+    const report: Array<ReportEiq> = await CropRepository.findCrops(
+      cropPipeline
+    )
 
     if (!report) {
       const error = errors.find((error) => error.key === '005')
@@ -236,11 +248,7 @@ class ReportsController {
       return res.status(404).json(error.code)
     }
 
-    const pathFile = ExportFile.exportXls(
-      report,
-      ReportsDmHeaderXls,
-      'DM.xlsx'
-    )
+    const pathFile = ExportFile.exportXls(report, ReportsDmHeaderXls, 'DM.xlsx')
 
     await EmailService.sendWithAttach({
       template: 'export-file',
@@ -255,6 +263,60 @@ class ReportsController {
     })
 
     return res.status(200).json('Ok')
+  }
+
+  /**
+   * Send export file report in email.
+   *
+   * @param req
+   * @param res
+   */
+  public async sendFileReportBilling(req: Request, res: Response) {
+    const email: string = req.query.email as string
+    const identifier: string = req.query.identifier as string
+    const type: TypeActivity = req.query.typeActivity as TypeActivity
+
+    if (!validateTypeActivity(type)) {
+      return res
+        .status(StatusCodes.UNPROCESSABLE_ENTITY)
+        .json({ error: 'ERROR_INVALID_FIELD', param: 'typeActivity' })
+    }
+
+    let crops = await CropRepository.findCropsFilterActivityForBilling(
+      {
+        cancelled: false,
+        'members.identifier': identifier
+      },
+      type
+    )
+
+    if (!crops) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: ReasonPhrases.NOT_FOUND })
+    }
+
+    const report: ReportBilling[] = getDataCropsForBilling(crops)
+
+    const pathFile = ExportFile.exportXls(
+      report,
+      reportHeaderBillingXls,
+      `BILLING_${typeActivityMap[type]}.xlsx`
+    )
+
+    await EmailService.sendWithAttach({
+      template: 'export-file',
+      to: email,
+      data: {},
+      files: [
+        {
+          filename: `BILLING_${typeActivityMap[type]}.xlsx`,
+          content: fs.readFileSync(pathFile)
+        }
+      ]
+    })
+
+    return res.json(ReasonPhrases.OK)
   }
 
   public async showMap(req: Request, res: Response) {

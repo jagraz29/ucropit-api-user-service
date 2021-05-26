@@ -4,6 +4,7 @@ import { handleFileConvertJSON } from '../utils/ParseKmzFile'
 import { errors } from '../types/common'
 import { VALID_FORMATS_DOCUMENTS } from './Files'
 import { ResponseOkProps } from '../interfaces/SatelliteImageRequest'
+import { TypeActivity } from '../repositories'
 import _ from 'lodash'
 
 import JoiDate from '@hapi/joi-date'
@@ -384,6 +385,10 @@ export const validateFormatKmz = async (files: FileArray) => {
     }
   }
   return { error: false }
+}
+
+export const validateTypeActivity = (type: TypeActivity) => {
+  return Object.values(TypeActivity).includes(type)
 }
 export const validateExtensionFile = (files) => {
   if (!files) {
