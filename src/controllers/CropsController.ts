@@ -2,8 +2,6 @@ import { Request, Response } from 'express'
 import {
   ReasonPhrases,
   StatusCodes,
-  getReasonPhrase,
-  getStatusCode
 } from 'http-status-codes'
 
 import models from '../models'
@@ -11,21 +9,18 @@ import CropService from '../services/CropService'
 import LotService from '../services/LotService'
 import CompanyService from '../services/CompanyService'
 import ActivityService from '../services/ActivityService'
-import { Evidence } from '../interfaces'
+import { Evidence, ReportSignersByCompany } from '../interfaces'
 
 import { CropRepository } from '../repositories'
 import { PDFService } from '../services'
 import {
-  basePath,
   getActivitiesOrderedByDateUtils,
-  makeDirIfNotExists,
   calculateDataCropUtils,
   calculateTheoreticalPotentialUtils,
   calculateCropVolumeUtils
 } from '../utils'
 
 import {
-  validateGetCrops,
   validateCropStore,
   validateFormatKmz,
   validateNotEqualNameLot
@@ -33,13 +28,10 @@ import {
 
 import { UserSchema } from '../models/user'
 import { errors } from '../types/common'
-import { ReportSignersByCompany } from '../interfaces'
 import path from 'path'
-import util from 'util'
 import moment from 'moment'
 
 const Crop = models.Crop
-const CropType = models.CropType
 
 class CropsController {
   /**
@@ -178,35 +170,26 @@ class CropsController {
     const {
       params: { id }
     } = req
-    // se obtienes crop con sus actividades
     const crop = await CropRepository.getCropWithActivities(id)
 
     if (!crop) {
       return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
     }
-    // aca se obtienen todos los crop de la company y el tipo de cultivo
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
 
-    // aca se calcula el potencial teorico
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
 
-    // aca esta la libreria a nivel de actividades
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    // aca estara la libreria a nivel de crop
     const dataCrop = calculateDataCropUtils(crop,activities)
 
-    // aca se unen el ptencial teorico con lo del crop ya calculado
     const dataPdf = {
       dataCrop,
       theoriticalPotential,
       activities,
       dateCreatePdf: moment().format('DD/MM/YYYY')
     }
-    // console.log(util.inspect(dataCrop, { showHidden: false, depth: null }))
-    // console.log(util.inspect(JSON.stringify(dataPdf), { showHidden: false, depth: null }))
-    // aca se utiliza el service para generar el pdf, este debe devoler el path para descargar el pdf
     const nameFile = await PDFService.generatePdf(
       'pdf-crop-history',
       dataPdf,
