@@ -105,7 +105,7 @@ router.get('/:nameFile/pdf-history-crop', cropsController.pdfHistoryCrop)
  *        "500":
  *          description: Server error
  */
-router.post('/:id/generate-pdf-history', cropsController.generatePdfHistoryCrop)
+router.post('/:id/crop-histories/pdf', cropsController.generatePdfHistoryCrop)
 
 /**
  * @swagger

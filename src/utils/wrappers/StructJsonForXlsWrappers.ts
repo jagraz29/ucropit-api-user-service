@@ -1,4 +1,4 @@
-import { ReportSignersByCompany } from '../../interfaces'
+import { ReportSignersByCompany, TypeActivities } from '../../interfaces'
 import _ from 'lodash'
 
 interface SingForTypeActivity {
@@ -19,16 +19,16 @@ export const structJsonForXls = (crops): Array<ReportSignersByCompany> => {
         surface_crop: surfaceCrop,
         user_signed_id: userSignedId.toString(),
         name_signed: nameSigned,
-        sign_ACT_AGREEMENTS: singForTypeActivity(activities,'ACT_AGREEMENTS').signed,
-        sign_request_ACT_AGREEMENTS: singForTypeActivity(activities,'ACT_AGREEMENTS').signRequest,
-        sign_ACT_SOWING: singForTypeActivity(activities,'ACT_SOWING').signed,
-        sign_request_ACT_SOWING: singForTypeActivity(activities,'ACT_SOWING').signRequest,
-        sign_ACT_APPLICATION: singForTypeActivity(activities,'ACT_APPLICATION').signed,
-        sign_request_ACT_APPLICATION: singForTypeActivity(activities,'ACT_APPLICATION').signRequest,
-        sign_ACT_MONITORING: singForTypeActivity(activities,'ACT_MONITORING').signed,
-        sign_request_ACT_MONITORING: singForTypeActivity(activities,'ACT_MONITORING').signRequest,
-        sign_ACT_HARVEST: singForTypeActivity(activities,'ACT_HARVEST').signed,
-        sign_request_ACT_HARVEST: singForTypeActivity(activities,'ACT_HARVEST').signRequest
+        sign_ACT_AGREEMENTS: singForTypeActivity(activities,TypeActivities.ACT_AGREEMENTS).signed,
+        sign_request_ACT_AGREEMENTS: singForTypeActivity(activities,TypeActivities.ACT_AGREEMENTS).signRequest,
+        sign_ACT_SOWING: singForTypeActivity(activities,TypeActivities.ACT_SOWING).signed,
+        sign_request_ACT_SOWING: singForTypeActivity(activities,TypeActivities.ACT_SOWING).signRequest,
+        sign_ACT_APPLICATION: singForTypeActivity(activities,TypeActivities.ACT_APPLICATION).signed,
+        sign_request_ACT_APPLICATION: singForTypeActivity(activities,TypeActivities.ACT_APPLICATION).signRequest,
+        sign_ACT_MONITORING: singForTypeActivity(activities,TypeActivities.ACT_MONITORING).signed,
+        sign_request_ACT_MONITORING: singForTypeActivity(activities,TypeActivities.ACT_MONITORING).signRequest,
+        sign_ACT_HARVEST: singForTypeActivity(activities,TypeActivities.ACT_HARVEST).signed,
+        sign_request_ACT_HARVEST: singForTypeActivity(activities,TypeActivities.ACT_HARVEST).signRequest
       }
     })
   }))

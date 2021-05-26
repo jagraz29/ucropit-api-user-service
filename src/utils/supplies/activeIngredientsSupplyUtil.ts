@@ -7,7 +7,7 @@ import {
 import { activeIngredientUnified } from '../../types/activeIngredients'
 import SupplyRepository from '../../repositories/supplyRepository'
 
-export function createListSimpleActiveIngredients(
+export function createListSimpleActiveIngredients (
   supply: Supply,
   activeIngredient: ActiveIngredient
 ): ActiveIngredientsSupply[] {

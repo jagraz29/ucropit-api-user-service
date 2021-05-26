@@ -21,7 +21,7 @@ class AuthController {
       email: req.body.email.toLocaleLowerCase()
     }).populate('config')
 
-    if (user && user.config.fromInvitation && !user.firstName) {
+    if (user && user.config?.fromInvitation && !user.firstName) {
       return res.status(404).json({ error: 'ERR_USER_NOT_FOUND' })
     }
 

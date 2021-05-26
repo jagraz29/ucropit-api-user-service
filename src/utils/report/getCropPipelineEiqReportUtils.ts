@@ -112,7 +112,7 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
         }
       }
     }],
-    as: 'supplies'
+    as: 'supply'
   }
 
   const lookupAchievements: any = {
@@ -146,14 +146,14 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
       $lookup: lookupSupply
     },{
       $unwind: {
-        path: '$supplies',
+        path: '$supply',
         preserveNullAndEmptyArrays: true
       }
     },{
       $addFields: {
         supplieEiq: {
           $reduce : {
-            input: '$supplies.activeIngredients.eiq',
+            input: '$supply.activeIngredients.eiq',
             initialValue: 0,
             in: {
               $sum: ['$$value', '$$this'],
@@ -248,9 +248,12 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
       $concat: [process.env.BASE_URL, '/v1/reports/map/lot?id=', { $toString: '$activities.achievements.lots._id' }]
     },
     cropLotTag: '$lots.tag',
-    lotName: '$activities.achievements.lots.name',
-    supplieId: '$activities.achievements.supplies._id',
-    supplieName: '$activities.achievements.supplies.name',
+    lotName: {
+      $concat: ['$activities.achievements.lots.name', ' - ', { $toString: '$activities.achievements.lots.surface' }, ' has']
+    },
+    supplieCode: '$activities.achievements.supply.code',
+    supplieId: '$activities.achievements.supply._id',
+    supplieName: '$activities.achievements.supply.brand',
     supplieUnit: '$activities.achievements.supplies.unit',
     supplieEiq: {
       $round: ['$activities.achievements.supplieEiq', 2]
@@ -261,7 +264,21 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
         date: '$activities.dateStart'
       }
     },
-    supplieQuantity: '$activities.achievements.supplies.quantity',
+    supplieQuantityPlanified: {
+      $reduce : {
+        input: {
+          $filter: {
+            input: '$activities.supplies',
+            as: 'activitySupply',
+            cond: {
+              eq: [ '$$activitySupply.name', '$activities.achievements.supplies.name' ]
+            }
+          }
+        },
+        initialValue: '',
+        in: '$$this.quantity'
+      }
+    },
     supplieEiqPlanified: {
       $cond: {
         if: {
@@ -280,7 +297,23 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
           }]
         },
         then: {
-          $round: ['$activities.achievements.supplieEiq', 2]
+          $round: [ {
+            $multiply : ['$activities.achievements.supplieEiq', {
+              $reduce : {
+                input: {
+                  $filter: {
+                    input: '$activities.supplies',
+                    as: 'activitySupply',
+                    cond: {
+                      eq: [ '$$activitySupply.name', '$activities.achievements.supplies.name' ]
+                    }
+                  }
+                },
+                initialValue: '',
+                in: '$$this.quantity'
+              }
+            }]
+          }, 2]
         },
         else: 0
       }
@@ -292,7 +325,12 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
       }
     },
     supplieTotal: '$activities.achievements.supplies.total',
-    lotSurface: '$activities.achievements.lots.surface',
+    lotSurface: '$activities.achievements.surface',
+    eiqAchievement: {
+      $round: [{
+        $multiply: ['$activities.achievements.supplieEiq', '$activities.achievements.supplies.total']
+      }, 2]
+    },
     evidences: {
       $reduce : {
         input: '$activities.achievements.files',

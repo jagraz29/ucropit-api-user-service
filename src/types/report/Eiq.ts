@@ -13,17 +13,18 @@ export const ReportsEiqHeaderXls = {
     'kmzLocation',
     'cropLotTag',
     'lotName',
-    'supplieRegister',
+    'supplieCode',
     'supplieId',
     'supplieName',
     'supplieUnit',
     'supplieEiq',
     'scheduleDate',
-    'supplieQuantity',
+    'supplieQuantityPlanified',
     'supplieEiqPlanified',
     'achievementDate',
     'supplieTotal',
     'lotSurface',
+    'eiqAchievement',
     'evidences',
   ],
   fieldNames: [
@@ -51,6 +52,7 @@ export const ReportsEiqHeaderXls = {
     'Fecha Realizacion',
     'Unidades Realizadas',
     'Ha Realizadas',
+    'EIQ Realización',
     'Evidencias',
   ]
 }

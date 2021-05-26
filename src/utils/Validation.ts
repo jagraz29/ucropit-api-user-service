@@ -93,9 +93,9 @@ export const validateActivityStore = async (activity) => {
     storages: Joi.array()
       .items(
         Joi.object().keys({
-          unitType: Joi.string().required(),
-          tonsHarvest: Joi.number().required(),
-          storageType: Joi.string().required(),
+          unitType: Joi.string().optional(),
+          tonsHarvest: Joi.number().optional(),
+          storageType: Joi.string().optional(),
           icon: Joi.string().optional(),
           label: Joi.string().optional()
         })
@@ -162,9 +162,9 @@ export const validateActivityUpdate = async (activity) => {
     storages: Joi.array()
       .items(
         Joi.object().keys({
-          unitType: Joi.string().required(),
-          tonsHarvest: Joi.number().required(),
-          storageType: Joi.string().required(),
+          unitType: Joi.string().optional(),
+          tonsHarvest: Joi.number().optional(),
+          storageType: Joi.string().optional(),
           icon: Joi.string().optional(),
           label: Joi.string().optional()
         })
