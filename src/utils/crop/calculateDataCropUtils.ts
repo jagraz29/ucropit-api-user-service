@@ -18,7 +18,6 @@ export const calculateDataCropUtils = ({
   let eiq: number = 0
   const { key: keyUnitType, name: nameUnitType } = unitType || {}
   eiq = activitiesWithEiq.reduce((a, b) => a + b.eiq, 0)
-  // console.log(util.inspect(lots, { showHidden: false, depth: null }))
 
   return {
     surface,
