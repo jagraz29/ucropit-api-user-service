@@ -19,7 +19,7 @@ import {
   reportHeaderBillingXls
 } from '../types/'
 
-import { CropRepository } from '../repositories'
+import { CropRepository, TypeActivity } from '../repositories'
 import {
   structJsonForXls,
   getCropPipelineEiqReportUtils,
@@ -32,7 +32,8 @@ import {
   ReportSignersByCompany,
   ReportEiq,
   ReportDm,
-  UserAuth
+  UserAuth,
+  ReportBilling
 } from '../interfaces'
 
 import {
@@ -272,7 +273,12 @@ class ReportsController {
   public async sendFileReportBilling (req: Request, res: Response) {
     const email: string = req.body.email as string
     const identifier: string = req.body.identifier as string
-    const type: string = req.body.typeActivity as string
+    const type: string = req.body.typeActivity as TypeActivity
+    const typeActivityByValueWithFilter = Object.values(TypeActivity).filter(element => !['ACT_SOWING'].includes(element))
+
+    if (!typeActivityByValueWithFilter.includes(type as TypeActivity)) {
+      return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ error: 'ERROR_INVALID_FIELD', param: 'typeActivity' })
+    }
 
     let crops = await CropRepository.findCropsFilterActivityForBilling(
       {
@@ -283,10 +289,10 @@ class ReportsController {
     )
 
     if (!crops) {
-      return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
+      return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND })
     }
 
-    const report = getDataCropsForBilling(crops)
+    const report: ReportBilling[] = getDataCropsForBilling(crops)
 
     const pathFile = ExportFile.exportXls(
       report,
@@ -306,7 +312,7 @@ class ReportsController {
       ]
     })
 
-    return res.status(200).json('Ok')
+    return res.json(ReasonPhrases.OK)
   }
 
   public async sendFileReportApplicationBilling(req: Request, res: Response) {
