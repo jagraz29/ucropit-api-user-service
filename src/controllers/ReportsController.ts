@@ -269,10 +269,10 @@ class ReportsController {
    * @param req
    * @param res
    */
-  public async sendFileReportBilling(req: Request, res: Response) {
-    const email: string = req.query.email as string
-    const identifier: string = req.query.identifier as string
-    const type: string = req.query.typeActivity as string
+  public async sendFileReportBilling (req: Request, res: Response) {
+    const email: string = req.body.email as string
+    const identifier: string = req.body.identifier as string
+    const type: string = req.body.typeActivity as string
 
     let crops = await CropRepository.findCropsFilterActivityForBilling(
       {
