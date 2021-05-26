@@ -12,7 +12,6 @@ export const getLots = (lots,activitiesWithEiq): Object[] => {
        image
      }) => {
       const { normal: path } = image || {}
-      const imageLot = path ? `${process.env.BASE_URL}${process.env.DIR_STORAGE}${path}` : null
       const eiq: number = getEiqOfAchievementsByLot(lotId,activitiesWithEiq)
       return {
         provinceName,
@@ -20,7 +19,7 @@ export const getLots = (lots,activitiesWithEiq): Object[] => {
         countryName,
         surface,
         eiq: Numbers.roundToTwo(eiq),
-        image: imageLot
+        image: path ? `${process.env.BASE_URL}${process.env.DIR_STORAGE}${path}` : null
       }
     }
   )
