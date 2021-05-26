@@ -190,17 +190,17 @@ router.post(
  *      summary: Request send email with DM report.
  *      tags: [Reports]
  *      parameters:
- *        - in: query
+ *        - in: body
  *          name: identifier
  *          required: true
  *          schema:
  *            type: string
- *        - in: query
+ *        - in: body
  *          name: email
  *          required: true
  *          schema:
  *            type: string
- *        - in: query
+ *        - in: body
  *          name: typeActivity
  *          required: true
  *          schema:
@@ -215,7 +215,7 @@ router.post(
  */
 router.post(
   '/billing',
-  // authMiddleware,
+  authMiddleware,
   reportsController.sendFileReportBilling
 )
 
