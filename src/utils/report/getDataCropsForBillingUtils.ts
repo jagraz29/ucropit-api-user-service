@@ -31,8 +31,8 @@ const dataCropBillingAchievement = (activity, crop) => {
         crop_name: crop.name,
         responsible: getMembersWithRol(crop),
         surface_total: crop.surface,
-        total_surface_signed_sowing: achievement.surface,
-        date_sign_achievement_by_lot_sowing: lastDateSign(achievement)
+        total_surface_signed: achievement.surface,
+        date_sign_achievement_by_lot: lastDateSign(achievement)
       }
     })
   )
