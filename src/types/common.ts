@@ -1,5 +1,7 @@
 export const roles = ['MARKETER', 'PROVIDER', 'CAM']
 
+export const rolesReportSowingBilling = ['MARKETER', 'PROVIDER', 'KAM', 'CAM']
+
 export const errors = [
   { key: '001', code: 'NOT_AUTHORIZATION_EXPORT' },
   { key: '002', code: 'ERROR_KMZ_INVALID_FORMAT' },
@@ -11,4 +13,14 @@ export const errors = [
 export enum emailTemplates {
   NOTIFICATION_COLLABORATOR = 'notification-collab',
   NOTIFICATION_ACTIVITY = 'notification-activity'
+}
+
+export enum typeActivityMap {
+  ACT_APPLICATION = 'APLICACIÓN',
+  ACT_SOWING = 'SIEMBRA',
+  ACT_HARVEST = 'COSECHA',
+  ACT_MONITORING = 'MONITOREO',
+  ACT_FERTILIZATION = 'FERTILIZACION',
+  ACT_TILLAGE = 'LABRANZA',
+  ACT_AGREEMENT = 'ACUERDO'
 }

@@ -182,6 +182,39 @@ router.post(
   reportsController.reportsDm
 )
 
+/**
+ * @swagger
+ * path:
+ *  /v1/reports/billing:
+ *    post:
+ *      summary: Request send email with DM report.
+ *      tags: [Reports]
+ *      parameters:
+ *        - in: query
+ *          name: identifier
+ *          required: true
+ *          schema:
+ *            type: string
+ *        - in: query
+ *          name: email
+ *          required: true
+ *          schema:
+ *            type: string
+ *        - in: query
+ *          name: typeActivity
+ *          required: true
+ *          schema:
+ *            type: string
+ *      responses:
+ *        "200":
+ *          description: ok
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.post('/billing', authMiddleware, reportsController.sendFileReportBilling)
+
 router.get('/map/lot', reportsController.showMap)
 
 export default router
