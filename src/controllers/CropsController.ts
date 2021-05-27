@@ -1,8 +1,5 @@
 import { Request, Response } from 'express'
-import {
-  ReasonPhrases,
-  StatusCodes,
-} from 'http-status-codes'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 import models from '../models'
 import CropService from '../services/CropService'
@@ -182,7 +179,7 @@ class CropsController {
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    const dataCrop = calculateDataCropUtils(crop,activities)
+    const dataCrop = calculateDataCropUtils(crop, activities)
 
     const dataPdf = {
       dataCrop,
