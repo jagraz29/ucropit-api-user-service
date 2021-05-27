@@ -8,7 +8,7 @@ export const badgesData = [
           "pt" : "Uso legal da terra"
       },
       "goalReach" : 90,
-      "image" : "/uploads/badges/legal-land-use.png",
+      "image" : "legal-land-use.png",
   },
   {
       "_id" : "60ac22a07921b7186c8509c6",
@@ -19,7 +19,7 @@ export const badgesData = [
           "pt" : "Sem desmatamento"
       },
       "goalReach" : 90,
-      "image" : "/uploads/badges/no-deforestation.png",
+      "image" : "no-deforestation.png",
   },
   {
     "_id" : "60ac22c87921b7186c8509c7",
@@ -30,7 +30,7 @@ export const badgesData = [
         "pt" : "Princípios Sustentáveis"
     },
     "goalReach" : 90,
-    "image" : "/uploads/badges/sustainable-principles.png",
+    "image" : "sustainable-principles.png",
   },
   {
     "_id" : "60ac23037921b7186c8509c8",
@@ -41,7 +41,7 @@ export const badgesData = [
         "pt" : "Uso legal de sementes"
     },
     "goalReach" : 10,
-    "image" : "/uploads/badges/legal-seed-use.png",
+    "image" : "legal-seed-use.png",
   },
   {
     "_id" : "60ac23137921b7186c8509c9",
@@ -52,7 +52,7 @@ export const badgesData = [
         "pt" : "Uso legal de sementes"
     },
     "goalReach" : 10,
-    "image" : "/uploads/badges/legal-seed-use.png",
+    "image" : "legal-seed-use.png",
   },
   {
     "_id" : "60ac23507921b7186c8509ca",
@@ -63,6 +63,6 @@ export const badgesData = [
         "pt" : "Uso responsável de produtos fitossanitários"
     },
     "goalReach" : 50,
-    "image" : "/uploads/badges/responsible-use-phytosanitary.png",
+    "image" : "responsible-use-phytosanitary.png",
   }
 ]

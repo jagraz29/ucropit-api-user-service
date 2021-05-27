@@ -34,6 +34,7 @@
  */
 
 import mongoose from 'mongoose'
+import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
 import { IBadge, BadgeTypes } from '../interfaces'
 
 const { Schema } = mongoose
@@ -67,6 +68,19 @@ const BadgeSchema = new Schema({
     type: String,
     required: true,
   }
+},{
+  toJSON: {
+    virtuals: true
+  },
+  toObject: {
+    virtuals: true
+  }
 })
+
+BadgeSchema.virtual('imagePath').get(function () {
+  return `${process.env.BASE_URL}${process.env.DIR_FOLDER_BADGES.replace('public', '')}/${this.image}`
+})
+
+BadgeSchema.plugin(mongooseLeanVirtuals)
 
 export default mongoose.model<IBadge>('Badge', BadgeSchema)

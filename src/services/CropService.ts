@@ -405,7 +405,7 @@ class CropService extends ServiceBase {
       .populate('members.user')
       .populate('badges.badge')
       .populate('badges.typeAgreement')
-      .lean()
+      .lean({ virtuals: true })
   }
   /**
    *

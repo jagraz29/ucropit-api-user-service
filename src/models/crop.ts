@@ -45,6 +45,7 @@
  *
  */
 import mongoose from 'mongoose'
+import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
 
 const { Schema } = mongoose
 
@@ -153,6 +154,15 @@ const CropSchema = new Schema({
       }
     }
   ]
+},{
+  toJSON: {
+    virtuals: true
+  },
+  toObject: {
+    virtuals: true
+  }
 })
+
+CropSchema.plugin(mongooseLeanVirtuals)
 
 export default mongoose.model('Crop', CropSchema)
