@@ -1,6 +1,6 @@
 import moment from 'moment'
 import { calculateCropVolumeUtils, Numbers } from '../'
-import { TypeActivitiesWithAchievements, TypeActivitiesWithOutAchievements, Achievement } from '../../interfaces'
+import { TypeActivitiesWithAchievements, TypeActivitiesWithOutAchievements, Achievement, TypeActivities } from '../../interfaces'
 import { getAchievements } from '../achievements'
 
 export const getActivitiesOrderedByDateUtils = ({ activities }) => {
@@ -29,6 +29,10 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
         let achievementsWithEiq: Achievement[] = []
         const pay = payEntry ?? 0
         const { key: keyUnitType, name: nameUnitType } = unitType || {}
+
+        if (TypeActivity === TypeActivities.ACT_AGREEMENTS) {
+          return null
+        }
 
         achievementsWithEiq = getAchievements(achievements)
         eiq = achievementsWithEiq.length
