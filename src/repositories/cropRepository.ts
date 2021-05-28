@@ -127,6 +127,7 @@ export class CropRepository {
       .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
+      .populate('badges.badge')
       .populate({ path: 'company', populate: [{ path: 'files' }] })
       .populate({
         path: 'pending',

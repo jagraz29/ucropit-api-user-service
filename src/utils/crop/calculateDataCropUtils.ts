@@ -10,6 +10,7 @@ export const calculateDataCropUtils = ({
     activities,
     lots,
     company,
+    badges,
     unitType,
     cropType: { key: cropTypeKey }
   }, activitiesWithEiq): Object => {
@@ -26,6 +27,7 @@ export const calculateDataCropUtils = ({
     pay,
     dateCrop,
     name,
+    badges,
     eiq: Numbers.roundToTwo(eiq),
     cropTypeKey,
     company,
