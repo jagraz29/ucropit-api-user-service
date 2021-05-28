@@ -4,11 +4,9 @@ import {
   ActivityRepository,
   TypeAgreementRepository,
   BadgeRepository,
-  CropRepository,
+  CropRepository
 } from '../repositories'
-import {
-  TypeActivities,
-} from '../interfaces'
+import { TypeActivities } from '../interfaces'
 import {
   validateActivityStore,
   validateActivityUpdate,
@@ -18,7 +16,7 @@ import {
 import {
   sumActivitiesSurfacesByTypeAgreement,
   getCropBadgesReached,
-  calculateCropEiq,
+  calculateCropEiq
 } from '../utils'
 
 import ActivityService from '../services/ActivityService'
@@ -30,7 +28,12 @@ import IntegrationService from '../services/IntegrationService'
 import UserConfigService from '../services/UserConfigService'
 import models from '../models'
 
-import { getPathFileByType, getFullPath, fileExist, removeFile } from '../utils/Files'
+import {
+  getPathFileByType,
+  getFullPath,
+  fileExist,
+  removeFile
+} from '../utils/Files'
 
 import { ACTIVITY_HARVEST } from '../utils/Constants'
 
@@ -246,14 +249,8 @@ class ActivitiesController {
     if (isCompleteSigned) {
       const crop = await Crop.findById(cropId).populate('cropType')
 
-      const {
-        ots,
-        hash,
-        pathPdf,
-        nameFilePdf,
-        nameFileOts,
-        pathOtsFile
-      } = await BlockChainServices.sign(crop, activity)
+      const { ots, hash, pathPdf, nameFilePdf, nameFileOts, pathOtsFile } =
+        await BlockChainServices.sign(crop, activity)
 
       const approvalRegisterSign = await ApprovalRegisterSingService.create({
         ots,
@@ -281,95 +278,110 @@ class ActivitiesController {
       const dataToFindActivities: any = {
         query: {
           _id: {
-            $in: [
-              ...crop.toMake,
-              ...crop.done,
-              ...crop.finished
-            ],
+            $in: [...crop.toMake, ...crop.done, ...crop.finished]
           },
           'signers.signed': {
-            $nin: [false],
-          },
+            $nin: [false]
+          }
         },
-        populate: [{
-          path: 'type',
-          match: {
-            tag: TypeActivities.ACT_AGREEMENTS,
+        populate: [
+          {
+            path: 'type',
+            match: {
+              tag: TypeActivities.ACT_AGREEMENTS
+            }
           },
-        },{
-          path: 'typeAgreement',
-        }],
+          {
+            path: 'typeAgreement'
+          }
+        ]
       }
 
-      let activities: Array<any> = await ActivityRepository.getActivities(dataToFindActivities)
+      let activities: Array<any> = await ActivityRepository.getActivities(
+        dataToFindActivities
+      )
 
-      activities = activities.filter((activity) => activity.type && activity.typeAgreement)
-
-      /*
-      SUM ALL SURFACES OF ACTIVITIES BY TYPE AGREEMENT AND CROP TYPE IN SOME CASE
-      */
-      const activitiesSurfaces: any = await sumActivitiesSurfacesByTypeAgreement(activities, crop)
-
-      /*
-      FIND ALL TYPE AGREEMENTS
-      */
-      const typeAgreements: Array<any> = await TypeAgreementRepository.getTypeAgreements({})
+      activities = activities.filter(
+        (activity) => activity.type && activity.typeAgreement
+      )
 
       /*
-      FIND ALL BADGES
-      */
+       * SUM ALL SURFACES OF ACTIVITIES BY TYPE AGREEMENT AND CROP TYPE IN SOME CASE
+       */
+      const activitiesSurfaces: any = sumActivitiesSurfacesByTypeAgreement(
+        activities,
+        crop
+      )
+
+      /*
+       * FIND ALL TYPE AGREEMENTS
+       */
+      const typeAgreements: Array<any> =
+        await TypeAgreementRepository.getTypeAgreements({})
+
+      /*
+       * FIND ALL BADGES
+       */
       const badges: Array<any> = await BadgeRepository.getBadges({})
 
       /*
-      FIND ACTIVITIES BY SIGNED TRUE AND TYPE BE APPLICATION FOR AFTER GET THE CROP EIQ
-      */
+       * FIND ACTIVITIES BY SIGNED TRUE AND TYPE BE APPLICATION FOR AFTER GET THE CROP EIQ
+       */
       const dataToFindApplicationActivities: any = {
         query: {
           _id: {
-            $in: [
-              ...crop.toMake,
-              ...crop.done,
-              ...crop.finished
-            ],
-          },
+            $in: [...crop.toMake, ...crop.done, ...crop.finished]
+          }
         },
-        populate: [{
-          path: 'type',
-          match: {
-            tag: TypeActivities.ACT_APPLICATION,
+        populate: [
+          {
+            path: 'type',
+            match: {
+              tag: TypeActivities.ACT_APPLICATION
+            }
           },
-        },{
-          path: 'achievements',
-          match: {
-            'signers.signed': {
-              $nin: [false],
+          {
+            path: 'achievements',
+            match: {
+              'signers.signed': {
+                $nin: [false]
+              }
             },
-          },
-          populate: [
-            {
-              path: 'supplies.supply'
-            },
-          ]
-        }],
+            populate: [
+              {
+                path: 'supplies.supply'
+              }
+            ]
+          }
+        ]
       }
 
-      let applicationActivities: Array<any> = await ActivityRepository.getActivities(dataToFindApplicationActivities)
+      let applicationActivities: Array<any> =
+        await ActivityRepository.getActivities(dataToFindApplicationActivities)
 
-      applicationActivities = applicationActivities.filter((activity) => activity.type && activity.achievements)
+      applicationActivities = applicationActivities.filter(
+        (activity) => activity.type && activity.achievements
+      )
 
       /*
-      GET CROP EIQ
-      */
+       * GET CROP EIQ
+       */
       const cropEiq: number = await calculateCropEiq(applicationActivities)
 
       /*
-      GET BADGES TO ADD TO CROP
-      */
-      const badgesToAdd: Array<any> = getCropBadgesReached(typeAgreements, badges, activitiesSurfaces, crop, cropEiq)
+       * GET BADGES TO ADD TO CROP
+       */
+      const badgesToAdd: Array<any> = getCropBadgesReached(
+        typeAgreements,
+        badges,
+        activitiesSurfaces,
+        crop,
+        cropEiq
+      )
 
       /*
-      ADD BADGES TO CROP
-      */
+       * ADD BADGES TO CROP
+       */
       const query: any = {
         _id: crop._id
       }
@@ -478,27 +490,31 @@ class ActivitiesController {
     const data = req.body
 
     const activity = await Activity.findOne({ _id: id })
-    const documents = await FileDocument.find({ _id: { $in : data } })
+    const documents = await FileDocument.find({ _id: { $in: data } })
 
     let files = activity.files
 
-    await Promise.all(documents.map(async (document) => {
-      const filePath = `${getFullPath(getPathFileByType('activity'))}/${activity.key}/${
-        document.nameFile
-      }`
+    await Promise.all(
+      documents.map(async (document) => {
+        const filePath = `${getFullPath(getPathFileByType('activity'))}/${
+          activity.key
+        }/${document.nameFile}`
 
-      if (fileExist(filePath)) removeFile(filePath)
+        if (fileExist(filePath)) removeFile(filePath)
 
-      const fileRemove = await FileDocument.findByIdAndDelete(document._id)
+        const fileRemove = await FileDocument.findByIdAndDelete(document._id)
 
-      if (fileRemove) {
-        const documentFiles = activity.toJSON().files
+        if (fileRemove) {
+          const documentFiles = activity.toJSON().files
 
-        files = files.filter(item => item.toString() !== document._id.toString())
-      }
+          files = files.filter(
+            (item) => item.toString() !== document._id.toString()
+          )
+        }
 
-      return Promise
-    }))
+        return Promise
+      })
+    )
 
     activity.files = files
 
