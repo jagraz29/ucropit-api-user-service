@@ -213,7 +213,8 @@ class CropsController {
     { params: { nameFile } }: Request,
     res: Response
   ) {
-    res.sendFile(path.resolve(`public/uploads/pdf-crop-history/${nameFile}`))
+    const dirPdf = `${process.env.BASE_URL}/${process.env.DIR_UPLOADS}/${process.env.DIR_PDF_CROP_HISTORY}/${nameFile}`
+    return res.status(StatusCodes.OK).json(dirPdf)
   }
 
   /**
