@@ -26,42 +26,12 @@
  *              type: array
  */
 
-import mongoose, { Schema, Document } from 'mongoose'
+import { Schema, model } from 'mongoose'
 import shortid from 'shortid'
-import { Signer } from '../interfaces/Signer'
-
-interface Supplies {
-  name?: string
-  unit?: string
-  quantity?: Number
-  typeId?: string
-  icon?: string
-  total?: Number
-}
-
-interface Destination {
-  name?: string
-  unit?: string
-  quantity?: Number
-  typeId?: string
-  icon?: string
-  total?: Number
-}
-
-export interface Achievement {
-  _id: string
-  key: string
-  dateAchievement?: Date
-  surface?: Number
-  percent?: Number
-  supplies?: Array<Supplies>
-  destination?: Array<Destination>
-  signers?: Array<Signer>
-  synchronizedList: Array<{ service: string; isSynchronized: Boolean }>
-}
+import { IAchievementDocument } from '../interfaces'
 
 const AchievementSchema: Schema = new Schema({
-  _id: { type: mongoose.Schema.Types.ObjectId, required: false },
+  _id: { type: Schema.Types.ObjectId, required: false },
   key: {
     type: String,
     required: false
@@ -162,7 +132,7 @@ const AchievementSchema: Schema = new Schema({
   ]
 })
 
-AchievementSchema.pre('save', async function (next: Function) {
+AchievementSchema.pre('save', async (next: Function) => {
   const achievement = this
 
   /** Generate unique key */
@@ -171,4 +141,4 @@ AchievementSchema.pre('save', async function (next: Function) {
   }
 })
 
-export default mongoose.model<Achievement>('Achievement', AchievementSchema)
+export const AchievementModel = model<IAchievementDocument>('Achievement', AchievementSchema)

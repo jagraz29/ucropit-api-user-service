@@ -1,6 +1,6 @@
-import models from '../models'
+import { AchievementModel } from '../models'
 
-const { Achievement } = models
+// const { Achievement } = models
 
 export class AchievementRepository {
   /**
@@ -9,6 +9,6 @@ export class AchievementRepository {
    * @param string id
    */
   static async updateAchievement(update, id: string): Promise<void> {
-    return Achievement.updateOne({ _id: id }, { $set: update })
+    return AchievementModel.updateOne({ _id: id }, { $set: update })
   }
 }

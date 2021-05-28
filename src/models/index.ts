@@ -7,7 +7,7 @@ import UserConfig from './userConfig'
 import ActivityType from './activityType'
 import TypeAgreement from './typeAgreement'
 import Activity from './activity'
-import Achievement from './achievement'
+export * from './achievement'
 import CollaboratorRequest from './collaboratorRequest'
 import ApprovalRegisterSign from './ApprovalRegisterSign'
 import Supply from './supply'
@@ -45,7 +45,7 @@ const models = {
   TypeAgreement,
   ActivityType,
   Activity,
-  Achievement,
+  // Achievement,
   CollaboratorRequest,
   ApprovalRegisterSign,
   Supply,
