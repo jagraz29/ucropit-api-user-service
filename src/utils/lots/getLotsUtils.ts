@@ -6,8 +6,8 @@ export const getLots = (lots, activitiesWithEiq): Object[] => {
     ({ provinceName, _id: lotId, cityName, countryName, surface, image }) => {
       const { normal: path } = image || {};
       const imageLot = path
-        ? `https://ucropsatelliteimagery.s3.amazonaws.com/stage/Image.svg`
-        : null;
+        ? `${process.env.BASE_URL}${process.env.DIR_STORAGE}${path}`
+        : process.env.IMAGE_LOT_DEFAULT
       const eiq: number = getEiqOfAchievementsByLot(lotId, activitiesWithEiq);
       return {
         provinceName,
