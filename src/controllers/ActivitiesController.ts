@@ -10,9 +10,12 @@ import ActivityService from '../services/ActivityService'
 import CropService from '../services/CropService'
 import BlockChainServices from '../services/BlockChainService'
 import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
+import SatelliteImageService from '../services/SatelliteImageService'
 import models from '../models'
 
-import { getPathFileByType, getFullPath } from '../utils/Files'
+import { getPathFileByType, getFullPath, fileExist, removeFile } from '../utils/Files'
+
+import { ACTIVITY_HARVEST } from '../utils/Constants'
 
 const Activity = models.Activity
 const FileDocument = models.FileDocument
@@ -102,6 +105,10 @@ class ActivitiesController {
 
     await CropService.addActivities(activity, crop)
 
+    if (activity.isDone() && activity.type.tag === ACTIVITY_HARVEST) {
+      await SatelliteImageService.createPayload(activity).send()
+    }
+
     res.status(201).json(activity)
   }
 
@@ -163,6 +170,10 @@ class ActivitiesController {
       await CropService.addActivities(activity, crop)
     }
 
+    if (activity.isDone() && activity.type.tag === ACTIVITY_HARVEST) {
+      await SatelliteImageService.createPayload(activity).send()
+    }
+
     res.status(200).json(activity)
   }
 
@@ -175,6 +186,7 @@ class ActivitiesController {
    * @return Response
    */
   public async sign(req: Request, res: Response) {
+    req.setTimeout(0)
     const { id, cropId } = req.params
     const user: UserSchema = req.user
 
@@ -187,7 +199,7 @@ class ActivitiesController {
 
     activity = await ActivityService.signUserAndUpdateSing(activity, user)
 
-    const isCompleteSigned = await ActivityService.isCompleteSingers(activity)
+    const isCompleteSigned = ActivityService.isCompleteSingers(activity)
 
     if (isCompleteSigned) {
       const crop = await Crop.findById(cropId).populate('cropType')
@@ -296,6 +308,50 @@ class ActivitiesController {
         .status(404)
         .json({ error: true, message: 'Not Found File to delete' })
     }
+
+    res.status(200).json({
+      message: 'deleted file successfully'
+    })
+  }
+
+  /**
+   * Delete Files to activity.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return {Response}
+   */
+  public async removeFiles(req: Request, res: Response) {
+    const { id } = req.params
+    const data = req.body
+
+    const activity = await Activity.findOne({ _id: id })
+    const documents = await FileDocument.find({ _id: { $in : data } })
+
+    let files = activity.files
+
+    await Promise.all(documents.map(async (document) => {
+      const filePath = `${getFullPath(getPathFileByType('activity'))}/${activity.key}/${
+        document.nameFile
+      }`
+
+      if (fileExist(filePath)) removeFile(filePath)
+
+      const fileRemove = await FileDocument.findByIdAndDelete(document._id)
+
+      if (fileRemove) {
+        const documentFiles = activity.toJSON().files
+
+        files = files.filter(item => item.toString() !== document._id.toString())
+      }
+
+      return Promise
+    }))
+
+    activity.files = files
+
+    await activity.save()
 
     res.status(200).json({
       message: 'deleted file successfully'

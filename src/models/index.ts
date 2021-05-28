@@ -18,9 +18,11 @@ import Roles from './Roles'
 import { CropType } from './cropType'
 import { UnitType } from './unitType'
 import TypeStorage from './typeStorage'
-
+import Notification from './notification'
 import FileDocument from './documentFile'
 import IntegrationLog from './integrationLog'
+import ActiveIngredient from './activeIngredient'
+import ForeignCredential from './foreignCredential'
 
 const connectDb = function () {
   return mongoose.connect(process.env.DATABASE_URL, {
@@ -52,7 +54,10 @@ const models = {
   ServiceIntegration,
   Roles,
   IntegrationLog,
-  TypeStorage
+  TypeStorage,
+  Notification,
+  ActiveIngredient,
+  ForeignCredential
 }
 
 export { connectDb }

@@ -1,7 +1,8 @@
 import models from '../models'
 import _ from 'lodash'
+import moment from 'moment'
 import GeoLocationService from '../services/GeoLocationService'
-import Numbers from '../utils/Numbers'
+import { Numbers } from '../utils'
 
 import {
   tagsTypeAgreement,
@@ -30,11 +31,7 @@ class ReportService {
         ),
         surface: crop.surface,
         responsible: this.getMembersWithIdentifier(crop),
-        date_harvest: crop.dateHarvest.toLocaleDateString('es-ES', {
-          day: 'numeric',
-          year: 'numeric',
-          month: 'long'
-        }),
+        date_harvest: moment(crop.dateHarvest).format('DD/MM/YYYY'),
         city: await this.listAddressLots(crop.lots, 1),
         province: await this.listAddressLots(crop.lots, 2),
         kmz_links: this.generateLinkShowLotKmz(crop.lots),
@@ -150,6 +147,7 @@ class ReportService {
   }
 
   public static async generateLotReports(crops) {
+    console.log(crops[0].lots[0].data, 'crops')
     const reports = crops.map((crop) => {
       const reportByCrop = crop.lots.map(async (item) => {
         const reportByLot = item.data.map(async (lot) => {
@@ -160,28 +158,16 @@ class ReportService {
             crop: crop.cropType.name.es,
             crop_name: crop.name,
             volume: Numbers.roundToTwo(
-              this.calVolume(crop.unitType.name.en, crop.pay, crop.lots)
+              this.calVolume(crop.unitType.key, crop.pay, crop.lots)
             ),
             surface: crop.surface,
-            pay: crop.pay,
+            pay: `${crop.pay} ${crop.unitType.name.es}`,
             responsible: this.getMembersWithIdentifier(crop),
-            date_sowing: crop.dateHarvest.toLocaleDateString('es-ES', {
-              day: 'numeric',
-              year: 'numeric',
-              month: 'long'
-            }),
-            date_harvest: crop.dateHarvest.toLocaleDateString('es-ES', {
-              day: 'numeric',
-              year: 'numeric',
-              month: 'long'
-            }),
-            date_created_crop: crop._id
-              .getTimestamp()
-              .toLocaleDateString('es-ES', {
-                day: 'numeric',
-                year: 'numeric',
-                month: 'long'
-              }),
+            date_sowing: moment(crop.dateCrop).format('DD/MM/YYYY'),
+            date_harvest: moment(crop.dateHarvest).format('DD/MM/YYYY'),
+            date_created_crop: moment(crop._id.getTimestamp()).format(
+              'DD/MM/YYYY'
+            ),
             city: await this.getLocaleAddress(lot, 2),
             province: await this.getLocaleAddress(lot, 1),
             kmz_links: this.linkKmzLot(lot),
@@ -454,7 +440,35 @@ class ReportService {
             ),
 
             mail_producers: this.getMailsProducers(crop),
-            phone_producers: this.getPhonesProducers(crop)
+            phone_producers: this.getPhonesProducers(crop),
+            last_monitoring_date: await this.lastDateSignMonitoring(
+              crop,
+              'ACT_MONITORING',
+              lot
+            ),
+            yield_unit_monitoring: this.unitMonitoring(
+              crop,
+              'ACT_MONITORING',
+              lot
+            ),
+
+            yelds_monitoring: this.calVolumeMonitoring(
+              crop.unitType.name.en,
+              crop.pay,
+              lot,
+              crop
+            ),
+
+            date_estimated_harvest: await this.asyncGetHarvestDateMonitoring(
+              crop,
+              'ACT_MONITORING',
+              lot
+            ),
+            date_total_signature_monitor: await this.lastDateSignActivitiesFinish(
+              crop,
+              'ACT_MONITORING',
+              lot
+            )
           }
         })
 
@@ -467,6 +481,272 @@ class ReportService {
     return _.flatten(_.flatten(await Promise.all(reports)))
   }
 
+  private static calVolumeMonitoring(unit, pay, lots, crop): number {
+    const listActivitiesDone = this.getActivitiesMonitoring(
+      crop,
+      'ACT_MONITORING',
+      'done'
+    )
+    const listActivitiesFinished = this.getActivitiesMonitoring(
+      crop,
+      'ACT_MONITORING',
+      'finished'
+    )
+
+    let total = 0
+    const activities = [...listActivitiesDone, ...listActivitiesFinished]
+    // console.log('activities pay ', activities)
+    // console.log('crop.pay: ', pay)
+    if (activities.length > 0) {
+      const surfaceLot = activities
+        .map((activity) => {
+          const lotSelected = activity.lots.find(
+            (lotItem) => lotItem._id.toString() === lots._id.toString()
+          )
+          if (lotSelected) return activity.pay
+        })
+        .filter((item) => item)
+
+      return surfaceLot.pop() || 0
+    }
+  }
+
+  private static sumSurfaceLotsCropMonitorig(lots: Array<any>): number {
+    let sum = 0
+
+    sum = lots
+      .map((lot) => {
+        return {
+          total: lot.data.reduce((a, b) => a + (b['surface'] || 0), 0)
+        }
+      })
+      .reduce((a, b) => a + (b['total'] || 0), 0)
+
+    return sum
+  }
+
+  private static filterActivityByMonitoring(crop: any, lot: any, type: string) {
+    let results = []
+    const activitiesDone = crop.done.filter(
+      (activity) => activity.type.tag === type
+    )
+
+    const activitiesFinished = crop.finished.filter(
+      (activity) => activity.type.tag === type
+    )
+
+    const activities = [...activitiesDone, ...activitiesFinished]
+
+    if (activities.length > 0) {
+      const surfaceLot = activities
+        .map((activity) => {
+          const lotSelected = activity.lots.find(
+            (lotItem) => lotItem._id.toString() === lot._id.toString()
+          )
+          if (lotSelected) return activity.pay
+        })
+        .filter((item) => item)
+
+      const achievements = activities
+        .map((item) => {
+          // console.log('item: ', item)
+          return item.lots.find(
+            (lotMade) => lotMade._id?.toString() === lot._id?.toString()
+          )
+        })
+        .filter((lot) => lot)
+      console.log('_.flatten(achievements)', _.flatten(achievements))
+      results = _.flatten(achievements)
+    }
+
+    return results
+  }
+
+  private static unitMonitoring(crop, type, lotParam) {
+    const listActivitiesDone = this.getActivitiesMonitoring(crop, type, 'done')
+    const listActivitiesFinished = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'finished'
+    )
+
+    const activities = [...listActivitiesDone, ...listActivitiesFinished]
+    let unitTypes: Array<String> = []
+    activities.map((activity) => {
+      if (
+        activity.lots.find(
+          (lot) => lot._id.toString() === lotParam._id.toString()
+        )
+      ) {
+        unitTypes.push(activity.unitType.name.es)
+      }
+    })
+
+    return activities.length > 0 ? unitTypes.pop() : null
+  }
+
+  private static async lastDateSignActivitiesFinish(
+    crop,
+    type,
+    lot
+  ): Promise<String> {
+    const activities = this.getActivitiesMonitoring(crop, type, 'finished')
+
+    let lastDateSign: Array<String> = activities
+      .map(async ({ lots, _id }) => {
+        const activity = await Activity.findById(_id)
+        if (lots.find(({ _id }) => _id.toString() === lot._id.toString())) {
+          if (this.isCompleteSigners(activity.signers)) {
+            const lastSigner = activity.signers[activity.signers.length - 1]
+            if (lastSigner) {
+              const date = lastSigner?.dateSigned
+                ? lastSigner?.dateSigned
+                : lastSigner._id.getTimestamp()
+
+              return moment(date).format('DD/MM/YYYY')
+            }
+          }
+        }
+      })
+      .filter((item) => item)
+
+    const datesList = (await Promise.all(lastDateSign)).filter((item) => item)
+
+    return datesList.length > 0 ? datesList.pop() : null
+  }
+
+  private static rindeMonitoringa(crop, lot, type) {
+    const listActivitiesDone = this.getActivitiesMonitoring(crop, type, 'done')
+    const listActivitiesFinished = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'finished'
+    )
+
+    let total = 0
+    const activities = [...listActivitiesDone, ...listActivitiesFinished]
+    if (activities.length > 0) {
+      for (const activity of activities) {
+        for (const lot of activity.lots) {
+          // console.log('Lotes ', lot)
+        }
+        total += activity.pay
+      }
+    }
+
+    return activities.length > 0 ? total : null
+  }
+
+  private static getActivitiesMonitoring(crop, type, status) {
+    return crop[status].length > 0
+      ? crop[status].filter((activity) => activity.type.tag === type)
+      : []
+  }
+
+  private static getSurfaceMonitoring(activities) {
+    let total = 0
+
+    for (const activity of activities) {
+      total += activity.surface
+    }
+
+    return total
+  }
+
+  private static async lastDateSignMonitoring(crop, type, lot) {
+    const activitiesDone = this.getActivitiesMonitoring(crop, type, 'done')
+    const activitiesFinished = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'finished'
+    )
+
+    const activities = [...activitiesDone, ...activitiesFinished]
+    const activitiesSorter = this.sortActivityBySigned(activities)
+
+    let datesLastMonitoring = activitiesSorter
+      .map(async ({ lots, _id }) => {
+        const activity = await Activity.findById(_id)
+        if (lots.find(({ _id }) => _id.toString() === lot?._id.toString())) {
+          const signer = activity.signers[0]
+          const dateSigned = signer?._id.getTimestamp()
+
+          return moment(dateSigned).format('DD/MM/YYYY')
+        }
+      })
+      .filter((item) => item)
+
+    const datesList = (await Promise.all(datesLastMonitoring)).filter(
+      (item) => item
+    )
+
+    return datesList.length > 0 ? datesList[0] : null
+  }
+
+  private static sortActivityBySigned(activities) {
+    return activities.sort(function (prev, next) {
+      const signerActivityPrev = prev.signers[0]
+      const signerActivityNext = next.signers[0]
+
+      if (signerActivityPrev?.dateSigned && signerActivityNext?.dateSigned) {
+        return signerActivityPrev?.dateSigned - signerActivityNext?.dateSigned
+      }
+
+      return (
+        signerActivityPrev?._id.getTimestamp() -
+        signerActivityNext?._id.getTimestamp()
+      )
+    })
+  }
+
+  private static async getDateLastSignedMonitoring(activities) {
+    let dates = []
+    for (const activity of activities) {
+      const dateLast = activity.signers.pop()?._id.getTimestamp()
+      dates.push(dateLast)
+    }
+    return dates.filter((date) => date)
+  }
+
+  private static async getDateLastSignedAchievement(activities) {
+    let dates = []
+    for (const activity of activities) {
+      const activityObject = await Activity.findById(activity._id)
+      const signersFalse = activityObject.signers.filter(
+        (obj) => obj.signed === false
+      )
+      const dateLast =
+        signersFalse.length === 0
+          ? activityObject.signers.pop()?._id.getTimestamp()
+          : null
+      dates.push(dateLast)
+    }
+    return dates.filter((date) => date)
+  }
+
+  private static async lastDateSignAchievement(crop, typeActivity) {
+    const datesDone = await this.getDateLastSignedAchievement(
+      crop.done.filter((activity) => activity.type.tag === typeActivity)
+    )
+
+    const datesFinished = await this.getDateLastSignedAchievement(
+      crop.finished.filter((activity) => activity.type.tag === typeActivity)
+    )
+
+    const mergedList = datesDone.concat(datesFinished)
+
+    const lastDate =
+      mergedList.length > 0 ? datesDone.concat(datesFinished).pop() : null
+
+    return lastDate
+      ? lastDate.toLocaleDateString('es-ES', {
+          day: 'numeric',
+          year: 'numeric',
+          month: 'long'
+        })
+      : ''
+  }
+
   public static generateDataSet(crops: Array<any>) {
     const cropsClean = this.cleanCrops(crops)
 
@@ -475,7 +755,6 @@ class ReportService {
         const itemData = item.data.map((lot) => {
           return {
             lot_id: lot._id.toString(),
-            name_lot: lot.name,
             campaign_id: crop._id.toString(),
             coords: lot.coordinates,
             state: 'Done',
@@ -822,15 +1101,15 @@ class ReportService {
   ): number {
     const surfaces = this.sumSurfaceLotsCrop(lots)
 
-    if (unit === 'Tons') {
+    if (unit === 't') {
       return pay * surfaces
     }
 
-    if (unit === 'Kilograms') {
+    if (unit === 'k') {
       return (pay / 1000) * surfaces
     }
 
-    if (unit === 'Quintales') {
+    if (unit === 'q') {
       return (pay / 10) * surfaces
     }
 
@@ -928,13 +1207,7 @@ class ReportService {
     const lastDate =
       mergedList.length > 0 ? datesDone.concat(datesFinished).pop() : null
 
-    return lastDate
-      ? lastDate.toLocaleDateString('es-ES', {
-          day: 'numeric',
-          year: 'numeric',
-          month: 'long'
-        })
-      : ''
+    return lastDate ? moment(lastDate).format('DD/MM/YYYY') : ''
   }
 
   private static async lastDateSignAchievementByLotAgreement(
@@ -1301,6 +1574,39 @@ class ReportService {
     return sumTotalActivitiesDone + sumTotalActivitiesFinished
   }
 
+  private static async asyncGetHarvestDateMonitoring(
+    crop,
+    type,
+    lot
+  ): Promise<String> {
+    const activitiesDone = this.getActivitiesMonitoring(crop, type, 'done')
+    const activitiesFinished = this.getActivitiesMonitoring(
+      crop,
+      type,
+      'finished'
+    )
+
+    const activities = [...activitiesDone, ...activitiesFinished]
+
+    let datesHarvestEstimated = activities
+      .map(async ({ lots, _id }) => {
+        const activity = await Activity.findById(_id)
+        if (lots.find(({ _id }) => _id.toString() === lot._id.toString())) {
+          const dateHarvestEstimated =
+            activity.dateEstimatedHarvest ?? crop.dateHarvest
+
+          return moment(dateHarvestEstimated).format('DD/MM/YYYY')
+        }
+      })
+      .filter((item) => item)
+
+    const datesList = (await Promise.all(datesHarvestEstimated)).filter(
+      (item) => item
+    )
+
+    return datesList.length > 0 ? datesList.pop() : null
+  }
+
   private static getNameSigner(activities) {
     let nameList = ''
 
@@ -1371,7 +1677,7 @@ class ReportService {
   }
 
   private static isApprovedFileEvidence(files) {
-    console.log(files)
+    // console.log(files)
     for (const file of files) {
       if (file.settings && file.settings.fromLots) {
         return true

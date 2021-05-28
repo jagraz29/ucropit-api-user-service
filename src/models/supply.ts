@@ -13,6 +13,7 @@
  *             type: string
  */
 import mongoose from 'mongoose'
+import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
 
 const { Schema } = mongoose
 
@@ -26,8 +27,37 @@ const SupplySchema = new Schema({
   },
   unit: String,
   brand: String,
-  compositon: String
+  compositon: String,
+  activeIngredients: [
+    {
+      activeIngredient: {
+        type: Schema.Types.ObjectId,
+        ref: 'ActiveIngredient'
+      },
+      eiqActiveIngredient: {
+        type: Number
+      },
+      eiq: {
+        type: Number
+      },
+      composition: {
+        type: Number
+      }
+    }
+  ]
 })
-SupplySchema.index({name: 'text', brand: 'text',company:'text'});
+SupplySchema.index({ name: 'text', brand: 'text', company: 'text' })
+
+SupplySchema.virtual('eiqTotal').get(function () {
+  if (this.activeIngredients) {
+    return this.activeIngredients.reduce(
+      (prev, next) => prev + (next['eiq'] || 0),
+      0
+    )
+  }
+  return 0
+})
+
+SupplySchema.plugin(mongooseLeanVirtuals)
 
 export default mongoose.model('Supply', SupplySchema)

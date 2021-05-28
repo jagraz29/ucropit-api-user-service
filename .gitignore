@@ -7,9 +7,12 @@ dist
 public/uploads/activities/*
 public/uploads/companies/*
 public/uploads/achievements/*
+public/uploads/pdf-crop-history/*
 public/uploads/tmp/*
 public/uploads/pdf-sings/*
+public/uploads/map-static/*
 public/uploads/profile
 public/.DS_Store
 public/uploads/profile
 .DS_Store
+.idea

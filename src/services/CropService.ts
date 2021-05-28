@@ -218,25 +218,8 @@ class CropService extends ServiceBase {
     return Promise.all(crops)
   }
 
-  public static async cropsOnlySeeRoles(
-    query: any,
-    filtering,
-    roles: Array<string>
-  ) {
-    let crops = (await this.findAll(query))
-      .map((crop) => {
-        if (
-          crop.members.find(
-            (member) =>
-              member.user._id.toString() === filtering.user.toString() &&
-              member.identifier === filtering.identifier &&
-              roles.includes(member.type)
-          )
-        ) {
-          return crop
-        }
-      })
-      .filter((crop) => crop)
+  public static async cropsOnlySeeRoles(query: any) {
+    let crops = await this.findAll(query)
 
     return crops
   }
@@ -260,7 +243,8 @@ class CropService extends ServiceBase {
           { path: 'typeAgreement' },
           { path: 'lots' },
           { path: 'files' },
-          { path: 'user' }
+          { path: 'user' },
+          { path: 'unitType' }
         ]
       })
       .populate({
@@ -271,7 +255,8 @@ class CropService extends ServiceBase {
           { path: 'typeAgreement' },
           { path: 'lots' },
           { path: 'files' },
-          { path: 'user' }
+          { path: 'user' },
+          { path: 'unitType' }
         ]
       })
       .populate({
@@ -287,7 +272,8 @@ class CropService extends ServiceBase {
             populate: [{ path: 'lots' }, { path: 'files' }]
           },
           { path: 'lotsMade' },
-          { path: 'user' }
+          { path: 'user' },
+          { path: 'unitType' }
         ]
       })
       .populate('members.user')
@@ -300,6 +286,7 @@ class CropService extends ServiceBase {
           { path: 'lots' },
           { path: 'files' },
           { path: 'user' },
+          { path: 'unitType' },
           {
             path: 'approvalRegister',
             populate: [
@@ -361,7 +348,11 @@ class CropService extends ServiceBase {
       .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
-      .populate({ path: 'company', populate: [{ path: 'files' }] })
+      .populate({
+        path: 'company',
+        populate: [{ path: 'files' }, { path: 'contacts.user' }]
+      })
+
       .populate({
         path: 'pending',
         populate: [

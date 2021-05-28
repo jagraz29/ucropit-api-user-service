@@ -2,6 +2,7 @@ import ServiceBase from './common/ServiceBase'
 import models from '../models'
 import mongoose from 'mongoose'
 import { statusActivities } from '../utils/Status'
+import { Signer } from '../interfaces/Signer'
 
 const Activity = models.Activity
 const ActivityType = models.ActivityType
@@ -118,7 +119,9 @@ class ActivityService extends ServiceBase {
       activity._id = mongoose.Types.ObjectId()
     }
 
-    return Activity.create(activity)
+    const activityModel = await Activity.create(activity)
+
+    return this.findActivityById(activityModel._id)
   }
 
   public static async update(id: string, activity: IActivity) {
@@ -132,6 +135,16 @@ class ActivityService extends ServiceBase {
     await Activity.findByIdAndUpdate(id, activity)
 
     return Activity.findOne({ _id: id })
+  }
+
+  public static async updateSigners(
+    signers: Signer[],
+    activityId: string
+  ): Promise<void> {
+    await Activity.updateOne(
+      { _id: activityId },
+      { $set: { signers: signers } }
+    )
   }
 
   public static async getByTag(tag: string) {
@@ -190,7 +203,7 @@ class ActivityService extends ServiceBase {
       .populate('typeAgreement')
   }
 
-  public static async isCompleteSingers(activity) {
+  public static isCompleteSingers(activity) {
     const signers = activity.signers.filter((item) => !item.signed)
 
     if (signers.length > 0) {
@@ -261,9 +274,10 @@ class ActivityService extends ServiceBase {
           const total = this.sumSurfacesByLotsAchievements(
             activity.achievements
           )
+
           return {
             total: total,
-            date: activity.achievements[0].dateAchievement.toLocaleDateString(
+            date: activity.achievements[0].dateAchievement?.toLocaleDateString(
               'en-US',
               {
                 year: 'numeric',
@@ -280,7 +294,7 @@ class ActivityService extends ServiceBase {
 
           return {
             total: total,
-            date: activity.dateObservation.toLocaleDateString('en-US', {
+            date: activity.dateObservation?.toLocaleDateString('en-US', {
               year: 'numeric',
               month: '2-digit'
             })
@@ -288,13 +302,15 @@ class ActivityService extends ServiceBase {
         }
 
         if (this.isActivityType(activity, type) && type === 'ACT_HARVEST') {
+          if(!activity?.dateHarvest) return undefined
+
           let total = 0
 
           total += activity.lots.reduce((a, b) => a + (b['surface'] || 0), 0)
 
           return {
             total: total,
-            date: activity?.dateHarvest.toLocaleDateString('en-US', {
+            date: activity?.dateHarvest?.toLocaleDateString('en-US', {
               year: 'numeric',
               month: '2-digit'
             })

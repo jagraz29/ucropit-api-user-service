@@ -13,6 +13,7 @@
  *           value:
  *             type: string
  */
+import { bool, boolean } from 'joi'
 import mongoose from 'mongoose'
 
 const { Schema } = mongoose
@@ -31,6 +32,10 @@ const Roles = new Schema({
   value: {
     type: String,
     require: true
+  },
+  isInactive: {
+    type: Boolean,
+    defaultStatus: false
   }
 })
 

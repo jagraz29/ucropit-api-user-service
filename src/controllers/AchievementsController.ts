@@ -31,7 +31,7 @@ class AchievementsController {
    *
    * @return Response
    */
-  public async index (req: Request, res: Response) {
+  public async index(req: Request, res: Response) {
     const { activityId } = req.query
 
     if (activityId) {
@@ -55,7 +55,7 @@ class AchievementsController {
    *
    * @returns Response
    */
-  public async show (req: Request, res: Response) {
+  public async show(req: Request, res: Response) {
     const { id } = req.params
 
     const achievement = await AchievementService.findById(id)
@@ -71,7 +71,7 @@ class AchievementsController {
    *
    * @return Response
    */
-  public async create (req: Request, res: Response) {
+  public async create(req: Request, res: Response) {
     const user: any = req.user
     const data = JSON.parse(req.body.data)
     const crop = await Crop.findById(data.crop)
@@ -116,11 +116,11 @@ class AchievementsController {
       )
     }
 
-    const signers = achievement.signers.filter(el => {
+    const signers = achievement.signers.filter((el) => {
       return !el.signed && user.email !== el.email
     })
 
-    const type = typesSupplies.find(el => activity.type.tag === el.tag).value
+    const type = typesSupplies.find((el) => activity.type.tag === el.tag).value
     const url = `${process.env.BASE_URL}/${process.env.FAST_LINK_URL}?url=activities/${crop._id}/${type}/common/detail/${achievement._id}/${activity._id}/true?tag=${activity.type.tag}`
 
     for (let signer of signers) {
@@ -132,6 +132,10 @@ class AchievementsController {
           cropName: crop.name,
           url,
           activity: activity.type.name.es
+        },
+        {
+          title: 'Recordatorio para firmar',
+          content: 'Tenes realizaciones sin firmar'
         }
       )
     }
@@ -181,7 +185,8 @@ class AchievementsController {
    *
    * @return Response
    */
-  public async signAchievement (req: Request, res: Response) {
+  public async signAchievement(req: Request, res: Response) {
+    req.setTimeout(0)
     const user = req.user
     const { id } = req.params
 
@@ -244,7 +249,7 @@ class AchievementsController {
    * @param Request req
    * @param Response res
    */
-  public async makePdf (req: Request, res: Response) {
+  public async makePdf(req: Request, res: Response) {
     const { idActivity, idCrop } = req.params
 
     const activity = await ActivityService.findActivityById(idActivity)

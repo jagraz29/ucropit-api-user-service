@@ -35,6 +35,10 @@ module.exports = function (agenda) {
                 cropName,
                 url,
                 activity: activityLabel
+              },
+              {
+                title: 'Recordatorio para firmar',
+                content: 'Tenes realizaciones sin firmar'
               }
             )
           }

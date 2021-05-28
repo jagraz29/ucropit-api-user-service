@@ -47,7 +47,6 @@
  */
 import mongoose from 'mongoose'
 import shortid from 'shortid'
-import { isNowGreaterThan } from '../utils/Date'
 
 const { Schema } = mongoose
 
@@ -163,6 +162,10 @@ const ActivitySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'SupplyType'
       },
+      supply: {
+        type: Schema.Types.ObjectId,
+        ref: 'Supply'
+      },
       icon: {
         type: String
       },
@@ -174,13 +177,15 @@ const ActivitySchema = new Schema({
   storages: [
     {
       unitType: {
-        type: Schema.Types.ObjectId
+        type: Schema.Types.ObjectId,
+        ref: 'UnitType'
       },
       tonsHarvest: {
         type: Number
       },
       storageType: {
-        type: Schema.Types.ObjectId
+        type: Schema.Types.ObjectId,
+        ref: 'TypeStorage'
       },
       label: {
         type: String
@@ -199,6 +204,10 @@ ActivitySchema.pre('save', async function (next) {
     activity.key = shortid.generate()
   }
 })
+
+ActivitySchema.methods.isDone = function () {
+  return this.status[0].name.en === 'DONE'
+}
 
 ActivitySchema.methods.setExpired = function () {
   this.status[0].name.en = 'EXPIRED'

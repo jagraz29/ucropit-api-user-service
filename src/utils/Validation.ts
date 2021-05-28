@@ -3,11 +3,24 @@ import { FileArray } from 'express-fileupload'
 import { handleFileConvertJSON } from '../utils/ParseKmzFile'
 import { errors } from '../types/common'
 import { VALID_FORMATS_DOCUMENTS } from './Files'
+import { ResponseOkProps } from '../interfaces/SatelliteImageRequest'
 import _ from 'lodash'
 
 import JoiDate from '@hapi/joi-date'
 
 const JoiValidation = Joi.extend(JoiDate)
+
+export const validateGetCrops = async (crop) => {
+  const schema = Joi.object({
+    identifier: Joi.string(),
+    cropTypes: Joi.array(),
+    companies: Joi.array(),
+    collaborators: Joi.array(),
+    cropVolume: Joi.number()
+  })
+
+  return schema.validateAsync(crop)
+}
 
 export const validateCropStore = async (crop) => {
   const schema = Joi.object({
@@ -53,14 +66,17 @@ export const validateActivityStore = async (activity) => {
     observation: Joi.string().optional(),
     supplies: Joi.array()
       .items(
-        Joi.object().keys({
-          name: Joi.string().required(),
-          unit: Joi.string().required(),
-          quantity: Joi.number().required(),
-          typeId: Joi.string().required(),
-          icon: Joi.string().optional(),
-          total: Joi.number().required()
-        })
+        Joi.object()
+          .keys({
+            name: Joi.string().required(),
+            unit: Joi.string().required(),
+            quantity: Joi.number().required(),
+            typeId: Joi.string().required(),
+            supply: Joi.string().required(),
+            icon: Joi.string().optional(),
+            total: Joi.number().required()
+          })
+          .unknown()
       )
       .optional(),
     evidences: Joi.array()
@@ -119,14 +135,17 @@ export const validateActivityUpdate = async (activity) => {
     crop: Joi.string().optional(),
     supplies: Joi.array()
       .items(
-        Joi.object().keys({
-          name: Joi.string().required(),
-          unit: Joi.string().required(),
-          quantity: Joi.number().required(),
-          typeId: Joi.string().required(),
-          icon: Joi.string().optional(),
-          total: Joi.number().required()
-        })
+        Joi.object()
+          .keys({
+            name: Joi.string().required(),
+            unit: Joi.string().required(),
+            quantity: Joi.number().required(),
+            typeId: Joi.string().required(),
+            supply: Joi.string().required(),
+            icon: Joi.string().optional(),
+            total: Joi.number().required()
+          })
+          .unknown()
       )
       .optional(),
     evidences: Joi.array()
@@ -218,14 +237,17 @@ export const validateAchievement = async (achievement) => {
     erpAgent: Joi.string().optional(),
     supplies: Joi.array()
       .items(
-        Joi.object().keys({
-          name: Joi.string().required(),
-          unit: Joi.string().required(),
-          quantity: Joi.number().required(),
-          typeId: Joi.string().optional(),
-          icon: Joi.string().optional(),
-          total: Joi.number().required()
-        })
+        Joi.object()
+          .keys({
+            name: Joi.string().required(),
+            unit: Joi.string().required(),
+            quantity: Joi.number().required(),
+            supply: Joi.string().required(),
+            typeId: Joi.string().optional(),
+            icon: Joi.string().optional(),
+            total: Joi.number().required()
+          })
+          .unknown()
       )
       .optional(),
     destination: Joi.array()
@@ -273,6 +295,34 @@ export const validateSignAchievement = async (dataSign) => {
   })
 
   return schema.validateAsync(dataSign)
+}
+
+export const validateResponseSatelliteImages = async (
+  payload: Array<ResponseOkProps>
+) => {
+  const schema = Joi.array().items(
+    Joi.object().keys({
+      status_ok: Joi.boolean().required(),
+      customOptions: Joi.object()
+        .keys({
+          activityId: Joi.string().required()
+        })
+        .required(),
+      lotId: Joi.string().required(),
+      images: Joi.array()
+        .items(
+          Joi.object().keys({
+            nameFile: Joi.string().required(),
+            date: Joi.date().required(),
+            type: Joi.string().required(),
+            tag: Joi.string().required()
+          })
+        )
+        .optional()
+    })
+  )
+
+  return schema.validateAsync(payload)
 }
 
 export const validateFilesWithEvidences = (files, evidences) => {

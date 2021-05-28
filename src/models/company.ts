@@ -64,6 +64,15 @@ const CompanySchema = new Schema({
         default: true
       }
     }
+  ],
+  contacts: [
+    {
+      type: {
+        type: String,
+        default: 'CONTACT_REPRESENTATIVE'
+      },
+      user: { type: Schema.Types.ObjectId, ref: 'User' }
+    }
   ]
 })
 
