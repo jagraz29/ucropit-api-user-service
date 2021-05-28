@@ -1,8 +1,5 @@
 import { Request, Response } from 'express'
-import {
-  ReasonPhrases,
-  StatusCodes,
-} from 'http-status-codes'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 import models from '../models'
 import CropService from '../services/CropService'
@@ -17,7 +14,8 @@ import {
   getActivitiesOrderedByDateUtils,
   calculateDataCropUtils,
   calculateTheoreticalPotentialUtils,
-  calculateCropVolumeUtils
+  calculateCropVolumeUtils,
+  getCropBadgesByUserType
 } from '../utils'
 
 import {
@@ -118,6 +116,7 @@ class CropsController {
     const lots = await LotService.storeLotImagesAndCountries(crop.lots)
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
+    const badges = getCropBadgesByUserType(req.user, crop)
     const volume = calculateCropVolumeUtils(
       crop.unitType.key,
       crop.pay,
@@ -131,7 +130,8 @@ class CropsController {
       company: {
         ...crop.company,
         theoriticalPotential
-      }
+      },
+      badges
     }
 
     res.status(200).json(newCrop)
@@ -182,7 +182,7 @@ class CropsController {
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    const dataCrop = calculateDataCropUtils(crop,activities)
+    const dataCrop = calculateDataCropUtils(crop, activities)
 
     const dataPdf = {
       dataCrop,
@@ -363,6 +363,7 @@ class CropsController {
       message: 'deleted successfuly'
     })
   }
+
   /**
    * Get all crops evidences
    *

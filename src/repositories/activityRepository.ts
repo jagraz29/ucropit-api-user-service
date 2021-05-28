@@ -48,4 +48,23 @@ export class ActivityRepository {
     return !!activities ? activities : null
   }
 
+  /**
+   * Get Activities.
+   *
+   * @returns
+   */
+  public static async getActivities({
+    query,
+    limit,
+    skip,
+    sort,
+    populate,
+  }: any): Promise<any> {
+    return Activity
+      .find(query ? query : {})
+      .populate(populate ? populate : [])
+      .limit(limit ? limit : 0)
+      .skip(skip ? skip : 0)
+      .sort(sort ? sort : {})
+  }
 }

@@ -286,6 +286,16 @@ export class CropRepository {
   /**
    *
    * @param query
+   * @param dataToUpdate
+   *
+   * @returns
+   */
+  public static async updateOneCrop(query: any, dataToUpdate: any): Promise<any> {
+    return Crop.updateOne(query, dataToUpdate)
+  }
+
+  /**
+   *
    * @param type
    */
   public static async findCropsFilterActivityForBilling(query, type) {
