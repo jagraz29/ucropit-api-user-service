@@ -15,7 +15,7 @@ export class PDFService {
     nameFile: string,
     { _id: cropId }
   ): Promise<string | null> {
-    const fileDocuments: Array<FileDocumentProps> | null =
+    const fileDocuments: FileDocumentProps | null =
       await FileDocumentRepository.getFiles(cropId)
 
     const path: string = `public/uploads/${directory}/`
@@ -68,20 +68,17 @@ export class PDFService {
   private static async findAndSavePdfExists(
     directory: string,
     fullName: string,
-    fileDocuments: Array<FileDocumentProps>,
+    { nameFile }: FileDocumentProps,
     cropId,
     pdfBytes
   ) {
     const pathFile = `public/uploads/${directory}/`
-    const fileDocument = fileDocuments.find(({ nameFile }) => {
-      const oldPdfBytes = readFileBytes(`${pathFile}${nameFile}`)
-      if (oldPdfBytes) {
-        // console.log(sha256(pdfBytes),sha256(oldPdfBytes))
-        return sha256(pdfBytes) === sha256(oldPdfBytes)
+    const oldPdfBytes = readFileBytes(`${pathFile}${nameFile}`)
+    if (oldPdfBytes) {
+      // console.log(sha256(pdfBytes),sha256(oldPdfBytes))
+      if (sha256(pdfBytes) === sha256(oldPdfBytes)) {
+        return nameFile
       }
-    })
-    if (fileDocument) {
-      return fileDocument.nameFile
     }
     saveFile(`${pathFile}${fullName}`, pdfBytes)
     await FileDocumentRepository.createFile({
