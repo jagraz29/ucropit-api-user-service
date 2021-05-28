@@ -7,12 +7,12 @@ import {
   ActivityRepository,
   TypeAgreementRepository,
   BadgeRepository,
-  CropRepository,
+  CropRepository
 } from '../repositories'
 import {
   sumActivitiesSurfacesByTypeAgreement,
   getCropBadgesReached,
-  calculateCropEiq,
+  calculateCropEiq
 } from '../utils'
 
 const Crop = models.Crop
@@ -35,39 +35,44 @@ const start = async () => {
       const dataToFindActivities: any = {
         query: {
           _id: {
-            $in: [
-              ...crop.toMake,
-              ...crop.done,
-              ...crop.finished
-            ],
+            $in: [...crop.toMake, ...crop.done, ...crop.finished]
           },
           'signers.signed': {
-            $nin: [false],
-          },
+            $nin: [false]
+          }
         },
-        populate: [{
-          path: 'type',
-          match: {
-            tag: TypeActivities.ACT_AGREEMENTS,
+        populate: [
+          {
+            path: 'type',
+            match: {
+              tag: TypeActivities.ACT_AGREEMENTS
+            }
           },
-        },{
-          path: 'typeAgreement',
-        }],
+          {
+            path: 'typeAgreement'
+          }
+        ]
       }
 
-      let activities: Array<any> = await ActivityRepository.getActivities(dataToFindActivities)
+      let activities: Array<any> = await ActivityRepository.getActivities(
+        dataToFindActivities
+      )
 
-      activities = activities.filter((activity) => activity.type && activity.typeAgreement)
+      activities = activities.filter(
+        (activity) => activity.type && activity.typeAgreement
+      )
 
       /*
       SUM ALL SURFACES OF ACTIVITIES BY TYPE AGREEMENT AND CROP TYPE IN SOME CASE
       */
-      const activitiesSurfaces: any = await sumActivitiesSurfacesByTypeAgreement(activities, crop)
+      const activitiesSurfaces: any =
+        await sumActivitiesSurfacesByTypeAgreement(activities, crop)
 
       /*
       FIND ALL TYPE AGREEMENTS
       */
-      const typeAgreements: Array<any> = await TypeAgreementRepository.getTypeAgreements({})
+      const typeAgreements: Array<any> =
+        await TypeAgreementRepository.getTypeAgreements({})
 
       /*
       FIND ALL BADGES
@@ -80,36 +85,38 @@ const start = async () => {
       const dataToFindApplicationActivities: any = {
         query: {
           _id: {
-            $in: [
-              ...crop.toMake,
-              ...crop.done,
-              ...crop.finished
-            ],
-          },
+            $in: [...crop.toMake, ...crop.done, ...crop.finished]
+          }
         },
-        populate: [{
-          path: 'type',
-          match: {
-            tag: TypeActivities.ACT_APPLICATION,
+        populate: [
+          {
+            path: 'type',
+            match: {
+              tag: TypeActivities.ACT_APPLICATION
+            }
           },
-        },{
-          path: 'achievements',
-          match: {
-            'signers.signed': {
-              $nin: [false],
+          {
+            path: 'achievements',
+            match: {
+              'signers.signed': {
+                $nin: [false]
+              }
             },
-          },
-          populate: [
-            {
-              path: 'supplies.supply'
-            },
-          ]
-        }],
+            populate: [
+              {
+                path: 'supplies.supply'
+              }
+            ]
+          }
+        ]
       }
 
-      let applicationActivities: Array<any> = await ActivityRepository.getActivities(dataToFindApplicationActivities)
+      let applicationActivities: Array<any> =
+        await ActivityRepository.getActivities(dataToFindApplicationActivities)
 
-      applicationActivities = applicationActivities.filter((activity) => activity.type && activity.achievements)
+      applicationActivities = applicationActivities.filter(
+        (activity) => activity.type && activity.achievements
+      )
 
       /*
       GET CROP EIQ
@@ -119,7 +126,13 @@ const start = async () => {
       /*
       GET BADGES TO ADD TO CROP
       */
-      const badgesToAdd: Array<any> = getCropBadgesReached(typeAgreements, badges, activitiesSurfaces, crop, cropEiq)
+      const badgesToAdd: Array<any> = getCropBadgesReached(
+        typeAgreements,
+        badges,
+        activitiesSurfaces,
+        crop,
+        cropEiq
+      )
 
       /*
       ADD BADGES TO CROP
@@ -136,6 +149,7 @@ const start = async () => {
 
       console.log(`${chalk.green(`Successfully: CROP: ${crop.id}`)}`)
     } catch (error) {
+      console.log(error)
       console.log(`${chalk.red(`Error adding badges to crop id: ${crop.id}`)}`)
     }
   }
