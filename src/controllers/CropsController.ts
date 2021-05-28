@@ -1,8 +1,5 @@
 import { Request, Response } from 'express'
-import {
-  ReasonPhrases,
-  StatusCodes,
-} from 'http-status-codes'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 import models from '../models'
 import CropService from '../services/CropService'
@@ -18,7 +15,7 @@ import {
   calculateDataCropUtils,
   calculateTheoreticalPotentialUtils,
   calculateCropVolumeUtils,
-  getCropBadgesByUserType,
+  getCropBadgesByUserType
 } from '../utils'
 
 import {
@@ -185,7 +182,7 @@ class CropsController {
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    const dataCrop = calculateDataCropUtils(crop,activities)
+    const dataCrop = calculateDataCropUtils(crop, activities)
 
     const dataPdf = {
       dataCrop,
@@ -366,7 +363,7 @@ class CropsController {
       message: 'deleted successfuly'
     })
   }
-  
+
   /**
    * Get all crops evidences
    *

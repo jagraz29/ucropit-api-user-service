@@ -1,34 +1,31 @@
-import {
-  TypeAgreement,
-  CropTypes,
-} from '../../interfaces'
+import { TypeAgreement, CropTypes } from '../../interfaces'
 
-export const sumActivitiesSurfacesByTypeAgreement = (activities, { cropType }) => {
+export const sumActivitiesSurfacesByTypeAgreement = (
+  activities,
+  { cropType }
+) => {
   let exploActivitiesSurfaces: number = 0
   let sustainActivitiesSurfaces: number = 0
   let seedUseActivitiesSurfaces: number = 0
   let responsibleUseActivitiesSurfaces: number = 0
 
   activities.map((activity) => {
-    if(activity.typeAgreement.key === TypeAgreement.EXPLO){
+    if (activity.typeAgreement.key === TypeAgreement.EXPLO) {
       exploActivitiesSurfaces += activity.surface
     }
 
-    if(activity.typeAgreement.key === TypeAgreement.SUSTAIN){
+    if (activity.typeAgreement.key === TypeAgreement.SUSTAIN) {
       sustainActivitiesSurfaces += activity.surface
     }
 
-    if(
+    if (
       activity.typeAgreement.key === TypeAgreement.SEED_USE &&
-      (
-        cropType.key === CropTypes.SOY ||
-        cropType.key === CropTypes.COTTON
-      )
-    ){
+      (cropType.key === CropTypes.SOY || cropType.key === CropTypes.COTTON)
+    ) {
       seedUseActivitiesSurfaces += activity.surface
     }
 
-    if(activity.typeAgreement.key === TypeAgreement.RESPONSIBLE_USE){
+    if (activity.typeAgreement.key === TypeAgreement.RESPONSIBLE_USE) {
       responsibleUseActivitiesSurfaces += activity.surface
     }
   })
@@ -37,6 +34,6 @@ export const sumActivitiesSurfacesByTypeAgreement = (activities, { cropType }) =
     exploActivitiesSurfaces,
     sustainActivitiesSurfaces,
     seedUseActivitiesSurfaces,
-    responsibleUseActivitiesSurfaces,
+    responsibleUseActivitiesSurfaces
   }
 }
