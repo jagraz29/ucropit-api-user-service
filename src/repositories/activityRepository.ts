@@ -36,7 +36,7 @@ export class ActivityRepository {
    *
    * @param TypeActivity type
    */
-  public static async getActivitiesFilterByName(name: NameActivity) {
+  public static async getActivitiesFilterByName (name: NameActivity) {
     const activities = await Activity.find({ name: name })
       .populate('type')
       .populate({
