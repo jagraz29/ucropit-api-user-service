@@ -1,16 +1,11 @@
-import { v4 as uuidv4 } from 'uuid';
-import Handlebars from 'handlebars';
-import Puppeteer from 'puppeteer';
-import sha256 from 'sha256';
-import {
-  makeDirIfNotExists,
-  readFileBytes,
-  saveFile,
-  readFile,
-} from '../utils';
-import { FileDocumentRepository } from '../repositories';
-import { setScriptPdf } from '../helpers';
-import { FileDocumentProps } from '../interfaces';
+import { v4 as uuidv4 } from 'uuid'
+import Handlebars from 'handlebars'
+import Puppeteer from 'puppeteer'
+import sha256 from 'sha256'
+import { makeDirIfNotExists, readFileBytes, saveFile, readFile } from '../utils'
+import { FileDocumentRepository } from '../repositories'
+import { setScriptPdf } from '../helpers'
+import { FileDocumentProps } from '../interfaces'
 
 export class PDFService {
   public static async generatePdf(
@@ -21,44 +16,44 @@ export class PDFService {
     { _id: cropId }
   ): Promise<string | null> {
     const fileDocuments: Array<FileDocumentProps> | null =
-      await FileDocumentRepository.getFiles(cropId);
+      await FileDocumentRepository.getFiles(cropId)
 
-    const path: string = `public/uploads/${directory}/`;
-    await makeDirIfNotExists(path);
-    const fullName: string = `${nameFile}-${uuidv4()}.pdf`;
-    const pathFile: string = `${path}${fullName}`;
+    const path: string = `public/uploads/${directory}/`
+    await makeDirIfNotExists(path)
+    const fullName: string = `${nameFile}-${uuidv4()}.pdf`
+    const pathFile: string = `${path}${fullName}`
 
-    const hbs: string = readFile(`views/pdf/html/${nameTemplate}.hbs`);
-    const handlebarsWithScript = setScriptPdf(Handlebars);
-    const template = handlebarsWithScript.compile(hbs);
-    const html = template(context);
+    const hbs: string = readFile(`views/pdf/html/${nameTemplate}.hbs`)
+    const handlebarsWithScript = setScriptPdf(Handlebars)
+    const template = handlebarsWithScript.compile(hbs)
+    const html = template(context)
     // saveFile(`public/uploads/${directory}/content.html`, html);
-    // console.log(html);
+    console.log(html)
 
-    const browser = await Puppeteer.launch();
-    const page = await browser.newPage();
-    await page.setContent(html);
-    await page.addStyleTag({ path: `views/pdf/css/${nameTemplate}.css` });
+    const browser = await Puppeteer.launch()
+    const page = await browser.newPage()
+    await page.setContent(html)
+    await page.addStyleTag({ path: `views/pdf/css/${nameTemplate}.css` })
     const pdfBytes = await page.pdf({
       format: 'A4',
       printBackground: true,
       margin: {
         // top: "70px",
         // bottom: "10%",
-        left: '100px',
-        right: '100px',
-      },
-    });
+        left: '160px',
+        right: '160px'
+      }
+    })
 
     if (!fileDocuments) {
-      saveFile(pathFile, pdfBytes);
+      saveFile(pathFile, pdfBytes)
       await FileDocumentRepository.createFile({
         nameFile: fullName,
         path: pathFile,
         date: new Date(),
-        cropId,
-      });
-      return fullName;
+        cropId
+      })
+      return fullName
     }
 
     return this.findAndSavePdfExists(
@@ -67,7 +62,7 @@ export class PDFService {
       fileDocuments,
       cropId,
       pdfBytes
-    );
+    )
   }
 
   private static async findAndSavePdfExists(
@@ -77,24 +72,24 @@ export class PDFService {
     cropId,
     pdfBytes
   ) {
-    const pathFile = `public/uploads/${directory}/`;
+    const pathFile = `public/uploads/${directory}/`
     const fileDocument = fileDocuments.find(({ nameFile }) => {
-      const oldPdfBytes = readFileBytes(`${pathFile}${nameFile}`);
+      const oldPdfBytes = readFileBytes(`${pathFile}${nameFile}`)
       if (oldPdfBytes) {
         // console.log(sha256(pdfBytes),sha256(oldPdfBytes))
-        return sha256(pdfBytes) === sha256(oldPdfBytes);
+        return sha256(pdfBytes) === sha256(oldPdfBytes)
       }
-    });
+    })
     if (fileDocument) {
-      return fileDocument.nameFile;
+      return fileDocument.nameFile
     }
-    saveFile(`${pathFile}${fullName}`, pdfBytes);
+    saveFile(`${pathFile}${fullName}`, pdfBytes)
     await FileDocumentRepository.createFile({
       nameFile: fullName,
       path: `${pathFile}${fullName}`,
       date: new Date(),
-      cropId,
-    });
-    return fullName;
+      cropId
+    })
+    return fullName
   }
 }
