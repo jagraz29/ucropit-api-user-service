@@ -1,28 +1,28 @@
-import express, { Response } from 'express'
-import 'express-async-errors'
-import users from './users'
-import profile from './profile'
-import auth from './auth'
-import lots from './lots'
-import crop from './crop'
-import cropCollaborators from './cropCollaborators'
-import activities from './activities'
-import company from './company'
-import common from './common'
-import configs from './configs'
-import passport from '../../utils/auth/strategies/jwt'
-import achievements from './achievements'
-import collaborators from './collaborators'
-import reports from './reports'
-import charts from './charts'
-import badges from './badges'
-import files from './files'
-import supplies from './supplies'
-import offline from './offline'
-import integrations from './integrations'
-import webhooks from './webhooks'
+import express, { Response } from 'express';
+import 'express-async-errors';
+import users from './users';
+import profile from './profile';
+import auth from './auth';
+import lots from './lots';
+import crop from './crop';
+import cropCollaborators from './cropCollaborators';
+import activities from './activities';
+import company from './company';
+import common from './common';
+import configs from './configs';
+import passport from '../../utils/auth/strategies/jwt';
+import achievements from './achievements';
+import collaborators from './collaborators';
+import reports from './reports';
+import charts from './charts';
+import badges from './badges';
+import files from './files';
+import supplies from './supplies';
+import offline from './offline';
+import integrations from './integrations';
+import webhooks from './webhooks';
 
-const router: express.Router = express.Router()
+const router: express.Router = express.Router();
 
 router.get('/', (req, res) => {
   res.send('v1 APP OK');
@@ -74,7 +74,7 @@ router.use('/collaborators', authMiddleware, collaborators);
 router.use('/charts', authMiddleware, charts);
 
 // BADGES
-router.use('/badges', authMiddleware, badges)
+router.use('/badges', authMiddleware, badges);
 
 // REPORTS
 router.use('/reports', reports);
