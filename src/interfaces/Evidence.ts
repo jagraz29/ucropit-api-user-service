@@ -11,4 +11,6 @@ export interface Evidence {
   settings?: any
   meta?: any
   user?: string
+  imagePathIntermediate?: string
+  imagePathThumbnails?: string
 }

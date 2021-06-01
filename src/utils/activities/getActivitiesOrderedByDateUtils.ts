@@ -1,5 +1,10 @@
 import moment from 'moment'
-import { calculateCropVolumeUtils, Numbers } from '../'
+import {
+  calculateCropVolumeUtils,
+  Numbers,
+  getEvidencePdf,
+  getEvidenceImage
+} from '../'
 import {
   TypeActivitiesWithAchievements,
   TypeActivitiesWithOutAchievements,
@@ -20,6 +25,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
         lots,
         surface,
         storages,
+        files,
         dateStart,
         dateEnd,
         typeAgreement,
@@ -80,7 +86,9 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
             : null,
           supplies,
           storages: storages ? getStorages(storages) : [],
-          achievements: achievementsWithEiq
+          achievements: achievementsWithEiq,
+          evidencesPdf: getEvidencePdf(files),
+          getEvidenceImages: getEvidenceImage(files)
         }
       }
     )
