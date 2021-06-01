@@ -30,7 +30,7 @@ router.get('/', companiesController.index)
  * path:
  *  /v1/companies/{id}:
  *    get:
- *      summary: Show a company
+ *      summary: Get all company's lots
  *      tags: [Companies]
  *      parameters:
  *        - in: path
@@ -49,6 +49,34 @@ router.get('/', companiesController.index)
  */
 router.get('/:id', companiesController.show)
 
+/**
+ * @swagger
+ * path:
+ *  /v1/companies/{id}/lots:
+ *    get:
+ *      summary: Show a company
+ *      tags: [Companies]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *        - in: query
+ *          name: page
+ *          required: false
+ *        - in: query
+ *          name: limit
+ *          required: false
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          content:
+ *            application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Lot'
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
 router.get('/:id/lots', [getLostInCropsByCompanyPolicy], companiesController.findLotsByCompany)
 
 /**

@@ -202,7 +202,6 @@ class CompaniesController {
         const { id } = req.params
         const { page = 1, limit = 20, dateCrop, dateHarvest } = req.query
 
-        // console.log(req.user)
         const pagination = new Pagination(parseInt(page.toString(), 10), parseInt(limit.toString(), 10))
 
         const companyInstance = await CompanyService.findById(id)
