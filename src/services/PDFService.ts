@@ -11,12 +11,12 @@ export class PDFService {
   public static async generatePdf (
     nameTemplate: string,
     context: object,
-    nameDirectory: string,
+    directory: string,
     nameFile: string,
     { _id: cropId }
   ): Promise<string> {
     const fileDocuments: Array<FileDocumentProps> | null = await FileDocumentRepository.getFiles(cropId)
-    const path: string = `public/uploads/${nameDirectory}/`
+    const path: string = `public/uploads/${directory}/`
     await makeDirIfNotExists(path)
     const fullName: string = `${nameFile}-${uuidv4()}.pdf`
     const pathFile: string = `${path}${fullName}`
@@ -24,22 +24,23 @@ export class PDFService {
     const hbs: string = readFile(`views/pdf/html/${nameTemplate}.hbs`)
     const handlebarsWithScript = setScriptPdf(Handlebars)
     const template = handlebarsWithScript.compile(hbs)
-    const html = template(context)
-    // saveFile(`public/uploads/${directory}/content.html`, html);
-    // console.log(html)
+    const html = template(context, 'utf-8')
+    saveFile(`public/uploads/${directory}/content.html`, html)
+    // console.log(html);
 
     const browser = await Puppeteer.launch()
     const page = await browser.newPage()
     await page.setContent(html)
     await page.addStyleTag({ path: `views/pdf/css/${nameTemplate}.css` })
+    await page.emulateMediaType('screen')
     const pdfNewBuffer = await page.pdf({
       format: 'A4',
       printBackground: true,
       margin: {
-        // top: "70px",
-        // bottom: "10%",
-        left: '160px',
-        right: '160px'
+        left: '20px',
+        top: '20px',
+        right: '20px',
+        bottom: '20px'
       }
     })
 
@@ -55,7 +56,7 @@ export class PDFService {
     }
 
     return this.findAndSavePdfExists(
-      nameDirectory,
+      directory,
       fullName,
       fileDocuments,
       cropId,
