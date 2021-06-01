@@ -38,7 +38,7 @@ export const getEvidenceImage = (documents: Evidence[]): Array<string> => {
         componentFile[1].match(VALID_FORMATS_FILES_IMAGES_PNG) ||
         componentFile[1].match(VALID_FORMATS_FILES_IMAGES_JPG)
       ) {
-        return `${imagePathIntermediate}`
+        return imagePathIntermediate
       }
     })
     .filter((item) => item)
