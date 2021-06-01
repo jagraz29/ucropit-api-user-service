@@ -1,7 +1,9 @@
 import express from 'express'
 
 import companiesController from '../../controllers/CompaniesController'
-
+import {
+    getLostInCropsByCompanyPolicy,
+} from '../../utils/'
 const router: express.Router = express.Router()
 
 /**
@@ -47,7 +49,7 @@ router.get('/', companiesController.index)
  */
 router.get('/:id', companiesController.show)
 
-router.get('/:id/lots', companiesController.findLotsByCompany)
+router.get('/:id/lots', [getLostInCropsByCompanyPolicy], companiesController.findLotsByCompany)
 
 /**
  * @swagger

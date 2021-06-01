@@ -24,6 +24,7 @@ class ErrorResponse implements IErrorResponse {
     public static RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND'
     public static BADGE_TYPE_DUPLICATED = 'BADGE_TYPE_DUPLICATED'
     public static DATA_NOT_FOUND = 'DATA_NOT_FOUND'
+    public static REQUIRED_FIELDS = 'REQUIRED_FIELDS'
 
     parseError (code: string, message: string, extend?: object): TError {
         return {

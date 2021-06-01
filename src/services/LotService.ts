@@ -26,7 +26,7 @@ class LotService extends ServiceBase {
     }
 
     public static async count (query) {
-        const count = await Lot.count(query)
+        const count = await Lot.countDocuments(query)
         return count
     }
 

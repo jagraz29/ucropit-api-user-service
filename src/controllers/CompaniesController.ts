@@ -202,10 +202,16 @@ class CompaniesController {
         const { id } = req.params
         const { page = 1, limit = 20, dateCrop, dateHarvest } = req.query
 
+        // console.log(req.user)
         const pagination = new Pagination(parseInt(page.toString(), 10), parseInt(limit.toString(), 10))
 
         const companyInstance = await CompanyService.findById(id)
         if (!companyInstance) return res.status(ErrorResponseInstance.parseStatusCode(404)).json(ErrorResponseInstance.parseError(ErrorResponse.DATA_NOT_FOUND, 'La Empresa no existe'))
+
+        // @ts-ignore
+        const companiesInUser = req.user.companies.map(element => element.company.toString())
+
+        if(!companiesInUser.includes(companyInstance.id)) return res.status(ErrorResponseInstance.parseStatusCode(404)).json(ErrorResponseInstance.parseError(ErrorResponse.DATA_NOT_FOUND, 'Esta Empresa no le pertenece'))
 
         let query = {
             identifier: companyInstance.identifier
