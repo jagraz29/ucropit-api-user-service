@@ -201,7 +201,6 @@ class CompaniesController {
 
         const { id } = req.params
         const { page = 1, limit = 20, dateCrop, dateHarvest } = req.query
-        console.log('get findLotsByCompanies', id)
 
         const pagination = new Pagination(parseInt(page.toString(), 10), parseInt(limit.toString(), 10))
 
