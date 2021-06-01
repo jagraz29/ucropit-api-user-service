@@ -1,75 +1,92 @@
 import { v4 as uuidv4 } from 'uuid'
-import pdf from 'handlebars-pdf'
-import sha256File from 'sha256-file'
-import {
-  basePath,
-  makeDirIfNotExists,
-  removeFile,
-  moveFile,
-  readFile
-} from '../utils'
+import Handlebars from 'handlebars'
+import Puppeteer from 'puppeteer'
+import sha256 from 'sha256'
+import { makeDirIfNotExists, readFileBytes, saveFile, readFile } from '../utils'
 import { FileDocumentRepository } from '../repositories'
-import { FileDocumentProps } from '../interfaces/FileDocument'
+import { setScriptPdf } from '../helpers'
+import { FileDocumentProps } from '../interfaces'
 
 export class PDFService {
   public static async generatePdf(
     nameTemplate: string,
     context: object,
-    nameDirectory: string,
+    directory: string,
     nameFile: string,
     { _id: cropId }
   ): Promise<string | null> {
-    const fileDocuments: Array<object> | null =
+    const fileDocuments: FileDocumentProps | null =
       await FileDocumentRepository.getFiles(cropId)
-    const directory: string = fileDocuments ? 'tmp' : nameDirectory
 
-    const path: string = `${basePath()}public/uploads/${directory}/`
+    const path: string = `public/uploads/${directory}/`
     await makeDirIfNotExists(path)
     const fullName: string = `${nameFile}-${uuidv4()}.pdf`
-    const fullPath: string = `${path}${fullName}`
+    const pathFile: string = `${path}${fullName}`
 
-    const template: string = readFile(`views/pdf/${nameTemplate}.hbs`)
+    const hbs: string = readFile(`views/pdf/html/${nameTemplate}.hbs`)
+    const handlebarsWithScript = setScriptPdf(Handlebars)
+    const template = handlebarsWithScript.compile(hbs)
+    const html = template(context, 'utf-8')
+    saveFile(`public/uploads/${directory}/content.html`, html)
+    // console.log(html);
 
-    await pdf.create({ template, context, path: fullPath })
+    const browser = await Puppeteer.launch()
+    const page = await browser.newPage()
+    await page.setContent(html)
+    await page.addStyleTag({ path: `views/pdf/css/${nameTemplate}.css` })
+    await page.emulateMediaType('screen')
+    const pdfBytes = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      margin: {
+        left: '20px',
+        top: '20px',
+        right: '20px',
+        bottom: '20px',
+      },
+    })
 
     if (!fileDocuments) {
+      saveFile(pathFile, pdfBytes)
       await FileDocumentRepository.createFile({
         nameFile: fullName,
-        path: fullPath,
+        path: pathFile,
         date: new Date(),
-        cropId
+        cropId,
       })
       return fullName
     }
 
-    return this.findPdfExists(fullName, fileDocuments, cropId)
+    return this.findAndSavePdfExists(
+      directory,
+      fullName,
+      fileDocuments,
+      cropId,
+      pdfBytes
+    )
   }
 
-  private static async findPdfExists(
+  private static async findAndSavePdfExists(
+    directory: string,
     fullName: string,
-    fileDocuments: Array<FileDocumentProps>,
-    cropId
+    { nameFile }: FileDocumentProps,
+    cropId,
+    pdfBytes
   ) {
-    const filePdfTemp = `public/uploads/tmp/${fullName}`
-    const pathCropHistory = `public/uploads/pdf-crop-history/`
-    const fileDocument = fileDocuments.find(({ nameFile }) => {
-      if (readFile(`${pathCropHistory}${nameFile}`)) {
-        return (
-          sha256File(filePdfTemp) ===
-          sha256File(`${pathCropHistory}${nameFile}`)
-        )
+    const pathFile = `public/uploads/${directory}/`
+    const oldPdfBytes = readFileBytes(`${pathFile}${nameFile}`)
+    if (oldPdfBytes) {
+      // console.log(sha256(pdfBytes),sha256(oldPdfBytes))
+      if (sha256(pdfBytes) === sha256(oldPdfBytes)) {
+        return nameFile
       }
-    })
-    if (fileDocument) {
-      removeFile(filePdfTemp)
-      return fileDocument.nameFile
     }
-    await moveFile(filePdfTemp, `${pathCropHistory}${fullName}`)
+    saveFile(`${pathFile}${fullName}`, pdfBytes)
     await FileDocumentRepository.createFile({
       nameFile: fullName,
-      path: `${pathCropHistory}${fullName}`,
+      path: `${pathFile}${fullName}`,
       date: new Date(),
-      cropId
+      cropId,
     })
     return fullName
   }

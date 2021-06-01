@@ -100,6 +100,21 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
     as: 'files'
   }
 
+  const lookupSupply: any = {
+    from: 'supplies',
+    let: {
+      'supplyId': '$supplies.supply',
+    },
+    pipeline: [{
+      $match: {
+        $expr: {
+          $eq : ['$_id', '$$supplyId']
+        }
+      }
+    }],
+    as: 'supply'
+  }
+
   const lookupAchievements: any = {
     from: 'achievements',
     let: {
@@ -126,6 +141,25 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
       $unwind: {
         path: '$supplies',
         preserveNullAndEmptyArrays: true
+      }
+    },{
+      $lookup: lookupSupply
+    },{
+      $unwind: {
+        path: '$supply',
+        preserveNullAndEmptyArrays: true
+      }
+    },{
+      $addFields: {
+        supplieEiq: {
+          $reduce : {
+            input: '$supply.activeIngredients.eiq',
+            initialValue: 0,
+            in: {
+              $sum: ['$$value', '$$this'],
+            }
+          }
+        }
       }
     }],
     as: 'achievements'
@@ -214,17 +248,76 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
       $concat: [process.env.BASE_URL, '/v1/reports/map/lot?id=', { $toString: '$activities.achievements.lots._id' }]
     },
     cropLotTag: '$lots.tag',
-    lotName: '$activities.achievements.lots.name',
-    supplieId: '$activities.achievements.supplies._id',
-    supplieName: '$activities.achievements.supplies.name',
+    lotName: {
+      $concat: ['$activities.achievements.lots.name', ' - ', { $toString: '$activities.achievements.lots.surface' }, ' has']
+    },
+    supplieCode: '$activities.achievements.supply.code',
+    supplieId: '$activities.achievements.supply._id',
+    supplieName: '$activities.achievements.supply.brand',
     supplieUnit: '$activities.achievements.supplies.unit',
+    supplieEiq: {
+      $round: ['$activities.achievements.supplieEiq', 2]
+    },
     scheduleDate: {
       $dateToString: {
         format: '%d/%m/%Y',
         date: '$activities.dateStart'
       }
     },
-    supplieQuantity: '$activities.achievements.supplies.quantity',
+    supplieQuantityPlanified: {
+      $reduce : {
+        input: {
+          $filter: {
+            input: '$activities.supplies',
+            as: 'activitySupply',
+            cond: {
+              eq: [ '$$activitySupply.name', '$activities.achievements.supplies.name' ]
+            }
+          }
+        },
+        initialValue: '',
+        in: '$$this.quantity'
+      }
+    },
+    supplieEiqPlanified: {
+      $cond: {
+        if: {
+          $and: [{
+            $gt: [{
+              $size: {
+                $filter: {
+                  input: '$activities.supplies',
+                  as: 'activitySupply',
+                  cond: {
+                    eq: [ '$$activitySupply.name', '$activities.achievements.supplies.name' ]
+                  }
+                }
+              }
+            }, 0]
+          }]
+        },
+        then: {
+          $round: [ {
+            $multiply : ['$activities.achievements.supplieEiq', {
+              $reduce : {
+                input: {
+                  $filter: {
+                    input: '$activities.supplies',
+                    as: 'activitySupply',
+                    cond: {
+                      eq: [ '$$activitySupply.name', '$activities.achievements.supplies.name' ]
+                    }
+                  }
+                },
+                initialValue: '',
+                in: '$$this.quantity'
+              }
+            }]
+          }, 2]
+        },
+        else: 0
+      }
+    },
     achievementDate: {
       $dateToString: {
         format: '%d/%m/%Y',
@@ -232,7 +325,12 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
       }
     },
     supplieTotal: '$activities.achievements.supplies.total',
-    lotSurface: '$activities.achievements.lots.surface',
+    lotSurface: '$activities.achievements.surface',
+    eiqAchievement: {
+      $round: [{
+        $multiply: ['$activities.achievements.supplieEiq', '$activities.achievements.supplies.total']
+      }, 2]
+    },
     evidences: {
       $reduce : {
         input: '$activities.achievements.files',
@@ -286,8 +384,8 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
             }, 0]
           }]
         },
-        then: "$$KEEP",
-        else: "$$PRUNE"
+        then: '$$KEEP',
+        else: '$$PRUNE'
       }
     }
   },{
@@ -303,8 +401,8 @@ export const getCropPipelineEiqReportUtils = ({ identifier }) => {
             $ifNull: ['$activities.achievements.dateAchievement', false]
           }]
         },
-        then: "$$KEEP",
-        else: "$$PRUNE"
+        then: '$$KEEP',
+        else: '$$PRUNE'
       }
     }
   },{

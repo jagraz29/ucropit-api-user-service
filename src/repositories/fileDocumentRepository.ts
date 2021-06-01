@@ -1,5 +1,5 @@
 import models from '../models'
-import { FileDocumentProps } from '../interfaces/FileDocument'
+import { FileDocumentProps } from '../interfaces'
 const { FileDocument } = models
 
 export class FileDocumentRepository {
@@ -18,10 +18,7 @@ export class FileDocumentRepository {
    *
    * @param dataFile
    */
-  public static async getFiles (cropId): Promise<Object[] | null> {
-    const fileDocumentInstance = await FileDocument.find({ cropId })
-    return !!fileDocumentInstance.length
-      ? fileDocumentInstance
-      : null
+  public static async getFiles (cropId): Promise<Object | null> {
+    return FileDocument.findOne({ cropId })
   }
 }

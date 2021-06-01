@@ -1,31 +1,24 @@
 import { Request, Response } from 'express'
-import {
-  ReasonPhrases,
-  StatusCodes,
-  getReasonPhrase,
-  getStatusCode
-} from 'http-status-codes'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 import models from '../models'
 import CropService from '../services/CropService'
 import LotService from '../services/LotService'
 import CompanyService from '../services/CompanyService'
 import ActivityService from '../services/ActivityService'
-import { Evidence } from '../interfaces'
+import { Evidence, ReportSignersByCompany } from '../interfaces'
 
 import { CropRepository } from '../repositories'
 import { PDFService } from '../services'
 import {
-  basePath,
   getActivitiesOrderedByDateUtils,
-  makeDirIfNotExists,
   calculateDataCropUtils,
   calculateTheoreticalPotentialUtils,
-  calculateCropVolumeUtils
+  calculateCropVolumeUtils,
+  getCropBadgesByUserType
 } from '../utils'
 
 import {
-  validateGetCrops,
   validateCropStore,
   validateFormatKmz,
   validateNotEqualNameLot
@@ -33,12 +26,10 @@ import {
 
 import { UserSchema } from '../models/user'
 import { errors } from '../types/common'
-import { ReportSignersByCompany } from '../interfaces'
 import path from 'path'
-import util from 'util'
+import moment from 'moment'
 
 const Crop = models.Crop
-const CropType = models.CropType
 
 class CropsController {
   /**
@@ -125,6 +116,7 @@ class CropsController {
     const lots = await LotService.storeLotImagesAndCountries(crop.lots)
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
+    const badges = getCropBadgesByUserType(req.user, crop)
     const volume = calculateCropVolumeUtils(
       crop.unitType.key,
       crop.pay,
@@ -138,7 +130,8 @@ class CropsController {
       company: {
         ...crop.company,
         theoriticalPotential
-      }
+      },
+      badges
     }
 
     res.status(200).json(newCrop)
@@ -177,50 +170,29 @@ class CropsController {
     const {
       params: { id }
     } = req
-    // se obtienes crop con sus actividades
     const crop = await CropRepository.getCropWithActivities(id)
 
     if (!crop) {
       return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
     }
-    // aca se obtienen todos los crop de la company y el tipo de cultivo
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
 
-    // aca se calcula el potencial teorico
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
 
-    // aca estara la libreria a nivel de crop
-    const dataCrop = calculateDataCropUtils(crop)
-
-    // aca esta la libreria a nivel de actividades
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    // aca se unen el ptencial teorico con lo del crop ya calculado
+    const dataCrop = calculateDataCropUtils(crop, activities)
+
     const dataPdf = {
       dataCrop,
       theoriticalPotential,
       activities,
-      date: new Date()
+      dateCreatePdf: moment().format('DD/MM/YYYY')
     }
-    // console.log(util.inspect(JSON.stringify(dataPdf), { showHidden: false, depth: null }))
-    const dataPDF = {
-      array: [
-        {
-          lot: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEu24ChRXtuv9btEVw3LTxt0vVvQDcbQbEnQ&usqp=CAU',
-          location: 'Santa Eugenia Navarro, Buenos Aires'
-        },
-        {
-          lot: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEu24ChRXtuv9btEVw3LTxt0vVvQDcbQbEnQ&usqp=CAU',
-          location: 'Santa Eugenia Navarro, Buenos Aires'
-        }
-      ]
-    }
-
-    // // aca se utiliza el service para generar el pdf, este debe devoler el path para descargar el pdf
     const nameFile = await PDFService.generatePdf(
       'pdf-crop-history',
-      dataPDF,
+      dataPdf,
       'pdf-crop-history',
       'company',
       crop
@@ -241,7 +213,8 @@ class CropsController {
     { params: { nameFile } }: Request,
     res: Response
   ) {
-    res.sendFile(path.resolve(`public/uploads/pdf-crop-history/${nameFile}`))
+    const dirPdf = `${process.env.BASE_URL}/${process.env.DIR_UPLOADS}/${process.env.DIR_PDF_CROP_HISTORY}/${nameFile}`
+    return res.status(StatusCodes.OK).json(dirPdf)
   }
 
   /**
@@ -391,6 +364,7 @@ class CropsController {
       message: 'deleted successfuly'
     })
   }
+
   /**
    * Get all crops evidences
    *

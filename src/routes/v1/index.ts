@@ -15,6 +15,7 @@ import achievements from './achievements'
 import collaborators from './collaborators'
 import reports from './reports'
 import charts from './charts'
+import badges from './badges'
 import files from './files'
 import supplies from './supplies'
 import offline from './offline'
@@ -71,6 +72,9 @@ router.use('/collaborators', authMiddleware, collaborators)
 
 // CHARTS CROPS
 router.use('/charts', authMiddleware, charts)
+
+// BADGES
+router.use('/badges', authMiddleware, badges)
 
 // REPORTS
 router.use('/reports', reports)

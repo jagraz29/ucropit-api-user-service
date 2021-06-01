@@ -1,19 +1,39 @@
 import { Request, Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
+import {
+  ActivityRepository,
+  TypeAgreementRepository,
+  BadgeRepository,
+  CropRepository
+} from '../repositories'
+import { TypeActivities } from '../interfaces'
 import {
   validateActivityStore,
   validateActivityUpdate,
   validateFilesWithEvidences,
   validateExtensionFile
 } from '../utils/Validation'
+import {
+  sumActivitiesSurfacesByTypeAgreement,
+  getCropBadgesReached,
+  calculateCropEiq
+} from '../utils'
 
 import ActivityService from '../services/ActivityService'
 import CropService from '../services/CropService'
 import BlockChainServices from '../services/BlockChainService'
 import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
 import SatelliteImageService from '../services/SatelliteImageService'
+import IntegrationService from '../services/IntegrationService'
+import UserConfigService from '../services/UserConfigService'
 import models from '../models'
 
-import { getPathFileByType, getFullPath, fileExist, removeFile } from '../utils/Files'
+import {
+  getPathFileByType,
+  getFullPath,
+  fileExist,
+  removeFile
+} from '../utils/Files'
 
 import { ACTIVITY_HARVEST } from '../utils/Constants'
 
@@ -74,6 +94,8 @@ class ActivitiesController {
 
     await validateActivityStore(data)
 
+    const { companySelected } = await UserConfigService.findById(user.config)
+
     const validationExtensionFile = validateExtensionFile(req.files)
 
     if (validationExtensionFile.error) {
@@ -107,6 +129,16 @@ class ActivitiesController {
 
     if (activity.isDone() && activity.type.tag === ACTIVITY_HARVEST) {
       await SatelliteImageService.createPayload(activity).send()
+
+      await IntegrationService.exportActivity(
+        {
+          cropId: data.crop._id,
+          activityId: activity._id,
+          erpAgent: 'auravant',
+          identifier: companySelected.identifier
+        },
+        req
+      )
     }
 
     res.status(201).json(activity)
@@ -125,6 +157,8 @@ class ActivitiesController {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
 
+    const { companySelected } = await UserConfigService.findById(user.config)
+
     const { status } = data
     await validateActivityUpdate(data)
 
@@ -142,6 +176,7 @@ class ActivitiesController {
     if (validationFiles.error) {
       res.status(400).json(validationFiles)
     }
+
     let activity = await ActivityService.findActivityById(id)
     if (data.signers) {
       const listSigners = ActivityService.getSigners(data.signers, activity)
@@ -172,6 +207,16 @@ class ActivitiesController {
 
     if (activity.isDone() && activity.type.tag === ACTIVITY_HARVEST) {
       await SatelliteImageService.createPayload(activity).send()
+
+      await IntegrationService.exportActivity(
+        {
+          cropId: data.crop,
+          activityId: activity._id,
+          erpAgent: 'auravant',
+          identifier: companySelected.identifier
+        },
+        req
+      )
     }
 
     res.status(200).json(activity)
@@ -204,14 +249,8 @@ class ActivitiesController {
     if (isCompleteSigned) {
       const crop = await Crop.findById(cropId).populate('cropType')
 
-      const {
-        ots,
-        hash,
-        pathPdf,
-        nameFilePdf,
-        nameFileOts,
-        pathOtsFile
-      } = await BlockChainServices.sign(crop, activity)
+      const { ots, hash, pathPdf, nameFilePdf, nameFileOts, pathOtsFile } =
+        await BlockChainServices.sign(crop, activity)
 
       const approvalRegisterSign = await ApprovalRegisterSingService.create({
         ots,
@@ -228,9 +267,133 @@ class ActivitiesController {
       await ActivityService.changeStatus(activity, 'FINISHED')
       await CropService.removeActivities(activity, crop, 'done')
       await CropService.addActivities(activity, crop)
+
+      /**********************************/
+      /*       ADD BADGES TO CROP       */
+      /**********************************/
+
+      /*
+      FIND ACTIVITIES BY SIGNED TRUE AND BE TYPE AGREEMENT
+      */
+      const dataToFindActivities: any = {
+        query: {
+          _id: {
+            $in: [...crop.toMake, ...crop.done, ...crop.finished]
+          },
+          'signers.signed': {
+            $nin: [false]
+          }
+        },
+        populate: [
+          {
+            path: 'type',
+            match: {
+              tag: TypeActivities.ACT_AGREEMENTS
+            }
+          },
+          {
+            path: 'typeAgreement'
+          }
+        ]
+      }
+
+      let activities: Array<any> = await ActivityRepository.getActivities(
+        dataToFindActivities
+      )
+
+      activities = activities.filter(
+        (activity) => activity.type && activity.typeAgreement
+      )
+
+      /*
+       * SUM ALL SURFACES OF ACTIVITIES BY TYPE AGREEMENT AND CROP TYPE IN SOME CASE
+       */
+      const activitiesSurfaces: any = sumActivitiesSurfacesByTypeAgreement(
+        activities,
+        crop
+      )
+
+      /*
+       * FIND ALL TYPE AGREEMENTS
+       */
+      const typeAgreements: Array<any> =
+        await TypeAgreementRepository.getTypeAgreements({})
+
+      /*
+       * FIND ALL BADGES
+       */
+      const badges: Array<any> = await BadgeRepository.getBadges({})
+
+      /*
+       * FIND ACTIVITIES BY SIGNED TRUE AND TYPE BE APPLICATION FOR AFTER GET THE CROP EIQ
+       */
+      const dataToFindApplicationActivities: any = {
+        query: {
+          _id: {
+            $in: [...crop.toMake, ...crop.done, ...crop.finished]
+          }
+        },
+        populate: [
+          {
+            path: 'type',
+            match: {
+              tag: TypeActivities.ACT_APPLICATION
+            }
+          },
+          {
+            path: 'achievements',
+            match: {
+              'signers.signed': {
+                $nin: [false]
+              }
+            },
+            populate: [
+              {
+                path: 'supplies.supply'
+              }
+            ]
+          }
+        ]
+      }
+
+      let applicationActivities: Array<any> =
+        await ActivityRepository.getActivities(dataToFindApplicationActivities)
+
+      applicationActivities = applicationActivities.filter(
+        (activity) => activity.type && activity.achievements
+      )
+
+      /*
+       * GET CROP EIQ
+       */
+      const cropEiq: number = await calculateCropEiq(applicationActivities)
+
+      /*
+       * GET BADGES TO ADD TO CROP
+       */
+      const badgesToAdd: Array<any> = getCropBadgesReached(
+        typeAgreements,
+        badges,
+        activitiesSurfaces,
+        crop,
+        cropEiq
+      )
+
+      /*
+       * ADD BADGES TO CROP
+       */
+      const query: any = {
+        _id: crop._id
+      }
+
+      const dataToUpdate: any = {
+        badges: badgesToAdd
+      }
+
+      await CropRepository.updateOneCrop(query, dataToUpdate)
     }
 
-    res.status(200).json(activity)
+    res.status(StatusCodes.OK).json(activity)
   }
 
   /**
@@ -327,27 +490,31 @@ class ActivitiesController {
     const data = req.body
 
     const activity = await Activity.findOne({ _id: id })
-    const documents = await FileDocument.find({ _id: { $in : data } })
+    const documents = await FileDocument.find({ _id: { $in: data } })
 
     let files = activity.files
 
-    await Promise.all(documents.map(async (document) => {
-      const filePath = `${getFullPath(getPathFileByType('activity'))}/${activity.key}/${
-        document.nameFile
-      }`
+    await Promise.all(
+      documents.map(async (document) => {
+        const filePath = `${getFullPath(getPathFileByType('activity'))}/${
+          activity.key
+        }/${document.nameFile}`
 
-      if (fileExist(filePath)) removeFile(filePath)
+        if (fileExist(filePath)) removeFile(filePath)
 
-      const fileRemove = await FileDocument.findByIdAndDelete(document._id)
+        const fileRemove = await FileDocument.findByIdAndDelete(document._id)
 
-      if (fileRemove) {
-        const documentFiles = activity.toJSON().files
+        if (fileRemove) {
+          const documentFiles = activity.toJSON().files
 
-        files = files.filter(item => item.toString() !== document._id.toString())
-      }
+          files = files.filter(
+            (item) => item.toString() !== document._id.toString()
+          )
+        }
 
-      return Promise
-    }))
+        return Promise
+      })
+    )
 
     activity.files = files
 

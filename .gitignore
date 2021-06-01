@@ -16,3 +16,4 @@ public/.DS_Store
 public/uploads/profile
 .DS_Store
 .idea
+package-lock.json

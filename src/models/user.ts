@@ -43,6 +43,7 @@ export interface UserSchema extends mongoose.Document {
   pin?: string
   verifyToken?: string
   companies?: Array<any>
+  config?: string | any
 }
 
 const userSchema = new mongoose.Schema(
@@ -69,7 +70,6 @@ const userSchema = new mongoose.Schema(
     isInactive: {
       type: Boolean,
       default: false
-
     },
     avatar: { type: String, required: false },
     collaboratorRequest: [
@@ -134,13 +134,14 @@ userSchema.methods.comparePassword = function (
   if (!this[field]) return cb(null, false)
 
   const fieldToCompare: string = this[field]
-  bcrypt.compare(candidatePassword, fieldToCompare, function (
-    err,
-    isMatch: boolean
-  ) {
-    if (err) return cb(err)
-    cb(null, isMatch)
-  })
+  bcrypt.compare(
+    candidatePassword,
+    fieldToCompare,
+    function (err, isMatch: boolean) {
+      if (err) return cb(err)
+      cb(null, isMatch)
+    }
+  )
 }
 
 userSchema.methods.generateAuthToken = function (): string {
