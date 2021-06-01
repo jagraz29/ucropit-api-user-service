@@ -374,6 +374,16 @@
   margin-left: 10px;
 }
 
+.spokesman-data-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  /* font-style: normal; */
+  /* font-weight: 400; */
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  margin-left: 20px;
+}
+
 .inner-margin {
   padding: 15px;
 }
@@ -400,11 +410,6 @@
   page-break-inside: avoid;
 }
 
-.activities {
-  page-break-inside: avoid;
-  background-color: #ffffff;
-}
-
 .activity-frame {
   border-radius: 2px;
   padding: 8px;
@@ -415,6 +420,23 @@
   flex-direction: column;
   page-break-inside: avoid;
 }
+
+.activities {
+  page-break-inside: avoid;
+  background-color: #ffffff;
+}
+
+.activity-frame-actividades-validaciones {
+  border-radius: 2px;
+  margin-bottom: 20px;
+  box-shadow: 0px 0px 0px 2px rgb(0, 0, 0, 0.1);
+  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  page-break-inside: avoid;
+  position: static;
+}
+
 
 .date-activity {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -427,6 +449,17 @@
   color: #333333;
 }
 
+.date-activity-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 1.5px;
+  color: #333333;
+  margin-left: 5px;
+  margin-top: 10px;
+}
 /* TODO: No borrar */
 /* .activity-lots {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -449,6 +482,32 @@
   text-align: left;
 }
 
+.applications-supply-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  /* font-style: normal; */
+  /* font-weight: 500; */
+  /* line-height: 20px; */
+  letter-spacing: 0.25px;
+  /* text-align: left; */
+  margin-left: 20px;
+  padding-top: 10px;
+  /* position: absolute; */
+  margin-bottom: -18px;
+}
+
+.activity-lots-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  text-align: left;
+  margin-top: 25px;
+  margin-left: 20px;
+}
+
 .activity-framed-h1 {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 18px;
@@ -467,6 +526,15 @@
   padding-right: 20px;
 }
 
+.activity-validations-val {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  margin-left: auto;
+  width: fit-content;
+  margin-top: -100px;
+  padding-right: 20px;
+  position: static;
+}
+
 .backup-docs {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 12px;
@@ -478,7 +546,22 @@
   color: rgba(51, 51, 51, 0.7);
 }
 
+.backup-docs-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.4000000059604645px;
+  color: rgba(51, 51, 51, 0.7);
+  margin-left: 20px;
+}
+
 .validation-date {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #c8e6c9;
+  color: #43a047;
+}
+
+.validation-date-val {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: #c8e6c9;
   color: #43a047;
@@ -494,7 +577,22 @@
   text-align: left;
 }
 
+.validation-name-val {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  text-align: left;
+}
+
+
 .validation-title {
+  page-break-inside: avoid !important;
+}
+
+.validation-title-val {
   page-break-inside: avoid !important;
 }
 
@@ -522,14 +620,15 @@
 }
 
 .applications {
-  page-break-inside: avoid !important;
+  page-break-inside: avoid;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 12px;
   font-style: normal;
-  font-weight: 400;
-  line-height: 10px;
+  /* font-weight: 400; */
+  /* line-height: 10px; */
   letter-spacing: 0.25px;
-  text-align: left;
+  /* text-align: left; */
+  margin-left: 5px;
 }
 
 .applications-supply {
@@ -541,6 +640,14 @@
   letter-spacing: 0.25px;
   text-align: left;
 }
+
+.applications-supply-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  letter-spacing: -0.5;
+  position: static;
+}
+
 
 .card {
   box-shadow: 0px 0px 0px 2px rgb(0, 0, 0, 0.1);
@@ -558,6 +665,20 @@
   display: flex;
   flex-wrap: wrap-reverse;
   padding-top: 60px;
+  position: static;
+}
+
+.activity-frame-lots-validation {
+  display: flex;
+  padding-top: 60px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  position: static;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 20px;
+  padding-left: 20px;
 }
 
 .eiq-lots {

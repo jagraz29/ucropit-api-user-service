@@ -105,7 +105,7 @@
                                 </div>
                                 {{/if}}
                                 {{/each}}
-            {{!-- FIXME: aqui comienzan las imagenes de lotes para reemplazarlas por las etiquetas --}}
+            {{!-- TODO: aqui comienzan las imagenes de lotes para reemplazarlas por las etiquetas --}}
                             {{!-- <div class="lots-top">
                                 {{#each dataCrop.lots}}
                                 <p class="lot-description">{{provinceName}}<br />{{cityName}}<br />{{countryName}}</p>
@@ -113,7 +113,6 @@
                                 {{/each}}
                             </div> --}}
                     </div>
-
             {{!-- TODO: aqui cierra el fill --}}
                 <div class="crop-leaders">
                     <div class="spokesman">
@@ -143,7 +142,6 @@
                                 height="26" />
                             <div class="activity-title">Acuerdos</div>
                         </div>
-
                         {{#each activities}}
                         {{#is tag "ACT_AGREEMENTS" }}
                         <div class="acuerdos">
@@ -259,37 +257,36 @@
                 {{/each}}
                 {{!-- TODO: aqui cierra actividades --}}
 
-                {{!-- TODO: aqui comienzan actividades de validaciones --}}
+                {{!-- FIXME: aqui comienzan actividades de validaciones --}}
                 <div class="activities">
                     <div class="activity-header">
                         <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/flask.png" width="26"
                             height="26" />
                         <div class="activity-title">Aplicaciones</div>
-                    </div>
+
                     {{#each activities}}
                     {{#each achievements}}
                     {{#if supplies }}
                     {{#each supplies }}
-                    <p class="applications">{{ name}}</p>
+                    <p class="applications">{{name}}</p>
                     {{/each}}
                     {{/if}}
                     {{/each}}
                     {{/each}}
 
-
                     {{#each activities}}
                     {{#each achievements}}
                     {{#if supplies }}
-
-                                <div class="date-activity">
+                    <div class="activity-frame-actividades-validaciones">
+                                <div class="date-activity-validation ">
                                     <i class="fa fa-check"></i>{{moment ../dateAchievement format="DD/MM/YYYY"}}
                                 </div>
                                 {{#each (unique supplies)}}
-                                <h3 class="applications-supply"><b>{{name}}- {{total}}{{unit}}</b> </h3>
+                                <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
                                 {{/each}}
-                                <div class="activity-lots">{{lotsQuantity}} lotes</div>
-                                <div class="spokesman-data">Evidencias</div>
-                                <div class="backup-docs">documentacion de respaldo</div>
+                                <div class="activity-lots-validation">{{lotsQuantity}} lotes</div>
+                                <div class="spokesman-data-validation">Evidencias</div>
+                                <div class="backup-docs-validation">documentacion de respaldo</div>
                                 {{#each files}}
                                 <div><img
                                         src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
@@ -297,16 +294,15 @@
                                     <a href={{path}}>{{name}}</a>
                                 </div>
                                 {{/each}}
-                                <div class="activity-validations">
-                                    <div class="validation-title">Validaciones</div>
-                                    <div><span class="validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
-                                    <div class="validation-name">Santiago Casares</div>
-                                    <divclass="backup-docs">Productor - 30-20771364-9
+                                <div class="activity-validations-val">
+                                    <div class="validation-title-val">Validaciones</div>
+                                    <div><span class="validation-date-val">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
+                                    <div class="validation-name-val">Santiago Casares</div>
+                                    <divclass="backup-docs-validation">Productor - 30-20771364-9
                                 </div>
-                            <div class="activity-frame-lots">
+                            <div class="activity-frame-lots-validation">
                                 {{#if lots}}
                                 {{#each lots}}
-
                                 <div class="card">
                                     <img src={{image.normal}} alt="crop" class="activity-lots-image">
                                     <div class="container">
@@ -317,9 +313,12 @@
                                 {{/each}}
                                 {{/if}}
                             </div>
+                    </div>
                     {{/if}}
                     {{/each}}
                     {{/each}}
+                </div>
+            </div>
          
                     {{!-- TODO: aqui comienza lotes final --}}
                             <div class="activity-header">
@@ -351,7 +350,7 @@
                                         </div>
                                     </div>
                                 </div>
-                </div>
-        </div>
+
+      </div>
     </body>
 </html>
