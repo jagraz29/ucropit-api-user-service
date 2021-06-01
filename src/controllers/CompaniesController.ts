@@ -236,7 +236,7 @@ class CompaniesController {
         query['_id'] = { $in: lotsInCropsIds }
 
         let results = []
-        const lotsList: any[] = await LotService.search(query, 20, 0)
+        const lotsList: any[] = await LotService.search(query, pagination.limit, pagination.skip)
 
         if (lotsList.length > 0) {
             count = await LotService.count(query)
