@@ -1,4 +1,4 @@
-import { StatusCodes } from 'http-status-codes'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 export type TError = {
     code: string
@@ -9,9 +9,9 @@ export type TError = {
 
 interface IErrorResponse {
     parseStatusCode (statusCode: StatusCodes): number
-
     // tslint:disable-next-line:unified-signatures
-    parseError (code: string, message: string, description?: string, errors?: Error[]): TError,
+    parseError (code: string, message: string, extend?: object): TError,
+    internalServer (error: Error): TError,
 }
 
 class ErrorResponse implements IErrorResponse {
@@ -25,17 +25,24 @@ class ErrorResponse implements IErrorResponse {
     public static BADGE_TYPE_DUPLICATED = 'BADGE_TYPE_DUPLICATED'
     public static DATA_NOT_FOUND = 'DATA_NOT_FOUND'
 
-    parseError (code: string, message: string, description?: string, errors?: Error[]): TError {
+    parseError (code: string, message: string, extend?: object): TError {
         return {
             code,
             message,
-            description,
-            errors
+            ...extend
         }
     }
 
     parseStatusCode (statusCode: StatusCodes): number {
         return /^2/.test(statusCode.toString()) ? 500 : statusCode
+    }
+
+    internalServer (error: any): TError {
+        return {
+            code: ErrorResponse.ERROR_SERVER,
+            message: ReasonPhrases.INTERNAL_SERVER_ERROR,
+            description: error.toString()
+        }
     }
 }
 export const ErrorResponseInstance = new ErrorResponse()
