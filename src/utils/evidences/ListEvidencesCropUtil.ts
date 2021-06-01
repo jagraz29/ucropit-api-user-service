@@ -19,10 +19,10 @@ export const listEvidencesCrop = (crop): Evidence[] => {
 
 export const getEvidencePdf = (documents: Evidence[]): Array<string> => {
   const listEvidences: Array<string> = documents
-    .map((document) => {
-      const componentFile = document.nameFile.split('.')
+    .map(({ nameFile, path }) => {
+      const componentFile = nameFile.split('.')
       if (componentFile[1].match(VALID_FORMATS_FILES_DOCUMENTS)) {
-        return `${process.env.BASE_URL}/${document.path}`
+        return `${process.env.BASE_URL}/${path}`
       }
     })
     .filter((item) => item)
@@ -32,13 +32,13 @@ export const getEvidencePdf = (documents: Evidence[]): Array<string> => {
 
 export const getEvidenceImage = (documents: Evidence[]): Array<string> => {
   const listEvidences: Array<string> = documents
-    .map((document) => {
-      const componentFile = document.nameFile.split('.')
+    .map(({ nameFile, imagePathIntermediate }) => {
+      const componentFile = nameFile.split('.')
       if (
         componentFile[1].match(VALID_FORMATS_FILES_IMAGES_PNG) ||
         componentFile[1].match(VALID_FORMATS_FILES_IMAGES_JPG)
       ) {
-        return `${document.imagePathIntermediate}`
+        return `${imagePathIntermediate}`
       }
     })
     .filter((item) => item)
