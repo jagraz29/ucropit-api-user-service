@@ -86,8 +86,8 @@ router.get('/:nameFile/pdf-history-crop', cropsController.pdfHistoryCrop)
 /**
  * @swagger
  * path:
- *  /v1/crops/{id}/generate-pdf-history:
- *    get:
+ *  /v1/crops/{id}/crop-history/pdf:
+ *    post:
  *      summary: Show a crop
  *      tags: [Crops]
  *      parameters:
@@ -105,7 +105,7 @@ router.get('/:nameFile/pdf-history-crop', cropsController.pdfHistoryCrop)
  *        "500":
  *          description: Server error
  */
-router.post('/:id/generate-pdf-history', cropsController.generatePdfHistoryCrop)
+router.post('/:id/crop-history/pdf', cropsController.generatePdfHistoryCrop)
 
 /**
  * @swagger

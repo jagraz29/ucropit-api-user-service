@@ -1,3 +1,6 @@
-export * from './getActivitiesOrderedByDateUtils'
 export * from './calculateDataCropUtils'
 export * from './calculateCropVolumeUtils'
+export * from './sumActivitiesSurfacesByTypeAgreementUtils'
+export * from './getCropBadgesReachedUtils'
+export * from './getCropBadgesByUserTypeUtils'
+export * from './calculateCropEiqUtils'

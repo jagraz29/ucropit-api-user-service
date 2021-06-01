@@ -224,6 +224,68 @@ class CropService extends ServiceBase {
     return crops
   }
 
+  public static async cropsOnlySeeRolesSowing(
+    query: any,
+    filtering,
+    roles: Array<string>
+  ) {
+    let crops = await this.findAllSowing(query)
+    return crops
+  }
+
+  /**
+   * Find All crops by query filter.
+   *
+   * @param query
+   */
+  public static async findAllSowing(query) {
+    return Crop.find(query)
+      .populate('lots.data')
+      .populate('cropType')
+      .populate('unitType')
+      .populate('company')
+      .populate({
+        path: 'done',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' },
+          {
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'files' }]
+          },
+          { path: 'lotsMade' },
+          { path: 'user' }
+        ]
+      })
+      .populate('members.user')
+      .populate({
+        path: 'finished',
+        populate: [
+          { path: 'collaborators' },
+          { path: 'type' },
+          { path: 'typeAgreement' },
+          { path: 'lots' },
+          { path: 'files' },
+          { path: 'user' },
+          {
+            path: 'approvalRegister',
+            populate: [
+              { path: 'filePdf' },
+              { path: 'fileOts' },
+              { path: 'activity' }
+            ]
+          },
+          {
+            path: 'achievements',
+            populate: [{ path: 'lots' }, { path: 'files' }]
+          }
+        ]
+      })
+  }
+
   /**
    * Find All crops by query filter.
    *
@@ -269,7 +331,11 @@ class CropService extends ServiceBase {
           { path: 'files' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           },
           { path: 'lotsMade' },
           { path: 'user' },
@@ -297,7 +363,11 @@ class CropService extends ServiceBase {
           },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           }
         ]
       })
@@ -403,7 +473,9 @@ class CropService extends ServiceBase {
         ]
       })
       .populate('members.user')
-      .lean()
+      .populate('badges.badge')
+      .populate('badges.typeAgreement')
+      .lean({ virtuals: true })
   }
   /**
    *
@@ -735,17 +807,17 @@ class CropService extends ServiceBase {
   public static serviceCropIsSynchronized(crop: any, service: any): boolean {
     return (
       service &&
-      crop.synchronizedList.filter((item) => item.service === service).length >
+      crop?.synchronizedList.filter((item) => item.service === service).length >
         0 &&
-      crop.synchronizedList.find((item) => item.service === service)
+      crop?.synchronizedList.find((item) => item.service === service)
         .isSynchronized
     )
   }
 
   private static isServiceAdded(crop: any, service: string) {
     return (
-      crop.synchronizedList &&
-      crop.synchronizedList.filter((item) => item.service === service).length >
+      crop?.synchronizedList &&
+      crop?.synchronizedList.filter((item) => item.service === service).length >
         0
     )
   }

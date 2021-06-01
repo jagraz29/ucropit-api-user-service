@@ -23,6 +23,7 @@ import FileDocument from './documentFile'
 import IntegrationLog from './integrationLog'
 import ActiveIngredient from './activeIngredient'
 import ForeignCredential from './foreignCredential'
+import Badge from './badge'
 
 const connectDb = function () {
   return mongoose.connect(process.env.DATABASE_URL, {
@@ -57,7 +58,8 @@ const models = {
   TypeStorage,
   Notification,
   ActiveIngredient,
-  ForeignCredential
+  ForeignCredential,
+  Badge
 }
 
 export { connectDb }

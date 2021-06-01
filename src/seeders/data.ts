@@ -251,6 +251,13 @@ export const agreementTypesData = [
       es: 'Proveedor'
     },
     key: 'SUPPLIER'
+  },
+  {
+    name: {
+      en: 'Responsible use of Phytosanitary',
+      es: 'Uso responsable de Fitosanitarios'
+    },
+    key: 'RESPONSIBLE_USE'
   }
 ]
 
