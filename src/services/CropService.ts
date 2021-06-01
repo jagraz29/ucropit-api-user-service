@@ -814,6 +814,15 @@ class CropService extends ServiceBase {
     )
   }
 
+  /**
+   * @function findCropsWithLotsSample
+   * @param query
+   */
+  public static async findCropsWithLotsSample (query) {
+    const crops = await Crop.find(query)
+    return crops
+  }
+
   private static isServiceAdded(crop: any, service: string) {
     return (
       crop?.synchronizedList &&
@@ -950,6 +959,7 @@ class CropService extends ServiceBase {
 
     return activityInstance.save()
   }
+
 }
 
 export default CropService
