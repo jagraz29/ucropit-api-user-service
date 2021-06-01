@@ -88,7 +88,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           storages: storages ? getStorages(storages) : [],
           achievements: achievementsWithEiq,
           evidencesPdf: getEvidencePdf(files),
-          getEvidenceImages: getEvidenceImage(files)
+          evidenceImages: getEvidenceImage(files)
         }
       }
     )
