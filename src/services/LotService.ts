@@ -19,6 +19,27 @@ interface ILot {
 }
 
 class LotService extends ServiceBase {
+
+    public static async search (query, limit, skip, sort?) {
+        const lots = await Lot.find(query).limit(limit).skip(skip).sort(sort || {})
+        return lots
+    }
+
+    public static async count (query) {
+        const count = await Lot.count(query)
+        return count
+    }
+
+    public static parseLotWithTag (lotsList, lotsInCrops) {
+        const results = lotsList.map(lot => {
+            const lotWithTag = lotsInCrops.find(el => el.data.includes(lot.id.toString()))
+            return {
+                ...lot.toJSON(),
+                tag: lotWithTag ? lotWithTag.tag : ''
+            }
+        })
+        return results
+    }
   public static async store (req: Request, lotsNames) {
     const jsonParserKmz = await handleFileConvertJSON(req.files)
 
