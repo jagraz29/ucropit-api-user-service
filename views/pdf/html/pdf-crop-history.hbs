@@ -278,7 +278,8 @@
                     {{#each achievements}}
                     {{#if supplies }}
                     <div class="activity-frame-actividades-validaciones">
-                                <div class="date-activity-validation ">
+                        <div class="activity-header-val">
+                                <div class="date-activity-validation">
                                     <i class="fa fa-check"></i>{{moment ../dateAchievement format="DD/MM/YYYY"}}
                                 </div>
                                 {{#each (unique supplies)}}
@@ -300,8 +301,8 @@
                                     <div class="validation-name-val">Santiago Casares</div>
                                     <divclass="backup-docs-validation">Productor - 30-20771364-9
                                 </div>
-                            <div class="activity-frame-lots-validation">
-                                {{#if lots}}
+                            {{!-- <div class="activity-frame-lots-validation"> --}}
+                                {{!-- {{#if lots}}
                                 {{#each lots}}
                                 <div class="card">
                                     <img src={{image.normal}} alt="crop" class="activity-lots-image">
@@ -311,8 +312,11 @@
                                     </div>
                                 </div>
                                 {{/each}}
-                                {{/if}}
-                            </div>
+                                {{/if}} --}}
+                            <div style="page-break-after: always;"></div>
+                                <p>
+                            {{!-- </div> --}}
+                        </div>
                     </div>
                     {{/if}}
                     {{/each}}
@@ -332,7 +336,7 @@
                                             <div class="spokesman-data">{{provinceName}} ({{surface}} has.)</div>
                                             {{/each}}
                                         </div>
-                                        <div class="activity-frame-lots">
+                                        <div class="activity-frame-lots-under">
                                             {{#each dataCrop.lots}}
                                             <div class="card">
                                                 <img src={{image}} alt="crop" class="activity-lots-img">
@@ -350,6 +354,8 @@
                                         </div>
                                     </div>
                                 </div>
+                    <div style="page-break-inside: always;"> </div>
+                        <p>
 
       </div>
     </body>
