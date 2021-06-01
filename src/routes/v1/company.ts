@@ -77,7 +77,9 @@ router.get('/:id', companiesController.show)
  *        "500":
  *          description: Server error
  */
-router.get('/:id/lots', [getLostInCropsByCompanyPolicy], companiesController.findLotsByCompany)
+router.get('/:id/lots',
+    // [getLostInCropsByCompanyPolicy],
+    companiesController.findLotsByCompany)
 
 /**
  * @swagger

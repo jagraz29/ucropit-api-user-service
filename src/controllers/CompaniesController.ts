@@ -249,7 +249,7 @@ class CompaniesController {
         }
 
         res.json({
-            pagination: pagination.calculate(count),
+            // pagination: pagination.calculate(count),
             results,
         })
     }
