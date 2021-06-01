@@ -47,6 +47,8 @@ router.get('/', companiesController.index)
  */
 router.get('/:id', companiesController.show)
 
+router.get('/:id/lots', companiesController.findLotsByCompany)
+
 /**
  * @swagger
  * path:
