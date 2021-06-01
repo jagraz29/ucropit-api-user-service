@@ -1,6 +1,11 @@
 import moment from 'moment'
 import { calculateCropVolumeUtils, Numbers } from '../'
-import { TypeActivitiesWithAchievements, TypeActivitiesWithOutAchievements, Achievement, TypeActivities } from '../../interfaces'
+import {
+  TypeActivitiesWithAchievements,
+  TypeActivitiesWithOutAchievements,
+  Achievement,
+  TypeActivities
+} from '../../interfaces'
 import { getAchievements } from '../achievements'
 
 export const getActivitiesOrderedByDateUtils = ({ activities }) => {
@@ -89,14 +94,16 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
 const getStorages = (storages): Object[] => {
   return storages.map(
     ({
-       tonsHarvest,
-       storageType: {
-         name: { es: storageTypeName }
-       }
-     }) => {
+      tonsHarvest,
+      label,
+      storageType: {
+        name: { es: storageTypeName }
+      }
+    }) => {
       return {
         tonsHarvest,
-        storageTypeName
+        storageTypeName,
+        label
       }
     }
   )
