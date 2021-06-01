@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Handlebars from 'handlebars'
 import pdfParse from 'pdf-parse'
 import Puppeteer from 'puppeteer'
-import { makeDirIfNotExists, readFileBuffer, saveFile, readFile, basePath } from '../utils'
+import { makeDirIfNotExists, readFileBuffer, saveFile, readFile } from '../utils'
 import { FileDocumentRepository } from '../repositories'
 import { setScriptPdf } from '../helpers'
 import { FileDocumentProps } from '../interfaces'
@@ -25,7 +25,7 @@ export class PDFService {
     const handlebarsWithScript = setScriptPdf(Handlebars)
     const template = handlebarsWithScript.compile(hbs)
     const html = template(context, 'utf-8')
-    saveFile(`public/uploads/${directory}/content.html`, html)
+    // saveFile(`public/uploads/${directory}/content.html`, html)
     // console.log(html);
 
     const browser = await Puppeteer.launch()
@@ -56,7 +56,7 @@ export class PDFService {
     }
 
     return this.findAndSavePdfExists(
-      directory,
+      pathFile,
       fullName,
       fileDocuments,
       cropId,
@@ -65,14 +65,13 @@ export class PDFService {
   }
 
   private static async findAndSavePdfExists (
-    directory: string,
+    pathFile: string,
     fullName: string,
     fileDocuments: FileDocumentProps[],
     cropId,
     pdfNewBuffer
   ) {
     const { text: textNewPdf } = await pdfParse(pdfNewBuffer)
-    const pathFile = `public/uploads/${directory}/${fullName}`
 
     const fileDocument = await Promise.all(fileDocuments.map(async (fileDocument) => {
       const oldPdfBuffer = readFileBuffer(fileDocument.path)
@@ -82,9 +81,9 @@ export class PDFService {
         return null
       }
     }))
-
-    if (fileDocument[0]) {
-      return fileDocument[0].nameFile
+    const fileDocumentWithOutNull = fileDocument.filter(item => item)
+    if (fileDocumentWithOutNull.length) {
+      return fileDocumentWithOutNull[0].nameFile
     }
 
     saveFile(pathFile, pdfNewBuffer)
