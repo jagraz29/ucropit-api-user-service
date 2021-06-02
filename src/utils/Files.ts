@@ -37,7 +37,7 @@ export function readFile (path: string) {
   }
   return null
 }
-export function readFileBytes (path: string) {
+export function readFileBuffer (path: string) {
   if (fileExist(path)) {
     return fs.readFileSync(`${basePath()}${path}`)
   }
