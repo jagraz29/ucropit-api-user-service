@@ -84,6 +84,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           signedIf: !achievements.length
             ? signers.filter(({ signed }) => signed).length
             : null,
+          signers,
           supplies,
           storages: storages ? getStorages(storages) : [],
           achievements: achievementsWithEiq,

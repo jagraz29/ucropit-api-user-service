@@ -27,6 +27,8 @@ export const setScriptPdf = (handlebars) => {
     const activities = list.split(',')
     if (activities.includes(value)) {
       return options.fn(this)
+    } else {
+      options.inverse(this)
     }
     return handlebars
   })

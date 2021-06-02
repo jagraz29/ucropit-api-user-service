@@ -196,26 +196,18 @@
                 {{!-- TODO: Aqui cierra acuerdos --}}
 
                 {{#each activities}}
-                    {{#isnt tag "ACT_AGREEMENTS" }}
-                    <div class="activity-header">
-                        {{#switch tag}}
-                        {{#case "ACT_SOWING"}}
-                        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/truck.png" width="26"
-                            height="26" />
-                        {{/case}}
-                        {{#case "ACT_MONITORING"}}
-                        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/eye.png" width="26"
-                            height="26" />
-                        {{/case}}
-                        {{#case "ACT_APPLICATION"}}
-                        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/flask.png" width="26"
-                            height="26" />
-                        {{/case}}
-                        {{#case "ACT_HARVEST"}}
-                        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/harvest.png"
-                            width="26" height="26" />
-                        {{/case}}
-                        {{/switch}}
+                    {{#ifCond tag 'ACT_MONITORING,ACT_HARVEST'}}
+                        <div class="activity-header">
+                            {{#switch tag}}
+                                {{#case "ACT_MONITORING"}}
+                                <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/eye.png" width="26"
+                                    height="26" />
+                                {{/case}}
+                                {{#case "ACT_HARVEST"}}
+                                <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/harvest.png"
+                                    width="26" height="26" />
+                                {{/case}}
+                            {{/switch}}
                         <div class="activity-title">{{name}}</div>
 
                         <div class="activity-frame">
@@ -271,87 +263,89 @@
                                 </div> --}}
                             </div>
                         </div>
-                    {{/isnt}}
+                    {{/ifCond}}
                 
 
-                {{!-- TODO: aqui cierra actividades --}}
-                {{#ifCond tag 'ACT_SOWING,ACT_APPLICATION,ACT_FERTILIZATION'}}
-                    <p>Tengo actividad de {{tag}}</p>
-                {{/ifCond}}
-                <div class="activities">
-                    <div class="activity-header">
-                        {{!-- <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/flask.png" width="26"
-                            height="26" /> --}}
-                        {{!-- <div class="activity-title">Aplicaciones</div> --}}
-                    
-                    {{#each activities}}
-                         {{#case "ACT_SOWING"}}
-                            <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/truck.png" width="26"
-                                  height="26" />
-                        {{/case}}
-                        {{#case "ACT_APPLICATION"}}
-                            <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/flask.png" width="26"
-                             height="26" />
-                         {{/case}}
-                         <div class="activity-title">{{name}}</div>
-                        {{#each achievements}}
-                            {{#if supplies }}
-                                {{#each supplies }}
-                                    <p class="applications">{{name}}</p>
-                                {{/each}}
-                            {{/if}}
-                            {{/each}}
-                        {{/each}}
+                    {{!-- TODO: aqui cierra actividades --}}
+                    {{#ifCond tag 'ACT_SOWING,ACT_APPLICATION,ACT_FERTILIZATION'}}
+                        <div class="activities">
+                            <div class="activity-header">
+                                {{!-- <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/flask.png" width="26"
+                                    height="26" /> --}}
+                                {{!-- <div class="activity-title">Aplicaciones</div> --}}
+                            
+                                {{#switch tag}}
+                                    {{#case "ACT_SOWING"}}
+                                        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/truck.png" width="26"
+                                            height="26" />
+                                    {{/case}}
+                                    {{#case "ACT_APPLICATION"}}
+                                        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/flask.png" width="26"
+                                        height="26" />
+                                    {{/case}}
+                                {{/switch}}
+                                <div class="activity-title">{{name}}</div>
 
-                    {{#each activities}}
-                    {{#each achievements}}
-                    {{#if supplies }}
-                    <div class="activity-frame-actividades-validaciones">
-                        <div class="activity-header-val">
-                                <div class="date-activity-validation">
-                                    <i class="fa fa-check"></i>{{moment ../dateAchievement format="DD/MM/YYYY"}}
-                                </div>
-                                {{#each (unique supplies)}}
-                                <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
+                                {{#each achievements}}
+                                    {{#if supplies }}
+                                        {{#each supplies }}
+                                            <p class="applications">{{name}}</p>
+                                        {{/each}}
+                                    {{/if}}
                                 {{/each}}
-                                <div class="activity-lots-validation">{{lotsQuantity}} lotes</div>
-                                <div class="spokesman-data-validation">Evidencias</div>
-                                <div class="backup-docs-validation">documentacion de respaldo</div>
-                                {{#each files}}
-                                <div><img
-                                        src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
-                                        height="25" width="25" />
-                                    <a href={{path}}>{{name}}</a>
-                                </div>
-                                {{/each}}
-                                <div class="activity-validations-val">
-                                    <div class="validation-title-val">Validaciones</div>
-                                    <div><span class="validation-date-val">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
-                                    <div class="validation-name-val">Santiago Casares</div>
-                                    <divclass="backup-docs-validation">Productor - 30-20771364-9
-                                </div>
-                            {{!-- <div class="activity-frame-lots-validation"> --}}
-                                {{!-- {{#if lots}}
-                                {{#each lots}}
-                                <div class="card">
-                                    <img src={{image.normal}} alt="crop" class="activity-lots-image">
-                                    <div class="container">
-                                        <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
-                                        <p class="type-pic-card">Dentro del lote</p>
+                                
+
+                            {{!-- {{#each activities}} --}}
+                            {{#each achievements}}
+                                {{#if supplies }}
+                                    <div class="activity-frame-actividades-validaciones">
+                                        <div class="activity-header-val">
+                                                <div class="date-activity-validation">
+                                                    <i class="fa fa-check"></i>{{moment ../dateAchievement format="DD/MM/YYYY"}}
+                                                </div>
+                                                {{#each (unique supplies)}}
+                                                    <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
+                                                {{/each}}
+                                                <div class="activity-lots-validation">{{lotsQuantity}} lotes</div>
+                                                <div class="spokesman-data-validation">Evidencias</div>
+                                                <div class="backup-docs-validation">documentacion de respaldo</div>
+                                                {{#each files}}
+                                                <div><img
+                                                        src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
+                                                        height="25" width="25" />
+                                                    <a href={{path}}>{{name}}</a>
+                                                </div>
+                                                {{/each}}
+                                                <div class="activity-validations-val">
+                                                    <div class="validation-title-val">Validaciones</div>
+                                                    <div><span class="validation-date-val">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
+                                                    <div class="validation-name-val">Santiago Casares</div>
+                                                    <divclass="backup-docs-validation">Productor - 30-20771364-9
+                                                </div>
+                                            {{!-- <div class="activity-frame-lots-validation"> --}}
+                                                {{!-- {{#if lots}}
+                                                {{#each lots}}
+                                                <div class="card">
+                                                    <img src={{image.normal}} alt="crop" class="activity-lots-image">
+                                                    <div class="container">
+                                                        <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
+                                                        <p class="type-pic-card">Dentro del lote</p>
+                                                    </div>
+                                                </div>
+                                                {{/each}}
+                                                {{/if}} --}}
+                                            <div style="page-break-after: always;"></div>
+                                                <p>
+                                            {{!-- </div> --}}
+                                        </div>
                                     </div>
-                                </div>
-                                {{/each}}
-                                {{/if}} --}}
-                            <div style="page-break-after: always;"></div>
-                                <p>
-                            {{!-- </div> --}}
+                                {{/if}}
+                            {{/each}}
+                            {{!-- {{/each}} --}}
                         </div>
-                    </div>
-                    {{/if}}
-                    {{/each}}
-                    {{/each}}
-                </div>
-                </div>
+                        </div>
+                    {{/ifCond}}
+                
                 {{/each}}
     {{!-- FIXME: aqui cierra actividades de validaciones --}}
     
