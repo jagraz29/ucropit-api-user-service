@@ -196,7 +196,7 @@
                 {{!-- TODO: Aqui cierra acuerdos --}}
 
                 {{#each activities}}
-                    {{#ifCond tag 'ACT_MONITORING,ACT_HARVEST'}}
+                    {{#if (or (is tag 'ACT_HARVEST') (is tag 'ACT_MONITORING'))}}
                         <div class="activity-header">
                             {{#switch tag}}
                                 {{#case "ACT_MONITORING"}}
@@ -247,33 +247,11 @@
                                             {{/each}}
                                         {{/if}}
                                     </div>
-                                {{!-- <div class="activity-frame-lots">
-                                    {{#if lots}}
-                                    {{#each lots}}
-
-                                    <div class="card">
-                                        <img src={{image.normal}} alt="crop" class="activity-lots-image">
-                                        <div class="container">
-                                            <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
-                                            <p class="type-pic-card">Dentro del lote</p>
-                                        </div>
-                                    </div>
-                                    {{/each}}
-                                    {{/if}}
-                                </div> --}}
                             </div>
                         </div>
-                    {{/ifCond}}
-                
-
-                    {{!-- TODO: aqui cierra actividades --}}
-                    {{#ifCond tag 'ACT_SOWING,ACT_APPLICATION,ACT_FERTILIZATION'}}
-                        <div class="activities">
+                    {{else}}
+                         <div class="activities">
                             <div class="activity-header">
-                                {{!-- <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/flask.png" width="26"
-                                    height="26" /> --}}
-                                {{!-- <div class="activity-title">Aplicaciones</div> --}}
-                            
                                 {{#switch tag}}
                                     {{#case "ACT_SOWING"}}
                                         <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/truck.png" width="26"
@@ -295,7 +273,7 @@
                                 {{/each}}
                                 
 
-                            {{!-- {{#each activities}} --}}
+                           
                             {{#each achievements}}
                                 {{#if supplies }}
                                     <div class="activity-frame-actividades-validaciones">
@@ -309,12 +287,13 @@
                                                 <div class="activity-lots-validation">{{lotsQuantity}} lotes</div>
                                                 <div class="spokesman-data-validation">Evidencias</div>
                                                 <div class="backup-docs-validation">documentacion de respaldo</div>
-                                                {{#each files}}
-                                                <div><img
-                                                        src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
-                                                        height="25" width="25" />
-                                                    <a href={{path}}>{{name}}</a>
-                                                </div>
+                                                {{#each evidencesPdf}}
+                                                    <div>
+                                                        <img
+                                                            src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
+                                                            height="25" width="25" />
+                                                        <a href={{path}}>{{description}}</a>
+                                                    </div>
                                                 {{/each}}
                                                 <div class="activity-validations-val">
                                                     <div class="validation-title-val">Validaciones</div>
@@ -322,29 +301,19 @@
                                                     <div class="validation-name-val">Santiago Casares</div>
                                                     <divclass="backup-docs-validation">Productor - 30-20771364-9
                                                 </div>
-                                            {{!-- <div class="activity-frame-lots-validation"> --}}
-                                                {{!-- {{#if lots}}
-                                                {{#each lots}}
-                                                <div class="card">
-                                                    <img src={{image.normal}} alt="crop" class="activity-lots-image">
-                                                    <div class="container">
-                                                        <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
-                                                        <p class="type-pic-card">Dentro del lote</p>
-                                                    </div>
-                                                </div>
-                                                {{/each}}
-                                                {{/if}} --}}
+                                           
                                             <div style="page-break-after: always;"></div>
                                                 <p>
-                                            {{!-- </div> --}}
+                                            
                                         </div>
                                     </div>
                                 {{/if}}
                             {{/each}}
-                            {{!-- {{/each}} --}}
+                          
+                            </div>
                         </div>
-                        </div>
-                    {{/ifCond}}
+                    {{/if}}
+                    {{!-- TODO: aqui cierra actividades --}}
                 
                 {{/each}}
     {{!-- FIXME: aqui cierra actividades de validaciones --}}
