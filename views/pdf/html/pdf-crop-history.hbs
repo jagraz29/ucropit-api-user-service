@@ -227,10 +227,14 @@
                                         </div>
                                     {{/each}}
                                     <div class="activity-validations">
-                                        <div class="validation-title">Validaciones</div>
-                                        <div><span class="validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
-                                        <div class="validation-name">Santiago Casares</div>
-                                        <divclass="backup-docs">Productor - 30-20771364-9
+                                        {{#each signers}}
+                                            <div>
+                                                <div class="validation-title">Validaciones</div>
+                                                <div><span class="validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
+                                                <div class="validation-name">{{fullName}}</div>
+                                                <div class="backup-docs">{{rol}}- {{cuit}}</div>
+                                            </div>
+                                        {{/each}}
                                     </div>
                                     <div class="activity-frame-lots"> 
                                         {{#if evidenceImages}}
@@ -288,18 +292,22 @@
                                                 <div class="spokesman-data-validation">Evidencias</div>
                                                 <div class="backup-docs-validation">documentacion de respaldo</div>
                                                 {{#each evidencesPdf}}
-                                                    <div>
-                                                        <img
-                                                            src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
-                                                            height="25" width="25" />
-                                                        <a href={{path}}>{{description}}</a>
-                                                    </div>
-                                                {{/each}}
+                                                        <div>
+                                                            <img
+                                                                src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
+                                                                height="25" width="25" />
+                                                            <a href={{path}}>{{description}}</a>
+                                                        </div>
+                                            {{/each}}
                                                 <div class="activity-validations-val">
-                                                    <div class="validation-title-val">Validaciones</div>
-                                                    <div><span class="validation-date-val">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
-                                                    <div class="validation-name-val">Santiago Casares</div>
-                                                    <divclass="backup-docs-validation">Productor - 30-20771364-9
+                                                    {{#each signers }}
+                                                        <div>
+                                                            <div class="validation-title-val">Validaciones</div>
+                                                            <div><span class="validation-date-val">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
+                                                            <div class="validation-name-val">{{fullName}}</div>
+                                                            <div class="backup-docs-validation">{{rol}} - {{cuit}} </div>
+                                                        </div>
+                                                    {{/each}}
                                                 </div>
                                            
                                             <div style="page-break-after: always;"></div>

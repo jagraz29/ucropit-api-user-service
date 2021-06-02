@@ -12,7 +12,7 @@ export const getSignerList = (signers: Signer[], members) => {
         dateSigned,
         signed,
         rol: roles[member.type] || '',
-        cuit: member.cuit
+        cuit: member.identifier
       }
     }
   )
