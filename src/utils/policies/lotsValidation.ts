@@ -10,8 +10,7 @@ export const getLotsPolicy = (
 ) => {
   const schema = Joi.object({
     identifier: Joi.number().required(),
-    dateCrop: Joi.date(),
-    dateHarvest: Joi.date()
+    dateCrop: Joi.date().required()
   })
 
   const { error } = schema.validate(req.query)

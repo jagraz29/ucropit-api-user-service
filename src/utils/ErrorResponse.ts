@@ -1,3 +1,4 @@
+import { Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 export type TError = {
@@ -8,10 +9,11 @@ export type TError = {
 }
 
 interface IErrorResponse {
-    parseStatusCode (statusCode: StatusCodes): number
-    // tslint:disable-next-line:unified-signatures
-    parseError (code: string, message: string, extend?: object): TError,
-    internalServer (error: Error): TError,
+    parseStatusCode(statusCode: StatusCodes): number
+
+    parseError(code: string, message: string, extend?: object): TError,
+
+    internalServer(error: Error, res?: Response): TError | Response,
 }
 
 class ErrorResponse implements IErrorResponse {
@@ -38,13 +40,16 @@ class ErrorResponse implements IErrorResponse {
         return /^2/.test(statusCode.toString()) ? 500 : statusCode
     }
 
-    internalServer (error: any): TError {
-        return {
+    internalServer (error: any, res: Response): TError | Response {
+        const payload = {
             code: ErrorResponse.ERROR_SERVER,
             message: ReasonPhrases.INTERNAL_SERVER_ERROR,
             description: error.toString()
         }
+        if (res) return res.status(this.parseStatusCode(res.statusCode)).json(payload)
+        return payload
     }
 }
+
 export const ErrorResponseInstance = new ErrorResponse()
 export default ErrorResponse

@@ -30,17 +30,6 @@ class LotService extends ServiceBase {
         return count
     }
 
-    public static parseLotWithTag(lotsList, lotsInCrops) {
-        const results = lotsList.map(lot => {
-            const lotWithTag = lotsInCrops.find(el => el.data.includes(lot.id.toString()))
-            return {
-                ...lot.toJSON(),
-                tag: lotWithTag ? lotWithTag.tag : ''
-            }
-        })
-        return results
-    }
-
     public static async store(req: Request, lotsNames) {
         const jsonParserKmz = await handleFileConvertJSON(req.files)
 
@@ -553,6 +542,26 @@ class LotService extends ServiceBase {
 
         Lot.updateOne({_id: lot._id}, {$set: dataToUpdate}).exec()
 
+    }
+
+    public static omitFieldsInLot (lot, fields) {
+        return _.omit(lot, fields)
+    }
+
+    public static async parseLotByTagInCropsWithDataPopulate (cropsList) {
+        const omitFields = ['area', 'coordinates', 'coordinateForGoogle', 'centerBound', 'centerBoundGoogle', '__v']
+        let results = []
+        for (let crop of cropsList) {
+            let lotList = await this.storeLotImagesAndCountriesWithPopulate(crop.toJSON().lots)
+            let lotsInData = _.flatten(_.map(lotList, 'data'))
+            results.push({
+                _id: lotList[0]._id,
+                tag: lotList[0].tag,
+                totalSurface: _.sumBy(lotsInData, 'surface'),
+                lots: lotsInData.map(lot => _.omit(lot, omitFields))
+            })
+        }
+        return results
     }
 }
 

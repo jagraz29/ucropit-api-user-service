@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import {flatten, map} from 'lodash'
+import { flatten, map, sumBy } from 'lodash'
 import {
   handleFileConvertJSON,
   mapArraySurfacesAndArea
@@ -7,10 +7,10 @@ import {
 import { validateFormatKmz } from '../utils/Validation'
 import models from '../models'
 import LotService from '../services/LotService'
-import moment from 'moment';
 import CropService from '../services/CropService'
-import {ErrorResponseInstance} from '../utils'
+import { ErrorResponseInstance } from '../utils'
 import ErrorResponse from '../utils/ErrorResponse'
+import { StatusCodes } from 'http-status-codes'
 
 const Lot = models.Lot
 
@@ -39,7 +39,7 @@ class LotsController {
    *
    * @return Response
    */
-  public async show(req: Request, res: Response) {
+  public async show (req: Request, res: Response) {
     const lot = await Lot.findById(req.params.id)
 
     res.status(200).json(lot)
@@ -53,7 +53,7 @@ class LotsController {
    *
    * @return Response
    */
-  public async create(req: Request, res: Response) {
+  public async create (req: Request, res: Response) {
     const { names, tag } = req.body
 
     const lots = await LotService.store(req, { names, tag })
@@ -67,7 +67,7 @@ class LotsController {
    * @param req
    * @param res
    */
-  public async update(req: Request, res: Response) {
+  public async update (req: Request, res: Response) {
     await Lot.findByIdAndUpdate(req.params.id, req.body)
     const lot = await Lot.findById(req.params.id)
 
@@ -82,7 +82,7 @@ class LotsController {
    *
    * @return Response
    */
-  public async surfaces(req: Request, res: Response) {
+  public async surfaces (req: Request, res: Response) {
     const validationKmz = await validateFormatKmz(req.files)
     if (validationKmz.error) {
       return res.status(400).json(validationKmz.code)
@@ -101,7 +101,7 @@ class LotsController {
    *
    * @return Response
    */
-  public async delete(req: Request, res: Response) {
+  public async delete (req: Request, res: Response) {
     const lot = await Lot.findByIdAndDelete(req.params.id)
 
     res.status(200).json({
@@ -119,40 +119,22 @@ class LotsController {
    */
   public async searchByIdentifier (req: Request, res: Response) {
 
-    const { identifier, dateCrop, dateHarvest } = req.query
+    const { identifier, dateCrop } = req.query
 
     let query = {
-      identifier
+      identifier,
+      dateHarvest: { $gt: new Date(dateCrop.toString()) },
+      // 'members.type': { $in: ['PRODUCER'] },
+      $where : function () { return (this.lots.length > 0) }
     }
 
-    // @ts-ignore
-    if (dateCrop && moment.invalid(dateCrop)) {
-      // @ts-ignore
-      query['dateCrop'] = { $gte: new Date(dateCrop) }
-    }
-
-    // @ts-ignore
-    if (dateHarvest && moment.invalid(dateHarvest)) {
-      // @ts-ignore
-      query['dateCrop'] = { $lte: new Date(dateHarvest) }
-    }
-
-    const cropsList = await CropService.findCropsWithLotsSample(query)
+    let cropsList = await CropService.findCropsWithLotsPopulateData(query)
 
     if (cropsList.length === 0) {
-      return res.status(ErrorResponseInstance.parseStatusCode(404)).json(ErrorResponseInstance.parseError(ErrorResponse.DATA_NOT_FOUND, 'No tiene cultivos asociados'))
+      return res.status(StatusCodes.NOT_FOUND).json(ErrorResponseInstance.parseError(ErrorResponse.DATA_NOT_FOUND, 'No tiene cultivos asociados'))
     }
 
-    const lotsInCrops = flatten(map(cropsList, 'lots'))
-    const lotsInCropsIds = flatten(map(lotsInCrops, 'data'))
-    // @ts-ignore
-    query = {}
-    query['_id'] = { $in: lotsInCropsIds }
-
-    let results = []
-    const lotsList: any[] = await LotService.search(query)
-
-    if (lotsList.length > 0) results = LotService.parseLotWithTag(lotsList, lotsInCrops)
+    let results = await LotService.parseLotByTagInCropsWithDataPopulate(cropsList)
 
     res.json({
       results

@@ -814,14 +814,12 @@ class CropService extends ServiceBase {
     )
   }
 
-  /**
-   * @function findCropsWithLotsSample
-   * @param query
-   */
-  public static async findCropsWithLotsSample (query) {
-    const crops = await Crop.find(query)
+  public static async findCropsWithLotsPopulateData (query) {
+    const crops = await Crop.find(query).populate('lots.data')
     return crops
   }
+
+
 
   private static isServiceAdded(crop: any, service: string) {
     return (
