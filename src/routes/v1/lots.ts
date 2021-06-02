@@ -8,8 +8,6 @@ import {
 
 const router: express.Router = express.Router()
 
-
-router.get('/search-by-identifier', [getLotsPolicy], lotsController.searchByIdentifier)
 /**
  * @swagger
  * /v1/lots:
@@ -26,6 +24,29 @@ router.get('/search-by-identifier', [getLotsPolicy], lotsController.searchByIden
  */
 router.get('/', lotsController.index)
 
+/**
+ * @swagger
+ * path:
+ *  /v1/lots/search-by-identifier:
+ *    get:
+ *      summary: Get all lots grouped by tag
+ *      tags: [Lots]
+ *      parameters:
+ *        - in: query
+ *          name: identifier
+ *        - in: query
+ *          name: dateCrop
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          produces:
+ *            - application/json
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.get('/search-by-identifier', [getLotsPolicy], lotsController.searchByIdentifier)
 /**
  * @swagger
  * path:
