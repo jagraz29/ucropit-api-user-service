@@ -136,8 +136,8 @@ export class CropRepository {
           { path: 'unitType' },
           { path: 'type' },
           { path: 'typeAgreement' },
-          { path: 'lots', select: '-area -__v' },
           { path: 'files' },
+          { path: 'lots', select: '-area -__v' },
           {
             path: 'supplies',
             populate: [{ path: 'typeId' }]
@@ -291,7 +291,10 @@ export class CropRepository {
    *
    * @returns
    */
-  public static async updateOneCrop(query: any, dataToUpdate: any): Promise<any> {
+  public static async updateOneCrop(
+    query: any,
+    dataToUpdate: any
+  ): Promise<any> {
     return Crop.updateOne(query, dataToUpdate)
   }
 
