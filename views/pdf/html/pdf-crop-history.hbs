@@ -230,7 +230,11 @@
                                         {{#each signers}}
                                             <div>
                                                 <div class="validation-title">Validaciones</div>
-                                                <div><span class="validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
+                                                {{#if dateSigned }}
+                                                    <div><span class="validation-date">{{moment dateSigned format="DD/MM/YYYY"}}</span></div>
+                                                {{else}}
+                                                    <div><span class="not-signed-validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
+                                                {{/if}}
                                                 <div class="validation-name">{{fullName}}</div>
                                                 <div class="backup-docs">{{rol}}- {{cuit}}</div>
                                             </div>
@@ -303,7 +307,11 @@
                                                     {{#each signers }}
                                                         <div>
                                                             <div class="validation-title-val">Validaciones</div>
-                                                            <div><span class="validation-date-val">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
+                                                            {{#if dateSigned }}
+                                                                <div><span class="validation-date">{{moment dateSigned format="DD/MM/YYYY"}}</span></div>
+                                                            {{else}}
+                                                                <div><span class="not-signed-validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
+                                                            {{/if}}
                                                             <div class="validation-name-val">{{fullName}}</div>
                                                             <div class="backup-docs-validation">{{rol}} - {{cuit}} </div>
                                                         </div>

@@ -449,7 +449,6 @@
   height: 20%;
 }
 
-
 .date-activity {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 10px;
@@ -559,6 +558,12 @@
   color: #43a047;
 }
 
+.not-signed-validation-date {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #ffccbc;
+  color: #f4511e;
+}
+
 .validation-date-val {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: #c8e6c9;
@@ -584,7 +589,6 @@
   letter-spacing: 0.25px;
   text-align: left;
 }
-
 
 .validation-title {
   page-break-inside: avoid !important;
@@ -654,7 +658,7 @@
   margin-left: 20px;
   margin-bottom: 15px;
   margin-top: 5px;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .activity-lots-img {
@@ -666,7 +670,7 @@
   flex-wrap: wrap-reverse;
   padding-top: 60px;
   position: static;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .activity-frame-lots-validation {
@@ -680,7 +684,7 @@
   margin-left: auto;
   padding-right: 20px;
   padding-left: 20px;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .activity-frame-lots-under {
@@ -688,7 +692,7 @@
   flex-wrap: wrap-reverse;
   padding-top: 20px;
   position: static;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .eiq-lots {
