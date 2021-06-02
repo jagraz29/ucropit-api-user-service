@@ -1,5 +1,4 @@
 import {Request, Response} from 'express'
-import {flatten, map} from 'lodash'
 import models from '../models'
 
 import {
@@ -10,12 +9,6 @@ import {
 import {getPathFileByType, getFullPath} from '../utils/Files'
 
 import CompanyService from '../services/CompanyService'
-import {ErrorResponseInstance} from '../utils'
-import ErrorResponse from '../utils/ErrorResponse'
-import CropService from '../services/CropService'
-import LotService from '../services/LotService'
-import Pagination from '../utils/Pagination'
-import moment from 'moment'
 
 const Company = models.Company
 const FileDocument = models.FileDocument
@@ -193,64 +186,6 @@ class CompaniesController {
 
         res.status(200).json({
             message: 'deleted file successfully'
-        })
-    }
-
-    public async findLotsByCompany (req: Request, res: Response) {
-        let count = 0
-
-        const { id } = req.params
-        const { page = 1, limit = 20, dateCrop, dateHarvest } = req.query
-
-        const pagination = new Pagination(parseInt(page.toString(), 10), parseInt(limit.toString(), 10))
-
-        const companyInstance = await CompanyService.findById(id)
-        if (!companyInstance) return res.status(ErrorResponseInstance.parseStatusCode(404)).json(ErrorResponseInstance.parseError(ErrorResponse.DATA_NOT_FOUND, 'La Empresa no existe'))
-
-        // @ts-ignore
-        const companiesInUser = req.user.companies.map(element => element.company.toString())
-
-        if(!companiesInUser.includes(companyInstance.id)) return res.status(ErrorResponseInstance.parseStatusCode(404)).json(ErrorResponseInstance.parseError(ErrorResponse.DATA_NOT_FOUND, 'Esta Empresa no le pertenece'))
-
-        let query = {
-            identifier: companyInstance.identifier
-        }
-
-        // @ts-ignore
-        if (dateCrop && moment.invalid(dateCrop)) {
-            // @ts-ignore
-            query['dateCrop'] = { $gte: new Date(dateCrop) }
-        }
-
-        // @ts-ignore
-        if (dateHarvest && moment.invalid(dateHarvest)) {
-            // @ts-ignore
-            query['dateCrop'] = { $lte: new Date(dateHarvest) }
-        }
-
-        const cropsList = await CropService.findCropsWithLotsSample(query)
-
-        if (cropsList.length === 0) {
-            return res.status(ErrorResponseInstance.parseStatusCode(404)).json(ErrorResponseInstance.parseError(ErrorResponse.DATA_NOT_FOUND, 'No tiene cultivos asociados'))
-        }
-
-        const lotsInCrops = flatten(map(cropsList, 'lots'))
-        const lotsInCropsIds = flatten(map(lotsInCrops, 'data'))
-        // @ts-ignore
-        query = {}
-        query['_id'] = { $in: lotsInCropsIds }
-
-        let results = []
-        const lotsList: any[] = await LotService.search(query, pagination.limit, pagination.skip)
-
-        if (lotsList.length > 0) {
-            count = await LotService.count(query)
-            results = LotService.parseLotWithTag(lotsList, lotsInCrops)
-        }
-
-        res.json({
-            // pagination: pagination.calculate(count),
-            results,
         })
     }
 }

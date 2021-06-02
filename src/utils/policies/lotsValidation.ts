@@ -3,14 +3,15 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import * as Joi from 'joi'
 import ErrorResponse, { ErrorResponseInstance } from '../ErrorResponse'
 
-export const getLostInCropsByCompanyPolicy = (
+export const getLotsPolicy = (
   req: Request | any,
   res: Response,
   next: NextFunction
 ) => {
   const schema = Joi.object({
-    page: Joi.number().min(1),
-    limit: Joi.number().min(20).max(500)
+    identifier: Joi.number().required(),
+    dateCrop: Joi.date(),
+    dateHarvest: Joi.date()
   })
 
   const { error } = schema.validate(req.query)

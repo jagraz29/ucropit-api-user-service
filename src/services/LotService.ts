@@ -20,8 +20,7 @@ interface ILot {
 
 class LotService extends ServiceBase {
 
-    public static async search (query, limit, skip, sort?) {
-        // const lots = await Lot.find(query).limit(limit).skip(skip).sort(sort || {})
+    public static async search (query) {
         const lots = await Lot.find(query)
         return lots
     }
