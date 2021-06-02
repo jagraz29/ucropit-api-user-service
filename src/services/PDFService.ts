@@ -42,8 +42,8 @@ export class PDFService {
         left: '20px',
         top: '20px',
         right: '20px',
-        bottom: '20px',
-      },
+        bottom: '20px'
+      }
     })
 
     if (!fileDocuments) {
@@ -52,7 +52,7 @@ export class PDFService {
         nameFile: fullName,
         path: pathFile,
         date: new Date(),
-        cropId,
+        cropId
       })
       return fullName
     }
@@ -86,7 +86,7 @@ export class PDFService {
       nameFile: fullName,
       path: `${pathFile}${fullName}`,
       date: new Date(),
-      cropId,
+      cropId
     })
     return fullName
   }

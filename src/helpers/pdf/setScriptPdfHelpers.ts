@@ -1,8 +1,7 @@
 import MomentHandlebars from 'helper-moment'
 import helpers from 'handlebars-helpers'
 
-export const setScriptPdf = handlebars => {
-
+export const setScriptPdf = (handlebars) => {
   handlebars.registerHelper('moment', MomentHandlebars)
   handlebars.registerHelper(helpers.string())
   handlebars.registerHelper(helpers.comparison())
@@ -22,6 +21,14 @@ export const setScriptPdf = handlebars => {
     if (this.switch_break === false) {
       return options.fn(this)
     }
+  })
+
+  handlebars.registerHelper('ifCond', function (value, list, options) {
+    const activities = list.split(',')
+    if (activities.includes(value)) {
+      return options.fn(this)
+    }
+    return handlebars
   })
 
   return handlebars

@@ -2,7 +2,8 @@ import { Numbers } from '../Numbers'
 import { calculateCropVolumeUtils } from './calculateCropVolumeUtils'
 import { getLots } from '../lots'
 
-export const calculateDataCropUtils = ({
+export const calculateDataCropUtils = (
+  {
     surface,
     pay: payEntry,
     dateCrop,
@@ -13,7 +14,9 @@ export const calculateDataCropUtils = ({
     badges,
     unitType,
     cropType: { key: cropTypeKey }
-  }, activitiesWithEiq): Object => {
+  },
+  activitiesWithEiq
+): Object => {
   const pay = payEntry ?? 0
   let eiq: number = 0
   const { key: keyUnitType, name: nameUnitType } = unitType || {}
@@ -31,7 +34,8 @@ export const calculateDataCropUtils = ({
     eiq: Numbers.roundToTwo(eiq),
     cropTypeKey,
     company,
+    activities,
     lotsQuantity: lots.length ? lots[0].data.length : 0,
-    lots: lots.length ? getLots(lots[0].data,activitiesWithEiq) : []
+    lots: lots.length ? getLots(lots[0].data, activitiesWithEiq) : []
   }
 }
