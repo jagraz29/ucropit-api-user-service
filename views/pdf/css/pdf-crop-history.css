@@ -124,28 +124,25 @@
   color: #000000;
 }
 
-.lots-top {
+.badges {
   position: absolute;
   display: flex;
-  margin-top: 5em;
-  flex-direction: column;
-  margin-left: 60%;
-  align-items: flex-end;
+  flex-direction: column-reverse;
+  margin-left: 57%;
+  margin-right: 50px;
 }
 
-.lot-description {
+.badges-description {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   color: #fff;
-  font-size: 12px;
-  text-align: right;
-  padding-right: 80px;
-  margin-bottom: -35px;
+  font-size: 20px;
+  margin-bottom: -50;
+  margin-left: 4em;
 }
 
-.lot-image {
-  width: 59px;
-  border-radius: 2px;
-  box-shadow: 9px -9px 0.9px #c8e6c9;
+.badges-image {
+  width: 60px;
+  padding-bottom: 20px;
 }
 
 /* TODO: no borrar estos estilos */

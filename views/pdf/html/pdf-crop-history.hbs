@@ -105,15 +105,18 @@
                                 </div>
                                 {{/if}}
                                 {{/each}}
-            {{!-- TODO: aqui comienzan las imagenes de lotes para reemplazarlas por las etiquetas --}}
-                            {{!-- <div class="lots-top">
-                                {{#each dataCrop.lots}}
-                                <p class="lot-description">{{provinceName}}<br />{{cityName}}<br />{{countryName}}</p>
-                                <img src={{image}} class="lot-image" />
+
+                            {{!-- TODO: Insignias --}}
+                            <div class="badges">
+                                {{#each dataCrop.badges}}
+                                <img src={{badge.imagePath}} class="badges-image" />
+                                <p class="badges-description">{{badge.name.es}} {{surfaceTotal}}</p>
                                 {{/each}}
-                            </div> --}}
+                            </div>
+
                     </div>
             {{!-- TODO: aqui cierra el fill --}}
+
                 <div class="crop-leaders">
                     <div class="spokesman">
                         <h5 class="spokesman-title">
@@ -135,7 +138,6 @@
                 </div>
                 {{!-- TODO: aqui cierra la seccion de datos --}}
 
-                {{!-- FIXME: Revisar porque no esta trayendo la data de acuerdo (dicha data es existente?) --}}
                     {{!-- <div class="activities">
                         <div class="activity-header">
                             <img class="activity-type-img" src="https://static.thenounproject.com/png/420338-200.png" width="26"
@@ -257,7 +259,6 @@
                 {{/each}}
                 {{!-- TODO: aqui cierra actividades --}}
 
-                {{!-- FIXME: aqui comienzan actividades de validaciones --}}
                 <div class="activities">
                     <div class="activity-header">
                         <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/flask.png" width="26"
@@ -323,8 +324,8 @@
                     {{/each}}
                 </div>
             </div>
-         
-                    {{!-- TODO: aqui comienza lotes final --}}
+    {{!-- FIXME: aqui cierra actividades de validaciones --}}
+    
                             <div class="activity-header">
                                 <img class="activity-type-img" src="https://www.pngrepo.com/png/111305/180/tryptic-brochure.png" width="26"
                                     height="26" />
@@ -354,8 +355,7 @@
                                         </div>
                                     </div>
                                 </div>
-                    <div style="page-break-inside: always;"> </div>
-                        <p>
+                {{!-- TODO: aqui cierra lotes final --}}
 
       </div>
     </body>
