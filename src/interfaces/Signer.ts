@@ -6,4 +6,6 @@ export interface Signer {
   type: string
   signed?: boolean
   dateSigned?: Date
+  rol?: string
+  cuit?: string
 }

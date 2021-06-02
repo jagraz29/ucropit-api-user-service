@@ -3,7 +3,8 @@ import {
   calculateCropVolumeUtils,
   Numbers,
   getEvidencePdf,
-  getEvidenceImage
+  getEvidenceImage,
+  getSignerList
 } from '../'
 import {
   TypeActivitiesWithAchievements,
@@ -13,7 +14,7 @@ import {
 } from '../../interfaces'
 import { getAchievements } from '../achievements'
 
-export const getActivitiesOrderedByDateUtils = ({ activities }) => {
+export const getActivitiesOrderedByDateUtils = ({ activities, members }) => {
   const activitiesRes = activities
     .map(
       ({
@@ -45,7 +46,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           return null
         }
 
-        achievementsWithEiq = getAchievements(achievements)
+        achievementsWithEiq = getAchievements(achievements, members)
         eiq = achievementsWithEiq.length
           ? achievementsWithEiq.reduce((a, b) => a + b.eiq, 0)
           : 0
@@ -84,7 +85,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           signedIf: !achievements.length
             ? signers.filter(({ signed }) => signed).length
             : null,
-          signers,
+          signers: getSignerList(signers, members),
           supplies,
           storages: storages ? getStorages(storages) : [],
           achievements: achievementsWithEiq,
