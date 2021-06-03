@@ -67,11 +67,11 @@
                                         {{company}}
                                     </div>
                                 </div>
-                                <div class="eiq">
+                                {{!-- <div class="eiq">
                                     <div class="center">
                                         EIQ: {{dataCrop.eiq}}
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="dataContainer">
                                     <div class="dataNames">Sup Neta</div>
                                     <div class="dataValue">{{dataCrop.surface}} has</div>
@@ -136,14 +136,14 @@
                             <div class="row">
                                 <div class="column">
                                     <div class="date-activity">
-                                        <i class="fa fa-check"></i>{{moment dateOrder format="DD/MM/YYYY"}}
+                                        <i class="fa fa-calendar"></i>{{moment dateOrder format="DD/MM/YYYY"}}
                                     </div>
                                     <h3 class="activity-framed-h1">{{typeAgreement.name.es}}</h3>
                                     <div class="activity-lots">{{lotsQuantity}} lotes</div>
                                     <div class="spokesman-data">Evidencias</div>
                                     <div class="backup-docs">documentacion de respaldo</div>
                                     {{#each files}}
-                                    <div><img
+                                    <div class="link-pdf" ><img
                                             src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
                                             height="25" width="25" />
                                         <a href={{path}}>{{name}}</a>
@@ -198,7 +198,7 @@
 
                         <div class="activity-frame">
                                     <div class="date-activity">
-                                        <i class="fa fa-check"></i>{{moment dateOrder format="DD/MM/YYYY"}}
+                                        <i class="fa fa-calendar"></i> {{ moment dateCrop format="MM-YYYY" }} - {{ moment dateHarvest format="MM-YYYY" }}
                                     </div>
                                     {{#is tag 'ACT_HARVEST'}}
                                         <h3 class="activity-framed-h1">Rinde: {{pay}} {{unitType}}.</h3>
@@ -212,7 +212,7 @@
                                     <div class="spokesman-data">Evidencias</div>
                                     <div class="backup-docs">documentacion de respaldo</div>
                                     {{#each evidencesPdf}}
-                                        <div>
+                                        <div class="link-pdf">
                                             <img
                                                 src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
                                                 height="25" width="25" />
@@ -280,7 +280,7 @@
                                     <div class="activity-frame-actividades-validaciones">
                                         <div class="activity-header-val">
                                                 <div class="date-activity-validation">
-                                                    <i class="fa fa-check"></i>{{moment ../dateAchievement format="DD/MM/YYYY"}}
+                                                    <i class="fa fa-calendar"></i> {{ moment dateCrop format="MM-YYYY" }} - {{ moment dateHarvest format="MM-YYYY" }}
                                                 </div>
                                                 {{#each (unique supplies)}}
                                                     <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
@@ -289,14 +289,14 @@
                                                 <div class="spokesman-data-validation">Evidencias</div>
                                                 <div class="backup-docs-validation">documentacion de respaldo</div>
                                                 {{#each evidencesPdf}}
-                                                        <div>
+                                                        <div class="link-pdf-val">
                                                             <img
                                                                 src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
                                                                 height="25" width="25" />
                                                             <a href={{path}}>{{description}}</a>
                                                         </div>
                                             {{/each}}
-                                                <div class="activity-validations-val">
+                                                <div class="activity-validations">
                                                     {{#each signers }}
                                                         <div>
                                                             <div class="validation-title-val">Validaciones</div>
@@ -310,9 +310,6 @@
                                                         </div>
                                                     {{/each}}
                                                 </div>
-                                           
-                                            <div style="page-break-after: always;"></div>
-                                                <p>
                                             
                                         </div>
                                     </div>
@@ -345,11 +342,11 @@
                                             <div class="container">
                                                 <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
                                                 <p class="type-pic-card">Dentro del lote</p>
-                                                <div class="eiq-lots">
+                                                {{!-- <div class="eiq-lots">
                                                     <div class="center">
                                                         EIQ: {{eiq}}
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                         {{/each}}
