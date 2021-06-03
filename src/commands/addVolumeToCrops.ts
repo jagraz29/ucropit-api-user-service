@@ -5,7 +5,7 @@ import chalk from 'chalk'
 import { CropRepository } from '../repositories'
 import { calculateCropVolumeUtils } from '../utils'
 
-const Crop = models.Crop
+const { Crop } = models
 
 const start = async () => {
   let crops = await Crop.find().populate('unitType')
