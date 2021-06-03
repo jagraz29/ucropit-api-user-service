@@ -15,21 +15,23 @@ import {
   calculateDataCropUtils,
   calculateTheoreticalPotentialUtils,
   calculateCropVolumeUtils,
-  getCropBadgesByUserType
+  getCropBadgesByUserType,
 } from '../utils'
 
 import {
   validateCropStore,
   validateFormatKmz,
-  validateNotEqualNameLot
+  validateNotEqualNameLot,
 } from '../utils/Validation'
 
 import { UserSchema } from '../models/user'
 import { errors } from '../types/common'
 import path from 'path'
 import moment from 'moment'
+import { UnitTypeSchema } from './../models/unitType'
 
 const Crop = models.Crop
+const UnitType = models.UnitType
 
 class CropsController {
   /**
@@ -45,46 +47,46 @@ class CropsController {
     let query: any = {
       $and: [
         {
-          cancelled: false
+          cancelled: false,
         },
         {
-          'members.user': req.user._id
+          'members.user': req.user._id,
         },
         {
-          'members.identifier': req.query.identifier
-        }
-      ]
+          'members.identifier': req.query.identifier,
+        },
+      ],
     }
 
     if (req.query.cropTypes) {
       query['$and'].push({
         cropType: {
-          $in: req.query.cropTypes
-        }
+          $in: req.query.cropTypes,
+        },
       })
     }
 
     if (req.query.companies) {
       query['$and'].push({
         company: {
-          $in: req.query.companies
-        }
+          $in: req.query.companies,
+        },
       })
     }
 
     if (req.query.collaborators) {
       query['$and'].push({
         'members.user': {
-          $in: req.query.collaborators
-        }
+          $in: req.query.collaborators,
+        },
       })
     }
 
     if (req.query.cropVolume) {
       query['$and'].push({
-        pay: {
-          $gte: req.query.cropVolume
-        }
+        volume: {
+          $gte: req.query.cropVolume,
+        },
       })
     }
 
@@ -129,9 +131,9 @@ class CropsController {
       lots,
       company: {
         ...crop.company,
-        theoriticalPotential
+        theoriticalPotential,
       },
-      badges
+      badges,
     }
 
     res.status(200).json(newCrop)
@@ -168,7 +170,7 @@ class CropsController {
    */
   public async generatePdfHistoryCrop(req: Request, res: Response) {
     const {
-      params: { id }
+      params: { id },
     } = req
     const crop = await CropRepository.getCropWithActivities(id)
 
@@ -188,7 +190,7 @@ class CropsController {
       dataCrop,
       theoriticalPotential,
       activities,
-      dateCreatePdf: moment().format('DD/MM/YYYY')
+      dateCreatePdf: moment().format('DD/MM/YYYY'),
     }
     const nameFile = await PDFService.generatePdf(
       'pdf-crop-history',
@@ -238,13 +240,26 @@ class CropsController {
       return res.status(400).json({
         error: true,
         code: validationKmz.code,
-        message: validationKmz.message
+        message: validationKmz.message,
       })
     }
 
     if (validationDuplicateName.error) {
       return res.status(400).json(validationDuplicateName.code)
     }
+
+    let volume: number = 0
+
+    try {
+      const unitType = await UnitType.findOne({ _id: data.unitType })
+
+      volume = calculateCropVolumeUtils(unitType?.key, data.pay, data.surface)
+    } catch (error) {
+      console.log('Error calculating volume to crop')
+      console.log(error)
+    }
+
+    data.volume = volume
 
     company = (await CompanyService.search({ identifier: data.identifier }))[0]
 
@@ -356,12 +371,12 @@ class CropsController {
     if (!isCancelled) {
       return res.status(400).json({
         error: true,
-        message: 'deleted not allowd'
+        message: 'deleted not allowd',
       })
     }
 
     res.status(200).json({
-      message: 'deleted successfuly'
+      message: 'deleted successfuly',
     })
   }
 

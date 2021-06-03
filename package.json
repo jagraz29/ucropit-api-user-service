@@ -14,6 +14,7 @@
     "sign:activity": "node dist/src/commands/sign.js",
     "insert:members": "node dist/src/commands/members.js",
     "add:badges": "node dist/src/commands/addBadgesToCrops.js",
+    "add:volume": "node dist/src/commands/addVolumeToCrops.js",
     "add:harvest:date": "node dist/src/commands/monitoringHarvestDate.js",
     "delete:signer:ghost": "node dist/src/commands/deleteGhostSigner.js",
     "add:active-ingredients:supply": "node dist/src/commands/activeIngredientsSupplies.js",
