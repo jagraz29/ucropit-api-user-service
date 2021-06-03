@@ -41,7 +41,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async index(req: Request | any, res: Response) {
+  public async index (req: Request | any, res: Response) {
     let query: any = {
       $and: [
         {
@@ -57,7 +57,7 @@ class CropsController {
     }
 
     if (req.query.cropTypes) {
-      query['$and'].push({
+      query[ '$and' ].push({
         cropType: {
           $in: req.query.cropTypes
         }
@@ -65,7 +65,7 @@ class CropsController {
     }
 
     if (req.query.companies) {
-      query['$and'].push({
+      query[ '$and' ].push({
         company: {
           $in: req.query.companies
         }
@@ -73,7 +73,7 @@ class CropsController {
     }
 
     if (req.query.collaborators) {
-      query['$and'].push({
+      query[ '$and' ].push({
         'members.user': {
           $in: req.query.collaborators
         }
@@ -81,7 +81,7 @@ class CropsController {
     }
 
     if (req.query.cropVolume) {
-      query['$and'].push({
+      query[ '$and' ].push({
         pay: {
           $gte: req.query.cropVolume
         }
@@ -89,15 +89,15 @@ class CropsController {
     }
 
     const crops = await Crop.find(query)
-      .populate('company')
-      .populate('cropType')
-      .populate('unitType')
-      .populate('pending')
-      .populate('toMake')
-      .populate('done')
-      .populate('members.user')
-      .populate('finished')
-      .lean()
+    .populate('company')
+    .populate('cropType')
+    .populate('unitType')
+    .populate('pending')
+    .populate('toMake')
+    .populate('done')
+    .populate('members.user')
+    .populate('finished')
+    .lean()
 
     res.status(200).json(crops)
   }
@@ -110,7 +110,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async show(req: Request, res: Response) {
+  public async show (req: Request, res: Response) {
     const { id } = req.params
     const crop = await CropService.getCrop(id)
     const lots = await LotService.storeLotImagesAndCountries(crop.lots)
@@ -145,7 +145,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async getCropWithActivities(req: Request, res: Response) {
+  public async getCropWithActivities (req: Request, res: Response) {
     const { id } = req.params
     const crop = await CropRepository.getCropWithActivities(id)
 
@@ -166,7 +166,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async generatePdfHistoryCrop(req: Request, res: Response) {
+  public async generatePdfHistoryCrop (req: Request, res: Response) {
     const {
       params: { id }
     } = req
@@ -209,11 +209,11 @@ class CropsController {
    * @return Response
    * @param res
    */
-  public async pdfHistoryCrop(
+  public async pdfHistoryCrop (
     { params: { nameFile } }: Request,
     res: Response
   ) {
-    const dirPdf = `${process.env.BASE_URL}/${process.env.DIR_UPLOADS}/${process.env.DIR_PDF_CROP_HISTORY}/${nameFile}`
+    const dirPdf = `${ process.env.BASE_URL }/${ process.env.DIR_UPLOADS }/${ process.env.DIR_PDF_CROP_HISTORY }/${ nameFile }`
     return res.status(StatusCodes.OK).json(dirPdf)
   }
 
@@ -225,28 +225,51 @@ class CropsController {
    *
    * @return Response
    */
-  public async create(req: Request | any, res: Response) {
+  public async create (req: Request | any, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     await validateCropStore(data)
-    const validationKmz = await validateFormatKmz(req.files)
-    const validationDuplicateName = validateNotEqualNameLot(data.lots)
+    // const validationKmz = await validateFormatKmz(req.files)
+    // const validationDuplicateName = validateNotEqualNameLot(data.lots)
 
     let company = null
 
-    if (validationKmz.error) {
+    console.log(data.lots)
+    // if (validationKmz.error) {
+    //   return res.status(400).json({
+    //     error: true,
+    //     code: validationKmz.code,
+    //     message: validationKmz.message
+    //   })
+    // }
+    //
+    // if (validationDuplicateName.error) {
+    //   return res.status(400).json(validationDuplicateName.code)
+    // }
+
+    return res.status(400).json({ error: true })
+
+    const { identifier, dateCrop } = data
+
+    const query = {
+      identifier,
+      dateHarvest: { $gt: new Date(dateCrop.toString()) },
+      // 'members.type': { $in: ['PRODUCER'] },
+      $where: function () {
+        return (this.lots.length > 0)
+      }
+    }
+
+    const cropsList = await CropRepository.findCropsSample(query)
+
+    if (cropsList.length) {
       return res.status(400).json({
         error: true,
-        code: validationKmz.code,
-        message: validationKmz.message
+        message: 'La fecha del Cultivo no esta disponible',
+        code: 'INVALID_DATE_CROP'
       })
     }
-
-    if (validationDuplicateName.error) {
-      return res.status(400).json(validationDuplicateName.code)
-    }
-
-    company = (await CompanyService.search({ identifier: data.identifier }))[0]
+    company = (await CompanyService.search({ identifier: data.identifier }))[ 0 ]
 
     const lots = await LotService.store(req, data.lots)
 
@@ -255,6 +278,8 @@ class CropsController {
       data.dateCrop,
       user
     )
+
+    console.log(lots)
 
     const crop = await CropService.handleDataCrop(
       data,
@@ -275,7 +300,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async showLastMonitoring(req: Request, res: Response) {
+  public async showLastMonitoring (req: Request, res: Response) {
     const monitoring = await CropService.getLastMonitoring(req.params.id)
 
     res.status(200).json(monitoring)
@@ -289,12 +314,12 @@ class CropsController {
    *
    * @return Response
    */
-  public async update(req: Request, res: Response) {
+  public async update (req: Request, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     let company = null
 
-    company = (await CompanyService.search({ identifier: data.identifier }))[0]
+    company = (await CompanyService.search({ identifier: data.identifier }))[ 0 ]
 
     const crop = await Crop.findById(req.params.id)
 
@@ -313,7 +338,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async enableOffline(req: Request, res: Response) {
+  public async enableOffline (req: Request, res: Response) {
     const crop = await Crop.findById(req.params.id)
 
     crop.downloaded = req.body.downloaded
@@ -331,7 +356,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async addIntegrationService(req: Request, res: Response) {
+  public async addIntegrationService (req: Request, res: Response) {
     const crop = await Crop.findById(req.params.id)
     const data = req.body
 
@@ -350,7 +375,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async delete(req: Request, res: Response) {
+  public async delete (req: Request, res: Response) {
     const isCancelled = await CropService.cancelled(req.params.id)
 
     if (!isCancelled) {
@@ -373,7 +398,7 @@ class CropsController {
    *
    * @returns
    */
-  public async evidences(req: Request, res: Response) {
+  public async evidences (req: Request, res: Response) {
     const { id } = req.params
     const evidences: Evidence[] = await CropRepository.findAllEvidencesByCropId(
       id
