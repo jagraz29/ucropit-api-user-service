@@ -1,6 +1,6 @@
 import { Numbers } from '../Numbers'
 import { calculateCropVolumeUtils } from './calculateCropVolumeUtils'
-import { getLots } from '../lots'
+import { getLots, getLotsGroupByTag } from '../lots'
 
 export const calculateDataCropUtils = (
   {
@@ -13,6 +13,7 @@ export const calculateDataCropUtils = (
     company,
     badges,
     unitType,
+    data,
     cropType: { key: cropTypeKey }
   },
   activitiesWithEiq
@@ -36,6 +37,9 @@ export const calculateDataCropUtils = (
     company,
     activities,
     lotsQuantity: lots.length ? lots[0].data.length : 0,
-    lots: lots.length ? getLots(lots[0].data, activitiesWithEiq) : []
+    lots: lots.length ? getLots(lots[0].data, activitiesWithEiq) : [],
+    lotsGroupByTag: lots.length
+      ? getLotsGroupByTag(lots, activitiesWithEiq)
+      : []
   }
 }

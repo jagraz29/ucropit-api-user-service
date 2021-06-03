@@ -214,8 +214,15 @@
                                     <div class="date-activity">
                                         <i class="fa fa-check"></i>{{moment dateOrder format="DD/MM/YYYY"}}
                                     </div>
-                                    <h3 class="activity-framed-h1">{{name}}</h3>
-                                    <div class="activity-lots">{{lotsQuantity}} lotes</div>
+                                    {{#is tag 'ACT_HARVEST'}}
+                                        <h3 class="activity-framed-h1">Rinde: {{pay}} {{unitType}}.</h3>
+                                    {{/is}}
+
+                                    {{#is tag 'ACT_MONITORING'}}
+                                        <h3 class="activity-framed-h1">Rinde Estimado: {{pay}} {{unitType}}.</h3>
+                                    {{/is}}
+                                    
+                                    <div class="activity-lots">{{lotsQuantity}} lotes ({{surface}} has.)</div>
                                     <div class="spokesman-data">Evidencias</div>
                                     <div class="backup-docs">documentacion de respaldo</div>
                                     {{#each evidencesPdf}}
@@ -292,7 +299,7 @@
                                                 {{#each (unique supplies)}}
                                                     <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
                                                 {{/each}}
-                                                <div class="activity-lots-validation">{{lotsQuantity}} lotes</div>
+                                                <div class="activity-lots-validation">{{lotsQuantity}} lotes ({{surface}} has)</div>
                                                 <div class="spokesman-data-validation">Evidencias</div>
                                                 <div class="backup-docs-validation">documentacion de respaldo</div>
                                                 {{#each evidencesPdf}}
@@ -333,36 +340,37 @@
                 
                 {{/each}}
     {{!-- FIXME: aqui cierra actividades de validaciones --}}
-    
-                            <div class="activity-header">
+                        {{#each dataCrop.lotsGroupByTag}}
+                        <div class="activity-header">
                                 <img class="activity-type-img" src="https://www.pngrepo.com/png/111305/180/tryptic-brochure.png" width="26"
                                     height="26" />
-                                <div class="activity-title">Lotes -{{dataCrop.lotsQuantity}} ({{dataCrop.surface}} has. Sup. digital)</div>
-                            <div class="activity-frame">
-                                        <div class="date-activity">
-                                            <div class="activity-lots">{{dataCrop.lotsQuantity}} Lotes</div>
-                                            {{#each dataCrop.lots}}
-                                            <div class="spokesman-data">{{provinceName}} ({{surface}} has.)</div>
-                                            {{/each}}
-                                        </div>
-                                        <div class="activity-frame-lots-under">
-                                            {{#each dataCrop.lots}}
-                                            <div class="card">
-                                                <img src={{image}} alt="crop" class="activity-lots-img">
-                                                <div class="container">
-                                                    <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
-                                                    <p class="type-pic-card">Dentro del lote</p>
-                                                    <div class="eiq-lots">
-                                                        <div class="center">
-                                                            EIQ: {{eiq}}
-                                                        </div>
+                                <div class="activity-title">{{tag}} Lotes - {{lotsQuantity}} ({{surface}} has.)</div>
+                                <div class="activity-frame">
+                                    <div class="date-activity">
+                                        <div class="activity-lots">{{dataCrop.lotsQuantity}} Lotes</div>
+                                        {{#each lots}}
+                                             <div class="spokesman-data">{{provinceName}} ({{surface}} has.)</div>
+                                        {{/each}}
+                                    </div>
+                                    <div class="activity-frame-lots-under">
+                                        {{#each lots}}
+                                        <div class="card">
+                                            <img src={{image}} alt="crop" class="activity-lots-img">
+                                            <div class="container">
+                                                <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
+                                                <p class="type-pic-card">Dentro del lote</p>
+                                                <div class="eiq-lots">
+                                                    <div class="center">
+                                                        EIQ: {{eiq}}
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{/each}}
                                         </div>
+                                        {{/each}}
                                     </div>
                                 </div>
+                        </div>
+                        {{/each}}
                 {{!-- TODO: aqui cierra lotes final --}}
 
       </div>
