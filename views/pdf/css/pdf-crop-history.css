@@ -326,12 +326,12 @@
 
 .crop-leaders {
   background: linear-gradient(
-to bottom,
-#4caf50 0%,
-#4caf50 40%,
-#ffffff 41%,
-#ffffff 100%
-);
+    to bottom,
+    #4caf50 0%,
+    #4caf50 40%,
+    #ffffff 41%,
+    #ffffff 100%
+  );
   display: flex;
   justify-content: space-evenly;
   height: 400px;
@@ -470,6 +470,7 @@ to bottom,
   color: #333333;
   margin-left: 5px;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 /* TODO: No borrar */
 /* .activity-lots {
@@ -652,7 +653,6 @@ to bottom,
   height: 200px;
 }
 
-
 .activity-frame-lots {
   display: flex;
   flex-wrap: wrap-reverse;
@@ -710,7 +710,6 @@ to bottom,
   -moz-osx-font-smoothing: grayscale;
   padding-right: 10px;
 }
-
 
 .link-pdf {
   margin-left: 20px;
