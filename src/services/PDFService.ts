@@ -1,23 +1,21 @@
 import { v4 as uuidv4 } from 'uuid'
 import Handlebars from 'handlebars'
+import pdfParse from 'pdf-parse'
 import Puppeteer from 'puppeteer'
-import sha256 from 'sha256'
-import { makeDirIfNotExists, readFileBytes, saveFile, readFile } from '../utils'
+import { makeDirIfNotExists, readFileBuffer, saveFile, readFile } from '../utils'
 import { FileDocumentRepository } from '../repositories'
 import { setScriptPdf } from '../helpers'
 import { FileDocumentProps } from '../interfaces'
 
 export class PDFService {
-  public static async generatePdf(
+  public static async generatePdf (
     nameTemplate: string,
     context: object,
     directory: string,
     nameFile: string,
     { _id: cropId }
-  ): Promise<string | null> {
-    const fileDocuments: FileDocumentProps | null =
-      await FileDocumentRepository.getFiles(cropId)
-
+  ): Promise<string> {
+    const fileDocuments: Array<FileDocumentProps> | null = await FileDocumentRepository.getFiles(cropId)
     const path: string = `public/uploads/${directory}/`
     await makeDirIfNotExists(path)
     const fullName: string = `${nameFile}-${uuidv4()}.pdf`
@@ -27,7 +25,7 @@ export class PDFService {
     const handlebarsWithScript = setScriptPdf(Handlebars)
     const template = handlebarsWithScript.compile(hbs)
     const html = template(context, 'utf-8')
-    saveFile(`public/uploads/${directory}/content.html`, html)
+    // saveFile(`public/uploads/${directory}/content.html`, html)
     // console.log(html);
 
     const browser = await Puppeteer.launch()
@@ -35,7 +33,7 @@ export class PDFService {
     await page.setContent(html)
     await page.addStyleTag({ path: `views/pdf/css/${nameTemplate}.css` })
     await page.emulateMediaType('screen')
-    const pdfBytes = await page.pdf({
+    const pdfNewBuffer = await page.pdf({
       format: 'A4',
       printBackground: true,
       margin: {
@@ -47,7 +45,7 @@ export class PDFService {
     })
 
     if (!fileDocuments) {
-      saveFile(pathFile, pdfBytes)
+      saveFile(pathFile, pdfNewBuffer)
       await FileDocumentRepository.createFile({
         nameFile: fullName,
         path: pathFile,
@@ -58,33 +56,40 @@ export class PDFService {
     }
 
     return this.findAndSavePdfExists(
-      directory,
+      pathFile,
       fullName,
       fileDocuments,
       cropId,
-      pdfBytes
+      pdfNewBuffer
     )
   }
 
-  private static async findAndSavePdfExists(
-    directory: string,
+  private static async findAndSavePdfExists (
+    pathFile: string,
     fullName: string,
-    { nameFile }: FileDocumentProps,
+    fileDocuments: FileDocumentProps[],
     cropId,
-    pdfBytes
+    pdfNewBuffer
   ) {
-    const pathFile = `public/uploads/${directory}/`
-    const oldPdfBytes = readFileBytes(`${pathFile}${nameFile}`)
-    if (oldPdfBytes) {
-      // console.log(sha256(pdfBytes),sha256(oldPdfBytes))
-      if (sha256(pdfBytes) === sha256(oldPdfBytes)) {
-        return nameFile
+    const { text: textNewPdf } = await pdfParse(pdfNewBuffer)
+
+    const fileDocument = await Promise.all(fileDocuments.map(async (fileDocument) => {
+      const oldPdfBuffer = readFileBuffer(fileDocument.path)
+      if (oldPdfBuffer) {
+        const { text: textOldPdf } = await pdfParse(oldPdfBuffer)
+        if (textNewPdf === textOldPdf) return fileDocument
+        return null
       }
+    }))
+    const fileDocumentWithOutNull = fileDocument.filter(item => item)
+    if (fileDocumentWithOutNull.length) {
+      return fileDocumentWithOutNull[0].nameFile
     }
-    saveFile(`${pathFile}${fullName}`, pdfBytes)
+
+    saveFile(pathFile, pdfNewBuffer)
     await FileDocumentRepository.createFile({
       nameFile: fullName,
-      path: `${pathFile}${fullName}`,
+      path: pathFile,
       date: new Date(),
       cropId
     })
