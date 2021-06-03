@@ -27,6 +27,7 @@ class ErrorResponse implements IErrorResponse {
     public static BADGE_TYPE_DUPLICATED = 'BADGE_TYPE_DUPLICATED'
     public static DATA_NOT_FOUND = 'DATA_NOT_FOUND'
     public static REQUIRED_FIELDS = 'REQUIRED_FIELDS'
+    public static INVALID_DATE_CROP = 'INVALID_DATE_CROP'
 
     parseError (code: string, message: string, extend?: object): TError {
         return {

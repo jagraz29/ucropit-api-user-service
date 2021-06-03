@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { flatten, map, sumBy } from 'lodash'
+import moment from 'moment'
 import {
   handleFileConvertJSON,
   mapArraySurfacesAndArea
@@ -120,22 +120,23 @@ class LotsController {
    */
   public async searchByIdentifier (req: Request, res: Response) {
 
-    const { identifier, dateCrop } = req.query
+    const { identifier } = req.query
+    const dateCrop = new Date(req.query.dateCrop.toString())
+
+    if (moment().isAfter(dateCrop)) {
+      return res.status(StatusCodes.BAD_GATEWAY).json(ErrorResponseInstance.parseError(ErrorResponse.INVALID_DATE_CROP, 'La fecha del cultivo debe ser posterior a la actual'))
+    }
 
     let query = {
       identifier,
-      dateHarvest: { $gt: new Date(dateCrop.toString()) },
       // 'members.type': { $in: ['PRODUCER'] },
-      $where : function () { return (this.lots.length > 0) }
+      $where: function () {
+        return (this.lots.length > 0)
+      }
     }
 
     let cropsList = await CropRepository.findCropsWithLotsPopulateData(query)
-
-    if (!cropsList.length) {
-      return res.status(StatusCodes.NOT_FOUND).json(ErrorResponseInstance.parseError(ErrorResponse.DATA_NOT_FOUND, 'No tiene cultivos asociados'))
-    }
-
-    let results = await LotService.parseLotByTagInCropsWithDataPopulate(cropsList)
+    let results = await LotService.parseLotByTagInCropsWithDataPopulate(cropsList, dateCrop)
 
     res.json({
       results
