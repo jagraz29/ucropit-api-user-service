@@ -2,20 +2,26 @@ import { v4 as uuidv4 } from 'uuid'
 import Handlebars from 'handlebars'
 import pdfParse from 'pdf-parse'
 import Puppeteer from 'puppeteer'
-import { makeDirIfNotExists, readFileBuffer, saveFile, readFile } from '../utils'
+import {
+  makeDirIfNotExists,
+  readFileBuffer,
+  saveFile,
+  readFile
+} from '../utils'
 import { FileDocumentRepository } from '../repositories'
 import { setScriptPdf } from '../helpers'
 import { FileDocumentProps } from '../interfaces'
 
 export class PDFService {
-  public static async generatePdf (
+  public static async generatePdf(
     nameTemplate: string,
     context: object,
     directory: string,
     nameFile: string,
     { _id: cropId }
   ): Promise<string> {
-    const fileDocuments: Array<FileDocumentProps> | null = await FileDocumentRepository.getFiles(cropId)
+    const fileDocuments: Array<FileDocumentProps> | null =
+      await FileDocumentRepository.getFiles(cropId)
     const path: string = `public/uploads/${directory}/`
     await makeDirIfNotExists(path)
     const fullName: string = `${nameFile}-${uuidv4()}.pdf`
@@ -25,7 +31,7 @@ export class PDFService {
     const handlebarsWithScript = setScriptPdf(Handlebars)
     const template = handlebarsWithScript.compile(hbs)
     const html = template(context, 'utf-8')
-    // saveFile(`public/uploads/${directory}/content.html`, html)
+    saveFile(`public/uploads/${directory}/content.html`, html)
     // console.log(html);
 
     const browser = await Puppeteer.launch()
@@ -64,7 +70,7 @@ export class PDFService {
     )
   }
 
-  private static async findAndSavePdfExists (
+  private static async findAndSavePdfExists(
     pathFile: string,
     fullName: string,
     fileDocuments: FileDocumentProps[],
@@ -73,15 +79,17 @@ export class PDFService {
   ) {
     const { text: textNewPdf } = await pdfParse(pdfNewBuffer)
 
-    const fileDocument = await Promise.all(fileDocuments.map(async (fileDocument) => {
-      const oldPdfBuffer = readFileBuffer(fileDocument.path)
-      if (oldPdfBuffer) {
-        const { text: textOldPdf } = await pdfParse(oldPdfBuffer)
-        if (textNewPdf === textOldPdf) return fileDocument
-        return null
-      }
-    }))
-    const fileDocumentWithOutNull = fileDocument.filter(item => item)
+    const fileDocument = await Promise.all(
+      fileDocuments.map(async (fileDocument) => {
+        const oldPdfBuffer = readFileBuffer(fileDocument.path)
+        if (oldPdfBuffer) {
+          const { text: textOldPdf } = await pdfParse(oldPdfBuffer)
+          if (textNewPdf === textOldPdf) return fileDocument
+          return null
+        }
+      })
+    )
+    const fileDocumentWithOutNull = fileDocument.filter((item) => item)
     if (fileDocumentWithOutNull.length) {
       return fileDocumentWithOutNull[0].nameFile
     }
