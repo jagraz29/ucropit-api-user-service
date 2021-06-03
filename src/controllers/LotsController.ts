@@ -11,6 +11,7 @@ import CropService from '../services/CropService'
 import { ErrorResponseInstance } from '../utils'
 import ErrorResponse from '../utils/ErrorResponse'
 import { StatusCodes } from 'http-status-codes'
+import { CropRepository } from '../repositories'
 
 const Lot = models.Lot
 
@@ -128,9 +129,9 @@ class LotsController {
       $where : function () { return (this.lots.length > 0) }
     }
 
-    let cropsList = await CropService.findCropsWithLotsPopulateData(query)
+    let cropsList = await CropRepository.findCropsWithLotsPopulateData(query)
 
-    if (cropsList.length === 0) {
+    if (!cropsList.length) {
       return res.status(StatusCodes.NOT_FOUND).json(ErrorResponseInstance.parseError(ErrorResponse.DATA_NOT_FOUND, 'No tiene cultivos asociados'))
     }
 
