@@ -1,6 +1,6 @@
 import { Achievement } from '../../interfaces'
 import { calculateEIQSurfaceAchievement } from '.'
-import { getEvidencePdf, getEvidenceImage } from '../'
+import { getEvidencePdf, getEvidenceImage, getSuppliesAndTotalTypes } from '../'
 import { Numbers } from '../Numbers'
 
 /**
@@ -14,8 +14,14 @@ import { Numbers } from '../Numbers'
 export const getAchievements = (achievements): Achievement[] => {
   return achievements
     .map((achievement) => {
-      const { dateAchievement, lots, surface, signers, supplies, files, _id } =
-        achievement
+      const {
+        dateAchievement,
+        lots,
+        surface,
+        signers,
+        supplies,
+        files,
+        _id } = achievement
       const eiq = calculateEIQSurfaceAchievement(achievement)
       return {
         _id,
@@ -23,7 +29,7 @@ export const getAchievements = (achievements): Achievement[] => {
         lots: lots,
         lotsQuantity: lots.length,
         surface,
-        supplies,
+        supplies: getSuppliesAndTotalTypes(supplies),
         eiq: Numbers.roundToTwo(eiq),
         signed: signers.length,
         signedIf: signers.filter(({ signed }) => signed).length,
