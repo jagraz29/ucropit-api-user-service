@@ -3,7 +3,9 @@ import {
   calculateCropVolumeUtils,
   Numbers,
   getEvidencePdf,
-  getEvidenceImage
+  getEvidenceImage,
+  getAchievements,
+  getSuppliesAndTotalTypes
 } from '../'
 import {
   TypeActivitiesWithAchievements,
@@ -11,14 +13,13 @@ import {
   Achievement,
   TypeActivities
 } from '../../interfaces'
-import { getAchievements } from '../achievements'
 
 export const getActivitiesOrderedByDateUtils = ({ activities }) => {
   const activitiesRes = activities
     .map(
       ({
         _id,
-        achievements,
+        achievements: achievementsParams,
         type: { tag: TypeActivity },
         signers,
         name,
@@ -37,22 +38,21 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
       }) => {
         let percent: number = 0
         let eiq: number = 0
-        let achievementsWithEiq: Achievement[] = []
+        let achievements: Achievement[] = []
         const pay = payEntry ?? 0
         const { key: keyUnitType, name: nameUnitType } = unitType || {}
 
         if (TypeActivity === TypeActivities.ACT_AGREEMENTS) {
           return null
         }
-
-        achievementsWithEiq = getAchievements(achievements)
-        eiq = achievementsWithEiq.length
-          ? achievementsWithEiq.reduce((a, b) => a + b.eiq, 0)
+        achievements = getAchievements(achievementsParams)
+        eiq = achievements.length
+          ? achievements.reduce((a, b) => a + b.eiq, 0)
           : 0
 
         if (TypeActivitiesWithAchievements[TypeActivity]) {
-          percent = achievements.length
-            ? achievements.reduce((a, b) => a + b.percent, 0)
+          percent = achievementsParams.length
+            ? achievementsParams.reduce((a, b) => a + b.percent, 0)
             : 0
         }
         if (TypeActivitiesWithOutAchievements[TypeActivity]) {
@@ -84,9 +84,9 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           signedIf: !achievements.length
             ? signers.filter(({ signed }) => signed).length
             : null,
-          supplies,
+          supplies: getSuppliesAndTotalTypes(supplies),
           storages: storages ? getStorages(storages) : [],
-          achievements: achievementsWithEiq,
+          achievements: achievements,
           evidencesPdf: getEvidencePdf(files),
           evidenceImages: getEvidenceImage(files)
         }
@@ -98,7 +98,6 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
     moment(a.dateOrder).diff(moment(b.dateOrder))
   )
 }
-
 const getStorages = (storages): Object[] => {
   return storages.map(
     ({
