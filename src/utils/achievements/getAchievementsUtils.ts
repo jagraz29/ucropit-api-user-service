@@ -30,6 +30,7 @@ export const getAchievements = (achievements, members?): Achievement[] => {
         lotsQuantity: lots.length,
         surface,
         supplies: getSuppliesAndTotalTypes(supplies),
+        suppliesList: supplies,
         eiq: Numbers.roundToTwo(eiq),
         signed: signers.length,
         signedIf: signers.filter(({ signed }) => signed).length,

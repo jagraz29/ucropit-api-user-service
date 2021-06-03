@@ -87,6 +87,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities, members }) => {
             : null,
           signers: getSignerList(signers, members),
           supplies: getSuppliesAndTotalTypes(supplies),
+          suppliesList: supplies,
           storages: storages ? getStorages(storages) : [],
           achievements: achievements,
           evidencesPdf: getEvidencePdf(files),

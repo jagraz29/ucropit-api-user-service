@@ -186,11 +186,11 @@
                         <div class="activity-header">
                             {{#switch tag}}
                                 {{#case "ACT_MONITORING"}}
-                                <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/eye.png" width="26"
+                                <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/monitoring.svg" width="26"
                                     height="26" />
                                 {{/case}}
                                 {{#case "ACT_HARVEST"}}
-                                <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/harvest.png"
+                                <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/harvest.svg"
                                     width="26" height="26" />
                                 {{/case}}
                             {{/switch}}
@@ -255,19 +255,19 @@
                             <div class="activity-header">
                                 {{#switch tag}}
                                     {{#case "ACT_SOWING"}}
-                                        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/truck.png" width="26"
+                                        <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/sowing.svg" width="26"
                                             height="26" />
                                     {{/case}}
                                     {{#case "ACT_APPLICATION"}}
-                                        <img class="activity-type-img" src="https://ucropitspace.nyc3.digitaloceanspaces.com/misc/flask.png" width="26"
+                                        <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
                                         height="26" />
                                     {{/case}}
                                 {{/switch}}
                                 <div class="activity-title">{{name}}</div>
 
                                 {{#each achievements}}
-                                    {{#if supplies }}
-                                        {{#each supplies }}
+                                    {{#if suppliesList }}
+                                        {{#each suppliesList }}
                                             <p class="applications">{{name}}</p>
                                         {{/each}}
                                     {{/if}}
@@ -276,13 +276,13 @@
 
                            
                             {{#each achievements}}
-                                {{#if supplies }}
+                                {{#if suppliesList }}
                                     <div class="activity-frame-actividades-validaciones">
                                         <div class="activity-header-val">
                                                 <div class="date-activity-validation">
                                                     <i class="fa fa-calendar"></i> {{ moment dateCrop format="MM-YYYY" }} - {{ moment dateHarvest format="MM-YYYY" }}
                                                 </div>
-                                                {{#each (unique supplies)}}
+                                                {{#each (unique suppliesList)}}
                                                     <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
                                                 {{/each}}
                                                 <div class="activity-lots-validation">{{lotsQuantity}} lotes ({{surface}} has)</div>

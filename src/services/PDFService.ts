@@ -32,7 +32,6 @@ export class PDFService {
     const template = handlebarsWithScript.compile(hbs)
     const html = template(context, 'utf-8')
     saveFile(`public/uploads/${directory}/content.html`, html)
-    // console.log(html);
 
     const browser = await Puppeteer.launch()
     const page = await browser.newPage()
