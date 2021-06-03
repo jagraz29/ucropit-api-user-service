@@ -56,8 +56,10 @@
                                 </div>
                                 <div>
                                     <div class="binnacle">
-                                        Bitácora al {{ dateCreatePdf }}
+                                        Historia de cultivo al {{ dateCreatePdf }}<br>
+                                        {{ moment dateCrop format="MM-YYYY" }} - {{ moment dateHarvest format="MM-YYYY" }}
                                     </div>
+
                                     <div class="text-title">
                                         {{dataCrop.name}} <br>{{moment dataCrop.dateCrop format="DD/MM/YYYY"}}
                                     </div>
@@ -84,24 +86,8 @@
                                 {{#if @last}}
                                 <div class="lastActivity">
                                     <div class="last-frame">
-                                        <div class="lastActivity-title">Status: {{status}}</div>
-                                        <div class="alm">
-                                            <i class="fa fa-building"></i>
-                                            Almacenado fuera de lote
-                                        </div>
-                                        <div class="ult">
-                                            <i class="fa fa-eye"></i>
-                                            último monitoreo {{moment dateOrder format="DD/MM/YYYY"}}
-                                            <div>Rinde estimado {{pay}} Kg </div>
-                                            <div>
-                                                {{#each supplies}}
-                                                <i class="fa fa-flask"></i>
-                                                {{name}} {{quantity}} {{unit}}
-                                                {{/each}}
-                                            </div>
-                                        </div>
+                                        <div class="lastActivity-title dataValue">Status: {{name}} {{status}}</div>
                                     </div>
-
                                 </div>
                                 {{/if}}
                                 {{/each}}
