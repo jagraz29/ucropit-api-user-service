@@ -264,7 +264,7 @@ class CropsController {
       let responseError
       const reusableLots: string[] = flatten(map(data.reusableLots, 'lotIds'))
       let query = {
-        identifier: '27959909852',
+        identifier,
         dateHarvest: { $gt: new Date(dateCrop.toString()) },
         $where: function () {
           return (this.lots.length > 0)
