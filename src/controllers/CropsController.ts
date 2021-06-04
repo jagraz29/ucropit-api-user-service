@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { map } from 'lodash'
 
 import models from '../models'
 import CropService from '../services/CropService'
@@ -15,7 +16,7 @@ import {
   calculateDataCropUtils,
   calculateTheoreticalPotentialUtils,
   calculateCropVolumeUtils,
-  getCropBadgesByUserType
+  getCropBadgesByUserType, validateLotsReusable
 } from '../utils'
 
 import {
@@ -228,56 +229,65 @@ class CropsController {
   public async create (req: Request | any, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
+
+    data.reusableLots = [ {
+      tag: 'Prunes Inthegra',
+      lotIds: [ '6011c48d07a7c744fd49bc80' ]
+    } ]
+
     await validateCropStore(data)
-    // const validationKmz = await validateFormatKmz(req.files)
-    // const validationDuplicateName = validateNotEqualNameLot(data.lots)
+    const validationKmz = await validateFormatKmz(req.files)
+    const validationDuplicateName = validateNotEqualNameLot(data.lots)
 
     let company = null
 
+    console.log(data)
     console.log(data.lots)
-    // if (validationKmz.error) {
-    //   return res.status(400).json({
-    //     error: true,
-    //     code: validationKmz.code,
-    //     message: validationKmz.message
-    //   })
-    // }
-    //
-    // if (validationDuplicateName.error) {
-    //   return res.status(400).json(validationDuplicateName.code)
-    // }
+    console.log(data.reusableLots)
+    if (validationKmz.error) {
+      return res.status(400).json({
+        error: true,
+        code: validationKmz.code,
+        message: validationKmz.message
+      })
+    }
+
+    if (validationDuplicateName.error) {
+      return res.status(400).json(validationDuplicateName.code)
+    }
+
+
+
+    if (data.reusableLots) {
+      const { identifier, dateCrop } = data
+      const lotsReusable: string[] = map(data.reusableLots, 'lotsIds')
+      const query = {
+        identifier: '27959909852',
+        dateHarvest: { $lt: new Date(data.dateCrop.toString()) },
+        'lots.data': { $in: lotsReusable }
+      }
+      console.log(query)
+      const cropsList = await CropRepository.findCropsSample(query)
+      const reusableLotsExist = validateLotsReusable(lotsReusable, cropsList)
+      console.log('reusableLotsExist')
+      console.log(reusableLotsExist.length)
+    }
 
     return res.status(400).json({ error: true })
 
-    const { identifier, dateCrop } = data
-
-    const query = {
-      identifier,
-      dateHarvest: { $gt: new Date(dateCrop.toString()) },
-      // 'members.type': { $in: ['PRODUCER'] },
-      $where: function () {
-        return (this.lots.length > 0)
-      }
-    }
-
-    const cropsList = await CropRepository.findCropsSample(query)
-
-    if (cropsList.length) {
-      return res.status(400).json({
-        error: true,
-        message: 'La fecha del Cultivo no esta disponible',
-        code: 'INVALID_DATE_CROP'
-      })
-    }
     company = (await CompanyService.search({ identifier: data.identifier }))[ 0 ]
 
-    const lots = await LotService.store(req, data.lots)
+    let lots = await LotService.store(req, data.lots)
 
     const activities = await ActivityService.createDefault(
       data.surface,
       data.dateCrop,
       user
     )
+
+    if (data.lotsReusable) {
+      lots = lots.concat(data.lotsReusable)
+    }
 
     console.log(lots)
 

@@ -37,11 +37,16 @@ export const validateCropStore = async (crop) => {
       .items(
         Joi.object().keys({
           names: Joi.array().items(Joi.string()).required(),
-          tag: Joi.string().required(),
-          lotsReusable: Joi.array().items(Joi.string())
+          tag: Joi.string().required()
         })
-      )
-      .required()
+      ).required(),
+    reusableLots: Joi.array()
+    .items(
+      Joi.object().keys({
+        tag: Joi.string().required(),
+        lotIds: Joi.array().items(Joi.string()).required()
+      })
+    )
   })
 
   return schema.validateAsync(crop)
