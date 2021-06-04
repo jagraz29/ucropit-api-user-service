@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { map } from 'lodash'
+import { map, flatten } from 'lodash'
 
 import models from '../models'
 import CropService from '../services/CropService'
@@ -229,23 +229,14 @@ class CropsController {
   public async create (req: Request | any, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
-
-    data.reusableLots = [ {
-      tag: 'Prunes Inthegra',
-      lotIds: [ '6011c48d07a7c744fd49bc80' ]
-    } ]
-
     await validateCropStore(data)
     const validationKmz = await validateFormatKmz(req.files)
     const validationDuplicateName = validateNotEqualNameLot(data.lots)
 
     let company = null
 
-    console.log(data)
-    console.log(data.lots)
-    console.log(data.reusableLots)
     if (validationKmz.error) {
-      return res.status(400).json({
+      return res.status(StatusCodes.BAD_REQUEST).json({
         error: true,
         code: validationKmz.code,
         message: validationKmz.message
@@ -253,27 +244,28 @@ class CropsController {
     }
 
     if (validationDuplicateName.error) {
-      return res.status(400).json(validationDuplicateName.code)
+      return res.status(StatusCodes.BAD_REQUEST).json(validationDuplicateName.code)
     }
-
-
 
     if (data.reusableLots) {
       const { identifier, dateCrop } = data
-      const lotsReusable: string[] = map(data.reusableLots, 'lotsIds')
+      const reusableLots: string[] = flatten(map(data.reusableLots, 'lotIds'))
       const query = {
-        identifier: '27959909852',
-        dateHarvest: { $lt: new Date(data.dateCrop.toString()) },
-        'lots.data': { $in: lotsReusable }
+        identifier,
+        dateHarvest: { $lt: new Date(dateCrop.toString()) },
+        'lots.data': { $in: reusableLots }
       }
-      console.log(query)
       const cropsList = await CropRepository.findCropsSample(query)
-      const reusableLotsExist = validateLotsReusable(lotsReusable, cropsList)
-      console.log('reusableLotsExist')
-      console.log(reusableLotsExist.length)
+      const lotsNotAvailable = validateLotsReusable(reusableLots, cropsList)
+      if (lotsNotAvailable.length) {
+        return res.status(StatusCodes.CONFLICT).json({
+          error: true,
+          message: 'Algunos lotes reutilizables no estan disponibles',
+          code: 'LOTS_NOT_AVAILABLE',
+          lotsNotAvailable: lotsNotAvailable
+        })
+      }
     }
-
-    return res.status(400).json({ error: true })
 
     company = (await CompanyService.search({ identifier: data.identifier }))[ 0 ]
 
@@ -288,8 +280,6 @@ class CropsController {
     if (data.lotsReusable) {
       lots = lots.concat(data.lotsReusable)
     }
-
-    console.log(lots)
 
     const crop = await CropService.handleDataCrop(
       data,
