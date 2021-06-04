@@ -13,13 +13,10 @@ export const getTotalTypeSupplies = (supplies): Object => {
   for (const key in SupplyType) {
     let count = 0
     supplies.map((supply) => {
-      if (supply.type) {
-        const { code, name } = supply.type
-        if (code === key) {
-          totalTypeSupplies.push({ quantity: count + 1, name })
-        }
+      const { code, name } = supply || {}
+      if (code === key) {
+        totalTypeSupplies.push({ quantity: count + 1, name })
       }
-
     })
   }
   return totalTypeSupplies

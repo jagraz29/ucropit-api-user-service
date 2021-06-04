@@ -18,9 +18,8 @@ export const getSupplies = (supplies): Object[] => {
       total,
       supply }) => {
       let eiq = 0
-
-      if (supply) {
-        const { typeId, unit, brand, eiqTotal } = supply
+      const { typeId, unit, brand, eiqTotal } = supply || {}
+      if (brand) {
         name = brand
         eiq = Numbers.roundToTwo(eiqTotal)
         typeParam = typeId
