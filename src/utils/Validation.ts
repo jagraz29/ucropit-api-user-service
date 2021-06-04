@@ -451,7 +451,7 @@ export const validateDateCropAndDateHarvest = (dateCrop: string, dateHarvest: st
     }
   }
 
-  if (startDate.isBefore(endDate)) {
+  if (endDate.isBefore(startDate)) {
     return {
       error: true,
       message: 'La fecha de cosecha deber ser posterior a la del cultivo',

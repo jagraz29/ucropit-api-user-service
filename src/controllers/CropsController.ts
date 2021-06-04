@@ -18,7 +18,11 @@ import {
   calculateCropVolumeUtils,
   getCropBadgesByUserType,
   validateLotsReusable,
-  parseLotsReusableAsData, validateDateCropAndDateHarvest
+  parseLotsReusableAsData,
+  validateDateCropAndDateHarvest,
+  exitsLotsReusableInCollectionLots,
+  lotsReusableNotExistInDB,
+  responseReusableLotsMessageError
 } from '../utils'
 
 import {
@@ -257,25 +261,46 @@ class CropsController {
     const { identifier, dateCrop } = data
 
     if (data.reusableLots) {
+      let responseError
       const reusableLots: string[] = flatten(map(data.reusableLots, 'lotIds'))
-      const query = {
-        identifier,
+      let query = {
+        identifier: '27959909852',
         dateHarvest: { $gt: new Date(dateCrop.toString()) },
         $where: function () {
           return (this.lots.length > 0)
         }
       }
+
       const cropsList = await CropRepository.findCropsSample(query)
       const lotsNotAvailable = validateLotsReusable(reusableLots, cropsList)
-      if (lotsNotAvailable.length) {
+      responseError = responseReusableLotsMessageError(lotsNotAvailable, 'Algunos lotes reutilizables no estan disponibles')
+
+      if (responseError.error) {
         return res.status(StatusCodes.CONFLICT).json({
-          error: true,
-          message: 'Algunos lotes reutilizables no estan disponibles',
-          code: 'LOTS_NOT_AVAILABLE',
-          lotsNotAvailable: lotsNotAvailable
+          ...responseError
         })
       }
+
+      const existLots = await CropRepository.findCrops(exitsLotsReusableInCollectionLots(identifier, reusableLots))
+      const message = 'Algunos lotes no san validos o no existen'
+      if (existLots) {
+        const notExistLots = lotsReusableNotExistInDB(existLots, reusableLots)
+        responseError = responseReusableLotsMessageError(notExistLots, message)
+      } else {
+        responseError = responseReusableLotsMessageError(reusableLots, message)
+      }
+
+      if (responseError.error) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          ...responseError
+        })
+      }
+
     }
+
+    return res.status(400).json({
+      error: true
+    })
 
     company = (await CompanyService.search({ identifier }))[ 0 ]
 
