@@ -51,7 +51,7 @@
 
 .fill {
   background-color: #4caf50;
-  height: 500px;
+  height: 700px;
 }
 
 .bigLogo {
@@ -59,11 +59,11 @@
 }
 
 .bigLogoContainer {
-  margin-left: 45px;
-  width: 120px;
+  width: 150px;
   margin-bottom: -100px;
   margin-top: 20px;
-  position: static;
+  position: absolute;
+  margin-left: 30px;
 }
 
 .eiq {
@@ -79,15 +79,14 @@
   padding-top: 5px;
   margin-left: 100px;
   align-items: center;
-  margin-top: 140px;
+  margin-top: 152px;
   position: absolute;
 }
 
 .dataContainer {
   position: absolute;
-  align-content: left;
   margin-left: 100px;
-  margin-top: 190px;
+  margin-top: 230px;
 }
 
 .dataNames {
@@ -107,7 +106,7 @@
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 22px;
   line-height: 24px;
   text-align: left;
   color: #ffffff;
@@ -130,19 +129,30 @@
   flex-direction: column-reverse;
   margin-left: 57%;
   margin-right: 50px;
+  margin-top: 90px;
 }
 
 .badges-description {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   color: #fff;
-  font-size: 20px;
+  display: flex;
+  position: relative;
+}
+
+.badges-image {
+  /* width: 90px;
+  height: 90px; */
+}
+
+.badges-hs {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #fff;
   margin-bottom: -50;
   margin-left: 4em;
 }
 
-.badges-image {
-  width: 60px;
-  padding-bottom: 20px;
+.hz-description {
+  margin-left: 20px;
 }
 
 /* TODO: no borrar estos estilos */
@@ -174,7 +184,7 @@
 .qr {
   position: absolute;
   width: 50px !important;
-  margin-top: 80px;
+  margin-top: 140px;
   filter: invert(1);
   margin-left: 50px;
 }
@@ -192,11 +202,11 @@
 .text-title {
   color: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 700;
   width: 300px;
   position: absolute;
-  top: 90px;
+  top: 140px;
   margin-left: 100px;
 }
 
@@ -217,9 +227,9 @@
   position: absolute;
   margin-left: 100px;
   font-size: 12px;
-  top: 70px;
+  top: 110px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
 }
 
 .lotValue {
@@ -287,7 +297,7 @@
 
 .lastActivity {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  margin-top: 340px;
+  margin-top: 380px;
   margin-left: 100px;
   font-size: 14px;
   line-height: 1.8;
@@ -324,6 +334,11 @@
   text-align: left;
 }
 
+.size-description {
+  font-size: 20px;
+  margin-bottom: -10;
+}
+
 .crop-leaders {
   background: linear-gradient(
     to bottom,
@@ -334,12 +349,13 @@
   );
   display: flex;
   justify-content: space-evenly;
+  height: 400px;
+  margin-top: -100;
 }
 
 .spokesman {
   height: fit-content;
   width: 242px;
-  left: 0px;
   border-radius: 4px;
   background: #f8f8f8;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -350,7 +366,6 @@
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 12px;
   font-style: normal;
-  line-height: 16px;
   letter-spacing: 0.4000000059604645px;
   margin-left: 10px;
   margin-top: 10px;
@@ -361,8 +376,8 @@
   font-size: 16px;
   font-style: normal;
   font-weight: bold;
-  line-height: 22px;
   margin-left: 10px;
+  margin-top: -18px;
 }
 
 .spokesman-data {
@@ -397,7 +412,7 @@
 }
 
 .activity-header-val {
-  page-break-after: always !important;
+  /* page-break-after: always !important; */
   /* page-break-inside: avoid; */
   /* page-break-before: always !important; */
   /* margin-top: 50px; */
@@ -408,6 +423,7 @@
   height: 30px;
   margin-left: 5px;
   margin-top: 20px;
+  width: 30;
 }
 
 .activity-title {
@@ -446,7 +462,7 @@
   page-break-inside: avoid !important;
   position: static;
   width: 100%;
-  height: 20%;
+  height: 30%;
 }
 
 .date-activity {
@@ -470,6 +486,7 @@
   color: #333333;
   margin-left: 5px;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 /* TODO: No borrar */
 /* .activity-lots {
@@ -517,19 +534,10 @@
 
 .activity-validations {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  margin-left: auto;
-  width: fit-content;
-  margin-top: -130px;
-  padding-right: 20px;
-}
-
-.activity-validations-val {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  margin-left: auto;
-  width: fit-content;
+  margin-left: 70%;
   margin-top: -100px;
   padding-right: 20px;
-  position: static;
+  /* margin-bottom: 20px; */
 }
 
 .backup-docs {
@@ -653,24 +661,23 @@
 }
 
 .card {
-  box-shadow: 0px 0px 0px 2px rgb(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 0px 2px rgb(0 0 0 / 10%);
   transition: 0.3s;
   margin-left: 20px;
   margin-bottom: 15px;
   margin-top: 5px;
-  overflow: hidden;
 }
 
 .activity-lots-img {
   width: 200px;
+  height: 200px;
 }
 
 .activity-frame-lots {
   display: flex;
-  flex-wrap: wrap-reverse;
   padding-top: 60px;
+  flex-wrap: wrap;
   position: static;
-  overflow: hidden;
 }
 
 .activity-frame-lots-validation {
@@ -689,10 +696,10 @@
 
 .activity-frame-lots-under {
   display: flex;
-  flex-wrap: wrap-reverse;
+  flex-direction: row;
   padding-top: 20px;
-  position: static;
-  overflow: hidden;
+  margin-bottom: 50px;
+  height: 250;
 }
 
 .eiq-lots {
@@ -708,4 +715,31 @@
   margin-left: 90px;
   align-items: center;
   margin-bottom: 10px;
+}
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-right: 10px;
+}
+
+.link-pdf {
+  margin-left: 20px;
+  padding-top: 5px;
+  color: #5e5e5e !important;
+  margin-bottom: 50px;
+  position: absolute;
+  margin-top: 130px;
+}
+
+.link-pdf-val {
+  margin-left: 20px;
+  padding-top: 5px;
+  color: #5e5e5e !important;
+  margin-bottom: 50px;
+  position: absolute;
 }

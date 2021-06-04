@@ -181,14 +181,14 @@ export class CropRepository {
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies.supply' },
+              { path: 'supplies.supply',
+                populate: [{ path: 'typeId' }]},
               { path: 'supplies.typeId' }
             ]
           },
-          {
-            path: 'supplies',
-            populate: [{ path: 'typeId' }]
-          },
+          { path: 'supplies.supply',
+            populate: [{ path: 'typeId' }]},
+          { path: 'supplies.typeId' },
           {
             path: 'storages',
             populate: [{ path: 'storageType' }]
@@ -205,10 +205,9 @@ export class CropRepository {
           { path: 'typeAgreement' },
           { path: 'lots', select: '-area -__v' },
           { path: 'files' },
-          {
-            path: 'supplies',
-            populate: [{ path: 'typeId' }]
-          },
+          { path: 'supplies.supply',
+            populate: [{ path: 'typeId' }]},
+          { path: 'supplies.typeId' },
           {
             path: 'storages',
             populate: [{ path: 'storageType' }]
@@ -218,7 +217,8 @@ export class CropRepository {
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies.supply' },
+              { path: 'supplies.supply',
+                populate: [{ path: 'typeId' }]},
               { path: 'supplies.typeId' }
             ]
           }

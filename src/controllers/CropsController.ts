@@ -31,7 +31,10 @@ import moment from 'moment'
 import { badgesData } from '../seeders/badgesData'
 import { data } from '../commands/supplies/data'
 
+import { UnitTypeSchema } from './../models/unitType'
+
 const Crop = models.Crop
+const UnitType = models.UnitType
 
 class CropsController {
   /**
@@ -84,7 +87,7 @@ class CropsController {
 
     if (req.query.cropVolume) {
       query['$and'].push({
-        pay: {
+        volume: {
           $gte: req.query.cropVolume
         }
       })
@@ -246,6 +249,19 @@ class CropsController {
     if (validationDuplicateName.error) {
       return res.status(400).json(validationDuplicateName.code)
     }
+
+    let volume: number = 0
+
+    try {
+      const unitType = await UnitType.findOne({ _id: data.unitType })
+
+      volume = calculateCropVolumeUtils(unitType?.key, data.pay, data.surface)
+    } catch (error) {
+      console.log('Error calculating volume to crop')
+      console.log(error)
+    }
+
+    data.volume = volume
 
     company = (await CompanyService.search({ identifier: data.identifier }))[0]
 
