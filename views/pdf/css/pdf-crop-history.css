@@ -140,8 +140,8 @@
 }
 
 .badges-image {
-  width: 90px;
-  height: 90px;
+  /* width: 90px;
+  height: 90px; */
 }
 
 .badges-hs {
@@ -341,12 +341,12 @@
 
 .crop-leaders {
   background: linear-gradient(
-  to bottom,
-  #4caf50 0%,
-  #4caf50 40%,
-  #ffffff 41%,
-  #ffffff 100%
-);
+    to bottom,
+    #4caf50 0%,
+    #4caf50 40%,
+    #ffffff 41%,
+    #ffffff 100%
+  );
   display: flex;
   justify-content: space-evenly;
   height: 400px;
@@ -609,14 +609,19 @@
 .lot-pic-text {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 13px;
+  font-style: normal;
+  font-weight: bold;
   line-height: 21px;
   padding-left: 10px;
   padding-right: 10px;
+  margin-top: -1px;
 }
 
 .type-pic-card {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 13px;
+  font-style: normal;
+  font-weight: 300;
   line-height: 20px;
   letter-spacing: 0.25px;
   color: #4caf50;
@@ -656,12 +661,11 @@
 }
 
 .card {
-  box-shadow: 0px 0px 0px 2px rgb(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 0px 2px rgb(0 0 0 / 10%);
   transition: 0.3s;
   margin-left: 20px;
-  margin-bottom: 0 auto;
-  /* margin-top: 5px; */
-  /* overflow: hidden; */
+  margin-bottom: 15px;
+  margin-top: 5px;
 }
 
 .activity-lots-img {
@@ -671,10 +675,9 @@
 
 .activity-frame-lots {
   display: flex;
-  flex-wrap: wrap-reverse;
   padding-top: 60px;
+  flex-wrap: wrap;
   position: static;
-  overflow: hidden;
 }
 
 .activity-frame-lots-validation {
@@ -693,12 +696,9 @@
 
 .activity-frame-lots-under {
   display: flex;
-  flex-wrap: wrap-reverse;
+  flex-direction: row;
   padding-top: 20px;
-  /* position: absolute; */
-  overflow: hidden;
   margin-bottom: 50px;
-  width: 250;
   height: 250;
 }
 

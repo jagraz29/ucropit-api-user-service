@@ -187,7 +187,8 @@
                 {{!-- TODO: Aqui cierra acuerdos --}}
 
                 {{#each activities}}
-                    {{#if (or (is tag 'ACT_HARVEST') (is tag 'ACT_MONITORING'))}}
+                    {{#if (or (is status 'REALIZADA') (is tag 'TERMINADA'))}}
+                            {{#if (or (is tag 'ACT_HARVEST') (is tag 'ACT_MONITORING'))}}
                         <div class="activity-header">
                             {{#switch tag}}
                                 {{#case "ACT_MONITORING"}}
@@ -332,6 +333,8 @@
                             </div>
                         </div>
                     {{/if}}
+                    {{/if}}
+                    
                     {{!-- TODO: aqui cierra actividades --}}
                 
                 {{/each}}
@@ -348,7 +351,7 @@
                                              <div class="spokesman-data">{{provinceName}} ({{surface}} has.)</div>
                                         {{/each}}
                                     </div>
-                                    <div class="activity-frame-lots-under">
+                                    <div class="activity-frame-lots">
                                         {{#each lots}}
                                         <div class="card">
                                             <img src={{image}} alt="crop" class="activity-lots-img">
