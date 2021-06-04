@@ -4,6 +4,7 @@ import {
   Numbers,
   getEvidencePdf,
   getEvidenceImage,
+  getSignerList,
   getAchievements,
   getSuppliesAndTotalTypes
 } from '../'
@@ -14,7 +15,7 @@ import {
   TypeActivities
 } from '../../interfaces'
 
-export const getActivitiesOrderedByDateUtils = ({ activities }) => {
+export const getActivitiesOrderedByDateUtils = ({ activities, members }) => {
   const activitiesRes = activities
     .map(
       ({
@@ -45,7 +46,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
         if (TypeActivity === TypeActivities.ACT_AGREEMENTS) {
           return null
         }
-        achievements = getAchievements(achievementsParams)
+        achievements = getAchievements(achievementsParams, members)
         eiq = achievements.length
           ? achievements.reduce((a, b) => a + b.eiq, 0)
           : 0
@@ -84,7 +85,9 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           signedIf: !achievements.length
             ? signers.filter(({ signed }) => signed).length
             : null,
+          signers: getSignerList(signers, members),
           supplies: getSuppliesAndTotalTypes(supplies),
+          suppliesList: supplies,
           storages: storages ? getStorages(storages) : [],
           achievements: achievements,
           evidencesPdf: getEvidencePdf(files),
