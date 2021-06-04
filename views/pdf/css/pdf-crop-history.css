@@ -128,7 +128,7 @@
   display: flex;
   flex-direction: column-reverse;
   margin-left: 57%;
-  margin-right: 50px;
+  /* margin-right: 50px; */
   margin-top: 90px;
 }
 
@@ -137,23 +137,34 @@
   color: #fff;
   display: flex;
   position: relative;
+  margin-left: -10px;
 }
 
 .badges-image {
-  /* width: 90px;
-  height: 90px; */
+  width: 80px;
+  height: 80px;
+  margin-left: -20px;
+}
+
+.size-description {
+  font-size: 17px;
+  margin-bottom: -10px;
+  margin-top: 10px;
 }
 
 .badges-hs {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   color: #fff;
-  margin-bottom: -50;
+  margin-bottom: -50px;
   margin-left: 4em;
 }
 
 .hz-description {
-  margin-left: 20px;
+  margin-left: 5px;
+  font-size: 12px;
+  margin-bottom: -20px;
 }
+
 
 /* TODO: no borrar estos estilos */
 /* .column {
@@ -417,6 +428,15 @@
   /* page-break-before: always !important; */
   /* margin-top: 50px; */
 }
+
+.validation-title {
+  page-break-inside: avoid !important;
+}
+
+.validation-title-val {
+  page-break-inside: avoid !important;
+}
+
 /* FIXME:*/
 
 .activity-type-img {
@@ -596,14 +616,6 @@
   line-height: 20px;
   letter-spacing: 0.25px;
   text-align: left;
-}
-
-.validation-title {
-  page-break-inside: avoid !important;
-}
-
-.validation-title-val {
-  page-break-inside: avoid !important;
 }
 
 .lot-pic-text {
