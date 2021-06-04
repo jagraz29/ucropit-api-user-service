@@ -187,7 +187,11 @@ class CropsController {
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    const dataCrop = calculateDataCropUtils(crop, activities, theoriticalPotential)
+    const dataCrop = calculateDataCropUtils(
+      crop,
+      activities,
+      theoriticalPotential
+    )
 
     const dataPdf = {
       crop: dataCrop,

@@ -32,8 +32,12 @@ export const calculateDataCropUtils = (
     ),
     pay,
     dateCrop,
-    commercialContact: company ? getCommercialContact(company,theoriticalPotential) : null,
-    cultivationManager: members.length ? getCultivationManager(members[0]) : null,
+    commercialContact: company
+      ? getCommercialContact(company, theoriticalPotential)
+      : null,
+    cultivationManager: members.length
+      ? getCultivationManager(members[0])
+      : null,
     name,
     badges,
     eiq: Numbers.roundToTwo(eiq),
@@ -49,11 +53,24 @@ export const calculateDataCropUtils = (
 }
 
 export const getCultivationManager = ({ user }) => {
-  const { email, firstName , lastName, phone } = user
-  return { email, firstName , lastName, phone }
+  const { email, firstName, lastName, phone } = user
+  return { email, firstName, lastName, phone }
 }
 
 export const getCommercialContact = (company, theoriticalPotential) => {
-  const { identifier, name , address, addressFloor } = company
-  return { identifier, name , address, addressFloor, theoriticalPotential }
+  const { identifier, name, address, addressFloor, contacts } = company
+  const {
+    user: { email, firstName, lastName, phone }
+  } = contacts.length ? contacts[0] : []
+  return {
+    identifier,
+    name,
+    address,
+    addressFloor,
+    theoriticalPotential,
+    email,
+    firstName,
+    lastName,
+    phone
+  }
 }

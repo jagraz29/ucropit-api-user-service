@@ -113,19 +113,21 @@
                         <h5 class="spokesman-title">
                             Responsable del cultivo
                         </h5>
-                        <h3 class="spokesman-name">{{crop.company.name}}</h3>
-                        <div class="spokesman-data">{{crop.company.phone}}</div>
-                        <div class="spokesman-data">{{crop.company.email}}</div>
+                        <h3 class="spokesman-name">{{crop.cultivationManager.firstName}} {{crop.cultivationManager.lastName}}</h3>
+                        <div class="spokesman-data">{{crop.cultivationManager.phone}}</div>
+                        <div class="spokesman-data">{{crop.cultivationManager.email}}</div>
                     </div>
-                    <div class="spokesman">
-                        <h5 class="spokesman-title">
-                            Contacto comercial
-                        </h5>
-                        <h3 class="spokesman-name">{{crop.company.name}}</h3>
-                        <div class="spokesman-data">Potencial Teórico {{theoriticalPotential}} ton</div>
-                        <div class="spokesman-data">{{crop.company.phone}}</div>
-                        <div class="spokesman-data">{{crop.company.email}}</div>
-                    </div>
+                    {{#if crop.commercialContact}}
+                        <div class="spokesman">
+                            <h5 class="spokesman-title">
+                                Contacto comercial
+                            </h5>
+                            <h3 class="spokesman-name">{{crop.commercialContact.firstName}} {{crop.commercialContact.lastName}}</h3>
+                            <div class="spokesman-data">Potencial Teórico {{theoriticalPotential}} ton</div>
+                            <div class="spokesman-data">{{crop.commercialContact.phone}}</div>
+                            <div class="spokesman-data">{{crop.commercialContact.email}}</div>
+                        </div>
+                    {{/if}}
                 </div>
                 {{!-- TODO: aqui cierra la seccion de datos --}}
 
