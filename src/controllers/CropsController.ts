@@ -248,11 +248,6 @@ class CropsController {
       return res.status(StatusCodes.BAD_REQUEST).json(validationDuplicateName.code)
     }
 
-    data.reusableLots = [ {
-      tag: 'Test Unico',
-      lotIds: [ '6011c48d07a7c744fd49bc80', '6011c48d07a7c744fd49bc81' ]
-    } ]
-
     if (data.reusableLots) {
       const { identifier, dateCrop } = data
       const reusableLots: string[] = flatten(map(data.reusableLots, 'lotIds'))
