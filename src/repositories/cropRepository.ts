@@ -244,6 +244,11 @@ export class CropRepository {
     return cropsInstance.length ? cropsInstance : null
   }
 
+  public static async findCropsWithLotsPopulateData (query) {
+    const crops = await Crop.find(query).populate('lots.data')
+    return crops
+  }
+
   public static async findAllEvidencesByCropId(cropId: string) {
     const cropsInstance = await Crop.findById(cropId)
       .populate({

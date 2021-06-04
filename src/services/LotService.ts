@@ -5,6 +5,7 @@ import flatten from 'lodash/flatten'
 import * as geolib from 'geolib'
 import _ from 'lodash'
 import axios from 'axios'
+import moment from 'moment'
 
 import ServiceBase from './common/ServiceBase'
 import { handleFileConvertJSON } from '../utils/ParseKmzFile'
@@ -19,26 +20,37 @@ interface ILot {
 }
 
 class LotService extends ServiceBase {
+
+  public static async search (query) {
+    const lots = await Lot.find(query)
+    return lots
+  }
+
+  public static async count (query) {
+    const count = await Lot.countDocuments(query)
+    return count
+  }
+
   public static async store (req: Request, lotsNames) {
     const jsonParserKmz = await handleFileConvertJSON(req.files)
 
     const filterLots = lotsNames.map(itemName => {
       return jsonParserKmz
-        .map(item => {
-          const lotsFilter = item.features.filter(item => {
-            return (
-              itemName.names.filter(select => select === item.properties.name)
-                .length > 0
-            )
-          })
-
-          if (lotsFilter.length > 0) {
-            return { lotsFilter, tag: itemName.tag }
-          }
-
-          return undefined
+      .map(item => {
+        const lotsFilter = item.features.filter(item => {
+          return (
+            itemName.names.filter(select => select === item.properties.name)
+              .length > 0
+          )
         })
-        .filter(kmzLotItem => kmzLotItem)
+
+        if (lotsFilter.length > 0) {
+          return { lotsFilter, tag: itemName.tag }
+        }
+
+        return undefined
+      })
+      .filter(kmzLotItem => kmzLotItem)
     })
 
     const flattListLotFilter = this.getArrayLotsGroupTag(_.flatten(filterLots))
@@ -47,6 +59,7 @@ class LotService extends ServiceBase {
 
     return lots
   }
+
   /**
    * To create a Lots when given items filter to Kmz/Kml file and lots are selected.
    *
@@ -196,7 +209,7 @@ class LotService extends ServiceBase {
         tagIndex = lotItem.tag
       } else {
         const index = LotArrayFilter.findIndex(x => x.tag === lotItem.tag)
-        LotArrayFilter[index].lots.push(
+        LotArrayFilter[ index ].lots.push(
           this.getArrayLotData(lotItem.lotsFilter)
         )
       }
@@ -206,7 +219,7 @@ class LotService extends ServiceBase {
   }
 
   private static getArrayLotData (lotFilter) {
-    return Array.isArray(lotFilter) ? lotFilter : [lotFilter]
+    return Array.isArray(lotFilter) ? lotFilter : [ lotFilter ]
   }
 
   /**
@@ -218,8 +231,8 @@ class LotService extends ServiceBase {
     return geolib.getCenter(
       area.map(element => {
         return {
-          latitude: element[1],
-          longitude: element[0]
+          latitude: element[ 1 ],
+          longitude: element[ 0 ]
         }
       })
     )
@@ -236,8 +249,8 @@ class LotService extends ServiceBase {
 
     area.map(element => {
       let elementCoords: any = {
-        latitude: element[1],
-        longitude: element[0]
+        latitude: element[ 1 ],
+        longitude: element[ 0 ]
       }
 
       let distance = geolib.getDistance(centroid, elementCoords)
@@ -280,7 +293,7 @@ class LotService extends ServiceBase {
       city: ''
     }
 
-    responseReverseGeocoding[0].address_components.map(addressComponent => {
+    responseReverseGeocoding[ 0 ].address_components.map(addressComponent => {
       if (addressComponent.types.indexOf('country') !== -1) {
         locationData.country = addressComponent.long_name
       }
@@ -338,22 +351,22 @@ class LotService extends ServiceBase {
 
     let responseStaticImage: any
 
-    try{
+    try {
       responseStaticImage = await axios(axiosStaticImageConfig)
-    }catch(error){
+    } catch (error) {
       console.log('ERROR GET SATELITE IMAGE')
       console.log(error)
-      return false
+      return null
     }
 
     let imagePath = path + '/' + fileName
 
     await new Promise((resolve: any) => {
       responseStaticImage.data
-        .pipe(fs.createWriteStream(imagePath))
-        .on('close', () => {
-          resolve()
-        })
+      .pipe(fs.createWriteStream(imagePath))
+      .on('close', () => {
+        resolve()
+      })
     })
 
     return imagePath
@@ -370,86 +383,141 @@ class LotService extends ServiceBase {
   /**
    * To store lot sattelital image and country, province and city.
    *
-   * @param companies
+   * @param lots
    *
    * @returns Array
    */
-  public static async storeLotImagesAndCountries (companies: Array<any>) {
-    const newCompanies: any = await Promise.all(
-      companies.map(async lots => {
-        let newLots: any = {
-          ...lots
+  public static async storeLotImagesAndCountriesWithPopulate (lots: Array<any>) {
+    const newLots: any = await Promise.all(
+      lots.map(async currentLot => {
+        let newLot: any = {
+          ...currentLot
         }
 
-        newLots.data = await Promise.all(
-          lots.data.map(async (lot, index) => {
-            if (lot.image?.normal) return lot
+        newLot.data = await Promise.all(
+          currentLot.data.map(async (lotInData, index) => {
+            if (lotInData.image?.normal) return lotInData
 
-            let newLot: any = {}
+            const locationData = await this.findImagesAndCountriesGeographics(lotInData)
 
-            const centroid: any = this.getCentroid(lot.area)
+            const newLotInData = { ...lotInData, ...locationData }
 
-            const locationData: any = await this.getLocationData(
-              centroid.latitude,
-              centroid.longitude
-            )
+            this.updateLotWithImagesAndCountries(newLotInData)
 
-            const zoom = this.calculateZoomForStaticMap(centroid, lot.area)
-
-            const staticMapImageUrl: string = StaticMapService.getStaticMapImageUrl(
-              {
-                center: {
-                  latitude: centroid.latitude,
-                  longitude: centroid.longitude
-                },
-                maptype: 'satellite',
-                zoom: zoom,
-                size: '250x250',
-                path: {
-                  fillcolor: '0xAA000033',
-                  color: '0xff0000ff',
-                  weight: 1,
-                  area: lot.area
-                }
-              }
-            )
-
-            const imagePath: string | boolean = await this.downloadStaticMap(
-              staticMapImageUrl,
-              'public/uploads/map-static/' + lot._id,
-              'normal.png'
-            )
-
-            const dataToUpdate: any = {
-              countryName: locationData.country,
-              provinceName: locationData.province,
-              cityName: locationData.city,
-              image: {
-                normal: imagePath ? imagePath.replace('public', '') : ''
-              }
-            }
-
-            await Lot.updateOne({ _id: lot._id }, { $set: dataToUpdate })
-
-            newLot = {
-              ...lot,
-              countryName: locationData.country,
-              provinceName: locationData.province,
-              cityName: locationData.city,
-              image: {
-                normal: imagePath ? imagePath.replace('public', '') : ''
-              }
-            }
-
-            return newLot
+            return newLotInData
           })
         )
 
-        return newLots
+        return newLot
       })
     )
 
-    return newCompanies
+    return newLots
+  }
+
+  public static async lotImagesAndCountriesSample (lots: Array<any>) {
+    const newLots: any = await Promise.all(
+      lots.map(async currentLot => {
+
+        let locationData = await this.findImagesAndCountriesGeographics(currentLot.toJSON())
+
+        let newLot: any = {
+          ...currentLot.toJSON(),
+          ...locationData
+        }
+
+        if (!newLot.image) this.updateLotWithImagesAndCountries(newLot)
+
+        return newLot
+      })
+    )
+
+    return newLots
+  }
+
+  private static async findImagesAndCountriesGeographics (lot) {
+    const centroid: any = this.getCentroid(lot.area)
+
+    const locationData: any = await this.getLocationData(
+      centroid.latitude,
+      centroid.longitude
+    )
+
+    const zoom = this.calculateZoomForStaticMap(centroid, lot.area)
+
+    const staticMapImageUrl: string = StaticMapService.getStaticMapImageUrl(
+      {
+        center: {
+          latitude: centroid.latitude,
+          longitude: centroid.longitude
+        },
+        maptype: 'satellite',
+        zoom: zoom,
+        size: '250x250',
+        path: {
+          fillcolor: '0xAA000033',
+          color: '0xff0000ff',
+          weight: 1,
+          area: lot.area
+        }
+      }
+    )
+
+    const imagePath: string = await this.downloadStaticMap(
+      staticMapImageUrl,
+      'public/uploads/map-static/' + lot._id,
+      'normal.png'
+    )
+
+    const { country, province, city } = locationData
+
+    const response: any = {
+      countryName: country,
+      provinceName: province,
+      cityName: city,
+      image: {
+        normal: imagePath ? imagePath.replace('public', '') : ''
+      }
+    }
+
+    return response
+  }
+
+  private static updateLotWithImagesAndCountries (lot) {
+    const { countryName, provinceName, cityName, image } = lot
+    const dataToUpdate: any = {
+      countryName,
+      provinceName,
+      cityName,
+      image
+    }
+
+    Lot.updateOne({ _id: lot._id }, { $set: dataToUpdate }).exec()
+
+  }
+
+  public static omitFieldsInLot (lot, fields) {
+    return _.omit(lot, fields)
+  }
+
+  public static async parseLotByTagInCropsWithDataPopulate (cropsList, currentDateCrop) {
+    const omitFields = [ 'status', 'area', 'coordinates', 'coordinateForGoogle', 'centerBound', 'centerBoundGoogle', '__v', 'id' ]
+    let results = []
+    for (let crop of cropsList) {
+      const { dateCrop, dateHarvest } = crop
+      const lotList = await this.storeLotImagesAndCountriesWithPopulate(crop.toJSON().lots)
+      const lotsInData = _.flatten(_.map(lotList, 'data'))
+      const disabled = moment(currentDateCrop).isBefore(dateHarvest)
+      const lots = lotsInData.map(lot => Object.assign(_.omit(lot, omitFields), { disabled, dateCrop, dateHarvest }))
+      results.push({
+        _id: lotList[ 0 ]._id,
+        tag: lotList[ 0 ].tag,
+        totalSurface: _.sumBy(lotsInData, 'surface'),
+        disabled: _.every(lots, 'disabled'),
+        lots
+      })
+    }
+    return results
   }
 }
 
