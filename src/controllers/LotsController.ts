@@ -138,9 +138,7 @@ class LotsController {
     let cropsList = await CropRepository.findCropsWithLotsPopulateData(query)
     let results = await LotService.parseLotByTagInCropsWithDataPopulate(cropsList, dateCrop)
 
-    res.json({
-      results
-    })
+    return res.status(StatusCodes.OK).json(results)
   }
 
 }
