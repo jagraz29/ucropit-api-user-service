@@ -12,7 +12,7 @@ import { CropRepository } from '../repositories'
 import { PDFService } from '../services'
 import {
   getActivitiesOrderedByDateUtils,
-  calculateDataCropUtils,
+  getCropUtils,
   calculateTheoreticalPotentialUtils,
   calculateCropVolumeUtils,
   getCropBadgesByUserType
@@ -182,7 +182,7 @@ class CropsController {
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    const dataCrop = calculateDataCropUtils(crop, activities)
+    const dataCrop = getCropUtils(crop, activities)
 
     const dataPdf = {
       dataCrop,

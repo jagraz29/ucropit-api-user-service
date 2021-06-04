@@ -1,4 +1,4 @@
-export * from './calculateDataCropUtils'
+export * from './getCropUtils'
 export * from './calculateCropVolumeUtils'
 export * from './sumActivitiesSurfacesByTypeAgreementUtils'
 export * from './getCropBadgesReachedUtils'

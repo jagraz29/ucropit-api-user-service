@@ -2,7 +2,7 @@ import { Numbers } from '../Numbers'
 import { calculateCropVolumeUtils } from './calculateCropVolumeUtils'
 import { getLots } from '../lots'
 
-export const calculateDataCropUtils = ({
+export const getCropUtils = ({
     surface,
     pay: payEntry,
     dateCrop,
