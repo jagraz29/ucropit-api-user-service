@@ -298,10 +298,6 @@ class CropsController {
 
     }
 
-    return res.status(400).json({
-      error: true
-    })
-
     company = (await CompanyService.search({ identifier }))[ 0 ]
 
     let lots = await LotService.store(req, data.lots)
