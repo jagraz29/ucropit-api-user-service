@@ -16,7 +16,9 @@ import {
   calculateDataCropUtils,
   calculateTheoreticalPotentialUtils,
   calculateCropVolumeUtils,
-  getCropBadgesByUserType, validateLotsReusable
+  getCropBadgesByUserType,
+  validateLotsReusable,
+  parseLotsReusableAsData
 } from '../utils'
 
 import {
@@ -27,7 +29,6 @@ import {
 
 import { UserSchema } from '../models/user'
 import { errors } from '../types/common'
-import path from 'path'
 import moment from 'moment'
 
 const Crop = models.Crop
@@ -247,13 +248,20 @@ class CropsController {
       return res.status(StatusCodes.BAD_REQUEST).json(validationDuplicateName.code)
     }
 
+    data.reusableLots = [ {
+      tag: 'Test Unico',
+      lotIds: [ '6011c48d07a7c744fd49bc80', '6011c48d07a7c744fd49bc81' ]
+    } ]
+
     if (data.reusableLots) {
       const { identifier, dateCrop } = data
       const reusableLots: string[] = flatten(map(data.reusableLots, 'lotIds'))
       const query = {
         identifier,
-        dateHarvest: { $lt: new Date(dateCrop.toString()) },
-        'lots.data': { $in: reusableLots }
+        dateHarvest: { $gt: new Date(dateCrop.toString()) },
+        $where: function () {
+          return (this.lots.length > 0)
+        }
       }
       const cropsList = await CropRepository.findCropsSample(query)
       const lotsNotAvailable = validateLotsReusable(reusableLots, cropsList)
@@ -277,8 +285,9 @@ class CropsController {
       user
     )
 
-    if (data.lotsReusable) {
-      lots = lots.concat(data.lotsReusable)
+    if (data.reusableLots) {
+
+      lots = lots.concat(parseLotsReusableAsData(data.reusableLots))
     }
 
     const crop = await CropService.handleDataCrop(
@@ -288,6 +297,8 @@ class CropsController {
       activities,
       { members: req.user }
     )
+
+    console.log(crop)
 
     res.status(201).json(crop)
   }
