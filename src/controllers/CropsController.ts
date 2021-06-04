@@ -179,18 +179,15 @@ class CropsController {
     }
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
 
-    console.log(crops[0])
-
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
 
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    const dataCrop = calculateDataCropUtils(crop, activities)
+    const dataCrop = calculateDataCropUtils(crop, activities, theoriticalPotential)
 
     const dataPdf = {
-      dataCrop,
-      theoriticalPotential,
+      crop: dataCrop,
       activities,
       dateCreatePdf: moment().format('DD/MM/YYYY')
     }

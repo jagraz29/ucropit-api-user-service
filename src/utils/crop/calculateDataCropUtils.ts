@@ -14,9 +14,11 @@ export const calculateDataCropUtils = (
     badges,
     unitType,
     data,
+    members,
     cropType: { key: cropTypeKey }
   },
-  activitiesWithEiq
+  activitiesWithEiq,
+  theoriticalPotential
 ): Object => {
   const pay = payEntry ?? 0
   let eiq: number = 0
@@ -30,6 +32,8 @@ export const calculateDataCropUtils = (
     ),
     pay,
     dateCrop,
+    commercialContact: company ? getCommercialContact(company,theoriticalPotential) : null,
+    cultivationManager: members.length ? getCultivationManager(members[0]) : null,
     name,
     badges,
     eiq: Numbers.roundToTwo(eiq),
@@ -42,4 +46,14 @@ export const calculateDataCropUtils = (
       ? getLotsGroupByTag(lots, activitiesWithEiq)
       : []
   }
+}
+
+export const getCultivationManager = ({ user }) => {
+  const { email, firstName , lastName, phone } = user
+  return { email, firstName , lastName, phone }
+}
+
+export const getCommercialContact = (company, theoriticalPotential) => {
+  const { identifier, name , address, addressFloor } = company
+  return { identifier, name , address, addressFloor, theoriticalPotential }
 }
