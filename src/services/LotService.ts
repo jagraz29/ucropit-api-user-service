@@ -398,20 +398,13 @@ class LotService extends ServiceBase {
           currentLot.data.map(async (lotInData, index) => {
             if (lotInData.image?.normal) return lotInData
 
-            let newlotInData: any = {}
+            const locationData = await this.findImagesAndCountriesGeographics(lotInData)
 
-            let locationData = await this.findImagesAndCountriesGeographics(lotInData)
-            newlotInData = {
-              ...lotInData,
-              countryName: locationData.country,
-              provinceName: locationData.province,
-              cityName: locationData.city,
-              image: locationData.image
-            }
+            const newLotInData = { ...lotInData, ...locationData }
 
-            this.updateLotWithImagesAndCountries(newlotInData)
+            this.updateLotWithImagesAndCountries(newLotInData)
 
-            return newlotInData
+            return newLotInData
           })
         )
 
@@ -476,10 +469,12 @@ class LotService extends ServiceBase {
       'normal.png'
     )
 
+    const { country, province, city } = locationData
+
     const response: any = {
-      countryName: locationData.country,
-      provinceName: locationData.province,
-      cityName: locationData.city,
+      countryName: country,
+      provinceName: province,
+      cityName: city,
       image: {
         normal: imagePath ? imagePath.replace('public', '') : ''
       }
@@ -489,12 +484,12 @@ class LotService extends ServiceBase {
   }
 
   private static updateLotWithImagesAndCountries (lot) {
-
+    const { countryName, provinceName, cityName, image } = lot
     const dataToUpdate: any = {
-      countryName: lot.countryName,
-      provinceName: lot.provinceName,
-      cityName: lot.cityName,
-      image: lot.image
+      countryName,
+      provinceName,
+      cityName,
+      image
     }
 
     Lot.updateOne({ _id: lot._id }, { $set: dataToUpdate }).exec()
