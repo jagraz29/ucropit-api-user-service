@@ -170,6 +170,15 @@ router.get('/:id/activities', cropsController.getCropWithActivities)
  *                              type: string
  *                         tag:
  *                           type: string
+ *                  reusableLots:
+ *                    items:
+ *                      type: object
+ *                      properties:
+ *                        lotIds:
+ *                          items:
+ *                            type: string
+ *                        tag:
+ *                           type: string
  *                  unitType:
  *                    type: string
  *                  company:
