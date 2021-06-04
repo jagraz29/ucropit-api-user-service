@@ -1,7 +1,7 @@
 export const validateLotsReusable = (cropsWithLots, cropsList): string[] => {
   let results = []
-  for (crops of cropsList) {
-
-  }
+  // for (crop of cropsList) {
+  //
+  // }
   return results
 }
