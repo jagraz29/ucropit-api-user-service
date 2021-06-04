@@ -32,6 +32,18 @@ export const exitsLotsReusableInCollectionLots = (identifier, reusableLots): obj
       identifier
     }
   }, {
+    $redact: {
+      $cond: {
+        if: {
+          $gt: [ {
+            $size: [ '$lots' ]
+          }, 0 ]
+        },
+        then: '$$KEEP',
+        else: '$$PRUNE'
+      }
+    }
+  }, {
     $unwind: '$lots'
   }, {
     $unwind: '$lots.data'
