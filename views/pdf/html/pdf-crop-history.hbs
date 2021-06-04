@@ -8,7 +8,7 @@
     <body>
          <div class="end-page">
                     <div class="fill">
-                                {{#switch dataCrop.cropTypeKey}}
+                                {{#switch crop.cropTypeKey}}
                                 {{#case "corn"}} <svg class="bigLogoContainer" viewBox="0 0 34 34">
                                     <path class="bigLogo"
                                         d="M15.3334 16.9999H11.7C13.0334 17.8333 14.25 18.7833 15.3334 19.7999V16.9999ZM8.66671 15.3333C9.11671 6.79992 12.6167 0.333252 17 0.333252C21.4334 0.333252 24.95 6.89992 25.3334 15.5333C27.8334 14.3833 30.6167 13.6666 33.6667 13.6666C24.0834 17.9499 27.4167 33.6666 17 33.6666C7.00004 33.6666 10.2167 17.9499 0.333374 13.6666C3.36671 13.6666 6.16671 14.3333 8.66671 15.3333ZM15.3334 15.3333V11.9999H10.7334L10.3834 15.3333H15.3334ZM15.3334 10.3333V6.99992H12.0834C11.6667 7.99992 11.3334 9.11659 11.05 10.3333H15.3334ZM15.3334 5.33325V2.49992C14.4167 3.04992 13.5834 4.03325 12.8334 5.33325H15.3334ZM17 1.99992V5.33325H18.6667V6.99992H17V10.3333H20.3334V11.9999H17V15.3333H22V16.9999H17V20.3333H20.3334V21.9999H17.3834C19.3667 24.4166 20.5834 26.9999 20.8667 29.0499C22.5167 26.2666 23.6 21.7333 23.6667 16.5999C23.5667 8.66659 20.55 1.99992 17 1.99992Z" />
@@ -57,11 +57,11 @@
                                 <div>
                                     <div class="binnacle">
                                         Historia de cultivo al {{ dateCreatePdf }}<br>
-                                        {{ moment dateCrop format="MM-YYYY" }} - {{ moment dateHarvest format="MM-YYYY" }}
+                                        {{ moment crop format="MM-YYYY" }} - {{ moment dateHarvest format="MM-YYYY" }}
                                     </div>
 
                                     <div class="text-title">
-                                        {{dataCrop.name}} <br>{{moment dataCrop.dateCrop format="DD/MM/YYYY"}}
+                                        {{crop.name}} <br>{{moment crop.crop format="DD/MM/YYYY"}}
                                     </div>
                                     <div class="text-company">
                                         {{company}}
@@ -69,17 +69,17 @@
                                 </div>
                                 {{!-- <div class="eiq">
                                     <div class="center">
-                                        EIQ: {{dataCrop.eiq}}
+                                        EIQ: {{crop.eiq}}
                                     </div>
                                 </div> --}}
                                 <div class="dataContainer">
                                     <div class="dataNames">Sup Neta</div>
-                                    <div class="dataValue">{{dataCrop.surface}} has</div>
+                                    <div class="dataValue">{{crop.surface}} has</div>
                                     <div class="dataNames">Rinde</div>
-                                    <div class="dataValue">{{dataCrop.pay}} Kgs/ha</div>
+                                    <div class="dataValue">{{crop.pay}} Kgs/ha</div>
                                     <div>
                                         <div class="dataNames">Volumen</div>
-                                        <div class="dataValue">{{dataCrop.volume}} Ton</div>
+                                        <div class="dataValue">{{crop.volume}} Ton</div>
                                     </div>
                                 </div>
                                 {{#each activities}}
@@ -94,7 +94,7 @@
 
                             {{!-- TODO: Insignias --}}
                             <div class="badges">
-                                {{#each dataCrop.badges}}
+                                {{#each crop.badges}}
                                  <div class="badges-description" >
                                     <img src={{badge.imagePath}} class="badges-image" />
                                         <div class="hz-description" >
@@ -113,18 +113,18 @@
                         <h5 class="spokesman-title">
                             Responsable del cultivo
                         </h5>
-                        <h3 class="spokesman-name">{{dataCrop.company.name}}</h3>
-                        <div class="spokesman-data">{{dataCrop.company.phone}}</div>
-                        <div class="spokesman-data">{{dataCrop.company.email}}</div>
+                        <h3 class="spokesman-name">{{crop.company.name}}</h3>
+                        <div class="spokesman-data">{{crop.company.phone}}</div>
+                        <div class="spokesman-data">{{crop.company.email}}</div>
                     </div>
                     <div class="spokesman">
                         <h5 class="spokesman-title">
                             Contacto comercial
                         </h5>
-                        <h3 class="spokesman-name">{{dataCrop.company.name}}</h3>
+                        <h3 class="spokesman-name">{{crop.company.name}}</h3>
                         <div class="spokesman-data">Potencial Teórico {{theoriticalPotential}} ton</div>
-                        <div class="spokesman-data">{{dataCrop.company.phone}}</div>
-                        <div class="spokesman-data">{{dataCrop.company.email}}</div>
+                        <div class="spokesman-data">{{crop.company.phone}}</div>
+                        <div class="spokesman-data">{{crop.company.email}}</div>
                     </div>
                 </div>
                 {{!-- TODO: aqui cierra la seccion de datos --}}
@@ -339,14 +339,14 @@
                 
                 {{/each}}
     {{!-- FIXME: aqui cierra actividades de validaciones --}}
-                        {{#each dataCrop.lotsGroupByTag}}
+                        {{#each crop.lotsGroupByTag}}
                         <div class="activity-header">
                                 <img class="activity-type-img" src="https://www.pngrepo.com/png/111305/180/tryptic-brochure.png" width="26"
                                     height="26" />
                                 <div class="activity-title">{{tag}} Lotes - {{lotsQuantity}} ({{surface}} has.)</div>
                                 <div class="activity-frame">
                                     <div class="date-activity">
-                                        <div class="activity-lots">{{dataCrop.lotsQuantity}} Lotes</div>
+                                        <div class="activity-lots">{{crop.lotsQuantity}} Lotes</div>
                                         {{#each lots}}
                                              <div class="spokesman-data">{{provinceName}} ({{surface}} has.)</div>
                                         {{/each}}
