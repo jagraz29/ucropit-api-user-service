@@ -18,7 +18,7 @@ import {
   calculateCropVolumeUtils,
   getCropBadgesByUserType,
   validateLotsReusable,
-  parseLotsReusableAsData
+  parseLotsReusableAsData, validateDateCropAndDateHarvest
 } from '../utils'
 
 import {
@@ -233,23 +233,30 @@ class CropsController {
     await validateCropStore(data)
     const validationKmz = await validateFormatKmz(req.files)
     const validationDuplicateName = validateNotEqualNameLot(data.lots)
-
-    let company = null
+    const validateDatesCropAndHarvest = validateDateCropAndDateHarvest(data.dateCrop, data.dateHarvest)
 
     if (validationKmz.error) {
       return res.status(StatusCodes.BAD_REQUEST).json({
-        error: true,
-        code: validationKmz.code,
-        message: validationKmz.message
+        ...validationKmz
       })
     }
 
     if (validationDuplicateName.error) {
-      return res.status(StatusCodes.BAD_REQUEST).json(validationDuplicateName.code)
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        ...validationDuplicateName
+      })
     }
 
+    if (validateDatesCropAndHarvest.error) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        ...validateDatesCropAndHarvest
+      })
+    }
+
+    let company = null
+    const { identifier, dateCrop } = data
+
     if (data.reusableLots) {
-      const { identifier, dateCrop } = data
       const reusableLots: string[] = flatten(map(data.reusableLots, 'lotIds'))
       const query = {
         identifier,
@@ -270,7 +277,7 @@ class CropsController {
       }
     }
 
-    company = (await CompanyService.search({ identifier: data.identifier }))[ 0 ]
+    company = (await CompanyService.search({ identifier }))[ 0 ]
 
     let lots = await LotService.store(req, data.lots)
 
@@ -292,8 +299,6 @@ class CropsController {
       activities,
       { members: req.user }
     )
-
-    console.log(crop)
 
     res.status(201).json(crop)
   }
