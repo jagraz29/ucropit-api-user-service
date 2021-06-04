@@ -447,9 +447,7 @@ export const validateDateCropAndDateHarvest = (dateCrop: string, dateHarvest: st
     return {
       error: true,
       message: 'La fecha de cultivo deber ser posterior a la actual',
-      code:
-        errors.find((error) => error.key === '003')?.code ||
-        'INVALID_DATE_CROP'
+      code: 'INVALID_DATE_CROP'
     }
   }
 
@@ -457,9 +455,7 @@ export const validateDateCropAndDateHarvest = (dateCrop: string, dateHarvest: st
     return {
       error: true,
       message: 'La fecha de cosecha deber ser posterior a la del cultivo',
-      code:
-        errors.find((error) => error.key === '003')?.code ||
-        'INVALID_DATE_HARVEST'
+      code: 'INVALID_DATE_HARVEST'
     }
   }
 
