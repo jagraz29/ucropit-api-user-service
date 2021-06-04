@@ -86,7 +86,7 @@
                                 {{#if @last}}
                                 <div class="lastActivity">
                                     <div class="last-frame">
-                                        <div class="lastActivity-title dataValue">Status: {{name}} {{status}}</div>
+                                        <div class="lastActivity-title dataValue">{{name}} {{status}}</div>
                                     </div>
                                 </div>
                                 {{/if}}
@@ -95,8 +95,13 @@
                             {{!-- TODO: Insignias --}}
                             <div class="badges">
                                 {{#each dataCrop.badges}}
-                                <img src={{badge.imagePath}} class="badges-image" />
-                                <p class="badges-description">{{badge.name.es}} {{surfaceTotal}}</p>
+                                 <div class="badges-description" >
+                                    <img src={{badge.imagePath}} class="badges-image" />
+                                        <div class="hz-description" >
+                                            <p class="size-description">{{badge.name.es}}</p>
+                                            <p>{{surfaceTotal}}</p>
+                                        </div> 
+                                    </div>  
                                 {{/each}}
                             </div>
 

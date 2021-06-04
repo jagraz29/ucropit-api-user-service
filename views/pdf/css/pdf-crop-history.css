@@ -106,7 +106,7 @@
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 22px;
   line-height: 24px;
   text-align: left;
   color: #ffffff;
@@ -129,20 +129,30 @@
   flex-direction: column-reverse;
   margin-left: 57%;
   margin-right: 50px;
-  margin-top: 50px;
+  margin-top: 90px;
 }
 
 .badges-description {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   color: #fff;
-  /* font-size: 20px; */
+  display: flex;
+  position: relative;
+}
+
+.badges-image {
+  width: 90px;
+  height: 90px;
+}
+
+.badges-hs {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #fff;
   margin-bottom: -50;
   margin-left: 4em;
 }
 
-.badges-image {
-  width: 60px;
-  padding-bottom: 20px;
+.hz-description {
+  margin-left: 20px;
 }
 
 /* TODO: no borrar estos estilos */
@@ -324,17 +334,23 @@
   text-align: left;
 }
 
+.size-description {
+  font-size: 20px;
+  margin-bottom: -10;
+}
+
 .crop-leaders {
   background: linear-gradient(
-    to bottom,
-    #4caf50 0%,
-    #4caf50 40%,
-    #ffffff 41%,
-    #ffffff 100%
-  );
+  to bottom,
+  #4caf50 0%,
+  #4caf50 40%,
+  #ffffff 41%,
+  #ffffff 100%
+);
   display: flex;
   justify-content: space-evenly;
   height: 400px;
+  margin-top: -100;
 }
 
 .spokesman {
