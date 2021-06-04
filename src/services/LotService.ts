@@ -509,11 +509,11 @@ class LotService extends ServiceBase {
     const omitFields = [ 'status', 'area', 'coordinates', 'coordinateForGoogle', 'centerBound', 'centerBoundGoogle', '__v', 'id' ]
     let results = []
     for (let crop of cropsList) {
-      const { dateHarvest } = crop
+      const { dateCrop, dateHarvest } = crop
       const lotList = await this.storeLotImagesAndCountriesWithPopulate(crop.toJSON().lots)
       const lotsInData = _.flatten(_.map(lotList, 'data'))
       const disabled = moment(currentDateCrop).isBefore(dateHarvest)
-      const lots = lotsInData.map(lot => Object.assign(_.omit(lot, omitFields), { disabled }))
+      const lots = lotsInData.map(lot => Object.assign(_.omit(lot, omitFields), { disabled, dateCrop, dateHarvest }))
       results.push({
         _id: lotList[ 0 ]._id,
         tag: lotList[ 0 ].tag,
