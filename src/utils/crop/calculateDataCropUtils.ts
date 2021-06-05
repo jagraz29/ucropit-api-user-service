@@ -59,13 +59,13 @@ export const getCultivationManager = ({ user }) => {
 
 export const getCommercialContact = (company, theoriticalPotential) => {
   const { identifier, name, address, addressFloor, contacts } = company
-  if (!contacts) {
+  if (!contacts && !contacts.length) {
     return null
   }
 
   const {
     user: { email, firstName, lastName, phone }
-  } = contacts.length ? contacts[0] : []
+  } = contacts[0]
   return {
     identifier,
     name,
