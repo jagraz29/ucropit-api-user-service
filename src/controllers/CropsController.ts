@@ -118,7 +118,9 @@ class CropsController {
   public async show(req: Request, res: Response) {
     const { id } = req.params
     const crop = await CropService.getCrop(id)
-    const lots = await LotService.storeLotImagesAndCountriesWithPopulate(crop.lots)
+    const lots = await LotService.storeLotImagesAndCountriesWithPopulate(
+      crop.lots
+    )
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
     const badges = getCropBadgesByUserType(req.user, crop)
@@ -198,6 +200,7 @@ class CropsController {
       activities,
       dateCreatePdf: moment().format('DD/MM/YYYY')
     }
+
     const nameFile = await PDFService.generatePdf(
       'pdf-crop-history',
       dataPdf,
