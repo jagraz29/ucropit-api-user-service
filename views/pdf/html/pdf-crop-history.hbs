@@ -189,7 +189,7 @@
                 {{!-- TODO: Aqui cierra acuerdos --}}
 
                 {{#each activities}}
-                    {{#if (or (is status 'REALIZADA') (is tag 'TERMINADA'))}}
+                    {{#if (or (is status 'REALIZADA') (is status 'TERMINADA'))}}
                             {{#if (or (is tag 'ACT_HARVEST') (is tag 'ACT_MONITORING'))}}
                         <div class="activity-header">
                             {{#switch tag}}
