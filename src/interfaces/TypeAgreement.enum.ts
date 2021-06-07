@@ -4,5 +4,6 @@ export enum TypeAgreement {
   COTTON_BETS= 'COTTON_BETS',
   EXPLO= 'EXPLO',
   FINAN= 'FINAN',
-  COMMER= 'COMMER'
+  COMMER= 'COMMER',
+  RESPONSIBLE_USE= 'RESPONSIBLE_USE',
 }

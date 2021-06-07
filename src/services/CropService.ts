@@ -473,7 +473,9 @@ class CropService extends ServiceBase {
         ]
       })
       .populate('members.user')
-      .lean()
+      .populate('badges.badge')
+      .populate('badges.typeAgreement')
+      .lean({ virtuals: true })
   }
   /**
    *
@@ -948,6 +950,7 @@ class CropService extends ServiceBase {
 
     return activityInstance.save()
   }
+
 }
 
 export default CropService

@@ -1,20 +1,33 @@
 import moment from 'moment'
-import { calculateCropVolumeUtils, Numbers } from '../'
-import { TypeActivitiesWithAchievements, TypeActivitiesWithOutAchievements, Achievement, TypeActivities } from '../../interfaces'
-import { getAchievements } from '../achievements'
+import {
+  calculateCropVolumeUtils,
+  Numbers,
+  getEvidencePdf,
+  getEvidenceImage,
+  getSignerList,
+  getAchievements,
+  getSuppliesAndTotalTypes
+} from '../'
+import {
+  TypeActivitiesWithAchievements,
+  TypeActivitiesWithOutAchievements,
+  Achievement,
+  TypeActivities
+} from '../../interfaces'
 
-export const getActivitiesOrderedByDateUtils = ({ activities }) => {
+export const getActivitiesOrderedByDateUtils = ({ activities, members }) => {
   const activitiesRes = activities
     .map(
       ({
         _id,
-        achievements,
+        achievements: achievementsParams,
         type: { tag: TypeActivity },
         signers,
         name,
         lots,
         surface,
         storages,
+        files,
         dateStart,
         dateEnd,
         typeAgreement,
@@ -26,22 +39,21 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
       }) => {
         let percent: number = 0
         let eiq: number = 0
-        let achievementsWithEiq: Achievement[] = []
+        let achievements: Achievement[] = []
         const pay = payEntry ?? 0
         const { key: keyUnitType, name: nameUnitType } = unitType || {}
 
         if (TypeActivity === TypeActivities.ACT_AGREEMENTS) {
           return null
         }
-
-        achievementsWithEiq = getAchievements(achievements)
-        eiq = achievementsWithEiq.length
-          ? achievementsWithEiq.reduce((a, b) => a + b.eiq, 0)
+        achievements = getAchievements(achievementsParams, members)
+        eiq = achievements.length
+          ? achievements.reduce((a, b) => a + b.eiq, 0)
           : 0
 
         if (TypeActivitiesWithAchievements[TypeActivity]) {
-          percent = achievements.length
-            ? achievements.reduce((a, b) => a + b.percent, 0)
+          percent = achievementsParams.length
+            ? achievementsParams.reduce((a, b) => a + b.percent, 0)
             : 0
         }
         if (TypeActivitiesWithOutAchievements[TypeActivity]) {
@@ -73,9 +85,13 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
           signedIf: !achievements.length
             ? signers.filter(({ signed }) => signed).length
             : null,
-          supplies,
+          signers: getSignerList(signers, members),
+          supplies: getSuppliesAndTotalTypes(supplies),
+          suppliesList: supplies,
           storages: storages ? getStorages(storages) : [],
-          achievements: achievementsWithEiq
+          achievements: achievements,
+          evidencesPdf: getEvidencePdf(files),
+          evidenceImages: getEvidenceImage(files)
         }
       }
     )
@@ -85,18 +101,19 @@ export const getActivitiesOrderedByDateUtils = ({ activities }) => {
     moment(a.dateOrder).diff(moment(b.dateOrder))
   )
 }
-
 const getStorages = (storages): Object[] => {
   return storages.map(
     ({
-       tonsHarvest,
-       storageType: {
-         name: { es: storageTypeName }
-       }
-     }) => {
+      tonsHarvest,
+      label,
+      storageType: {
+        name: { es: storageTypeName }
+      }
+    }) => {
       return {
         tonsHarvest,
-        storageTypeName
+        storageTypeName,
+        label
       }
     }
   )

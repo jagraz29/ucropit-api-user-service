@@ -18,10 +18,8 @@ export class FileDocumentRepository {
    *
    * @param dataFile
    */
-  public static async getFiles (cropId): Promise<Object[] | null> {
+  public static async getFiles (cropId): Promise<Array<FileDocumentProps> | null> {
     const fileDocumentInstance = await FileDocument.find({ cropId })
-    return fileDocumentInstance.length
-      ? fileDocumentInstance
-      : null
+    return fileDocumentInstance.length ? fileDocumentInstance : null
   }
 }

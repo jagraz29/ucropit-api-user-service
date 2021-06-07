@@ -2,6 +2,10 @@ import express from 'express'
 
 import lotsController from '../../controllers/LotsController'
 
+import {
+    getLotsPolicy
+} from '../../utils'
+
 const router: express.Router = express.Router()
 
 /**
@@ -20,6 +24,29 @@ const router: express.Router = express.Router()
  */
 router.get('/', lotsController.index)
 
+/**
+ * @swagger
+ * path:
+ *  /v1/lots/search-by-identifier:
+ *    get:
+ *      summary: Get all lots grouped by tag
+ *      tags: [Lots]
+ *      parameters:
+ *        - in: query
+ *          name: identifier
+ *        - in: query
+ *          name: dateCrop
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          produces:
+ *            - application/json
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.get('/search-by-identifier', [getLotsPolicy], lotsController.searchByIdentifier)
 /**
  * @swagger
  * path:

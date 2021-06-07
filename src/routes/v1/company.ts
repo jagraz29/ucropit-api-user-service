@@ -28,7 +28,7 @@ router.get('/', companiesController.index)
  * path:
  *  /v1/companies/{id}:
  *    get:
- *      summary: Show a company
+ *      summary: Get all company's lots
  *      tags: [Companies]
  *      parameters:
  *        - in: path

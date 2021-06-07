@@ -1,621 +1,756 @@
-@font-face {
-    font-family: 'Material Icons';
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
-    src: local('Material Icons'),
-      local('MaterialIcons-Regular'),
-      url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
-      url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
-      url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+@page {
+  size: A4;
+}
+@media print and (orientation: portrait) {
+  .end-page {
+    page-break-inside: always;
+    page-break-after: always;
+    page-break-before: always;
   }
 
-  .material-icons {
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;  /* Preferred icon size */
-    display: inline-block;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-  
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
-  
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
-  
-    /* Support for IE. */
-    font-feature-settings: 'liga';
+  .sheet-static {
+    border: none;
   }
-  
-.bigLogo {
-    fill: rgba(255, 255, 255, 0.5);
-  }
-  
-  .bigLogoContainer {
-    left: 1px;
-    width: 118px;
-    height: 118px;
-    fill: none;
-  }
-  
-  .eiq {
-    height: 30px;
-    width: 100px;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    color: #66bb6a;
-    border-radius: 100px;
-    background: #e8f5e9;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    padding-top: 5px;
-    margin-top: 50px;
-    margin-bottom: 20px;
-    margin-left: 50px;
-  }
-
-  .dataContainer {
-    display: flex;
-    flex-flow: column wrap;
-    align-content: left;
-    margin-left: 45px;
-    margin-top: 60px;
-  }
-  
-  
-  .dataNames {
-    padding-bottom: 5px;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    text-align: left;
-    color: #ffffff;
-    line-height: 14.32px;
-    letter-spacing: 0.15px;
-  }
-
-  .dataValue {
-    padding-bottom: 5px;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 24px;
-    text-align: left;
-    color: #ffffff;
-  }
-  
-  .dataMeasures {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 20px;
-    text-align: center;
-    letter-spacing: 0.25px;
-    color: #000000;
-  }
-  
-  .fill {
-    height: 600px;
-    width: 600px;
-    left: 0px;
-    top: 0px;
-    background-color: #4caf50;
-  }
-  
-  .column {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 100%;
-    flex: 1;
-    padding: 10px;
-  }
-  
-  .center {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    color: #66bb6a;
-  }
-  
-  .disclaimer {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-style: italic;
-    font-weight: normal;
-    font-size: 10px;
-    line-height: 12px;
-    clear: left;
-  }
-  
-  .qr {
-    display: flex;
-    width: 90px;
-    margin-top: -120px;
-    margin-bottom: 70px;
-    margin-right: -70px;
-    filter: invert(1);
-  }
-  
-  .text-title {
-    color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 20px;
-    font-style: bold;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: 0.15000000596046448px;
-    width: 299px;
-    height: 72px;
-    position: absolute;
-    vertical-align: top;
-    float: left;
-    top: 77px;
-    margin-top: 30px;
-    margin-left: 50px;
-  }
-  
-  .text-company {
-    color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 24px;
-    font-style: normal;
-    float: left;
-    position: absolute;
-    vertical-align: top;
-    left: 80px;
-    top: 125px;
-  }
-  
-  .binnacle {
-    color: #ffffff;
-    position: absolute;
-    margin-top: 30px;
-    margin-left: 50px;
-    font-size: 12px;
-    top: 57px;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    line-height: 16px;
-    letter-spacing: 2px;
-  }
-
-  .pvc{
-    display: flex !important;
-    flex-direction: column-reverse !important;
-    margin-top: -100em !important;
-    margin-right: -60%;
-    margin-left: auto;
-    align-content: flex-start;
-  }
-
-  .lot-description{
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    color: #fff;
-    font-size: 12px;
-    text-align: right;
-    margin-top: -50px;
-    padding-right: 30px;
-    margin-left: -50%;
-    margin-right: 40em;
 }
 
-  .lot-image{
-      width: 59px;
-      margin-left: 100px;
-      border-radius: 2px;
-      box-shadow: 9px -9px 0.9px #C8E6C9;
-  }
-  
-  
-  .lotValue {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 14, 32px;
-    float: right;
-    color: #ffffff;
-  }
-  
-  .background-shape {
-    height: 59px;
-    float: right;
-    offset: initial;
-    height: 57px;
-    width: 57px;
-    left: 5px;
-    top: -10px;
-    border-radius: 2px;
-    background: #c8e6c9;
-    offset: 10px 30px;
-  }
-  
-  .lot {
-    box-shadow: 15px -15px 0.9px #c8e6c9;
-  }
-  
-  .lotdiv {
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: row;
-    margin-bottom: 30px;
-    width: 80%;
-    height: 100%;
-  }
-  
-  .lot-location {
-    text-justify: inherit;
-  }
-  
-  .svg-hex {
-    width: 30%;
-    filter: drop-shadow(2px 0 0 #4caf50) drop-shadow(-2px 0 0 #4caf50)
-      drop-shadow(0 2px 0 #4caf50) drop-shadow(0 -2px 0 #4caf50)
-      drop-shadow(2px 0 0 #ffffff) drop-shadow(-2px 0 0 #ffffff)
-      drop-shadow(0 -2px 0 #ffffff) drop-shadow(0 2px 0 #ffffff);
-  }
-  
-  .div-svg {
-    position: relative;
-    left: 280px;
-    top: -250px;
-    vertical-align: top;
-    box-sizing: border-box;
-  }
-  
-  .div-text-badge {
-    position: relative;
-    left: 370px;
-    top: -320px;
-    color: #ffffff;
-  }
-  
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'), local('MaterialIcons-Regular'),
+    url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
+    url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
+    url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+}
 
-  .lastActivity {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    margin-top: 30px;
-    margin-left: 35px;
-    font-size: 14px;
-    display: flex !important;
-  }
-  
-  .last-frame {
-    color: #ffffff;
-  }
-  
-  .lastActivity-title {
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
 
-  .alm {
-    margin-bottom: 10px;
-  }
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
 
-  .ult {
-    margin-bottom: 10px;
-  }
-  
-  .badge-title {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 17px;
-    letter-spacing: 0.15000000596046448px;
-    text-align: left;
-  }
-  
-  .badge-info {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 12px;
-    letter-spacing: 1.5px;
-    text-align: left;
-  }
-  
-  .crop-leaders {
-    background: #4caf50;
-    background: linear-gradient(
-      to bottom,
-      #4caf50 0%,
-      #4caf50 40%,
-      #ffffff 41%,
-      #ffffff 100%
-    );
-    height: 170px;
-    width: 600px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-  }
-  
-  .spokesman {
-    height: fit-content;
-    width: 242px;
-    left: 0px;
-    top: 50px;
-    border-radius: 4px;
-    background: #f8f8f8;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    color: #333333;
-    text-align: left;
-  }
-  
-  .spokesman-title {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    line-height: 16px;
-    letter-spacing: 0.4000000059604645px;
-    margin-left: 10px;
-    margin-top: 10px;
-  }
-  
-  .spokesman-name {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: bold;
-    line-height: 22px;
-    margin-left: 10px;
-  }
-  
-  .spokesman-data {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: 0.25px;
-    margin-left: 10px;
-  }
-  
-  .inner-margin {
-    padding: 15px;
-  }
-  
-  .activity-header {
-    display: flex;
-    margin-top: -50px;
-  }
-  
-  .activity-type-img {
-    height: 29.749998092651367px;
-    width: 25.570831298828125px;
-    margin-left: 5px;
-  }
-  
-  .activity-title {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 22px;
-    font-style: normal;
-    padding-left: 10px;
-    font-weight: 600;
-    letter-spacing: 0.25px;
-    text-align: left;
-    padding-bottom: 10px;
-  }
-  
-  .activities {
-    width: 595px;
-    background-color: #ffffff;
-  }
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
 
-  .acuerdos {
-    width: 600px;
-    border-radius: 5px;
-    padding: 8px;
-    margin-left: 8px;
-    padding-left: 20px;
-    box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.3);
-    background-color: #f5f5f5;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20em;
-    
-  }
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
 
-  .cultivos-sustentables {
-    width: 600px;
-    border-radius: 2px;
-    padding: 8px;
-    margin-top: 10em !important;
-    box-shadow: 0px 1px 5px 0px rgb(0, 0, 0, 0.6);
-    background-color: #f5f5f5;
-    display: flex;
-    text-align: left;
-    flex-direction: column;
-    justify-content: left;
-    flex-wrap: wrap;
-    margin-bottom: 30px !important;
-    
-  }
+.fill {
+  background-color: #4caf50;
+  height: 700px;
+}
 
-  .uso-legal-semilla {
-    width: 600px;
-    border-radius: 2px;
-    padding: 8px;
-    margin-top: 5em;
-    box-shadow: 0px 1px 5px 0px rgb(0, 0, 0, 0.6);
-    background-color: #f5f5f5;
-    display: flex;
-    text-align: left;
-    flex-direction: column;
-    justify-content: left;
-    flex-wrap: wrap;
-    margin-bottom: 20em;
-    
-  }
+.bigLogo {
+  fill: rgba(255, 255, 255, 0.5);
+}
 
-  .activity-frame {
-    width: 600px;
-    border-radius: 2px;
-    padding: 8px;
-    margin-top: 40px;
-    box-shadow: 0px 1px 5px 0px rgb(0, 0, 0, 0.6);
-    background-color: #f8f8f8;
-    display: flex;
-    text-align: left;
-    flex-direction: column;
-    justify-content: left;
-    margin-bottom: 5em;
-    flex-wrap: wrap;
-    margin-bottom: 20em;
-  }
-  
-  .date-activity {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 16px;
-    letter-spacing: 1.5px;
-    text-align: left;
-    color: #333333;
-  }
-  
-  .activity-lots {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: 0.25px;
-    text-align: left;
-    padding-bottom: 10px;
-  }
-  
-  .activity-framed-h1 {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 22px;
-    letter-spacing: 0px;
-    text-align: left;
-  }
-  
-  .activity-validations {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    margin-left: auto;
-    width: fit-content;
-  }
-  
-  .backup-docs {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 16px;
-    letter-spacing: 0.4000000059604645px;
-    text-align: left;
-    color: rgba(51, 51, 51, 0.7);
-  }
-  
-  .card {
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
-    transition: 0.3s;
-    padding: auto;
-    padding-bottom: 20px;
+.bigLogoContainer {
+  width: 150px;
+  margin-bottom: -100px;
+  margin-top: 20px;
+  position: absolute;
+  margin-left: 30px;
+}
 
-  }
-  
-  .agreement-card {
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
-    transition: 0.3s;
-    padding-left: 10px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
+.eiq {
+  height: 30px;
+  width: 100px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #66bb6a;
+  border-radius: 100px;
+  background: #e8f5e9;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding-top: 5px;
+  margin-left: 100px;
+  align-items: center;
+  margin-top: 152px;
+  position: absolute;
+}
 
-  .validation-date {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: #c8e6c9;
-    color: #43a047;
-  }
-  
-  .validation-name {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: 0.25px;
-    text-align: left;
-  }
-  
-  .validation-title {
-    margin-bottom: 1em;
-  }
-  
-  .lot-pic-text {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 21px;
-    letter-spacing: 0.15000000596046448px;
-    text-align: left;
-  }
+.dataContainer {
+  position: absolute;
+  margin-left: 100px;
+  margin-top: 230px;
+}
 
-  .type-pic-card {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 20px;
-    letter-spacing: 0.25px;
-    text-align: left;
-    color: #4caf50;
-  }
-  
-  .applications {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 10px;
-    letter-spacing: 0.25px;
-    text-align: left;
-  }
-  
-  .applications-supply {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 20px;
-    letter-spacing: 0.25px;
-    text-align: left;
-  }
+.dataNames {
+  padding-bottom: 5px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  text-align: left;
+  color: #ffffff;
+  line-height: 14.32px;
+  letter-spacing: 0.15px;
+}
 
-  .activity-lots-frame{
-    display: table; clear: both;
-  }
-  .activity-lots-image{
-    width:100%;
-    height: fit-content;
-  }
-  .activity-frame-lots{
-    display: flex;
-    flex-wrap: wrap-reverse;
-    margin: 8;
-  }
+.dataValue {
+  padding-bottom: 5px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 24px;
+  text-align: left;
+  color: #ffffff;
+}
+
+.dataMeasures {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.25px;
+  color: #000000;
+}
+
+.badges {
+  position: absolute;
+  display: flex;
+  flex-direction: column-reverse;
+  margin-left: 57%;
+  margin-top: 90px;
+}
+
+.badges-description {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #fff;
+  display: flex;
+  position: relative;
+  margin-left: -10px;
+}
+
+.badges-image {
+  width: 80px;
+  height: 80px;
+  margin-left: -20px;
+}
+
+.size-description {
+  font-size: 17px;
+  margin-bottom: -10px;
+  margin-top: 10px;
+}
+
+.badges-hs {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #fff;
+  margin-bottom: -50px;
+  margin-left: 4em;
+}
+
+.hz-description {
+  margin-left: 5px;
+  font-size: 12px;
+  margin-bottom: -20px;
+}
+
+
+/* TODO: no borrar estos estilos */
+/* .column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  padding: 10px;
+} */
+
+.center {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  color: #66bb6a;
+}
+
+.disclaimer {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  clear: left;
+}
+
+.qr {
+  position: absolute;
+  width: 50px !important;
+  margin-top: 140px;
+  filter: invert(1);
+  margin-left: 50px;
+}
+
+.alm {
+  margin-bottom: 10px;
+  margin-top: -10px;
+}
+
+.ult {
+  margin-bottom: 10px;
+  margin-top: -10px;
+}
+
+.text-title {
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  width: 300px;
+  position: absolute;
+  top: 140px;
+  margin-left: 100px;
+}
+
+.text-company {
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  float: left;
+  position: absolute;
+  vertical-align: top;
+  left: 80px;
+  top: 125px;
+}
+
+.binnacle {
+  color: #ffffff;
+  position: absolute;
+  margin-left: 100px;
+  font-size: 12px;
+  top: 110px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: 2.5px;
+}
+
+.lotValue {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14, 32px;
+  float: right;
+  color: #ffffff;
+}
+
+.background-shape {
+  height: 59px;
+  float: right;
+  offset: initial;
+  height: 57px;
+  width: 57px;
+  left: 5px;
+  top: -10px;
+  border-radius: 2px;
+  background: #c8e6c9;
+  offset: 10px 30px;
+}
+
+.lot {
+  box-shadow: 15px -15px 0.9px #c8e6c9;
+}
+
+.lotdiv {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  margin-bottom: 30px;
+  width: 80%;
+  height: 100%;
+}
+
+.lot-location {
+  text-justify: inherit;
+}
+
+.svg-hex {
+  width: 30%;
+  filter: drop-shadow(2px 0 0 #4caf50) drop-shadow(-2px 0 0 #4caf50)
+    drop-shadow(0 2px 0 #4caf50) drop-shadow(0 -2px 0 #4caf50)
+    drop-shadow(2px 0 0 #ffffff) drop-shadow(-2px 0 0 #ffffff)
+    drop-shadow(0 -2px 0 #ffffff) drop-shadow(0 2px 0 #ffffff);
+}
+
+.div-svg {
+  position: relative;
+  left: 280px;
+  top: -250px;
+  vertical-align: top;
+  box-sizing: border-box;
+}
+
+.div-text-badge {
+  position: relative;
+  left: 370px;
+  top: -320px;
+  color: #ffffff;
+}
+
+.lastActivity {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  margin-top: 380px;
+  margin-left: 100px;
+  font-size: 14px;
+  line-height: 1.8;
+  text-align: left;
+  position: absolute;
+}
+
+.last-frame {
+  color: #ffffff;
+}
+
+.lastActivity-title {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.badge-title {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 17px;
+  letter-spacing: 0.15000000596046448px;
+  text-align: left;
+}
+
+.badge-info {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: 1.5px;
+  text-align: left;
+}
+
+.size-description {
+  font-size: 20px;
+  margin-bottom: -10;
+}
+
+.crop-leaders {
+  background: linear-gradient(
+    to bottom,
+    #4caf50 0%,
+    #4caf50 40%,
+    #ffffff 41%,
+    #ffffff 100%
+  );
+  display: flex;
+  justify-content: space-evenly;
+  height: 400px;
+  margin-top: -100;
+}
+
+.spokesman {
+  height: fit-content;
+  width: 242px;
+  border-radius: 4px;
+  background: #f8f8f8;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #333333;
+}
+
+.spokesman-title {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  letter-spacing: 0.4000000059604645px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.spokesman-name {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: bold;
+  margin-left: 10px;
+  margin-top: -18px;
+}
+
+.spokesman-data {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  margin-left: 10px;
+}
+
+.spokesman-data-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  /* font-style: normal; */
+  /* font-weight: 400; */
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  margin-left: 20px;
+}
+
+.inner-margin {
+  padding: 15px;
+}
+
+/* FIXME: Desde aca se controla el paginado */
+.activity-header {
+  page-break-inside: avoid;
+  /* page-break-after: always !important;
+  page-break-before: always !important; */
+}
+
+.activity-header-val {
+  /* page-break-after: always !important; */
+  /* page-break-inside: avoid; */
+  /* page-break-before: always !important; */
+  /* margin-top: 50px; */
+}
+
+.validation-title {
+  page-break-inside: avoid !important;
+}
+
+.validation-title-val {
+  page-break-inside: avoid !important;
+}
+
+/* FIXME:*/
+
+.activity-type-img {
+  height: 30px;
+  margin-left: 5px;
+  margin-top: 20px;
+  width: 30;
+}
+
+.activity-title {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 22px;
+  font-style: normal;
+  padding-left: 10px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-top: -26px;
+  page-break-inside: avoid;
+}
+
+.activity-frame {
+  border-radius: 2px;
+  padding: 8px;
+  box-shadow: 0px 0px 0px 2px rgb(0, 0, 0, 0.1);
+  background-color: #f8f8f8;
+  display: flex;
+  text-align: left;
+  flex-direction: column;
+  page-break-inside: avoid;
+}
+
+.activities {
+  page-break-inside: avoid;
+  background-color: #ffffff;
+}
+
+.activity-frame-actividades-validaciones {
+  border-radius: 2px;
+  margin-bottom: 20px;
+  box-shadow: 0px 0px 0px 2px rgb(0, 0, 0, 0.1);
+  background-color: #f8f8f8;
+  page-break-inside: avoid !important;
+  position: static;
+  width: 100%;
+  height: 30%;
+}
+
+.date-activity {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 1.5px;
+  text-align: left;
+  color: #333333;
+}
+
+.date-activity-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 1.5px;
+  color: #333333;
+  margin-left: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+/* TODO: No borrar */
+/* .activity-lots {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  text-align: left;
+  padding-bottom: 10px;
+} */
+
+.activity-lots {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  text-align: left;
+}
+
+.activity-lots-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  text-align: left;
+  margin-top: 25px;
+  margin-left: 20px;
+}
+
+.activity-framed-h1 {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.activity-validations {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  margin-left: 70%;
+  margin-top: -100px;
+  padding-right: 20px;
+  /* margin-bottom: 20px; */
+}
+
+.backup-docs {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.4000000059604645px;
+  text-align: left;
+  color: rgba(51, 51, 51, 0.7);
+}
+
+.backup-docs-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.4000000059604645px;
+  color: rgba(51, 51, 51, 0.7);
+  margin-left: 20px;
+}
+
+.validation-date {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #c8e6c9;
+  color: #43a047;
+}
+
+.not-signed-validation-date {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #ffccbc;
+  color: #f4511e;
+}
+
+.validation-date-val {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #c8e6c9;
+  color: #43a047;
+}
+
+.validation-name {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  text-align: left;
+}
+
+.validation-name-val {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  text-align: left;
+}
+
+.lot-pic-text {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 21px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: -1px;
+}
+
+.type-pic-card {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: #4caf50;
+  padding-left: 10px;
+  margin-top: -20px;
+}
+
+.applications {
+  page-break-inside: avoid;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  /* font-weight: 400; */
+  /* line-height: 10px; */
+  letter-spacing: 0.25px;
+  /* text-align: left; */
+  margin-left: 5px;
+}
+
+.applications-supply {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  text-align: left;
+}
+
+.applications-supply-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
+  letter-spacing: -0.5;
+  position: static;
+  padding-right: 5px;
+  margin-left: 10px;
+}
+
+.card {
+  box-shadow: 0px 0px 0px 2px rgb(0 0 0 / 10%);
+  transition: 0.3s;
+  margin-left: 20px;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+.activity-lots-img {
+  width: 200px;
+  height: 200px;
+}
+
+.activity-frame-lots {
+  display: flex;
+  padding-top: 60px;
+  flex-wrap: wrap;
+  position: static;
+}
+
+.activity-frame-lots-validation {
+  display: flex;
+  padding-top: 60px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  position: static;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 20px;
+  padding-left: 20px;
+  overflow: hidden;
+}
+
+.activity-frame-lots-under {
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+  margin-bottom: 50px;
+  height: 250;
+}
+
+.eiq-lots {
+  height: 30px;
+  width: 100px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  border-radius: 100px;
+  background: #e8f5e9;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding-top: 5px;
+  margin-left: 90px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-right: 10px;
+}
+
+.link-pdf {
+  margin-left: 20px;
+  padding-top: 5px;
+  color: #5e5e5e !important;
+  margin-bottom: 50px;
+  position: absolute;
+  margin-top: 130px;
+}
+
+.link-pdf-val {
+  margin-left: 20px;
+  padding-top: 5px;
+  color: #5e5e5e !important;
+  margin-bottom: 50px;
+  position: absolute;
+}
