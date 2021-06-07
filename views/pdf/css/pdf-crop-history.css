@@ -51,11 +51,11 @@
 
 .fill {
   background-color: #4caf50;
-  height: 700px;
+  height: 600px;
 }
 
 .bigLogo {
-  fill: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.2);
 }
 
 .bigLogoContainer {
@@ -90,7 +90,6 @@
 }
 
 .dataNames {
-  padding-bottom: 5px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -99,10 +98,10 @@
   color: #ffffff;
   line-height: 14.32px;
   letter-spacing: 0.15px;
+  margin-bottom: 10px;
 }
 
 .dataValue {
-  padding-bottom: 5px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -110,6 +109,7 @@
   line-height: 24px;
   text-align: left;
   color: #ffffff;
+  margin-bottom: 5px;
 }
 
 .dataMeasures {
@@ -163,7 +163,6 @@
   font-size: 12px;
   margin-bottom: -20px;
 }
-
 
 /* TODO: no borrar estos estilos */
 /* .column {
@@ -307,9 +306,9 @@
 
 .lastActivity {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  margin-top: 380px;
+  margin-top: 400px;
   margin-left: 100px;
-  font-size: 14px;
+  font-size: 20px;
   line-height: 1.8;
   text-align: left;
   position: absolute;
@@ -321,7 +320,10 @@
 
 .lastActivity-title {
   margin-bottom: 10px;
-  font-weight: bold;
+}
+
+.no-bold {
+  font-weight: 400;
 }
 
 .badge-title {
