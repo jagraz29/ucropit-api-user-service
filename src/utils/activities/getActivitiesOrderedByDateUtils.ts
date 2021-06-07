@@ -96,6 +96,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities, members }) => {
       }
     )
     .filter((item) => item)
+    .filter(filterActivities)
 
   return activitiesRes.sort((a, b) =>
     moment(a.dateOrder).diff(moment(b.dateOrder))
@@ -117,4 +118,10 @@ const getStorages = (storages): Object[] => {
       }
     }
   )
+}
+
+const filterActivities = (activity) => {
+  if (activity.status === 'TERMINADA' || activity.status === 'REALIZADA') {
+    return activity
+  }
 }
