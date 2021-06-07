@@ -9,7 +9,6 @@ export const getLots = (lots, activitiesWithEiq): Object[] => {
         ? `${process.env.BASE_URL}${path}`
         : process.env.IMAGE_LOT_DEFAULT
 
-      console.log(imageLot)
       const eiq: number = getEiqOfAchievementsByLot(lotId, activitiesWithEiq)
       return {
         provinceName,
@@ -21,4 +20,18 @@ export const getLots = (lots, activitiesWithEiq): Object[] => {
       }
     }
   )
+}
+
+export const getLotsGroupByTag = (lots, activitiesWithEiq) => {
+  return lots.map(({ data, tag }) => {
+    const lots = getLots(data, activitiesWithEiq)
+    return {
+      tag,
+      lots,
+      lotsQuantity: lots.length ? lots.length : 0,
+      surface: Numbers.roundToTwo(
+        lots.reduce((prev, next) => prev + (next['surface'] || 0), 0)
+      )
+    }
+  })
 }

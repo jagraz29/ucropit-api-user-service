@@ -1,8 +1,9 @@
 import { Numbers } from '../Numbers'
 import { calculateCropVolumeUtils } from './calculateCropVolumeUtils'
-import { getLots } from '../lots'
+import { getLots, getLotsGroupByTag } from '../lots'
 
-export const getCropUtils = ({
+export const calculateDataCropUtils = (
+  {
     surface,
     pay: payEntry,
     dateCrop,
@@ -12,8 +13,13 @@ export const getCropUtils = ({
     company,
     badges,
     unitType,
+    data,
+    members,
     cropType: { key: cropTypeKey }
-  }, activitiesWithEiq): Object => {
+  },
+  activitiesWithEiq,
+  theoriticalPotential
+): Object => {
   const pay = payEntry ?? 0
   let eiq: number = 0
   const { key: keyUnitType, name: nameUnitType } = unitType || {}
@@ -26,12 +32,49 @@ export const getCropUtils = ({
     ),
     pay,
     dateCrop,
+    commercialContact: company
+      ? getCommercialContact(company, theoriticalPotential)
+      : null,
+    cultivationManager: members.length
+      ? getCultivationManager(members[0])
+      : null,
     name,
     badges,
     eiq: Numbers.roundToTwo(eiq),
     cropTypeKey,
     company,
+    activities,
     lotsQuantity: lots.length ? lots[0].data.length : 0,
-    lots: lots.length ? getLots(lots[0].data,activitiesWithEiq) : []
+    lots: lots.length ? getLots(lots[0].data, activitiesWithEiq) : [],
+    lotsGroupByTag: lots.length
+      ? getLotsGroupByTag(lots, activitiesWithEiq)
+      : []
+  }
+}
+
+export const getCultivationManager = ({ user }) => {
+  const { email, firstName, lastName, phone } = user
+  return { email, firstName, lastName, phone }
+}
+
+export const getCommercialContact = (company, theoriticalPotential) => {
+  const { identifier, name, address, addressFloor, contacts } = company
+  if (!contacts || !contacts.length) {
+    return null
+  }
+
+  const {
+    user: { email, firstName, lastName, phone }
+  } = contacts[0]
+  return {
+    identifier,
+    name,
+    address,
+    addressFloor,
+    theoriticalPotential,
+    email,
+    firstName,
+    lastName,
+    phone
   }
 }
