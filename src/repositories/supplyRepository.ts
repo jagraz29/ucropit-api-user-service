@@ -4,6 +4,14 @@ const { Supply, ActiveIngredient } = models
 class SupplyRepository {
   /**
    *
+   * @param query
+   * @returns
+   */
+  public static async getSupply(query) {
+    return Supply.findOne(query)
+  }
+  /**
+   *
    * @param String[] idsSupplyTypes
    */
   public static async getSuppliesBySupplyTypes(idsSupplyTypes: String[]) {
