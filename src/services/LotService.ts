@@ -405,7 +405,7 @@ class LotService extends ServiceBase {
 
             this.updateLotWithImagesAndCountries(newLotInData)
 
-            newLotInData['imageUrl'] = parseImageUrl(newLotInData.image.normal)
+            newLotInData.imageUrl = parseImageUrl(newLotInData.image.normal)
 
             return newLotInData
           })
