@@ -11,6 +11,7 @@ import ServiceBase from './common/ServiceBase'
 import { handleFileConvertJSON } from '../utils/ParseKmzFile'
 import GeoLocationService from '../services/GeoLocationService'
 import StaticMapService from '../services/StaticMapService'
+import { parseImageUrl } from '../utils'
 
 interface ILot {
   name: String
@@ -403,6 +404,8 @@ class LotService extends ServiceBase {
             const newLotInData = { ...lotInData, ...locationData }
 
             this.updateLotWithImagesAndCountries(newLotInData)
+
+            newLotInData['imageUrl'] = parseImageUrl(newLotInData.image.normal)
 
             return newLotInData
           })
