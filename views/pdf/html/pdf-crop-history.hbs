@@ -109,23 +109,23 @@
             {{!-- TODO: aqui cierra el fill --}}
 
                 <div class="crop-leaders">
-                    <div class="spokesman">
-                        <h5 class="spokesman-title">
+                    <div class="res-contact-header">
+                        <h5 class="res-contact-title">
                             Responsable del cultivo
                         </h5>
-                        <h3 class="spokesman-name">{{crop.cultivationManager.firstName}} {{crop.cultivationManager.lastName}}</h3>
-                        <div class="spokesman-data">{{crop.cultivationManager.phone}}</div>
-                        <div class="spokesman-data">{{crop.cultivationManager.email}}</div>
+                        <h3 class="name-header">{{crop.cultivationManager.firstName}} {{crop.cultivationManager.lastName}}</h3>
+                        <div class="data-header">{{crop.cultivationManager.phone}}</div>
+                        <div class="data-header">{{crop.cultivationManager.email}}</div>
                     </div>
                     {{#if crop.commercialContact}}
-                        <div class="spokesman">
-                            <h5 class="spokesman-title">
+                        <div class="res-contact-header">
+                            <h5 class="res-contact-title">
                                 Contacto comercial
                             </h5>
-                            <h3 class="spokesman-name">{{crop.commercialContact.firstName}} {{crop.commercialContact.lastName}}</h3>
-                            <div class="spokesman-data">Potencial Teórico {{crop.commercialContact.theoriticalPotential}} ton</div>
-                            <div class="spokesman-data">{{crop.commercialContact.phone}}</div>
-                            <div class="spokesman-data">{{crop.commercialContact.email}}</div>
+                            <h3 class="name-header">{{crop.commercialContact.firstName}} {{crop.commercialContact.lastName}}</h3>
+                            <div class="data-header">Potencial Teórico {{crop.commercialContact.theoriticalPotential}} ton</div>
+                            <div class="data-header">{{crop.commercialContact.phone}}</div>
+                            <div class="data-header">{{crop.commercialContact.email}}</div>
                         </div>
                     {{/if}}
                 </div>
@@ -275,6 +275,14 @@
                                     {{/case}}
                                     {{#case "ACT_APPLICATION"}}
                                         <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
+                                        height="26" />
+                                    {{/case}}
+                                    {{#case "ACT_FERTILIZATION"}}
+                                        <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/fertilization.svg" width="26"
+                                        height="26" />
+                                    {{/case}}
+                                    {{#case "ACT_TILLAGE"}}
+                                        <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/tillage.svg" width="26"
                                         height="26" />
                                     {{/case}}
                                 {{/switch}}
