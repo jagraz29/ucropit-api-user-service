@@ -65,3 +65,5 @@ const models = {
 export { connectDb }
 
 export default models
+
+export * from './eiqRanges'

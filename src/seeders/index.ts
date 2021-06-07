@@ -25,6 +25,8 @@ import {
 import { activesPrinciples } from './activesPrinciplesData'
 
 import { badgesData } from './badgesData'
+import { EiqRangesRepository } from '../repositories'
+import { eiqRangesData } from './eiqRangesData'
 
 const Badge = models.Badge
 const CropType = models.CropType
@@ -42,6 +44,18 @@ const TypeStorage = models.TypeStorage
 const ActiveIngredient = models.ActiveIngredient
 
 const ForeignCredential = models.ForeignCredential
+
+/**
+ * Seeders Badges
+ */
+const seedersEiqRanges = async (flag?) => {
+  if (flag && flag !== '--eiqRanges') return
+  console.log(`${chalk.green('=====Registering Eiq Ranges====')}`)
+
+  await EiqRangesRepository.createAllEiq(eiqRangesData)
+  console.log(`${chalk.green('=====Registered Eiq Ranges====')}`)
+  return true
+}
 
 /**
  * Seeders Badges
@@ -374,6 +388,7 @@ const seedersForeignCredentials = async (flag?) => {
       await seedersStorageTypes(flag)
       await seedersActivePrinciples(flag)
       await seedersForeignCredentials(flag)
+      await seedersEiqRanges(flag)
     } catch (e) {
       console.log(e)
     }
