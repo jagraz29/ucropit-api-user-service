@@ -22,7 +22,7 @@ import {
   validateCropStore,
   validateFormatKmz,
   validateNotEqualNameLot
-} from '../utils/Validation'
+} from '../utils'
 
 import { UserSchema } from '../models/user'
 import { errors } from '../types/common'

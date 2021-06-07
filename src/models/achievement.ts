@@ -28,7 +28,7 @@
 
 import mongoose, { Schema, Document } from 'mongoose'
 import shortid from 'shortid'
-import { Signer } from '../interfaces/Signer'
+import { Signer } from '../interfaces'
 
 interface Supplies {
   name?: string
