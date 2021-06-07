@@ -1,4 +1,4 @@
-import { DIR_FOLDER_DEFAULT_IMAGES } from '../utils/Constants'
+import { DIR_FOLDER_DEFAULT_IMAGES } from '../utils/Files'
 
 export const parseImageUrl = (imagePath) => {
 

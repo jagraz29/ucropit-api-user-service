@@ -101,5 +101,3 @@ export const supplyTypesEIQ = [
   '346564643430633836343232',
   '346564643430633836343233'
 ]
-
-export const DIR_FOLDER_DEFAULT_IMAGES = 'public/uploads/default-images'
