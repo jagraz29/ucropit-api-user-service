@@ -8,7 +8,7 @@ export interface Supply {
   brand?: string
   compositon?: string
   quantity?: Number
-  activesPrinciples?: Array<any>
+  activeIngredients?: Array<any>
   supply?: string | any
   icon?: string
   total?: Number | number
