@@ -2,7 +2,7 @@ import { DIR_FOLDER_DEFAULT_IMAGES } from '../utils/Constants'
 
 export const parseImageUrl = (imagePath) => {
 
-  return `${ process.env.BASE_URL }/${ imagePath }`
+  return `${ process.env.BASE_URL }${ imagePath }`
 
 }
 

@@ -140,8 +140,7 @@ LotSchema.virtual('centerBoundGoogle').get(function () {
   }
 })
 LotSchema.virtual('imageUrl').get(function () {
-  // return this.image ? parseImageUrl(this.image.normal) : parseImageUrlDefault('lot_placeholder.png')
-  return parseImageUrlDefault('lot_placeholder.png')
+  return this.image ? parseImageUrl(this.image.normal) : parseImageUrlDefault('lot_placeholder.png')
 })
 
 LotSchema.plugin(mongooseLeanVirtuals)
