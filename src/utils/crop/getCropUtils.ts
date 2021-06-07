@@ -2,7 +2,7 @@ import { Numbers } from '../Numbers'
 import { calculateCropVolumeUtils } from './calculateCropVolumeUtils'
 import { getLots, getLotsGroupByTag } from '../lots'
 
-export const calculateDataCropUtils = (
+export const getCropUtils = (
   {
     surface,
     pay: payEntry,

@@ -12,7 +12,7 @@ import { CropRepository } from '../repositories'
 import { PDFService } from '../services'
 import {
   getActivitiesOrderedByDateUtils,
-  calculateDataCropUtils,
+  getCropUtils,
   calculateTheoreticalPotentialUtils,
   calculateCropVolumeUtils,
   getCropBadgesByUserType
@@ -22,7 +22,7 @@ import {
   validateCropStore,
   validateFormatKmz,
   validateNotEqualNameLot
-} from '../utils/Validation'
+} from '../utils'
 
 import { UserSchema } from '../models/user'
 import { errors } from '../types/common'
@@ -87,7 +87,7 @@ class CropsController {
 
     if (req.query.cropVolume) {
       query['$and'].push({
-        volume: {
+        pay: {
           $gte: req.query.cropVolume
         }
       })
@@ -189,7 +189,7 @@ class CropsController {
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    const dataCrop = calculateDataCropUtils(
+    const dataCrop = getCropUtils(
       crop,
       activities,
       theoriticalPotential
