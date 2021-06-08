@@ -15,12 +15,15 @@ import {
   createCompoundActiveIngredients
 } from '../utils'
 import { activeIngredientUnified } from '../types/activeIngredients'
+import { compositionUpdate } from './supplies'
 
 const program = new Command()
 
 program
   .description('Use this command to add the active ingredients of an input')
   .option('-a, --add', 'Add active ingredients into supplies')
+  .option('-c --update-composition', 'Update data composition supplies')
+  .option('-u, --update', 'Update supply with active ingredient missing')
   .option('-l, --list', 'List all supplies with active ingredients')
 
 program.parse(process.argv)
@@ -98,6 +101,41 @@ async function updateSupplies() {
 
   console.log(`${chalk.yellow('FINISH ACTIVE INGREDIENTS')}`)
 }
+
+async function updateActiveIngredients() {
+  console.log(`${chalk.yellow('UPDATE ACTIVE INGREDIENTS')}`)
+  const supplies = await SupplyRepository.getSuppliesBySupplyTypes(
+    supplyTypesEIQ
+  )
+
+  for (const supply of supplies) {
+    if (!supply.activeIngredients.length) {
+      if (!isSupplyCompoundIngredient(supply)) {
+        await updateActiveIngredientsSimpleSupply(supply)
+      } else {
+        await updateActiveIngredientsCompoundSupply(supply)
+      }
+    }
+  }
+}
+
+async function updateCompositionSupply(): Promise<void> {
+  console.log(`${chalk.yellow('UPDATE COMPOSITION SUPPLIES')}`)
+  for (const supply of compositionUpdate) {
+    const supplyUpdated: Supply = await SupplyRepository.getSupply({
+      code: supply.code
+    })
+    if (!supplyUpdated.activeIngredients.length) {
+      console.log(
+        `${chalk.green(`UPDATE SUPPLY COMPOSITION CODE: ${supply.code}`)}`
+      )
+      await SupplyRepository.updateOne(supplyUpdated._id, {
+        $set: { compositon: supply.composition }
+      })
+    }
+  }
+  console.log(`${chalk.yellow('FINISH UPDATE COMPOSITION SUPPLIES')}`)
+}
 ;(async () => {
   try {
     const connected = await connectDb()
@@ -107,6 +145,14 @@ async function updateSupplies() {
 
       if (options.add) {
         await updateSupplies()
+      }
+
+      if (options.update) {
+        await updateActiveIngredients()
+      }
+
+      if (options.updateComposition) {
+        await updateCompositionSupply()
       }
     }
   } catch (error) {
