@@ -6,9 +6,9 @@ import CropService from '../services/CropService'
 import LotService from '../services/LotService'
 import CompanyService from '../services/CompanyService'
 import ActivityService from '../services/ActivityService'
-import { Evidence, ReportSignersByCompany } from '../interfaces'
+import { Evidence, IEiqRangesDocument, ReportSignersByCompany } from '../interfaces'
 
-import { CropRepository } from '../repositories'
+import { CropRepository, EiqRangesRepository } from '../repositories'
 import { PDFService } from '../services'
 import {
   getActivitiesOrderedByDateUtils,
@@ -43,7 +43,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async index(req: Request | any, res: Response) {
+  public async index (req: Request | any, res: Response) {
     let query: any = {
       $and: [
         {
@@ -90,7 +90,7 @@ class CropsController {
       })
     }
 
-    const crops = await Crop.find(query)
+    const crops: any = await Crop.find(query)
       .populate('company')
       .populate('cropType')
       .populate('unitType')
@@ -112,7 +112,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async show(req: Request, res: Response) {
+  public async show (req: Request, res: Response) {
     const { id } = req.params
     const crop = await CropService.getCrop(id)
     const lots = await LotService.storeLotImagesAndCountriesWithPopulate(
@@ -149,7 +149,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async getCropWithActivities(req: Request, res: Response) {
+  public async getCropWithActivities (req: Request, res: Response) {
     const { id } = req.params
     const crop = await CropRepository.getCropWithActivities(id)
 
@@ -170,7 +170,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async generatePdfHistoryCrop(req: Request, res: Response) {
+  public async generatePdfHistoryCrop (req: Request, res: Response) {
     const {
       params: { id }
     } = req
@@ -181,17 +181,19 @@ class CropsController {
     }
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
 
+    const eiqRanges: IEiqRangesDocument[] = await EiqRangesRepository.getAllEiq()
+
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
 
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    const dataCrop = calculateDataCropUtils(
+    const dataCrop = getCropUtils(
       crop,
       activities,
-      theoriticalPotential
+      theoriticalPotential,
+      eiqRanges
     )
-
     const dataPdf = {
       crop: dataCrop,
       activities,
@@ -217,7 +219,7 @@ class CropsController {
    * @return Response
    * @param res
    */
-  public async pdfHistoryCrop(
+  public async pdfHistoryCrop (
     { params: { nameFile } }: Request,
     res: Response
   ) {
@@ -233,7 +235,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async create(req: Request | any, res: Response) {
+  public async create (req: Request | any, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     await validateCropStore(data)
@@ -257,7 +259,7 @@ class CropsController {
     let volume: number = 0
 
     try {
-      const unitType = await UnitType.findOne({ _id: data.unitType })
+      const unitType: any = await UnitType.findOne({ _id: data.unitType })
 
       volume = calculateCropVolumeUtils(unitType?.key, data.pay, data.surface)
     } catch (error) {
@@ -296,7 +298,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async showLastMonitoring(req: Request, res: Response) {
+  public async showLastMonitoring (req: Request, res: Response) {
     const monitoring = await CropService.getLastMonitoring(req.params.id)
 
     res.status(200).json(monitoring)
@@ -310,14 +312,14 @@ class CropsController {
    *
    * @return Response
    */
-  public async update(req: Request, res: Response) {
-    const user: UserSchema = req.user
+  public async update (req: Request, res: Response) {
+    const user: any = req.user
     const data = JSON.parse(req.body.data)
     let company = null
 
     company = (await CompanyService.search({ identifier: data.identifier }))[0]
 
-    const crop = await Crop.findById(req.params.id)
+    const crop: any = await Crop.findById(req.params.id)
 
     crop.company = company ? company._id : null
 
@@ -334,8 +336,8 @@ class CropsController {
    *
    * @return Response
    */
-  public async enableOffline(req: Request, res: Response) {
-    const crop = await Crop.findById(req.params.id)
+  public async enableOffline (req: Request, res: Response) {
+    const crop: any = await Crop.findById(req.params.id)
 
     crop.downloaded = req.body.downloaded
 
@@ -352,8 +354,8 @@ class CropsController {
    *
    * @return Response
    */
-  public async addIntegrationService(req: Request, res: Response) {
-    const crop = await Crop.findById(req.params.id)
+  public async addIntegrationService (req: Request, res: Response) {
+    const crop: any = await Crop.findById(req.params.id)
     const data = req.body
 
     crop.synchronizedList.push(data)
@@ -371,7 +373,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async delete(req: Request, res: Response) {
+  public async delete (req: Request, res: Response) {
     const isCancelled = await CropService.cancelled(req.params.id)
 
     if (!isCancelled) {
@@ -394,7 +396,7 @@ class CropsController {
    *
    * @returns
    */
-  public async evidences(req: Request, res: Response) {
+  public async evidences (req: Request, res: Response) {
     const { id } = req.params
     const evidences: Evidence[] = await CropRepository.findAllEvidencesByCropId(
       id
