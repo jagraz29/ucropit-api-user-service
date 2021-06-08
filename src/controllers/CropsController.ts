@@ -15,7 +15,8 @@ import {
   calculateDataCropUtils,
   calculateTheoreticalPotentialUtils,
   calculateCropVolumeUtils,
-  getCropBadgesByUserType
+  getCropBadgesByUserType,
+  filterActivities
 } from '../utils'
 
 import {
@@ -159,8 +160,9 @@ class CropsController {
     if (!crop) {
       return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
     }
-    const activities: Array<ReportSignersByCompany> =
+    const activities: Array<ReportSignersByCompany> = filterActivities(
       getActivitiesOrderedByDateUtils(crop)
+    )
 
     res.status(StatusCodes.OK).json(activities)
   }
