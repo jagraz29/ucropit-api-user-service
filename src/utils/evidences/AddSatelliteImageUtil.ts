@@ -1,7 +1,7 @@
 import { ResponseOkProps } from '../../interfaces/SatelliteImageRequest'
 import LotRepository from '../../repositories/lotRepository'
 import { ActivityRepository } from '../../repositories'
-import { FileDocumentRepository } from '../../repositories/fileDocumentRepository'
+import { FileDocumentRepository } from '../../repositories'
 import CommonRepository from '../../repositories/commonRepository'
 import { DocumentNotFound } from '../../loggin/error-custom'
 
@@ -45,7 +45,7 @@ const responseWithImages = async (response: ResponseOkProps): Promise<void> => {
   if (!lot) {
     throw new DocumentNotFound('LOT_NOT_FOUND', 404, 'Lot Not Found', false)
   }
-  const activity = await ActivityRepository.findById(activityId)
+  const activity: any = await ActivityRepository.findById(activityId)
 
   if (!activity) {
     throw new DocumentNotFound(

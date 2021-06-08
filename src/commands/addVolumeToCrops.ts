@@ -8,7 +8,7 @@ import { calculateCropVolumeUtils } from '../utils'
 const { Crop } = models
 
 const start = async () => {
-  let crops = await Crop.find().populate('unitType')
+  let crops: any = await Crop.find().populate('unitType')
 
   for (const crop of crops) {
     try {

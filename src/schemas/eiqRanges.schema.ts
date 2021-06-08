@@ -35,7 +35,7 @@
 import { TEiqRanges } from '../interfaces'
 import { Schema } from 'mongoose'
 
-export const EiqRangesSchema = new Schema({
+export const EiqRangesSchema: Schema = new Schema({
   type: {
     type: String,
     enum: Object.values(TEiqRanges),

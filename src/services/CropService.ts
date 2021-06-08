@@ -291,7 +291,7 @@ class CropService extends ServiceBase {
    *
    * @param query
    */
-  public static async findAll(query) {
+  public static async findAll(query): Promise<any> {
     return Crop.find(query)
       .populate('lots.data')
       .populate('cropType')
@@ -413,7 +413,7 @@ class CropService extends ServiceBase {
    *
    * @param string id
    */
-  public static async getCrop(id: string) {
+  public static async getCrop(id: string): Promise<any> {
     return Crop.findById(id)
       .populate('lots.data')
       .populate('cropType')
@@ -494,7 +494,7 @@ class CropService extends ServiceBase {
   public static async getLastMonitoring(cropId: string) {
     const crop = await CropService.findOneCrop(cropId)
 
-    const activityName = await ActivityType.findOne({ tag: 'ACT_MONITORING' })
+    const activityName: any = await ActivityType.findOne({ tag: 'ACT_MONITORING' })
 
     function filterActivity(item) {
       return (
@@ -538,7 +538,7 @@ class CropService extends ServiceBase {
    *
    * @param cropId
    */
-  public static async findOneCrop(cropId: string) {
+  public static async findOneCrop(cropId: string): Promise<any> {
     return Crop.findById(cropId)
       .populate('lots.data')
       .populate('cropType')
@@ -646,7 +646,7 @@ class CropService extends ServiceBase {
    *
    * @return Promise
    */
-  public static async changeStatusActivitiesRange(crop: any): Promise<void> {
+  public static async changeStatusActivitiesRange(crop: any): Promise<any> {
     const listActivitiesExpired = (
       await this.listActivitiesExpiredRange(crop, 'done')
     ).filter((activity) => activity)
@@ -701,7 +701,7 @@ class CropService extends ServiceBase {
     data.company = company ? company._id : null
     data.pending = activities
 
-    let newCrop = await this.store(data)
+    let newCrop: any = await this.store(data)
 
     newCrop.members.push({
       user: members._id,
@@ -751,7 +751,7 @@ class CropService extends ServiceBase {
   }
 
   public static async cancelled(cropId) {
-    const crop = await Crop.findById(cropId)
+    const crop: any = await Crop.findById(cropId)
 
     if (
       crop.toMake.length === 0 &&
@@ -782,7 +782,7 @@ class CropService extends ServiceBase {
 
   public static async addServiceSynchronized(data): Promise<boolean> {
     for (const item of data.crops) {
-      const crop = await Crop.findById(item.id)
+      const crop: any = await Crop.findById(item.id)
       if (!this.isServiceAdded(crop, item.erpAgent)) {
         if (!crop.synchronizedList) {
           const synchronized = []
@@ -944,9 +944,10 @@ class CropService extends ServiceBase {
    * @param activity
    */
   private static async expiredActivity(activity) {
-    const activityInstance = await Activity.findById(activity._id)
+    const activityInstance: any = await Activity.findById(activity._id)
 
     activityInstance.setExpired()
+
 
     return activityInstance.save()
   }

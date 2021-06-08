@@ -4,7 +4,7 @@ import {
   validateSignAchievement,
   validateFilesWithEvidences,
   validateExtensionFile
-} from '../utils/Validation'
+} from '../utils'
 
 import AchievementService from '../services/AchievementService'
 import ActivityService from '../services/ActivityService'
@@ -74,7 +74,7 @@ class AchievementsController {
   public async create(req: Request, res: Response) {
     const user: any = req.user
     const data = JSON.parse(req.body.data)
-    const crop = await Crop.findById(data.crop)
+    const crop: any = await Crop.findById(data.crop)
     const userConfig = await UserConfigService.findById(user.config)
 
     await validateAchievement(data)
@@ -94,9 +94,9 @@ class AchievementsController {
       return res.status(400).json(validationFiles)
     }
 
-    const activity = await ActivityService.findActivityById(data.activity)
+    const activity: any = await ActivityService.findActivityById(data.activity)
 
-    let achievement = await AchievementService.store(data, activity)
+    let achievement: any = await AchievementService.store(data, activity)
 
     await ActivityService.addAchievement(activity, achievement)
 

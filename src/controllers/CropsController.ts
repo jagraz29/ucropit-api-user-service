@@ -15,10 +15,7 @@ import {
   getCropUtils,
   calculateTheoreticalPotentialUtils,
   calculateCropVolumeUtils,
-  getCropBadgesByUserType
-} from '../utils'
-
-import {
+  getCropBadgesByUserType,
   validateCropStore,
   validateFormatKmz,
   validateNotEqualNameLot
@@ -260,7 +257,7 @@ class CropsController {
     let volume: number = 0
 
     try {
-      const unitType = await UnitType.findOne({ _id: data.unitType })
+      const unitType: any = await UnitType.findOne({ _id: data.unitType })
 
       volume = calculateCropVolumeUtils(unitType?.key, data.pay, data.surface)
     } catch (error) {
@@ -314,13 +311,12 @@ class CropsController {
    * @return Response
    */
   public async update(req: Request, res: Response) {
-    const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
     let company = null
 
     company = (await CompanyService.search({ identifier: data.identifier }))[0]
 
-    const crop = await Crop.findById(req.params.id)
+    const crop: any = await Crop.findById(req.params.id)
 
     crop.company = company ? company._id : null
 
@@ -338,7 +334,7 @@ class CropsController {
    * @return Response
    */
   public async enableOffline(req: Request, res: Response) {
-    const crop = await Crop.findById(req.params.id)
+    const crop: any = await Crop.findById(req.params.id)
 
     crop.downloaded = req.body.downloaded
 
@@ -356,7 +352,7 @@ class CropsController {
    * @return Response
    */
   public async addIntegrationService(req: Request, res: Response) {
-    const crop = await Crop.findById(req.params.id)
+    const crop: any = await Crop.findById(req.params.id)
     const data = req.body
 
     crop.synchronizedList.push(data)

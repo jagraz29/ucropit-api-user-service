@@ -84,7 +84,7 @@ async function updateActiveIngredientsCompoundSupply(
  */
 async function updateSupplies() {
   console.log(`${chalk.yellow('ADD ACTIVE INGREDIENTS')}`)
-  const supplies = await SupplyRepository.getSuppliesBySupplyTypes(
+  const supplies: any = await SupplyRepository.getSuppliesBySupplyTypes(
     supplyTypesEIQ
   )
 

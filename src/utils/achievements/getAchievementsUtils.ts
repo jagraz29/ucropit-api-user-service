@@ -1,4 +1,4 @@
-import { Achievement } from '../../interfaces'
+import { IAchievement } from '../../interfaces'
 import { calculateEIQSurfaceAchievement } from '.'
 import {
   getEvidencePdf,
@@ -17,7 +17,7 @@ import { Numbers } from '../Numbers'
  *
  * @returns Number
  */
-export const getAchievements = (achievements, members?): Achievement[] => {
+export const getAchievements = (achievements, members?): IAchievement[] => {
   return achievements
     .map((achievement) => {
       const { dateAchievement, lots, surface, signers, supplies, files, _id } =

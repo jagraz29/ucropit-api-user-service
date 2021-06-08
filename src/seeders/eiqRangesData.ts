@@ -1,6 +1,6 @@
-import { TEiqRanges, IEiqRangesDocument } from '../interfaces'
+import { TEiqRanges, IEiqRanges } from '../interfaces'
 
-export const eiqRangesData: IEiqRangesDocument[] = [
+export const eiqRangesData: IEiqRanges[] = [
   {
     type: TEiqRanges.VERY_LOW,
     range: {

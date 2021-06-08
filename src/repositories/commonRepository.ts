@@ -9,7 +9,7 @@ class CommonRepository {
    *
    * @returns
    */
-  public static findEvidenceConceptBy(query) {
+  public static findEvidenceConceptBy(query): any {
     return EvidenceConcept.find(query)
   }
 }

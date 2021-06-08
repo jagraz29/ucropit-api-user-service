@@ -1,11 +1,9 @@
 import ServiceBase from './common/ServiceBase'
-import models from '../models'
+import { AchievementModel } from '../models'
 import PDF from '../utils/pdf/PDF'
 import mongoose from 'mongoose'
-import { basePath, fileExist, makeDirIfNotExists } from '../utils/Files'
-import { Signer } from '../interfaces/Signer'
-
-const Achievement = models.Achievement
+import { basePath, fileExist, makeDirIfNotExists } from '../utils'
+import { Signer } from '../interfaces'
 
 interface IAchievement {
   _id?: String
@@ -19,8 +17,8 @@ interface IAchievement {
 }
 
 class AchievementService extends ServiceBase {
-  public static async find(query) {
-    return Achievement.find(query)
+  public static async find(query): Promise<any> {
+    return AchievementModel.find(query)
       .populate('lots')
       .populate('files')
       .populate('signers')
@@ -30,8 +28,8 @@ class AchievementService extends ServiceBase {
    *
    * @param string id
    */
-  public static async findById(id: string) {
-    return Achievement.findById(id)
+  public static async findById(id: string): Promise<any> {
+    return AchievementModel.findById(id)
       .populate('lots')
       .populate('files')
       .populate('signers')
@@ -44,7 +42,7 @@ class AchievementService extends ServiceBase {
    * @param IAchievement achievement
    * @param activity
    */
-  public static async store(achievement: IAchievement, activity) {
+  public static async store(achievement, activity) {
     achievement.percent = this.calcPercent(achievement.surface, activity)
     await this.addLotsAchievement(achievement.lots, activity)
 
@@ -52,7 +50,7 @@ class AchievementService extends ServiceBase {
       achievement._id = mongoose.Types.ObjectId()
     }
 
-    return Achievement.create(achievement)
+    return AchievementModel.create(achievement)
   }
 
   /**
@@ -104,13 +102,13 @@ class AchievementService extends ServiceBase {
     id: string,
     service: string
   ): Promise<void> {
-    await Achievement.findByIdAndUpdate(id, {
+    await AchievementModel.findByIdAndUpdate(id, {
       synchronizedList: [{ service, isSynchronized: true }]
     })
   }
 
   public static async updateSigners(signers: Signer[], achievementId: string) {
-    return Achievement.updateOne(
+    return AchievementModel.updateOne(
       { _id: achievementId },
       { $set: { signers: signers } }
     )

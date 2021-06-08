@@ -31,7 +31,7 @@ class UserConfigService {
    *
    * @param string id
    */
-  public static async findById (id: string) {
+  public static async findById (id: string): Promise<any> {
     return UserConfig.findById(id).populate('companySelected')
   }
   /**

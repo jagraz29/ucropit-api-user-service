@@ -2,11 +2,10 @@ require('dotenv').config()
 import models, { connectDb } from '../models'
 import chalk from 'chalk'
 import { Command, OptionValues } from 'commander'
-import { Signer } from '../interfaces/Signer'
+import { IAchievementDocument, Signer } from '../interfaces'
 import { uniqByPropMap } from '../utils/List'
 import ActivityService from '../services/ActivityService'
 import AchievementService from '../services/AchievementService'
-import { Achievement } from '../models/achievement'
 import { flatten } from 'lodash'
 const Crop = models.Crop
 
@@ -25,7 +24,7 @@ program.parse(process.argv)
 /**
  * Search And List users ghost
  */
-async function searchGhostUsers(): Promise<void> {
+async function searchGhostUsers (): Promise<void> {
   console.log(`${chalk.yellow('SEARCH USERS GHOST')}`)
   const crops: any = await getCropsWithActivitiesDone()
 
@@ -35,7 +34,7 @@ async function searchGhostUsers(): Promise<void> {
     done.forEach((activity) => {
       const { achievements, signers } = activity
       if (existAchievements(achievements)) {
-        achievements.forEach((achievement: Achievement) => {
+        achievements.forEach((achievement: IAchievementDocument) => {
           const { signers } = achievement
           const duplicates: Signer[] = findDuplicateSigners(signers)
           logSigners(duplicates, activity, crop, 'USERS DUPLICATE')
@@ -51,7 +50,7 @@ async function searchGhostUsers(): Promise<void> {
 /**
  * For User Ghost And clean duplicate.
  */
-async function deleteGhostUsers(): Promise<void> {
+async function deleteGhostUsers (): Promise<void> {
   console.log(`${chalk.yellow('DELETE USERS GHOST')}`)
   const crops: any = await getCropsWithActivitiesDone()
 
@@ -77,10 +76,10 @@ async function deleteGhostUsers(): Promise<void> {
  * @param activity
  * @returns
  */
-async function cleanSignersAchievement(activity): Promise<Signer[]> {
+async function cleanSignersAchievement (activity): Promise<Signer[]> {
   const { achievements } = activity
   const cleanerSigners = flatten(
-    achievements.map(async (achievement: Achievement) => {
+    achievements.map(async (achievement: IAchievementDocument) => {
       const { signers } = achievement
       if (isDuplicateSigners(signers)) {
         const listCleaned: Signer[] = cleanDuplicateSigners(signers)
@@ -98,7 +97,7 @@ async function cleanSignersAchievement(activity): Promise<Signer[]> {
  *
  * @param list
  */
-function logSigners(list: Signer[], activity, crop, message?: string): void {
+function logSigners (list: Signer[], activity, crop, message?: string): void {
   if (list.length > 0) {
     console.log('=======================')
     console.log(`${chalk.green(`CROP ID: ${crop._id}`)}`)
@@ -124,7 +123,7 @@ function logSigners(list: Signer[], activity, crop, message?: string): void {
  *
  * @returns Signer[]
  */
-function cleanDuplicateSigners(signers: Signer[]): Signer[] {
+function cleanDuplicateSigners (signers: Signer[]): Signer[] {
   const orderSigners = signers.sort(function (after, current) {
     return Number(after.signed) - Number(current.signed)
   })
@@ -143,7 +142,7 @@ function cleanDuplicateSigners(signers: Signer[]): Signer[] {
  *
  * @returns Array
  */
-function findDuplicateSigners(signers: Signer[]): Array<Signer> {
+function findDuplicateSigners (signers: Signer[]): Array<Signer> {
   const lookup = signers.reduce((prev, item) => {
     prev[item.email] = ++prev[item.email] || 0
     return prev
@@ -159,7 +158,7 @@ function findDuplicateSigners(signers: Signer[]): Array<Signer> {
  *
  * @returns Array
  */
-function isDuplicateSigners(signers: Signer[]): boolean {
+function isDuplicateSigners (signers: Signer[]): boolean {
   const signersId = signers.map((item: Signer) => item.userId)
 
   return signersId.some((item, index) => signersId.indexOf(item) !== index)
@@ -172,29 +171,27 @@ function isDuplicateSigners(signers: Signer[]): boolean {
  *
  * @returns boolean
  */
-function existAchievements(achievements: Achievement[]): boolean {
+function existAchievements (achievements: IAchievementDocument[]): boolean {
   return achievements.length > 0
 }
 
-async function getCropsWithActivitiesDone<T>(): Promise<Array<T>> {
-  const crops = (
-    await Crop.find({ cancelled: false }).populate({
-      path: 'done',
-      populate: [
+async function getCropsWithActivitiesDone<T> (): Promise<any> {
+  const crops: any = await Crop.find({ cancelled: false }).populate({
+    path: 'done',
+    populate: [
         { path: 'type' },
         { path: 'typeAgreement' },
         { path: 'files' },
-        {
-          path: 'achievements'
-        }
-      ]
-    })
-  ).filter((crop) => crop.done.length > 0)
+      {
+        path: 'achievements'
+      }
+    ]
+  })
 
-  return crops
+  return crops.filter((crop) => crop.done.length > 0)
 }
 
-;(async () => {
+(async () => {
   try {
     const connected = await connectDb()
 

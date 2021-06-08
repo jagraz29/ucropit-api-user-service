@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import { connect } from 'mongoose'
 import User from './user'
 import Lot from './lot'
 import Crop from './crop'
@@ -7,7 +7,6 @@ import UserConfig from './userConfig'
 import ActivityType from './activityType'
 import TypeAgreement from './typeAgreement'
 import Activity from './activity'
-export * from './achievement'
 import CollaboratorRequest from './collaboratorRequest'
 import ApprovalRegisterSign from './ApprovalRegisterSign'
 import Supply from './supply'
@@ -26,13 +25,16 @@ import ForeignCredential from './foreignCredential'
 import Badge from './badge'
 
 const connectDb = function () {
-  return mongoose.connect(process.env.DATABASE_URL, {
+  return connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: false
   })
 }
+
+export * from './eiqRanges'
+export * from './achievement'
 
 const models = {
   User,
@@ -46,7 +48,6 @@ const models = {
   TypeAgreement,
   ActivityType,
   Activity,
-  // Achievement,
   CollaboratorRequest,
   ApprovalRegisterSign,
   Supply,
@@ -65,5 +66,3 @@ const models = {
 export { connectDb }
 
 export default models
-
-export * from './eiqRanges'

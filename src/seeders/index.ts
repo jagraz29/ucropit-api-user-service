@@ -64,7 +64,7 @@ const seedersBadges = async (flag?) => {
   if (flag && flag !== '--badges') return
   console.log(`${chalk.green('=====Registering Badges====')}`)
 
-  const badges = await Badge.find({})
+  const badges: any = await Badge.find({})
 
   const badgesSeed = badgesData.filter(
     (item) => !badges.find((element) => item.type === element.type)
@@ -84,7 +84,7 @@ const seedersCropType = async (flag?) => {
   if (flag && flag !== '--cropType') return
   console.log(`${chalk.green('=====Registering CropTypes====')}`)
 
-  const cropTypes = await CropType.find({})
+  const cropTypes: any = await CropType.find({})
 
   const cropTypesSeed = cropTypesData.filter(
     (item) => !cropTypes.find((element) => item.key === element.key)
@@ -104,7 +104,7 @@ const seedersUnitType = async (flag?) => {
   if (flag && flag !== '--unitType') return
   console.log(`${chalk.green('=====Registering UnitType====')}`)
 
-  const unitTypes = await UnitType.find({})
+  const unitTypes: any = await UnitType.find({})
 
   const unitTypeSeed = unitTypesData.filter(
     (item) => !unitTypes.find((element) => item.key === element.key)
@@ -122,7 +122,7 @@ const seedersActivitiesType = async (flag?) => {
   if (flag && flag !== '--activityType') return
   console.log(`${chalk.green('=====Registering ActivityType====')}`)
 
-  const activities = await ActivityType.find({})
+  const activities: any = await ActivityType.find({})
 
   const activityTypeSeed = activitiesTypesData.filter(
     (item) => !activities.find((element) => item.tag === element.tag)
@@ -140,7 +140,7 @@ const seedersTypeAgreement = async (flag) => {
   if (flag && flag !== '--typeAgreement') return
   console.log(`${chalk.green('=====Registering TypeAgreement====')}`)
 
-  const agreementTypes = await TypeAgreement.find({})
+  const agreementTypes: any = await TypeAgreement.find({})
 
   const agreementTypeSeed = agreementTypesData.filter(
     (item) => !agreementTypes.find((element) => item.key === element.key)
@@ -162,7 +162,7 @@ const seedersSupply = async (flag?) => {
   if (flag && flag !== '--suppply') return
   console.log(`${chalk.green('=====Registering Supply====')}`)
 
-  const supplies = await Supply.find({})
+  const supplies: any = await Supply.find({})
 
   const supplySeed = suppliesData.filter(
     (item) => !supplies.find((element) => item.name === element.name)
@@ -179,7 +179,7 @@ const seedersSupply = async (flag?) => {
 const seedersSupplyFertilizers = async (flag?) => {
   if (flag && flag !== '--fertilizers') return
   console.log(`${chalk.green('=====Registering Supply Fertilizers====')}`)
-  const supplies = await Supply.find({})
+  const supplies: any = await Supply.find({})
 
   const supplyFertilizerSeed = fertilizers.filter(
     (item) => !supplies.find((element) => item.name === element.name)
@@ -197,7 +197,7 @@ const seedersSupplyPesticides = async (flag?) => {
   if (flag && flag !== '--pesticides') return
   console.log(`${chalk.green('=====Registering Supply Pesticides====')}`)
 
-  const supplies = await Supply.find({})
+  const supplies: any = await Supply.find({})
 
   const supplyPesticidesSeed = pesticides.filter(
     (item) => !supplies.find((element) => item.name === element.name)
@@ -227,7 +227,7 @@ const seedersSupplyType = async (flag?) => {
   if (flag && flag !== '--supplyType') return
   console.log(`${chalk.green('=====Registering SupplyType====')}`)
 
-  const supplies = await SupplyType.find({})
+  const supplies: any = await SupplyType.find({})
   const supplyTypeSeed = supplyTypesData.filter(
     (item) => !supplies.find((element) => item.name === element.name)
   )
@@ -244,7 +244,7 @@ const seedersRoles = async (flag?) => {
   if (flag && flag !== '--roles') return
   console.log(`${chalk.green('=====Registering Roles====')}`)
 
-  const role = await Roles.find({})
+  const role: any = await Roles.find({})
   const roleTypeSeed = rolesData.filter(
     (item) => !role.find((element) => item.value === element.value)
   )
@@ -262,7 +262,7 @@ const seedersEvidenceConcepts = async (flag?) => {
 
   console.log(`${chalk.green('=====Registering Evidence Concept====')}`)
 
-  const evidences = await EvidenceConcept.find({})
+  const evidences: any = await EvidenceConcept.find({})
 
   const evidencesConceptSeed = evidenceConcepts.filter(
     (item) => !evidences.find((element) => item.code === element.code)
@@ -280,7 +280,7 @@ const seedersServiceIntegrations = async (flag?) => {
   if (flag && flag !== '--integrations') return
 
   console.log(`${chalk.green('=====Registering Service Integrations====')}`)
-  const services = await ServiceIntegration.find({})
+  const services: any = await ServiceIntegration.find({})
 
   const servicesIntegrationSeed = servicesIntegration.filter(
     (item) => !services.find((element) => item.code === element.code)
@@ -298,7 +298,7 @@ const seedersStorageTypes = async (flag?) => {
   if (flag && flag !== '--storage-types') return
 
   console.log(`${chalk.green('=====Registering Storage Types====')}`)
-  const typesStorage = await TypeStorage.find({})
+  const typesStorage: any = await TypeStorage.find({})
 
   const typesStorageSeed = storageTypes.filter(
     (item) => !typesStorage.find((element) => item.key === element.key)
@@ -316,7 +316,7 @@ const seedersActivePrinciples = async (flag?) => {
   if (flag && flag !== '--active-principles') return
 
   console.log(`${chalk.green('=====Registering Actives Principles ====')}`)
-  const activeIngredients = await ActiveIngredient.find({})
+  const activeIngredients: any = await ActiveIngredient.find({})
 
   const activeIngredientsSeed = activesPrinciples.filter(
     (item) =>
@@ -342,7 +342,7 @@ const seedersForeignCredentials = async (flag?) => {
   if (flag && flag !== '--foreign-credentials') return
 
   console.log(`${chalk.green('=====Registering Foreign Credentials====')}`)
-  const credentials = await ForeignCredential.find({})
+  const credentials: any = await ForeignCredential.find({})
 
   const credentialsSeed = foreignCredentials.filter(
     (item) =>

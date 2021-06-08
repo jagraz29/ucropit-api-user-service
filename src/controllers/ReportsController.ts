@@ -323,7 +323,7 @@ class ReportsController {
     const { id } = req.query
 
     if (!id) res.status(403).json({ error: 'MUST PASS ID LOT' })
-    const lot = await Lot.findById(id)
+    const lot: any = await Lot.findById(id)
 
     res.render('index', {
       api_key: process.env.GOOGLE_API_KEY,

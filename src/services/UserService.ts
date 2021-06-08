@@ -45,7 +45,7 @@ class UserService {
     userId: string,
     collaboratorRequest: any
   ) {
-    const user = await User.findById(userId)
+    const user: any = await User.findById(userId)
     user.collaboratorRequest.push(collaboratorRequest._id)
 
     return user.save()

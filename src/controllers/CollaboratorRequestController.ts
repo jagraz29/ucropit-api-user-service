@@ -35,10 +35,10 @@ class CollaboratorRequestController {
 
     await CollaboratorRequestService.update(data, id)
 
-    const collaboratorRequest = await CollaboratorRequestService.findById(id)
+    const collaboratorRequest: any = await CollaboratorRequestService.findById(id)
 
     if (data.status === 'accepted') {
-      const user = await User.findById(collaboratorRequest.user._id).populate(
+      const user: any = await User.findById(collaboratorRequest.user._id).populate(
         'companies'
       )
 

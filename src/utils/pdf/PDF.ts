@@ -380,7 +380,7 @@ class PDF {
     return coordinatesLiteral
   }
 
-  private static getCompanyProducer(crop, type = 'PRODUCER') {
+  private static getCompanyProducer(crop, type = 'PRODUCER'): any {
     const member = crop.members.filter((item) => item.type === type)[0]
 
     return CompanyService.search({ identifier: member.identifier })

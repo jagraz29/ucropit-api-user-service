@@ -21,7 +21,7 @@ export interface IDestination {
 }
 
 export interface IAchievement {
-  _id: string
+  // _id: string
   key: string
   dateAchievement?: Date
   surface?: Number | number
@@ -34,5 +34,5 @@ export interface IAchievement {
   eiqSurface?: Number | number
 }
 
-export interface IAchievementDocument extends Document {}
+export interface IAchievementDocument extends IAchievement, Document {}
 export interface IAchievementModel extends Model<IAchievementDocument> {}
