@@ -90,6 +90,7 @@
 }
 
 .dataNames {
+  margin-bottom: 10px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -98,10 +99,10 @@
   color: #ffffff;
   line-height: 14.32px;
   letter-spacing: 0.15px;
-  margin-bottom: 10px;
 }
 
 .dataValue {
+  margin-bottom: 5px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -109,7 +110,6 @@
   line-height: 24px;
   text-align: left;
   color: #ffffff;
-  margin-bottom: 5px;
 }
 
 .dataMeasures {
@@ -323,7 +323,7 @@
 }
 
 .no-bold {
-  font-weight: 400;
+  font-weight: 400px;
 }
 
 .badge-title {
@@ -403,8 +403,8 @@
 }
 
 .res-contact-header {
-  height: fit-content;
-  width: 260px;
+  height: 100px;
+  width: 250px;
   border-radius: 4px;
   background: #f8f8f8;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -715,6 +715,11 @@
   margin-top: 5px;
 }
 
+.activity-lots-image {
+  width: 300px;
+  height: 180px;
+}
+
 .activity-lots-img {
   width: 200px;
   height: 200px;
@@ -722,7 +727,7 @@
 
 .activity-frame-lots {
   display: flex;
-  padding-top: 60px;
+  padding-top: 50px;
   flex-wrap: wrap;
   position: static;
 }
@@ -744,9 +749,9 @@
 .activity-frame-lots-under {
   display: flex;
   flex-direction: row;
-  padding-top: 20px;
+  margin-top: -50px;
   margin-bottom: 50px;
-  height: 250;
+  height: 250px;
 }
 
 .eiq-lots {
