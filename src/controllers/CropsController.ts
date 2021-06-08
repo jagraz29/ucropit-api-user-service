@@ -140,6 +140,42 @@ class CropsController {
 
     res.status(200).json(newCrop)
   }
+  /**
+   * Get Crop With Lots.
+   *
+   * @param  Request req
+   * @param  Response res
+   *
+   * @return Response
+   */
+  public async getCropWithLots (req: Request, res: Response) {
+    const {
+      params: { id }
+    } = req
+    const crop = await CropRepository.getCropWithActivities(id)
+
+    if (!crop) {
+      return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
+    }
+    const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
+
+    const eiqRanges: IEiqRangesDocument[] = await EiqRangesRepository.getAllEiq()
+
+    const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
+
+    const activities: Array<ReportSignersByCompany> =
+      getActivitiesOrderedByDateUtils(crop)
+
+    const dataCrop = getCropUtils(
+      crop,
+      activities,
+      theoriticalPotential,
+      eiqRanges
+    )
+    delete dataCrop.activities
+
+    res.status(StatusCodes.OK).send(dataCrop)
+  }
 
   /**
    * Get one crop.

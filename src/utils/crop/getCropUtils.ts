@@ -22,7 +22,7 @@ export const getCropUtils = (
   activitiesWithEiq,
   theoriticalPotential,
   eiqRanges: IEiqRangesDocument[]
-): Object => {
+) => {
   const pay = payEntry ?? 0
   let eiq: number = 0
   const { key: keyUnitType, name: nameUnitType } = unitType || {}
