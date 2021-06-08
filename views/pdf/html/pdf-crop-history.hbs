@@ -99,7 +99,9 @@
                                     <img src={{badge.imagePath}} class="badges-image" />
                                         <div class="hz-description" >
                                             <p class="size-description">{{badge.name.es}}</p>
-                                            <p>{{surfaceTotal}}</p>
+                                            {{#if surfaceTotal }}
+                                                <p>{{surfaceTotal}} has</p>
+                                            {{/if}}
                                         </div> 
                                     </div>  
                                 {{/each}}
@@ -232,9 +234,9 @@
                                         </div>
                                     {{/each}}
                                     <div class="activity-validations">
+                                        <div class="validation-title">Validaciones</div>
                                         {{#each signers}}
                                             <div>
-                                                <div class="validation-title">Validaciones</div>
                                                 {{#if dateSigned }}
                                                     <div><span class="validation-date">{{moment dateSigned format="DD/MM/YYYY"}}</span></div>
                                                 {{else}}
@@ -289,13 +291,13 @@
                                  
                                 <div class="activity-title">{{name}}</div>
 
-                                {{#each achievements}}
+                                {{!-- {{#each achievements}}
                                     {{#if suppliesList }}
                                         {{#each suppliesList }}
                                             <p class="applications">{{name}}</p>
                                         {{/each}}
                                     {{/if}}
-                                {{/each}}
+                                {{/each}} --}}
                                 
 
                            
@@ -327,9 +329,9 @@
                                                     </div>
                                                 </div> --}}
                                                 <div class="activity-validations">
+                                                    <div class="validation-title-val">Validaciones</div>
                                                     {{#each signers }}
                                                         <div>
-                                                            <div class="validation-title-val">Validaciones</div>
                                                             {{#if dateSigned }}
                                                                 <div><span class="validation-date">{{moment dateSigned format="DD/MM/YYYY"}}</span></div>
                                                             {{else}}
