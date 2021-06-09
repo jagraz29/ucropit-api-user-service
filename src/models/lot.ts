@@ -44,6 +44,7 @@ import mongoose from 'mongoose'
 import _ from 'lodash'
 import { getCenterOfBounds } from 'geolib'
 import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
+import { parseImageUrl, parseImageUrlDefault } from '../utils/ParseImageUrl'
 
 const { Schema } = mongoose
 
@@ -138,5 +139,9 @@ LotSchema.virtual('centerBoundGoogle').get(function () {
     lng: centerBound.longitude
   }
 })
+LotSchema.virtual('imageUrl').get(function () {
+  return this.image ? parseImageUrl(this.image.normal) : parseImageUrlDefault('lot_placeholder.png')
+})
+
 LotSchema.plugin(mongooseLeanVirtuals)
 export default mongoose.model<Lot>('Lot', LotSchema)

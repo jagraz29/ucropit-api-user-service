@@ -3,6 +3,8 @@
 }
 @media print and (orientation: portrait) {
   .end-page {
+    page-break-inside: always;
+    page-break-after: always;
     page-break-before: always;
   }
 
@@ -49,7 +51,7 @@
 
 .fill {
   background-color: #4caf50;
-  height: 500px;
+  height: 700px;
 }
 
 .bigLogo {
@@ -57,9 +59,11 @@
 }
 
 .bigLogoContainer {
-  margin-left: 45px;
-  width: 120px;
+  width: 150px;
   margin-bottom: -100px;
+  margin-top: 20px;
+  position: absolute;
+  margin-left: 30px;
 }
 
 .eiq {
@@ -75,15 +79,14 @@
   padding-top: 5px;
   margin-left: 100px;
   align-items: center;
-  margin-top: 140px;
+  margin-top: 152px;
   position: absolute;
 }
 
 .dataContainer {
   position: absolute;
-  align-content: left;
   margin-left: 100px;
-  margin-top: 190px;
+  margin-top: 230px;
 }
 
 .dataNames {
@@ -103,7 +106,7 @@
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 22px;
   line-height: 24px;
   text-align: left;
   color: #ffffff;
@@ -120,29 +123,47 @@
   color: #000000;
 }
 
-.lots-top {
+.badges {
   position: absolute;
   display: flex;
-  margin-top: 5em;
-  flex-direction: column;
-  margin-left: 60%;
-  align-items: flex-end;
+  flex-direction: column-reverse;
+  margin-left: 57%;
+  margin-top: 90px;
 }
 
-.lot-description {
+.badges-description {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   color: #fff;
-  font-size: 12px;
-  text-align: right;
-  padding-right: 80px;
-  margin-bottom: -35px;
+  display: flex;
+  position: relative;
+  margin-left: -10px;
 }
 
-.lot-image {
-  width: 59px;
-  border-radius: 2px;
-  box-shadow: 9px -9px 0.9px #c8e6c9;
+.badges-image {
+  width: 80px;
+  height: 80px;
+  margin-left: -20px;
 }
+
+.size-description {
+  font-size: 17px;
+  margin-bottom: -10px;
+  margin-top: 10px;
+}
+
+.badges-hs {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #fff;
+  margin-bottom: -50px;
+  margin-left: 4em;
+}
+
+.hz-description {
+  margin-left: 5px;
+  font-size: 12px;
+  margin-bottom: -20px;
+}
+
 
 /* TODO: no borrar estos estilos */
 /* .column {
@@ -173,7 +194,7 @@
 .qr {
   position: absolute;
   width: 50px !important;
-  margin-top: 80px;
+  margin-top: 140px;
   filter: invert(1);
   margin-left: 50px;
 }
@@ -191,11 +212,11 @@
 .text-title {
   color: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 700;
   width: 300px;
   position: absolute;
-  top: 90px;
+  top: 140px;
   margin-left: 100px;
 }
 
@@ -216,9 +237,9 @@
   position: absolute;
   margin-left: 100px;
   font-size: 12px;
-  top: 70px;
+  top: 110px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
 }
 
 .lotValue {
@@ -286,7 +307,7 @@
 
 .lastActivity {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  margin-top: 340px;
+  margin-top: 380px;
   margin-left: 100px;
   font-size: 14px;
   line-height: 1.8;
@@ -323,6 +344,11 @@
   text-align: left;
 }
 
+.size-description {
+  font-size: 20px;
+  margin-bottom: -10;
+}
+
 .crop-leaders {
   background: linear-gradient(
     to bottom,
@@ -333,12 +359,13 @@
   );
   display: flex;
   justify-content: space-evenly;
+  height: 400px;
+  margin-top: -100;
 }
 
 .spokesman {
   height: fit-content;
   width: 242px;
-  left: 0px;
   border-radius: 4px;
   background: #f8f8f8;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -349,7 +376,6 @@
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 12px;
   font-style: normal;
-  line-height: 16px;
   letter-spacing: 0.4000000059604645px;
   margin-left: 10px;
   margin-top: 10px;
@@ -360,8 +386,8 @@
   font-size: 16px;
   font-style: normal;
   font-weight: bold;
-  line-height: 22px;
   margin-left: 10px;
+  margin-top: -18px;
 }
 
 .spokesman-data {
@@ -374,18 +400,49 @@
   margin-left: 10px;
 }
 
+.spokesman-data-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  /* font-style: normal; */
+  /* font-weight: 400; */
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  margin-left: 20px;
+}
+
 .inner-margin {
   padding: 15px;
 }
 
+/* FIXME: Desde aca se controla el paginado */
 .activity-header {
   page-break-inside: avoid;
+  /* page-break-after: always !important;
+  page-break-before: always !important; */
 }
+
+.activity-header-val {
+  /* page-break-after: always !important; */
+  /* page-break-inside: avoid; */
+  /* page-break-before: always !important; */
+  /* margin-top: 50px; */
+}
+
+.validation-title {
+  page-break-inside: avoid !important;
+}
+
+.validation-title-val {
+  page-break-inside: avoid !important;
+}
+
+/* FIXME:*/
 
 .activity-type-img {
   height: 30px;
   margin-left: 5px;
   margin-top: 20px;
+  width: 30;
 }
 
 .activity-title {
@@ -400,11 +457,6 @@
   page-break-inside: avoid;
 }
 
-.activities {
-  page-break-inside: avoid;
-  background-color: #ffffff;
-}
-
 .activity-frame {
   border-radius: 2px;
   padding: 8px;
@@ -414,6 +466,22 @@
   text-align: left;
   flex-direction: column;
   page-break-inside: avoid;
+}
+
+.activities {
+  page-break-inside: avoid;
+  background-color: #ffffff;
+}
+
+.activity-frame-actividades-validaciones {
+  border-radius: 2px;
+  margin-bottom: 20px;
+  box-shadow: 0px 0px 0px 2px rgb(0, 0, 0, 0.1);
+  background-color: #f8f8f8;
+  page-break-inside: avoid !important;
+  position: static;
+  width: 100%;
+  height: 30%;
 }
 
 .date-activity {
@@ -427,6 +495,18 @@
   color: #333333;
 }
 
+.date-activity-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 1.5px;
+  color: #333333;
+  margin-left: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 /* TODO: No borrar */
 /* .activity-lots {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -449,6 +529,18 @@
   text-align: left;
 }
 
+.activity-lots-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  text-align: left;
+  margin-top: 25px;
+  margin-left: 20px;
+}
+
 .activity-framed-h1 {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 18px;
@@ -461,10 +553,10 @@
 
 .activity-validations {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  margin-left: auto;
-  width: fit-content;
-  margin-top: -130px;
+  margin-left: 70%;
+  margin-top: -100px;
   padding-right: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .backup-docs {
@@ -478,7 +570,28 @@
   color: rgba(51, 51, 51, 0.7);
 }
 
+.backup-docs-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.4000000059604645px;
+  color: rgba(51, 51, 51, 0.7);
+  margin-left: 20px;
+}
+
 .validation-date {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #c8e6c9;
+  color: #43a047;
+}
+
+.not-signed-validation-date {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #ffccbc;
+  color: #f4511e;
+}
+
+.validation-date-val {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: #c8e6c9;
   color: #43a047;
@@ -494,8 +607,14 @@
   text-align: left;
 }
 
-.validation-title {
-  page-break-inside: avoid !important;
+.validation-name-val {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  text-align: left;
 }
 
 .lot-pic-text {
@@ -522,14 +641,15 @@
 }
 
 .applications {
-  page-break-inside: avoid !important;
+  page-break-inside: avoid;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 12px;
   font-style: normal;
-  font-weight: 400;
-  line-height: 10px;
+  /* font-weight: 400; */
+  /* line-height: 10px; */
   letter-spacing: 0.25px;
-  text-align: left;
+  /* text-align: left; */
+  margin-left: 5px;
 }
 
 .applications-supply {
@@ -542,8 +662,17 @@
   text-align: left;
 }
 
+.applications-supply-validation {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
+  letter-spacing: -0.5;
+  position: static;
+  padding-right: 5px;
+  margin-left: 10px;
+}
+
 .card {
-  box-shadow: 0px 0px 0px 2px rgb(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 0px 2px rgb(0 0 0 / 10%);
   transition: 0.3s;
   margin-left: 20px;
   margin-bottom: 15px;
@@ -552,12 +681,36 @@
 
 .activity-lots-img {
   width: 200px;
+  height: 200px;
 }
 
 .activity-frame-lots {
   display: flex;
-  flex-wrap: wrap-reverse;
   padding-top: 60px;
+  flex-wrap: wrap;
+  position: static;
+}
+
+.activity-frame-lots-validation {
+  display: flex;
+  padding-top: 60px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  position: static;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 20px;
+  padding-left: 20px;
+  overflow: hidden;
+}
+
+.activity-frame-lots-under {
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+  margin-bottom: 50px;
+  height: 250;
 }
 
 .eiq-lots {
@@ -573,4 +726,31 @@
   margin-left: 90px;
   align-items: center;
   margin-bottom: 10px;
+}
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-right: 10px;
+}
+
+.link-pdf {
+  margin-left: 20px;
+  padding-top: 5px;
+  color: #5e5e5e !important;
+  margin-bottom: 50px;
+  position: absolute;
+  margin-top: 130px;
+}
+
+.link-pdf-val {
+  margin-left: 20px;
+  padding-top: 5px;
+  color: #5e5e5e !important;
+  margin-bottom: 50px;
+  position: absolute;
 }

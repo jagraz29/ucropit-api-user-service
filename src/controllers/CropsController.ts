@@ -22,7 +22,8 @@ import {
   validateDateCropAndDateHarvest,
   exitsLotsReusableInCollectionLots,
   lotsReusableNotExistInDB,
-  responseReusableLotsMessageError
+  responseReusableLotsMessageError,
+  filterActivities
 } from '../utils'
 
 import {
@@ -34,6 +35,10 @@ import {
 import { UserSchema } from '../models/user'
 import { errors } from '../types/common'
 import moment from 'moment'
+import { badgesData } from '../seeders/badgesData'
+import { data } from '../commands/supplies/data'
+
+import { UnitTypeSchema } from './../models/unitType'
 
 const Crop = models.Crop
 
@@ -119,7 +124,9 @@ class CropsController {
   public async show (req: Request, res: Response) {
     const { id } = req.params
     const crop = await CropService.getCrop(id)
-    const lots = await LotService.storeLotImagesAndCountries(crop.lots)
+    const lots = await LotService.storeLotImagesAndCountriesWithPopulate(
+      crop.lots
+    )
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
     const badges = getCropBadgesByUserType(req.user, crop)
@@ -158,8 +165,9 @@ class CropsController {
     if (!crop) {
       return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
     }
-    const activities: Array<ReportSignersByCompany> =
+    const activities: Array<ReportSignersByCompany> = filterActivities(
       getActivitiesOrderedByDateUtils(crop)
+    )
 
     res.status(StatusCodes.OK).json(activities)
   }
@@ -188,14 +196,18 @@ class CropsController {
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    const dataCrop = calculateDataCropUtils(crop, activities)
+    const dataCrop = calculateDataCropUtils(
+      crop,
+      activities,
+      theoriticalPotential
+    )
 
     const dataPdf = {
-      dataCrop,
-      theoriticalPotential,
+      crop: dataCrop,
       activities,
       dateCreatePdf: moment().format('DD/MM/YYYY')
     }
+
     const nameFile = await PDFService.generatePdf(
       'pdf-crop-history',
       dataPdf,
