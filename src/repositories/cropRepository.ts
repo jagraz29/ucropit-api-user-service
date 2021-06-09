@@ -8,6 +8,16 @@ import {
 } from '../utils'
 
 export class CropRepository {
+
+  /**
+   * @function findCropsSample
+   * Get crops sample.
+   * @param object query
+   */
+  public static async findCropsSample (query) {
+    const crops = await Crop.find(query)
+    return crops
+  }
   /**
    *
    * @param identifier
