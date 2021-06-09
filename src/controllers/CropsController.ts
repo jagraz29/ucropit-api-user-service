@@ -35,10 +35,6 @@ import {
 import { UserSchema } from '../models/user'
 import { errors } from '../types/common'
 import moment from 'moment'
-import { badgesData } from '../seeders/badgesData'
-import { data } from '../commands/supplies/data'
-
-import { UnitTypeSchema } from './../models/unitType'
 
 const Crop = models.Crop
 
