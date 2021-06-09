@@ -109,12 +109,10 @@ async function updateActiveIngredients() {
   )
 
   for (const supply of supplies) {
-    if (!supply.activeIngredients.length) {
-      if (!isSupplyCompoundIngredient(supply)) {
-        await updateActiveIngredientsSimpleSupply(supply)
-      } else {
-        await updateActiveIngredientsCompoundSupply(supply)
-      }
+    if (!isSupplyCompoundIngredient(supply)) {
+      await updateActiveIngredientsSimpleSupply(supply)
+    } else {
+      await updateActiveIngredientsCompoundSupply(supply)
     }
   }
 }
@@ -125,14 +123,13 @@ async function updateCompositionSupply(): Promise<void> {
     const supplyUpdated: Supply = await SupplyRepository.getSupply({
       code: supply.code
     })
-    if (!supplyUpdated.activeIngredients.length) {
-      console.log(
-        `${chalk.green(`UPDATE SUPPLY COMPOSITION CODE: ${supply.code}`)}`
-      )
-      await SupplyRepository.updateOne(supplyUpdated._id, {
-        $set: { compositon: supply.composition }
-      })
-    }
+
+    console.log(
+      `${chalk.green(`UPDATE SUPPLY COMPOSITION CODE: ${supply.code}`)}`
+    )
+    await SupplyRepository.updateOne(supplyUpdated._id, {
+      $set: { compositon: supply.composition }
+    })
   }
   console.log(`${chalk.yellow('FINISH UPDATE COMPOSITION SUPPLIES')}`)
 }
