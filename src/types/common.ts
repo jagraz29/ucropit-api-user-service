@@ -1,6 +1,6 @@
-export const roles = ['MARKETER', 'PROVIDER', 'CAM']
+export const roles = [ 'MARKETER', 'PROVIDER', 'CAM' ]
 
-export const rolesReportSowingBilling = ['MARKETER', 'PROVIDER', 'KAM', 'CAM']
+export const rolesReportSowingBilling = [ 'MARKETER', 'PROVIDER', 'KAM', 'CAM' ]
 
 export const errors = [
   { key: '001', code: 'NOT_AUTHORIZATION_EXPORT' },
@@ -9,7 +9,7 @@ export const errors = [
   { key: '004', code: 'NAME_LOT_DUPLICATED' },
   { key: '005', code: 'RESOURCE_NOT_FOUND' },
   { key: '006', code: 'BADGE_TYPE_DUPLICATED' },
-  { key: '007', code: 'DATA_NOT_FOUND' },
+  { key: '007', code: 'DATA_NOT_FOUND' }
 ]
 
 export enum emailTemplates {

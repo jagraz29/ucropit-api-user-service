@@ -2,6 +2,7 @@ import models from '../models'
 import { isNowGreaterThan } from '../utils/Date'
 import ServiceBase from './common/ServiceBase'
 import ActivityService from './ActivityService'
+
 const Crop = models.Crop
 const Activity = models.Activity
 const ActivityType = models.ActivityType
@@ -477,6 +478,7 @@ class CropService extends ServiceBase {
       .populate('badges.typeAgreement')
       .lean({ virtuals: true })
   }
+
   /**
    *
    * @param cropId
@@ -494,7 +496,9 @@ class CropService extends ServiceBase {
   public static async getLastMonitoring(cropId: string) {
     const crop = await CropService.findOneCrop(cropId)
 
-    const activityName: any = await ActivityType.findOne({ tag: 'ACT_MONITORING' })
+    const activityName: any = await ActivityType.findOne({
+      tag: 'ACT_MONITORING'
+    })
 
     function filterActivity(item) {
       return (
@@ -948,10 +952,8 @@ class CropService extends ServiceBase {
 
     activityInstance.setExpired()
 
-
     return activityInstance.save()
   }
-
 }
 
 export default CropService

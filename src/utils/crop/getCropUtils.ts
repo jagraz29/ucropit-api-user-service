@@ -45,13 +45,15 @@ export const getCropUtils = (
     badges,
     eiq: {
       quantity: eiq,
-      range: getEiqRange(eiq,eiqRanges)
+      range: getEiqRange(eiq, eiqRanges)
     },
     cropTypeKey,
     company,
     activities,
     lotsQuantity: lots.length ? lots[0].data.length : 0,
-    lots: lots.length ? getLots(lots[0].data, activitiesWithEiq, eiqRanges) : [],
+    lots: lots.length
+      ? getLots(lots[0].data, activitiesWithEiq, eiqRanges)
+      : [],
     lotsGroupByTag: lots.length
       ? getLotsGroupByTag(lots, activitiesWithEiq, eiqRanges)
       : []
