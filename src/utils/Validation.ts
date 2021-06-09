@@ -443,7 +443,7 @@ export const validateDateCropAndDateHarvest = (dateCrop: string, dateHarvest: st
   const currentDate = moment()
   const startDate = moment(new Date(dateCrop))
   const endDate = moment(new Date(dateHarvest))
-  if (currentDate.isBefore(startDate)) {
+  if (startDate.isBefore(currentDate)) {
     return {
       error: true,
       message: 'La fecha de cultivo deber ser posterior a la actual',
