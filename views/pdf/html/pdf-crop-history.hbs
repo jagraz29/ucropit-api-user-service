@@ -57,7 +57,7 @@
                                 <div>
                                     <div class="binnacle">
                                         Historia de cultivo al {{ dateCreatePdf }}<br>
-                                        {{ moment crop format="MM-YYYY" }} - {{ moment dateHarvest format="MM-YYYY" }}
+                                        {{ moment crop format="MMMM yy" }} - {{ moment dateHarvest format="MMMM yy" }}
                                     </div>
 
                                     <div class="text-title">
@@ -86,7 +86,7 @@
                                 {{#if @last}}
                                 <div class="lastActivity">
                                     <div class="last-frame">
-                                        <div class="lastActivity-title dataValue">{{name}} {{status}}</div>
+                                        <div class="lastActivity-title dataValue no-bold"> Status: {{name}} {{status}}</div>
                                     </div>
                                 </div>
                                 {{/if}}
@@ -99,7 +99,9 @@
                                     <img src={{badge.imagePath}} class="badges-image" />
                                         <div class="hz-description" >
                                             <p class="size-description">{{badge.name.es}}</p>
-                                            <p>{{surfaceTotal}}</p>
+                                            {{#if surfaceTotal }}
+                                                <p>{{surfaceTotal}} has</p>
+                                            {{/if}}
                                         </div> 
                                     </div>  
                                 {{/each}}
@@ -109,23 +111,23 @@
             {{!-- TODO: aqui cierra el fill --}}
 
                 <div class="crop-leaders">
-                    <div class="spokesman">
-                        <h5 class="spokesman-title">
+                    <div class="res-contact-header">
+                        <h5 class="res-contact-title">
                             Responsable del cultivo
                         </h5>
-                        <h3 class="spokesman-name">{{crop.cultivationManager.firstName}} {{crop.cultivationManager.lastName}}</h3>
-                        <div class="spokesman-data">{{crop.cultivationManager.phone}}</div>
-                        <div class="spokesman-data">{{crop.cultivationManager.email}}</div>
+                        <h3 class="name-header">{{crop.cultivationManager.firstName}} {{crop.cultivationManager.lastName}}</h3>
+                        <div class="data-header">{{crop.cultivationManager.phone}}</div>
+                        <div class="data-header">{{crop.cultivationManager.email}}</div>
                     </div>
                     {{#if crop.commercialContact}}
-                        <div class="spokesman">
-                            <h5 class="spokesman-title">
+                        <div class="res-contact-header">
+                            <h5 class="res-contact-title">
                                 Contacto comercial
                             </h5>
-                            <h3 class="spokesman-name">{{crop.commercialContact.firstName}} {{crop.commercialContact.lastName}}</h3>
-                            <div class="spokesman-data">Potencial Teórico {{crop.commercialContact.theoriticalPotential}} ton</div>
-                            <div class="spokesman-data">{{crop.commercialContact.phone}}</div>
-                            <div class="spokesman-data">{{crop.commercialContact.email}}</div>
+                            <h3 class="name-header">{{crop.commercialContact.firstName}} {{crop.commercialContact.lastName}}</h3>
+                            <div class="data-header">Potencial Teórico {{crop.commercialContact.theoriticalPotential}} ton</div>
+                            <div class="data-header">{{crop.commercialContact.phone}}</div>
+                            <div class="data-header">{{crop.commercialContact.email}}</div>
                         </div>
                     {{/if}}
                 </div>
@@ -232,9 +234,9 @@
                                         </div>
                                     {{/each}}
                                     <div class="activity-validations">
+                                        <div class="validation-title">Validaciones</div>
                                         {{#each signers}}
                                             <div>
-                                                <div class="validation-title">Validaciones</div>
                                                 {{#if dateSigned }}
                                                     <div><span class="validation-date">{{moment dateSigned format="DD/MM/YYYY"}}</span></div>
                                                 {{else}}
@@ -277,17 +279,25 @@
                                         <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
                                         height="26" />
                                     {{/case}}
+                                    {{#case "ACT_FERTILIZATION"}}
+                                        <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/fertilization.svg" width="26"
+                                        height="26" />
+                                    {{/case}}
+                                    {{#case "ACT_TILLAGE"}}
+                                        <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/tillage.svg" width="26"
+                                        height="26" />
+                                    {{/case}}
                                 {{/switch}}
                                  
                                 <div class="activity-title">{{name}}</div>
 
-                                {{#each achievements}}
+                                {{!-- {{#each achievements}}
                                     {{#if suppliesList }}
                                         {{#each suppliesList }}
                                             <p class="applications">{{name}}</p>
                                         {{/each}}
                                     {{/if}}
-                                {{/each}}
+                                {{/each}} --}}
                                 
 
                            
@@ -312,10 +322,16 @@
                                                             <a href={{path}}>{{description}}</a>
                                                         </div>
                                             {{/each}}
+                                            <!-- TODO: EIQ EN ACTIVIDADES -->
+                                                {{!-- <div class="eiq">
+                                                    <div class="center">
+                                                        EIQ: {{crop.eiq}}
+                                                    </div>
+                                                </div> --}}
                                                 <div class="activity-validations">
+                                                    <div class="validation-title-val">Validaciones</div>
                                                     {{#each signers }}
                                                         <div>
-                                                            <div class="validation-title-val">Validaciones</div>
                                                             {{#if dateSigned }}
                                                                 <div><span class="validation-date">{{moment dateSigned format="DD/MM/YYYY"}}</span></div>
                                                             {{else}}
@@ -360,6 +376,7 @@
                                             <div class="container">
                                                 <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
                                                 <p class="type-pic-card">Dentro del lote</p>
+                                                <!-- TODO: EIQ EN LOTES -->
                                                 {{!-- <div class="eiq-lots">
                                                     <div class="center">
                                                         EIQ: {{eiq}}
