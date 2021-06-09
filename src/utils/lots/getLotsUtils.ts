@@ -1,7 +1,9 @@
 import { Numbers } from '../Numbers'
 import { getEiqOfAchievementsByLot } from '.'
+import { getEiqRange } from '..'
+import { IEiqRangesDocument } from '../../interfaces'
 
-export const getLots = (lots, activitiesWithEiq): Object[] => {
+export const getLots = (lots, activitiesWithEiq, eiqRanges: IEiqRangesDocument[]): Object[] => {
   return lots.map(
     ({ provinceName, _id: lotId, cityName, countryName, surface, image }) => {
       const { normal: path } = image || {}
@@ -9,22 +11,25 @@ export const getLots = (lots, activitiesWithEiq): Object[] => {
         ? `${process.env.BASE_URL}${path}`
         : process.env.IMAGE_LOT_DEFAULT
 
-      const eiq: number = getEiqOfAchievementsByLot(lotId, activitiesWithEiq)
+      const eiq: number = Numbers.roundToTwo(getEiqOfAchievementsByLot(lotId, activitiesWithEiq))
       return {
         provinceName,
         cityName,
         countryName,
         surface,
-        eiq: Numbers.roundToTwo(eiq),
+        eiq: {
+          quantity: eiq,
+          range: getEiqRange(eiq,eiqRanges)
+        },
         image: imageLot
       }
     }
   )
 }
 
-export const getLotsGroupByTag = (lots, activitiesWithEiq) => {
+export const getLotsGroupByTag = (lots, activitiesWithEiq, eiqRanges: IEiqRangesDocument[]) => {
   return lots.map(({ data, tag }) => {
-    const lots = getLots(data, activitiesWithEiq)
+    const lots = getLots(data, activitiesWithEiq, eiqRanges)
     return {
       tag,
       lots,

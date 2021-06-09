@@ -17,7 +17,7 @@ class AuthController {
   }
 
   public async auth (req: Request, res: Response) {
-    let user = await User.findOne({
+    let user: any = await User.findOne({
       email: req.body.email.toLocaleLowerCase()
     }).populate('config')
 
@@ -48,7 +48,7 @@ class AuthController {
 
   public async register (req: Request, res: Response) {
     const { firstName, lastName, email, phone } = req.body
-    let user = await User.findOne({
+    let user: any = await User.findOne({
       email: req.body.email.toLocaleLowerCase()
     }).populate('config')
 
@@ -75,7 +75,7 @@ class AuthController {
   }
 
   public async validate (req: Request, res: Response) {
-    const user = await User.findOne({
+    const user: any = await User.findOne({
       email: req.body.email.toLocaleLowerCase()
     })
 
@@ -118,7 +118,7 @@ class AuthController {
   public async authForeignService(req: Request, res: Response) {
     const { credentialKey, credentialSecret } = req.body
 
-    const credential = await ForeignCredential.findOne({ credentialKey })
+    const credential: any = await ForeignCredential.findOne({ credentialKey })
 
     if (!credential) {
       return res.status(404).json({ error: 'ERR_NOT_FOUND' })

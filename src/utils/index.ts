@@ -1,4 +1,3 @@
-
 export * from './report'
 export * from './evidences'
 export * from './crop'
@@ -16,3 +15,4 @@ export * from './Validation'
 export * from './ErrorResponse'
 export * from './Pagination'
 export * from './ParseImageUrl'
+export * from './eiq'

@@ -15,7 +15,7 @@ class ProfileController {
    * @return Response
    */
   public async image(req: Request, res: Response) {
-    const user = await User.findById(req.params.id)
+    const user: any = await User.findById(req.params.id)
 
     if (!user) {
       return res.status(404).json({ error: 'ERR_NOT_FOUND' })

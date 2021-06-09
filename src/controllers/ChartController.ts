@@ -158,7 +158,7 @@ class ChartController {
       query['members.identifier'] = req.query.identifier
     }
 
-    const crops = await Crop.find(query)
+    const crops: any = await Crop.find(query)
       .populate('unitType')
       .populate('lots.data')
       .populate({

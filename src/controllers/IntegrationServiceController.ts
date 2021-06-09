@@ -144,7 +144,7 @@ class IntegrationServiceController {
     const data = req.body
     let responseIntegration: ResponseIntegration = {}
 
-    const userConfig = await UserConfigService.findById(user.config)
+    const userConfig: any = await UserConfigService.findById(user.config)
 
     await CropService.addServiceSynchronized(data)
 
@@ -190,7 +190,7 @@ class IntegrationServiceController {
 
     if (CropService.serviceCropIsSynchronized(crop, data.erpAgent)) {
       const token: string = req.get('authorization').split(' ')[1]
-      const userConfig = await UserConfigService.findById(user.config)
+      const userConfig: any = await UserConfigService.findById(user.config)
 
       const response = await IntegrationService.export(
         {

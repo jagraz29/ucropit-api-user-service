@@ -22,7 +22,7 @@ class UsersController {
 
   public async update(req: Request, res: Response) {
     const { email, firstName, lastName, phone, pin } = req.body
-    let user = await User.findOne({ email: req.body.email })
+    let user: any = await User.findOne({ email: req.body.email })
 
     if (!user) return res.status(404).json({ error: 'ERR_NOT_FOUND' })
 
@@ -45,7 +45,7 @@ class UsersController {
    */
   public async validatePin(req: Request | any, res: Response) {
     const { pin } = req.body
-    const user = await User.findById(req.user._id)
+    const user: any = await User.findById(req.user._id)
 
     if (user) {
       user.comparePassword(pin, 'pin', async function (err, isMatch) {

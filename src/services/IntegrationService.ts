@@ -127,7 +127,7 @@ class IntegrationService extends ServiceBase {
     crop: string,
     logAchievement: IExportIntegrationLog
   ) {
-    const integrationsLogFind = await integrationLog.findOne({ crop: crop })
+    const integrationsLogFind: any = await integrationLog.findOne({ crop: crop })
 
     let res = await integrationsLogFind.logAchievement.push(logAchievement)
     await integrationsLogFind.save()

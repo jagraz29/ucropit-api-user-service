@@ -1,4 +1,4 @@
-import models from '../models'
+import models, { AchievementModel } from '../models'
 import _ from 'lodash'
 import moment from 'moment'
 import GeoLocationService from '../services/GeoLocationService'
@@ -10,7 +10,6 @@ import {
   supplyTypesSeedGen,
   rolesAdvisorPromoter
 } from '../utils/Constants'
-import Achievement from '../models/achievement'
 import Activity from '../models/activity'
 
 const Company = models.Company
@@ -583,7 +582,7 @@ class ReportService {
 
     let lastDateSign: Array<String> = activities
       .map(async ({ lots, _id }) => {
-        const activity = await Activity.findById(_id)
+        const activity: any = await Activity.findById(_id)
         if (lots.find(({ _id }) => _id.toString() === lot._id.toString())) {
           if (this.isCompleteSigners(activity.signers)) {
             const lastSigner = activity.signers[activity.signers.length - 1]
@@ -655,7 +654,7 @@ class ReportService {
 
     let datesLastMonitoring = activitiesSorter
       .map(async ({ lots, _id }) => {
-        const activity = await Activity.findById(_id)
+        const activity: any = await Activity.findById(_id)
         if (lots.find(({ _id }) => _id.toString() === lot?._id.toString())) {
           const signer = activity.signers[0]
           const dateSigned = signer?._id.getTimestamp()
@@ -700,7 +699,7 @@ class ReportService {
   private static async getDateLastSignedAchievement(activities) {
     let dates = []
     for (const activity of activities) {
-      const activityObject = await Activity.findById(activity._id)
+      const activityObject: any = await Activity.findById(activity._id)
       const signersFalse = activityObject.signers.filter(
         (obj) => obj.signed === false
       )
@@ -939,7 +938,7 @@ class ReportService {
     return false
   }
 
-  private static async getCompany(identifier) {
+  private static async getCompany(identifier): Promise<any> {
     return Company.findOne({ identifier: identifier })
   }
 
@@ -1255,7 +1254,7 @@ class ReportService {
       )
 
       if (lotsSelected.length > 0 && this.isCompleteSigners(activity.signers)) {
-        const activityObject = await Activity.findById(activity._id)
+        const activityObject: any = await Activity.findById(activity._id)
         const dateLast = activityObject.signers.pop()._id.getTimestamp()
         dates.push(dateLast)
       }
@@ -1276,7 +1275,7 @@ class ReportService {
           lotsSelected.length > 0 &&
           this.isCompleteSigners(achievement.signers)
         ) {
-          const achievementsObject = await Achievement.findById(achievement._id)
+          const achievementsObject: any = await AchievementModel.findById(achievement._id)
           const dateLast =
             achievementsObject.signers.pop()?.dateSigned ||
             achievementsObject.signers.pop()?._id.getTimestamp()
@@ -1574,7 +1573,7 @@ class ReportService {
 
     let datesHarvestEstimated = activities
       .map(async ({ lots, _id }) => {
-        const activity = await Activity.findById(_id)
+        const activity: any = await Activity.findById(_id)
         if (lots.find(({ _id }) => _id.toString() === lot._id.toString())) {
           const dateHarvestEstimated =
             activity.dateEstimatedHarvest ?? crop.dateHarvest
@@ -1702,7 +1701,7 @@ class ReportService {
     return _.flatten(_.flatten(await Promise.all(dataCropsSowing)))
   }
 
-  private static filterCropsSowing(crops: any, type) {
+  private static filterCropsSowing(crops: any, type): any {
     return crops.filter((crop) =>
       ///(this.checkAgreements(crop.finished) || this.checkAgreements(crop.done)) &&
       this.isContainActivityBilling(crop, type)

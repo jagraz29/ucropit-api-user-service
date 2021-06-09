@@ -7,14 +7,14 @@ class SupplyRepository {
    * @param query
    * @returns
    */
-  public static async getSupply(query) {
+  public static async getSupply(query): Promise<any> {
     return Supply.findOne(query)
   }
   /**
    *
    * @param String[] idsSupplyTypes
    */
-  public static async getSuppliesBySupplyTypes(idsSupplyTypes: String[]) {
+  public static async getSuppliesBySupplyTypes(idsSupplyTypes: String[]): Promise<any> {
     const supplies = await Supply.find({
       typeId: {
         $in: idsSupplyTypes
@@ -40,7 +40,7 @@ class SupplyRepository {
    *
    * @returns
    */
-  public static async getOneActiveIngredient(query) {
+  public static async getOneActiveIngredient(query): Promise<any> {
     return ActiveIngredient.findOne(query)
   }
 }

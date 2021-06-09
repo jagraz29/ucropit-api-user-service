@@ -24,7 +24,7 @@ program.parse(process.argv)
  * Add Achievement's EIQ Surface
  */
 async function addEIQSupplySelectedInActivity() {
-  const activities = await ActivityRepository.getActivitiesFilterByName(
+  const activities: any = await ActivityRepository.getActivitiesFilterByName(
     NameActivity.Application
   )
 

@@ -2,8 +2,6 @@ import chalk from 'chalk'
 import models from '../../models'
 import NotificationService from '../../services/NotificationService'
 import { emailTemplates } from '../../types/common'
-
-const Achievement = models.Achievement
 const Activity = models.Activity
 
 module.exports = function (agenda) {
@@ -17,7 +15,7 @@ module.exports = function (agenda) {
         achievement
       } = job.attrs.data
 
-      const result = await Activity.findOne({ _id: activity }).populate({
+      const result: any = await Activity.findOne({ _id: activity }).populate({
         path: 'achievements',
         match: {
           _id: achievement
