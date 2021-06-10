@@ -40,7 +40,7 @@ export const validateCropStore = async (crop) => {
         names: Joi.array().items(Joi.string()).required(),
         tag: Joi.string().required()
       })
-    ).required(),
+    ),
     reusableLots: Joi.array()
     .items(
       Joi.object().keys({

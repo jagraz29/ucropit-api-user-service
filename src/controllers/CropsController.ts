@@ -281,10 +281,27 @@ class CropsController {
   public async create(req: Request | any, res: Response) {
     const user: UserSchema = req.user
     const data = JSON.parse(req.body.data)
+    let validationKmz = { error: false }
+    let validationDuplicateName = validationKmz
+    let validateDatesCropAndHarvest = validationKmz
+    let company = null
+
     await validateCropStore(data)
-    const validationKmz = await validateFormatKmz(req.files)
-    const validationDuplicateName = validateNotEqualNameLot(data.lots)
-    const validateDatesCropAndHarvest = validateDateCropAndDateHarvest(
+
+    if(!data.lots && !data.reusableLots) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        error: true,
+        code: 'INVALID_ARRAY_LOTS',
+        message: 'Debe seleccionar al menos un lote'
+      })
+    }
+
+    if(data.lots) {
+      validationKmz = await validateFormatKmz(req.files)
+      validationDuplicateName = validateNotEqualNameLot(data.lots)
+    }
+
+    validateDatesCropAndHarvest = validateDateCropAndDateHarvest(
       data.dateCrop,
       data.dateHarvest
     )
@@ -307,7 +324,7 @@ class CropsController {
       })
     }
 
-    let company = null
+
     const { identifier, dateCrop } = data
 
     if (data.reusableLots) {
@@ -354,17 +371,21 @@ class CropsController {
 
     company = (await CompanyService.search({ identifier }))[0]
 
-    let lots = await LotService.store(req, data.lots)
+    let lots = []
+
+    if(data.lots) {
+      lots = await LotService.store(req, data.lots)
+    }
+
+    if (data.reusableLots) {
+      lots = lots.concat(parseLotsReusableAsData(data.reusableLots))
+    }
 
     const activities = await ActivityService.createDefault(
       data.surface,
       data.dateCrop,
       user
     )
-
-    if (data.reusableLots) {
-      lots = lots.concat(parseLotsReusableAsData(data.reusableLots))
-    }
 
     const crop = await CropService.handleDataCrop(
       data,
