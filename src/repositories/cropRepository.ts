@@ -128,7 +128,10 @@ export class CropRepository {
       .populate('cropType')
       .populate('unitType')
       .populate('badges.badge')
-      .populate({ path: 'company', populate: [{ path: 'files' }] })
+      .populate({
+        path: 'company',
+        populate: [{ path: 'files' }, { path: 'contacts.user' }]
+      })
       .populate({
         path: 'pending',
         populate: [
@@ -136,8 +139,8 @@ export class CropRepository {
           { path: 'unitType' },
           { path: 'type' },
           { path: 'typeAgreement' },
-          { path: 'lots', select: '-area -__v' },
           { path: 'files' },
+          { path: 'lots', select: '-area -__v' },
           {
             path: 'supplies',
             populate: [{ path: 'typeId' }]
@@ -181,14 +184,12 @@ export class CropRepository {
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies.supply' },
+              { path: 'supplies.supply', populate: [{ path: 'typeId' }] },
               { path: 'supplies.typeId' }
             ]
           },
-          {
-            path: 'supplies',
-            populate: [{ path: 'typeId' }]
-          },
+          { path: 'supplies.supply', populate: [{ path: 'typeId' }] },
+          { path: 'supplies.typeId' },
           {
             path: 'storages',
             populate: [{ path: 'storageType' }]
@@ -205,10 +206,8 @@ export class CropRepository {
           { path: 'typeAgreement' },
           { path: 'lots', select: '-area -__v' },
           { path: 'files' },
-          {
-            path: 'supplies',
-            populate: [{ path: 'typeId' }]
-          },
+          { path: 'supplies.supply', populate: [{ path: 'typeId' }] },
+          { path: 'supplies.typeId' },
           {
             path: 'storages',
             populate: [{ path: 'storageType' }]
@@ -218,7 +217,7 @@ export class CropRepository {
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies.supply' },
+              { path: 'supplies.supply', populate: [{ path: 'typeId' }] },
               { path: 'supplies.typeId' }
             ]
           }
@@ -242,6 +241,11 @@ export class CropRepository {
     }).populate('unitType')
 
     return cropsInstance.length ? cropsInstance : null
+  }
+
+  public static async findCropsWithLotsPopulateData (query) {
+    const crops = await Crop.find(query).populate('lots.data')
+    return crops
   }
 
   public static async findAllEvidencesByCropId(cropId: string) {
@@ -291,7 +295,10 @@ export class CropRepository {
    *
    * @returns
    */
-  public static async updateOneCrop(query: any, dataToUpdate: any): Promise<any> {
+  public static async updateOneCrop(
+    query: any,
+    dataToUpdate: any
+  ): Promise<any> {
     return Crop.updateOne(query, dataToUpdate)
   }
 

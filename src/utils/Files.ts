@@ -5,6 +5,7 @@ import * as fs from 'fs'
 
 export const VALID_FORMATS_FILES = `text.*|image.*|application/pdf|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/octet-stream|application/vnd.google-earth.kmz|application/vnd.google-earth.kml`
 export const VALID_FORMATS_DOCUMENTS = `text.*|image.*|application/pdf|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document`
+export const DIR_FOLDER_DEFAULT_IMAGES = 'public/uploads/default-images'
 
 export async function makeDirIfNotExists (dir) {
   await mkdirp(dir)
@@ -37,7 +38,7 @@ export function readFile (path: string) {
   }
   return null
 }
-export function readFileBytes (path: string) {
+export function readFileBuffer (path: string) {
   if (fileExist(path)) {
     return fs.readFileSync(`${basePath()}${path}`)
   }

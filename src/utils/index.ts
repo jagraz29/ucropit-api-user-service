@@ -1,3 +1,4 @@
+
 export * from './report'
 export * from './evidences'
 export * from './crop'
@@ -12,3 +13,6 @@ export * from './activities'
 export * from './badge'
 export * from './lots'
 export * from './Validation'
+export * from './ErrorResponse'
+export * from './Pagination'
+export * from './ParseImageUrl'
