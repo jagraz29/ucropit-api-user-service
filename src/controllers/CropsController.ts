@@ -296,15 +296,21 @@ class CropsController {
       })
     }
 
-    if(data.lots) {
-      validationKmz = await validateFormatKmz(req.files)
-      validationDuplicateName = validateNotEqualNameLot(data.lots)
-    }
-
     validateDatesCropAndHarvest = validateDateCropAndDateHarvest(
       data.dateCrop,
       data.dateHarvest
     )
+
+    if (validateDatesCropAndHarvest.error) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        ...validateDatesCropAndHarvest
+      })
+    }
+
+    if(data.lots) {
+      validationKmz = await validateFormatKmz(req.files)
+      validationDuplicateName = validateNotEqualNameLot(data.lots)
+    }
 
     if (validationKmz.error) {
       return res.status(StatusCodes.BAD_REQUEST).json({
@@ -317,13 +323,6 @@ class CropsController {
         ...validationDuplicateName
       })
     }
-
-    if (validateDatesCropAndHarvest.error) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        ...validateDatesCropAndHarvest
-      })
-    }
-
 
     const { identifier, dateCrop } = data
 
