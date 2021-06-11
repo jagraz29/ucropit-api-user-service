@@ -75,6 +75,9 @@
                                     <div class="center">
                                         EIQ: {{crop.eiq}}
                                     </div>
+                                    <div class="star-eiq-header">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div>
                                 </div>
                                 <div class="dataContainer">
                                     <div class="dataNames">Sup Neta</div>
@@ -385,17 +388,23 @@
                                                 <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
                                                 <p class="type-pic-card">Dentro del lote</p>
                                                 <!-- TODO: EIQ EN LOTES AQUI VALIDO EL RANGO -->
-                                                {{!-- <div class="eiq-lots">
-                                                    <div class="eiq-under">
+                                                <div class="eiq-lots">
+                                                    <div class="eiq-very-low">
                                                         EIQ: {{crop.eiq}}
                                                     </div>
-                                                    <div class="eiq-medium">
+                                                    <div class="eiq-low">
                                                         EIQ: {{crop.eiq}}
                                                     </div>
-                                                    <div class="eiq-hard">
+                                                    <div class="eiq-moderate">
                                                         EIQ: {{crop.eiq}}
                                                     </div>
-                                                </div> --}}
+                                                    <div class="eiq-high">
+                                                        EIQ: {{crop.eiq}}
+                                                    </div>
+                                                    <div class="eiq-very-high">
+                                                        EIQ: {{crop.eiq}}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         {{/each}}
@@ -404,7 +413,6 @@
                         </div>
                         {{/each}}
                 {{!-- TODO: aqui cierra lotes final --}}
-
       </div>
     </body>
 </html>

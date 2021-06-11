@@ -69,7 +69,7 @@
 .dataContainer {
   position: absolute;
   margin-left: 100px;
-  margin-top: 280px;
+  margin-top: 290px;
 }
 
 .dataNames {
@@ -766,14 +766,14 @@
 }
 
 .eiq-header {
-  height: 50px;
+  height: 60px;
   width: 200px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   background: #ffffff;
   display: flex;
   position: absolute;
   margin-left: 100px;
-  margin-top: 220;
+  margin-top: 220px;
   opacity: 0.5;
   align-items: center;
   justify-content: space-around;
@@ -794,6 +794,12 @@
   height: 40px;
   width: 40px;
   margin-right: -60px;
+}
+
+.star-eiq-header {
+  color: #00ff06;
+  position: absolute;
+  margin-top: 30px;
 }
 
 .img-eiq-header {
@@ -843,32 +849,40 @@
   width: 100px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   border-radius: 100px;
-  background: #ffffff;
   display: flex;
   justify-content: center;
   align-content: center;
-  margin-left: 350px;
+  margin-left: 10px;
   align-items: center;
-  margin-bottom: 10px;
-  margin-top: -10;
+  margin-top: -10px;
 }
 
 :root{
-  --eiq-under: #008000;
-  --eiq-medium: #ffff00;
-  --eiq-hard: #ff0000;
+  --eiq-very-low: #4CAF50;
+  --eiq-low: #8BC34A;
+  --eiq-moderate: #CDDC39;
+  --eiq-high: #FF9800;
+  --eiq-very-high: #FF5722;
 }
 
-.eiq-under{
-  background-color: var(--eiq-under);
+.eiq-very-low{
+  background-color: var(--eiq-very-low);
 }
 
-.eiq-medium{
-  background-color: var(--eiq-medium);
+.eiq-low{
+  background-color: var(--eiq-low);
 }
 
-.eiq-hard{
-  background-color: var(--eiq-hard);
+.eiq-moderate{
+  background-color: var(--eiq-moderate);
+}
+
+.eiq-high{
+  background-color: var(--eiq-high);
+}
+
+.eiq-very-high{
+  background-color: var(--eiq-very-high);
 }
 
 .row {
