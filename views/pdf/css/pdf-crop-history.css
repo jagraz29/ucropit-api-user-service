@@ -411,6 +411,7 @@
   background: #f8f8f8;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   color: #333333;
+  padding: 15px;
 }
 
 .res-contact-title {
@@ -419,7 +420,7 @@
   font-style: normal;
   letter-spacing: 0.4000000059604645px;
   margin-left: 10px;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
 .name-header {

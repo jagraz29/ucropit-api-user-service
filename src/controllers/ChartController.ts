@@ -1,3 +1,4 @@
+/* tslint:disable:await-promise */
 import { Response, Request } from 'express'
 
 import CropService from '../services/CropService'

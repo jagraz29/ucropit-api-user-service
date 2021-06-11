@@ -1,3 +1,4 @@
+/* tslint:disable:await-promise */
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { map, flatten } from 'lodash'
@@ -237,6 +238,9 @@ class CropsController {
       theoriticalPotential,
       eiqRanges
     )
+
+    console.log(dataCrop)
+
     const dataPdf = {
       crop: dataCrop,
       activities,
