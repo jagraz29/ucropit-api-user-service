@@ -280,51 +280,14 @@ class CropsController {
    */
   public async create(req: Request | any, res: Response) {
     const user: UserSchema = req.user
-    const data = JSON.parse(req.body.data)
-    let validationKmz = { error: false }
-    let validationDuplicateName = validationKmz
-    let validateDatesCropAndHarvest = validationKmz
+    const { data } = req.body
+    const { identifier, dateCrop } = data
     let company = null
-
-    await validateCropStore(data)
-
-    if(!data.lots && !data.reusableLots) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        error: true,
-        code: 'INVALID_ARRAY_LOTS',
-        message: 'Debe seleccionar al menos un lote'
-      })
-    }
-
-    validateDatesCropAndHarvest = validateDateCropAndDateHarvest(
-      data.dateCrop,
-      data.dateHarvest
-    )
-
-    if (validateDatesCropAndHarvest.error) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        ...validateDatesCropAndHarvest
-      })
-    }
+    let lots = []
 
     if(data.lots) {
-      validationKmz = await validateFormatKmz(req.files)
-      validationDuplicateName = validateNotEqualNameLot(data.lots)
+      lots = await LotService.store(req, data.lots)
     }
-
-    if (validationKmz.error) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        ...validationKmz
-      })
-    }
-
-    if (validationDuplicateName.error) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        ...validationDuplicateName
-      })
-    }
-
-    const { identifier, dateCrop } = data
 
     if (data.reusableLots) {
       let responseError
@@ -366,19 +329,12 @@ class CropsController {
           ...responseError
         })
       }
+
+      lots = lots.concat(parseLotsReusableAsData(data.reusableLots))
+
     }
 
     company = (await CompanyService.search({ identifier }))[0]
-
-    let lots = []
-
-    if(data.lots) {
-      lots = await LotService.store(req, data.lots)
-    }
-
-    if (data.reusableLots) {
-      lots = lots.concat(parseLotsReusableAsData(data.reusableLots))
-    }
 
     const activities = await ActivityService.createDefault(
       data.surface,
@@ -396,7 +352,6 @@ class CropsController {
 
     res.status(201).json(crop)
   }
-
 
   /**
    * Show last monitoring
