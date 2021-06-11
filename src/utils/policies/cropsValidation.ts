@@ -1,12 +1,19 @@
 import { Request, Response, NextFunction } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import ErrorResponse, { ErrorResponseInstance } from '../ErrorResponse'
+import { map, flatten } from 'lodash'
 import {
   validateCropStore,
   validateDateCropAndDateHarvest,
   validateFormatKmz,
   validateNotEqualNameLot
 } from '../../utils/Validation'
+import { CropRepository } from '../../repositories'
+import {
+  exitsLotsReusableInCollectionLots, lotsReusableNotExistInDB,
+  responseReusableLotsMessageError,
+  validateLotsReusable
+} from '../../utils/lots'
 
 export const cropStorePolicy = async (
   req: Request | any,
@@ -76,7 +83,7 @@ export const validateDateCropAndDateHarvestInData = async (
 
 }
 
-export const hasLotsOrReusableLotsInDataPolicy = async (
+export const hasLotsInDataPolicy = async (
   req: Request | any,
   res: Response,
   next: NextFunction
@@ -102,6 +109,64 @@ export const hasLotsOrReusableLotsInDataPolicy = async (
       return res.status(StatusCodes.BAD_REQUEST).json({
         ...validationDuplicateName
       })
+    }
+    return next()
+  } catch (err) {
+    return ErrorResponseInstance.internalServer(err.toString(), res)
+  }
+
+}
+
+export const hasLotsReusableInDataPolicy = async (
+  req: Request | any,
+  res: Response,
+  next: NextFunction
+) => {
+
+  try {
+    const { data } = req.body
+    const { identifier, dateCrop } = data
+
+    if (data.reusableLots) {
+      let responseError
+      const reusableLots: string[] = flatten(map(data.reusableLots, 'lotIds'))
+      let query = {
+        identifier,
+        dateHarvest: { $gt: new Date(dateCrop.toString()) },
+        $where: function () {
+          return this.lots.length > 0
+        }
+      }
+
+      const cropsList = await CropRepository.findCropsSample(query)
+      const lotsNotAvailable = validateLotsReusable(reusableLots, cropsList)
+      responseError = responseReusableLotsMessageError(
+        lotsNotAvailable,
+        'Algunos lotes reutilizables no estan disponibles'
+      )
+
+      if (responseError.error) {
+        return res.status(StatusCodes.CONFLICT).json({
+          ...responseError
+        })
+      }
+
+      const existLots = await CropRepository.findCrops(
+        exitsLotsReusableInCollectionLots(identifier, reusableLots)
+      )
+      const message = 'Algunos lotes no san validos o no existen'
+      if (existLots) {
+        const notExistLots = lotsReusableNotExistInDB(existLots, reusableLots)
+        responseError = responseReusableLotsMessageError(notExistLots, message)
+      } else {
+        responseError = responseReusableLotsMessageError(reusableLots, message)
+      }
+
+      if (responseError.error) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          ...responseError
+        })
+      }
     }
     return next()
   } catch (err) {

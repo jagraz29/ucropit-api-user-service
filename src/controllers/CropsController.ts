@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { map, flatten } from 'lodash'
 
 import models from '../models'
 import CropService from '../services/CropService'
@@ -290,48 +289,7 @@ class CropsController {
     }
 
     if (data.reusableLots) {
-      let responseError
-      const reusableLots: string[] = flatten(map(data.reusableLots, 'lotIds'))
-      let query = {
-        identifier,
-        dateHarvest: { $gt: new Date(dateCrop.toString()) },
-        $where: function () {
-          return this.lots.length > 0
-        }
-      }
-
-      const cropsList = await CropRepository.findCropsSample(query)
-      const lotsNotAvailable = validateLotsReusable(reusableLots, cropsList)
-      responseError = responseReusableLotsMessageError(
-        lotsNotAvailable,
-        'Algunos lotes reutilizables no estan disponibles'
-      )
-
-      if (responseError.error) {
-        return res.status(StatusCodes.CONFLICT).json({
-          ...responseError
-        })
-      }
-
-      const existLots = await CropRepository.findCrops(
-        exitsLotsReusableInCollectionLots(identifier, reusableLots)
-      )
-      const message = 'Algunos lotes no san validos o no existen'
-      if (existLots) {
-        const notExistLots = lotsReusableNotExistInDB(existLots, reusableLots)
-        responseError = responseReusableLotsMessageError(notExistLots, message)
-      } else {
-        responseError = responseReusableLotsMessageError(reusableLots, message)
-      }
-
-      if (responseError.error) {
-        return res.status(StatusCodes.BAD_REQUEST).json({
-          ...responseError
-        })
-      }
-
       lots = lots.concat(parseLotsReusableAsData(data.reusableLots))
-
     }
 
     company = (await CompanyService.search({ identifier }))[0]

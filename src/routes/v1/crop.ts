@@ -3,8 +3,8 @@ import express from 'express'
 import cropsController from '../../controllers/CropsController'
 import {
   cropStorePolicy,
-  hasKmzInFilesPolicy,
-  hasLotsOrReusableLotsInDataPolicy,
+  hasKmzInFilesPolicy, hasLotsInDataPolicy,
+  hasLotsReusableInDataPolicy,
   validateDateCropAndDateHarvestInData
 } from '../../utils'
 
@@ -242,8 +242,9 @@ router.get('/:id/activities', cropsController.getCropWithActivities)
 router.post('/', [
   cropStorePolicy,
   validateDateCropAndDateHarvestInData,
-  hasLotsOrReusableLotsInDataPolicy,
-  hasKmzInFilesPolicy
+  hasLotsInDataPolicy,
+  hasKmzInFilesPolicy,
+  hasLotsReusableInDataPolicy
 ], cropsController.create)
 
 /**
