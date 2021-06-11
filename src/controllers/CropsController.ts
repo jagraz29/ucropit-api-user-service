@@ -280,7 +280,7 @@ class CropsController {
   public async create(req: Request | any, res: Response) {
     const user: UserSchema = req.user
     const { data } = req.body
-    const { identifier, dateCrop } = data
+    const { identifier } = data
     let company = null
     let lots = []
 

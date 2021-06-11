@@ -503,42 +503,42 @@ class LotService extends ServiceBase {
     return _.omit(lot, fields)
   }
 
-  public static _filterLotsFuture (cropsList, currentDateCrop) {
-    const cropsListFilter = cropsList.filter(crop => moment(currentDateCrop).isBefore(crop.dateHarvest)).map(crop => crop.toJSON())
-    const lotsInCrops = _.flatten(_.map(cropsListFilter, 'lots'))
-    const lotsInData = _.flatten(_.map(lotsInCrops, 'data'))
-    return lotsInData.map(lot => lot._id.toString())
-  }
-
   public static async parseLotByTagInCropsWithDataPopulate (cropsList, currentDateCrop) {
     const omitFields = [ 'status', 'area', 'coordinates', 'coordinateForGoogle', 'centerBound', 'centerBoundGoogle', '__v', 'id' ]
-    let results = []
-    const lotsFuture = await this._filterLotsFuture(cropsList, currentDateCrop)
-    console.log(lotsFuture)
+    const tagsArray = []
 
     for (let crop of cropsList) {
       const { dateCrop, dateHarvest } = crop
       const lotList = await this.storeLotImagesAndCountriesWithPopulate(crop.toJSON().lots)
       const lotsInData = _.flatten(_.map(lotList, 'data'))
       const disabled = moment(currentDateCrop).isBefore(dateHarvest)
-      const lots = lotsInData.map(lot => {
-       const _lost = _.omit(lot, omitFields)
-        return {
-          ..._lost,
-            disabled: disabled || lotsFuture.includes(lot._id.toString()),
-            dateCrop,
-            dateHarvest
+      const tagId = lotList[ 0 ]._id
+      const tagName = lotList[ 0 ].tag
+      const index = tagsArray.findIndex((x) => x.tag === tagName)
+      if (index !== -1) {
+        for (const lot of lotsInData) {
+          const lotForTag = Object.assign(_.omit(lot, omitFields), { disabled, dateCrop, dateHarvest })
+          const indexLot = tagsArray[index].lots.findIndex((x) => x._id === lot._id)
+          if (indexLot !== -1) {
+            tagsArray[index].lots[indexLot] = lotForTag
+          } else {
+            tagsArray[index].lots.push(lotForTag)
+          }
         }
-      })
-      results.push({
-        _id: lotList[ 0 ]._id,
-        tag: lotList[ 0 ].tag,
-        totalSurface: _.sumBy(lotsInData, 'surface'),
-        disabled: _.every(lots, 'disabled'),
-        lots
-      })
+        tagsArray[index].totalSurface = _.sumBy(tagsArray[index].lots, 'surface')
+        tagsArray[index].disabled = _.every(tagsArray[index].lots, 'disabled')
+      } else {
+        const lots = lotsInData.map(lot => Object.assign(_.omit(lot, omitFields), { disabled, dateCrop, dateHarvest }))
+        tagsArray.push({
+          _id: tagId,
+          tag: tagName,
+          totalSurface: _.sumBy(lots, 'surface'),
+          disabled: _.every(lots, 'disabled'),
+          lots
+        })
+      }
     }
-    return results
+    return tagsArray
   }
 }
 
