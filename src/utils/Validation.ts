@@ -73,42 +73,42 @@ export const validateActivityStore = async (activity) => {
     pay: Joi.number().optional(),
     observation: Joi.string().optional(),
     supplies: Joi.array()
-    .items(
-      Joi.object()
-      .keys({
-        name: Joi.string().required(),
-        unit: Joi.string().required(),
-        quantity: Joi.number().required(),
-        typeId: Joi.string().required(),
-        supply: Joi.string().required(),
-        icon: Joi.string().optional(),
-        total: Joi.number().required()
-      })
-      .unknown()
-    )
-    .optional(),
+      .items(
+        Joi.object()
+          .keys({
+            name: Joi.string().required(),
+            unit: Joi.string().required(),
+            quantity: Joi.number().required(),
+            typeId: Joi.string().required(),
+            supply: Joi.string().required(),
+            icon: Joi.string().optional(),
+            total: Joi.number().required()
+          })
+          .unknown()
+      )
+      .optional(),
     evidences: Joi.array()
-    .items(
-      Joi.object().keys({
-        name: Joi.string().optional(),
-        description: Joi.string().required(),
-        date: Joi.date().required(),
-        settings: Joi.optional(),
-        meta: Joi.optional()
-      })
-    )
-    .optional(),
+      .items(
+        Joi.object().keys({
+          name: Joi.string().optional(),
+          description: Joi.string().required(),
+          date: Joi.date().required(),
+          settings: Joi.optional(),
+          meta: Joi.optional()
+        })
+      )
+      .optional(),
     storages: Joi.array()
-    .items(
-      Joi.object().keys({
-        unitType: Joi.string().optional(),
-        tonsHarvest: Joi.number().optional(),
-        storageType: Joi.string().optional(),
-        icon: Joi.string().optional(),
-        label: Joi.string().optional()
-      })
-    )
-    .optional(),
+      .items(
+        Joi.object().keys({
+          unitType: Joi.string().optional(),
+          tonsHarvest: Joi.number().optional(),
+          storageType: Joi.string().optional(),
+          icon: Joi.string().optional(),
+          label: Joi.string().optional()
+        })
+      )
+      .optional(),
     signers: Joi.array().items(
       Joi.object().keys({
         userId: Joi.string().required(),
@@ -142,42 +142,42 @@ export const validateActivityUpdate = async (activity) => {
     lots: Joi.array().items(Joi.string()).optional(),
     crop: Joi.string().optional(),
     supplies: Joi.array()
-    .items(
-      Joi.object()
-      .keys({
-        name: Joi.string().required(),
-        unit: Joi.string().required(),
-        quantity: Joi.number().required(),
-        typeId: Joi.string().required(),
-        supply: Joi.string().required(),
-        icon: Joi.string().optional(),
-        total: Joi.number().required()
-      })
-      .unknown()
-    )
-    .optional(),
+      .items(
+        Joi.object()
+          .keys({
+            name: Joi.string().required(),
+            unit: Joi.string().required(),
+            quantity: Joi.number().required(),
+            typeId: Joi.string().required(),
+            supply: Joi.string().required(),
+            icon: Joi.string().optional(),
+            total: Joi.number().required()
+          })
+          .unknown()
+      )
+      .optional(),
     evidences: Joi.array()
-    .items(
-      Joi.object().keys({
-        name: Joi.string().optional(),
-        description: Joi.string().required(),
-        date: Joi.date().required(),
-        settings: Joi.optional(),
-        meta: Joi.optional()
-      })
-    )
-    .optional(),
+      .items(
+        Joi.object().keys({
+          name: Joi.string().optional(),
+          description: Joi.string().required(),
+          date: Joi.date().required(),
+          settings: Joi.optional(),
+          meta: Joi.optional()
+        })
+      )
+      .optional(),
     storages: Joi.array()
-    .items(
-      Joi.object().keys({
-        unitType: Joi.string().optional(),
-        tonsHarvest: Joi.number().optional(),
-        storageType: Joi.string().optional(),
-        icon: Joi.string().optional(),
-        label: Joi.string().optional()
-      })
-    )
-    .optional(),
+      .items(
+        Joi.object().keys({
+          unitType: Joi.string().optional(),
+          tonsHarvest: Joi.number().optional(),
+          storageType: Joi.string().optional(),
+          icon: Joi.string().optional(),
+          label: Joi.string().optional()
+        })
+      )
+      .optional(),
     signers: Joi.array().items(
       Joi.object().keys({
         userId: Joi.string().required(),
@@ -200,14 +200,14 @@ export const validateCompanyStore = async (company) => {
     address: Joi.string().required(),
     addressFloor: Joi.string().allow('').optional(),
     evidences: Joi.array()
-    .items(
-      Joi.object().keys({
-        name: Joi.string().required(),
-        description: Joi.string().required(),
-        date: Joi.date().required()
-      })
-    )
-    .optional()
+      .items(
+        Joi.object().keys({
+          name: Joi.string().required(),
+          description: Joi.string().required(),
+          date: Joi.date().required()
+        })
+      )
+      .optional()
   })
 
   return schema.validateAsync(company)
@@ -221,14 +221,14 @@ export const validateCompanyUpdate = async (company) => {
     address: Joi.string().optional(),
     addressFloor: Joi.string().allow('').optional(),
     evidences: Joi.array()
-    .items(
-      Joi.object().keys({
-        name: Joi.string().required(),
-        description: Joi.string().required(),
-        date: Joi.date().required()
-      })
-    )
-    .optional()
+      .items(
+        Joi.object().keys({
+          name: Joi.string().required(),
+          description: Joi.string().required(),
+          date: Joi.date().required()
+        })
+      )
+      .optional()
   })
 
   return schema.validateAsync(company)
@@ -244,53 +244,53 @@ export const validateAchievement = async (achievement) => {
     crop: Joi.string().required(),
     erpAgent: Joi.string().optional(),
     supplies: Joi.array()
-    .items(
-      Joi.object()
-      .keys({
-        name: Joi.string().required(),
-        unit: Joi.string().required(),
-        quantity: Joi.number().required(),
-        supply: Joi.string().required(),
-        typeId: Joi.string().optional(),
-        icon: Joi.string().optional(),
-        total: Joi.number().required()
-      })
-      .unknown()
-    )
-    .optional(),
+      .items(
+        Joi.object()
+          .keys({
+            name: Joi.string().required(),
+            unit: Joi.string().required(),
+            quantity: Joi.number().required(),
+            supply: Joi.string().required(),
+            typeId: Joi.string().optional(),
+            icon: Joi.string().optional(),
+            total: Joi.number().required()
+          })
+          .unknown()
+      )
+      .optional(),
     destination: Joi.array()
-    .items(
-      Joi.object().keys({
-        unitType: Joi.string().required(),
-        tonsHarvest: Joi.number().required(),
-        destinationAddress: Joi.string().required(),
-        icon: Joi.string().optional(),
-        label: Joi.string().optional()
-      })
-    )
-    .optional(),
+      .items(
+        Joi.object().keys({
+          unitType: Joi.string().required(),
+          tonsHarvest: Joi.number().required(),
+          destinationAddress: Joi.string().required(),
+          icon: Joi.string().optional(),
+          label: Joi.string().optional()
+        })
+      )
+      .optional(),
     evidences: Joi.array()
-    .items(
-      Joi.object().keys({
-        name: Joi.string().optional(),
-        description: Joi.string().required(),
-        date: Joi.date().required(),
-        settings: Joi.optional(),
-        meta: Joi.optional()
-      })
-    )
-    .optional(),
+      .items(
+        Joi.object().keys({
+          name: Joi.string().optional(),
+          description: Joi.string().required(),
+          date: Joi.date().required(),
+          settings: Joi.optional(),
+          meta: Joi.optional()
+        })
+      )
+      .optional(),
     signers: Joi.array()
-    .items(
-      Joi.object().keys({
-        userId: Joi.string().required(),
-        fullName: Joi.string().required(),
-        email: Joi.string().required(),
-        type: Joi.string().required(),
-        signed: Joi.boolean().optional()
-      })
-    )
-    .optional()
+      .items(
+        Joi.object().keys({
+          userId: Joi.string().required(),
+          fullName: Joi.string().required(),
+          email: Joi.string().required(),
+          type: Joi.string().required(),
+          signed: Joi.boolean().optional()
+        })
+      )
+      .optional()
   })
 
   return schema.validateAsync(achievement)
@@ -312,21 +312,21 @@ export const validateResponseSatelliteImages = async (
     Joi.object().keys({
       status_ok: Joi.boolean().required(),
       customOptions: Joi.object()
-      .keys({
-        activityId: Joi.string().required()
-      })
-      .required(),
+        .keys({
+          activityId: Joi.string().required()
+        })
+        .required(),
       lotId: Joi.string().required(),
       images: Joi.array()
-      .items(
-        Joi.object().keys({
-          nameFile: Joi.string().required(),
-          date: Joi.date().required(),
-          type: Joi.string().required(),
-          tag: Joi.string().required()
-        })
-      )
-      .optional()
+        .items(
+          Joi.object().keys({
+            nameFile: Joi.string().required(),
+            date: Joi.date().required(),
+            type: Joi.string().required(),
+            tag: Joi.string().required()
+          })
+        )
+        .optional()
     })
   )
 
@@ -343,7 +343,7 @@ export const validateFilesWithEvidences = (files, evidences) => {
   }
 
   if (!Array.isArray(files.files)) {
-    files.files = [ files.files ]
+    files.files = [files.files]
   }
 
   if (files.files.length !== evidences.length) {
@@ -380,7 +380,7 @@ export const validateNotEqualNameLot = (lotNames) => {
 export const validateFormatKmz = async (files: FileArray) => {
   const result = await handleFileConvertJSON(files)
 
-  for (const feature of result[ 0 ].features) {
+  for (const feature of result[0].features) {
     if (feature.geometry.type !== 'Polygon') {
       return {
         error: true,
@@ -402,8 +402,8 @@ export const validateExtensionFile = (files) => {
     return { error: false }
   }
   const isValidTypes = Object.keys(files).map((key) => {
-    if (files[ key ].length > 0) {
-      return files[ key ].map((file) => {
+    if (files[key].length) {
+      return files[key].map((file) => {
         if (!validTypes(file)) {
           return {
             error: true
@@ -415,7 +415,7 @@ export const validateExtensionFile = (files) => {
       })
     }
 
-    if (!validTypes(files[ key ])) {
+    if (!validTypes(files[key])) {
       return {
         error: true
       }
@@ -439,8 +439,11 @@ export const validateExtensionFile = (files) => {
   return { error: false }
 }
 
-export const validateDateCropAndDateHarvest = (dateCrop: string, dateHarvest: string) => {
-  const currentDate = moment()
+export const validateDateCropAndDateHarvest = (
+  dateCrop: string,
+  dateHarvest: string
+) => {
+  const currentDate = moment().subtract(1, 'day')
   const startDate = moment(new Date(dateCrop))
   const endDate = moment(new Date(dateHarvest))
   if (startDate.isBefore(currentDate)) {
@@ -460,9 +463,8 @@ export const validateDateCropAndDateHarvest = (dateCrop: string, dateHarvest: st
   }
 
   return { error: false }
-
 }
 
-function validTypes (file) {
+function validTypes(file) {
   return file.mimetype.match(VALID_FORMATS_DOCUMENTS) !== null
 }
