@@ -518,7 +518,7 @@ class LotService extends ServiceBase {
       if (index !== -1) {
         for (const lot of lotsInData) {
           const lotForTag = Object.assign(_.omit(lot, omitFields), { disabled, dateCrop, dateHarvest })
-          const indexLot = tagsArray[index].lots.findIndex((x) => x._id === lot._id)
+          const indexLot = tagsArray[index].lots.findIndex((l) => l._id.toString() === lot._id.toString())
           if (indexLot !== -1) {
             tagsArray[index].lots[indexLot] = lotForTag
           } else {
