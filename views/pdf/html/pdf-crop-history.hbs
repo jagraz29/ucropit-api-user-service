@@ -67,11 +67,18 @@
                                         {{company}}
                                     </div>
                                 </div>
-                                {{!-- <div class="eiq">
+                                <div class="eiq-header">
+                                    <div class="icon-eiq-header">
+                                      <img class="img-eiq-header" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
+                                        height="26" />
+                                    </div>
                                     <div class="center">
                                         EIQ: {{crop.eiq}}
                                     </div>
-                                </div> --}}
+                                    <div class="star-eiq-header">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div>
+                                </div>
                                 <div class="dataContainer">
                                     <div class="dataNames">Sup Neta</div>
                                     <div class="dataValue">{{crop.surface}} has</div>
@@ -322,17 +329,21 @@
                                                             <a href={{path}}>{{description}}</a>
                                                         </div>
                                             {{/each}}
-                                            <!-- TODO: EIQ EN ACTIVIDADES -->
-                                                {{!-- <div class="eiq">
-                                                    <div class="center">
-                                                        EIQ: {{crop.eiq}}
-                                                    </div>
-                                                </div> --}}
                                                 <div class="activity-validations">
                                                     <div class="validation-title-val">Validaciones</div>
                                                     {{#each signers }}
                                                         <div>
                                                             {{#if dateSigned }}
+                                                            <!-- TODO: EIQ EN ACTIVIDADES -->
+                                                                <div class="eiq-activity">
+                                                                    <div class="icon-eiq-activity">
+                                                                    <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
+                                                                        height="26" />
+                                                                    </div>
+                                                                    <div class="center-activity">
+                                                                        EIQ: {{crop.eiq}}
+                                                                    </div>
+                                                                </div>
                                                                 <div><span class="validation-date">{{moment dateSigned format="DD/MM/YYYY"}}</span></div>
                                                             {{else}}
                                                                 <div><span class="not-signed-validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
@@ -358,7 +369,7 @@
                 {{/each}}
     {{!-- TODO: aqui cierra actividades de validaciones --}}
                         {{#each crop.lotsGroupByTag}}
-                        <div class="activity-header">
+                        <div class="activity-header-lots-under">
                                 <img class="activity-type-img" src="https://www.pngrepo.com/png/111305/180/tryptic-brochure.png" width="26"
                                     height="26" />
                                 <div class="activity-title">{{tag}} Lotes - {{lotsQuantity}} ({{surface}} has.)</div>
@@ -376,12 +387,24 @@
                                             <div class="container">
                                                 <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
                                                 <p class="type-pic-card">Dentro del lote</p>
-                                                <!-- TODO: EIQ EN LOTES -->
-                                                {{!-- <div class="eiq-lots">
-                                                    <div class="center">
-                                                        EIQ: {{eiq}}
+                                                <!-- TODO: EIQ EN LOTES AQUI VALIDO EL RANGO -->
+                                                <div class="eiq-lots">
+                                                    <div class="eiq-very-low">
+                                                        EIQ: {{crop.eiq}}
                                                     </div>
-                                                </div> --}}
+                                                    <div class="eiq-low">
+                                                        EIQ: {{crop.eiq}}
+                                                    </div>
+                                                    <div class="eiq-moderate">
+                                                        EIQ: {{crop.eiq}}
+                                                    </div>
+                                                    <div class="eiq-high">
+                                                        EIQ: {{crop.eiq}}
+                                                    </div>
+                                                    <div class="eiq-very-high">
+                                                        EIQ: {{crop.eiq}}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         {{/each}}
@@ -390,7 +413,6 @@
                         </div>
                         {{/each}}
                 {{!-- TODO: aqui cierra lotes final --}}
-
       </div>
     </body>
 </html>
