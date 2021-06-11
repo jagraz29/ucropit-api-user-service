@@ -513,7 +513,7 @@ class LotService extends ServiceBase {
       const lotsInData = _.flatten(_.map(lotList, 'data'))
       const disabled = moment(currentDateCrop).isBefore(dateHarvest)
       const tagId = lotList[ 0 ]._id
-      const tagName = lotList[ 0 ].tag
+      const tagName = lotList[ 0 ].tag.trim()
       const index = tagsArray.findIndex((x) => x.tag === tagName)
       if (index !== -1) {
         for (const lot of lotsInData) {
