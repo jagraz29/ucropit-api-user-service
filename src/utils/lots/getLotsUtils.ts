@@ -1,33 +1,54 @@
 import { Numbers } from '../Numbers'
 import { getEiqOfAchievementsByLot } from '.'
 import { getEiqRange } from '..'
-import { IEiqRangesDocument } from '../../interfaces'
+import { IEiqRangesDocument, IDataLot } from '../../interfaces'
 
-export const getLots = (lots, activitiesWithEiq, eiqRanges: IEiqRangesDocument[]): Object[] => {
+export const getLots = (
+  lots,
+  activitiesWithEiq,
+  eiqRanges: IEiqRangesDocument[]
+): Object[] => {
   return lots.map(
-    ({ provinceName, _id: lotId, cityName, countryName, surface, image }) => {
+    ({
+      provinceName,
+      _id: lotId,
+      cityName,
+      countryName,
+      surface,
+      image,
+      name
+    }) => {
       const { normal: path } = image || {}
       const imageLot = path
         ? `${process.env.BASE_URL}${path}`
         : process.env.IMAGE_LOT_DEFAULT
-
-      const eiq: number = Numbers.roundToTwo(getEiqOfAchievementsByLot(lotId, activitiesWithEiq))
+      const dataLots: IDataLot = getEiqOfAchievementsByLot(
+        lotId,
+        activitiesWithEiq
+      )
+      const eiq: number = Numbers.roundToTwo(dataLots.eiq)
       return {
         provinceName,
         cityName,
         countryName,
         surface,
+        countAchievement: dataLots.count,
         eiq: {
           quantity: eiq,
-          range: getEiqRange(eiq,eiqRanges)
+          range: getEiqRange(eiq, eiqRanges)
         },
-        image: imageLot
+        image: imageLot,
+        nameLot: name
       }
     }
   )
 }
 
-export const getLotsGroupByTag = (lots, activitiesWithEiq, eiqRanges: IEiqRangesDocument[]) => {
+export const getLotsGroupByTag = (
+  lots,
+  activitiesWithEiq,
+  eiqRanges: IEiqRangesDocument[]
+) => {
   return lots.map(({ data, tag }) => {
     const lots = getLots(data, activitiesWithEiq, eiqRanges)
     return {

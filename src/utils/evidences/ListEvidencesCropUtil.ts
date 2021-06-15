@@ -40,7 +40,8 @@ export const getEvidenceImage = (documents: Evidence[]) => {
         nameFile,
         imagePathIntermediate,
         imagePathThumbnails,
-        description
+        description,
+        settings
       }) => {
         const componentFile = nameFile.split('.')
         if (
@@ -50,7 +51,8 @@ export const getEvidenceImage = (documents: Evidence[]) => {
           return {
             path: imagePathIntermediate,
             thumb: imagePathThumbnails,
-            description: description
+            description: description,
+            isInLot: settings ? settings.isInLot : false
           }
         }
       }

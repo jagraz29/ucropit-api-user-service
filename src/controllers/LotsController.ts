@@ -127,7 +127,7 @@ class LotsController {
 
     if (isAfterDateCrop) {
       return res
-        .status(StatusCodes.BAD_GATEWAY)
+        .status(StatusCodes.BAD_REQUEST)
         .json(
           ErrorResponseInstance.parseError(
             ErrorResponse.INVALID_DATE_CROP,

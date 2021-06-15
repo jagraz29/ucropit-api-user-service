@@ -35,14 +35,14 @@ export const validateCropStore = async (crop) => {
     unitType: Joi.string().required(),
     identifier: Joi.string().required(),
     lots: Joi.array()
-      .items(
-        Joi.object().keys({
-          names: Joi.array().items(Joi.string()).required(),
-          tag: Joi.string().required()
-        })
-      )
-      .required(),
-    reusableLots: Joi.array().items(
+    .items(
+      Joi.object().keys({
+        names: Joi.array().items(Joi.string()).required(),
+        tag: Joi.string().required()
+      })
+    ),
+    reusableLots: Joi.array()
+    .items(
       Joi.object().keys({
         tag: Joi.string().required(),
         lotIds: Joi.array().items(Joi.string()).required()
@@ -402,7 +402,7 @@ export const validateExtensionFile = (files) => {
     return { error: false }
   }
   const isValidTypes = Object.keys(files).map((key) => {
-    if (files[key].length > 0) {
+    if (files[key].length) {
       return files[key].map((file) => {
         if (!validTypes(file)) {
           return {

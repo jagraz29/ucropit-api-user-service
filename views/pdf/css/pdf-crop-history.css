@@ -156,7 +156,6 @@
   padding: 10px;
 } */
 
-
 .disclaimer {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-style: italic;
@@ -387,7 +386,7 @@
   background: #f8f8f8;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   color: #333333;
-  padding: 15px;
+  padding: 10px;
 }
 
 .res-contact-title {
@@ -435,7 +434,7 @@
   page-break-before: always !important; */
 }
 
-.activity-header-lots-under{
+.activity-header-lots-under {
   page-break-before: always;
 }
 
@@ -647,6 +646,31 @@
   margin-top: -1px;
 }
 
+.name-lot-card {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 21px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.surface-lot-card {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  line-height: 21px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: -1px;
+  color: rgba(51, 51, 51, 0.7);
+}
+
+.container-card-lot {
+  min-height: 60px;
+}
+
 .type-pic-card {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 13px;
@@ -737,7 +761,6 @@
   height: 250px;
 }
 
-
 .fa {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
@@ -790,7 +813,7 @@
 }
 
 .icon-eiq-header {
-  background-color: #8BC34A;
+  background-color: #8bc34a;
   border-radius: 100px;
   height: 40px;
   width: 40px;
@@ -858,31 +881,31 @@
   margin-top: -10px;
 }
 
-:root{
-  --eiq-very-low: #4CAF50;
-  --eiq-low: #8BC34A;
-  --eiq-moderate: #CDDC39;
-  --eiq-high: #FF9800;
-  --eiq-very-high: #FF5722;
+:root {
+  --eiq-very-low: #4caf50;
+  --eiq-low: #8bc34a;
+  --eiq-moderate: #cddc39;
+  --eiq-high: #ff9800;
+  --eiq-very-high: #ff5722;
 }
 
-.eiq-very-low{
+.eiq-very-low {
   background-color: var(--eiq-very-low);
 }
 
-.eiq-low{
+.eiq-low {
   background-color: var(--eiq-low);
 }
 
-.eiq-moderate{
+.eiq-moderate {
   background-color: var(--eiq-moderate);
 }
 
-.eiq-high{
+.eiq-high {
   background-color: var(--eiq-high);
 }
 
-.eiq-very-high{
+.eiq-very-high {
   background-color: var(--eiq-very-high);
 }
 

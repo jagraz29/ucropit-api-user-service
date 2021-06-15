@@ -505,22 +505,40 @@ class LotService extends ServiceBase {
 
   public static async parseLotByTagInCropsWithDataPopulate (cropsList, currentDateCrop) {
     const omitFields = [ 'status', 'area', 'coordinates', 'coordinateForGoogle', 'centerBound', 'centerBoundGoogle', '__v', 'id' ]
-    let results = []
+    const tagsArray = []
+
     for (let crop of cropsList) {
       const { dateCrop, dateHarvest } = crop
       const lotList = await this.storeLotImagesAndCountriesWithPopulate(crop.toJSON().lots)
       const lotsInData = _.flatten(_.map(lotList, 'data'))
       const disabled = moment(currentDateCrop).isBefore(dateHarvest)
-      const lots = lotsInData.map(lot => Object.assign(_.omit(lot, omitFields), { disabled, dateCrop, dateHarvest }))
-      results.push({
-        _id: lotList[ 0 ]._id,
-        tag: lotList[ 0 ].tag,
-        totalSurface: _.sumBy(lotsInData, 'surface'),
-        disabled: _.every(lots, 'disabled'),
-        lots
-      })
+      const tagId = lotList[ 0 ]._id
+      const tagName = lotList[ 0 ].tag.trim()
+      const index = tagsArray.findIndex((x) => x.tag === tagName)
+      if (index !== -1) {
+        for (const lot of lotsInData) {
+          const lotForTag = Object.assign(_.omit(lot, omitFields), { disabled, dateCrop, dateHarvest })
+          const indexLot = tagsArray[index].lots.findIndex((l) => l._id.toString() === lot._id.toString())
+          if (indexLot !== -1) {
+            tagsArray[index].lots[indexLot] = lotForTag
+          } else {
+            tagsArray[index].lots.push(lotForTag)
+          }
+        }
+        tagsArray[index].totalSurface = _.sumBy(tagsArray[index].lots, 'surface')
+        tagsArray[index].disabled = _.every(tagsArray[index].lots, 'disabled')
+      } else {
+        const lots = lotsInData.map(lot => Object.assign(_.omit(lot, omitFields), { disabled, dateCrop, dateHarvest }))
+        tagsArray.push({
+          _id: tagId,
+          tag: tagName,
+          totalSurface: _.sumBy(lots, 'surface'),
+          disabled: _.every(lots, 'disabled'),
+          lots
+        })
+      }
     }
-    return results
+    return tagsArray
   }
 }
 

@@ -235,7 +235,7 @@
                                     {{#each evidencesPdf}}
                                         <div class="link-pdf">
                                             <img
-                                                src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
+                                                src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/pdf-icon.svg"
                                                 height="25" width="25" />
                                             <a href={{path}}>{{description}}</a>
                                         </div>
@@ -262,7 +262,9 @@
                                                     <img src={{thumb}} alt="crop" class="activity-lots-image">
                                                     <div class="container">
                                                         <h4 class="lot-pic-text"><b>{{description}}</b></h4>
-                                                        <p class="type-pic-card">Dentro del lote</p>
+                                                        {{#if isInLot}}
+                                                            <p class="type-pic-card">Dentro del lote</p>
+                                                        {{/if}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -324,7 +326,7 @@
                                                 {{#each evidencesPdf}}
                                                         <div class="link-pdf-val">
                                                             <img
-                                                                src="https://www.bitcoinargentina.org/wp-content/uploads/2020/11/pdf-icon-png-2056-242x300.png"
+                                                                src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/pdf-icon.svg"
                                                                 height="25" width="25" />
                                                             <a href={{path}}>{{description}}</a>
                                                         </div>
@@ -385,8 +387,8 @@
                                         <div class="card">
                                             <img src={{image}} alt="crop" class="activity-lots-img">
                                             <div class="container">
-                                                <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
-                                                <p class="type-pic-card">Dentro del lote</p>
+                                                 <h3 class="name-lot-card"><b>{{nameLot}}</b></h3>
+                                                 <p class="surface-lot-card">{{surface}} has</p>
                                                 <!-- TODO: EIQ EN LOTES AQUI VALIDO EL RANGO -->
                                                 <div class="eiq-lots">
                                                     <div class="eiq-very-low">
