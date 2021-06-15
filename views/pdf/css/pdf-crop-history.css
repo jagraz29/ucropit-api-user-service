@@ -667,6 +667,31 @@
   margin-top: -1px;
 }
 
+.name-lot-card {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 21px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.surface-lot-card {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  line-height: 21px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: -1px;
+  color: rgba(51, 51, 51, 0.7);
+}
+
+.container-card-lot {
+  min-height: 60px;
+}
+
 .type-pic-card {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 13px;
