@@ -1,7 +1,7 @@
 import { Numbers } from '../Numbers'
 import { getEiqOfAchievementsByLot } from '.'
 import { getEiqRange } from '..'
-import { IEiqRangesDocument } from '../../interfaces'
+import { IEiqRangesDocument,IDataLot } from '../../interfaces'
 
 export const getLots = (lots, activitiesWithEiq, eiqRanges: IEiqRangesDocument[]): Object[] => {
   return lots.map(
@@ -10,13 +10,14 @@ export const getLots = (lots, activitiesWithEiq, eiqRanges: IEiqRangesDocument[]
       const imageLot = path
         ? `${process.env.BASE_URL}${path}`
         : process.env.IMAGE_LOT_DEFAULT
-
-      const eiq: number = Numbers.roundToTwo(getEiqOfAchievementsByLot(lotId, activitiesWithEiq))
+      const dataLots: IDataLot = getEiqOfAchievementsByLot(lotId, activitiesWithEiq)
+      const eiq: number = Numbers.roundToTwo(dataLots.eiq)
       return {
         provinceName,
         cityName,
         countryName,
         surface,
+        countAchievement: dataLots.count,
         eiq: {
           quantity: eiq,
           range: getEiqRange(eiq,eiqRanges)

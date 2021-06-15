@@ -9,6 +9,7 @@ export const getCropUtils = (
     surface,
     pay: payEntry,
     dateCrop,
+    dateHarvest,
     name,
     activities,
     lots,
@@ -35,6 +36,7 @@ export const getCropUtils = (
     ),
     pay,
     dateCrop,
+    dateHarvest,
     commercialContact: company
       ? getCommercialContact(company, theoriticalPotential)
       : null,
