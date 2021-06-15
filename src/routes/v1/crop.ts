@@ -3,7 +3,8 @@ import express from 'express'
 import cropsController from '../../controllers/CropsController'
 import {
   cropStorePolicy,
-  hasKmzInFilesPolicy, hasLotsInDataPolicy,
+  hasKmzInFilesPolicy,
+  hasLotsInDataPolicy,
   hasLotsReusableInDataPolicy,
   validateDateCropAndDateHarvestInData
 } from '../../utils'
@@ -239,13 +240,17 @@ router.get('/:id/activities', cropsController.getCropWithActivities)
  *         description: Error to Server.
  *
  */
-router.post('/', [
-  cropStorePolicy,
-  validateDateCropAndDateHarvestInData,
-  hasLotsInDataPolicy,
-  hasKmzInFilesPolicy,
-  hasLotsReusableInDataPolicy
-], cropsController.create)
+router.post(
+  '/',
+  [
+    cropStorePolicy,
+    validateDateCropAndDateHarvestInData,
+    hasLotsInDataPolicy,
+    hasKmzInFilesPolicy,
+    hasLotsReusableInDataPolicy
+  ],
+  cropsController.create
+)
 
 /**
  * @swagger

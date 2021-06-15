@@ -236,6 +236,7 @@ class CropsController {
       theoriticalPotential,
       eiqRanges
     )
+
     const dataPdf = {
       crop: dataCrop,
       activities,
@@ -284,7 +285,7 @@ class CropsController {
     let company = null
     let lots = []
 
-    if(data.lots) {
+    if (data.lots) {
       lots = await LotService.store(req, data.lots)
     }
 

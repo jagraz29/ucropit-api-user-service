@@ -255,7 +255,9 @@
                                                     <img src={{thumb}} alt="crop" class="activity-lots-image">
                                                     <div class="container">
                                                         <h4 class="lot-pic-text"><b>{{description}}</b></h4>
-                                                        <p class="type-pic-card">Dentro del lote</p>
+                                                        {{#if isInLot}}
+                                                            <p class="type-pic-card">Dentro del lote</p>
+                                                        {{/if}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -374,8 +376,8 @@
                                         <div class="card">
                                             <img src={{image}} alt="crop" class="activity-lots-img">
                                             <div class="container">
-                                                <h4 class="lot-pic-text"><b>Foto Georeferenciada</b></h4>
-                                                <p class="type-pic-card">Dentro del lote</p>
+                                                <h3 class="name-lot-card"><b>{{nameLot}}</b></h3>
+                                                <p class="surface-lot-card">{{surface}} has</p>
                                                 <!-- TODO: EIQ EN LOTES -->
                                                 {{!-- <div class="eiq-lots">
                                                     <div class="center">
