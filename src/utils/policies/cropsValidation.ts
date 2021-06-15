@@ -184,6 +184,7 @@ export const hasKmzInFilesPolicy = async (
   try {
 
     const { data } = req.body
+    let validationKmz = { error: false }
 
     if (data.lots && !req.files) {
       return res.status(StatusCodes.BAD_REQUEST).json({
@@ -193,7 +194,9 @@ export const hasKmzInFilesPolicy = async (
       })
     }
 
-    const validationKmz = await validateFormatKmz(req.files)
+    if (req.files) {
+      validationKmz = await validateFormatKmz(req.files)
+    }
 
     if (validationKmz.error) {
       return res.status(StatusCodes.BAD_REQUEST).json({
