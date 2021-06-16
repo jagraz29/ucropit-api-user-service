@@ -8,8 +8,13 @@ import { IEiqRangesDocument, TEiqRanges } from '../../interfaces'
  *
  * @returns String
  */
-export const getEiqRange = (eiq, eiqRanges: IEiqRangesDocument[]): TEiqRanges => {
-  const eiqRange = eiqRanges.find(({ range: { max, min } }) => eiq >= min && eiq <= max)
+export const getEiqRange = (
+  eiq,
+  eiqRanges: IEiqRangesDocument[]
+): TEiqRanges => {
+  const eiqRange = eiqRanges.find(
+    ({ range: { max, min } }) => eiq >= min && eiq <= max
+  )
   if (eiqRange) return eiqRange.type
   return TEiqRanges.VERY_HIGH
 }

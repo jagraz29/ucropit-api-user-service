@@ -67,11 +67,88 @@
                                         {{company}}
                                     </div>
                                 </div>
-                                {{!-- <div class="eiq">
+                                <div class="eiq-header">
+                                    {{#is crop.eiq.range 'VERY_LOW' }}
+                                        <div class="icon-eiq-header color-background-very-low ">
+                                        <img class="img-eiq-header" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
+                                            height="26" />
+                                        </div>
                                     <div class="center">
-                                        EIQ: {{crop.eiq}}
+                                        EIQ: {{crop.eiq.quantity}}
+                                        <div class="star-eiq-header color-very-low">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <p class="label-eiq-severity">Muy Bajo</p>
+                                        </div>
+                                        
                                     </div>
-                                </div> --}}
+                                    {{/is}}
+                                    {{#is crop.eiq.range 'LOW'}}
+                                    <div class="icon-eiq-header color-background-low">
+                                        <img class="img-eiq-header" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
+                                            height="26" />
+                                    </div>
+                                    <div class="center">
+                                        EIQ: {{crop.eiq.quantity}}
+                                        <div class="star-eiq-header color-low">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <p class="label-eiq-severity">Bajo</p> 
+                                        </div> 
+                                                                                  
+                                    </div>
+                                    {{/is}}
+                                    {{#is crop.eiq.range 'MODERATE'}}
+                                        <div class="icon-eiq-header color-background-moderate">
+                                        <img class="img-eiq-header" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
+                                            height="26" />
+                                    </div>
+                                    <div class="center">
+                                        EIQ: {{crop.eiq.quantity}}
+                                         <div class="star-eiq-header color-moderate">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <p class="label-eiq-severity">Moderado</p>
+                                        </div>
+                                        
+                                    </div>
+                                    {{/is}}
+                                    {{#is crop.eiq.range 'HIGH'}}
+                                        <div class="icon-eiq-header color-background-height">
+                                        <img class="img-eiq-header" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
+                                            height="26" />
+                                    </div>
+                                    <div class="center">
+                                        EIQ: {{crop.eiq.quantity}}
+                                        <div class="star-eiq-header color-height">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <p class="label-eiq-severity">Alto</p> 
+                                        </div> 
+                                                      
+                                    </div>
+                                    {{/is}}
+                                    {{#is crop.eiq.range 'VERY_HIGH'}}
+                                        <div class="icon-eiq-header color-background-very-height">
+                                            <img class="img-eiq-header" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
+                                                height="26" />
+                                        </div>
+                                        <div class="center">
+                                                EIQ: {{crop.eiq.quantity}}
+                                            <div class="star-eiq-header color-very-height">
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <p class="label-eiq-severity">Muy Alto</p>
+                                            </div> 
+                                                  
+                                        </div>
+                                    {{/is}}
+                                    
+                                  
+                                </div>
                                 <div class="dataContainer">
                                     <div class="dataNames">Sup Neta</div>
                                     <div class="dataValue">{{crop.surface}} has</div>
@@ -301,19 +378,21 @@
                                     {{/if}}
                                 {{/each}} --}}
                                 
-
-                           
-                            {{#each achievements}}
-                                {{#if suppliesList }}
+                            {{#if (or (is tag 'ACT_SOWING') (is tag 'ACT_FERTILIZATION') (is tag 'ACT_TILLAGE'))}}
+                                {{#each achievements}}
+                                {{#if supplies.supplies }}
                                     <div class="activity-frame-actividades-validaciones">
                                         <div class="activity-header-val">
                                                 <div class="date-activity-validation">
                                                     <i class="fa fa-check"></i>{{ moment dateAchievement format="DD/MM/YYYY" }}
                                                 </div>
-                                                {{#each (unique suppliesList)}}
-                                                    <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
-                                                {{/each}}
                                                 <div class="activity-lots-validation">{{lotsQuantity}} lotes ({{surface}} has)</div>
+                                                {{#each (unique supplies.supplies)}}
+                                                    <div style="display: flex">
+                                                        <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
+                                                    </div>
+                                                    
+                                                {{/each}}
                                                 <div class="spokesman-data-validation">Evidencias</div>
                                                 <div class="backup-docs-validation">documentacion de respaldo</div>
                                                 {{#each evidencesPdf}}
@@ -324,17 +403,13 @@
                                                             <a href={{path}}>{{description}}</a>
                                                         </div>
                                             {{/each}}
-                                            <!-- TODO: EIQ EN ACTIVIDADES -->
-                                                {{!-- <div class="eiq">
-                                                    <div class="center">
-                                                        EIQ: {{crop.eiq}}
-                                                    </div>
-                                                </div> --}}
                                                 <div class="activity-validations">
                                                     <div class="validation-title-val">Validaciones</div>
                                                     {{#each signers }}
                                                         <div>
                                                             {{#if dateSigned }}
+                                                            <!-- TODO: EIQ EN ACTIVIDADES -->
+                                                                
                                                                 <div><span class="validation-date">{{moment dateSigned format="DD/MM/YYYY"}}</span></div>
                                                             {{else}}
                                                                 <div><span class="not-signed-validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
@@ -349,7 +424,73 @@
                                     </div>
                                 {{/if}}
                             {{/each}}
-                          
+                            {{else}}
+                                {{#each achievements}}
+                                {{#if supplies.supplies }}
+                                    <div class="activity-frame-actividades-validaciones">
+                                        <div class="activity-header-val">
+                                                <div class="date-activity-validation">
+                                                    <i class="fa fa-check"></i>{{ moment dateAchievement format="DD/MM/YYYY" }}
+                                                </div>
+                                                <div style="display: flex; align-items: center;">
+                                                    <div class="activity-lots-validation">{{lotsQuantity}} lotes ({{surface}} has)</div>
+                                                    <div class="eiq-activity">
+                                                            <div class="icon-eiq-activity">
+                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
+                                                                height="15" />
+                                                            </div>
+                                                            <div class="center-activity">
+                                                                EIQ: {{eiq}}
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                {{#each (unique supplies.supplies)}}
+                                                    <div style="display: flex;margin-top: 7px;">
+                                                        <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
+                                                        <div class="eiq-activity">
+                                                            <div class="icon-eiq-activity">
+                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
+                                                                height="15" />
+                                                            </div>
+                                                            <div class="center-activity">
+                                                                EIQ: {{eiq}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                {{/each}}
+                                                <div class="spokesman-data-validation">Evidencias</div>
+                                                <div class="backup-docs-validation">documentacion de respaldo</div>
+                                                {{#each evidencesPdf}}
+                                                        <div class="link-pdf-val">
+                                                            <img
+                                                                src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/pdf-icon.svg"
+                                                                height="25" width="25" />
+                                                            <a href={{path}}>{{description}}</a>
+                                                        </div>
+                                            {{/each}}
+                                                <div class="activity-validations">
+                                                    <div class="validation-title-val">Validaciones</div>
+                                                    {{#each signers }}
+                                                        <div>
+                                                            {{#if dateSigned }}
+                                                            <!-- TODO: EIQ EN ACTIVIDADES -->
+                                                                
+                                                                <div><span class="validation-date">{{moment dateSigned format="DD/MM/YYYY"}}</span></div>
+                                                            {{else}}
+                                                                <div><span class="not-signed-validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
+                                                            {{/if}}
+                                                            <div class="validation-name-val">{{fullName}}</div>
+                                                            <div class="backup-docs-validation">{{rol}} - {{cuit}} </div>
+                                                        </div>
+                                                    {{/each}}
+                                                </div>
+                                            
+                                        </div>
+                                    </div>
+                                {{/if}}
+                            {{/each}}      
+                            {{/if}}
                             </div>
                         </div>
                     {{/if}}
@@ -360,7 +501,7 @@
                 {{/each}}
     {{!-- TODO: aqui cierra actividades de validaciones --}}
                         {{#each crop.lotsGroupByTag}}
-                        <div class="activity-header">
+                        <div class="activity-header-lots-under">
                                 <img class="activity-type-img" src="https://www.pngrepo.com/png/111305/180/tryptic-brochure.png" width="26"
                                     height="26" />
                                 <div class="activity-title">{{tag}} Lotes - {{lotsQuantity}} ({{surface}} has.)</div>
@@ -376,14 +517,92 @@
                                         <div class="card">
                                             <img src={{image}} alt="crop" class="activity-lots-img">
                                             <div class="container">
-                                                <h3 class="name-lot-card"><b>{{nameLot}}</b></h3>
-                                                <p class="surface-lot-card">{{surface}} has</p>
-                                                <!-- TODO: EIQ EN LOTES -->
-                                                {{!-- <div class="eiq-lots">
-                                                    <div class="center">
-                                                        EIQ: {{eiq}}
+                                                 <h3 class="name-lot-card"><b>{{nameLot}}</b></h3>
+                                                 <p class="surface-lot-card">{{surface}} has</p>
+                                                 <p class="surface-lot-card">{{countAchievement}} Aplicaciones</p>
+                                                <!-- TODO: EIQ EN LOTES AQUI VALIDO EL RANGO -->
+                                                {{#is eiq.range 'VERY_LOW'}}
+                                                    <div class="eiq-content">
+                                                        <div class="eiq-lots eiq-very-low">
+                                                            <div class="eiq-lots-style">
+                                                                <div class="icon-eiq-activity">
+                                                                <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
+                                                                    height="26" />
+                                                                </div>
+                                                                <div class="center-activity color-very-low">
+                                                                    EIQ: {{eiq.quantity}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div> --}}
+                                                    
+                                                {{/is}}
+
+                                                {{#is eiq.range 'LOW'}}
+                                                  <div class="eiq-content">
+                                                        <div class="eiq-lots eiq-low">
+                                                            <div class="eiq-lots-style">
+                                                                <div class="icon-eiq-activity">
+                                                                <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
+                                                                    height="26" />
+                                                                </div>
+                                                                <div class="center-activity color-low">
+                                                                    EIQ: {{eiq.quantity}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                {{/is}}
+
+                                                {{#is eiq.range 'MODERATE'}}
+                                                <div class="eiq-content">
+                                                    <div class="eiq-lots eiq-moderate">
+                                                        <div class="eiq-lots-style">
+                                                            <div class="icon-eiq-activity">
+                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
+                                                                height="26" />
+                                                            </div>
+                                                            <div class="center-activity color-moderate">
+                                                                EIQ: {{eiq.quantity}}
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                </div>
+                                                    
+                                                {{/is}}
+
+                                                {{#is eiq.range 'HIGH'}}
+                                                <div class="eiq-content">
+                                                    <div class="eiq-lots eiq-high">
+                                                        <div class="eiq-lots-style">
+                                                            <div class="icon-eiq-activity">
+                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
+                                                                height="26" />
+                                                            </div>
+                                                            <div class="center-activity color-hight">
+                                                                EIQ: {{eiq.quantity}}
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                     </div>
+                                                {{/is}}
+
+                                                {{#is eiq.range 'VERY_HIGH'}}
+                                                <div class="eiq-content">
+                                                    <div class="eiq-lots eiq-very-high">
+                                                        <div class="eiq-lots-style">
+                                                            <div class="icon-eiq-activity">
+                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
+                                                                height="26" />
+                                                            </div>
+                                                            <div class="text-eiq-value color-very-high">
+                                                                EIQ: {{eiq.quantity}}
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                     </div>
+                                                {{/is}}
+                                                
                                             </div>
                                         </div>
                                         {{/each}}
@@ -392,7 +611,6 @@
                         </div>
                         {{/each}}
                 {{!-- TODO: aqui cierra lotes final --}}
-
       </div>
     </body>
 </html>

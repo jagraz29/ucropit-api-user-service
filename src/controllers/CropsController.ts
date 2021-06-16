@@ -1,3 +1,4 @@
+/* tslint:disable:await-promise */
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
@@ -229,6 +230,8 @@ class CropsController {
 
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
+
+    const dataAchievement = activities.map((item) => item.achievements)
 
     const dataCrop = getCropUtils(
       crop,
