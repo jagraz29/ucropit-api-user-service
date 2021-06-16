@@ -290,7 +290,7 @@ class CropsController {
     }
 
     if (data.reusableLots) {
-      lots = lots.concat(parseLotsReusableAsData(data.reusableLots))
+      lots = [...lots, ...parseLotsReusableAsData(data.reusableLots)]
     }
 
     company = (await CompanyService.search({ identifier }))[0]
