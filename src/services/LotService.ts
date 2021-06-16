@@ -513,7 +513,7 @@ class LotService extends ServiceBase {
     for (let crop of cropsListFuture) {
       for (let lot of crop.lots) {
         const lostInData = flatten(_.map(lot.data, '_id')).map(id => id.toString())
-        lotsNotAvailable = lotsNotAvailable.concat(lostInData)
+        lotsNotAvailable = [...lotsNotAvailable, ...lostInData]
       }
     }
 
