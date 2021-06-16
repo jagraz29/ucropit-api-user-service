@@ -233,16 +233,12 @@ class CropsController {
 
     const dataAchievement = activities.map((item) => item.achievements)
 
-    console.log(dataAchievement)
-
     const dataCrop = getCropUtils(
       crop,
       activities,
       theoriticalPotential,
       eiqRanges
     )
-
-    console.log(dataCrop)
 
     const dataPdf = {
       crop: dataCrop,
