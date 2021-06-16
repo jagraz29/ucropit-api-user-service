@@ -506,6 +506,16 @@ class LotService extends ServiceBase {
   public static async parseLotByTagInCropsWithDataPopulate (cropsList, currentDateCrop) {
     const omitFields = [ 'status', 'area', 'coordinates', 'coordinateForGoogle', 'centerBound', 'centerBoundGoogle', '__v', 'id' ]
     const tagsArray = []
+    let lotsNotAvailable = []
+
+    const cropsListFuture = cropsList.filter(crop => moment(currentDateCrop).isBefore(crop.dateHarvest))
+
+    for (let crop of cropsListFuture) {
+      for (let lot of crop.lots) {
+        const lostInData = flatten(_.map(lot.data, '_id')).map(id => id.toString())
+        lotsNotAvailable = [...lotsNotAvailable, ...lostInData]
+      }
+    }
 
     for (let crop of cropsList) {
       const { dateCrop, dateHarvest } = crop
