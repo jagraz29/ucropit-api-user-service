@@ -555,7 +555,6 @@
   line-height: 20px;
   letter-spacing: 0.25px;
   text-align: left;
-  margin-top: 25px;
   margin-left: 20px;
 }
 
@@ -790,7 +789,7 @@
 }
 
 .eiq-header {
-  height: 60px;
+  height: 47px;
   width: 200px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   background: #ffffff;
@@ -800,7 +799,7 @@
   margin-top: 220px;
   opacity: 0.5;
   align-items: center;
-  justify-content: space-around;
+  padding: 3px;
 }
 
 .center {
@@ -813,17 +812,56 @@
 }
 
 .icon-eiq-header {
-  background-color: #8bc34a;
   border-radius: 100px;
   height: 40px;
   width: 40px;
-  margin-right: -60px;
+  margin-right: 10px;
+  margin-left: 23px;
+}
+
+.color-background-very-low {
+  background-color: #30bb58;
+}
+
+.color-background-low {
+  background-color: #7ac62d;
+}
+
+.color-background-moderate {
+  background-color: #c9dd02;
+}
+
+.color-background-height {
+  background-color: #ff9101;
+}
+
+.color-background-very-height {
+  background-color: #ff4401;
+}
+
+.color-very-low {
+  color: #00ff06;
+}
+
+.color-low {
+  color: #8bc34a;
+}
+
+.color-moderate {
+  color: #c9dd02;
+}
+
+.color-very-height {
+  color: #ff4401;
+}
+
+.color-height {
+  color: #ff9101;
 }
 
 .star-eiq-header {
-  color: #00ff06;
   position: absolute;
-  margin-top: 30px;
+  display: flex;
 }
 
 .img-eiq-header {
@@ -840,37 +878,42 @@
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   background: #ffffff;
   display: flex;
-  position: absolute;
-  margin-left: -120px;
   align-items: center;
   justify-content: space-around;
   border-radius: 100px;
+  margin-left: 20px;
 }
 
 .center-activity {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 700;
   margin-left: -50px;
 }
 
+.text-eiq-value {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+}
+
 .icon-eiq-activity {
   background-color: #ebebeb;
   border-radius: 100px;
-  height: 25px;
-  width: 25px;
+  height: 15px;
+  width: 15px;
   margin-left: -30px;
 }
 
 .img-eiq-activity {
-  margin-left: 7px;
+  margin-left: 4px;
   width: 10px;
 }
 
 .eiq-lots {
   height: 30px;
-  width: 100px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   border-radius: 100px;
   display: flex;
@@ -879,14 +922,34 @@
   margin-left: 10px;
   align-items: center;
   margin-top: -10px;
+  width: 100px;
+}
+
+.eiq-lots-style {
+  height: 30px;
+  width: 100px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  position: absolute;
+  /* margin-left: -120px; */
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 100px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.eiq-content {
+  display: flex;
+  justify-content: center;
 }
 
 :root {
-  --eiq-very-low: #4caf50;
-  --eiq-low: #8bc34a;
-  --eiq-moderate: #cddc39;
-  --eiq-high: #ff9800;
-  --eiq-very-high: #ff5722;
+  --eiq-very-low: #e8f5e9;
+  --eiq-low: #f1f8e9;
+  --eiq-moderate: #f9fbe7;
+  --eiq-high: #fff3e0;
+  --eiq-very-high: #fff3e0;
 }
 
 .eiq-very-low {
@@ -907,6 +970,25 @@
 
 .eiq-very-high {
   background-color: var(--eiq-very-high);
+}
+
+.color-very-high {
+  color: #ff5722;
+}
+.color-hight {
+  color: #ff9800;
+}
+
+.color-moderate {
+  color: #c0ca33;
+}
+
+.color-low {
+  color: #8bc34a;
+}
+
+.color-very-low {
+  color: #4caf50;
 }
 
 .row {

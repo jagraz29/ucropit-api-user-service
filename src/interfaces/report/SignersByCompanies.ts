@@ -17,4 +17,5 @@ export interface ReportSignersByCompany {
   sign_request_ACT_MONITORING: number
   sign_ACT_HARVEST: number
   sign_request_ACT_HARVEST: number
+  achievements?: Array<any>
 }
