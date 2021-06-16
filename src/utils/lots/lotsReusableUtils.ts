@@ -1,5 +1,6 @@
 import { map, flatten } from 'lodash'
 import mongoose from 'mongoose'
+import ErrorResponse from '../../utils/ErrorResponse'
 
 export const validateLotsReusable = (reusableLots, cropsList): string[] => {
   let results = []
@@ -72,8 +73,8 @@ export const responseReusableLotsMessageError = (reusableLots, message) => {
   if (reusableLots.length) {
     return {
       error: true,
-      message,
-      lotsNotAvailable: reusableLots
+      code: ErrorResponse.LOTS_NOT_AVAILABLE,
+      message
     }
   }
   return { error: false }

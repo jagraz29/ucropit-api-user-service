@@ -27,7 +27,7 @@ export const cropStorePolicy = async (
     if (!data) {
       return res.status(StatusCodes.BAD_REQUEST).json({
         error: true,
-        code: 'INVALID_DATA_FIELD',
+        code: ErrorResponse.INVALID_DATA_FIELD,
         message: 'El campo data es requerido'
       })
     }
@@ -38,7 +38,7 @@ export const cropStorePolicy = async (
 
     if (error) {
 
-      return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(ErrorResponseInstance.parseError(ErrorResponse.REQUIRED_FIELDS, 'Uno o/y mas campos son requeridos', {
+      return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponseInstance.parseError(ErrorResponse.REQUIRED_FIELDS, 'Uno o/y mas campos son requeridos', {
         description: ReasonPhrases.BAD_REQUEST,
         error
       }))
@@ -96,7 +96,7 @@ export const hasLotsInDataPolicy = async (
     if (!data.lots && !data.reusableLots) {
       return res.status(StatusCodes.BAD_REQUEST).json({
         error: true,
-        code: 'INVALID_ARRAY_LOTS',
+        code: ErrorResponse.INVALID_ARRAY_LOTS,
         message: 'Debe seleccionar al menos un lote'
       })
     }
@@ -146,7 +146,7 @@ export const hasLotsReusableInDataPolicy = async (
       )
 
       if (responseError.error) {
-        return res.status(StatusCodes.CONFLICT).json({
+        return res.status(StatusCodes.BAD_REQUEST).json({
           ...responseError
         })
       }
@@ -189,7 +189,7 @@ export const hasKmzInFilesPolicy = async (
     if (data.lots && !req.files) {
       return res.status(StatusCodes.BAD_REQUEST).json({
         error: true,
-        code: 'INVALID_ARRAY_FILES',
+        code: ErrorResponse.INVALID_ARRAY_FILES,
         message: 'Debe enviar el KMZ asociado a los lotes nuevos'
       })
     }
