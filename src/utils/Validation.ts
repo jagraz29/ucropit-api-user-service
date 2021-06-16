@@ -9,6 +9,7 @@ import _ from 'lodash'
 
 import JoiDate from '@hapi/joi-date'
 import moment from 'moment'
+import ErrorResponse from '../utils/ErrorResponse'
 
 const JoiValidation = Joi.extend(JoiDate)
 
@@ -450,7 +451,7 @@ export const validateDateCropAndDateHarvest = (
     return {
       error: true,
       message: 'La fecha de cultivo deber ser posterior a la actual',
-      code: 'INVALID_DATE_CROP'
+      code: ErrorResponse.INVALID_DATE_CROP
     }
   }
 
@@ -458,7 +459,7 @@ export const validateDateCropAndDateHarvest = (
     return {
       error: true,
       message: 'La fecha de cosecha deber ser posterior a la del cultivo',
-      code: 'INVALID_DATE_HARVEST'
+      code: ErrorResponse.INVALID_DATE_HARVEST
     }
   }
 
