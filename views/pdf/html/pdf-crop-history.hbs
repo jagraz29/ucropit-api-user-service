@@ -514,11 +514,12 @@
                                     </div>
                                     <div class="activity-frame-lots">
                                         {{#each lots}}
-                                        <div class="card" style="min-height: 315px;">
+                                        <div class="card">
                                             <img src={{image}} alt="crop" class="activity-lots-img">
                                             <div class="container">
                                                  <h3 class="name-lot-card"><b>{{nameLot}}</b></h3>
                                                  <p class="surface-lot-card">{{surface}} has</p>
+                                                 <p class="surface-lot-card">{{countAchievement}} Aplicaciones</p>
                                                 <!-- TODO: EIQ EN LOTES AQUI VALIDO EL RANGO -->
                                                 {{#is eiq.range 'VERY_LOW'}}
                                                     <div class="eiq-content">
