@@ -54,7 +54,7 @@ const start = async () => {
       let avg = (count * maxLen) / countLots
       let avgPorcentage = (avg / maxLen) * 100
       porcentagesArray = generateArrayPercentage('#', avg + 1, porcentagesArray)
-      console.log(`[${porcentagesArray.join('')}] ${avgPorcentage.toFixed(0)}% | ${count}/${countLots} Lots`)
+      console.log(new Date(), `[${porcentagesArray.join('')}] lot ${count}/${countLots} (${avgPorcentage.toFixed(1)}%)`)
     }
     console.log(`Total Lots: ${ count }`)
   } catch (err) {
