@@ -10,7 +10,7 @@ const Lots = models.Lot
 
 const start = async () => {
   let lot, cursor, count = 0, countLots = 0, maxLen = 50
-  let porcentages = generateArrayPercentage('.', maxLen)
+  let porcentagesArray = generateArrayPercentage('.', maxLen)
   try {
     countLots = await LotService.count({})
     cursor = await Lots.aggregate([])
@@ -53,8 +53,8 @@ const start = async () => {
       count++
       let avg = (count * maxLen) / countLots
       let avgPorcentage = (avg / maxLen) * 100
-      porcentages = generateArrayPercentage('#', avg + 1, porcentages)
-      console.log(`[${porcentages.join('')}] ${avgPorcentage.toFixed(0)}% | ${count}/${countLots} Lots`)
+      porcentagesArray = generateArrayPercentage('#', avg + 1, porcentagesArray)
+      console.log(`[${porcentagesArray.join('')}] ${avgPorcentage.toFixed(0)}% | ${count}/${countLots} Lots`)
     }
     console.log(`Total Lots: ${ count }`)
   } catch (err) {
