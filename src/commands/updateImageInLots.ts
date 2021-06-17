@@ -1,3 +1,5 @@
+import { generateArrayPercentage } from '../utils/GenerateArrayPercentage'
+
 require('dotenv').config()
 
 import models, { connectDb } from '../models'
@@ -8,10 +10,13 @@ const Lots = models.Lot
 
 const start = async () => {
   let lot, cursor, count = 0
+  let porcentages = generateArrayPercentage('.', 25)
   try {
-    let cursor = await Lots.aggregate([])
+    let countLots = await LotService.count({})
+    cursor = await Lots.aggregate([])
     .cursor()
     .exec()
+    console.log(countLots)
 
     while (lot = await cursor.next()) {
       const { countryName, provinceName, cityName, image, area } = lot
@@ -46,6 +51,9 @@ const start = async () => {
 
       Lots.updateOne({_id: lot._id}, {$set: dataToUpdate},{new: true}).exec()
       count++
+      let index = parseInt((count * 25) / countLots )
+      porcentages = generateArrayPercentage('#', index + 1, porcentages)
+      console.log(`[${porcentages.join('')}]: ${parseFloat((index / 25) * 100).toFixed(0)}%`)
     }
     console.log(`Total Lots: ${ count }`)
   } catch (err) {
