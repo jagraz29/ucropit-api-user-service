@@ -53,7 +53,7 @@ const start = async () => {
       count++
       let index = parseInt((count * maxLen) / countLots )
       porcentages = generateArrayPercentage('#', index + 1, porcentages)
-      console.log(`[${porcentages.join('')}]: ${parseFloat((index / maxLen) * 100).toFixed(0)}% ${count}/${countLots} Lots`)
+      console.log(`[${porcentages.join('')}] ${parseFloat((index / maxLen) * 100).toFixed(0)}% | ${count}/${countLots} Lots`)
     }
     console.log(`Total Lots: ${ count }`)
   } catch (err) {
