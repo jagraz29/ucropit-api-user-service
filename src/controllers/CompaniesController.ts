@@ -54,7 +54,7 @@ class CompaniesController {
      * @return {Response}
      */
     public async showIntegrations(req: Request, res: Response) {
-        const company = await Company.findById(req.params.id)
+        const company: any = await Company.findById(req.params.id)
 
         res.status(200).json(company.servicesIntegrations)
     }
@@ -167,8 +167,8 @@ class CompaniesController {
     public async removeFile(req: Request, res: Response) {
         const {id, fileId} = req.params
 
-        const company = await Company.findOne({_id: id})
-        const document = await FileDocument.findOne({_id: fileId})
+        const company: any = await Company.findOne({_id: id})
+        const document: any = await FileDocument.findOne({_id: fileId})
 
         const fileRemove = await CompanyService.removeFiles(
             fileId,

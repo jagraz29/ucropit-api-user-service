@@ -1,10 +1,10 @@
 require('dotenv').config()
-import models, { connectDb } from '../models'
+import models, { connectDb, AchievementModel } from '../models'
 import chalk from 'chalk'
 import { Command, OptionValues } from 'commander'
 import { data } from './supplies/data'
 
-const { Supply, Achievement } = models
+const { Supply } = models
 
 const program = new Command()
 
@@ -16,13 +16,13 @@ program.parse(process.argv)
 
 async function execUpdateSupply() {
   for (const item of data) {
-    const achievement = await Achievement.findById(item.achievementId)
+    const achievement: any = await AchievementModel.findById(item.achievementId)
     const supply = await Supply.findOne({ code: item.code })
 
     let supplyApplied = achievement.supplies.id(item.supplyIdApplied)
 
     if (supply && supplyApplied && Object.keys(supplyApplied).length >= 1) {
-      await Achievement.findOneAndUpdate(
+      await AchievementModel.findOneAndUpdate(
         { _id: item.achievementId, 'supplies._id': supplyApplied._id },
         { $set: { 'supplies.$.supply': supply._id } }
       )

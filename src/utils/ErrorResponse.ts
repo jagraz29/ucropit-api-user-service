@@ -28,6 +28,11 @@ class ErrorResponse implements IErrorResponse {
     public static DATA_NOT_FOUND = 'DATA_NOT_FOUND'
     public static REQUIRED_FIELDS = 'REQUIRED_FIELDS'
     public static INVALID_DATE_CROP = 'INVALID_DATE_CROP'
+    public static INVALID_DATE_HARVEST = 'INVALID_DATE_HARVEST'
+    public static INVALID_ARRAY_FILES = 'INVALID_ARRAY_FILES'
+    public static LOTS_NOT_AVAILABLE = 'LOTS_NOT_AVAILABLE'
+    public static INVALID_ARRAY_LOTS = 'INVALID_ARRAY_LOTS'
+    public static INVALID_DATA_FIELD = 'INVALID_DATA_FIELD'
 
     parseError (code: string, message: string, extend?: object): TError {
         return {

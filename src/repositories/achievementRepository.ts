@@ -1,6 +1,5 @@
-import models from '../models'
-
-const { Achievement } = models
+import { AchievementModel } from '../models'
+import { IAchievementDocument, IAchievement } from '../interfaces'
 
 export class AchievementRepository {
   /**
@@ -8,7 +7,7 @@ export class AchievementRepository {
    * @param update
    * @param string id
    */
-  static async updateAchievement(update, id: string): Promise<void> {
-    return Achievement.updateOne({ _id: id }, { $set: update })
+  static async updateAchievement(update: Partial<IAchievement>, id: string): Promise<IAchievementDocument | any > {
+    return AchievementModel.updateOne({ _id: id }, { $set: update })
   }
 }

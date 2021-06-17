@@ -8,6 +8,8 @@ import { TypeActivity } from '../repositories'
 import _ from 'lodash'
 
 import JoiDate from '@hapi/joi-date'
+import moment from 'moment'
+import ErrorResponse from '../utils/ErrorResponse'
 
 const JoiValidation = Joi.extend(JoiDate)
 
@@ -34,13 +36,19 @@ export const validateCropStore = async (crop) => {
     unitType: Joi.string().required(),
     identifier: Joi.string().required(),
     lots: Joi.array()
-      .items(
-        Joi.object().keys({
-          names: Joi.array().items(Joi.string()).required(),
-          tag: Joi.string().required()
-        })
-      )
-      .required()
+    .items(
+      Joi.object().keys({
+        names: Joi.array().items(Joi.string()).required(),
+        tag: Joi.string().required()
+      })
+    ),
+    reusableLots: Joi.array()
+    .items(
+      Joi.object().keys({
+        tag: Joi.string().required(),
+        lotIds: Joi.array().items(Joi.string()).required()
+      })
+    )
   })
 
   return schema.validateAsync(crop)
@@ -395,7 +403,7 @@ export const validateExtensionFile = (files) => {
     return { error: false }
   }
   const isValidTypes = Object.keys(files).map((key) => {
-    if (files[key].length > 0) {
+    if (files[key].length) {
       return files[key].map((file) => {
         if (!validTypes(file)) {
           return {
@@ -426,6 +434,32 @@ export const validateExtensionFile = (files) => {
       code:
         errors.find((error) => error.key === '003')?.code ||
         'ERROR_FILE_EXTENSION'
+    }
+  }
+
+  return { error: false }
+}
+
+export const validateDateCropAndDateHarvest = (
+  dateCrop: string,
+  dateHarvest: string
+) => {
+  const currentDate = moment().subtract(1, 'day')
+  const startDate = moment(new Date(dateCrop))
+  const endDate = moment(new Date(dateHarvest))
+  if (startDate.isBefore(currentDate)) {
+    return {
+      error: true,
+      message: 'La fecha de cultivo deber ser posterior a la actual',
+      code: ErrorResponse.INVALID_DATE_CROP
+    }
+  }
+
+  if (endDate.isBefore(startDate)) {
+    return {
+      error: true,
+      message: 'La fecha de cosecha deber ser posterior a la del cultivo',
+      code: ErrorResponse.INVALID_DATE_HARVEST
     }
   }
 

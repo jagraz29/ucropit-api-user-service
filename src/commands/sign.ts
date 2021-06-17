@@ -31,7 +31,7 @@ program.parse(process.argv)
  * @param string status
  */
 async function signActivities(status: string): Promise<void> {
-  const crops = await getCropsByStatusActivities(status)
+  const crops: any = await getCropsByStatusActivities(status)
 
   for (const crop of crops) {
     const { done } = crop
@@ -139,7 +139,7 @@ async function getCropsByStatusActivities(status: string) {
 }
 
 async function createSignCrops(): Promise<void> {
-  let crops = await getCropsByStatusActivities('finished')
+  let crops: any = await getCropsByStatusActivities('finished')
 
   for (const crop of crops) {
     console.log(`${chalk.green(`${crop.name}`)}`)

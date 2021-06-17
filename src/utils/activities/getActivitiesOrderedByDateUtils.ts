@@ -11,7 +11,7 @@ import {
 import {
   TypeActivitiesWithAchievements,
   TypeActivitiesWithOutAchievements,
-  Achievement,
+  IAchievement,
   TypeActivities
 } from '../../interfaces'
 
@@ -39,7 +39,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities, members }) => {
       }) => {
         let percent: number = 0
         let eiq: number = 0
-        let achievements: Achievement[] = []
+        let achievements: IAchievement[] = []
         const pay = payEntry ?? 0
         const { key: keyUnitType, name: nameUnitType } = unitType || {}
 

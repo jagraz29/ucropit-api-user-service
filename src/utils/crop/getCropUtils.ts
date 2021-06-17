@@ -1,12 +1,15 @@
 import { Numbers } from '../Numbers'
-import { calculateCropVolumeUtils } from './calculateCropVolumeUtils'
+import { calculateCropVolumeUtils } from '.'
 import { getLots, getLotsGroupByTag } from '../lots'
+import { IEiqRangesDocument } from '../../interfaces'
+import { getEiqRange } from '..'
 
-export const calculateDataCropUtils = (
+export const getCropUtils = (
   {
     surface,
     pay: payEntry,
     dateCrop,
+    dateHarvest,
     name,
     activities,
     lots,
@@ -18,12 +21,13 @@ export const calculateDataCropUtils = (
     cropType: { key: cropTypeKey }
   },
   activitiesWithEiq,
-  theoriticalPotential
-): Object => {
+  theoriticalPotential,
+  eiqRanges: IEiqRangesDocument[]
+) => {
   const pay = payEntry ?? 0
   let eiq: number = 0
   const { key: keyUnitType, name: nameUnitType } = unitType || {}
-  eiq = activitiesWithEiq.reduce((a, b) => a + b.eiq, 0)
+  eiq = Numbers.roundToTwo(activitiesWithEiq.reduce((a, b) => a + b.eiq, 0))
 
   return {
     surface,
@@ -32,6 +36,7 @@ export const calculateDataCropUtils = (
     ),
     pay,
     dateCrop,
+    dateHarvest,
     commercialContact: company
       ? getCommercialContact(company, theoriticalPotential)
       : null,
@@ -40,14 +45,19 @@ export const calculateDataCropUtils = (
       : null,
     name,
     badges,
-    eiq: Numbers.roundToTwo(eiq),
+    eiq: {
+      quantity: eiq,
+      range: getEiqRange(eiq, eiqRanges)
+    },
     cropTypeKey,
     company,
     activities,
     lotsQuantity: lots.length ? lots[0].data.length : 0,
-    lots: lots.length ? getLots(lots[0].data, activitiesWithEiq) : [],
+    lots: lots.length
+      ? getLots(lots[0].data, activitiesWithEiq, eiqRanges)
+      : [],
     lotsGroupByTag: lots.length
-      ? getLotsGroupByTag(lots, activitiesWithEiq)
+      ? getLotsGroupByTag(lots, activitiesWithEiq, eiqRanges)
       : []
   }
 }

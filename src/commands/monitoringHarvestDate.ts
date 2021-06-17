@@ -8,7 +8,7 @@ const Crop = models.Crop
 
 const addHarvestDateMonitoring = async () => {
   try {
-    let crops = await Crop.find({ cancelled: false })
+    let crops: any = await Crop.find({ cancelled: false })
       .populate('cropType')
       .populate({
         path: 'pending',

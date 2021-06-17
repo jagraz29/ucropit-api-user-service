@@ -18,7 +18,7 @@ class CompanyService extends ServiceBase {
    *
    * @param query
    */
-  public static async search(query) {
+  public static async search(query): Promise<any> {
     return Company.find(query)
   }
 
@@ -27,7 +27,7 @@ class CompanyService extends ServiceBase {
    *
    * @param string id
    */
-  public static async findById(id: string) {
+  public static async findById(id: string): Promise<any> {
     return Company.findById(id).populate('files')
   }
 
@@ -56,7 +56,7 @@ class CompanyService extends ServiceBase {
       return Company.create(company)
     }
 
-    const companyCreated = await Company.create(company)
+    const companyCreated: any = await Company.create(company)
 
     if (companyCreated) {
       const exists = await user.companies.findIndex(
@@ -86,7 +86,7 @@ class CompanyService extends ServiceBase {
     )
   }
 
-  public static async updated(company: ICompany, id: string) {
+  public static async updated(company: ICompany, id: string): Promise<any> {
     await Company.findByIdAndUpdate(id, company)
     return Company.findById(id)
   }
@@ -95,7 +95,7 @@ class CompanyService extends ServiceBase {
     service: string | any,
     identifier: string | any
   ): Promise<boolean> {
-    const company = await Company.findOne({ identifier })
+    const company: any = await Company.findOne({ identifier })
 
     const isServiceIntegration = company.servicesIntegrations.find(
       (item) => item.service === service
@@ -109,7 +109,7 @@ class CompanyService extends ServiceBase {
   }
 
   public static async addServiceIntegration(service: string, id: string) {
-    const company = await Company.findById(id)
+    const company: any = await Company.findById(id)
     const isServiceIntegration = company.servicesIntegrations.find(
       (item) => item.service === service
     )
@@ -126,7 +126,7 @@ class CompanyService extends ServiceBase {
   }
 
   public static async removeServiceIntegration(service: string, id: string) {
-    const company = await Company.findById(id)
+    const company: any = await Company.findById(id)
 
     const isServiceIntegration = company.servicesIntegrations.find(
       (item) => item.service === service
@@ -135,7 +135,7 @@ class CompanyService extends ServiceBase {
     return Company.updateOne(
       { _id: id },
       { $pull: { servicesIntegrations: { _id: isServiceIntegration._id } } },
-      { safe: true, multi: true }
+      { /*safe: true,*/ multi: true }
     )
   }
 }

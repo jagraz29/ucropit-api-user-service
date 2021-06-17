@@ -89,7 +89,7 @@ class ActivitiesController {
    * @return Response
    */
   public async create(req: Request, res: Response) {
-    const user: UserSchema = req.user
+    const user: any = req.user
     const data = JSON.parse(req.body.data)
 
     await validateActivityStore(data)
@@ -154,7 +154,7 @@ class ActivitiesController {
    */
   public async update(req: Request, res: Response) {
     const { id } = req.params
-    const user: UserSchema = req.user
+    const user: any = req.user
     const data = JSON.parse(req.body.data)
 
     const { companySelected } = await UserConfigService.findById(user.config)
@@ -233,9 +233,9 @@ class ActivitiesController {
   public async sign(req: Request, res: Response) {
     req.setTimeout(0)
     const { id, cropId } = req.params
-    const user: UserSchema = req.user
+    const user = req.user
 
-    let activity = await Activity.findById(id)
+    let activity: any = await Activity.findById(id)
       .populate('type')
       .populate('typeAgreement')
       .populate('unitType')
@@ -247,7 +247,7 @@ class ActivitiesController {
     const isCompleteSigned = ActivityService.isCompleteSingers(activity)
 
     if (isCompleteSigned) {
-      const crop = await Crop.findById(cropId).populate('cropType')
+      const crop: any = await Crop.findById(cropId).populate('cropType')
 
       const { ots, hash, pathPdf, nameFilePdf, nameFileOts, pathOtsFile } =
         await BlockChainServices.sign(crop, activity)
@@ -408,7 +408,7 @@ class ActivitiesController {
     const { id, cropId } = req.params
     const { status } = req.body
 
-    let activity = await Activity.findById(id).populate('type')
+    let activity: any = await Activity.findById(id).populate('type')
 
     await ActivityService.changeStatus(activity, status)
 
@@ -455,8 +455,8 @@ class ActivitiesController {
   public async removeFile(req: Request, res: Response) {
     const { id, fileId } = req.params
 
-    const activity = await Activity.findOne({ _id: id })
-    const document = await FileDocument.findOne({ _id: fileId })
+    const activity: any = await Activity.findOne({ _id: id })
+    const document: any = await FileDocument.findOne({ _id: fileId })
 
     const fileRemove = await ActivityService.removeFiles(
       fileId,
@@ -489,8 +489,8 @@ class ActivitiesController {
     const { id } = req.params
     const data = req.body
 
-    const activity = await Activity.findOne({ _id: id })
-    const documents = await FileDocument.find({ _id: { $in: data } })
+    const activity: any = await Activity.findOne({ _id: id })
+    const documents: any = await FileDocument.find({ _id: { $in: data } })
 
     let files = activity.files
 

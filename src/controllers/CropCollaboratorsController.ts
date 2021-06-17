@@ -19,9 +19,9 @@ class CropCollaboratorsController {
     try {
       const { email, identifier, type } = req.body
       const { id } = req.params
-      const company = await Company.findOne({ identifier })
+      const company: any = await Company.findOne({ identifier })
 
-      let user = await User.findOne({ email })
+      let user: any = await User.findOne({ email })
 
       if (user === null) {
         user = await UserService.store(
@@ -58,7 +58,7 @@ class CropCollaboratorsController {
         })
       }
 
-      const crop = await Crop.findById(id)
+      const crop: any = await Crop.findById(id)
 
       crop.members.push({
         user: user._id,
