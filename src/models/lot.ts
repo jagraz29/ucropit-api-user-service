@@ -96,7 +96,11 @@ const LotSchema = new Schema(
     cityName: {
       type: String,
       default: null
-    }
+    },
+    errorInStaticImage: {
+      type: Boolean,
+      default: false
+    },
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
@@ -140,7 +144,7 @@ LotSchema.virtual('centerBoundGoogle').get(function () {
   }
 })
 LotSchema.virtual('imageUrl').get(function () {
-  return this.image ? parseImageUrl(this.image.normal) : parseImageUrlDefault('lot_placeholder.png')
+  return this.image && this.image?.normal ? parseImageUrl(this.image.normal) : parseImageUrlDefault('lot_placeholder.png')
 })
 
 LotSchema.plugin(mongooseLeanVirtuals)

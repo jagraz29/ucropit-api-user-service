@@ -120,6 +120,7 @@ class LotsController {
    * @return Response
    */
   public async searchByIdentifier(req: Request, res: Response) {
+
     const { identifier } = req.query
     const dateCrop = new Date(req.query.dateCrop.toString())
 
@@ -144,6 +145,7 @@ class LotsController {
       }
     }
 
+    req.setTimeout(0)
     let cropsList = await CropRepository.findCropsWithLotsPopulateData(query)
     let results = await LotService.parseLotByTagInCropsWithDataPopulate(
       cropsList,
