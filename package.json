@@ -19,7 +19,8 @@
     "delete:signer:ghost": "node dist/src/commands/deleteGhostSigner.js",
     "add:active-ingredients:supply": "node dist/src/commands/activeIngredientsSupplies.js",
     "add:eiq-supply-selected:activity": "node dist/src/commands/addEiqSupplySelectedActivity.js",
-    "update:id:supply": "node dist/src/commands/updateIdSupply.js"
+    "update:id:supply": "node dist/src/commands/updateIdSupply.js",
+    "update:lots:image": "node dist/src/commands/updateImageInLots.js"
   },
   "resolutions": {
     "graceful-fs": "4.2.2"
