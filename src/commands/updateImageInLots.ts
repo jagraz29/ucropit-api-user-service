@@ -49,11 +49,12 @@ const start = async () => {
         }
       }
 
-      Lots.updateOne({_id: lot._id}, {$set: dataToUpdate},{new: true}).exec()
+      Lots.updateOne({ _id: lot._id }, { $set: dataToUpdate },{ new: true }).exec()
       count++
-      let index = parseInt((count * maxLen) / countLots )
-      porcentages = generateArrayPercentage('#', index + 1, porcentages)
-      console.log(`[${porcentages.join('')}] ${parseFloat((index / maxLen) * 100).toFixed(0)}% | ${count}/${countLots} Lots`)
+      let avg = (count * maxLen) / countLots
+      let avgPorcentage = (avg / maxLen) * 100
+      porcentages = generateArrayPercentage('#', avg + 1, porcentages)
+      console.log(`[${porcentages.join('')}] ${avgPorcentage.toFixed(0)}% | ${count}/${countLots} Lots`)
     }
     console.log(`Total Lots: ${ count }`)
   } catch (err) {

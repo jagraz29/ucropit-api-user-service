@@ -1,19 +1,19 @@
-export const generateArrayPercentage = (value, len, arry) => {
-  if (arry) {
+export const generateArrayPercentage = (value: string, len: number, arrayList?: string[]) => {
+  if (arrayList) {
 
     for (let i = 0; i < len; i++) {
-      arry[ i ] = value
+      arrayList[ i ] = value
     }
 
   } else {
 
-    arry = []
+    arrayList = []
 
     for (let i = 0; i < len; i++) {
-      arry.push(value)
+      arrayList.push(value)
     }
 
   }
 
-  return arry
+  return arrayList
 }
