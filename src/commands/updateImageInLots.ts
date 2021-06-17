@@ -9,10 +9,10 @@ import LotService from '../services/LotService'
 const Lots = models.Lot
 
 const start = async () => {
-  let lot, cursor, count = 0
-  let porcentages = generateArrayPercentage('.', 25)
+  let lot, cursor, count = 0, countLots = 0, maxLen = 50
+  let porcentages = generateArrayPercentage('.', maxLen)
   try {
-    let countLots = await LotService.count({})
+    countLots = await LotService.count({})
     cursor = await Lots.aggregate([])
     .cursor()
     .exec()
@@ -51,9 +51,9 @@ const start = async () => {
 
       Lots.updateOne({_id: lot._id}, {$set: dataToUpdate},{new: true}).exec()
       count++
-      let index = parseInt((count * 25) / countLots )
+      let index = parseInt((count * maxLen) / countLots )
       porcentages = generateArrayPercentage('#', index + 1, porcentages)
-      console.log(`[${porcentages.join('')}]: ${parseFloat((index / 25) * 100).toFixed(0)}%`)
+      console.log(`[${porcentages.join('')}]: ${parseFloat((index / maxLen) * 100).toFixed(0)}% ${count}/${countLots} Lots`)
     }
     console.log(`Total Lots: ${ count }`)
   } catch (err) {
