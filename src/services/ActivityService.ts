@@ -2,7 +2,7 @@ import ServiceBase from './common/ServiceBase'
 import models from '../models'
 import mongoose from 'mongoose'
 import { statusActivities } from '../utils/Status'
-import { Signer } from '../interfaces/Signer'
+import { Signer } from '../interfaces'
 
 const Activity = models.Activity
 const ActivityType = models.ActivityType
@@ -26,7 +26,7 @@ interface IActivity {
 }
 
 class ActivityService extends ServiceBase {
-  public static async findActivityById(id: string) {
+  public static async findActivityById(id: string): Promise<any> {
     return Activity.findById(id)
       .populate('type')
       .populate('typeAgreement')
@@ -54,7 +54,7 @@ class ActivityService extends ServiceBase {
       .populate('user')
   }
 
-  public static async getActivities() {
+  public static async getActivities(): Promise<any> {
     return Activity.find()
       .populate('type')
       .populate('typeAgreement')
@@ -70,7 +70,7 @@ class ActivityService extends ServiceBase {
       .lean()
   }
 
-  public static async getActivitiesByIds(ids: Array<string>) {
+  public static async getActivitiesByIds(ids: Array<string>): Promise<any> {
     return Activity.find()
       .populate('type')
       .populate('typeAgreement')
@@ -101,7 +101,7 @@ class ActivityService extends ServiceBase {
       .lean()
   }
 
-  public static async store(activity: IActivity, user) {
+  public static async store(activity, user) {
     let statusActivity: Array<any> = []
     if (!this.existStatus(activity)) {
       statusActivity = this.createStatus('COMPLETAR')
@@ -124,7 +124,7 @@ class ActivityService extends ServiceBase {
     return this.findActivityById(activityModel._id)
   }
 
-  public static async update(id: string, activity: IActivity) {
+  public static async update(id: string, activity: IActivity): Promise<any> {
     let statusActivity: Array<any> = []
 
     if (this.existStatus(activity)) {

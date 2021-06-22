@@ -11,7 +11,7 @@ import ServiceBase from './common/ServiceBase'
 import { handleFileConvertJSON } from '../utils/ParseKmzFile'
 import GeoLocationService from '../services/GeoLocationService'
 import StaticMapService from '../services/StaticMapService'
-import { parseImageUrl } from '../utils'
+import { parseImageUrl, parseImageUrlDefault } from '../utils'
 
 interface ILot {
   name: String
@@ -228,7 +228,7 @@ class LotService extends ServiceBase {
    *
    * @param area
    */
-  private static getCentroid (area) {
+  public static getCentroid (area) {
     return geolib.getCenter(
       area.map(element => {
         return {
@@ -282,7 +282,7 @@ class LotService extends ServiceBase {
    * @param latitude
    * @param longitude
    */
-  private static async getLocationData (latitude, longitude) {
+  public static async getLocationData (latitude, longitude) {
     const responseReverseGeocoding: any = await GeoLocationService.getLocationByCoordinates(
       latitude,
       longitude
@@ -356,7 +356,7 @@ class LotService extends ServiceBase {
       responseStaticImage = await axios(axiosStaticImageConfig)
     } catch (error) {
       console.log('ERROR GET SATELITE IMAGE')
-      console.log(error)
+      console.log(error.toString())
       return null
     }
 
@@ -397,17 +397,16 @@ class LotService extends ServiceBase {
 
         newLot.data = await Promise.all(
           currentLot.data.map(async (lotInData, index) => {
-            if (lotInData.image?.normal) return lotInData
+            const { countryName = '', provinceName = '', cityName = '' } = lotInData
 
-            const locationData = await this.findImagesAndCountriesGeographics(lotInData)
-
-            const newLotInData = { ...lotInData, ...locationData }
-
-            this.updateLotWithImagesAndCountries(newLotInData)
-
-            newLotInData.imageUrl = parseImageUrl(newLotInData.image.normal)
-
-            return newLotInData
+            lotInData = {
+              ...lotInData,
+              imageUrl: lotInData.imageUrl ? lotInData.imageUrl : parseImageUrlDefault('lot_placeholder.png'),
+              provinceName,
+              countryName,
+              cityName
+            }
+            return lotInData
           })
         )
 
@@ -418,33 +417,7 @@ class LotService extends ServiceBase {
     return newLots
   }
 
-  public static async lotImagesAndCountriesSample (lots: Array<any>) {
-    const newLots: any = await Promise.all(
-      lots.map(async currentLot => {
-
-        let locationData = await this.findImagesAndCountriesGeographics(currentLot.toJSON())
-
-        let newLot: any = {
-          ...currentLot.toJSON(),
-          ...locationData
-        }
-
-        if (!newLot.image) this.updateLotWithImagesAndCountries(newLot)
-
-        return newLot
-      })
-    )
-
-    return newLots
-  }
-
-  private static async findImagesAndCountriesGeographics (lot) {
-    const centroid: any = this.getCentroid(lot.area)
-
-    const locationData: any = await this.getLocationData(
-      centroid.latitude,
-      centroid.longitude
-    )
+  public static async findImagesGeographics (lot, centroid) {
 
     const zoom = this.calculateZoomForStaticMap(centroid, lot.area)
 
@@ -472,18 +445,13 @@ class LotService extends ServiceBase {
       'normal.png'
     )
 
-    const { country, province, city } = locationData
+    if (!imagePath) return null
 
-    const response: any = {
-      countryName: country,
-      provinceName: province,
-      cityName: city,
-      image: {
-        normal: imagePath ? imagePath.replace('public', '') : ''
-      }
+    const image = {
+      normal: imagePath ? imagePath.replace('public', '') : ''
     }
 
-    return response
+    return image
   }
 
   private static updateLotWithImagesAndCountries (lot) {
@@ -505,22 +473,50 @@ class LotService extends ServiceBase {
 
   public static async parseLotByTagInCropsWithDataPopulate (cropsList, currentDateCrop) {
     const omitFields = [ 'status', 'area', 'coordinates', 'coordinateForGoogle', 'centerBound', 'centerBoundGoogle', '__v', 'id' ]
-    let results = []
+    const tagsArray = []
+    let lotsNotAvailable = []
+
+    const cropsListFuture = cropsList.filter(crop => moment(currentDateCrop).isBefore(crop.dateHarvest))
+
+    for (let crop of cropsListFuture) {
+      for (let lot of crop.lots) {
+        const lostInData = flatten(_.map(lot.data, '_id')).map(id => id.toString())
+        lotsNotAvailable = [...lotsNotAvailable, ...lostInData]
+      }
+    }
+
     for (let crop of cropsList) {
       const { dateCrop, dateHarvest } = crop
       const lotList = await this.storeLotImagesAndCountriesWithPopulate(crop.toJSON().lots)
       const lotsInData = _.flatten(_.map(lotList, 'data'))
       const disabled = moment(currentDateCrop).isBefore(dateHarvest)
-      const lots = lotsInData.map(lot => Object.assign(_.omit(lot, omitFields), { disabled, dateCrop, dateHarvest }))
-      results.push({
-        _id: lotList[ 0 ]._id,
-        tag: lotList[ 0 ].tag,
-        totalSurface: _.sumBy(lotsInData, 'surface'),
-        disabled: _.every(lots, 'disabled'),
-        lots
-      })
+      const tagId = lotList[ 0 ]._id
+      const tagName = lotList[ 0 ].tag.trim()
+      const index = tagsArray.findIndex((x) => x.tag === tagName)
+      if (index !== -1) {
+        for (const lot of lotsInData) {
+          const lotForTag = Object.assign(_.omit(lot, omitFields), { disabled, dateCrop, dateHarvest })
+          const indexLot = tagsArray[index].lots.findIndex((l) => l._id.toString() === lot._id.toString())
+          if (indexLot !== -1) {
+            tagsArray[index].lots[indexLot] = lotForTag
+          } else {
+            tagsArray[index].lots.push(lotForTag)
+          }
+        }
+        tagsArray[index].totalSurface = _.sumBy(tagsArray[index].lots, 'surface')
+        tagsArray[index].disabled = _.every(tagsArray[index].lots, 'disabled')
+      } else {
+        const lots = lotsInData.map(lot => Object.assign(_.omit(lot, omitFields), { disabled, dateCrop, dateHarvest }))
+        tagsArray.push({
+          _id: tagId,
+          tag: tagName,
+          totalSurface: _.sumBy(lots, 'surface'),
+          disabled: _.every(lots, 'disabled'),
+          lots
+        })
+      }
     }
-    return results
+    return tagsArray
   }
 }
 

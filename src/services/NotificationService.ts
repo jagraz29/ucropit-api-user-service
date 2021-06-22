@@ -43,7 +43,7 @@ class NotificationService {
   }
 
   static async store (notification: INotification) {
-    const newNotification = new Notification()
+    const newNotification: any = new Notification()
 
     newNotification.content = notification.content
     newNotification.title = notification.title

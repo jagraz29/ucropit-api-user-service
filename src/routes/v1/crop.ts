@@ -1,6 +1,13 @@
 import express from 'express'
 
 import cropsController from '../../controllers/CropsController'
+import {
+  cropStorePolicy,
+  hasKmzInFilesPolicy,
+  hasLotsInDataPolicy,
+  hasLotsReusableInDataPolicy,
+  validateDateCropAndDateHarvestInData
+} from '../../utils'
 
 const router: express.Router = express.Router()
 
@@ -56,6 +63,30 @@ router.get('/lastMonitoring/:id', cropsController.showLastMonitoring)
  *          description: Server error
  */
 router.get('/:id', cropsController.show)
+
+/**
+ * @swagger
+ * path:
+ *  /v1/crops/{id}/v2:
+ *    get:
+ *      summary: Show a crop and Lots
+ *      tags: [Crops]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          content:
+ *            application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Crop'
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.get('/:id/v2', cropsController.getCropWithLots)
 
 /**
  * @swagger
@@ -163,12 +194,22 @@ router.get('/:id/activities', cropsController.getCropWithActivities)
  *                  cropType:
  *                    type: string
  *                  lots:
- *                    type: object
- *                    properties:
- *                         names:
- *                            items:
- *                              type: string
- *                         tag:
+ *                    items:
+ *                      type: object
+ *                      properties:
+ *                        names:
+ *                          items:
+ *                            type: string
+ *                        tag:
+ *                           type: string
+ *                  reusableLots:
+ *                    items:
+ *                      type: object
+ *                      properties:
+ *                        lotIds:
+ *                          items:
+ *                            type: string
+ *                        tag:
  *                           type: string
  *                  unitType:
  *                    type: string
@@ -199,7 +240,17 @@ router.get('/:id/activities', cropsController.getCropWithActivities)
  *         description: Error to Server.
  *
  */
-router.post('/', cropsController.create)
+router.post(
+  '/',
+  [
+    cropStorePolicy,
+    validateDateCropAndDateHarvestInData,
+    hasLotsInDataPolicy,
+    hasKmzInFilesPolicy,
+    hasLotsReusableInDataPolicy
+  ],
+  cropsController.create
+)
 
 /**
  * @swagger

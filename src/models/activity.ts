@@ -209,7 +209,7 @@ const ActivitySchema = new Schema({
 })
 
 ActivitySchema.pre('save', async function (next) {
-  const activity = this
+  let activity: any = this
   /** Generate unique key */
   if (!activity.key) {
     activity.key = shortid.generate()
@@ -217,12 +217,14 @@ ActivitySchema.pre('save', async function (next) {
 })
 
 ActivitySchema.methods.isDone = function () {
-  return this.status[0].name.en === 'DONE'
+  let activity: any = this
+  return activity.status[0].name.en === 'DONE'
 }
 
 ActivitySchema.methods.setExpired = function () {
-  this.status[0].name.en = 'EXPIRED'
-  this.status[0].name.es = 'VENCIDA'
+  let activity: any = this
+  activity.status[0].name.en = 'EXPIRED'
+  activity.status[0].name.es = 'VENCIDA'
 }
 
 export default mongoose.model('Activity', ActivitySchema)

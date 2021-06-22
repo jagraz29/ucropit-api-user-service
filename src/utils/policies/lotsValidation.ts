@@ -22,7 +22,7 @@ export const getLotsPolicy = (
   if (error) {
     let field = error.details[0].path[0]
 
-    return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(ErrorResponseInstance.parseError(ErrorResponse.REQUIRED_FIELDS, messages[field], {
+    return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponseInstance.parseError(ErrorResponse.REQUIRED_FIELDS, messages[field], {
       description: ReasonPhrases.BAD_REQUEST,
       error
     }))

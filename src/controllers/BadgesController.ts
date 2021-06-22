@@ -19,7 +19,7 @@ class BadgesController {
       populate: [],
       limit: 0,
       skip: 0,
-      sort: {},
+      sort: {}
     }
 
     const badges = await BadgeRepository.getBadges(dataToFind)
@@ -37,24 +37,17 @@ class BadgesController {
    * @return Response
    */
   public async create(req: Request | any, res: Response) {
-    const {
-      type,
-      nameEs,
-      nameEn,
-      namePt,
-      goalReach,
-      image,
-    } = req.body
+    const { type, nameEs, nameEn, namePt, goalReach, image } = req.body
 
     const dataToFind: any = {
       query: {
-        type,
+        type
       }
     }
 
     const badges = await BadgeRepository.getBadges(dataToFind)
 
-    if(badges.length){
+    if (badges.length) {
       return res.status(StatusCodes.CONFLICT).json({
         error: ReasonPhrases.CONFLICT,
         description: errors.find((error) => error.key === '006').code
@@ -66,10 +59,10 @@ class BadgesController {
       name: {
         es: nameEs,
         en: nameEn,
-        pt: namePt,
+        pt: namePt
       },
       goalReach,
-      image,
+      image
     }
 
     const badge = await BadgeRepository.createBadge(dataToCreate)
@@ -87,28 +80,19 @@ class BadgesController {
    * @return Response
    */
   public async update(req: Request | any, res: Response) {
-    const {
-      badgeId,
-    } = req.params
+    const { badgeId } = req.params
 
-    const {
-      type,
-      nameEs,
-      nameEn,
-      namePt,
-      goalReach,
-      image,
-    } = req.body
+    const { type, nameEs, nameEn, namePt, goalReach, image } = req.body
 
     const dataToFind: any = {
       query: {
-        _id: badgeId,
+        _id: badgeId
       }
     }
 
     const badges = await BadgeRepository.getBadges(dataToFind)
 
-    if(!badges.length){
+    if (!badges.length) {
       return res.status(StatusCodes.CONFLICT).json({
         error: ReasonPhrases.CONFLICT,
         description: errors.find((error) => error.key === '007').code
@@ -124,10 +108,10 @@ class BadgesController {
       name: {
         es: nameEs !== undefined ? nameEs : badges[0].name.es,
         en: nameEn !== undefined ? nameEn : badges[0].name.en,
-        pt: namePt !== undefined ? namePt : badges[0].name.pt,
+        pt: namePt !== undefined ? namePt : badges[0].name.pt
       },
       goalReach: goalReach !== undefined ? goalReach : badges[0].goalReach,
-      image: image !== undefined ? image : badges[0].image,
+      image: image !== undefined ? image : badges[0].image
     }
 
     const badge = await BadgeRepository.updateOneBadge(query, dataToUpdate)
@@ -145,28 +129,19 @@ class BadgesController {
    * @return Response
    */
   public async delete(req: Request | any, res: Response) {
-    const {
-      badgeId,
-    } = req.params
+    const { badgeId } = req.params
 
-    const {
-      type,
-      nameEs,
-      nameEn,
-      namePt,
-      goalReach,
-      image,
-    } = req.body
+    const { type, nameEs, nameEn, namePt, goalReach, image } = req.body
 
     const dataToFind: any = {
       query: {
-        _id: badgeId,
+        _id: badgeId
       }
     }
 
     const badges = await BadgeRepository.getBadges(dataToFind)
 
-    if(!badges.length){
+    if (!badges.length) {
       return res.status(StatusCodes.CONFLICT).json({
         error: ReasonPhrases.CONFLICT,
         description: errors.find((error) => error.key === '007').code

@@ -1,5 +1,5 @@
 import BaseError from './base-error'
-import mongoose from 'mongoose'
+import { Error as CastError } from 'mongoose'
 import { ErrorIntegration } from './type'
 import { codeIntegrations, codeDocumentNotFound } from './error-code'
 import { DocumentNotFound } from './error-custom'
@@ -11,7 +11,7 @@ class ErrorHandler {
   }
 
   public isCastErrorMongoose(error: Error) {
-    if (error instanceof mongoose.CastError) {
+    if (error instanceof CastError) {
       // Handle this error
       return true
     }

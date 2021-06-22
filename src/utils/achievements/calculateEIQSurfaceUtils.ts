@@ -1,4 +1,4 @@
-import { Achievement } from '../../interfaces'
+import { IAchievement } from '../../interfaces'
 
 /**
  * Calculate Achievement's EIQ Surface.
@@ -11,7 +11,7 @@ import { Achievement } from '../../interfaces'
 export function calculateEIQSurfaceAchievement ({
   supplies,
   surface
-}: Achievement) {
+}: IAchievement) {
   const eiqTotalSupplies = supplies.reduce((
     a,
     { supply, total }) => {

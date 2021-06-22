@@ -13,6 +13,7 @@ export const ReportsEiqHeaderXls = {
     'kmzLocation',
     'cropLotTag',
     'lotName',
+    'lotSurface',
     'supplieCode',
     'supplieId',
     'supplieName',
@@ -23,7 +24,7 @@ export const ReportsEiqHeaderXls = {
     'supplieEiqPlanified',
     'achievementDate',
     'supplieTotal',
-    'lotSurface',
+    'achievementSurface',
     'eiqAchievement',
     'evidences',
   ],
@@ -41,6 +42,7 @@ export const ReportsEiqHeaderXls = {
     'Ubicación KMZ',
     'Campo',
     'Lote',
+    'Hectareas del lote',
     'Registro Insumo',
     'SUPPLY ID',
     'Nombre Insumo',
@@ -54,5 +56,5 @@ export const ReportsEiqHeaderXls = {
     'Ha Realizadas',
     'EIQ Realización',
     'Evidencias',
-  ]
+  ],
 }
