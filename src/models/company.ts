@@ -19,6 +19,9 @@
  *             type: string
  *           addressFloor:
  *             type: string
+ *           country:
+ *              schema:
+ *                $ref: '#/components/schemas/Country'
  */
 import mongoose from 'mongoose'
 
@@ -28,52 +31,53 @@ const CompanySchema = new Schema({
   identifier: {
     type: String,
     require: true,
-    unique: true
+    unique: true,
   },
   typePerson: {
     type: String,
     enum: ['PHYSICAL_PERSON', 'LEGAL_PERSON'],
-    default: 'PHYSICAL_PERSON'
+    default: 'PHYSICAL_PERSON',
   },
   name: {
     type: String,
-    require: true
+    require: true,
   },
   address: {
     type: String,
-    require: true
+    require: true,
   },
   addressFloor: {
     type: String,
-    require: false
+    require: false,
   },
   status: {
     type: Boolean,
-    default: 0
+    default: 0,
   },
   files: {
-    type: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }]
+    type: [{ type: Schema.Types.ObjectId, ref: 'FileDocument' }],
   },
   servicesIntegrations: [
     {
       service: {
-        type: String
+        type: String,
       },
       integrate: {
         type: Boolean,
-        default: true
-      }
-    }
+        default: true,
+      },
+    },
   ],
   contacts: [
     {
       type: {
         type: String,
-        default: 'CONTACT_REPRESENTATIVE'
+        default: 'CONTACT_REPRESENTATIVE',
       },
-      user: { type: Schema.Types.ObjectId, ref: 'User' }
-    }
-  ]
+      user: { type: Schema.Types.ObjectId, ref: 'User' },
+    },
+  ],
+  country: { type: Schema.Types.ObjectId, ref: 'Country' },
 })
 
 export default mongoose.model('Company', CompanySchema)

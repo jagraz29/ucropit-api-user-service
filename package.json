@@ -20,7 +20,9 @@
     "add:active-ingredients:supply": "node dist/src/commands/activeIngredientsSupplies.js",
     "add:eiq-supply-selected:activity": "node dist/src/commands/addEiqSupplySelectedActivity.js",
     "update:id:supply": "node dist/src/commands/updateIdSupply.js",
-    "update:lots:image": "node dist/src/commands/updateImageInLots.js"
+    "update:lots:image": "node dist/src/commands/updateImageInLots.js",
+    "add:countryToCompanies": "node dist/src/commands/addCountryToCompanies.js",
+    "add:countryToMembers": "node dist/src/commands/addCountryToMembers.js"
   },
   "resolutions": {
     "graceful-fs": "4.2.2"

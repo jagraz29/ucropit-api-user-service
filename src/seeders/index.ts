@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+import axios from 'axios'
 import models, { connectDb } from '../models'
 import chalk from 'chalk'
 import {
@@ -12,20 +13,20 @@ import {
   rolesData,
   servicesIntegration,
   storageTypes,
-  foreignCredentials
+  foreignCredentials,
 } from './data'
 
 import {
   suppliesData,
   fertilizers,
   pesticides,
-  phytotherapeutic
+  phytotherapeutic,
 } from './suppliesData'
 
 import { activesPrinciples } from './activesPrinciplesData'
 
 import { badgesData } from './badgesData'
-import { EiqRangesRepository } from '../repositories'
+import { EiqRangesRepository, CountryRepository } from '../repositories'
 import { eiqRangesData } from './eiqRangesData'
 
 const Badge = models.Badge
@@ -74,6 +75,52 @@ const seedersBadges = async (flag?) => {
     await Badge.create(badge)
   }
   console.log(`${chalk.green('=====Registered Badges====')}`)
+  return true
+}
+
+/**
+ * Seeders Countries
+ */
+const seedersCountries = async (flag?) => {
+  if (flag && flag !== '--countries') return
+  console.log(`${chalk.green('=====Registering Countries====')}`)
+
+  const dataToFind: any = {}
+
+  const countries = await CountryRepository.getCountries(dataToFind)
+
+  const axiosConfig: any = {
+    method: 'GET',
+    url: 'https://restcountries.eu/rest/v2/all',
+  }
+
+  const response: any = await axios(axiosConfig)
+
+  const CountriesSeed = response.data.filter(
+    (item) =>
+      !countries.find((element) => item.alpha3Code === element.alpha3Code)
+  )
+
+  for (const country of CountriesSeed) {
+    const newCountry = {
+      name: country.name,
+      phoneCode: country.callingCodes[0],
+      capital: country.capital,
+      geolocation: country.latlng,
+      timezone: country.timezones[0],
+      currencies: country.currencies,
+      languages: country.languages,
+      flag: country.flag,
+      alpha2Code: country.alpha2Code,
+      alpha3Code: country.alpha3Code,
+      disabled: true,
+    }
+
+    await CountryRepository.createCountry(newCountry)
+  }
+
+  console.log(`${chalk.green('=====Registered Countries====')}`)
+
   return true
 }
 
@@ -328,9 +375,9 @@ const seedersActivePrinciples = async (flag?) => {
   for (const activeIngredient of activeIngredientsSeed) {
     await ActiveIngredient.create({
       name: {
-        es: activeIngredient.active_principle_es
+        es: activeIngredient.active_principle_es,
       },
-      eiq: Number(activeIngredient.eiq.replace(/,/g, '.'))
+      eiq: Number(activeIngredient.eiq.replace(/,/g, '.')),
     })
   }
 
@@ -389,6 +436,7 @@ const seedersForeignCredentials = async (flag?) => {
       await seedersActivePrinciples(flag)
       await seedersForeignCredentials(flag)
       await seedersEiqRanges(flag)
+      await seedersCountries(flag)
     } catch (e) {
       console.log(e)
     }

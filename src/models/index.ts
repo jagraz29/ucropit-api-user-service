@@ -23,13 +23,14 @@ import IntegrationLog from './integrationLog'
 import ActiveIngredient from './activeIngredient'
 import ForeignCredential from './foreignCredential'
 import Badge from './badge'
+import Country from './country'
 
 const connectDb = function () {
   return connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-    useFindAndModify: false
+    useFindAndModify: false,
   })
 }
 
@@ -60,7 +61,8 @@ const models = {
   Notification,
   ActiveIngredient,
   ForeignCredential,
-  Badge
+  Badge,
+  Country,
 }
 
 export { connectDb }
