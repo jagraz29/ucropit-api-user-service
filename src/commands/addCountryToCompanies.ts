@@ -1,55 +1,54 @@
 require('dotenv').config()
 
 import chalk from 'chalk'
+import { Command, OptionValues } from 'commander'
 
 import models, { connectDb } from '../models'
-import { CountryRepository } from '../repositories'
+import { CountryRepository, CropRepository } from '../repositories'
+
+const program = new Command()
+
+program
+  .description('Use this command to add the Country in the company')
+  .option('-a, --add', 'Add the Country in the company')
+
+program.parse(process.argv)
 
 const Company = models.Company
 
-const start = async () => {
+const addCountryToCompanies = async () => {
   let companies: Array<any> = await Company.find()
 
   for (const company of companies) {
-    try {
-      console.log('=== COMPANY ===')
-      console.log(company._id)
-
-      /**********************************/
-      /*     ADD COUNTRY TO COMPANY     */
-      /**********************************/
-
-      const dataToFind: any = {
-        query: {
-          alpha3Code: 'ARG',
-        },
-      }
-
-      const country = await CountryRepository.getCountry(dataToFind)
-
-      company.country = country._id
-
-      await company.save()
-
-      console.log(`${chalk.green(`Successfully: COMPANY: ${company.id}`)}`)
-    } catch (error) {
-      console.log(error)
-      console.log(
-        `${chalk.red(`Error adding country to company id: ${company.id}`)}`
-      )
+    const dataToFind: any = {
+      query: {
+        alpha3Code: 'ARG',
+      },
     }
+
+    const country = await CountryRepository.getCountry(dataToFind)
+
+    company.country = country._id
+
+    await company.save()
+
+    console.log(`${chalk.green(`Successfully: COMPANY: ${company.id}`)}`)
   }
 }
 
 ;(async () => {
-  const connected = await connectDb()
+  try {
+    const connected = await connectDb()
 
-  if (connected) {
-    console.log(`${chalk.green('Process Add Country to all Companies...')}`)
+    if (connected) {
+      const options: OptionValues = program.opts()
 
-    await start()
-
-    console.log(`${chalk.green('Finished Add Country to all Companies...')}`)
+      if (options.add) {
+        await addCountryToCompanies()
+      }
+    }
+  } catch (error) {
+    console.log(error)
   }
 
   process.exit()

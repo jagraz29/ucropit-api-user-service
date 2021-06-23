@@ -21,6 +21,7 @@
     "add:eiq-supply-selected:activity": "node dist/src/commands/addEiqSupplySelectedActivity.js",
     "update:id:supply": "node dist/src/commands/updateIdSupply.js",
     "update:lots:image": "node dist/src/commands/updateImageInLots.js",
+    "add:countries": "node dist/src/commands/addCountries.js",
     "add:countryToCompanies": "node dist/src/commands/addCountryToCompanies.js",
     "add:countryToMembers": "node dist/src/commands/addCountryToMembers.js"
   },
