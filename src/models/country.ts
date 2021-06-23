@@ -52,9 +52,11 @@ const CountrySchema = new Schema({
   },
   phoneCode: {
     type: String,
+    default: '',
   },
   capital: {
     type: String,
+    default: '',
   },
   geolocation: {
     type: Object,
@@ -62,17 +64,21 @@ const CountrySchema = new Schema({
   },
   timezone: {
     type: String,
+    default: '',
   },
   currencies: [
     {
       code: {
         type: String,
+        default: '',
       },
       name: {
         type: String,
+        default: '',
       },
       symbol: {
         type: String,
+        default: '',
       },
     },
   ],
@@ -80,15 +86,19 @@ const CountrySchema = new Schema({
     {
       iso639_1: {
         type: String,
+        default: '',
       },
       iso639_2: {
         type: String,
+        default: '',
       },
       name: {
         type: String,
+        default: '',
       },
       nativeName: {
         type: String,
+        default: '',
       },
     },
   ],
