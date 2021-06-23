@@ -36,7 +36,7 @@ export class ActivityRepository {
    *
    * @param TypeActivity type
    */
-  public static async getActivitiesFilterByName (name: NameActivity) {
+  public static async getActivitiesFilterByName(name: NameActivity) {
     const activities = await Activity.find({ name: name })
       .populate('type')
       .populate({
@@ -58,10 +58,9 @@ export class ActivityRepository {
     limit,
     skip,
     sort,
-    populate,
+    populate
   }: any): Promise<any> {
-    return Activity
-      .find(query ? query : {})
+    return Activity.find(query ? query : {})
       .populate(populate ? populate : [])
       .limit(limit ? limit : 0)
       .skip(skip ? skip : 0)
