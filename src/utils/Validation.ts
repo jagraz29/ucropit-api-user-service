@@ -19,7 +19,7 @@ export const validateGetCrops = async (crop) => {
     cropTypes: Joi.array(),
     companies: Joi.array(),
     collaborators: Joi.array(),
-    cropVolume: Joi.number()
+    cropVolume: Joi.number(),
   })
 
   return schema.validateAsync(crop)
@@ -35,20 +35,18 @@ export const validateCropStore = async (crop) => {
     cropType: Joi.string().required(),
     unitType: Joi.string().required(),
     identifier: Joi.string().required(),
-    lots: Joi.array()
-    .items(
+    lots: Joi.array().items(
       Joi.object().keys({
         names: Joi.array().items(Joi.string()).required(),
-        tag: Joi.string().required()
+        tag: Joi.string().required(),
       })
     ),
-    reusableLots: Joi.array()
-    .items(
+    reusableLots: Joi.array().items(
       Joi.object().keys({
         tag: Joi.string().required(),
-        lotIds: Joi.array().items(Joi.string()).required()
+        lotIds: Joi.array().items(Joi.string()).required(),
       })
-    )
+    ),
   })
 
   return schema.validateAsync(crop)
@@ -83,7 +81,7 @@ export const validateActivityStore = async (activity) => {
             typeId: Joi.string().required(),
             supply: Joi.string().required(),
             icon: Joi.string().optional(),
-            total: Joi.number().required()
+            total: Joi.number().required(),
           })
           .unknown()
       )
@@ -95,7 +93,7 @@ export const validateActivityStore = async (activity) => {
           description: Joi.string().required(),
           date: Joi.date().required(),
           settings: Joi.optional(),
-          meta: Joi.optional()
+          meta: Joi.optional(),
         })
       )
       .optional(),
@@ -106,7 +104,7 @@ export const validateActivityStore = async (activity) => {
           tonsHarvest: Joi.number().optional(),
           storageType: Joi.string().optional(),
           icon: Joi.string().optional(),
-          label: Joi.string().optional()
+          label: Joi.string().optional(),
         })
       )
       .optional(),
@@ -116,9 +114,9 @@ export const validateActivityStore = async (activity) => {
         fullName: Joi.string().required(),
         email: Joi.string().required(),
         type: Joi.string().required(),
-        signed: Joi.boolean().optional()
+        signed: Joi.boolean().optional(),
       })
-    )
+    ),
   })
 
   return schema.validateAsync(activity)
@@ -152,7 +150,7 @@ export const validateActivityUpdate = async (activity) => {
             typeId: Joi.string().required(),
             supply: Joi.string().required(),
             icon: Joi.string().optional(),
-            total: Joi.number().required()
+            total: Joi.number().required(),
           })
           .unknown()
       )
@@ -164,7 +162,7 @@ export const validateActivityUpdate = async (activity) => {
           description: Joi.string().required(),
           date: Joi.date().required(),
           settings: Joi.optional(),
-          meta: Joi.optional()
+          meta: Joi.optional(),
         })
       )
       .optional(),
@@ -175,7 +173,7 @@ export const validateActivityUpdate = async (activity) => {
           tonsHarvest: Joi.number().optional(),
           storageType: Joi.string().optional(),
           icon: Joi.string().optional(),
-          label: Joi.string().optional()
+          label: Joi.string().optional(),
         })
       )
       .optional(),
@@ -185,9 +183,9 @@ export const validateActivityUpdate = async (activity) => {
         fullName: Joi.string().required(),
         email: Joi.string().required(),
         type: Joi.string().required(),
-        signed: Joi.boolean().optional()
+        signed: Joi.boolean().optional(),
       })
-    )
+    ),
   })
 
   return schema.validateAsync(activity)
@@ -195,6 +193,7 @@ export const validateActivityUpdate = async (activity) => {
 
 export const validateCompanyStore = async (company) => {
   const schema = Joi.object({
+    country: Joi.string().required(),
     identifier: Joi.string().required(),
     typePerson: Joi.string().optional(),
     name: Joi.string().required(),
@@ -205,10 +204,10 @@ export const validateCompanyStore = async (company) => {
         Joi.object().keys({
           name: Joi.string().required(),
           description: Joi.string().required(),
-          date: Joi.date().required()
+          date: Joi.date().required(),
         })
       )
-      .optional()
+      .optional(),
   })
 
   return schema.validateAsync(company)
@@ -226,10 +225,10 @@ export const validateCompanyUpdate = async (company) => {
         Joi.object().keys({
           name: Joi.string().required(),
           description: Joi.string().required(),
-          date: Joi.date().required()
+          date: Joi.date().required(),
         })
       )
-      .optional()
+      .optional(),
   })
 
   return schema.validateAsync(company)
@@ -254,7 +253,7 @@ export const validateAchievement = async (achievement) => {
             supply: Joi.string().required(),
             typeId: Joi.string().optional(),
             icon: Joi.string().optional(),
-            total: Joi.number().required()
+            total: Joi.number().required(),
           })
           .unknown()
       )
@@ -266,7 +265,7 @@ export const validateAchievement = async (achievement) => {
           tonsHarvest: Joi.number().required(),
           destinationAddress: Joi.string().required(),
           icon: Joi.string().optional(),
-          label: Joi.string().optional()
+          label: Joi.string().optional(),
         })
       )
       .optional(),
@@ -277,7 +276,7 @@ export const validateAchievement = async (achievement) => {
           description: Joi.string().required(),
           date: Joi.date().required(),
           settings: Joi.optional(),
-          meta: Joi.optional()
+          meta: Joi.optional(),
         })
       )
       .optional(),
@@ -288,10 +287,10 @@ export const validateAchievement = async (achievement) => {
           fullName: Joi.string().required(),
           email: Joi.string().required(),
           type: Joi.string().required(),
-          signed: Joi.boolean().optional()
+          signed: Joi.boolean().optional(),
         })
       )
-      .optional()
+      .optional(),
   })
 
   return schema.validateAsync(achievement)
@@ -300,7 +299,7 @@ export const validateAchievement = async (achievement) => {
 export const validateSignAchievement = async (dataSign) => {
   const schema = Joi.object({
     activityId: Joi.string().required(),
-    cropId: Joi.string().required()
+    cropId: Joi.string().required(),
   })
 
   return schema.validateAsync(dataSign)
@@ -314,7 +313,7 @@ export const validateResponseSatelliteImages = async (
       status_ok: Joi.boolean().required(),
       customOptions: Joi.object()
         .keys({
-          activityId: Joi.string().required()
+          activityId: Joi.string().required(),
         })
         .required(),
       lotId: Joi.string().required(),
@@ -324,10 +323,10 @@ export const validateResponseSatelliteImages = async (
             nameFile: Joi.string().required(),
             date: Joi.date().required(),
             type: Joi.string().required(),
-            tag: Joi.string().required()
+            tag: Joi.string().required(),
           })
         )
-        .optional()
+        .optional(),
     })
   )
 
@@ -366,7 +365,7 @@ export const validateNotEqualNameLot = (lotNames) => {
       message: 'KMZ names lot duplicate',
       code:
         errors.find((error) => error.key === '004')?.code ||
-        'NAME_LOT_DUPLICATED'
+        'NAME_LOT_DUPLICATED',
     }
   }
 
@@ -388,7 +387,7 @@ export const validateFormatKmz = async (files: FileArray) => {
         message: 'KMZ format not allowed',
         code:
           errors.find((error) => error.key === '002')?.code ||
-          'ERROR_INVALID_FORMAT_KMZ'
+          'ERROR_INVALID_FORMAT_KMZ',
       }
     }
   }
@@ -407,23 +406,23 @@ export const validateExtensionFile = (files) => {
       return files[key].map((file) => {
         if (!validTypes(file)) {
           return {
-            error: true
+            error: true,
           }
         }
         return {
-          error: false
+          error: false,
         }
       })
     }
 
     if (!validTypes(files[key])) {
       return {
-        error: true
+        error: true,
       }
     }
 
     return {
-      error: false
+      error: false,
     }
   })
 
@@ -433,7 +432,7 @@ export const validateExtensionFile = (files) => {
       message: 'Any File extension not allowed',
       code:
         errors.find((error) => error.key === '003')?.code ||
-        'ERROR_FILE_EXTENSION'
+        'ERROR_FILE_EXTENSION',
     }
   }
 
@@ -451,7 +450,7 @@ export const validateDateCropAndDateHarvest = (
     return {
       error: true,
       message: 'La fecha de cultivo deber ser posterior a la actual',
-      code: ErrorResponse.INVALID_DATE_CROP
+      code: ErrorResponse.INVALID_DATE_CROP,
     }
   }
 
@@ -459,7 +458,7 @@ export const validateDateCropAndDateHarvest = (
     return {
       error: true,
       message: 'La fecha de cosecha deber ser posterior a la del cultivo',
-      code: ErrorResponse.INVALID_DATE_HARVEST
+      code: ErrorResponse.INVALID_DATE_HARVEST,
     }
   }
 

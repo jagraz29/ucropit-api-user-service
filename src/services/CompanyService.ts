@@ -20,7 +20,7 @@ class CompanyService extends ServiceBase {
    * @param query
    */
   public static async search(query): Promise<any> {
-    return Company.find(query)
+    return Company.find(query).populate('country')
   }
 
   /**
