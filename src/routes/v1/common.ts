@@ -131,4 +131,20 @@ router.get('/integrations', commonController.serviceIntegration)
  */
 router.get('/storagetypes', commonController.storageTypes)
 
+/**
+ * @swagger
+ * /v1/commons/countries:
+ *  get:
+ *   summary: Get all countries availables
+ *   tags:
+ *      - Common
+ *   description: Countries
+ *   produces:
+ *     - application/json
+ *   responses:
+ *    '200':
+ *      description: Get all countries availables
+ */
+router.get('/countries', commonController.countries)
+
 export default router

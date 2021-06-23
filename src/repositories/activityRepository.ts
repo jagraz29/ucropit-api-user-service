@@ -49,6 +49,18 @@ export class ActivityRepository {
   }
 
   /**
+   * Find All Activities.
+   *
+   * @param Generic query
+   * @param Generic populate
+   *
+   * @returns
+   */
+  public static async findAll<T>(query: T, populate?: T) {
+    return Activity.find(query).populate(populate ?? [])
+  }
+
+  /**
    * Get Activities.
    *
    * @returns
@@ -65,5 +77,15 @@ export class ActivityRepository {
       .limit(limit ? limit : 0)
       .skip(skip ? skip : 0)
       .sort(sort ? sort : {})
+  }
+
+  /**
+   * Update Activity.
+   *
+   * @param update
+   * @param string id
+   */
+  static async updateActivity<T>(update: T, id: string) {
+    return Activity.updateOne({ _id: id }, { $set: update })
   }
 }
