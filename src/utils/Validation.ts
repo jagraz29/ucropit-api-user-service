@@ -193,6 +193,7 @@ export const validateActivityUpdate = async (activity) => {
 
 export const validateCompanyStore = async (company) => {
   const schema = Joi.object({
+    country: Joi.string().required(),
     identifier: Joi.string().required(),
     typePerson: Joi.string().optional(),
     name: Joi.string().required(),

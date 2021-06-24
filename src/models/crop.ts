@@ -112,6 +112,7 @@ const CropSchema = new Schema(
           default: true,
         },
         user: { type: Schema.Types.ObjectId, ref: 'User' },
+        country: { type: Schema.Types.ObjectId, ref: 'Country' },
       },
     ],
     lots: [
