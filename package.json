@@ -23,7 +23,8 @@
     "update:lots:image": "node dist/src/commands/updateImageInLots.js",
     "add:countries": "node dist/src/commands/addCountries.js",
     "add:countryToCompanies": "node dist/src/commands/addCountryToCompanies.js",
-    "add:countryToMembers": "node dist/src/commands/addCountryToMembers.js"
+    "add:countryToMembers": "node dist/src/commands/addCountryToMembers.js",
+    "update:surfaceActivities": "node dist/src/commands/updateSurfaceActivity.js"
   },
   "resolutions": {
     "graceful-fs": "4.2.2"

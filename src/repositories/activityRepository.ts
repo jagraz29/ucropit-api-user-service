@@ -36,7 +36,7 @@ export class ActivityRepository {
    *
    * @param TypeActivity type
    */
-  public static async getActivitiesFilterByName (name: NameActivity) {
+  public static async getActivitiesFilterByName(name: NameActivity) {
     const activities = await Activity.find({ name: name })
       .populate('type')
       .populate({
@@ -49,6 +49,18 @@ export class ActivityRepository {
   }
 
   /**
+   * Find All Activities.
+   *
+   * @param Generic query
+   * @param Generic populate
+   *
+   * @returns
+   */
+  public static async findAll<T>(query: T, populate?: T) {
+    return Activity.find(query).populate(populate ?? [])
+  }
+
+  /**
    * Get Activities.
    *
    * @returns
@@ -58,13 +70,22 @@ export class ActivityRepository {
     limit,
     skip,
     sort,
-    populate,
+    populate
   }: any): Promise<any> {
-    return Activity
-      .find(query ? query : {})
-      .populate(populate ? populate : [])
-      .limit(limit ? limit : 0)
-      .skip(skip ? skip : 0)
-      .sort(sort ? sort : {})
+    return Activity.find(query ?? {})
+      .populate(populate ?? [])
+      .limit(limit ?? 0)
+      .skip(skip ?? 0)
+      .sort(sort ?? {})
+  }
+
+  /**
+   * Update Activity.
+   *
+   * @param update
+   * @param string id
+   */
+  static async updateActivity<T>(update: T, id: string) {
+    return Activity.updateOne({ _id: id }, { $set: update })
   }
 }
