@@ -35,15 +35,13 @@ export const validateCropStore = async (crop) => {
     cropType: Joi.string().required(),
     unitType: Joi.string().required(),
     identifier: Joi.string().required(),
-    lots: Joi.array()
-    .items(
+    lots: Joi.array().items(
       Joi.object().keys({
         names: Joi.array().items(Joi.string()).required(),
         tag: Joi.string().required()
       })
     ),
-    reusableLots: Joi.array()
-    .items(
+    reusableLots: Joi.array().items(
       Joi.object().keys({
         tag: Joi.string().required(),
         lotIds: Joi.array().items(Joi.string()).required()
@@ -447,13 +445,6 @@ export const validateDateCropAndDateHarvest = (
   const currentDate = moment().subtract(1, 'day')
   const startDate = moment(new Date(dateCrop))
   const endDate = moment(new Date(dateHarvest))
-  if (startDate.isBefore(currentDate)) {
-    return {
-      error: true,
-      message: 'La fecha de cultivo deber ser posterior a la actual',
-      code: ErrorResponse.INVALID_DATE_CROP
-    }
-  }
 
   if (endDate.isBefore(startDate)) {
     return {
