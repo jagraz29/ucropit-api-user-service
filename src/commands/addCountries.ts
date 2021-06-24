@@ -19,8 +19,8 @@ const Company = models.Company
 
 const defaultListCountries: Array<string> = ['ARG', 'PRY', 'URY', 'BRL']
 
-const setEnabledCountries = (alpha2Code: string): boolean => {
-  return !defaultListCountries.includes(alpha2Code)
+const setEnabledCountries = (alpha3Code: string): boolean => {
+  return !defaultListCountries.includes(alpha3Code)
 }
 
 const addCountries = async () => {
@@ -47,7 +47,7 @@ const addCountries = async () => {
       flag: country.flag,
       alpha2Code: country.alpha2Code,
       alpha3Code: country.alpha3Code,
-      disabled: setEnabledCountries(country.alpha3Code)
+      disabled: setEnabledCountries(country.alpha3Code),
     }
 
     await CountryRepository.createCountry(newCountry)
