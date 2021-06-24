@@ -1,7 +1,7 @@
 require('dotenv').config()
-import { connectDb } from '../models'
 import chalk from 'chalk'
 import { Command, OptionValues } from 'commander'
+import { connectDb } from '../models'
 import { ActivityRepository } from '../repositories'
 import { StatusActivities } from '../interfaces'
 import { Numbers } from '../utils'
