@@ -120,22 +120,8 @@ class LotsController {
    * @return Response
    */
   public async searchByIdentifier(req: Request, res: Response) {
-
     const { identifier } = req.query
     const dateCrop = new Date(req.query.dateCrop.toString())
-
-    const isAfterDateCrop = moment().subtract(1, 'day').isAfter(dateCrop)
-
-    if (isAfterDateCrop) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json(
-          ErrorResponseInstance.parseError(
-            ErrorResponse.INVALID_DATE_CROP,
-            'La fecha del cultivo debe ser posterior a la actual'
-          )
-        )
-    }
 
     let query = {
       identifier,
