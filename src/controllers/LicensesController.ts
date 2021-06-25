@@ -53,7 +53,7 @@ export class LicensesController {
    */
      public static async searchByCropType(req: Request | any, res: Response) {
       const { cropId } = req.query
-      const userId = req.user._id
+      const userId = req.user._id.toString()
       try {
         const licenses = await LicenseService.searchByCropType({userId,cropId})
         res.status(StatusCodes.OK).json(licenses)
