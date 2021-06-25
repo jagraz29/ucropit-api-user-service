@@ -27,7 +27,7 @@ export class LicenseService extends ServiceBase {
           null,
           {userId})
       } catch (error) {
-        throw new Error(error)
+        throw error
       }
   
     }
@@ -44,7 +44,7 @@ export class LicenseService extends ServiceBase {
           null,
           licenseSearch)
       } catch (error) {
-        throw new Error(error)
+        throw new error
       }
   
     }
@@ -60,7 +60,7 @@ export class LicenseService extends ServiceBase {
         base_url,
         license)
     } catch (error) {
-      throw new Error(error)
+      throw error
     }
 
   }

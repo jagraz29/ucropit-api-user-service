@@ -35,7 +35,6 @@ export class LicensesController {
         const licenses = await LicenseService.licensebyId({userId, id})
         res.status(StatusCodes.OK).json(licenses)
       } catch (error) {
-        console.log(error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
           error: ReasonPhrases.INTERNAL_SERVER_ERROR
         })
@@ -58,7 +57,6 @@ export class LicensesController {
         const licenses = await LicenseService.searchByCropType({userId,cropId})
         res.status(StatusCodes.OK).json(licenses)
       } catch (error) {
-        console.log(error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
           error: ReasonPhrases.INTERNAL_SERVER_ERROR
         })
