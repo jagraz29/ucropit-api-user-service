@@ -40,7 +40,7 @@ export class LicenseService extends ServiceBase {
       try {        
         return this.makeRequestES6(
           'get',
-          `${base_url}/search`,
+          `${base_url}/search-by-crop`,
           null,
           licenseSearch)
       } catch (error) {

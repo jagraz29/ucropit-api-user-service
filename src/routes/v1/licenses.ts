@@ -45,7 +45,7 @@ router.get('/', LicensesController.index)
 /**
  * @swagger
  * path:
- *  /v1/licenses/search-by-crop-type:
+ *  /v1/licenses/search-by-crop:
  *    get:
  *      summary: Get all License grouped by crop Type
  *      tags: [License]
@@ -53,7 +53,7 @@ router.get('/', LicensesController.index)
  *        - in: query
  *          name: userId
  *        - in: query
- *          name: cropTypeId
+ *          name: cropId
  *      responses:
  *        "200":
  *          description: Show success
@@ -64,7 +64,7 @@ router.get('/', LicensesController.index)
  *        "500":
  *          description: Server error
  */
- router.get('/search-by-crop-type', [listLicensebyCrptypeValidation], LicensesController.searchByCropType)
+ router.get('/search-by-crop', [listLicensebyCrptypeValidation], LicensesController.searchByCropType)
 
 /**
  * @swagger
