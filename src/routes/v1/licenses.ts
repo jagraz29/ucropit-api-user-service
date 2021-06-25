@@ -27,9 +27,6 @@ router.get('/', LicensesController.index)
  *    get:
  *      summary: Get License by id
  *      tags: [License]
- *      parameters:
- *        - in: query
- *          name: userId
  *      responses:
  *        "200":
  *          description: Show success
@@ -50,8 +47,6 @@ router.get('/', LicensesController.index)
  *      summary: Get all License grouped by crop Type
  *      tags: [License]
  *      parameters:
- *        - in: query
- *          name: userId
  *        - in: query
  *          name: cropId
  *      responses:

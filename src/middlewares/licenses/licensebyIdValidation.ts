@@ -12,7 +12,6 @@ export const licensebyIdValidation = (
 ) => {
 
   const Schema = Joi.object({
-    userId: Joi.objectId().required(),
     id: Joi.objectId().required(),
   })
 

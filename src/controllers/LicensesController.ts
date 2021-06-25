@@ -29,7 +29,7 @@ export class LicensesController {
    * @return Response
    */
     public static async licensebyId(req: Request | any, res: Response) {
-      const { userId } = req.query
+      const userId = req.user._id
       const { id } = req.params
       try {
         const licenses = await LicenseService.licensebyId({userId, id})
@@ -52,7 +52,8 @@ export class LicensesController {
    * @return Response
    */
      public static async searchByCropType(req: Request | any, res: Response) {
-      const { userId, cropId } = req.query
+      const { cropId } = req.query
+      const userId = req.user._id
       try {
         const licenses = await LicenseService.searchByCropType({userId,cropId})
         res.status(StatusCodes.OK).json(licenses)

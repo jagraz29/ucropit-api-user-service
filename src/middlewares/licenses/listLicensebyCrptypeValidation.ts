@@ -12,7 +12,6 @@ export const listLicensebyCrptypeValidation = (
 ) => {
 
   const Schema = Joi.object({
-    userId: Joi.objectId().required(),
     cropId: Joi.objectId().required(),
   })
 
