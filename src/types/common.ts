@@ -26,3 +26,5 @@ export enum typeActivityMap {
   ACT_TILLAGE = 'LABRANZA',
   ACT_AGREEMENT = 'ACUERDO'
 }
+
+export const ms_license_url = process.env.MS_LICENSE_URL
