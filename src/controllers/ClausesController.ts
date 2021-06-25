@@ -31,8 +31,8 @@ export class ClausesController {
    */
   public static async create(req: Request | any, res: Response) {
     try {
-      const Clauses = await ClauseService.createClause(req.body)
-      res.status(StatusCodes.CREATED).json(Clauses)
+      const clauses = await ClauseService.createClause(req.body)
+      res.status(StatusCodes.CREATED).json(clauses)
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: ReasonPhrases.INTERNAL_SERVER_ERROR

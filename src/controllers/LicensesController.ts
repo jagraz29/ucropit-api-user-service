@@ -52,9 +52,9 @@ export class LicensesController {
    * @return Response
    */
      public static async searchByCropType(req: Request | any, res: Response) {
-      const { userId, cropTypeId } = req.query
+      const { userId, cropId } = req.query
       try {
-        const licenses = await LicenseService.searchByCropType({userId, cropId: cropTypeId})
+        const licenses = await LicenseService.searchByCropType({userId,cropId})
         res.status(StatusCodes.OK).json(licenses)
       } catch (error) {
         console.log(error);
