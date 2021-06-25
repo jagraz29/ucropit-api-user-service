@@ -12,20 +12,20 @@ import {
   rolesData,
   servicesIntegration,
   storageTypes,
-  foreignCredentials
+  foreignCredentials,
 } from './data'
 
 import {
   suppliesData,
   fertilizers,
   pesticides,
-  phytotherapeutic
+  phytotherapeutic,
 } from './suppliesData'
 
 import { activesPrinciples } from './activesPrinciplesData'
 
 import { badgesData } from './badgesData'
-import { EiqRangesRepository } from '../repositories'
+import { EiqRangesRepository, CountryRepository } from '../repositories'
 import { eiqRangesData } from './eiqRangesData'
 
 const Badge = models.Badge
@@ -328,9 +328,9 @@ const seedersActivePrinciples = async (flag?) => {
   for (const activeIngredient of activeIngredientsSeed) {
     await ActiveIngredient.create({
       name: {
-        es: activeIngredient.active_principle_es
+        es: activeIngredient.active_principle_es,
       },
-      eiq: Number(activeIngredient.eiq.replace(/,/g, '.'))
+      eiq: Number(activeIngredient.eiq.replace(/,/g, '.')),
     })
   }
 

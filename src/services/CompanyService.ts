@@ -10,6 +10,7 @@ interface ICompany {
   name?: string
   address?: string
   addressFloor?: string
+  country?: string
 }
 
 class CompanyService extends ServiceBase {
@@ -19,7 +20,7 @@ class CompanyService extends ServiceBase {
    * @param query
    */
   public static async search(query): Promise<any> {
-    return Company.find(query)
+    return Company.find(query).populate('country')
   }
 
   /**
@@ -45,7 +46,7 @@ class CompanyService extends ServiceBase {
     user
   ) {
     let companies = await this.search({
-      identifier: company.identifier
+      identifier: company.identifier,
     })
 
     if (companies[0]) {
@@ -66,11 +67,11 @@ class CompanyService extends ServiceBase {
       if (exists > -1) {
         await user.companies.set(exists, {
           ...user.companies[exists],
-          company: companyCreated.id
+          company: companyCreated.id,
         })
       } else {
         user.companies.push({
-          company: companyCreated._id
+          company: companyCreated._id,
         })
       }
 
@@ -116,7 +117,7 @@ class CompanyService extends ServiceBase {
 
     if (!isServiceIntegration) {
       company.servicesIntegrations.push({
-        service: service
+        service: service,
       })
 
       return company.save()
