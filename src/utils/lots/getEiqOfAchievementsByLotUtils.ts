@@ -1,5 +1,5 @@
 import { IDataLot, EiqActivitiesTypes } from '../../interfaces'
-import { type } from './../Pagination'
+// import { type } from './../Pagination'
 
 export const getEiqOfAchievementsByLot = (
   lotId,

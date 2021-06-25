@@ -13,7 +13,7 @@ export const listLicensebyCrptypeValidation = (
 
   const Schema = Joi.object({
     userId: Joi.objectId().required(),
-    cropTypeId: Joi.objectId().required(),
+    cropId: Joi.objectId().required(),
   })
 
   const { error } = Schema.validate({ ...req.params, ...req.body, ...req.query })
