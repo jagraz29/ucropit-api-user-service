@@ -29,7 +29,7 @@ export class LicensesController {
    * @return Response
    */
     public static async licensebyId(req: Request | any, res: Response) {
-      const userId = req.user._id
+      const userId = req.user._id.toString()
       const { id } = req.params
       try {
         const licenses = await LicenseService.licensebyId({userId, id})
