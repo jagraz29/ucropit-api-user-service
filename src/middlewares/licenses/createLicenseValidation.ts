@@ -21,7 +21,7 @@ export const createLicenseValidate = (
     companyId: JoiValidationId.objectId().required(),
     cropType: Joi.string().required(),
     termsAndConditions: Joi.string().required(),
-    clauses: Joi.array().items(joiSchemaClause).required(),
+    clauses: Joi.array().items(JoiValidationId.objectId().required()).required(),
     accessibleIdentifier: Joi.array().items(Joi.string().required()).required(),
     startDatePost: JoiValidationDate.date().required(),
     endDatePost: JoiValidationDate.date().required(),

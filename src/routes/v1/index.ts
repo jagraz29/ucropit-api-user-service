@@ -82,7 +82,7 @@ router.use('/badges', authMiddleware, badges)
 router.use('/clauses', authMiddleware, clauses)
 
 // LICENSES
-router.use('/licenses', authMiddleware, licenses)
+router.use('/licenses'/* , authMiddleware */, licenses)
 
 // REPORTS
 router.use('/reports', reports)

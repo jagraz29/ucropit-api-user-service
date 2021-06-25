@@ -142,8 +142,10 @@ class ServiceBase {
      public static async makeRequestES6(
       method: string,
       url: string,
-      values?: any,
+      body: any,
+      params?: any,
     ) {
+      const values = body ? body : { params:params }
       try {
         const res = await axios[method](url, values)
         return res.data

@@ -59,46 +59,4 @@ router.get('/', ClausesController.index)
  */
 router.post('/', [createClauseValidation], ClausesController.create)
 
-/**
- * @swagger
- * path:
- *  /v1/badges/{badgeId}:
- *    put:
- *      summary: Update a Badge
- *      tags: [Badge]
- *      parameters:
- *        - in: path
- *          name: badgeId
- *      requestBody:
- *        content:
- *          multipart/form-data:
- *              schema:
- *               type: object
- *               properties:
- *                  title:
- *                     type: string
- *                     required: true
- *                     description: Clause title
- *                  description:
- *                     type: string
- *                     required: true
- *                     description: Clause name spanish
- *                  image:
- *                     type: string
- *                     description: Clause url image
- *
- *      responses:
- *       '200':
- *         description: Update a Badge.
- *         content:
- *         application/json:
- *             schema:
- *                $ref: '#/components/schemas/Badge'
- *
- *       '500':
- *         description: Error to Server.
- *
- */
-router.put('/:id', [updateClauseValidation], ClausesController.update)
-
 export default router

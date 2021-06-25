@@ -4,19 +4,19 @@ import Joi from '@hapi/joi'
 import JoiObjectId from "joi-objectid";
 Joi.objectId = JoiObjectId(Joi)
 
-export const updateClauseValidation = (
+
+export const licensebyIdValidation = (
   req: Request | any,
   res: Response,
   next: NextFunction
 ) => {
-  const schema = Joi.object({
+
+  const Schema = Joi.object({
+    userId: Joi.objectId().required(),
     id: Joi.objectId().required(),
-    title: Joi.string().optional(),
-    description: Joi.string().optional(),
-    image: Joi.string().optional()
   })
 
-  const { error } = schema.validate({ ...req.params, ...req.body })
+  const { error } = Schema.validate({ ...req.params, ...req.body, ...req.query })
 
   if (error) {
     return res.status(StatusCodes.BAD_REQUEST).json({

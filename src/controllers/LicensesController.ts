@@ -19,6 +19,51 @@ export class LicensesController {
 
     res.status(StatusCodes.OK).json(licenses)
   }
+  /**
+   *
+   * Get licenses By Crop Type.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+    public static async licensebyId(req: Request | any, res: Response) {
+      const { userId } = req.query
+      const { id } = req.params
+      try {
+        const licenses = await LicenseService.licensebyId({userId, id})
+        res.status(StatusCodes.OK).json(licenses)
+      } catch (error) {
+        console.log(error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: ReasonPhrases.INTERNAL_SERVER_ERROR
+        })
+      }
+    }
+
+    /**
+   *
+   * Get licenses By Crop Type.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+     public static async searchByCropType(req: Request | any, res: Response) {
+      const { userId, cropTypeId } = req.query
+      try {
+        const licenses = await LicenseService.searchByCropType({userId, cropId: cropTypeId})
+        res.status(StatusCodes.OK).json(licenses)
+      } catch (error) {
+        console.log(error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: ReasonPhrases.INTERNAL_SERVER_ERROR
+        })
+      }
+
+    }
 
   /**
    *

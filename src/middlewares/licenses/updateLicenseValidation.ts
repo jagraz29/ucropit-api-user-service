@@ -19,7 +19,7 @@ export const updateLicenseValidation = (
     companyId: Joi.string().optional(),
     cropType: Joi.string().optional(),
     termsAndConditions: Joi.string().optional(),
-    clauses: Joi.array().items(joiSchemaClause).optional(),
+    clauses: Joi.array().items(JoiValidation.objectId().required()).optional(),
     accessibleIdentifier: Joi.array().items(Joi.string().optional()).optional(),
     startDatePost: JoiValidation.date().optional(),
     endDatePost: JoiValidation.date().optional(),
