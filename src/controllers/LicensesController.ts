@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { LicenseService } from '../services'
-import { errors } from '../types/common'
 
 export class LicensesController {
   /**
@@ -14,7 +13,6 @@ export class LicensesController {
    * @return Response
    */
   public static async index(req: Request | any, res: Response) {
-
     const licenses = await LicenseService.createLicense(req.body)
 
     res.status(StatusCodes.OK).json(licenses)
@@ -28,20 +26,20 @@ export class LicensesController {
    *
    * @return Response
    */
-    public static async licensebyId(req: Request | any, res: Response) {
-      const userId = req.user._id.toString()
-      const { id } = req.params
-      try {
-        const licenses = await LicenseService.licensebyId({userId, id})
-        res.status(StatusCodes.OK).json(licenses)
-      } catch (error) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: ReasonPhrases.INTERNAL_SERVER_ERROR
-        })
-      }
+  public static async licensebyId(req: Request | any, res: Response) {
+    const userId = req.user._id.toString()
+    const { id } = req.params
+    try {
+      const licenses = await LicenseService.licensebyId({ userId, id })
+      res.status(StatusCodes.OK).json(licenses)
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: ReasonPhrases.INTERNAL_SERVER_ERROR
+      })
     }
+  }
 
-    /**
+  /**
    *
    * Get licenses By Crop Type.
    *
@@ -50,19 +48,22 @@ export class LicensesController {
    *
    * @return Response
    */
-     public static async searchByCropType(req: Request | any, res: Response) {
+  public static async searchByCropType(req: Request | any, res: Response) {
+    try {
       const { cropId } = req.query
       const userId = req.user._id.toString()
-      try {
-        const licenses = await LicenseService.searchByCropType({userId,cropId})
-        res.status(StatusCodes.OK).json(licenses)
-      } catch (error) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: ReasonPhrases.INTERNAL_SERVER_ERROR
-        })
-      }
-
+      const licenses = await LicenseService.searchByCropType({ userId, cropId })
+      res.status(StatusCodes.OK).json(licenses)
+    } catch (error) {
+      const {
+        response: { status, data }
+      } = error
+      res.status(status).json({
+        error: data.message,
+        code: data.code
+      })
     }
+  }
 
   /**
    *
