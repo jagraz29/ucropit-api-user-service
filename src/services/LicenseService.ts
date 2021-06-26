@@ -36,7 +36,7 @@ export class LicenseService extends ServiceBase {
       this.makeRequest(
         'get',
         `${BASE_URL}/search-by-crop`,
-        licenseSearch,
+        { params: licenseSearch },
         (result) => {
           resolve(result.data)
         },
