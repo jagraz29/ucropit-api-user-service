@@ -1,6 +1,10 @@
 import express from 'express'
-import {LicensesController} from '../../controllers'
-import { createLicenseValidate, listLicensebyCrptypeValidation, licensebyIdValidation  } from '../../middlewares'
+import { LicensesController } from '../../controllers'
+import {
+  createLicenseValidate,
+  listLicensebyCrptypeValidation,
+  licensebyIdValidation
+} from '../../middlewares'
 
 const router: express.Router = express.Router()
 
@@ -40,7 +44,11 @@ router.get('/', LicensesController.index)
  *        "500":
  *          description: Server error
  */
- router.get('/search-by-crop', [listLicensebyCrptypeValidation], LicensesController.searchByCropType)
+router.get(
+  '/search-by-crop',
+  [listLicensebyCrptypeValidation],
+  LicensesController.searchByCropType
+)
 
 /**
  * @swagger
@@ -59,7 +67,7 @@ router.get('/', LicensesController.index)
  *        "500":
  *          description: Server error
  */
- router.get('/:id', [licensebyIdValidation], LicensesController.licensebyId)
+router.get('/:id', [licensebyIdValidation], LicensesController.licensebyId)
 
 /**
  * @swagger

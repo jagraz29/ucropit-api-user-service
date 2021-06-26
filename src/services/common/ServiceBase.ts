@@ -55,7 +55,11 @@ class ServiceBase {
    * @param document
    * @param filePath
    */
-  public static async removeFiles(fileId: string, document: any, filePath: string) {
+  public static async removeFiles(
+    fileId: string,
+    document: any,
+    filePath: string
+  ) {
     if (fileExist(filePath)) {
       removeFile(filePath)
 
@@ -64,7 +68,9 @@ class ServiceBase {
       if (fileRemove) {
         const documentFiles = document.toJSON().files
 
-        const files = document.files.filter(item => item.toString() !== fileId.toString())
+        const files = document.files.filter(
+          (item) => item.toString() !== fileId.toString()
+        )
 
         document.files = files
 
@@ -132,27 +138,27 @@ class ServiceBase {
     axios[method](url, values).then(callback).catch(callbackError)
   }
 
-    /**
+  /**
    * Make Request ES6 HTTP.
    *
    * @param method
    * @param url
    * @param values
    */
-     public static async makeRequestES6(
-      method: string,
-      url: string,
-      body: any,
-      params?: any,
-    ) {
-      const values = body ? body : { params:params }
-      try {
-        const res = await axios[method](url, values)
-        return res.data
-      } catch (error) {
-        throw new Error(error)
-      }
+  public static async makeRequestES6(
+    method: string,
+    url: string,
+    body: any,
+    params?: any
+  ) {
+    const values = body ? body : { params: params }
+    try {
+      const res = await axios[method](url, values)
+      return res.data
+    } catch (error) {
+      throw new Error(error)
     }
+  }
 
   /**
    * Sort based on the value in the monthNames object.
