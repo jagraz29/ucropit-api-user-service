@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
 import models from '../models'
+import { CountryRepository } from '../repositories'
 
 const CropType = models.CropType
 const UnitType = models.UnitType
@@ -123,6 +125,27 @@ class CommonController {
     const storageTypes = await TypeStorage.find({})
 
     res.status(200).json(storageTypes)
+  }
+
+  /**
+   *
+   * Get all countries availables.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async countries(req: Request | any, res: Response) {
+    const dataToFind: any = {
+      query: {
+        disabled: false,
+      },
+    }
+
+    const countries = await CountryRepository.getCountries(dataToFind)
+
+    res.status(StatusCodes.OK).json(countries)
   }
 }
 

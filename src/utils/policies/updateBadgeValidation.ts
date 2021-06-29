@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from 'express'
 import { BadgeTypes } from '../../interfaces'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import * as Joi from 'joi'
+import JoiObjectId from "joi-objectid";
+const JoiValidation = JoiObjectId(Joi)
 
 export const updateBadgeValidationPolicy = (
   req: Request | any,
@@ -9,7 +11,7 @@ export const updateBadgeValidationPolicy = (
   next: NextFunction
 ) => {
   const schema = Joi.object({
-    badgeId: Joi.string().required(),
+    badgeId: JoiValidation.objectId().required(),
     type: Joi.string().valid(...Object.values(BadgeTypes)),
     nameEs: Joi.string(),
     nameEn: Joi.string(),

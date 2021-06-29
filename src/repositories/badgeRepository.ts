@@ -20,12 +20,11 @@ export class BadgeRepository {
     sort,
     populate,
   }: any): Promise<any> {
-    return Badge
-      .find(query ? query : {})
-      .populate(populate ? populate : [])
-      .limit(limit ? limit : 0)
-      .skip(skip ? skip : 0)
-      .sort(sort ? sort : {})
+    return Badge.find(query ?? {})
+      .populate(populate ?? [])
+      .limit(limit ?? 0)
+      .skip(skip ?? 0)
+      .sort(sort ?? {})
   }
 
   /**
@@ -45,7 +44,10 @@ export class BadgeRepository {
    *
    * @returns
    */
-  public static async updateOneBadge(query: any, dataToUpdate: any): Promise<any> {
+  public static async updateOneBadge(
+    query: any,
+    dataToUpdate: any
+  ): Promise<any> {
     return Badge.updateOne(query, dataToUpdate)
   }
 

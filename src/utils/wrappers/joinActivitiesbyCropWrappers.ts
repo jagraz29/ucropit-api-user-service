@@ -5,7 +5,7 @@ export const joinActivitiesByCrop = (crop) => {
   delete crop.finished
   delete crop.toMake
   delete crop.pending
-  return { ...crop, activities: [...done, ...finished, ...toMake, ...pending] }
+  return { ...crop, activities: [...done, ...finished] }
 }
 
 export const joinActivitiesFilterTypeWithCrop = (crops, type) => {
