@@ -14,7 +14,7 @@ const router: express.Router = express.Router()
  *  get:
  *   summary: Get License
  *   tags:
- *      - Badge
+ *      - License
  *   description: Get License
  *   produces:
  *     - application/json
