@@ -14,7 +14,6 @@ export class ClausesController {
    * @return Response
    */
   public static async index(req: Request | any, res: Response) {
-
     const clauses = await ClauseService.createClause(req.body)
 
     res.status(StatusCodes.OK).json(clauses)

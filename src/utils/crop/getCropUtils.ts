@@ -25,7 +25,7 @@ export const getCropUtils = (
   eiqRanges: IEiqRangesDocument[]
 ) => {
   const pay = payEntry ?? 0
-  let eiq: number = 0
+  let eiq = 0
   const { key: keyUnitType, name: nameUnitType } = unitType || {}
   eiq = Numbers.roundToTwo(activitiesWithEiq.reduce((a, b) => a + b.eiq, 0))
 

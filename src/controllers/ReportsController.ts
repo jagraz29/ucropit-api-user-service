@@ -3,7 +3,7 @@ import {
   ReasonPhrases,
   StatusCodes,
   getReasonPhrase,
-  getStatusCode,
+  getStatusCode
 } from 'http-status-codes'
 import moment from 'moment'
 
@@ -16,7 +16,7 @@ import {
   ReportsSignersByCompaniesHeaderXls,
   ReportsEiqHeaderXls,
   ReportsDmHeaderXls,
-  reportHeaderBillingXls,
+  reportHeaderBillingXls
 } from '../types/'
 
 import { CropRepository, TypeActivity } from '../repositories'
@@ -26,7 +26,7 @@ import {
   filterDataCropsByCompanies,
   getCropPipelineDmReportUtils,
   getDataCropsForBilling,
-  validateTypeActivity,
+  validateTypeActivity
 } from '../utils'
 
 import {
@@ -34,14 +34,14 @@ import {
   ReportEiq,
   ReportDm,
   UserAuth,
-  ReportBilling,
+  ReportBilling
 } from '../interfaces'
 
 import {
   roles,
   errors,
   rolesReportSowingBilling,
-  typeActivityMap,
+  typeActivityMap
 } from '../types/common'
 
 import fs from 'fs'
@@ -59,7 +59,7 @@ class ReportsController {
    *
    * @return Response
    */
-  public async generateCrops(req: Request, res: Response) {
+  public async generateCrops(req: Request, res: Response | any) {
     const cuit = req.query.cuit
     const mode: any = req.query.mode || 'xls'
 
@@ -92,7 +92,7 @@ class ReportsController {
   public async generateDataSet(req: Request, res: Response) {
     const mode: any = req.query.mode || 'json'
 
-    let crops = await CropService.getAll()
+    const crops = await CropService.getAll()
 
     const dataset = ReportService.generateDataSet(crops)
 
@@ -111,10 +111,10 @@ class ReportsController {
     const { email, identifier } = req.body
     const user: any = req.user
 
-    let crops = await CropService.cropsOnlySeeRoles({
+    const crops = await CropService.cropsOnlySeeRoles({
       cancelled: false,
       'members.user': user._id,
-      'members.identifier': identifier,
+      'members.identifier': identifier
     })
 
     if (crops.length === 0) {
@@ -137,9 +137,9 @@ class ReportsController {
           filename: `report_global_${identifier}_${today.format(
             'DD-MM-YYYY'
           )}.xlsx`,
-          content: fs.readFileSync(pathFile),
-        },
-      ],
+          content: fs.readFileSync(pathFile)
+        }
+      ]
     })
 
     return res.status(200).json('Ok')
@@ -155,13 +155,13 @@ class ReportsController {
     const email: string = req.query.email as string
     const identifier: string = req.query.identifier as string
 
-    let crops = await CropRepository.findAllCropsByCompanies(identifier)
+    const crops = await CropRepository.findAllCropsByCompanies(identifier)
 
     if (!crops) {
       return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
     }
 
-    let cropsByCompanies = filterDataCropsByCompanies(crops, identifier)
+    const cropsByCompanies = filterDataCropsByCompanies(crops, identifier)
 
     const reports: Array<ReportSignersByCompany> =
       structJsonForXls(cropsByCompanies)
@@ -179,9 +179,9 @@ class ReportsController {
       files: [
         {
           filename: 'signers_by_companies.xlsx',
-          content: fs.readFileSync(pathFile),
-        },
-      ],
+          content: fs.readFileSync(pathFile)
+        }
+      ]
     })
 
     return res.status(StatusCodes.OK).send(ReasonPhrases.OK)
@@ -221,9 +221,9 @@ class ReportsController {
       files: [
         {
           filename: 'EIQ.xlsx',
-          content: fs.readFileSync(pathFile),
-        },
-      ],
+          content: fs.readFileSync(pathFile)
+        }
+      ]
     })
 
     return res.status(200).json('Ok')
@@ -257,9 +257,9 @@ class ReportsController {
       files: [
         {
           filename: 'DM.xlsx',
-          content: fs.readFileSync(pathFile),
-        },
-      ],
+          content: fs.readFileSync(pathFile)
+        }
+      ]
     })
 
     return res.status(200).json('Ok')
@@ -282,10 +282,10 @@ class ReportsController {
         .json({ error: 'ERROR_INVALID_FIELD', param: 'typeActivity' })
     }
 
-    let crops = await CropRepository.findCropsFilterActivityForBilling(
+    const crops = await CropRepository.findCropsFilterActivityForBilling(
       {
         cancelled: false,
-        'members.identifier': identifier,
+        'members.identifier': identifier
       },
       type
     )
@@ -311,9 +311,9 @@ class ReportsController {
       files: [
         {
           filename: `BILLING_${typeActivityMap[type]}.xlsx`,
-          content: fs.readFileSync(pathFile),
-        },
-      ],
+          content: fs.readFileSync(pathFile)
+        }
+      ]
     })
 
     return res.json(ReasonPhrases.OK)
@@ -329,7 +329,7 @@ class ReportsController {
       api_key: process.env.GOOGLE_API_KEY,
       flightPlanCoordinates: lot.coordinateForGoogle,
       center: lot.centerBoundGoogle,
-      title: 'Localización Lote KMZ',
+      title: 'Localización Lote KMZ'
     })
   }
 }

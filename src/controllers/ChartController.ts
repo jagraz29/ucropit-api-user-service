@@ -9,7 +9,7 @@ import _ from 'lodash'
 
 const Crop = models.Crop
 
-let allMonths = [
+const allMonths = [
   'January',
   'February',
   'March',
@@ -32,7 +32,7 @@ class ChartController {
    * @param res
    */
   public async surfaceActivityAgreement(req: Request, res: Response) {
-    let sum = 0
+    const sum = 0
     const user: any = req.user
     const query: any = {
       cancelled: false,
@@ -65,7 +65,7 @@ class ChartController {
   }
 
   public async surfaceProgressAchievements(req: Request, res: Response) {
-    let sum = 0
+    const sum = 0
     const user: any = req.user
     const query: any = {
       cancelled: false,

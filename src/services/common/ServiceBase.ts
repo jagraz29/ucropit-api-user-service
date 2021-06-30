@@ -172,9 +172,9 @@ class ServiceBase {
   ): Array<any> {
     const sortData = list.sort(function (a, b) {
       if (a.total > 0 && b.total > 0) {
-        let currentDate =
+        const currentDate =
           a.date.substr(3, 4).split(' ') + a.date.substr(0, 2).split(' ')
-        let cropDate =
+        const cropDate =
           b.date.substr(3, 4).split(' ') + b.date.substr(0, 2).split(' ')
         return currentDate - cropDate
       }

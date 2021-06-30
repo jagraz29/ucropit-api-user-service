@@ -5,7 +5,7 @@ import ErrorResponse, { ErrorResponseInstance } from '../ErrorResponse'
 
 const messages = {
   identifier: 'El CUIT es requerido para continuar con la operación',
-  dateCrop: 'Debe ingresar una fecha en el valor ‘Fecha de cultivo’.',
+  dateCrop: 'Debe ingresar una fecha en el valor ‘Fecha de cultivo’.'
 }
 export const getLotsPolicy = (
   req: Request | any,
@@ -14,13 +14,13 @@ export const getLotsPolicy = (
 ) => {
   const schema = Joi.object({
     identifier: Joi.string().required(),
-    dateCrop: Joi.date().required(),
+    dateCrop: Joi.date().required()
   })
 
   const { error } = schema.validate(req.query)
 
   if (error) {
-    let field = error.details[0].path[0]
+    const field = error.details[0].path[0]
 
     return res.status(StatusCodes.BAD_REQUEST).json(
       ErrorResponseInstance.parseError(
@@ -28,7 +28,7 @@ export const getLotsPolicy = (
         messages[field],
         {
           description: ReasonPhrases.BAD_REQUEST,
-          error,
+          error
         }
       )
     )

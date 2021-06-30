@@ -50,7 +50,7 @@ class CropsController {
    * @return Response
    */
   public async index(req: Request | any, res: Response) {
-    let query: any = {
+    const query: any = {
       $and: [
         {
           cancelled: false

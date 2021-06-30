@@ -41,8 +41,6 @@ const Activity = models.Activity
 const FileDocument = models.FileDocument
 const Crop = models.Crop
 
-import { UserSchema } from '../models/user'
-
 class ActivitiesController {
   /**
    *

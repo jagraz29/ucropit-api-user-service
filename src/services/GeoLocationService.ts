@@ -3,7 +3,7 @@ const geocodingApi = process.env.GOOGLE_API_GEOCODING
 const apiKey = process.env.GOOGLE_API_KEY
 
 class GeoLocationService extends ServiceBase {
-  public static getLocationByCoordinates (lat, long) {
+  public static getLocationByCoordinates(lat, long) {
     return new Promise((resolve, reject) => {
       this.makeRequest(
         'get',

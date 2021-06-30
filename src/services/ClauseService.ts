@@ -11,13 +11,9 @@ export class ClauseService extends ServiceBase {
    */
   public static async createClause(Clause: IClauseProps) {
     try {
-      return this.makeRequestES6(
-        'post',
-        base_url,
-        Clause)
+      return this.makeRequestES6('post', base_url, Clause)
     } catch (error) {
       throw new Error(error)
     }
-
   }
 }

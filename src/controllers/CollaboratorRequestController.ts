@@ -13,7 +13,7 @@ class CollaboratorRequestController {
    *
    * @returns Response
    */
-  public async index (req: Request, res: Response) {
+  public async index(req: Request, res: Response) {
     const query = req.query
 
     const collaboratorsRequest = await CollaboratorRequestService.find(query)
@@ -29,20 +29,22 @@ class CollaboratorRequestController {
    *
    * @return Response
    */
-  public async update (req: Request, res: Response) {
+  public async update(req: Request, res: Response) {
     const { id } = req.params
     const data = req.body
 
     await CollaboratorRequestService.update(data, id)
 
-    const collaboratorRequest: any = await CollaboratorRequestService.findById(id)
+    const collaboratorRequest: any = await CollaboratorRequestService.findById(
+      id
+    )
 
     if (data.status === 'accepted') {
-      const user: any = await User.findById(collaboratorRequest.user._id).populate(
-        'companies'
-      )
+      const user: any = await User.findById(
+        collaboratorRequest.user._id
+      ).populate('companies')
 
-      const companyIndex = user.companies.findIndex(company => {
+      const companyIndex = user.companies.findIndex((company) => {
         return (
           String(company.company) === String(collaboratorRequest.company._id)
         )

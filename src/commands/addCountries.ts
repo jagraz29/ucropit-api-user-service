@@ -47,7 +47,7 @@ const addCountries = async () => {
       flag: country.flag,
       alpha2Code: country.alpha2Code,
       alpha3Code: country.alpha3Code,
-      disabled: setEnabledCountries(country.alpha3Code),
+      disabled: setEnabledCountries(country.alpha3Code)
     }
 
     await CountryRepository.createCountry(newCountry)

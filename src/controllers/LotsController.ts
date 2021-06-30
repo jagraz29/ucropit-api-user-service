@@ -123,7 +123,7 @@ class LotsController {
     const { identifier } = req.query
     const dateCrop = new Date(req.query.dateCrop.toString())
 
-    let query = {
+    const query = {
       identifier,
       // 'members.type': { $in: ['PRODUCER'] },
       $where: function () {
@@ -132,8 +132,8 @@ class LotsController {
     }
 
     req.setTimeout(0)
-    let cropsList = await CropRepository.findCropsWithLotsPopulateData(query)
-    let results = await LotService.parseLotByTagInCropsWithDataPopulate(
+    const cropsList = await CropRepository.findCropsWithLotsPopulateData(query)
+    const results = await LotService.parseLotByTagInCropsWithDataPopulate(
       cropsList,
       dateCrop
     )

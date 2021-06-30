@@ -17,13 +17,13 @@ program.parse(process.argv)
 const Company = models.Company
 
 const addCountryToCompanies = async () => {
-  let companies: Array<any> = await Company.find()
+  const companies: Array<any> = await Company.find()
 
   for (const company of companies) {
     const dataToFind: any = {
       query: {
-        alpha3Code: 'ARG',
-      },
+        alpha3Code: 'ARG'
+      }
     }
 
     const country = await CountryRepository.getCountry(dataToFind)

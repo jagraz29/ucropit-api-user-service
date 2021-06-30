@@ -7,45 +7,45 @@ export const VALID_FORMATS_FILES = `text.*|image.*|application/pdf|application/m
 export const VALID_FORMATS_DOCUMENTS = `text.*|image.*|application/pdf|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document`
 export const DIR_FOLDER_DEFAULT_IMAGES = 'public/uploads/default-images'
 
-export async function makeDirIfNotExists (dir) {
+export async function makeDirIfNotExists(dir) {
   await mkdirp(dir)
   return dir
 }
 
-export function getFullPath (filePath: string) {
+export function getFullPath(filePath: string) {
   return join(publicPath(), filePath)
 }
 
-function publicPath () {
+function publicPath() {
   return join(basePath(), `public`)
 }
 
-export function basePath (): string {
+export function basePath(): string {
   return join(__dirname, '../../../')
 }
 
-export function removeFile (dir: string) {
+export function removeFile(dir: string) {
   fs.unlinkSync(dir)
 }
 
-export function saveFile (path: string,pdfBytes: string) {
+export function saveFile(path: string, pdfBytes: string) {
   fs.writeFileSync(`${basePath()}${path}`, pdfBytes)
 }
 
-export function readFile (path: string) {
+export function readFile(path: string) {
   if (fileExist(path)) {
     return fs.readFileSync(`${basePath()}${path}`, { encoding: 'utf-8' })
   }
   return null
 }
-export function readFileBuffer (path: string) {
+export function readFileBuffer(path: string) {
   if (fileExist(path)) {
     return fs.readFileSync(`${basePath()}${path}`)
   }
   return null
 }
 
-export async function removeFiles (dirs: Array<string>): Promise<boolean> {
+export async function removeFiles(dirs: Array<string>): Promise<boolean> {
   for (const path of dirs) {
     if (fileExist(path)) {
       removeFile(path)
@@ -55,7 +55,7 @@ export async function removeFiles (dirs: Array<string>): Promise<boolean> {
   return true
 }
 
-export function getPathFileByType (type): string {
+export function getPathFileByType(type): string {
   let dir = ''
   switch (type) {
     case 'company':
@@ -68,7 +68,7 @@ export function getPathFileByType (type): string {
   return dir
 }
 
-export function fileExist (dir: string) {
+export function fileExist(dir: string) {
   if (fs.existsSync(dir)) {
     return true
   }

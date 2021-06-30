@@ -65,7 +65,7 @@ class UsersController {
   public async destroy(req: Request, res: Response) {
     const user = await User.findByIdAndDelete(req.params.id)
     res.json({
-      message: 'deleted successfully',
+      message: 'deleted successfully'
     })
   }
 }

@@ -1,6 +1,9 @@
 import express from 'express'
 import { ClausesController } from '../../controllers'
-import { createClauseValidation,updateClauseValidation  } from '../../middlewares'
+import {
+  createClauseValidation,
+  updateClauseValidation
+} from '../../middlewares'
 
 const router: express.Router = express.Router()
 

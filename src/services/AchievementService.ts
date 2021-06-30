@@ -6,14 +6,14 @@ import { basePath, fileExist, makeDirIfNotExists } from '../utils'
 import { Signer } from '../interfaces'
 
 interface IAchievement {
-  _id?: String
-  dateAchievement?: String
+  _id?: string
+  dateAchievement?: string
   surface?: number
   lots?: Array<string>
   supplies?: Array<any>
   evidences?: Array<any>
   signers?: Array<any>
-  percent?: Number
+  percent?: number
 }
 
 class AchievementService extends ServiceBase {
