@@ -21,16 +21,8 @@ import {
   calculateTheoreticalPotentialUtils,
   calculateCropVolumeUtils,
   getCropBadgesByUserType,
-  validateLotsReusable,
   parseLotsReusableAsData,
-  validateDateCropAndDateHarvest,
-  exitsLotsReusableInCollectionLots,
-  lotsReusableNotExistInDB,
-  responseReusableLotsMessageError,
-  filterActivities,
-  validateCropStore,
-  validateFormatKmz,
-  validateNotEqualNameLot
+  filterActivitiesMakeByDates
 } from '../utils'
 
 import { UserSchema } from '../models/user'
@@ -117,8 +109,9 @@ class CropsController {
    *
    * @return Response
    */
-  public async show(req: Request, res: Response) {
+  public async show (req: Request, res: Response) {
     const { id } = req.params
+    const { startDate, endDate } = req.query
     const crop = await CropService.getCrop(id)
     const lots = await LotService.storeLotImagesAndCountriesWithPopulate(
       crop.lots
@@ -132,6 +125,14 @@ class CropsController {
       crop.surface
     )
 
+    const toMakeFilterDates = filterActivitiesMakeByDates(crop.toMake, startDate, endDate).map(activity => {
+      return{
+        ...activity,
+        EIQ: 100
+      }
+
+    })
+
     const newCrop = {
       ...crop,
       volume,
@@ -140,8 +141,12 @@ class CropsController {
         ...crop.company,
         theoriticalPotential
       },
-      badges
+      badges,
+      toMake: toMakeFilterDates,
     }
+
+    // console.log('crop show')
+    // console.log(newCrop)
 
     res.status(200).json(newCrop)
   }
@@ -157,6 +162,7 @@ class CropsController {
     const {
       params: { id }
     } = req
+    console.log('getCropWithLots')
     const crop = await CropRepository.getCropWithActivities(id)
 
     if (!crop) {
