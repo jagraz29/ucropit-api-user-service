@@ -11,6 +11,7 @@
     "test": "jest --verbose",
     "preinstall": "npx npm-force-resolutions",
     "lint": "eslint src --ext ts --fix",
+    "prettify": "prettier \"src/**/*.{js,json,ts}\" --write",
     "seed": "node dist/src/seeders/index.js",
     "sign:activity": "node dist/src/commands/sign.js",
     "insert:members": "node dist/src/commands/members.js",
@@ -38,6 +39,11 @@
   "license": "ISC",
   "bugs": {
     "url": "https://gitlab.com/ucrop-it/ucropit-api-user-service/issues"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run prettify && lint-staged"
+    }
   },
   "homepage": "https://gitlab.com/ucrop-it/ucropit-api-user-service#readme",
   "dependencies": {
