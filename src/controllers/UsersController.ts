@@ -22,7 +22,7 @@ class UsersController {
 
   public async update(req: Request, res: Response) {
     const { email, firstName, lastName, phone, pin } = req.body
-    let user: any = await User.findOne({ email: req.body.email })
+    let user: any = await User.findOne({ email: email })
 
     if (!user) return res.status(404).json({ error: 'ERR_NOT_FOUND' })
 
@@ -63,7 +63,7 @@ class UsersController {
   }
 
   public async destroy(req: Request, res: Response) {
-    const user = await User.findByIdAndDelete(req.params.id)
+    await User.findByIdAndDelete(req.params.id)
     res.json({
       message: 'deleted successfully'
     })

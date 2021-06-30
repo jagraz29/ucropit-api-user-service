@@ -214,6 +214,7 @@ ActivitySchema.pre('save', async function (next) {
   if (!activity.key) {
     activity.key = shortid.generate()
   }
+  next()
 })
 
 ActivitySchema.methods.isDone = function () {

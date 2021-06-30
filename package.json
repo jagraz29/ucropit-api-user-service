@@ -42,7 +42,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run prettify && lint-staged"
+      "pre-commit": "npm run prettify && npm run lint"
     }
   },
   "homepage": "https://gitlab.com/ucrop-it/ucropit-api-user-service#readme",

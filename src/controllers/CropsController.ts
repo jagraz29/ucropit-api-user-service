@@ -21,16 +21,7 @@ import {
   calculateTheoreticalPotentialUtils,
   calculateCropVolumeUtils,
   getCropBadgesByUserType,
-  validateLotsReusable,
-  parseLotsReusableAsData,
-  validateDateCropAndDateHarvest,
-  exitsLotsReusableInCollectionLots,
-  lotsReusableNotExistInDB,
-  responseReusableLotsMessageError,
-  filterActivities,
-  validateCropStore,
-  validateFormatKmz,
-  validateNotEqualNameLot
+  parseLotsReusableAsData
 } from '../utils'
 
 import { UserSchema } from '../models/user'
@@ -120,6 +111,7 @@ class CropsController {
   public async show(req: Request, res: Response) {
     const { id } = req.params
     const crop = await CropService.getCrop(id)
+    console.log(crop)
     const lots = await LotService.storeLotImagesAndCountriesWithPopulate(
       crop.lots
     )
@@ -231,8 +223,6 @@ class CropsController {
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    const dataAchievement = activities.map((item) => item.achievements)
-
     const dataCrop = getCropUtils(
       crop,
       activities,
@@ -338,7 +328,6 @@ class CropsController {
    * @return Response
    */
   public async update(req: Request, res: Response) {
-    const user: any = req.user
     const data = JSON.parse(req.body.data)
     let company = null
 

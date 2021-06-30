@@ -74,6 +74,7 @@ class AchievementsController {
   public async create(req: Request, res: Response) {
     const user: any = req.user
     const data = JSON.parse(req.body.data)
+
     const crop: any = await Crop.findById(data.crop)
     const userConfig = await UserConfigService.findById(user.config)
 

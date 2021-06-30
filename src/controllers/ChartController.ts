@@ -5,7 +5,6 @@ import CropService from '../services/CropService'
 import ChartService from '../services/ChartDataService'
 import models from '../models'
 import { Numbers } from '../utils'
-import _ from 'lodash'
 
 const Crop = models.Crop
 
@@ -32,7 +31,6 @@ class ChartController {
    * @param res
    */
   public async surfaceActivityAgreement(req: Request, res: Response) {
-    const sum = 0
     const user: any = req.user
     const query: any = {
       cancelled: false,
@@ -65,7 +63,6 @@ class ChartController {
   }
 
   public async surfaceProgressAchievements(req: Request, res: Response) {
-    const sum = 0
     const user: any = req.user
     const query: any = {
       cancelled: false,

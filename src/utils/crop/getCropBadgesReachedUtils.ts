@@ -14,8 +14,7 @@ export const getCropBadgesReached = (
   {
     exploActivitiesSurfaces,
     sustainActivitiesSurfaces,
-    seedUseActivitiesSurfaces,
-    responsibleUseActivitiesSurfaces
+    seedUseActivitiesSurfaces
   },
   { cropType, surface },
   cropEiq

@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import { Command, OptionValues } from 'commander'
 
 import models, { connectDb } from '../models'
-import { CountryRepository, CropRepository } from '../repositories'
+import { CountryRepository } from '../repositories'
 
 const program = new Command()
 

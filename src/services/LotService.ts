@@ -11,7 +11,7 @@ import ServiceBase from './common/ServiceBase'
 import { handleFileConvertJSON } from '../utils/ParseKmzFile'
 import GeoLocationService from '../services/GeoLocationService'
 import StaticMapService from '../services/StaticMapService'
-import { parseImageUrl, parseImageUrlDefault } from '../utils'
+import { parseImageUrlDefault } from '../utils'
 
 interface ILot {
   name: string
@@ -87,7 +87,7 @@ class LotService extends ServiceBase {
       const lots = await Promise.all(toStored)
 
       const newLots: any = await Promise.all(
-        lots.map(async (lot, index) => {
+        lots.map(async (lot) => {
           let newLot: any = {}
 
           const centroid: any = this.getCentroid(lot.area)
@@ -329,15 +329,6 @@ class LotService extends ServiceBase {
       fs.mkdirSync(path)
     }
 
-    /*
-    const responseStaticImage = await new Promise((resolve, reject) => {
-      this.makeRequest('get', url, { responseType: 'stream' },
-        (result) => resolve(result.data.results),
-        (error) => reject(error)
-      )
-    })
-    */
-
     // NEED TO DO THIS BECAUSE THE REQUEST SERVICE NOT RECEIVE CONFIG PARAMS, WE NEED TO ADD responseType PARAM
 
     const axiosStaticImageConfig: any = {
@@ -392,7 +383,7 @@ class LotService extends ServiceBase {
         }
 
         newLot.data = await Promise.all(
-          currentLot.data.map(async (lotInData, index) => {
+          currentLot.data.map(async (lotInData) => {
             const {
               countryName = '',
               provinceName = '',

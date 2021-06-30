@@ -25,7 +25,7 @@ import {
 import { activesPrinciples } from './activesPrinciplesData'
 
 import { badgesData } from './badgesData'
-import { EiqRangesRepository, CountryRepository } from '../repositories'
+import { EiqRangesRepository } from '../repositories'
 import { eiqRangesData } from './eiqRangesData'
 
 const Badge = models.Badge
@@ -39,7 +39,6 @@ const EvidenceConcept = models.EvidenceConcept
 const Roles = models.Roles
 const ServiceIntegration = models.ServiceIntegration
 
-const CollaboratorRequest = models.CollaboratorRequest
 const TypeStorage = models.TypeStorage
 const ActiveIngredient = models.ActiveIngredient
 

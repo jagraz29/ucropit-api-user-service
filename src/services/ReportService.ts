@@ -480,8 +480,6 @@ class ReportService {
       'ACT_MONITORING',
       'finished'
     )
-
-    const total = 0
     const activities = [...listActivitiesDone, ...listActivitiesFinished]
     // console.log('activities pay ', activities)
     // console.log('crop.pay: ', pay)
@@ -526,14 +524,14 @@ class ReportService {
     const activities = [...activitiesDone, ...activitiesFinished]
 
     if (activities.length > 0) {
-      const surfaceLot = activities
-        .map((activity) => {
-          const lotSelected = activity.lots.find(
-            (lotItem) => lotItem._id.toString() === lot._id.toString()
-          )
-          if (lotSelected) return activity.pay
-        })
-        .filter((item) => item)
+      // const surfaceLot = activities
+      //   .map((activity) => {
+      //     const lotSelected = activity.lots.find(
+      //       (lotItem) => lotItem._id.toString() === lot._id.toString()
+      //     )
+      //     if (lotSelected) return activity.pay
+      //   })
+      //   .filter((item) => item)
 
       const achievements = activities
         .map((item) => {
@@ -615,9 +613,9 @@ class ReportService {
     const activities = [...listActivitiesDone, ...listActivitiesFinished]
     if (activities.length > 0) {
       for (const activity of activities) {
-        for (const lot of activity.lots) {
-          // console.log('Lotes ', lot)
-        }
+        // for (const lot of activity.lots) {
+        //   // console.log('Lotes ', lot)
+        // }
         total += activity.pay
       }
     }

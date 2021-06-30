@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { ClauseService } from '../services'
-import { errors } from '../types/common'
 
 export class ClausesController {
   /**

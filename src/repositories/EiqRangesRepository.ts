@@ -38,7 +38,7 @@ export class EiqRangesRepository {
    * @returns
    */
   public static async updateOneByIdEiq(
-    id: string,
+    id: string | any,
     dataToUpdate: Partial<IEiqRanges>
   ): Promise<IEiqRangesDocument | any> {
     return EiqRangesModel.updateOne(id, dataToUpdate)

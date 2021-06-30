@@ -149,7 +149,7 @@ class CompaniesController {
    * @return {Response}
    */
   public async delete(req: Request, res: Response) {
-    const company = await Company.findByIdAndDelete(req.params.id)
+    await Company.findByIdAndDelete(req.params.id)
 
     res.status(200).json({
       message: 'deleted successfully'

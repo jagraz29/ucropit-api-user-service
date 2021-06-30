@@ -131,7 +131,7 @@ class IntegrationService extends ServiceBase {
       crop: crop
     })
 
-    const res = await integrationsLogFind.logAchievement.push(logAchievement)
+    await integrationsLogFind.logAchievement.push(logAchievement)
     await integrationsLogFind.save()
 
     return integrationLog.findOne({ crop: crop })

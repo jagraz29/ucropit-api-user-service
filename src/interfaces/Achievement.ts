@@ -1,5 +1,5 @@
 import { Signer } from './Signer'
-import { Document, Model } from 'mongoose'
+import { Document } from 'mongoose'
 
 export interface ISupplies {
   name?: string

@@ -16,7 +16,6 @@ export const getCropUtils = (
     company,
     badges,
     unitType,
-    data,
     members,
     cropType: { key: cropTypeKey }
   },
@@ -26,7 +25,7 @@ export const getCropUtils = (
 ) => {
   const pay = payEntry ?? 0
   let eiq = 0
-  const { key: keyUnitType, name: nameUnitType } = unitType || {}
+  const { key: keyUnitType } = unitType || {}
   eiq = Numbers.roundToTwo(activitiesWithEiq.reduce((a, b) => a + b.eiq, 0))
 
   return {

@@ -41,7 +41,6 @@
  *            cityName: 9 de Julio
  */
 import mongoose from 'mongoose'
-import _ from 'lodash'
 import { getCenterOfBounds } from 'geolib'
 import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
 import { parseImageUrl, parseImageUrlDefault } from '../utils/ParseImageUrl'

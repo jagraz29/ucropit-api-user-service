@@ -225,11 +225,7 @@ class CropService extends ServiceBase {
     return crops
   }
 
-  public static async cropsOnlySeeRolesSowing(
-    query: any,
-    filtering,
-    roles: Array<string>
-  ) {
+  public static async cropsOnlySeeRolesSowing(query: any) {
     const crops = await this.findAllSowing(query)
     return crops
   }

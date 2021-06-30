@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { LicenseTypes, LicenseStatus } from '../../interfaces'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { joiSchemaClause } from '..'
 import * as Joi from 'joi'
 import JoiObjectId from 'joi-objectid'
 const JoiValidation = JoiObjectId(Joi)

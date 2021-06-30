@@ -1,10 +1,5 @@
 import { Request, Response } from 'express'
-import {
-  ReasonPhrases,
-  StatusCodes,
-  getReasonPhrase,
-  getStatusCode
-} from 'http-status-codes'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import moment from 'moment'
 
 import CropService from '../services/CropService'
@@ -33,23 +28,16 @@ import {
   ReportSignersByCompany,
   ReportEiq,
   ReportDm,
-  UserAuth,
   ReportBilling
 } from '../interfaces'
 
-import {
-  roles,
-  errors,
-  rolesReportSowingBilling,
-  typeActivityMap
-} from '../types/common'
+import { errors, typeActivityMap } from '../types/common'
 
 import fs from 'fs'
 
 import models from '../models'
 
 const Lot = models.Lot
-const Crop = models.Crop
 
 class ReportsController {
   /**

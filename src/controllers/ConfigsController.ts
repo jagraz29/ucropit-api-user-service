@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import UserService from '../services/UserService'
 import UserConfigService from '../services/UserConfigService'
 import CollaboratorRequest from '../models/collaboratorRequest'
 

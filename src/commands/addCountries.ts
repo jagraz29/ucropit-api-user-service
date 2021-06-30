@@ -3,7 +3,7 @@ require('dotenv').config()
 import chalk from 'chalk'
 import { Command, OptionValues } from 'commander'
 
-import models, { connectDb } from '../models'
+import { connectDb } from '../models'
 import { CountryRepository } from '../repositories'
 import CountriesService from '../services/CountriesService'
 
@@ -14,8 +14,6 @@ program
   .option('-a, --add', 'Add Countries to database')
 
 program.parse(process.argv)
-
-const Company = models.Company
 
 const defaultListCountries: Array<string> = ['ARG', 'PRY', 'URY', 'BRL']
 

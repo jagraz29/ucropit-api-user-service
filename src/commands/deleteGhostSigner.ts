@@ -175,7 +175,7 @@ function existAchievements(achievements: IAchievementDocument[]): boolean {
   return achievements.length > 0
 }
 
-async function getCropsWithActivitiesDone<T>(): Promise<any> {
+async function getCropsWithActivitiesDone(): Promise<any> {
   const crops: any = await Crop.find({ cancelled: false }).populate({
     path: 'done',
     populate: [
