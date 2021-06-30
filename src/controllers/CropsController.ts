@@ -22,7 +22,7 @@ import {
   calculateCropVolumeUtils,
   getCropBadgesByUserType,
   parseLotsReusableAsData,
-  filterActivitiesMakeByDates, sumPercentInAchievements, calculateEIQSurfaceInAchievements
+  filterActivitiesMakeByDates, calculateEIQAndPorcentTotal
 } from '../utils'
 
 import { UserSchema } from '../models/user'
@@ -125,31 +125,10 @@ class CropsController {
       crop.surface
     )
 
-    const toMakeFilterDates = filterActivitiesMakeByDates(crop.toMake, startDate, endDate).map(activity => {
-      return{
-        ...activity,
-        percentTotal: sumPercentInAchievements(activity.achievements),
-        eiq: calculateEIQSurfaceInAchievements(crop.surface, activity.achievements)
-      }
-
-    })
-    const done = crop.done.map(activity => {
-      console.log(activity)
-      return {
-        ...activity,
-        percentTotal: sumPercentInAchievements(activity.achievements),
-        eiq: calculateEIQSurfaceInAchievements(crop.surface, activity.achievements)
-      }
-    })
-
-    const finished = crop.done.map(activity => {
-      console.log(activity)
-      return {
-        ...activity,
-        percentTotal: sumPercentInAchievements(activity.achievements),
-        eiq: calculateEIQSurfaceInAchievements(crop.surface, activity.achievements)
-      }
-    })
+    const toMakeFilterDates = filterActivitiesMakeByDates(crop.toMake, startDate, endDate)
+    const toMake = calculateEIQAndPorcentTotal(toMakeFilterDates, crop.surface)
+    const done = calculateEIQAndPorcentTotal(crop.done, crop.surface)
+    const finished = calculateEIQAndPorcentTotal(crop.finished, crop.surface)
 
     const newCrop = {
       ...crop,
@@ -160,7 +139,7 @@ class CropsController {
         theoriticalPotential
       },
       badges,
-      toMake: toMakeFilterDates,
+      toMake,
       done,
       finished
     }

@@ -31,5 +31,5 @@ export const calculateEIQSurfaceInAchievements = (surface, achievements) => {
     const achievementDTO = { supplies: achievement.supplies, surface } as IAchievement
     eiqTotal += calculateEIQSurfaceAchievement(achievementDTO)
   })
-  return eiqTotal || 45 //Todo: quitar al aplicar el calculo real de eiq
+  return eiqTotal
 }
