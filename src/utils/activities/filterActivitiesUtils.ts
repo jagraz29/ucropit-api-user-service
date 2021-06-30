@@ -12,9 +12,9 @@ export const filterByActivityMakeAndFinished = (activity) => {
 export const filterActivitiesMakeByDates = (activities, startDate, endDate) => {
 
   if (!startDate && !endDate) return activities
-  startDate = moment(startDate)
-  endDate = moment(endDate)
+  startDate = moment(startDate).startOf('day')
+  endDate = moment(endDate).endOf('day')
 
-  return activities.filter(activity => startDate.isSameOrBefore(activity.dateStart) && endDate.isSameOrBefore(activity.dateEnd))
+  return activities.filter(activity => moment(activity.dateStart).startOf('day').isSameOrAfter(startDate) && moment(activity.dateEnd).endOf('day').isSameOrBefore(endDate))
 
 }

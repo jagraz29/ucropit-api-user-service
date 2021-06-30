@@ -132,7 +132,6 @@ class CropsController {
       }
 
     })
-
     const newCrop = {
       ...crop,
       volume,
@@ -142,7 +141,7 @@ class CropsController {
         theoriticalPotential
       },
       badges,
-      toMake: toMakeFilterDates,
+      toMake: toMakeFilterDates
     }
 
     // console.log('crop show')
