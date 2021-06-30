@@ -8,21 +8,6 @@ import { Numbers } from '../utils'
 
 const Crop = models.Crop
 
-const allMonths = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-]
-
 class ChartController {
   /**
    * Data to Chart agreement's activity.
@@ -121,10 +106,9 @@ class ChartController {
 
     const listSummaryVolumes = CropService.getSummaryVolumes(crops)
 
-    const listDataCrops = ChartService.sortData(
-      listSummaryVolumes,
-      allMonths
-    ).filter((item) => item.total > 0)
+    const listDataCrops = ChartService.sortData(listSummaryVolumes).filter(
+      (item) => item.total > 0
+    )
 
     const summarySortData = CropService.summaryData(listDataCrops)
 
