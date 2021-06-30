@@ -21,10 +21,13 @@ export class LicenseService extends ServiceBase {
    */
   public static async licenseById ({ userId, id }: ILicenseById) {
     return new Promise((resolve, reject) => {
+      const params = {
+        userId
+      }
       this.makeRequest(
         'get',
         `${BASE_URL}/${id}`,
-        { userId },
+        { params },
         (result) => {
           resolve(result.data)
         },
