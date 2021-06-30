@@ -22,7 +22,7 @@ import {
   calculateCropVolumeUtils,
   getCropBadgesByUserType,
   parseLotsReusableAsData,
-  filterActivitiesMakeByDates
+  filterActivitiesMakeByDates, sumPercentInAchievements, calculateEIQSurfaceInAchievements
 } from '../utils'
 
 import { UserSchema } from '../models/user'
@@ -128,10 +128,29 @@ class CropsController {
     const toMakeFilterDates = filterActivitiesMakeByDates(crop.toMake, startDate, endDate).map(activity => {
       return{
         ...activity,
-        EIQ: 100
+        percentTotal: sumPercentInAchievements(activity.achievements),
+        eiq: calculateEIQSurfaceInAchievements(crop.surface, activity.achievements)
       }
 
     })
+    const done = crop.done.map(activity => {
+      console.log(activity)
+      return {
+        ...activity,
+        percentTotal: sumPercentInAchievements(activity.achievements),
+        eiq: calculateEIQSurfaceInAchievements(crop.surface, activity.achievements)
+      }
+    })
+
+    const finished = crop.done.map(activity => {
+      console.log(activity)
+      return {
+        ...activity,
+        percentTotal: sumPercentInAchievements(activity.achievements),
+        eiq: calculateEIQSurfaceInAchievements(crop.surface, activity.achievements)
+      }
+    })
+
     const newCrop = {
       ...crop,
       volume,
@@ -141,11 +160,12 @@ class CropsController {
         theoriticalPotential
       },
       badges,
-      toMake: toMakeFilterDates
+      toMake: toMakeFilterDates,
+      done,
+      finished
     }
 
-    // console.log('crop show')
-    // console.log(newCrop)
+    console.log('crop show')
 
     res.status(200).json(newCrop)
   }

@@ -24,3 +24,12 @@ export function calculateEIQSurfaceAchievement ({
   const eiqTotal = eiqTotalSupplies / Number(surface)
   return !Number.isNaN(eiqTotal) ? eiqTotal : 0
 }
+
+export const calculateEIQSurfaceInAchievements = (surface, achievements) => {
+  let eiqTotal = 0
+  achievements.forEach(achievement => {
+    const achievementDTO = { supplies: achievement.supplies, surface } as IAchievement
+    eiqTotal += calculateEIQSurfaceAchievement(achievementDTO)
+  })
+  return eiqTotal || 45 //Todo: quitar al aplicar el calculo real de eiq
+}
