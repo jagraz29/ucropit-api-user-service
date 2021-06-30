@@ -7,7 +7,7 @@ export const calculateEIQAndPorcentTotal = (activities, surface) => {
     return {
       ...activity,
       percentTotal,
-      eiq
+      eiq: eiq || 40 //Todo: quitar este valor para el calculo correcto del eiq
     }
   })
 

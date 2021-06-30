@@ -143,9 +143,7 @@ class CropsController {
       done,
       finished
     }
-
-    console.log('crop show')
-
+    
     res.status(200).json(newCrop)
   }
   /**
