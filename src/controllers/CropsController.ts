@@ -22,7 +22,8 @@ import {
   calculateCropVolumeUtils,
   getCropBadgesByUserType,
   parseLotsReusableAsData,
-  filterActivitiesMakeByDates, calculateEIQAndPorcentTotal
+  filterActivitiesMakeByDates,
+  calculateEIQAndPorcentTotal
 } from '../utils'
 
 import { UserSchema } from '../models/user'
@@ -42,7 +43,7 @@ class CropsController {
    * @return Response
    */
   public async index(req: Request | any, res: Response) {
-    let query: any = {
+    const query: any = {
       $and: [
         {
           cancelled: false
@@ -109,7 +110,7 @@ class CropsController {
    *
    * @return Response
    */
-  public async show (req: Request, res: Response) {
+  public async show(req: Request, res: Response) {
     const { id } = req.params
     const { startDate, endDate } = req.query
     const crop = await CropService.getCrop(id)
@@ -125,7 +126,11 @@ class CropsController {
       crop.surface
     )
 
-    const toMakeFilterDates = filterActivitiesMakeByDates(crop.toMake, startDate, endDate)
+    const toMakeFilterDates = filterActivitiesMakeByDates(
+      crop.toMake,
+      startDate,
+      endDate
+    )
     const toMake = calculateEIQAndPorcentTotal(toMakeFilterDates, crop.surface)
     const done = calculateEIQAndPorcentTotal(crop.done, crop.surface)
     const finished = calculateEIQAndPorcentTotal(crop.finished, crop.surface)
@@ -143,7 +148,7 @@ class CropsController {
       done,
       finished
     }
-    
+
     res.status(200).json(newCrop)
   }
   /**
@@ -158,7 +163,6 @@ class CropsController {
     const {
       params: { id }
     } = req
-    console.log('getCropWithLots')
     const crop = await CropRepository.getCropWithActivities(id)
 
     if (!crop) {
@@ -232,8 +236,6 @@ class CropsController {
 
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
-
-    const dataAchievement = activities.map((item) => item.achievements)
 
     const dataCrop = getCropUtils(
       crop,
@@ -340,7 +342,6 @@ class CropsController {
    * @return Response
    */
   public async update(req: Request, res: Response) {
-    const user: any = req.user
     const data = JSON.parse(req.body.data)
     let company = null
 

@@ -9,9 +9,9 @@ import { SupplyType } from '../../interfaces'
  * @returns Number
  */
 export const getTotalTypeSupplies = (supplies): Object => {
-  let totalTypeSupplies = []
+  const totalTypeSupplies = []
   for (const key in SupplyType) {
-    let count = 0
+    const count = 0
     supplies.map((supply) => {
       const { code, name } = supply || {}
       if (code === key) {

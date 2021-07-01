@@ -12,14 +12,17 @@ export const getCropByIdMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-
   const Schema = Joi.object({
     id: JoiValidation.objectId().required(),
     startDate: JoiValidation.date().optional(),
     endDate: JoiValidation.date().greater(Joi.ref('startDate')).optional()
   })
 
-  const { error } = Schema.validate({ ...req.params, ...req.body, ...req.query })
+  const { error } = Schema.validate({
+    ...req.params,
+    ...req.body,
+    ...req.query
+  })
 
   if (error) {
     return res.status(StatusCodes.BAD_REQUEST).json({

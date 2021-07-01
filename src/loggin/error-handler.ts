@@ -7,7 +7,7 @@ import { DocumentNotFound } from './error-custom'
 class ErrorHandler {
   public async handleError(err: Error): Promise<void> {
     // handle with some package
-    // console.log('err', err)
+    console.log('err', err)
   }
 
   public isCastErrorMongoose(error: Error) {

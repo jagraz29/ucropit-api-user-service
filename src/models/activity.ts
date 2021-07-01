@@ -209,20 +209,21 @@ const ActivitySchema = new Schema({
 })
 
 ActivitySchema.pre('save', async function (next) {
-  let activity: any = this
+  const activity: any = this
   /** Generate unique key */
   if (!activity.key) {
     activity.key = shortid.generate()
   }
+  next()
 })
 
 ActivitySchema.methods.isDone = function () {
-  let activity: any = this
+  const activity: any = this
   return activity.status[0].name.en === 'DONE'
 }
 
 ActivitySchema.methods.setExpired = function () {
-  let activity: any = this
+  const activity: any = this
   activity.status[0].name.en = 'EXPIRED'
   activity.status[0].name.es = 'VENCIDA'
 }

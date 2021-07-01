@@ -3,7 +3,7 @@ import shortid from 'shortid'
 import { IAchievementDocument } from '../interfaces'
 import { AchievementSchema } from '../schemas'
 
-AchievementSchema.pre('save',  (next: Function) => {
+AchievementSchema.pre('save', (next: Function) => {
   const achievement: any = this
 
   /** Generate unique key */
@@ -13,4 +13,7 @@ AchievementSchema.pre('save',  (next: Function) => {
   next()
 })
 
-export const AchievementModel = model<IAchievementDocument>('Achievement', AchievementSchema)
+export const AchievementModel = model<IAchievementDocument>(
+  'Achievement',
+  AchievementSchema
+)

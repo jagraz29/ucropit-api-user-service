@@ -30,7 +30,7 @@ const connectDb = function () {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-    useFindAndModify: false,
+    useFindAndModify: false
   })
 }
 
@@ -62,7 +62,7 @@ const models = {
   ActiveIngredient,
   ForeignCredential,
   Badge,
-  Country,
+  Country
 }
 
 export { connectDb }

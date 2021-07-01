@@ -2,7 +2,7 @@ import { EiqRangesModel } from '../models'
 import { IEiqRangesDocument, IEiqRanges } from '../interfaces'
 
 export class EiqRangesRepository {
-  public static async getAllEiq (): Promise<IEiqRangesDocument[]> {
+  public static async getAllEiq(): Promise<IEiqRangesDocument[]> {
     return EiqRangesModel.find()
   }
 
@@ -12,7 +12,9 @@ export class EiqRangesRepository {
    *
    * @returns
    */
-  public static async createOneEiq (eiq: IEiqRanges): Promise<IEiqRangesDocument> {
+  public static async createOneEiq(
+    eiq: IEiqRanges
+  ): Promise<IEiqRangesDocument> {
     return EiqRangesModel.create(eiq)
   }
 
@@ -22,7 +24,9 @@ export class EiqRangesRepository {
    *
    * @returns
    */
-  public static async createAllEiq (eiqs: IEiqRanges[]): Promise<IEiqRangesDocument[]> {
+  public static async createAllEiq(
+    eiqs: IEiqRanges[]
+  ): Promise<IEiqRangesDocument[]> {
     return EiqRangesModel.insertMany(eiqs)
   }
 
@@ -33,7 +37,10 @@ export class EiqRangesRepository {
    *
    * @returns
    */
-  public static async updateOneByIdEiq (id: String, dataToUpdate: Partial<IEiqRanges>): Promise<IEiqRangesDocument | any > {
+  public static async updateOneByIdEiq(
+    id: string | any,
+    dataToUpdate: Partial<IEiqRanges>
+  ): Promise<IEiqRangesDocument | any> {
     return EiqRangesModel.updateOne(id, dataToUpdate)
   }
 }

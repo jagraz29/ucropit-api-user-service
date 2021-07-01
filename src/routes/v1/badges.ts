@@ -1,9 +1,9 @@
 import express from 'express'
 import badgesController from '../../controllers/BadgesController'
 import {
-	createBadgeValidationPolicy,
-	updateBadgeValidationPolicy,
-	deleteBadgeValidationPolicy,
+  createBadgeValidationPolicy,
+  updateBadgeValidationPolicy,
+  deleteBadgeValidationPolicy
 } from '../../utils'
 
 const router: express.Router = express.Router()
@@ -148,6 +148,10 @@ router.put('/:badgeId', [updateBadgeValidationPolicy], badgesController.update)
  *         description: Error to Server.
  *
  */
-router.delete('/:badgeId', [deleteBadgeValidationPolicy], badgesController.delete)
+router.delete(
+  '/:badgeId',
+  [deleteBadgeValidationPolicy],
+  badgesController.delete
+)
 
 export default router

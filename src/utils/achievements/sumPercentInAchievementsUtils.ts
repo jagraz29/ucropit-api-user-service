@@ -1,4 +1,3 @@
-
 const sumPercent = (current, achievement) => {
   return current + achievement.percent
 }

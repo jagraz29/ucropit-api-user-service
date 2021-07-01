@@ -1,9 +1,8 @@
 import { Request, Response } from 'express'
-import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 import { LicenseService } from '../services'
 
 export class LicensesController {
-
   /**
    *
    * Get licenses By Crop Type.
@@ -13,7 +12,7 @@ export class LicensesController {
    *
    * @return Response
    */
-  public static async licenseById (req: Request | any, res: Response) {
+  public static async licenseById(req: Request | any, res: Response) {
     const userId = req.user._id.toString()
     const { id } = req.params
     try {
@@ -39,7 +38,7 @@ export class LicensesController {
    *
    * @return Response
    */
-  public static async searchByCropType (req: Request | any, res: Response) {
+  public static async searchByCropType(req: Request | any, res: Response) {
     try {
       const { cropId } = req.query
       const userId = req.user._id.toString()

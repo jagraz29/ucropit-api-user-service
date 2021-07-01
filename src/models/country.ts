@@ -48,76 +48,76 @@ const { Schema } = mongoose
 const CountrySchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   phoneCode: {
     type: String,
-    default: '',
+    default: ''
   },
   capital: {
     type: String,
-    default: '',
+    default: ''
   },
   geolocation: {
     type: Object,
-    default: [],
+    default: []
   },
   timezone: {
     type: String,
-    default: '',
+    default: ''
   },
   currencies: [
     {
       code: {
         type: String,
-        default: '',
+        default: ''
       },
       name: {
         type: String,
-        default: '',
+        default: ''
       },
       symbol: {
         type: String,
-        default: '',
-      },
-    },
+        default: ''
+      }
+    }
   ],
   languages: [
     {
       iso639_1: {
         type: String,
-        default: '',
+        default: ''
       },
       iso639_2: {
         type: String,
-        default: '',
+        default: ''
       },
       name: {
         type: String,
-        default: '',
+        default: ''
       },
       nativeName: {
         type: String,
-        default: '',
-      },
-    },
+        default: ''
+      }
+    }
   ],
   flag: {
     type: String,
-    required: true,
+    required: true
   },
   alpha2Code: {
     type: String,
-    required: true,
+    required: true
   },
   alpha3Code: {
     type: String,
-    required: true,
+    required: true
   },
   disabled: {
     type: Boolean,
-    required: true,
-  },
+    required: true
+  }
 })
 
 export default mongoose.model<ICountry>('Country', CountrySchema)
