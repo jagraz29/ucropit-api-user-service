@@ -1,25 +1,29 @@
 import {
-  calculateEIQSurfaceInAchievements,
   parseSuppliesWithEiqTotalInAchievements,
+  sumEIQInAchievements,
   sumPercentInAchievements
 } from './../achievements/'
 import { parseSuppliesWithEiqTotal } from '../supplies'
 
-export const calculateEIQAndPorcentTotal = (activities) => {
-  const activitiesWithEIQAndPercentTotal = activities.map((activity) => {
-    const { achievements, supplies } = activity
-    const newAchievements =
-      parseSuppliesWithEiqTotalInAchievements(achievements)
-    const percentTotal = sumPercentInAchievements(newAchievements)
-    const eiq = calculateEIQSurfaceInAchievements(newAchievements)
-    return {
-      ...activity,
-      achievements: newAchievements,
-      supplies: parseSuppliesWithEiqTotal(supplies),
-      percentTotal,
-      eiq: eiq || 40 // Todo: quitar este valor para el calculo correcto del eiq
-    }
-  })
+export const calculateEIQAndPorcentTotal = (activities) =>
+  activities.map(calculateEiqOfActivity)
 
-  return activitiesWithEIQAndPercentTotal
+export const calculateEiqOfActivity = (activity) => {
+  const { achievements, supplies } = activity
+  const newSupplies = parseSuppliesWithEiqTotal(supplies)
+  const newAchievements = parseSuppliesWithEiqTotalInAchievements(achievements)
+  const percentTotal = sumPercentInAchievements(newAchievements)
+  const eiq = newAchievements.length ? sumEIQInAchievements(newAchievements) : 0
+  const eiqPlafined = newSupplies.length ? sumEIQInAchievements(newSupplies) : 0
+  return {
+    ...activity,
+    achievements: newAchievements,
+    supplies: newSupplies,
+    percentTotal,
+    eiqPlafined,
+    eiq
+  }
 }
+
+const reduceSumEIQ = (current, { eiq = 0 }) => current + eiq
+export const sumEIQInSupplies = (list) => list.reduce(reduceSumEIQ, 0)

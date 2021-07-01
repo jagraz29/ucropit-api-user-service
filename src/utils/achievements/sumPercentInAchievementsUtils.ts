@@ -1,3 +1,3 @@
-const sumPercent = (current, { percent = 0 }) => current + percent
+const reduceSumPercent = (current, { percent = 0 }) => current + percent
 export const sumPercentInAchievements = (achievements) =>
-  achievements.reduce(sumPercent, 0)
+  achievements.reduce(reduceSumPercent, 0)

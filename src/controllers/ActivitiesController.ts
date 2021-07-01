@@ -16,7 +16,8 @@ import {
 import {
   sumActivitiesSurfacesByTypeAgreement,
   getCropBadgesReached,
-  calculateCropEiq
+  calculateCropEiq,
+  calculateEiqOfActivity
 } from '../utils'
 
 import ActivityService from '../services/ActivityService'
@@ -78,7 +79,8 @@ class ActivitiesController {
         req.params.id
       )
 
-    res.status(200).json(activity)
+    const activityWithEIQ = calculateEiqOfActivity(activity)
+    res.status(200).json(activityWithEIQ)
   }
 
   /**

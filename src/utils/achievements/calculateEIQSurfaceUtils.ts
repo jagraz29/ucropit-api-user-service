@@ -1,5 +1,6 @@
 import { IAchievement } from '../../interfaces'
 import { parseSuppliesWithEiqTotal } from '../supplies'
+import { sumEIQInSupplies } from '../activities'
 
 /**
  * Calculate Achievement's EIQ Surface.
@@ -14,7 +15,6 @@ export function calculateEIQSurfaceAchievement({
   surface
 }: IAchievement) {
   const eiqTotalSupplies = supplies.reduce((a, { supply, total }) => {
-    // console.log(supply)
     if (supply) return a + (supply.eiqTotal || 0) * Number(total)
     return 0
   }, 0)
@@ -35,12 +35,22 @@ export const calculateEIQSurfaceInAchievements = (achievements) => {
   return eiqTotal
 }
 
-export const parseSuppliesWithEiqTotalInAchievements = (achievements) => {
+export const parseSuppliesWithEiqTotalInAchievements = (achievements = []) => {
   return achievements.map((achievement) => {
     const { supplies } = achievement
+    const newSupplies = parseSuppliesWithEiqTotal(supplies)
+    const eiq = sumEIQInSupplies(newSupplies)
     return {
       ...achievement,
-      supplies: parseSuppliesWithEiqTotal(supplies)
+      supplies: newSupplies,
+      eiq
     }
   })
 }
+
+export const calculateEIQApplied = (quantity, unit, eiqTotal) => {
+  return quantity * eiqTotal //Todo: determinar calculo segun unit
+}
+
+const reduceSumEIQ = (current, { eiq = 0 }) => current + eiq
+export const sumEIQInAchievements = (list) => list.reduce(reduceSumEIQ, 0)
