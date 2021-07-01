@@ -1,6 +1,5 @@
 import ServiceBase from './common/ServiceBase'
 import { ms_license_url } from '../types'
-import { ILicenseProps } from '../interfaces'
 const BASE_URL = `${ms_license_url}/licenses`
 
 export interface ILicenseSearch {
@@ -19,7 +18,7 @@ export class LicenseService extends ServiceBase {
    *
    * @param licenseById
    */
-  public static async licenseById ({ userId, id }: ILicenseById) {
+  public static async licenseById({ userId, id }: ILicenseById) {
     return new Promise((resolve, reject) => {
       const params = {
         userId
@@ -42,7 +41,7 @@ export class LicenseService extends ServiceBase {
    *
    * @param licenseSearch
    */
-  public static async searchByCropType (licenseSearch) {
+  public static async searchByCropType(licenseSearch) {
     return new Promise((resolve, reject) => {
       this.makeRequest(
         'get',
