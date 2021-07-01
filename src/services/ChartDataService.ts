@@ -4,21 +4,6 @@ import ActivityService from './ActivityService'
 import { Numbers } from '../utils'
 import _ from 'lodash'
 
-const allMonths: Array<string> = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-]
-
 const activitiesTags: Array<string> = [
   'ACT_SOWING',
   'ACT_HARVEST',
@@ -38,7 +23,7 @@ class ChartDataService extends ServiceBase {
     const listSummarySurfaces: any =
       CropService.createDataCropToChartSurface(crops)
 
-    const sortDataList = this.sortData(listSummarySurfaces, allMonths).filter(
+    const sortDataList = this.sortData(listSummarySurfaces).filter(
       (item) => item.total > 0
     )
 
@@ -67,10 +52,9 @@ class ChartDataService extends ServiceBase {
         return groupDataActivitiesDone.concat(groupDataActivitiesFinished)
       })
 
-      const sortGroupData = this.sortData(
-        _.flatten(dataCrop),
-        allMonths
-      ).filter((item) => item.total > 0)
+      const sortGroupData = this.sortData(_.flatten(dataCrop)).filter(
+        (item) => item.total > 0
+      )
 
       const dataActivitiesSummary = this.summaryTotalPerMonth(
         CropService.summaryData(sortGroupData)
