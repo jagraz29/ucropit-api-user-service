@@ -13,15 +13,18 @@ export const calculateEiqOfActivity = (activity) => {
   const newSupplies = parseSuppliesWithEiqTotal(supplies)
   const newAchievements = parseSuppliesWithEiqTotalInAchievements(achievements)
   const percentTotal = sumPercentInAchievements(newAchievements)
-  const eiq = newAchievements.length ? sumEIQInAchievements(newAchievements) : 0
-  const eiqPlafined = newSupplies.length ? sumEIQInAchievements(newSupplies) : 0
+  const eiqPlafined = newSupplies.length ? sumEIQInSupplies(newSupplies) : 0
+  const eiqApplied = newAchievements.length
+    ? sumEIQInAchievements(newAchievements)
+    : 0
   return {
     ...activity,
     achievements: newAchievements,
     supplies: newSupplies,
     percentTotal,
+    eiqApplied,
     eiqPlafined,
-    eiq
+    eiq: eiqApplied > 0 ? eiqApplied : eiqPlafined
   }
 }
 

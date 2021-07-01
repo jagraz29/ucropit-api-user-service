@@ -131,6 +131,7 @@ class CropsController {
       startDate,
       endDate
     )
+
     const toMake = calculateEIQAndPorcentTotal(toMakeFilterDates)
     const done = calculateEIQAndPorcentTotal(crop.done)
     const finished = calculateEIQAndPorcentTotal(crop.finished)
