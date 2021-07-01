@@ -5,11 +5,9 @@ import {
 
 export const calculateEIQAndPorcentTotal = (activities, surface) => {
   const activitiesWithEIQAndPercentTotal = activities.map((activity) => {
-    const percentTotal = sumPercentInAchievements(activity.achievements)
-    const eiq = calculateEIQSurfaceInAchievements(
-      surface,
-      activity.achievements
-    )
+    const { achievements } = activity
+    const percentTotal = sumPercentInAchievements(achievements)
+    const eiq = calculateEIQSurfaceInAchievements(surface, achievements)
     return {
       ...activity,
       percentTotal,
