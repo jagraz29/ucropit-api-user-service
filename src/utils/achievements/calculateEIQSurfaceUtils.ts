@@ -1,4 +1,5 @@
 import { IAchievement } from '../../interfaces'
+import { parseSuppliesWithEiqTotal } from '../supplies'
 
 /**
  * Calculate Achievement's EIQ Surface.
@@ -13,6 +14,7 @@ export function calculateEIQSurfaceAchievement({
   surface
 }: IAchievement) {
   const eiqTotalSupplies = supplies.reduce((a, { supply, total }) => {
+    // console.log(supply)
     if (supply) return a + (supply.eiqTotal || 0) * Number(total)
     return 0
   }, 0)
@@ -20,14 +22,25 @@ export function calculateEIQSurfaceAchievement({
   return !Number.isNaN(eiqTotal) ? eiqTotal : 0
 }
 
-export const calculateEIQSurfaceInAchievements = (surface, achievements) => {
+export const calculateEIQSurfaceInAchievements = (achievements) => {
   let eiqTotal = 0
   achievements.forEach((achievement) => {
+    const { supplies, surface } = achievement
     const achievementDTO = {
-      supplies: achievement.supplies,
+      supplies,
       surface
     } as IAchievement
     eiqTotal += calculateEIQSurfaceAchievement(achievementDTO)
   })
   return eiqTotal
+}
+
+export const parseSuppliesWithEiqTotalInAchievements = (achievements) => {
+  return achievements.map((achievement) => {
+    const { supplies } = achievement
+    return {
+      ...achievement,
+      supplies: parseSuppliesWithEiqTotal(supplies)
+    }
+  })
 }
