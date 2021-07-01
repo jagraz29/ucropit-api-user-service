@@ -10,5 +10,5 @@ export interface FileDocumentProps {
   settings?: any
   meta?: any
   user?: string
-  cropId?: String | any
+  cropId?: string | any
 }

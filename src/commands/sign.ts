@@ -104,7 +104,7 @@ function existAchievements(activity): boolean {
  * @returns
  */
 async function getCropsByStatusActivities(status: string) {
-  let crops = await Crop.find({ cancelled: false })
+  const crops = await Crop.find({ cancelled: false })
     .populate('cropType')
     .populate({
       path: status,
@@ -139,7 +139,7 @@ async function getCropsByStatusActivities(status: string) {
 }
 
 async function createSignCrops(): Promise<void> {
-  let crops: any = await getCropsByStatusActivities('finished')
+  const crops: any = await getCropsByStatusActivities('finished')
 
   for (const crop of crops) {
     console.log(`${chalk.green(`${crop.name}`)}`)
@@ -172,14 +172,8 @@ async function changeStatusActivityInCrop(activity, crop): Promise<void> {
  * @param crop
  */
 async function stampBlockChain(activity, crop): Promise<void> {
-  const {
-    ots,
-    hash,
-    pathPdf,
-    nameFilePdf,
-    nameFileOts,
-    pathOtsFile
-  } = await BlockChainServices.sign(crop, activity)
+  const { ots, hash, pathPdf, nameFilePdf, nameFileOts, pathOtsFile } =
+    await BlockChainServices.sign(crop, activity)
 
   const approvalRegisterSign = await ApprovalRegisterSingService.create({
     ots,

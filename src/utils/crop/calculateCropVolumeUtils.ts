@@ -1,4 +1,8 @@
-export const calculateCropVolumeUtils = (unit: string, pay: number, surface: number) => {
+export const calculateCropVolumeUtils = (
+  unit: string,
+  pay: number,
+  surface: number
+) => {
   if (unit === 'kg') {
     return (pay / 1000) * surface
   }

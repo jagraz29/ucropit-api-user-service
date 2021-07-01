@@ -443,7 +443,6 @@ export const validateDateCropAndDateHarvest = (
   dateCrop: string,
   dateHarvest: string
 ) => {
-  const currentDate = moment().subtract(1, 'day')
   const startDate = moment(new Date(dateCrop))
   const endDate = moment(new Date(dateHarvest))
 

@@ -2,9 +2,7 @@ import express from 'express'
 
 import lotsController from '../../controllers/LotsController'
 
-import {
-    getLotsPolicy
-} from '../../utils'
+import { getLotsPolicy } from '../../utils'
 
 const router: express.Router = express.Router()
 
@@ -46,7 +44,11 @@ router.get('/', lotsController.index)
  *        "500":
  *          description: Server error
  */
-router.get('/search-by-identifier', [getLotsPolicy], lotsController.searchByIdentifier)
+router.get(
+  '/search-by-identifier',
+  [getLotsPolicy],
+  lotsController.searchByIdentifier
+)
 /**
  * @swagger
  * path:

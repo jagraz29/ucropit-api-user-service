@@ -480,8 +480,6 @@ class ReportService {
       'ACT_MONITORING',
       'finished'
     )
-
-    let total = 0
     const activities = [...listActivitiesDone, ...listActivitiesFinished]
     // console.log('activities pay ', activities)
     // console.log('crop.pay: ', pay)
@@ -526,14 +524,14 @@ class ReportService {
     const activities = [...activitiesDone, ...activitiesFinished]
 
     if (activities.length > 0) {
-      const surfaceLot = activities
-        .map((activity) => {
-          const lotSelected = activity.lots.find(
-            (lotItem) => lotItem._id.toString() === lot._id.toString()
-          )
-          if (lotSelected) return activity.pay
-        })
-        .filter((item) => item)
+      // const surfaceLot = activities
+      //   .map((activity) => {
+      //     const lotSelected = activity.lots.find(
+      //       (lotItem) => lotItem._id.toString() === lot._id.toString()
+      //     )
+      //     if (lotSelected) return activity.pay
+      //   })
+      //   .filter((item) => item)
 
       const achievements = activities
         .map((item) => {
@@ -559,7 +557,7 @@ class ReportService {
     )
 
     const activities = [...listActivitiesDone, ...listActivitiesFinished]
-    let unitTypes: Array<String> = []
+    const unitTypes: Array<string> = []
     activities.map((activity) => {
       if (
         activity.lots.find(
@@ -577,10 +575,10 @@ class ReportService {
     crop,
     type,
     lot
-  ): Promise<String> {
+  ): Promise<string> {
     const activities = this.getActivitiesMonitoring(crop, type, 'finished')
 
-    let lastDateSign: Array<String> = activities
+    const lastDateSign: Array<string> = activities
       .map(async ({ lots, _id }) => {
         const activity: any = await Activity.findById(_id)
         if (lots.find(({ _id }) => _id.toString() === lot._id.toString())) {
@@ -615,9 +613,9 @@ class ReportService {
     const activities = [...listActivitiesDone, ...listActivitiesFinished]
     if (activities.length > 0) {
       for (const activity of activities) {
-        for (const lot of activity.lots) {
-          // console.log('Lotes ', lot)
-        }
+        // for (const lot of activity.lots) {
+        //   // console.log('Lotes ', lot)
+        // }
         total += activity.pay
       }
     }
@@ -652,7 +650,7 @@ class ReportService {
     const activities = [...activitiesDone, ...activitiesFinished]
     const activitiesSorter = this.sortActivityBySigned(activities)
 
-    let datesLastMonitoring = activitiesSorter
+    const datesLastMonitoring = activitiesSorter
       .map(async ({ lots, _id }) => {
         const activity: any = await Activity.findById(_id)
         if (lots.find(({ _id }) => _id.toString() === lot?._id.toString())) {
@@ -688,7 +686,7 @@ class ReportService {
   }
 
   private static async getDateLastSignedMonitoring(activities) {
-    let dates = []
+    const dates = []
     for (const activity of activities) {
       const dateLast = activity.signers.pop()?._id.getTimestamp()
       dates.push(dateLast)
@@ -697,7 +695,7 @@ class ReportService {
   }
 
   private static async getDateLastSignedAchievement(activities) {
-    let dates = []
+    const dates = []
     for (const activity of activities) {
       const activityObject: any = await Activity.findById(activity._id)
       const signersFalse = activityObject.signers.filter(
@@ -802,7 +800,7 @@ class ReportService {
     lot: any,
     type: string
   ): Array<string> {
-    let listCantLots: Array<string> = []
+    const listCantLots: Array<string> = []
 
     const listAchievements = this.filterActivityBy(crop, lot, type)
 
@@ -818,7 +816,7 @@ class ReportService {
     lot: any,
     type: string
   ): Array<string> {
-    let listDates: Array<string> = []
+    const listDates: Array<string> = []
 
     const listAchievements = this.filterActivityBy(crop, lot, type)
 
@@ -834,7 +832,7 @@ class ReportService {
     lot: any,
     type: string
   ): Array<any> {
-    let listValidate: Array<any> = []
+    const listValidate: Array<any> = []
 
     const listAchievements = this.filterActivityBy(crop, lot, type)
 
@@ -852,7 +850,7 @@ class ReportService {
     lot: any,
     type: string
   ): Array<string> {
-    let list: Array<string> = []
+    const list: Array<string> = []
 
     const achievements = this.filterActivityBy(crop, lot, type)
 
@@ -872,7 +870,7 @@ class ReportService {
     lot: any,
     type: string
   ): Array<number> {
-    let list: Array<number> = []
+    const list: Array<number> = []
 
     const achievements = this.filterActivityBy(crop, lot, type)
 
@@ -884,7 +882,7 @@ class ReportService {
   }
 
   private static getPayLot(crop: any, lot: any, type: string): Array<number> {
-    let result: Array<number> = []
+    const result: Array<number> = []
 
     const achievements = this.filterActivityBy(crop, lot, type)
 
@@ -906,7 +904,7 @@ class ReportService {
     )
   }
 
-  private static checkAgreements(activities: Array<any>): Boolean {
+  private static checkAgreements(activities: Array<any>): boolean {
     const agreements = activities.filter(
       (activity) =>
         activity.typeAgreement &&
@@ -920,7 +918,7 @@ class ReportService {
     return false
   }
 
-  private static isContainActivity(crop: any, type): Boolean {
+  private static isContainActivity(crop: any, type): boolean {
     const activitiesDone = crop.done.filter(
       (activity) => activity.type && activity.type.tag === type
     )
@@ -1246,7 +1244,7 @@ class ReportService {
   }
 
   private static async getDateLastSignedAgreement(activities, lot) {
-    let dates = []
+    const dates = []
 
     for (const activity of activities) {
       const lotsSelected = activity.lots.filter(
@@ -1264,7 +1262,7 @@ class ReportService {
   }
 
   private static async getDateLastSigned(activities, lot) {
-    let dates = []
+    const dates = []
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
         const lotsSelected = achievement.lots.filter(
@@ -1275,7 +1273,9 @@ class ReportService {
           lotsSelected.length > 0 &&
           this.isCompleteSigners(achievement.signers)
         ) {
-          const achievementsObject: any = await AchievementModel.findById(achievement._id)
+          const achievementsObject: any = await AchievementModel.findById(
+            achievement._id
+          )
           const dateLast =
             achievementsObject.signers.pop()?.dateSigned ||
             achievementsObject.signers.pop()?._id.getTimestamp()
@@ -1288,7 +1288,7 @@ class ReportService {
   }
 
   private static getDateLastAchievement(activities, lot): any {
-    let dates = []
+    const dates = []
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
         const lotsSelected = achievement.lots.filter(
@@ -1305,7 +1305,7 @@ class ReportService {
   }
 
   private static sumSurfaceAchievements(activities): number {
-    let total: number = 0
+    let total = 0
 
     for (const activity of activities) {
       for (const achievement of activity.achievements) {
@@ -1317,7 +1317,7 @@ class ReportService {
   }
 
   private static getEvidenceFiles(crop: any, tag: string): string {
-    let urls: string = ''
+    let urls = ''
 
     const activities: Array<any> = crop.done
       .filter((activity) => activity.type.tag === tag)
@@ -1348,7 +1348,7 @@ class ReportService {
     activities,
     typeAgreement: string = tagsTypeAgreement.EXPLO
   ) {
-    let urls: string = ''
+    let urls = ''
     const urlsDownloads = activities
       .map((activity) => {
         if (
@@ -1561,7 +1561,7 @@ class ReportService {
     crop,
     type,
     lot
-  ): Promise<String> {
+  ): Promise<string> {
     const activitiesDone = this.getActivitiesMonitoring(crop, type, 'done')
     const activitiesFinished = this.getActivitiesMonitoring(
       crop,
@@ -1571,7 +1571,7 @@ class ReportService {
 
     const activities = [...activitiesDone, ...activitiesFinished]
 
-    let datesHarvestEstimated = activities
+    const datesHarvestEstimated = activities
       .map(async ({ lots, _id }) => {
         const activity: any = await Activity.findById(_id)
         if (lots.find(({ _id }) => _id.toString() === lot._id.toString())) {
@@ -1721,7 +1721,7 @@ class ReportService {
     return membersNames
   }
 
-  private static isContainActivityBilling(crop: any, type): Boolean {
+  private static isContainActivityBilling(crop: any, type): boolean {
     const activitiesDone = crop.done.filter(
       (activity) => activity.type && activity.type.tag === type
     )

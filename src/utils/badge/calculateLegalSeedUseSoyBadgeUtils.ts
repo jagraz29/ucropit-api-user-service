@@ -1,10 +1,13 @@
 import { IBadge } from '../../interfaces'
 
-export const calculateLegalSeedUseSoyBadge = (activitiesSurfaces: number, cropSurface: number, badge: IBadge) => {
+export const calculateLegalSeedUseSoyBadge = (
+  activitiesSurfaces: number,
+  cropSurface: number,
+  badge: IBadge
+) => {
+  const average = (activitiesSurfaces / cropSurface) * 100
 
-  let average = (activitiesSurfaces / cropSurface) * 100
-
-  if(average >= badge.goalReach){
+  if (average >= badge.goalReach) {
     return badge
   }
 

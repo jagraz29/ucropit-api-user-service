@@ -18,7 +18,7 @@ export class CountryRepository {
     limit,
     skip,
     sort,
-    populate,
+    populate
   }: any): Promise<any> {
     return Country.find(query ?? {})
       .populate(populate ?? [])

@@ -41,7 +41,6 @@
  *            cityName: 9 de Julio
  */
 import mongoose from 'mongoose'
-import _ from 'lodash'
 import { getCenterOfBounds } from 'geolib'
 import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
 import { parseImageUrl, parseImageUrlDefault } from '../utils/ParseImageUrl'
@@ -52,7 +51,7 @@ export interface Lot extends mongoose.Document {
   _id: string
   name: string
   area: any
-  surface: Number
+  surface: number
   status: boolean
 }
 
@@ -100,7 +99,7 @@ const LotSchema = new Schema(
     errorInStaticImage: {
       type: Boolean,
       default: false
-    },
+    }
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
@@ -144,7 +143,9 @@ LotSchema.virtual('centerBoundGoogle').get(function () {
   }
 })
 LotSchema.virtual('imageUrl').get(function () {
-  return this.image && this.image?.normal ? parseImageUrl(this.image.normal) : parseImageUrlDefault('lot_placeholder.png')
+  return this.image && this.image?.normal
+    ? parseImageUrl(this.image.normal)
+    : parseImageUrlDefault('lot_placeholder.png')
 })
 
 LotSchema.plugin(mongooseLeanVirtuals)

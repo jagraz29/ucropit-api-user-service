@@ -31,7 +31,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { hashPassword } from '../utils/auth'
 
-const SALT_WORK_FACTOR: number = 10
+const SALT_WORK_FACTOR = 10
 
 const { Schema } = mongoose
 

@@ -2,7 +2,6 @@
 
 import { Request, Response } from 'express'
 import models from '../models'
-import supply from '../models/supply'
 import { typesSupplies } from '../utils/Constants'
 
 const Supply = models.Supply
