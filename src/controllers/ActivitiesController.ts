@@ -73,7 +73,10 @@ class ActivitiesController {
    * @return Response
    */
   public async show(req: Request, res: Response) {
-    const activity = await ActivityService.findActivityById(req.params.id)
+    const activity =
+      await ActivityRepository.findActivityByIdWithPopulateAndVirtuals(
+        req.params.id
+      )
 
     res.status(200).json(activity)
   }

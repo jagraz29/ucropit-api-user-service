@@ -47,6 +47,7 @@
  */
 import mongoose from 'mongoose'
 import shortid from 'shortid'
+import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
 
 const { Schema } = mongoose
 
@@ -227,5 +228,7 @@ ActivitySchema.methods.setExpired = function () {
   activity.status[0].name.en = 'EXPIRED'
   activity.status[0].name.es = 'VENCIDA'
 }
+
+ActivitySchema.plugin(mongooseLeanVirtuals)
 
 export default mongoose.model('Activity', ActivitySchema)
