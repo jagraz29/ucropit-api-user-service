@@ -13,7 +13,6 @@ class FileUpload {
   }
 
   public async store(): Promise<any> {
-    console.log('store')
     if (Object.keys(this.files).length === 0) {
       throw new Error('No files were uploaded.')
     }
