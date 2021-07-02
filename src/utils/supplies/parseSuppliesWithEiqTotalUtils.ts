@@ -4,13 +4,14 @@ const sumEIQ = (current, { eiq = 0 }) => current + eiq
 export const sumEIQInActiveIngredients = (activeIngredients) =>
   activeIngredients.reduce(sumEIQ, 0)
 
-export const parseSuppliesWithEiqTotal = (supplies) => {
+export const parseSuppliesWithEiqTotal = (supplies, isPlanning) => {
   return supplies.map((supplyObject) => {
     const {
       supply,
       activeIngredients = [],
       eiqTotal,
       quantity,
+      total,
       unit
     } = supplyObject
     let newEiqTotal = eiqTotal || 0
@@ -40,7 +41,8 @@ export const parseSuppliesWithEiqTotal = (supplies) => {
       }
     }
     if (!isNaN(quantity * 1) && !isNaN(newEiqTotal * 1)) {
-      const eiq = calculateEIQApplied(quantity, unit, newEiqTotal)
+      const _quantity = isPlanning ? quantity : total
+      const eiq = calculateEIQApplied(_quantity, unit, newEiqTotal)
       supplyObject = {
         ...supplyObject,
         eiq

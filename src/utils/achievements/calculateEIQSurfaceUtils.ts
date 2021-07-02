@@ -38,7 +38,7 @@ export const calculateEIQSurfaceInAchievements = (achievements) => {
 export const parseSuppliesWithEiqTotalInAchievements = (achievements = []) => {
   return achievements.map((achievement) => {
     const { supplies } = achievement
-    const newSupplies = parseSuppliesWithEiqTotal(supplies)
+    const newSupplies = parseSuppliesWithEiqTotal(supplies, false)
     const eiq = sumEIQInSupplies(newSupplies)
     return {
       ...achievement,

@@ -4,17 +4,18 @@ import {
   sumPercentInAchievements
 } from './../achievements/'
 import { parseSuppliesWithEiqTotal } from '../supplies'
+import { Numbers } from '../Numbers'
 
 export const calculateEIQAndPorcentTotal = (activities) =>
   activities.map(calculateEiqOfActivity)
 
 export const calculateEiqOfActivity = (activity) => {
   const { achievements, supplies } = activity
-  const newSupplies = parseSuppliesWithEiqTotal(supplies)
+  const newSupplies = parseSuppliesWithEiqTotal(supplies, true)
   const newAchievements = parseSuppliesWithEiqTotalInAchievements(achievements)
   const percentTotal = sumPercentInAchievements(newAchievements)
-  const eiqPlanned = sumEIQInSupplies(newSupplies)
-  const eiqApplied = sumEIQInAchievements(newAchievements)
+  const eiqPlanned = Numbers.roundToTwo(sumEIQInSupplies(newSupplies))
+  const eiqApplied = Numbers.roundToTwo(sumEIQInAchievements(newAchievements))
   return {
     ...activity,
     achievements: newAchievements,
