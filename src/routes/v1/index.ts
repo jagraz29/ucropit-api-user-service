@@ -53,7 +53,7 @@ router.use('/lots', authMiddleware, lots)
 router.use('/commons', authMiddleware, common)
 
 // CROPS
-router.use('/crops', authMiddleware, crop)
+router.use('/crops'/* , authMiddleware */, crop)
 
 // CROPS
 router.use('/crops', authMiddleware, cropCollaborators)
@@ -68,7 +68,7 @@ router.use('/companies', authMiddleware, company)
 router.use('/configurations', authMiddleware, configs)
 
 // ACHIEVEMENTS
-router.use('/achievements', authMiddleware, achievements)
+router.use('/achievements'/* , authMiddleware */, achievements)
 
 // COLLABORATOR
 router.use('/collaborators', authMiddleware, collaborators)

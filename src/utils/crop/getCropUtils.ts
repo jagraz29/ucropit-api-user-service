@@ -1,5 +1,5 @@
 import { Numbers } from '../Numbers'
-import { calculateCropVolumeUtils } from '.'
+import { calculateCropVolumeUtils, getEiqFromActivityWithEiq } from '.'
 import { getLots, getLotsGroupByTag } from '../lots'
 import { IEiqRangesDocument } from '../../interfaces'
 import { getEiqRange } from '..'
@@ -27,7 +27,7 @@ export const getCropUtils = (
   const pay = payEntry ?? 0
   let eiq: number = 0
   const { key: keyUnitType, name: nameUnitType } = unitType || {}
-  eiq = Numbers.roundToTwo(activitiesWithEiq.reduce((a, b) => a + b.eiq, 0))
+  eiq = getEiqFromActivityWithEiq(activitiesWithEiq)
 
   return {
     surface,
