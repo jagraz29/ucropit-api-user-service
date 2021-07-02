@@ -51,7 +51,14 @@
 
 .fill {
   background-color: #4caf50;
-  height: 600px;
+  height: 670px;
+}
+
+.fill-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
 }
 
 .bigLogo {
@@ -68,8 +75,8 @@
 
 .dataContainer {
   position: absolute;
-  margin-left: 100px;
-  margin-top: 290px;
+  margin-left: 73px;
+  margin-top: 30px;
 }
 
 .dataNames {
@@ -111,7 +118,7 @@
   display: flex;
   flex-direction: column-reverse;
   margin-left: 57%;
-  margin-top: 90px;
+  margin-top: 30px;
 }
 
 .badges-description {
@@ -167,10 +174,7 @@
 
 .qr {
   position: absolute;
-  width: 50px !important;
   margin-top: 140px;
-  filter: invert(1);
-  margin-left: 50px;
 }
 
 .alm {
@@ -192,6 +196,7 @@
   position: absolute;
   top: 140px;
   margin-left: 100px;
+  margin-top: 20px;
 }
 
 .text-company {
@@ -208,12 +213,12 @@
 
 .binnacle {
   color: #ffffff;
-  position: absolute;
-  margin-left: 100px;
+  margin-left: 60px;
   font-size: 12px;
-  top: 110px;
+  top: 50px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   letter-spacing: 2.5px;
+  border-bottom: 1px solid;
 }
 
 .lotValue {
@@ -281,8 +286,8 @@
 
 .lastActivity {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  margin-top: 450px;
-  margin-left: 100px;
+  margin-top: 445px;
+  margin-left: 70px;
   font-size: 20px;
   line-height: 1.8;
   text-align: left;
@@ -795,8 +800,8 @@
   background: rgba(255, 255, 255, 0.54);
   display: flex;
   position: absolute;
-  margin-left: 100px;
-  margin-top: 212px;
+  margin-left: 70px;
+  margin-top: 382px;
   opacity: 0.5;
   align-items: center;
   padding: 3px;

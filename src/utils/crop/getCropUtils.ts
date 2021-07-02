@@ -18,7 +18,7 @@ export const getCropUtils = (
     unitType,
     data,
     members,
-    cropType: { key: cropTypeKey }
+    cropType: { key: cropTypeKey, name: cropTypeName }
   },
   activitiesWithEiq,
   theoriticalPotential,
@@ -37,6 +37,7 @@ export const getCropUtils = (
     pay,
     dateCrop,
     dateHarvest,
+    cropTypeName,
     commercialContact: company
       ? getCommercialContact(company, theoriticalPotential)
       : null,
