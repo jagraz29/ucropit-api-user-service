@@ -3,6 +3,7 @@ import { calculateCropVolumeUtils } from '.'
 import { getLots, getLotsGroupByTag } from '../lots'
 import { IEiqRangesDocument } from '../../interfaces'
 import { getEiqRange } from '..'
+import { formatDate } from '..'
 
 export const getCropUtils = (
   {
@@ -37,6 +38,8 @@ export const getCropUtils = (
     pay,
     dateCrop,
     dateHarvest,
+    dateSowingFormat: formatDate(dateCrop, 'MMMM yy'),
+    dateHarvestFormat: formatDate(dateHarvest, 'MMMM yy'),
     cropTypeName,
     commercialContact: company
       ? getCommercialContact(company, theoriticalPotential)

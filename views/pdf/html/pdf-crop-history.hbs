@@ -11,47 +11,47 @@
                                 {{#switch crop.cropTypeKey}}
                                 {{#case "corn"}} <svg class="bigLogoContainer" viewBox="0 0 34 34">
                                     <div>
-                                        <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/corn.svg">
+                                        <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/corn.png">
                                     </div>
                                 {{/case}}
                                 {{#case "soy"}} <svg class="bigLogoContainer" viewBox="0 0 34 34">
                                    <div>
-                                         <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/soy.svg">
+                                         <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/soy.png">
                                     </div>
                                 {{/case}}
                                 {{#case "cotton"}} <svg class="bigLogoContainer" viewBox="0 0 34 34">
                                     <div>
-                                         <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/cotton.svg">
+                                         <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/cotton.png">
                                     </div>
                                 {{/case}}
                                 {{#case "carinata"}} <svg class="bigLogoContainer" viewBox="0 0 34 34">
                                     <div>
-                                        <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/carinata.svg">
+                                        <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/carinata.png">
                                     </div>
                                 {{/case}}
                                 {{#case "sunflower"}} <svg class="bigLogoContainer" viewBox="0 0 34 34">
                                    <div>
-                                         <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/sunflower.svg">
+                                         <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/sunflower.png">
                                     </div>
                                 {{/case}}
                                 {{#case "wheat"}} <svg class="bigLogoContainer" viewBox="0 0 34 34">
                                     <div>
-                                         <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/wheat.svg">
+                                         <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/wheat.png">
                                     </div>
                                 {{/case}}
                                 {{#default "default"}} <svg class="bigLogoContainer" viewBox="0 0 34 34">
                                     <div>
-                                        <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/otros.svg">
+                                        <img class="qr" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/otros.png">
                                     </div>
                                 {{/default}}
                                 {{/switch}}
                                 <div class="fill-header">
                                     <div class="binnacle">
                                         Historia del Cultivo<br>
-                                        impresa el 30/04/2021
+                                        impresa el {{moment dateCreatePdf format="DD/MM/YYYY"}}
                                     </div>
                                     <div>
-                                       <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/logo-ucropit.svg" alt="logo-ucropit"/>
+                                       <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/ucropit-logo.png" alt="logo-ucropit"/>
                                     </div> 
                                 
 
@@ -65,9 +65,9 @@
                                     <div class="dataNames">Sup Neta</div>
                                     <div class="dataValue">{{crop.surface}} has</div>
                                     <div class="dataNames">Fecha Siembra</div>
-                                    <div class="dataValue">{{moment crop.dateCrop  format="MMMM yy"}}</div>
+                                    <div class="dataValue">{{crop.dateSowingFormat}}</div>
                                     <div class="dataNames">Fecha Cosecha</div>
-                                    <div class="dataValue">{{moment crop.surface format="MMMM yy"}}</div>
+                                    <div class="dataValue">{{crop.dateHarvestFormat}}</div>
                                     <div class="dataNames">Rinde</div>
                                     <div class="dataValue">{{crop.pay}} Kgs/ha</div>
                                     <div>
@@ -201,7 +201,7 @@
                                 Contacto comercial
                             </h5>
                             <h3 class="name-header">{{crop.commercialContact.firstName}} {{crop.commercialContact.lastName}}</h3>
-                            <div class="data-header">Potencial Teórico {{crop.commercialContact.theoriticalPotential}} ton</div>
+                            <div class="data-header">Vol: {{crop.commercialContact.theoriticalPotential}} ton</div>
                             <div class="data-header">{{crop.commercialContact.phone}}</div>
                             <div class="data-header">{{crop.commercialContact.email}}</div>
                         </div>
@@ -287,6 +287,7 @@
                                     {{#is tag 'ACT_HARVEST'}}
                                         <div class="date-activity">
                                               <i class="fa fa-check"></i> {{ moment dateHarvest format="DD/MM/YYYY" }}
+                                              <span style="float: right;margin-right: 117px;">Validado Por:</span>
                                          </div>
                                         <h3 class="activity-framed-h1">Rinde: {{pay}} {{unitType}}.</h3>
                                     {{/is}}
@@ -294,34 +295,44 @@
                                     {{#is tag 'ACT_MONITORING'}}
                                         <div class="date-activity">
                                               <i class="fa fa-check"></i> {{ moment dateObservation format="DD/MM/YYYY" }}
+                                              <span style="float: right;margin-right: 117px;">Validado Por:</span>
                                          </div>
                                         <h3 class="activity-framed-h1">Rinde Estimado: {{pay}} {{unitType}}.</h3>
                                     {{/is}}
-                                    
-                                    <div class="activity-lots">{{lotsQuantity}} lotes ({{surface}} has.)</div>
-                                    <div class="spokesman-data">Evidencias</div>
-                                    <div class="backup-docs">documentacion de respaldo</div>
-                                    {{#each evidencesPdf}}
-                                        <div class="link-pdf">
-                                            <img
-                                                src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/pdf-icon.svg"
-                                                height="25" width="25" />
-                                            <a href={{path}}>{{description}}</a>
+                                    <div class="activity-description-content">
+                                        <div>
+                                             <div class="activity-lots">{{lotsQuantity}} lotes ({{surface}} has.)</div>
+                                             <div class="spokesman-data">Evidencias</div>
+                                             <div class="backup-docs">documentacion de respaldo</div>
+                                            {{#each evidencesPdf}}
+                                                <div class="link-pdf">
+                                                    <img
+                                                        src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/pdf-icon.svg"
+                                                        height="25" width="25" />
+                                                    <a href={{path}}>{{description}}</a>
+                                                </div>
+                                            {{/each}}
                                         </div>
-                                    {{/each}}
-                                    <div class="activity-validations">
-                                        <div class="validation-title">Validaciones</div>
-                                        {{#each signers}}
-                                            <div>
-                                                {{#if dateSigned }}
-                                                    <div><span class="validation-date">{{moment dateSigned format="DD/MM/YYYY"}}</span></div>
-                                                {{else}}
-                                                    <div><span class="not-signed-validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
-                                                {{/if}}
-                                                <div class="validation-name">{{fullName}}</div>
-                                                <div class="backup-docs">{{rol}}- {{cuit}}</div>
-                                            </div>
-                                        {{/each}}
+                                        <div class="activity-validations-list">
+                                            {{#each signers}}
+                                                <div>
+                                                    {{#if dateSigned }}
+                                                        <div>
+                                                            <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/signed.svg" alt="signed-icon">
+                                                            <span class="validation-date">{{moment dateSigned format="DD/MM/YYYY HH:MM"}}</span>
+                                                        </div>
+                                                    {{else}}
+                                                        <div>
+                                                            <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/signed.svg" alt="signed-icon">
+                                                            <span class="not-signed-validation-date">PENDIENTE</span>
+                                                        </div>
+                                                    {{/if}}
+                                                    <div class="validation-name">{{fullName}}</div>
+                                                    <div class="backup-docs">{{rol}}- {{cuit}}</div>
+                                                </div>
+                                            {{/each}}
+                                    </div>
+                                          
                                     </div>
                                     <div class="activity-frame-lots"> 
                                         {{#if evidenceImages}}
@@ -384,41 +395,48 @@
                                         <div class="activity-header-val">
                                                 <div class="date-activity-validation">
                                                     <i class="fa fa-check"></i>{{ moment dateAchievement format="DD/MM/YYYY" }}
+                                                    <span style="float: right;margin-right: 117px;">Validado Por:</span>
                                                 </div>
-                                                <div class="activity-lots-validation">{{lotsQuantity}} lotes ({{surface}} has)</div>
-                                                {{#each (unique supplies.supplies)}}
-                                                    <div style="display: flex">
-                                                        <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
+                                                 <div class="activity-description-content">
+                                                     <div>
+                                                        <div class="activity-lots-validation">{{lotsQuantity}} lotes ({{surface}} has)</div>
+                                                        {{#each (unique supplies.supplies)}}
+                                                            <div style="display: flex">
+                                                                <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
+                                                            </div>
+                                                        {{/each}}
+                                                        <div class="spokesman-data-validation">Evidencias</div>
+                                                        <div class="backup-docs-validation">documentacion de respaldo</div>
+                                                        {{#each evidencesPdf}}
+                                                                <div class="link-pdf-val">
+                                                                    <img
+                                                                        src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/pdf-icon.svg"
+                                                                        height="25" width="25" />
+                                                                    <a href={{path}}>{{description}}</a>
+                                                                </div>
+                                                        {{/each}}
+                                                     </div>
+                                                     <div class="activity-validations-list">
+                                                        {{#each signers }}
+                                                            <div>
+                                                                {{#if dateSigned }}
+                                                                <!-- TODO: EIQ EN ACTIVIDADES -->
+                                                                    <div>
+                                                                        <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/signed.svg" alt="signed-icon">
+                                                                        <span class="validation-date">{{moment dateSigned format="DD/MM/YYYY HH:mm"}}</span>
+                                                                    </div>
+                                                                {{else}}
+                                                                    <div>
+                                                                        <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/signed.svg" alt="signed-icon">
+                                                                        <span class="not-signed-validation-date">PENDIENTE</span>
+                                                                    </div>
+                                                                {{/if}}
+                                                                <div class="validation-name-val">{{fullName}}</div>
+                                                                <div class="backup-docs-validation">{{rol}} - {{cuit}} </div>
+                                                            </div>
+                                                        {{/each}}
                                                     </div>
-                                                    
-                                                {{/each}}
-                                                <div class="spokesman-data-validation">Evidencias</div>
-                                                <div class="backup-docs-validation">documentacion de respaldo</div>
-                                                {{#each evidencesPdf}}
-                                                        <div class="link-pdf-val">
-                                                            <img
-                                                                src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/pdf-icon.svg"
-                                                                height="25" width="25" />
-                                                            <a href={{path}}>{{description}}</a>
-                                                        </div>
-                                            {{/each}}
-                                                <div class="activity-validations">
-                                                    <div class="validation-title-val">Validaciones</div>
-                                                    {{#each signers }}
-                                                        <div>
-                                                            {{#if dateSigned }}
-                                                            <!-- TODO: EIQ EN ACTIVIDADES -->
-                                                                
-                                                                <div><span class="validation-date">{{moment dateSigned format="DD/MM/YYYY"}}</span></div>
-                                                            {{else}}
-                                                                <div><span class="not-signed-validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
-                                                            {{/if}}
-                                                            <div class="validation-name-val">{{fullName}}</div>
-                                                            <div class="backup-docs-validation">{{rol}} - {{cuit}} </div>
-                                                        </div>
-                                                    {{/each}}
-                                                </div>
-                                            
+                                                 </div>
                                         </div>
                                     </div>
                                 {{/if}}
@@ -430,61 +448,71 @@
                                         <div class="activity-header-val">
                                                 <div class="date-activity-validation">
                                                     <i class="fa fa-check"></i>{{ moment dateAchievement format="DD/MM/YYYY" }}
+                                                    <span style="float: right;margin-right: 117px;">Validado Por:</span>
                                                 </div>
-                                                <div style="display: flex; align-items: center;">
-                                                    <div class="activity-lots-validation">{{lotsQuantity}} lotes ({{surface}} has)</div>
-                                                    <div class="eiq-activity">
-                                                            <div class="icon-eiq-activity">
-                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
-                                                                height="15" />
+                                                <div class="activity-description-content">
+                                                    <div style="min-height: 350px;">
+                                                            <div style="display: flex; align-items: center;">
+                                                                <div class="activity-lots-validation">{{lotsQuantity}} lotes ({{surface}} has)</div>
+                                                                <div class="eiq-activity">
+                                                                        <div class="icon-eiq-activity">
+                                                                        <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
+                                                                            height="15" />
+                                                                        </div>
+                                                                        <div class="center-activity">
+                                                                            EIQ: {{eiq}}
+                                                                        </div>
+                                                                </div>
                                                             </div>
-                                                            <div class="center-activity">
-                                                                EIQ: {{eiq}}
-                                                            </div>
+                                                            {{#each (unique supplies.supplies)}}
+                                                                <div style="display: flex;margin-top: 7px;">
+                                                                    <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
+                                                                    <div class="eiq-activity">
+                                                                        <div class="icon-eiq-activity">
+                                                                        <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
+                                                                            height="15" />
+                                                                        </div>
+                                                                        <div class="center-activity">
+                                                                            EIQ: {{eiq}}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            {{/each}}
+                                                            <div class="spokesman-data-validation">Evidencias</div>
+                                                            <div class="backup-docs-validation">documentacion de respaldo</div>
+                                                            {{#each evidencesPdf}}
+                                                                    <div class="link-pdf-val">
+                                                                        <img
+                                                                            src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/pdf-icon.svg"
+                                                                            height="25" width="25" />
+                                                                        <a href={{path}}>{{description}}</a>
+                                                                    </div>
+                                                                {{/each}}
                                                     </div>
-                                                </div>
-                                                {{#each (unique supplies.supplies)}}
-                                                    <div style="display: flex;margin-top: 7px;">
-                                                        <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
-                                                        <div class="eiq-activity">
-                                                            <div class="icon-eiq-activity">
-                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
-                                                                height="15" />
-                                                            </div>
-                                                            <div class="center-activity">
-                                                                EIQ: {{eiq}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                {{/each}}
-                                                <div class="spokesman-data-validation">Evidencias</div>
-                                                <div class="backup-docs-validation">documentacion de respaldo</div>
-                                                {{#each evidencesPdf}}
-                                                        <div class="link-pdf-val">
-                                                            <img
-                                                                src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/pdf-icon.svg"
-                                                                height="25" width="25" />
-                                                            <a href={{path}}>{{description}}</a>
-                                                        </div>
-                                            {{/each}}
-                                                <div class="activity-validations">
-                                                    <div class="validation-title-val">Validaciones</div>
+
+                                                    <div class="activity-validations-list" style="min-height: 350px;">
                                                     {{#each signers }}
                                                         <div>
                                                             {{#if dateSigned }}
                                                             <!-- TODO: EIQ EN ACTIVIDADES -->
                                                                 
-                                                                <div><span class="validation-date">{{moment dateSigned format="DD/MM/YYYY"}}</span></div>
+                                                                <div>
+                                                                    <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/signed.svg" alt="signed-icon">
+                                                                    <span class="validation-date">{{moment dateSigned format="DD/MM/YYYY HH:mm"}}</span>
+                                                                    </div>
                                                             {{else}}
-                                                                <div><span class="not-signed-validation-date">{{moment dateOrder format="DD/MM/YYYY"}}</span></div>
+                                                                <div>
+                                                                    <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/signed.svg" alt="signed-icon">
+                                                                    <span class="not-signed-validation-date">PENDIENTE</span>
+                                                                </div>
                                                             {{/if}}
                                                             <div class="validation-name-val">{{fullName}}</div>
                                                             <div class="backup-docs-validation">{{rol}} - {{cuit}} </div>
                                                         </div>
                                                     {{/each}}
                                                 </div>
-                                            
+                                                </div>
                                         </div>
                                     </div>
                                 {{/if}}
@@ -505,12 +533,6 @@
                                     height="26" />
                                 <div class="activity-title">{{tag}} Lotes - {{lotsQuantity}} ({{surface}} has.)</div>
                                 <div class="activity-frame">
-                                    <div class="date-activity">
-                                        <div class="activity-lots">{{crop.lotsQuantity}} Lotes</div>
-                                        {{#each lots}}
-                                             <div class="spokesman-data">{{provinceName}} ({{surface}} has.)</div>
-                                        {{/each}}
-                                    </div>
                                     <div class="activity-frame-lots">
                                         {{#each lots}}
                                         <div class="card">

@@ -226,8 +226,6 @@ router.get('/:id/activities', cropsController.getCropWithActivities)
  *                            type: string
  *                         addressFloor:
  *                            type: string
- *
- *
  *      responses:
  *       '201':
  *         description: Create success a crop.
@@ -277,7 +275,6 @@ router.post(
  *            application/json:
  *             schema:
  *                $ref: '#/components/schemas/Crop'
- *
  *       '500':
  *         description: Error to Server.
  *
@@ -328,8 +325,6 @@ router.put('/offline/:id', cropsController.enableOffline)
  *                              type: string
  *                         tag:
  *                           type: string
- *
- *
  *      responses:
  *       '201':
  *         description: Create success a crop.
