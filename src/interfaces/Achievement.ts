@@ -34,6 +34,4 @@ export interface IAchievement {
   eiqSurface?: Number | number
 }
 
-// export interface IAchievementDocument extends IAchievement, Document {}
-// export interface IAchievementModel extends Model<IAchievementDocument> {}
 export type IAchievementDocument = IAchievement & Document
