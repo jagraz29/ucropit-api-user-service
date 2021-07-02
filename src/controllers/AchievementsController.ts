@@ -77,13 +77,15 @@ class AchievementsController {
     const crop: any = await Crop.findById(data.crop)
     const userConfig = await UserConfigService.findById(user.config)
 
+    console.log('create 1')
     await validateAchievement(data)
 
-    const validationExtensionFile = validateExtensionFile(req.files)
-
-    if (validationExtensionFile.error) {
-      return res.status(400).json(validationExtensionFile.code)
-    }
+    // const validationExtensionFile = validateExtensionFile(req.files)
+    //
+    // if (validationExtensionFile.error) {
+    //   return res.status(400).json(validationExtensionFile.code)
+    // }
+    console.log('create 2')
 
     const validationFiles = validateFilesWithEvidences(
       req.files,
@@ -98,6 +100,7 @@ class AchievementsController {
 
     let achievement: any = await AchievementService.store(data, activity)
 
+    console.log('create 3')
     await ActivityService.addAchievement(activity, achievement)
 
     if (activity.status[0].name.en !== 'DONE') {
@@ -106,7 +109,10 @@ class AchievementsController {
       await CropService.addActivities(activity, crop)
     }
 
+    console.log('create 4')
     if (req.files) {
+      console.log('req.files')
+      console.log(req.files)
       achievement = await AchievementService.addFiles(
         achievement,
         data.evidences,
@@ -115,6 +121,8 @@ class AchievementsController {
         `achievements/${achievement.key}`
       )
     }
+
+    console.log('create 5')
 
     const signers = achievement.signers.filter((el) => {
       return !el.signed && user.email !== el.email
