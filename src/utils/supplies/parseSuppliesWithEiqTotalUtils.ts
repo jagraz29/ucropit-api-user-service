@@ -1,4 +1,5 @@
 import { calculateEIQApplied } from '../achievements/'
+import { Numbers } from '../Numbers'
 
 const sumEIQ = (current, { eiq = 0 }) => current + eiq
 export const sumEIQInActiveIngredients = (activeIngredients) =>
@@ -26,7 +27,7 @@ export const parseSuppliesWithEiqTotal = (supplies, isPlanning) => {
         ...supplyObject,
         supply: {
           ...supplyJSON,
-          eiqTotal: currentEiqTotal
+          eiqTotal: Numbers.roundToTwo(currentEiqTotal)
         }
       }
     }
@@ -36,7 +37,7 @@ export const parseSuppliesWithEiqTotal = (supplies, isPlanning) => {
           ? eiqTotal
           : sumEIQInActiveIngredients(activeIngredients)
       supplyObject = {
-        eiqTotal: currentEiqTotal
+        eiqTotal: Numbers.roundToTwo(currentEiqTotal)
       }
     }
     if (quantity) {

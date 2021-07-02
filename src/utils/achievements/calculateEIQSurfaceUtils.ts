@@ -1,6 +1,7 @@
 import { IAchievement } from '../../interfaces'
 import { parseSuppliesWithEiqTotal } from '../supplies'
 import { sumEIQInSupplies } from '../activities'
+import { Numbers } from '../Numbers'
 
 /**
  * Calculate Achievement's EIQ Surface.
@@ -39,7 +40,7 @@ export const parseSuppliesWithEiqTotalInAchievements = (achievements = []) => {
   return achievements.map((achievement) => {
     const { supplies } = achievement
     const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies, false)
-    const eiq = sumEIQInSupplies(suppliesWithEiqTotal)
+    const eiq = Numbers.roundToTwo(sumEIQInSupplies(suppliesWithEiqTotal))
     return {
       ...achievement,
       supplies: suppliesWithEiqTotal,
