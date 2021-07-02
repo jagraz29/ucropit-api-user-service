@@ -22,7 +22,7 @@ export const calculateEiqOfActivity = (activity) => {
     percentTotal,
     eiqApplied,
     eiqPlanned,
-    eiq: eiqApplied ? eiqApplied : eiqPlanned
+    eiq: eiqApplied || eiqPlanned
   }
 }
 
