@@ -53,5 +53,5 @@ export const calculateEIQApplied = (quantity, unit, eiqTotal) => {
   return quantity * eiqTotal //Todo: determinar calculo segun unit
 }
 
-const reduceSumEIQ = (current, { eiq = 0 }) => current + eiq
+const reduceSumEIQ = (current, { eiq }) => current + (eiq || 0)
 export const sumEIQInAchievements = (list) => list.reduce(reduceSumEIQ, 0)
