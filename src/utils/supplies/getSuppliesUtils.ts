@@ -10,29 +10,32 @@ import { Numbers } from '../'
  */
 export const getSupplies = (supplies): Object[] => {
   return supplies
-    .map(({
-      name,
-      quantity: quantityParam,
-      typeId: typeParam,
-      unit: unitParam,
-      total,
-      supply }) => {
-      let eiq = 0
-      const { typeId, unit, brand, eiqTotal } = supply || {}
-      if (brand) {
-        name = brand
-        eiq = Numbers.roundToTwo(eiqTotal)
-        typeParam = typeId
-        unitParam = unit
-      }
-      return {
+    .map(
+      ({
         name,
-        eiq,
         quantity: quantityParam,
+        typeId: typeParam,
         unit: unitParam,
-        type: typeParam,
-        total
+        total,
+        supply
+      }) => {
+        let eiq = 0
+        const { typeId, unit, brand, eiqTotal } = supply || {}
+        if (brand) {
+          name = brand
+          eiq = Numbers.roundToTwo(eiqTotal)
+          typeParam = typeId
+          unitParam = unit
+        }
+        return {
+          name,
+          eiq,
+          quantity: quantityParam,
+          unit: unitParam,
+          type: typeParam,
+          total
+        }
       }
-    })
+    )
     .filter((item) => item)
 }

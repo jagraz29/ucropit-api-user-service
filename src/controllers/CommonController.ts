@@ -139,8 +139,8 @@ class CommonController {
   public async countries(req: Request | any, res: Response) {
     const dataToFind: any = {
       query: {
-        disabled: false,
-      },
+        disabled: false
+      }
     }
 
     const countries = await CountryRepository.getCountries(dataToFind)

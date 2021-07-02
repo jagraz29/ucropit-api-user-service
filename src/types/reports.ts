@@ -18,7 +18,7 @@ export const reportHeaderXls = {
     'name_lot',
     'surface_total',
     'link_sustainability_agreements',
-    'link_pdf_ots_agreement_sus', 
+    'link_pdf_ots_agreement_sus',
     'names_signers_sustainability_agreements',
     'total_surface_sus',
     'date_sign_achievement_by_lot_sus',
@@ -394,7 +394,7 @@ export const reportHeaderXlsSowingBilling = {
     'CUIT Colaborador con ROL Asesor Promotor',
     'HECTÁREAS TOTALES EN KMZ',
     'HECTÁREAS de Realización de siembra',
-    'FECHA FINAL de Firma de Realización',
+    'FECHA FINAL de Firma de Realización'
   ]
 }
 
@@ -417,6 +417,6 @@ export const reportHeaderXlsAplicationBilling = {
     'CUIT Colaborador con ROL Asesor Promotor',
     'HECTÁREAS TOTALES EN KMZ',
     'HECTÁREAS de Realización de Aplicaciones',
-    'FECHA FINAL de Firma de Realización de Aplicaciones',
+    'FECHA FINAL de Firma de Realización de Aplicaciones'
   ]
 }

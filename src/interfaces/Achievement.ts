@@ -1,10 +1,10 @@
 import { Signer } from './Signer'
-import { Document, Model } from 'mongoose'
+import { Document } from 'mongoose'
 
 export interface ISupplies {
   name?: string
   unit?: string
-  quantity?: Number
+  quantity?: number
   typeId?: string
   icon?: string
   total?: number
@@ -14,7 +14,7 @@ export interface ISupplies {
 export interface IDestination {
   name?: string
   unit?: string
-  quantity?: Number
+  quantity?: number
   typeId?: string
   icon?: string
   total?: number
@@ -24,14 +24,14 @@ export interface IAchievement {
   // _id: string
   key: string
   dateAchievement?: Date
-  surface?: Number | number
-  percent?: Number
+  surface?: number | number
+  percent?: number
   eiq?: number
   supplies?: Array<ISupplies>
   destination?: Array<IDestination>
   signers?: Array<Signer>
-  synchronizedList?: Array<{ service: string; isSynchronized: Boolean }>
-  eiqSurface?: Number | number
+  synchronizedList?: Array<{ service: string; isSynchronized: boolean }>
+  eiqSurface?: number | number
 }
 
 // export interface IAchievementDocument extends IAchievement, Document {}

@@ -41,8 +41,6 @@ const Activity = models.Activity
 const FileDocument = models.FileDocument
 const Crop = models.Crop
 
-import { UserSchema } from '../models/user'
-
 class ActivitiesController {
   /**
    *
@@ -437,7 +435,7 @@ class ActivitiesController {
    * @return Response
    */
   public async delete(req: Request, res: Response) {
-    const activity = await Activity.findByIdAndDelete(req.params.id)
+    await Activity.findByIdAndDelete(req.params.id)
 
     res.status(200).json({
       message: 'deleted successfully'
@@ -505,8 +503,6 @@ class ActivitiesController {
         const fileRemove = await FileDocument.findByIdAndDelete(document._id)
 
         if (fileRemove) {
-          const documentFiles = activity.toJSON().files
-
           files = files.filter(
             (item) => item.toString() !== document._id.toString()
           )

@@ -37,8 +37,8 @@ export const getActivitiesOrderedByDateUtils = ({ activities, members }) => {
         status,
         unitType
       }) => {
-        let percent: number = 0
-        let eiq: number = 0
+        let percent = 0
+        let eiq = 0
         let achievements: IAchievement[] = []
         const pay = payEntry ?? 0
         const { key: keyUnitType, name: nameUnitType } = unitType || {}

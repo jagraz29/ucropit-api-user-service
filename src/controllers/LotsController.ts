@@ -1,6 +1,5 @@
 /* tslint:disable:await-promise */
 import { Request, Response } from 'express'
-import moment from 'moment'
 import {
   handleFileConvertJSON,
   mapArraySurfacesAndArea
@@ -8,9 +7,6 @@ import {
 import { validateFormatKmz } from '../utils/Validation'
 import models from '../models'
 import LotService from '../services/LotService'
-import CropService from '../services/CropService'
-import { ErrorResponseInstance } from '../utils'
-import ErrorResponse from '../utils/ErrorResponse'
 import { StatusCodes } from 'http-status-codes'
 import { CropRepository } from '../repositories'
 
@@ -123,7 +119,7 @@ class LotsController {
     const { identifier } = req.query
     const dateCrop = new Date(req.query.dateCrop.toString())
 
-    let query = {
+    const query = {
       identifier,
       // 'members.type': { $in: ['PRODUCER'] },
       $where: function () {
@@ -132,8 +128,8 @@ class LotsController {
     }
 
     req.setTimeout(0)
-    let cropsList = await CropRepository.findCropsWithLotsPopulateData(query)
-    let results = await LotService.parseLotByTagInCropsWithDataPopulate(
+    const cropsList = await CropRepository.findCropsWithLotsPopulateData(query)
+    const results = await LotService.parseLotByTagInCropsWithDataPopulate(
       cropsList,
       dateCrop
     )

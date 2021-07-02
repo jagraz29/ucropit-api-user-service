@@ -13,12 +13,11 @@ const agenda = new Agenda(connectionOpts)
 
 const jobTypes = ['email']
 
-jobTypes.forEach(type => {
+jobTypes.forEach((type) => {
   require('./agenda/' + type)(agenda)
 })
 
 if (jobTypes.length) {
-
   if (process.env.AGENDA === 'on') {
     agenda
       .start()
@@ -26,7 +25,7 @@ if (jobTypes.length) {
         await agenda.purge()
         console.log(`${chalk.green('=====AGENDA ENABLED====')}`)
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err)
       })
   } else {

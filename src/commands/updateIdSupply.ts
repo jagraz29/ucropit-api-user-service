@@ -19,7 +19,7 @@ async function execUpdateSupply() {
     const achievement: any = await AchievementModel.findById(item.achievementId)
     const supply = await Supply.findOne({ code: item.code })
 
-    let supplyApplied = achievement.supplies.id(item.supplyIdApplied)
+    const supplyApplied = achievement.supplies.id(item.supplyIdApplied)
 
     if (supply && supplyApplied && Object.keys(supplyApplied).length >= 1) {
       await AchievementModel.findOneAndUpdate(

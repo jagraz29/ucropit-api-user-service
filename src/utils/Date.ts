@@ -1,4 +1,4 @@
-export function isNowGreaterThan (date: Date): boolean {
+export function isNowGreaterThan(date: Date): boolean {
   const dateCompare = new Date()
   const now = new Date(
     Date.UTC(
@@ -11,6 +11,6 @@ export function isNowGreaterThan (date: Date): boolean {
   return now > date
 }
 
-export function compareDate (dateFirst: Date, dateLast: Date): boolean {
+export function compareDate(dateFirst: Date, dateLast: Date): boolean {
   return dateFirst > dateLast
 }

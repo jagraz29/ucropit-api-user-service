@@ -19,7 +19,7 @@ const email = new Email({
 })
 
 class EmailService {
-  async send ({ template = '', to = '', data = {} }) {
+  async send({ template = '', to = '', data = {} }) {
     email
       .send({
         template: template,
@@ -30,7 +30,7 @@ class EmailService {
       .catch(console.error)
   }
 
-  async sendWithAttach ({ template = '', to = '', data = {}, files }) {
+  async sendWithAttach({ template = '', to = '', data = {}, files }) {
     email
       .send({
         template: template,

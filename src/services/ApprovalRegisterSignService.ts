@@ -3,20 +3,20 @@ const FileDocument = models.FileDocument
 const ApprovalRegisterSign = models.ApprovalRegisterSign
 
 interface ApprovalRegister {
-  ots: String
-  hash: String
-  pathPdf: String
-  nameFilePdf: String
-  nameFileOts: String
-  pathOtsFile: String
-  activity: String | any
-  file?: String | any
+  ots: string
+  hash: string
+  pathPdf: string
+  nameFilePdf: string
+  nameFileOts: string
+  pathOtsFile: string
+  activity: string | any
+  file?: string | any
 }
 
 interface FileDocument {
-  nameFile: String
-  path: String
-  user?: String | any
+  nameFile: string
+  path: string
+  user?: string | any
   date: Date
 }
 
@@ -25,7 +25,7 @@ class ApprovalRegisterSignService {
    *
    * @param data
    */
-  public static async create (data: ApprovalRegister) {
+  public static async create(data: ApprovalRegister) {
     const fileDocumentPdf = await this.createFile({
       nameFile: data.nameFilePdf,
       path: data.pathPdf,
@@ -51,7 +51,7 @@ class ApprovalRegisterSignService {
    *
    * @param dataFile
    */
-  private static async createFile (dataFile: FileDocument) {
+  private static async createFile(dataFile: FileDocument) {
     return FileDocument.create(dataFile)
   }
 }

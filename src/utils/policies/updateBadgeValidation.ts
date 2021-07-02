@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { BadgeTypes } from '../../interfaces'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import * as Joi from 'joi'
-import JoiObjectId from "joi-objectid";
+import JoiObjectId from 'joi-objectid'
 const JoiValidation = JoiObjectId(Joi)
 
 export const updateBadgeValidationPolicy = (

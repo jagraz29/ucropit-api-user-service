@@ -1,6 +1,5 @@
 import ServiceBase from './common/ServiceBase'
 import { ms_license_url } from '../types'
-import { ILicenseProps } from '../interfaces'
 const BASE_URL = `${ms_license_url}/licenses`
 
 export interface ILicenseSearch {
@@ -19,12 +18,23 @@ export class LicenseService extends ServiceBase {
    *
    * @param licenseById
    */
-  public static async licensebyId({ userId, id }: ILicenseById) {
-    try {
-      return this.makeRequestES6('get', `${BASE_URL}/${id}`, null, { userId })
-    } catch (error) {
-      throw error
-    }
+  public static async licenseById({ userId, id }: ILicenseById) {
+    return new Promise((resolve, reject) => {
+      const params = {
+        userId
+      }
+      this.makeRequest(
+        'get',
+        `${BASE_URL}/${id}`,
+        { params },
+        (result) => {
+          resolve(result.data)
+        },
+        (err) => {
+          reject(err)
+        }
+      )
+    })
   }
   /**
    *  create new license.
@@ -45,17 +55,5 @@ export class LicenseService extends ServiceBase {
         }
       )
     })
-  }
-  /**
-   *  create new license.
-   *
-   * @param license
-   */
-  public static async createLicense(license: ILicenseProps) {
-    try {
-      return this.makeRequestES6('post', BASE_URL, license)
-    } catch (error) {
-      throw error
-    }
   }
 }
