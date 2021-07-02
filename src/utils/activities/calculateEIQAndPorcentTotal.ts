@@ -30,5 +30,5 @@ export const calculateEiqOfActivity = (activity) => {
   }
 }
 
-const reduceSumEIQ = (current, { eiq = 0 }) => current + eiq
+const reduceSumEIQ = (current, { eiq }) => current + (eiq || 0)
 export const sumEIQInSupplies = (list) => list.reduce(reduceSumEIQ, 0)
