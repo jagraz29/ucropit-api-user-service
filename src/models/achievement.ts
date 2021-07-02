@@ -3,9 +3,8 @@ import shortid from 'shortid'
 import { IAchievementDocument } from '../interfaces'
 import { AchievementSchema } from '../schemas'
 
-AchievementSchema.pre('save',  (next: Function) => {
-  const achievement: any = this
-
+AchievementSchema.pre('save', async function (next) {
+  let achievement: any = this
   /** Generate unique key */
   if (!achievement.key) {
     achievement.key = shortid.generate()
