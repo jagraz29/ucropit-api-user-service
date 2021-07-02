@@ -8,6 +8,7 @@ import {
   hasLotsReusableInDataPolicy,
   validateDateCropAndDateHarvestInData
 } from '../../utils'
+import { getCropByIdMiddleware } from '../../middlewares'
 
 const router: express.Router = express.Router()
 
@@ -62,7 +63,7 @@ router.get('/lastMonitoring/:id', cropsController.showLastMonitoring)
  *        "500":
  *          description: Server error
  */
-router.get('/:id', cropsController.show)
+router.get('/:id', [getCropByIdMiddleware], cropsController.show)
 
 /**
  * @swagger

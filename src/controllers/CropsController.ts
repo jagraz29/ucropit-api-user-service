@@ -21,7 +21,9 @@ import {
   calculateTheoreticalPotentialUtils,
   calculateCropVolumeUtils,
   getCropBadgesByUserType,
-  parseLotsReusableAsData
+  parseLotsReusableAsData,
+  filterActivitiesMakeByDates,
+  calculateEIQAndPorcentTotal
 } from '../utils'
 
 import { UserSchema } from '../models/user'
@@ -110,8 +112,8 @@ class CropsController {
    */
   public async show(req: Request, res: Response) {
     const { id } = req.params
+    const { startDate, endDate } = req.query
     const crop = await CropService.getCrop(id)
-    console.log(crop)
     const lots = await LotService.storeLotImagesAndCountriesWithPopulate(
       crop.lots
     )
@@ -124,6 +126,16 @@ class CropsController {
       crop.surface
     )
 
+    const toMakeFilterDates = filterActivitiesMakeByDates(
+      crop.toMake,
+      startDate,
+      endDate
+    )
+
+    const toMake = calculateEIQAndPorcentTotal(toMakeFilterDates)
+    const done = calculateEIQAndPorcentTotal(crop.done)
+    const finished = calculateEIQAndPorcentTotal(crop.finished)
+
     const newCrop = {
       ...crop,
       volume,
@@ -132,7 +144,10 @@ class CropsController {
         ...crop.company,
         theoriticalPotential
       },
-      badges
+      badges,
+      toMake,
+      done,
+      finished
     }
 
     res.status(200).json(newCrop)
