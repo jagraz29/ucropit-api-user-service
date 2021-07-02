@@ -45,7 +45,7 @@ export const parseSuppliesWithEiqTotal = (supplies, isPlanning) => {
       const eiq = calculateEIQApplied(quantityOrTotal, unit, currentEiqTotal)
       supplyObject = {
         ...supplyObject,
-        eiq
+        eiq: Numbers.roundToTwo(eiq)
       }
     }
     return supplyObject
