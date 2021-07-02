@@ -14,12 +14,11 @@ export const parseSuppliesWithEiqTotal = (supplies, isPlanning) => {
       total,
       unit
     } = supplyObject
-    let newEiqTotal = eiqTotal || 0
+    let currentEiqTotal = eiqTotal || 0
     if (supply) {
-      // Supply as product
       const supplyJSON = supply.toJSON ? supply.toJSON() : supply
       const { eiqTotal, activeIngredients = [] } = supplyJSON
-      newEiqTotal =
+      currentEiqTotal =
         eiqTotal !== undefined
           ? eiqTotal
           : sumEIQInActiveIngredients(activeIngredients)
@@ -27,22 +26,22 @@ export const parseSuppliesWithEiqTotal = (supplies, isPlanning) => {
         ...supplyObject,
         supply: {
           ...supplyJSON,
-          eiqTotal: newEiqTotal
+          eiqTotal: currentEiqTotal
         }
       }
     }
     if (activeIngredients.length) {
-      newEiqTotal =
+      currentEiqTotal =
         eiqTotal !== undefined
           ? eiqTotal
           : sumEIQInActiveIngredients(activeIngredients)
       supplyObject = {
-        eiqTotal: newEiqTotal
+        eiqTotal: currentEiqTotal
       }
     }
-    if (!isNaN(quantity * 1) && !isNaN(newEiqTotal * 1)) {
-      const _quantity = isPlanning ? quantity : total
-      const eiq = calculateEIQApplied(_quantity, unit, newEiqTotal)
+    if (quantity) {
+      const quantityOrTotal = isPlanning ? quantity : total
+      const eiq = calculateEIQApplied(quantityOrTotal, unit, currentEiqTotal)
       supplyObject = {
         ...supplyObject,
         eiq

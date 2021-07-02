@@ -11,15 +11,18 @@ export const calculateEIQAndPorcentTotal = (activities) =>
 
 export const calculateEiqOfActivity = (activity) => {
   const { achievements, supplies } = activity
-  const newSupplies = parseSuppliesWithEiqTotal(supplies, true)
-  const newAchievements = parseSuppliesWithEiqTotalInAchievements(achievements)
-  const percentTotal = sumPercentInAchievements(newAchievements)
-  const eiqPlanned = Numbers.roundToTwo(sumEIQInSupplies(newSupplies))
-  const eiqApplied = Numbers.roundToTwo(sumEIQInAchievements(newAchievements))
+  const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies, true)
+  const achievementsWithEiq =
+    parseSuppliesWithEiqTotalInAchievements(achievements)
+  const percentTotal = sumPercentInAchievements(achievementsWithEiq)
+  const eiqPlanned = Numbers.roundToTwo(sumEIQInSupplies(suppliesWithEiqTotal))
+  const eiqApplied = Numbers.roundToTwo(
+    sumEIQInAchievements(achievementsWithEiq)
+  )
   return {
     ...activity,
-    achievements: newAchievements,
-    supplies: newSupplies,
+    achievements: achievementsWithEiq,
+    supplies: suppliesWithEiqTotal,
     percentTotal,
     eiqApplied,
     eiqPlanned,
