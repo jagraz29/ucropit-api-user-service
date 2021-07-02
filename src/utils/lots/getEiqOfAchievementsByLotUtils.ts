@@ -1,20 +1,23 @@
+import { calculateEIQSurfaceAchievement } from '..'
 import { IDataLot, EiqActivitiesTypes } from '../../interfaces'
 // import { type } from './../Pagination'
 
 export const getEiqOfAchievementsByLot = (
   lotId,
-  activitiesWithEiq
+  activities
 ): IDataLot => {
-  return activitiesWithEiq
+  return activities
     .filter((element) => EiqActivitiesTypes[element.tag])
     .reduce(
       (a, { achievements }) => {
         const achievement = achievements.reduce(
-          (a, { lots, eiq }) => {
+          (a, achievement) => {
+            const { lots, eiq } = achievement || {}
             const lot = lots.find(
               ({ _id }) => lotId.toString() === _id.toString()
             )
-            if (lot) return { eiq: a.eiq + eiq, count: a.count + 1 }
+            if (lot) return { eiq: a.eiq + eiq ?? calculateEIQSurfaceAchievement(achievement),
+                              count: a.count + 1 }
             return { eiq: 0, count: 0 }
           },
           { eiq: 0, count: 0 }

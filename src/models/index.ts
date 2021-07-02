@@ -36,6 +36,7 @@ const connectDb = function () {
 
 export * from './eiqRanges'
 export * from './achievement'
+export * from './envImpactIndice'
 
 const models = {
   User,

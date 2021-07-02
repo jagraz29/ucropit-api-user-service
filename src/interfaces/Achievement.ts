@@ -22,6 +22,7 @@ export interface IDestination {
 
 export interface IAchievement {
   // _id: string
+  envImpactIndice: string
   key: string
   dateAchievement?: Date
   surface?: Number | number

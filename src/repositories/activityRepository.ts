@@ -88,4 +88,17 @@ export class ActivityRepository {
   static async updateActivity<T>(update: T, id: string) {
     return Activity.updateOne({ _id: id }, { $set: update })
   }
+  /**
+   *
+   * @param query
+   * @param dataToUpdate
+   *
+   * @returns
+   */
+     public static async updateOneActivity(
+      query: any,
+      dataToUpdate: any
+    ): Promise<any> {
+      return Activity.updateOne(query, dataToUpdate)
+    }
 }

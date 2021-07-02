@@ -1,9 +1,17 @@
 import { Request, Response } from 'express'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { errors } from '../types/common'
+
 import {
   validateAchievement,
   validateSignAchievement,
   validateFilesWithEvidences,
-  validateExtensionFile
+  validateExtensionFile,
+  calculateCropEiq,
+  calculateEIQSurfaceAchievement,
+  calculateActivityEiq,
+  getEiqRange,
+  getEiqOfAchievementsByLot
 } from '../utils'
 
 import AchievementService from '../services/AchievementService'
@@ -19,6 +27,8 @@ import NotificationService from '../services/NotificationService'
 import { emailTemplates } from '../types/common'
 import { typesSupplies } from '../utils/Constants'
 import agenda from '../jobs'
+import { AchievementRepository, ActivityRepository, CropRepository, EiqRangesRepository, envImpactIndiceRepository, LotRepository } from '../repositories'
+import { IEntity, IEiqRangesDocument, IEnvImpactIndice, IEnvImpactIndiceDocument } from '../interfaces'
 
 const Crop = models.Crop
 
@@ -97,6 +107,17 @@ class AchievementsController {
     const activity: any = await ActivityService.findActivityById(data.activity)
 
     let achievement: any = await AchievementService.store(data, activity)
+    try {
+      const envImpactIndiceIds: IEnvImpactIndiceDocument[] = await this.setEiqInEnvImpactIndice(data,achievement)
+      await this.setEnvImpactIndicesInEntities(envImpactIndiceIds)
+    } catch (error) {
+      console.log(error);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: ReasonPhrases.INTERNAL_SERVER_ERROR,
+        description: errors.find((error) => error.key === '007').code
+      })
+    }
+
 
     await ActivityService.addAchievement(activity, achievement)
 
@@ -181,6 +202,83 @@ class AchievementsController {
     res.status(201).json(achievement)
   }
 
+  /**
+   * set Eiq.
+   *
+   * @param string cropId
+   * @param string activityId
+   * @param object achievement
+   *
+   */
+     private async setEiqInEnvImpactIndice({crop,activity,lots},achievement): Promise<IEnvImpactIndiceDocument[]> {
+      const { _id } = achievement || {}
+      let entryEnvImpactIndice = {
+        crop,
+        activity,
+        achievement:_id
+      }
+        const eiqRanges: IEiqRangesDocument[] = await EiqRangesRepository.getAllEiq()
+        const { activities } = await CropRepository.getCropWithActivities(crop)
+        let envImpactIndices: IEnvImpactIndice[] = lots.map((id): IEnvImpactIndice =>{
+          const { eiq } = getEiqOfAchievementsByLot(id,activities)
+          return {
+            ...entryEnvImpactIndice,
+            lot:id,
+            entity: IEntity.LOT,
+            eiq:{
+              value: eiq,
+              range: getEiqRange(eiq, eiqRanges)
+            }
+          }
+        })
+        const activityObj = activities.find(({_id}) =>_id.toString() === activity.toString())
+        const cropEiq: number = calculateCropEiq(activities)
+        envImpactIndices.push({
+          ...entryEnvImpactIndice,
+          entity: IEntity.CROP,
+          eiq:{
+            value: cropEiq,
+            range: getEiqRange(cropEiq, eiqRanges)
+          }
+        })
+        const activityEiq: number = calculateActivityEiq(activityObj)
+        envImpactIndices.push({
+          ...entryEnvImpactIndice,
+          entity: IEntity.ACTIVITY,
+          eiq:{
+            value: activityEiq,
+            range: getEiqRange(activityEiq, eiqRanges)
+          }
+        })
+        const achievementEiq: number = calculateEIQSurfaceAchievement(achievement)
+        envImpactIndices.push({
+          ...entryEnvImpactIndice,
+          entity: IEntity.ACHIEVEMENT,
+          eiq:{
+            value: achievementEiq,
+            range: getEiqRange(achievementEiq, eiqRanges)
+          }
+        })
+        return envImpactIndiceRepository.createAllEnvImpactIndice(envImpactIndices)
+    }
+
+    private async setEnvImpactIndicesInEntities(envImpactIndiceIds): Promise<void> {
+      const envImpactIndices: IEnvImpactIndiceDocument[] = await envImpactIndiceRepository.getEnvImpactIndicesByIds(envImpactIndiceIds)
+      Promise.all(envImpactIndices.map(async ({entity, _id, crop, lot, activity, achievement }) =>{
+        if (entity === IEntity.CROP) {
+          await CropRepository.updateOneCrop({_id: crop},{envImpactIndice:_id})
+        }
+        if (entity === IEntity.LOT) {
+          await LotRepository.updateOneLot({_id: lot},{envImpactIndice:_id})
+        }
+        if (entity === IEntity.ACTIVITY) {
+          await ActivityRepository.updateOneActivity({_id: activity},{envImpactIndice:_id})
+        }
+        if (entity === IEntity.ACHIEVEMENT) {
+          await AchievementRepository.updateOneAchievement({_id: achievement},{envImpactIndice:_id})
+        }
+      }))
+    }
   /**
    * User Sign to Achievement.
    *

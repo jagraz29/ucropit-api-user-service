@@ -92,6 +92,10 @@ const CropSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'CropType',
     },
+    envImpactIndice: {
+      type: Schema.Types.ObjectId,
+      ref: 'EnvImpactIndice',
+    },
     unitType: {
       type: Schema.Types.ObjectId,
       ref: 'UnitType',

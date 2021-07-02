@@ -366,7 +366,7 @@ class ActivitiesController {
       /*
        * GET CROP EIQ
        */
-      const cropEiq: number = await calculateCropEiq(applicationActivities)
+      const cropEiq: number = calculateCropEiq(applicationActivities)
 
       /*
        * GET BADGES TO ADD TO CROP
