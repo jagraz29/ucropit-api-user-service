@@ -1,7 +1,7 @@
 import { calculateEIQApplied } from '../achievements/'
 import { Numbers } from '../Numbers'
 
-const sumEIQ = (current, { eiq = 0 }) => current + eiq
+const sumEIQ = (current, { eiq }) => current + (eiq || 0)
 export const sumEIQInActiveIngredients = (activeIngredients) =>
   activeIngredients.reduce(sumEIQ, 0)
 
