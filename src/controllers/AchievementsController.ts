@@ -72,6 +72,7 @@ class AchievementsController {
    * @return Response
    */
   public async create(req: Request, res: Response) {
+    req.setTimeout(0)
     const user: any = req.user
     const data = JSON.parse(req.body.data)
 

@@ -1,4 +1,6 @@
+const heicConvert = require('heic-convert')
 import { UploadedFile } from 'express-fileupload'
+import { writeFileSync, mkdirSync } from 'fs'
 import { getFullPath, VALID_FORMATS_FILES } from '../utils/Files'
 
 class FileUpload {
@@ -49,11 +51,15 @@ class FileUpload {
 
     const fileNameArray = file.name.trim().split('.')
 
-    const renameFile = `${file.md5}.${fileNameArray.pop()}`
+    let renameFile = `${file.md5}.${fileNameArray.pop()}`
 
     const path = getFullPath(`${process.env.DIR_UPLOADS}/${this.destination}`)
+    return new Promise(async (resolve, reject) => {
 
-    return new Promise((resolve, reject) => {
+      if (file.mimetype === 'image/heic') {
+        return resolve(this.convertAndSaveNewFile(file, path))
+      }
+
       file.mv(`${path}/${renameFile}`, (err) => {
         if (err) reject(err)
 
@@ -69,6 +75,31 @@ class FileUpload {
   validTypes(file) {
     return file.mimetype.match(VALID_FORMATS_FILES) !== null
   }
+
+  async convertImageHeciToJpeg (inputBuffer) {
+    const outputBuffer = await heicConvert({
+      buffer: inputBuffer,
+      format: 'JPEG',
+      quality: 1
+    })
+    return outputBuffer
+
+  }
+
+  async convertAndSaveNewFile (file, path) {
+    mkdirSync(path)
+    const renameFile = `${file.md5}.jpg`
+    const outputBuffer = await this.convertImageHeciToJpeg(file.data)
+    writeFileSync(`${path}/${renameFile}`, outputBuffer)
+    return {
+      path: `${process.env.DIR_UPLOADS}/${this.destination}/${renameFile}`,
+      nameFile: renameFile,
+      fileType: 'image/jpeg'
+    }
+
+  }
+
+
 }
 
 export default FileUpload
