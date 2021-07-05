@@ -231,7 +231,7 @@ class CropsController {
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    const dataAchievement = activities.map((item) => item.achievements)
+    // const dataAchievement = activities.map((item) => item.achievements)
 
     const dataCrop = getCropUtils(
       crop,

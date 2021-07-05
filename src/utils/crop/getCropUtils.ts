@@ -17,6 +17,7 @@ export const getCropUtils = (
     badges,
     unitType,
     data,
+    envImpactIndice,
     members,
     cropType: { key: cropTypeKey }
   },
@@ -49,6 +50,7 @@ export const getCropUtils = (
       quantity: eiq,
       range: getEiqRange(eiq, eiqRanges)
     },
+    envImpactIndice,
     cropTypeKey,
     company,
     activities,
