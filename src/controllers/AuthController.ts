@@ -18,7 +18,7 @@ class AuthController {
   }
 
   public async auth(req: Request, res: Response) {
-    let user: any = await User.findOne({
+    const user: any = await User.findOne({
       email: req.body.email.toLocaleLowerCase()
     }).populate('config')
 

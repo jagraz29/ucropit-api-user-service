@@ -1,7 +1,6 @@
 import { FileArray } from 'express-fileupload'
 import UploadService from '../UploadService'
 import ImageService from '../ImageService'
-import remove from 'lodash/remove'
 import axios from 'axios'
 import { fileExist, removeFile } from '../../utils/Files'
 import models from '../../models'
@@ -66,8 +65,6 @@ class ServiceBase {
       const fileRemove = await FileDocument.findByIdAndDelete(fileId)
 
       if (fileRemove) {
-        const documentFiles = document.toJSON().files
-
         const files = document.files.filter(
           (item) => item.toString() !== fileId.toString()
         )
@@ -166,15 +163,12 @@ class ServiceBase {
    * @param list
    * @param sortReference
    */
-  public static sortData(
-    list: Array<any>,
-    sortReference?: Array<any>
-  ): Array<any> {
+  public static sortData(list: Array<any>): Array<any> {
     const sortData = list.sort(function (a, b) {
       if (a.total > 0 && b.total > 0) {
-        let currentDate =
+        const currentDate =
           a.date.substr(3, 4).split(' ') + a.date.substr(0, 2).split(' ')
-        let cropDate =
+        const cropDate =
           b.date.substr(3, 4).split(' ') + b.date.substr(0, 2).split(' ')
         return currentDate - cropDate
       }

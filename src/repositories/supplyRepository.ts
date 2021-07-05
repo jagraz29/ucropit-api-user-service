@@ -14,7 +14,9 @@ class SupplyRepository {
    *
    * @param String[] idsSupplyTypes
    */
-  public static async getSuppliesBySupplyTypes(idsSupplyTypes: String[]): Promise<any> {
+  public static async getSuppliesBySupplyTypes(
+    idsSupplyTypes: string[]
+  ): Promise<any> {
     const supplies = await Supply.find({
       typeId: {
         $in: idsSupplyTypes

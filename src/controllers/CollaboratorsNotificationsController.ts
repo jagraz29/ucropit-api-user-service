@@ -5,7 +5,7 @@ import EmailService from '../services/EmailService'
 const User = models.User
 
 class CollaboratorsNotificationsController {
-  public async notify (req: Request, res: Response) {
+  public async notify(req: Request, res: Response) {
     const host = process.env.BASE_URL
 
     const { email, identifier, cropname, role } = req.body

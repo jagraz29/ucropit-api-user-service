@@ -21,7 +21,7 @@ export const getEiqOfAchievementsByLot = (
         )
         return {
           eiq: a.eiq + achievement.eiq,
-          count: a.count + achievement.count,
+          count: a.count + achievement.count
         }
       },
       { eiq: 0, count: 0 }

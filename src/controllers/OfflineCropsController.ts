@@ -15,7 +15,7 @@ class OfflineCropsController {
    *
    * @return Response
    */
-  public async reset (req: Request | any, res: Response) {
+  public async reset(req: Request | any, res: Response) {
     const userId: string = req.user._id.toString()
     const identifier: string = req.query.identifier
 

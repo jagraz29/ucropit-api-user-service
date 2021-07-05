@@ -34,7 +34,7 @@ class ProfileController {
         suffixName: 'thumbnail',
         width: 200,
         height: 200,
-        fit: 'cover',
+        fit: 'cover'
       })
 
       return thumbnail

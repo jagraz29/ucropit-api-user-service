@@ -14,7 +14,7 @@ const addNewMembersInCrops = async (
 ) => {
   const query = createQueryFilterCrop(user, company, companyIdFilter)
 
-  let crops: any = await Crop.find(query)
+  const crops: any = await Crop.find(query)
 
   for (const crop of crops) {
     try {
