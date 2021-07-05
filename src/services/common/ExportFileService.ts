@@ -3,17 +3,22 @@ import { Parser } from 'json2csv'
 import fs from 'fs'
 import moment from 'moment'
 import { getFullPath } from '../../utils/Files'
-import { reportHeaderXls, fieldsCSV, reportHeaderXlsSowingBilling, reportHeaderXlsAplicationBilling } from '../../types/reports'
+import {
+  reportHeaderXls,
+  fieldsCSV,
+  reportHeaderXlsSowingBilling,
+  reportHeaderXlsAplicationBilling
+} from '../../types/reports'
 import { dataSetFieldsCSV } from '../../types/dataset'
 
 export interface OptionsXls {
-  fields?: Object | Array<String>
-  fieldNames: Array<String>
+  fields?: Object | Array<string>
+  fieldNames: Array<string>
 }
 
 export interface OptionsCsv {
-  label: String
-  value: String
+  label: string
+  value: string
 }
 
 class ExportFileService {
@@ -42,7 +47,7 @@ class ExportFileService {
    * @param data
    * @param mode
    */
-  public static modeExportSowingBilling(data: Array<any>, mode: string | any) { 
+  public static modeExportSowingBilling(data: Array<any>, mode: string | any) {
     if (mode === 'xls') {
       return this.exportXls(
         data,
@@ -56,12 +61,15 @@ class ExportFileService {
     }
   }
 
-    /**
+  /**
    *
    * @param data
    * @param mode
    */
-  public static modeExportAplicationBilling(data: Array<any>, mode: string | any) { 
+  public static modeExportAplicationBilling(
+    data: Array<any>,
+    mode: string | any
+  ) {
     if (mode === 'xls') {
       return this.exportXls(
         data,

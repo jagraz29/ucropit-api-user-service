@@ -74,6 +74,7 @@ class AchievementsController {
   public async create(req: Request, res: Response) {
     const user: any = req.user
     const data = JSON.parse(req.body.data)
+
     const crop: any = await Crop.findById(data.crop)
     const userConfig = await UserConfigService.findById(user.config)
 
@@ -123,7 +124,7 @@ class AchievementsController {
     const type = typesSupplies.find((el) => activity.type.tag === el.tag).value
     const url = `${process.env.BASE_URL}/${process.env.FAST_LINK_URL}?url=activities/${crop._id}/${type}/common/detail/${achievement._id}/${activity._id}/true?tag=${activity.type.tag}`
 
-    for (let signer of signers) {
+    for (const signer of signers) {
       await NotificationService.email(
         emailTemplates.NOTIFICATION_ACTIVITY,
         signer,

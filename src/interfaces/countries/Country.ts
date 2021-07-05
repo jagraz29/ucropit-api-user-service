@@ -3,7 +3,7 @@ export interface ICountry {
   name: string
   phoneCode: string
   capital: string
-  geolocation: Array<Number>
+  geolocation: Array<number>
   timezone: string
   currencies: Array<ICurrency>
   languages: Array<ILanguages>

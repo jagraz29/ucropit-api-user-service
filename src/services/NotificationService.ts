@@ -15,7 +15,7 @@ interface INotification {
 }
 
 class NotificationService {
-  static async email (
+  static async email(
     template: string,
     user,
     data: any,
@@ -42,7 +42,7 @@ class NotificationService {
     }
   }
 
-  static async store (notification: INotification) {
+  static async store(notification: INotification) {
     const newNotification: any = new Notification()
 
     newNotification.content = notification.content

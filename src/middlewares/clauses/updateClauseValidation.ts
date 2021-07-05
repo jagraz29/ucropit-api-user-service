@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import Joi from '@hapi/joi'
-import JoiObjectId from "joi-objectid";
+import JoiObjectId from 'joi-objectid'
 Joi.objectId = JoiObjectId(Joi)
 
 export const updateClauseValidation = (

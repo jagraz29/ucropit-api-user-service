@@ -8,7 +8,7 @@ import { calculateCropVolumeUtils } from '../utils'
 const { Crop } = models
 
 const start = async () => {
-  let crops: any = await Crop.find().populate('unitType')
+  const crops: any = await Crop.find().populate('unitType')
 
   for (const crop of crops) {
     try {
@@ -38,11 +38,11 @@ const start = async () => {
       ADD VOLUME TO CROP
       */
       const query: any = {
-        _id: crop._id,
+        _id: crop._id
       }
 
       const dataToUpdate: any = {
-        volume,
+        volume
       }
 
       await CropRepository.updateOneCrop(query, dataToUpdate)

@@ -9,20 +9,20 @@ const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
 
 interface IActivity {
-  _id?: String
-  name?: String
-  dateStart?: String
-  dateEnd?: String
-  surface?: Number
-  type?: String
-  crop?: String
+  _id?: string
+  name?: string
+  dateStart?: string
+  dateEnd?: string
+  surface?: number
+  type?: string
+  crop?: string
   lots?: Array<any>
-  dateLimitValidation?: String
-  typeAgreement?: String
+  dateLimitValidation?: string
+  typeAgreement?: string
   supplies?: Array<any>
   evidences?: Array<any>
-  status?: String | Array<any>
-  user?: String
+  status?: string | Array<any>
+  user?: string
 }
 
 class ActivityService extends ServiceBase {

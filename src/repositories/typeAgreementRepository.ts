@@ -18,10 +18,9 @@ export class TypeAgreementRepository {
     limit,
     skip,
     sort,
-    populate,
+    populate
   }: any): Promise<any> {
-    return TypeAgreement
-      .find(query ? query : {})
+    return TypeAgreement.find(query ? query : {})
       .populate(populate ? populate : [])
       .limit(limit ? limit : 0)
       .skip(skip ? skip : 0)
@@ -45,7 +44,10 @@ export class TypeAgreementRepository {
    *
    * @returns
    */
-  public static async updateOneTypeAgreement(query: any, dataToUpdate: any): Promise<any> {
+  public static async updateOneTypeAgreement(
+    query: any,
+    dataToUpdate: any
+  ): Promise<any> {
     return TypeAgreement.updateOne(query, dataToUpdate)
   }
 

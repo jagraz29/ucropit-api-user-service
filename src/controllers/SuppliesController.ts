@@ -2,7 +2,6 @@
 
 import { Request, Response } from 'express'
 import models from '../models'
-import supply from '../models/supply'
 import { typesSupplies } from '../utils/Constants'
 
 const Supply = models.Supply
@@ -38,7 +37,7 @@ class SuppliesController {
       .populate('activesPrinciples.activePrinciple')
       .lean({ virtuals: true })
 
-    console.log(supplies)
+    // console.log(supplies)
 
     res.status(200).json(supplies)
   }

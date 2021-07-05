@@ -7,7 +7,7 @@ class Stamp {
    *
    * @returns Promise
    */
-  public static async stampHash (
+  public static async stampHash(
     hash: string
   ): Promise<{ ots: string; fileOts: Array<any> }> {
     const buff = Buffer.from(hash, 'hex')
@@ -25,7 +25,7 @@ class Stamp {
    *
    * @param byteArray
    */
-  public static toHexString (byteArray: any): string {
+  public static toHexString(byteArray: any): string {
     return Array.from(byteArray, (byte: any) => {
       return ('0' + (byte & 0xff).toString(16)).slice(-2)
     }).join('')
