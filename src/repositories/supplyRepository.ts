@@ -46,6 +46,7 @@ class SupplyRepository {
 
   /**
    *
+   * @param id
    * @param queryUpdate
    */
   public static async updateOne(id: string, queryUpdate): Promise<void> {
