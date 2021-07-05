@@ -49,6 +49,10 @@
   font-feature-settings: 'liga';
 }
 
+.page-break-after {
+  page-break-after: avoid;
+}
+
 .fill {
   background-color: #4caf50;
   height: 670px;
@@ -491,8 +495,18 @@
   page-break-inside: avoid;
 }
 
-.activities {
+.lots-frame {
+  border-radius: 2px;
+  padding: 8px;
+  box-shadow: 0px 0px 0px 2px rgb(0, 0, 0, 0.1);
+  background-color: #f8f8f8;
+  display: flex;
+  text-align: left;
   page-break-inside: avoid;
+}
+
+.activities {
+  page-break-before: always;
   background-color: #ffffff;
 }
 
@@ -667,6 +681,7 @@
   line-height: 21px;
   padding-left: 10px;
   padding-right: 10px;
+  width: 150px;
 }
 
 .surface-lot-card {
@@ -750,6 +765,7 @@
   margin-top: 65px;
   flex-wrap: wrap;
   position: static;
+  page-break-inside: avoid;
 }
 
 .activity-frame-lots-validation {
@@ -957,8 +973,6 @@
   align-items: center;
   justify-content: space-around;
   border-radius: 100px;
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .eiq-content {

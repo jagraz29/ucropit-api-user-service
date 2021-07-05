@@ -269,18 +269,27 @@
                 {{#each activities}}
                     {{#if (or (is status 'REALIZADA') (is status 'TERMINADA'))}}
                             {{#if (or (is tag 'ACT_HARVEST') (is tag 'ACT_MONITORING'))}}
+                            <div class="activities">
                         <div class="activity-header">
-                            {{#switch tag}}
-                                {{#case "ACT_MONITORING"}}
-                                <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/monitoring.svg" width="26"
-                                    height="26" />
-                                {{/case}}
-                                {{#case "ACT_HARVEST"}}
-                                <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/harvest.svg"
-                                    width="26" height="26" />
-                                {{/case}}
-                            {{/switch}}
-                        <div class="activity-title">{{name}}</div>
+                            <div class="fill-header">
+                                <div>
+                                    {{#switch tag}}
+                                        {{#case "ACT_MONITORING"}}
+                                        <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/monitoring.svg" width="26"
+                                            height="26" />
+                                        {{/case}}
+                                        {{#case "ACT_HARVEST"}}
+                                        <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/harvest.svg"
+                                            width="26" height="26" />
+                                        {{/case}}
+                                     {{/switch}}
+                                <div class="activity-title">{{name}}</div>
+                               </div>
+                                <div>
+                                    <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/ucropit-logo.png" alt="logo-ucropit"/>
+                                </div> 
+                            </div>
+                            
 
                         <div class="activity-frame">
                                     
@@ -289,7 +298,6 @@
                                               <i class="fa fa-check"></i> {{ moment dateHarvest format="DD/MM/YYYY" }}
                                               <span style="float: right;margin-right: 117px;">Validado Por:</span>
                                          </div>
-                                        <h3 class="activity-framed-h1">Rinde: {{pay}} {{unitType}}.</h3>
                                     {{/is}}
 
                                     {{#is tag 'ACT_MONITORING'}}
@@ -297,10 +305,10 @@
                                               <i class="fa fa-check"></i> {{ moment dateObservation format="DD/MM/YYYY" }}
                                               <span style="float: right;margin-right: 117px;">Validado Por:</span>
                                          </div>
-                                        <h3 class="activity-framed-h1">Rinde Estimado: {{pay}} {{unitType}}.</h3>
                                     {{/is}}
                                     <div class="activity-description-content">
                                         <div>
+                                             <h3 class="activity-framed-h1">Rinde Estimado: {{pay}} {{unitType}}.</h3>
                                              <div class="activity-lots">{{lotsQuantity}} lotes ({{surface}} has.)</div>
                                              <div class="spokesman-data">Evidencias</div>
                                              <div class="backup-docs">documentacion de respaldo</div>
@@ -353,11 +361,19 @@
                                     </div>
                             </div>
                         </div>
+                    </div>
+                        
                     {{else}}
                          <div class="activities">
-                             <div class="date-activity-validation">
-                                <i class="fa fa-calendar"></i> {{ moment dateStart format="DD/MM/YYYY" }} - {{ moment dateEnd format="DD/MM/YYYY" }}
-                            </div>
+                              <div class="fill-header">
+                                    <div class="date-activity-validation">
+                                        <i class="fa fa-calendar"></i> {{ moment dateStart format="DD/MM/YYYY" }} - {{ moment dateEnd format="DD/MM/YYYY" }}
+                                    </div>
+                                    <div>
+                                        <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/ucropit-logo.png" alt="logo-ucropit"/>
+                                    </div> 
+                              </div>
+                             
                             <div class="activity-header">
                                 {{#switch tag}}
                                     {{#case "ACT_SOWING"}}
@@ -529,10 +545,19 @@
     {{!-- TODO: aqui cierra actividades de validaciones --}}
                         {{#each crop.lotsGroupByTag}}
                         <div class="activity-header-lots-under">
-                                <img class="activity-type-img" src="https://www.pngrepo.com/png/111305/180/tryptic-brochure.png" width="26"
+                            <div class="fill-header">
+                                <div>
+                                    <img class="activity-type-img" src="https://www.pngrepo.com/png/111305/180/tryptic-brochure.png" width="26"
                                     height="26" />
-                                <div class="activity-title">{{tag}} Lotes - {{lotsQuantity}} ({{surface}} has.)</div>
-                                <div class="activity-frame">
+                                    <div class="activity-title">{{tag}} Lotes - {{lotsQuantity}} ({{surface}} has.)</div>
+                                </div>
+                              
+                                <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/ucropit-logo.png" alt="logo-ucropit"/>
+                                
+                            </div>
+                                
+                                
+                                <div class="lots-frame">
                                     <div class="activity-frame-lots">
                                         {{#each lots}}
                                         <div class="card">
