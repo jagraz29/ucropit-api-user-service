@@ -17,13 +17,13 @@ program.parse(process.argv)
 const addCountryToMembers = async () => {
   const dataToFindCrops: any = {}
 
-  let crops: Array<any> = await CropRepository.getCrops(dataToFindCrops)
+  const crops: Array<any> = await CropRepository.getCrops(dataToFindCrops)
 
   for (const crop of crops) {
     const dataToFind: any = {
       query: {
-        alpha3Code: 'ARG',
-      },
+        alpha3Code: 'ARG'
+      }
     }
 
     const country = await CountryRepository.getCountry(dataToFind)

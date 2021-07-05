@@ -6,8 +6,8 @@ interface ResizeImageParameters {
   destination: string
   nameFile: string
   suffixName?: string
-  width?: Number
-  height?: Number
+  width?: number
+  height?: number
   fit?: string
 }
 
@@ -21,13 +21,13 @@ class ImageService {
     const pathImage = `${parameters.destination}/${parameters.suffixName}-${parameters.nameFile}`
     await sharp(getFullPath(parameters.path))
       .resize(parameters.width, parameters.height, {
-        fit: parameters.fit || 'cover',
+        fit: parameters.fit || 'cover'
       })
       .toFile(getFullPath(pathImage))
 
     return {
       path: pathImage,
-      nameFile: `${parameters.suffixName}-${parameters.nameFile}`,
+      nameFile: `${parameters.suffixName}-${parameters.nameFile}`
     }
   }
 
@@ -44,7 +44,7 @@ class ImageService {
       suffixName: 'thumbnail',
       width: 200,
       height: 200,
-      fit: 'cover',
+      fit: 'cover'
     })
 
     return thumbnails

@@ -56,41 +56,41 @@ const CropSchema = new Schema(
   {
     name: {
       type: String,
-      require: true,
+      require: true
     },
     pay: {
       type: Number,
-      require: false,
+      require: false
     },
     dateCrop: {
       type: Date,
-      require: false,
+      require: false
     },
     dateHarvest: {
       type: Date,
-      require: false,
+      require: false
     },
     surface: {
       type: Number,
-      require: true,
+      require: true
     },
     volume: {
-      type: Number,
+      type: Number
     },
     cancelled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     downloaded: {
       type: Boolean,
-      default: false,
+      default: false
     },
     identifier: {
-      type: String,
+      type: String
     },
     cropType: {
       type: Schema.Types.ObjectId,
-      ref: 'CropType',
+      ref: 'CropType'
     },
     envImpactIndice: {
       type: Schema.Types.ObjectId,
@@ -98,40 +98,40 @@ const CropSchema = new Schema(
     },
     unitType: {
       type: Schema.Types.ObjectId,
-      ref: 'UnitType',
+      ref: 'UnitType'
     },
     company: {
       type: Schema.Types.ObjectId,
-      ref: 'Company',
+      ref: 'Company'
     },
     members: [
       {
         identifier: String,
         type: {
           type: String,
-          default: 'PRODUCER',
+          default: 'PRODUCER'
         },
         producer: {
           type: Boolean,
-          default: true,
+          default: true
         },
         user: { type: Schema.Types.ObjectId, ref: 'User' },
-        country: { type: Schema.Types.ObjectId, ref: 'Country' },
-      },
+        country: { type: Schema.Types.ObjectId, ref: 'Country' }
+      }
     ],
     lots: [
       {
         tag: {
           type: String,
-          require: true,
+          require: true
         },
         data: [
           {
             type: Schema.Types.ObjectId,
-            ref: 'Lot',
-          },
-        ],
-      },
+            ref: 'Lot'
+          }
+        ]
+      }
     ],
     pending: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
     toMake: [{ type: Schema.Types.ObjectId, ref: 'Activity' }],
@@ -142,38 +142,38 @@ const CropSchema = new Schema(
         typeAgreement: {
           type: Schema.Types.ObjectId,
           ref: 'TypeAgreement',
-          require: true,
+          require: true
         },
         badge: {
           type: Schema.Types.ObjectId,
           ref: 'Badge',
-          require: true,
+          require: true
         },
         surfaceTotal: {
           type: Number,
-          require: true,
-        },
-      },
+          require: true
+        }
+      }
     ],
     synchronizedList: [
       {
         service: {
-          type: String,
+          type: String
         },
         isSynchronized: {
           type: Boolean,
-          default: false,
-        },
-      },
-    ],
+          default: false
+        }
+      }
+    ]
   },
   {
     toJSON: {
-      virtuals: true,
+      virtuals: true
     },
     toObject: {
-      virtuals: true,
-    },
+      virtuals: true
+    }
   }
 )
 

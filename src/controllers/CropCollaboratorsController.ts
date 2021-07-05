@@ -11,7 +11,7 @@ const PRODUCERS_ROLES = [
   'PRODUCER',
   'PRODUCER_ADVISER',
   'PRODUCER_ADVISER_ENCOURAGED',
-  'CAM',
+  'CAM'
 ]
 
 class CropCollaboratorsController {
@@ -41,12 +41,12 @@ class CropCollaboratorsController {
           user.companies.push({
             company: company._id,
             isAdmin: false,
-            identifier,
+            identifier
           })
 
           const request = await CollaboratorRequest.create({
             user: user._id,
-            company: company._id,
+            company: company._id
           })
 
           user.collaboratorRequest.push(request._id)
@@ -54,7 +54,7 @@ class CropCollaboratorsController {
       } else {
         user.companies.push({
           isAdmin: PRODUCERS_ROLES.includes(type),
-          identifier,
+          identifier
         })
       }
 
@@ -65,7 +65,7 @@ class CropCollaboratorsController {
         producer: PRODUCERS_ROLES.includes(type),
         identifier,
         type,
-        country,
+        country
       })
 
       const role = await RoleService.findOne({ value: type })
@@ -77,7 +77,7 @@ class CropCollaboratorsController {
           user,
           cropname: crop.name,
           identifier: identifier,
-          role: role.label.es,
+          role: role.label.es
         }
       )
 

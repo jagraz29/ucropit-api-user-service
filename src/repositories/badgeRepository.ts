@@ -18,7 +18,7 @@ export class BadgeRepository {
     limit,
     skip,
     sort,
-    populate,
+    populate
   }: any): Promise<any> {
     return Badge.find(query ?? {})
       .populate(populate ?? [])

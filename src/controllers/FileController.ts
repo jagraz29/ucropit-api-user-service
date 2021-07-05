@@ -15,7 +15,7 @@ class FileController {
    *
    * @returns Response
    */
-  public async download (req: Request, res: Response) {
+  public async download(req: Request, res: Response) {
     const { id } = req.params
 
     const file: any = await File.findById(id)
@@ -23,7 +23,7 @@ class FileController {
     res.download(getFullPath(file.path))
   }
 
-  public async downloadSign (req: Request, res: Response) {
+  public async downloadSign(req: Request, res: Response) {
     const { id } = req.params
 
     const file: any = await File.findById(id)

@@ -4,7 +4,7 @@ const { Crop } = models
 import {
   joinActivitiesByCrop,
   listEvidencesCrop,
-  joinActivitiesFilterTypeWithCrop,
+  joinActivitiesFilterTypeWithCrop
 } from '../utils'
 
 export class CropRepository {
@@ -23,7 +23,7 @@ export class CropRepository {
     limit,
     skip,
     sort,
-    populate,
+    populate
   }: any): Promise<any> {
     return Crop.find(query ?? {})
       .populate(populate ?? [])
@@ -48,7 +48,7 @@ export class CropRepository {
   public static async findAllCropsByCompanies(identifier: string) {
     const cropsInstance = await Crop.find({
       cancelled: false,
-      'members.identifier': identifier,
+      'members.identifier': identifier
     })
       .populate('lots.data')
       .populate('cropType')
@@ -64,13 +64,13 @@ export class CropRepository {
           { path: 'files' },
           {
             path: 'supplies',
-            populate: [{ path: 'typeId' }],
+            populate: [{ path: 'typeId' }]
           },
           {
             path: 'storages',
-            populate: [{ path: 'storageType' }],
-          },
-        ],
+            populate: [{ path: 'storageType' }]
+          }
+        ]
       })
       .populate({
         path: 'toMake',
@@ -82,13 +82,13 @@ export class CropRepository {
           { path: 'files' },
           {
             path: 'supplies',
-            populate: [{ path: 'typeId' }],
+            populate: [{ path: 'typeId' }]
           },
           {
             path: 'storages',
-            populate: [{ path: 'storageType' }],
-          },
-        ],
+            populate: [{ path: 'storageType' }]
+          }
+        ]
       })
       .populate({
         path: 'done',
@@ -103,19 +103,19 @@ export class CropRepository {
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies', populate: [{ path: 'typeId' }] },
-            ],
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           },
           {
             path: 'supplies',
-            populate: [{ path: 'typeId' }],
+            populate: [{ path: 'typeId' }]
           },
           {
             path: 'storages',
-            populate: [{ path: 'storageType' }],
+            populate: [{ path: 'storageType' }]
           },
-          { path: 'lotsMade' },
-        ],
+          { path: 'lotsMade' }
+        ]
       })
       .populate({
         path: 'finished',
@@ -127,21 +127,21 @@ export class CropRepository {
           { path: 'files' },
           {
             path: 'supplies',
-            populate: [{ path: 'typeId' }],
+            populate: [{ path: 'typeId' }]
           },
           {
             path: 'storages',
-            populate: [{ path: 'storageType' }],
+            populate: [{ path: 'storageType' }]
           },
           {
             path: 'achievements',
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies', populate: [{ path: 'typeId' }] },
-            ],
-          },
-        ],
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
+          }
+        ]
       })
       .populate('members.user')
       .lean()
@@ -167,7 +167,7 @@ export class CropRepository {
       .populate('badges.badge')
       .populate({
         path: 'company',
-        populate: [{ path: 'files' }, { path: 'contacts.user' }],
+        populate: [{ path: 'files' }, { path: 'contacts.user' }]
       })
       .populate({
         path: 'pending',
@@ -181,13 +181,13 @@ export class CropRepository {
           { path: 'lots', select: '-area -__v' },
           {
             path: 'supplies',
-            populate: [{ path: 'typeId' }],
+            populate: [{ path: 'typeId' }]
           },
           {
             path: 'storages',
-            populate: [{ path: 'storageType' }],
-          },
-        ],
+            populate: [{ path: 'storageType' }]
+          }
+        ]
       })
       .populate({
         path: 'toMake',
@@ -201,13 +201,13 @@ export class CropRepository {
           { path: 'files' },
           {
             path: 'supplies',
-            populate: [{ path: 'typeId' }],
+            populate: [{ path: 'typeId' }]
           },
           {
             path: 'storages',
-            populate: [{ path: 'storageType' }],
-          },
-        ],
+            populate: [{ path: 'storageType' }]
+          }
+        ]
       })
       .populate({
         path: 'done',
@@ -232,17 +232,17 @@ export class CropRepository {
               { path: 'envImpactIndice', select: 'eiq' },
               { path: 'files' },
               { path: 'supplies.supply', populate: [{ path: 'typeId' }] },
-              { path: 'supplies.typeId' },
-            ],
+              { path: 'supplies.typeId' }
+            ]
           },
           { path: 'supplies.supply', populate: [{ path: 'typeId' }] },
           { path: 'supplies.typeId' },
           {
             path: 'storages',
-            populate: [{ path: 'storageType' }],
+            populate: [{ path: 'storageType' }]
           },
-          { path: 'lotsMade' },
-        ],
+          { path: 'lotsMade' }
+        ]
       })
       .populate({
         path: 'finished',
@@ -262,7 +262,7 @@ export class CropRepository {
           { path: 'supplies.typeId' },
           {
             path: 'storages',
-            populate: [{ path: 'storageType' }],
+            populate: [{ path: 'storageType' }]
           },
           {
             path: 'achievements',
@@ -274,10 +274,10 @@ export class CropRepository {
               { path: 'envImpactIndice', select: 'eiq' },
               { path: 'files' },
               { path: 'supplies.supply', populate: [{ path: 'typeId' }] },
-              { path: 'supplies.typeId' },
-            ],
-          },
-        ],
+              { path: 'supplies.typeId' }
+            ]
+          }
+        ]
       })
       .populate('members.user')
       .lean({ virtuals: true })
@@ -293,7 +293,7 @@ export class CropRepository {
     const cropsInstance = await Crop.find({
       cancelled: false,
       cropType,
-      company,
+      company
     }).populate('unitType')
 
     return cropsInstance.length ? cropsInstance : null
@@ -313,9 +313,9 @@ export class CropRepository {
           { path: 'satelliteImages' },
           {
             path: 'achievements',
-            populate: [{ path: 'files' }],
-          },
-        ],
+            populate: [{ path: 'files' }]
+          }
+        ]
       })
       .populate('members.user')
       .populate({
@@ -325,9 +325,9 @@ export class CropRepository {
           { path: 'satelliteImages' },
           {
             path: 'achievements',
-            populate: [{ path: 'files' }],
-          },
-        ],
+            populate: [{ path: 'files' }]
+          }
+        ]
       })
       .lean({ virtuals: true })
     return cropsInstance ? listEvidencesCrop(cropsInstance) : null
@@ -396,13 +396,13 @@ export class CropRepository {
           { path: 'files' },
           {
             path: 'supplies',
-            populate: [{ path: 'typeId' }],
+            populate: [{ path: 'typeId' }]
           },
           {
             path: 'storages',
-            populate: [{ path: 'storageType' }],
-          },
-        ],
+            populate: [{ path: 'storageType' }]
+          }
+        ]
       })
       .populate({
         path: 'toMake',
@@ -414,13 +414,13 @@ export class CropRepository {
           { path: 'files' },
           {
             path: 'supplies',
-            populate: [{ path: 'typeId' }],
+            populate: [{ path: 'typeId' }]
           },
           {
             path: 'storages',
-            populate: [{ path: 'storageType' }],
-          },
-        ],
+            populate: [{ path: 'storageType' }]
+          }
+        ]
       })
       .populate({
         path: 'done',
@@ -435,19 +435,19 @@ export class CropRepository {
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies', populate: [{ path: 'typeId' }] },
-            ],
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           },
           {
             path: 'supplies',
-            populate: [{ path: 'typeId' }],
+            populate: [{ path: 'typeId' }]
           },
           {
             path: 'storages',
-            populate: [{ path: 'storageType' }],
+            populate: [{ path: 'storageType' }]
           },
-          { path: 'lotsMade' },
-        ],
+          { path: 'lotsMade' }
+        ]
       })
       .populate({
         path: 'finished',
@@ -459,21 +459,21 @@ export class CropRepository {
           { path: 'files' },
           {
             path: 'supplies',
-            populate: [{ path: 'typeId' }],
+            populate: [{ path: 'typeId' }]
           },
           {
             path: 'storages',
-            populate: [{ path: 'storageType' }],
+            populate: [{ path: 'storageType' }]
           },
           {
             path: 'achievements',
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies', populate: [{ path: 'typeId' }] },
-            ],
-          },
-        ],
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
+          }
+        ]
       })
       .populate('members.user')
 

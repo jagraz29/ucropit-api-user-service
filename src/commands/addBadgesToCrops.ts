@@ -18,7 +18,7 @@ import {
 const Crop = models.Crop
 
 const start = async () => {
-  let crops: Array<any> = await Crop.find()
+  const crops: Array<any> = await Crop.find()
 
   for (const crop of crops) {
     try {

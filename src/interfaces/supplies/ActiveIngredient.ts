@@ -1,14 +1,14 @@
 export interface ActiveIngredient {
   _id: string
   name: { es: string; en?: string; pt?: string }
-  eiq: Number | String | any
+  eiq: number | string | any
 }
 
 export interface ActiveIngredientsSupply {
   activeIngredient: string
-  eiqActiveIngredient: Number
-  composition: Number
-  eiq: Number
+  eiqActiveIngredient: number
+  composition: number
+  eiq: number
 }
 
 export interface ActiveIngredientUnified {

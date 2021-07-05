@@ -4,21 +4,6 @@ import ActivityService from './ActivityService'
 import { Numbers } from '../utils'
 import _ from 'lodash'
 
-let allMonths: Array<string> = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-]
-
 const activitiesTags: Array<string> = [
   'ACT_SOWING',
   'ACT_HARVEST',
@@ -35,11 +20,10 @@ class ChartDataService extends ServiceBase {
    * @param crops
    */
   public static generateDataAgreement(crops) {
-    const listSummarySurfaces: any = CropService.createDataCropToChartSurface(
-      crops
-    )
+    const listSummarySurfaces: any =
+      CropService.createDataCropToChartSurface(crops)
 
-    const sortDataList = this.sortData(listSummarySurfaces, allMonths).filter(
+    const sortDataList = this.sortData(listSummarySurfaces).filter(
       (item) => item.total > 0
     )
 
@@ -59,23 +43,18 @@ class ChartDataService extends ServiceBase {
     let labels = []
     const groupData = activitiesTags.map((tag) => {
       const dataCrop = crops.map((crop) => {
-        const groupDataActivitiesDone = ActivityService.groupSurfaceAndDateAchievements(
-          crop.done,
-          tag
-        )
+        const groupDataActivitiesDone =
+          ActivityService.groupSurfaceAndDateAchievements(crop.done, tag)
 
-        const groupDataActivitiesFinished = ActivityService.groupSurfaceAndDateAchievements(
-          crop.finished,
-          tag
-        )
+        const groupDataActivitiesFinished =
+          ActivityService.groupSurfaceAndDateAchievements(crop.finished, tag)
 
         return groupDataActivitiesDone.concat(groupDataActivitiesFinished)
       })
 
-      const sortGroupData = this.sortData(
-        _.flatten(dataCrop),
-        allMonths
-      ).filter((item) => item.total > 0)
+      const sortGroupData = this.sortData(_.flatten(dataCrop)).filter(
+        (item) => item.total > 0
+      )
 
       const dataActivitiesSummary = this.summaryTotalPerMonth(
         CropService.summaryData(sortGroupData)
@@ -97,8 +76,8 @@ class ChartDataService extends ServiceBase {
     labels = this.mergeDataLabelsActivity(labels)
 
     labels.sort(function (a, b) {
-      let currentDate = a.substr(3, 4).split(' ') + a.substr(0, 2).split(' ')
-      let cropDate = b.substr(3, 4).split(' ') + b.substr(0, 2).split(' ')
+      const currentDate = a.substr(3, 4).split(' ') + a.substr(0, 2).split(' ')
+      const cropDate = b.substr(3, 4).split(' ') + b.substr(0, 2).split(' ')
       return currentDate - cropDate
     })
 
@@ -115,7 +94,7 @@ class ChartDataService extends ServiceBase {
   }
 
   private static dataActivity(data, labels, activityLabel) {
-    let newDataSet = []
+    const newDataSet = []
     if (data.length === 0) return newDataSet
 
     for (const label of labels) {
