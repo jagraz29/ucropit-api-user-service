@@ -20,8 +20,16 @@ import { Numbers } from '../Numbers'
 export const getAchievements = (achievements, members?): IAchievement[] => {
   return achievements
     .map((achievement) => {
-      const { dateAchievement, lots, surface, signers, supplies, files, _id, envImpactIndice } =
-        achievement
+      const {
+        dateAchievement,
+        lots,
+        surface,
+        signers,
+        supplies,
+        files,
+        _id,
+        envImpactIndex
+      } = achievement
       const eiq = calculateEIQSurfaceAchievement(achievement)
       return {
         _id,
@@ -32,7 +40,7 @@ export const getAchievements = (achievements, members?): IAchievement[] => {
         supplies: getSuppliesAndTotalTypes(supplies),
         suppliesList: supplies,
         eiq: Numbers.roundToTwo(eiq),
-        envImpactIndice,
+        envImpactIndex,
         signed: signers.length,
         signedIf: signers.filter(({ signed }) => signed).length,
         signers: getSignerList(signers, members),

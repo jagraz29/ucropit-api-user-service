@@ -51,11 +51,10 @@ class FileUpload {
 
     const fileNameArray = file.name.trim().split('.')
 
-    let renameFile = `${file.md5}.${fileNameArray.pop()}`
+    const renameFile = `${file.md5}.${fileNameArray.pop()}`
 
     const path = getFullPath(`${process.env.DIR_UPLOADS}/${this.destination}`)
     return new Promise(async (resolve, reject) => {
-
       if (file.mimetype === 'image/heic') {
         return resolve(this.convertAndSaveNewFile(file, path))
       }
@@ -76,17 +75,16 @@ class FileUpload {
     return file.mimetype.match(VALID_FORMATS_FILES) !== null
   }
 
-  async convertImageHeciToJpeg (inputBuffer) {
+  async convertImageHeciToJpeg(inputBuffer) {
     const outputBuffer = await heicConvert({
       buffer: inputBuffer,
       format: 'JPEG',
       quality: 1
     })
     return outputBuffer
-
   }
 
-  async convertAndSaveNewFile (file, path) {
+  async convertAndSaveNewFile(file, path) {
     mkdirSync(path)
     const renameFile = `${file.md5}.jpg`
     const outputBuffer = await this.convertImageHeciToJpeg(file.data)
@@ -96,10 +94,7 @@ class FileUpload {
       nameFile: renameFile,
       fileType: 'image/jpeg'
     }
-
   }
-
-
 }
 
 export default FileUpload

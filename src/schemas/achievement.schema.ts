@@ -29,9 +29,9 @@ import { Schema } from 'mongoose'
 
 export const AchievementSchema: Schema = new Schema({
   _id: { type: Schema.Types.ObjectId, required: false },
-  envImpactIndice: {
+  envImpactIndex: {
     type: Schema.Types.ObjectId,
-    ref: 'EnvImpactIndice',
+    ref: 'EnvImpactIndex'
   },
   key: {
     type: String,

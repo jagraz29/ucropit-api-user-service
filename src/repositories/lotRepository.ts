@@ -19,10 +19,10 @@ export class LotRepository {
    *
    * @returns
    */
-     public static async updateOneLot(
-      query: any,
-      dataToUpdate: any
-    ): Promise<any> {
-      return Lot.updateOne(query, dataToUpdate)
-    }
+  public static async updateOneLot(
+    query: any,
+    dataToUpdate: any
+  ): Promise<any> {
+    return Lot.updateOne(query, dataToUpdate)
+  }
 }

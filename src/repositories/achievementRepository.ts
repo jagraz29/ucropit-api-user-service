@@ -20,10 +20,10 @@ export class AchievementRepository {
    *
    * @returns
    */
-     public static async updateOneAchievement(
-      query: any,
-      dataToUpdate: Partial<IAchievement>
-    ): Promise<IAchievementDocument | any > {
-      return AchievementModel.updateOne(query, dataToUpdate)
-    }
+  public static async updateOneAchievement(
+    query: any,
+    dataToUpdate: Partial<IAchievement>
+  ): Promise<IAchievementDocument | any> {
+    return AchievementModel.updateOne(query, dataToUpdate)
+  }
 }

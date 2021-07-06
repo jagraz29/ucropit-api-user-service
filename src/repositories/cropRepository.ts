@@ -159,11 +159,11 @@ export class CropRepository {
     const cropInstance = await Crop.findById(id)
       .populate({
         path: 'lots.data',
-        populate: [{ path: 'envImpactIndice', select: 'eiq' }],
+        populate: [{ path: 'envImpactIndex', select: 'eiq' }]
       })
       .populate('cropType')
       .populate('unitType')
-      .populate('envImpactIndice', 'eiq')
+      .populate('envImpactIndex', 'eiq')
       .populate('badges.badge')
       .populate({
         path: 'company',
@@ -173,7 +173,7 @@ export class CropRepository {
         path: 'pending',
         populate: [
           { path: 'collaborators' },
-          { path: 'envImpactIndice', select: 'eiq' },
+          { path: 'envImpactIndex', select: 'eiq' },
           { path: 'unitType' },
           { path: 'type' },
           { path: 'typeAgreement' },
@@ -193,7 +193,7 @@ export class CropRepository {
         path: 'toMake',
         populate: [
           { path: 'collaborators' },
-          { path: 'envImpactIndice', select: 'eiq' },
+          { path: 'envImpactIndex', select: 'eiq' },
           { path: 'unitType' },
           { path: 'type' },
           { path: 'typeAgreement' },
@@ -212,24 +212,25 @@ export class CropRepository {
       .populate({
         path: 'done',
         populate: [
-          { path: 'envImpactIndice', select: 'eiq' },
+          { path: 'envImpactIndex', select: 'eiq' },
           { path: 'collaborators' },
           { path: 'unitType' },
           { path: 'type' },
           { path: 'typeAgreement' },
-          { path: 'lots', select: '-area -__v',
-          populate: [
-            { path: 'envImpactIndice', select: 'eiq' }
-          ]},
+          {
+            path: 'lots',
+            select: '-area -__v',
+            populate: [{ path: 'envImpactIndex', select: 'eiq' }]
+          },
           { path: 'files' },
           {
             path: 'achievements',
             populate: [
-              { path: 'lots',
-              populate: [
-                { path: 'envImpactIndice', select: 'eiq' }
-              ]},
-              { path: 'envImpactIndice', select: 'eiq' },
+              {
+                path: 'lots',
+                populate: [{ path: 'envImpactIndex', select: 'eiq' }]
+              },
+              { path: 'envImpactIndex', select: 'eiq' },
               { path: 'files' },
               { path: 'supplies.supply', populate: [{ path: 'typeId' }] },
               { path: 'supplies.typeId' }
@@ -247,15 +248,15 @@ export class CropRepository {
       .populate({
         path: 'finished',
         populate: [
-          { path: 'envImpactIndice', select: 'eiq' },
+          { path: 'envImpactIndex', select: 'eiq' },
           { path: 'collaborators' },
           { path: 'unitType' },
           { path: 'type' },
           { path: 'typeAgreement' },
-          { path: 'lots', select: '-area -__v',
-            populate: [
-              { path: 'envImpactIndice', select: 'eiq' }
-            ]
+          {
+            path: 'lots',
+            select: '-area -__v',
+            populate: [{ path: 'envImpactIndex', select: 'eiq' }]
           },
           { path: 'files' },
           { path: 'supplies.supply', populate: [{ path: 'typeId' }] },
@@ -267,11 +268,11 @@ export class CropRepository {
           {
             path: 'achievements',
             populate: [
-              { path: 'lots',
-              populate: [
-                { path: 'envImpactIndice', select: 'eiq' }
-              ]},
-              { path: 'envImpactIndice', select: 'eiq' },
+              {
+                path: 'lots',
+                populate: [{ path: 'envImpactIndex', select: 'eiq' }]
+              },
+              { path: 'envImpactIndex', select: 'eiq' },
               { path: 'files' },
               { path: 'supplies.supply', populate: [{ path: 'typeId' }] },
               { path: 'supplies.typeId' }

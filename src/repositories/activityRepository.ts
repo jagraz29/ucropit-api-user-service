@@ -137,10 +137,10 @@ export class ActivityRepository {
    *
    * @returns
    */
-     public static async updateOneActivity(
-      query: any,
-      dataToUpdate: any
-    ): Promise<any> {
-      return Activity.updateOne(query, dataToUpdate)
-    }
+  public static async updateOneActivity(
+    query: any,
+    dataToUpdate: any
+  ): Promise<any> {
+    return Activity.updateOne(query, dataToUpdate)
+  }
 }

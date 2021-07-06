@@ -16,11 +16,7 @@ export const getCropUtils = (
     company,
     badges,
     unitType,
-<<<<<<< HEAD
-    data,
-    envImpactIndice,
-=======
->>>>>>> develop
+    envImpactIndex,
     members,
     cropType: { key: cropTypeKey }
   },
@@ -29,15 +25,9 @@ export const getCropUtils = (
   eiqRanges: IEiqRangesDocument[]
 ) => {
   const pay = payEntry ?? 0
-<<<<<<< HEAD
-  let eiq: number = 0
+  let eiq = 0
   const { key: keyUnitType, name: nameUnitType } = unitType || {}
   eiq = getEiqFromActivityWithEiq(activitiesWithEiq)
-=======
-  let eiq = 0
-  const { key: keyUnitType } = unitType || {}
-  eiq = Numbers.roundToTwo(activitiesWithEiq.reduce((a, b) => a + b.eiq, 0))
->>>>>>> develop
 
   return {
     surface,
@@ -59,7 +49,7 @@ export const getCropUtils = (
       quantity: eiq,
       range: getEiqRange(eiq, eiqRanges)
     },
-    envImpactIndice,
+    envImpactIndex,
     cropTypeKey,
     company,
     activities,

@@ -90,9 +90,9 @@ const ActivitySchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'UnitType'
   },
-  envImpactIndice: {
+  envImpactIndex: {
     type: Schema.Types.ObjectId,
-    ref: 'EnvImpactIndice',
+    ref: 'EnvImpactIndex'
   },
   pay: {
     type: Number

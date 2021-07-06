@@ -17,7 +17,7 @@ export const getLots = (
       surface,
       image,
       name,
-      envImpactIndice,
+      envImpactIndex
     }) => {
       const { normal: path } = image || {}
       const imageLot = path
@@ -38,7 +38,7 @@ export const getLots = (
           quantity: eiq,
           range: getEiqRange(eiq, eiqRanges)
         },
-        envImpactIndice,
+        envImpactIndex,
         image: imageLot,
         nameLot: name
       }

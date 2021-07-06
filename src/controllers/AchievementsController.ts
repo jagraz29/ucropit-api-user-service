@@ -6,7 +6,7 @@ import {
   validateAchievement,
   validateSignAchievement,
   validateFilesWithEvidences,
-  validateExtensionFile,
+  validateExtensionFile
 } from '../utils'
 
 import AchievementService from '../services/AchievementService'
@@ -22,8 +22,8 @@ import NotificationService from '../services/NotificationService'
 import { emailTemplates } from '../types/common'
 import { typesSupplies } from '../utils/Constants'
 import agenda from '../jobs'
-import { IEnvImpactIndiceDocument } from '../interfaces'
-import { setEiqInEnvImpactIndice, setEnvImpactIndicesInEntities } from '../core'
+import { IEnvImpactIndexDocument } from '../interfaces'
+import { setEiqInEnvImpactIndex, setEnvImpactIndexInEntities } from '../core'
 
 const Crop = models.Crop
 
@@ -100,22 +100,23 @@ class AchievementsController {
     if (validationFiles.error) {
       return res.status(400).json(validationFiles)
     }
-    
+
     const activity: any = await ActivityService.findActivityById(data.activity)
-    
+
     let achievement: any = await AchievementService.store(data, activity)
-    
+
     await ActivityService.addAchievement(activity, achievement)
-    
+
     if (activity.status[0].name.en !== 'DONE') {
       await ActivityService.changeStatus(activity, 'DONE')
       await CropService.removeActivities(activity, crop, 'toMake')
       await CropService.addActivities(activity, crop)
     }
-    
+
     try {
-      const envImpactIndiceIds: IEnvImpactIndiceDocument[] = await setEiqInEnvImpactIndice(data,achievement)
-      await setEnvImpactIndicesInEntities(envImpactIndiceIds)
+      const envImpactIndexIds: IEnvImpactIndexDocument[] =
+        await setEiqInEnvImpactIndex(data, achievement)
+      await setEnvImpactIndexInEntities(envImpactIndexIds)
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: ReasonPhrases.INTERNAL_SERVER_ERROR,

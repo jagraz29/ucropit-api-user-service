@@ -1,7 +1,7 @@
 import { Document, Model } from 'mongoose'
 import { IEntity, TEiqRanges } from '.'
 
-export interface IEnvImpactIndice {
+export interface IEnvImpactIndex {
   crop: String
   lot?: String
   activity: String
@@ -10,9 +10,9 @@ export interface IEnvImpactIndice {
   eiq: {
     value: Number
     planned?: Number
-    range:TEiqRanges
+    range: TEiqRanges
   }
 }
 
-export interface IEnvImpactIndiceDocument extends IEnvImpactIndice, Document {}
-export interface IEnvImpactIndiceModel extends Model<IEnvImpactIndiceDocument> {}
+export interface IEnvImpactIndexDocument extends IEnvImpactIndex, Document {}
+export interface IEnvImpactIndexModel extends Model<IEnvImpactIndexDocument> {}
