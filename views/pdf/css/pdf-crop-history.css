@@ -506,8 +506,11 @@
 }
 
 .activities {
-  page-break-before: always;
   background-color: #ffffff;
+}
+
+.activities-with-achievements {
+  page-break-before: always;
 }
 
 .activity-frame-actividades-validaciones {

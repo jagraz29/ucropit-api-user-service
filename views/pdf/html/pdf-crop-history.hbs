@@ -271,26 +271,17 @@
                             {{#if (or (is tag 'ACT_HARVEST') (is tag 'ACT_MONITORING'))}}
                             <div class="activities">
                         <div class="activity-header">
-                            <div class="fill-header">
-                                <div>
-                                    {{#switch tag}}
-                                        {{#case "ACT_MONITORING"}}
-                                        <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/monitoring.svg" width="26"
-                                            height="26" />
-                                        {{/case}}
-                                        {{#case "ACT_HARVEST"}}
-                                        <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/harvest.svg"
-                                            width="26" height="26" />
-                                        {{/case}}
-                                     {{/switch}}
-                                <div class="activity-title">{{name}}</div>
-                               </div>
-                                <div>
-                                    <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/ucropit-logo.png" alt="logo-ucropit"/>
-                                </div> 
-                            </div>
-                            
-
+                                {{#switch tag}}
+                                    {{#case "ACT_MONITORING"}}
+                                    <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/monitoring.svg" width="26"
+                                        height="26" />
+                                    {{/case}}
+                                    {{#case "ACT_HARVEST"}}
+                                    <img class="activity-type-img" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/harvest.svg"
+                                        width="26" height="26" />
+                                    {{/case}}
+                                    {{/switch}}
+                            <div class="activity-title">{{name}}</div>
                         <div class="activity-frame">
                                     
                                     {{#is tag 'ACT_HARVEST'}}
@@ -364,15 +355,12 @@
                     </div>
                         
                     {{else}}
-                         <div class="activities">
-                              <div class="fill-header">
-                                    <div class="date-activity-validation">
-                                        <i class="fa fa-calendar"></i> {{ moment dateStart format="DD/MM/YYYY" }} - {{ moment dateEnd format="DD/MM/YYYY" }}
-                                    </div>
-                                    <div>
-                                        <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/ucropit-logo.png" alt="logo-ucropit"/>
-                                    </div> 
-                              </div>
+                         <div class="activities-with-achievements">
+
+                            <div class="date-activity-validation">
+                                <i class="fa fa-calendar"></i> {{ moment dateStart format="DD/MM/YYYY" }} - {{ moment dateEnd format="DD/MM/YYYY" }}
+                            </div>
+                            
                              
                             <div class="activity-header">
                                 {{#switch tag}}
@@ -547,13 +535,10 @@
                         <div class="activity-header-lots-under">
                             <div class="fill-header">
                                 <div>
-                                    <img class="activity-type-img" src="https://www.pngrepo.com/png/111305/180/tryptic-brochure.png" width="26"
-                                    height="26" />
+                                    <img class="activity-type-img" src="https://www.pngrepo.com/png/111305/180/tryptic-brochure.png" width="15"
+                                    height="15" />
                                     <div class="activity-title">{{tag}} Lotes - {{lotsQuantity}} ({{surface}} has.)</div>
-                                </div>
-                              
-                                <img src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/ucropit-logo.png" alt="logo-ucropit"/>
-                                
+                                </div>  
                             </div>
                                 
                                 
@@ -572,8 +557,8 @@
                                                         <div class="eiq-lots eiq-very-low">
                                                             <div class="eiq-lots-style">
                                                                 <div class="icon-eiq-activity">
-                                                                <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
-                                                                    height="26" />
+                                                                <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
+                                                                    height="15" />
                                                                 </div>
                                                                 <div class="center-activity color-very-low">
                                                                     EIQ: {{eiq.quantity}}
@@ -589,8 +574,8 @@
                                                         <div class="eiq-lots eiq-low">
                                                             <div class="eiq-lots-style">
                                                                 <div class="icon-eiq-activity">
-                                                                <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
-                                                                    height="26" />
+                                                                <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
+                                                                    height="15" />
                                                                 </div>
                                                                 <div class="center-activity color-low">
                                                                     EIQ: {{eiq.quantity}}
@@ -605,8 +590,8 @@
                                                     <div class="eiq-lots eiq-moderate">
                                                         <div class="eiq-lots-style">
                                                             <div class="icon-eiq-activity">
-                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
-                                                                height="26" />
+                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
+                                                                height="15" />
                                                             </div>
                                                             <div class="center-activity color-moderate">
                                                                 EIQ: {{eiq.quantity}}
@@ -622,8 +607,8 @@
                                                     <div class="eiq-lots eiq-high">
                                                         <div class="eiq-lots-style">
                                                             <div class="icon-eiq-activity">
-                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
-                                                                height="26" />
+                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
+                                                                height="15" />
                                                             </div>
                                                             <div class="center-activity color-hight">
                                                                 EIQ: {{eiq.quantity}}
@@ -638,8 +623,8 @@
                                                     <div class="eiq-lots eiq-very-high">
                                                         <div class="eiq-lots-style">
                                                             <div class="icon-eiq-activity">
-                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="26"
-                                                                height="26" />
+                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
+                                                                height="15" />
                                                             </div>
                                                             <div class="text-eiq-value color-very-high">
                                                                 EIQ: {{eiq.quantity}}
