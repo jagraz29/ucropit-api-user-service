@@ -9,7 +9,8 @@ export const errors = [
   { key: '004', code: 'NAME_LOT_DUPLICATED' },
   { key: '005', code: 'RESOURCE_NOT_FOUND' },
   { key: '006', code: 'BADGE_TYPE_DUPLICATED' },
-  { key: '007', code: 'DATA_NOT_FOUND' }
+  { key: '007', code: 'DATA_NOT_FOUND' },
+  { key: '008', code: 'SAVE_FAILED' }
 ]
 
 export enum emailTemplates {

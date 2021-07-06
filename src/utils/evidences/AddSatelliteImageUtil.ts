@@ -1,5 +1,5 @@
 import { ResponseOkProps } from '../../interfaces/SatelliteImageRequest'
-import LotRepository from '../../repositories/lotRepository'
+import { LotRepository } from '../../repositories'
 import { ActivityRepository } from '../../repositories'
 import { FileDocumentRepository } from '../../repositories'
 import CommonRepository from '../../repositories/commonRepository'
