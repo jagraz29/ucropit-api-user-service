@@ -16,7 +16,8 @@ import {
 import {
   sumActivitiesSurfacesByTypeAgreement,
   getCropBadgesReached,
-  calculateCropEiq
+  calculateCropEiq,
+  calculateEiqOfActivity
 } from '../utils'
 
 import ActivityService from '../services/ActivityService'
@@ -40,8 +41,6 @@ import { ACTIVITY_HARVEST } from '../utils/Constants'
 const Activity = models.Activity
 const FileDocument = models.FileDocument
 const Crop = models.Crop
-
-import { UserSchema } from '../models/user'
 
 class ActivitiesController {
   /**
@@ -75,9 +74,13 @@ class ActivitiesController {
    * @return Response
    */
   public async show(req: Request, res: Response) {
-    const activity = await ActivityService.findActivityById(req.params.id)
+    const activity =
+      await ActivityRepository.findActivityByIdWithPopulateAndVirtuals(
+        req.params.id
+      )
 
-    res.status(200).json(activity)
+    const activityWithEIQ = calculateEiqOfActivity(activity)
+    res.status(200).json(activityWithEIQ)
   }
 
   /**
@@ -366,7 +369,7 @@ class ActivitiesController {
       /*
        * GET CROP EIQ
        */
-      const cropEiq: number = await calculateCropEiq(applicationActivities)
+      const cropEiq: number = calculateCropEiq(applicationActivities)
 
       /*
        * GET BADGES TO ADD TO CROP
@@ -437,7 +440,7 @@ class ActivitiesController {
    * @return Response
    */
   public async delete(req: Request, res: Response) {
-    const activity = await Activity.findByIdAndDelete(req.params.id)
+    await Activity.findByIdAndDelete(req.params.id)
 
     res.status(200).json({
       message: 'deleted successfully'
@@ -505,8 +508,6 @@ class ActivitiesController {
         const fileRemove = await FileDocument.findByIdAndDelete(document._id)
 
         if (fileRemove) {
-          const documentFiles = activity.toJSON().files
-
           files = files.filter(
             (item) => item.toString() !== document._id.toString()
           )

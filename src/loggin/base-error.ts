@@ -10,7 +10,7 @@ class BaseError extends Error {
   public readonly httpCode: HttpStatusCode
   public readonly isOperational: boolean
 
-  constructor (
+  constructor(
     name: string,
     httpCode: HttpStatusCode,
     description: string,

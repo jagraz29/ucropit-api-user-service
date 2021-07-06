@@ -14,17 +14,16 @@ export const getCropBadgesReached = (
   {
     exploActivitiesSurfaces,
     sustainActivitiesSurfaces,
-    seedUseActivitiesSurfaces,
-    responsibleUseActivitiesSurfaces
+    seedUseActivitiesSurfaces
   },
   { cropType, surface },
   cropEiq
 ) => {
-  let badgesToAdd: Array<any> = []
+  const badgesToAdd: Array<any> = []
 
   badges.map((badge) => {
     if (badge.type === BadgeTypes.LEGAL_LAND_USE) {
-      let allowBadge = calculateLegalLandUseBadge(
+      const allowBadge = calculateLegalLandUseBadge(
         exploActivitiesSurfaces,
         surface,
         badge
@@ -42,7 +41,7 @@ export const getCropBadgesReached = (
     }
 
     if (badge.type === BadgeTypes.NO_DEFORESTATION) {
-      let allowBadge = calculateNoDeforestationBadge(
+      const allowBadge = calculateNoDeforestationBadge(
         sustainActivitiesSurfaces,
         surface,
         badge
@@ -60,7 +59,7 @@ export const getCropBadgesReached = (
     }
 
     if (badge.type === BadgeTypes.SUSTAINABLE_PRINCIPLES) {
-      let allowBadge = calculateSustainablePrinciplesBadge(
+      const allowBadge = calculateSustainablePrinciplesBadge(
         sustainActivitiesSurfaces,
         surface,
         badge
@@ -81,7 +80,7 @@ export const getCropBadgesReached = (
       cropType.key === CropTypes.SOY &&
       badge.type === BadgeTypes.LEGAL_SEED_USE_SOY
     ) {
-      let allowBadge = calculateLegalSeedUseSoyBadge(
+      const allowBadge = calculateLegalSeedUseSoyBadge(
         seedUseActivitiesSurfaces,
         surface,
         badge
@@ -102,7 +101,7 @@ export const getCropBadgesReached = (
       cropType.key === CropTypes.COTTON &&
       badge.type === BadgeTypes.LEGAL_SEED_USE_COTTON
     ) {
-      let allowBadge = calculateLegalSeedUseCottonBadge(
+      const allowBadge = calculateLegalSeedUseCottonBadge(
         seedUseActivitiesSurfaces,
         surface,
         badge
@@ -120,7 +119,10 @@ export const getCropBadgesReached = (
     }
 
     if (badge.type === BadgeTypes.RESPOSIBLE_USE_PHYTOSANITARY) {
-      let allowBadge = calculateResponsibleUsePhytosanitaryBadge(cropEiq, badge)
+      const allowBadge = calculateResponsibleUsePhytosanitaryBadge(
+        cropEiq,
+        badge
+      )
 
       if (allowBadge) {
         badgesToAdd.push({

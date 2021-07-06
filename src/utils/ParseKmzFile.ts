@@ -15,8 +15,8 @@ import { removeFiles } from '../utils/Files'
  * @param file
  */
 export const handleFileConvertJSON = async function (file: FileArray) {
-  let lots = []
-  let paths = []
+  const lots = []
+  const paths = []
   let result = null
 
   const upload = new FileUpload(file, 'tmp')

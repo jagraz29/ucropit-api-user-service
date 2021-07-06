@@ -1,19 +1,7 @@
-import { calculateEIQSurfaceAchievement } from '../'
+import { calculateActivityEiq } from '../'
 
-export const calculateCropEiq = async (activities) => {
-  let cropEiq: number = 0
-
-  activities.map(({ achievements }) => {
-    let activityEiq: number = 0
-
-    achievements.map((achievement) => {
-      let achievementEiq: number = calculateEIQSurfaceAchievement(achievement)
-
-      activityEiq += achievementEiq
-    })
-
-    cropEiq += activityEiq
-  })
-
-  return cropEiq
+export const calculateCropEiq = (activities) => {
+  return activities.reduce((a, { achievements }) => {
+    return a + calculateActivityEiq(achievements)
+  }, 0)
 }

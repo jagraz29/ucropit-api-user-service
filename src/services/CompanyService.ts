@@ -45,8 +45,8 @@ class CompanyService extends ServiceBase {
     evidences,
     user
   ) {
-    let companies = await this.search({
-      identifier: company.identifier,
+    const companies = await this.search({
+      identifier: company.identifier
     })
 
     if (companies[0]) {
@@ -67,11 +67,11 @@ class CompanyService extends ServiceBase {
       if (exists > -1) {
         await user.companies.set(exists, {
           ...user.companies[exists],
-          company: companyCreated.id,
+          company: companyCreated.id
         })
       } else {
         user.companies.push({
-          company: companyCreated._id,
+          company: companyCreated._id
         })
       }
 
@@ -117,7 +117,7 @@ class CompanyService extends ServiceBase {
 
     if (!isServiceIntegration) {
       company.servicesIntegrations.push({
-        service: service,
+        service: service
       })
 
       return company.save()

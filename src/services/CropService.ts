@@ -9,8 +9,8 @@ const ActivityType = models.ActivityType
 
 interface ICrop {
   name: string
-  pay: Number
-  surface: Number
+  pay: number
+  surface: number
   dateCrop: string
   dateHarvest: string
   cropType: Object
@@ -23,24 +23,24 @@ interface ICrop {
 const statusActivities: Array<any> = [
   {
     name: 'TO_COMPLETE',
-    cropStatus: 'pending',
+    cropStatus: 'pending'
   },
   {
     name: 'PLANNED',
-    cropStatus: 'toMake',
+    cropStatus: 'toMake'
   },
   {
     name: 'DONE',
-    cropStatus: 'done',
+    cropStatus: 'done'
   },
   {
     name: 'FINISHED',
-    cropStatus: 'finished',
+    cropStatus: 'finished'
   },
   {
     name: 'EXPIRED',
-    cropStatus: 'toMake',
-  },
+    cropStatus: 'toMake'
+  }
 ]
 
 class CropService extends ServiceBase {
@@ -62,21 +62,21 @@ class CropService extends ServiceBase {
       if (sumSurfaceExplo.total === sumSurfaceSustain.total) {
         return {
           total: sumSurfaceExplo.total,
-          date: sumSurfaceExplo.date,
+          date: sumSurfaceExplo.date
         }
       }
 
       if (sumSurfaceExplo.total > sumSurfaceSustain.total) {
         return {
           total: sumSurfaceSustain.total,
-          date: sumSurfaceSustain.date,
+          date: sumSurfaceSustain.date
         }
       }
 
       if (sumSurfaceExplo.total < sumSurfaceSustain.total) {
         return {
           total: sumSurfaceExplo.total,
-          date: sumSurfaceExplo.date,
+          date: sumSurfaceExplo.date
         }
       }
     })
@@ -90,8 +90,8 @@ class CropService extends ServiceBase {
         total: this.calVolume(crop.unitType.key, crop.pay, crop.surface),
         date: crop.dateHarvest.toLocaleDateString('en-US', {
           year: 'numeric',
-          month: '2-digit',
-        }),
+          month: '2-digit'
+        })
       }
     })
 
@@ -101,14 +101,14 @@ class CropService extends ServiceBase {
   public static summaryData(list) {
     let total = 0
     let date = ''
-    let summary = []
+    const summary = []
     for (const data of list) {
       if (date !== data.date) {
         total += data.total
         date = data.date
         summary.push({
           total,
-          date,
+          date
         })
       } else {
         const index = summary.findIndex((item) => item.date === date)
@@ -171,7 +171,7 @@ class CropService extends ServiceBase {
 
       date = crop.dateCrop.toLocaleDateString('en-US', {
         year: 'numeric',
-        month: '2-digit',
+        month: '2-digit'
       })
     }
 
@@ -220,17 +220,13 @@ class CropService extends ServiceBase {
   }
 
   public static async cropsOnlySeeRoles(query: any) {
-    let crops = await this.findAll(query)
+    const crops = await this.findAll(query)
 
     return crops
   }
 
-  public static async cropsOnlySeeRolesSowing(
-    query: any,
-    filtering,
-    roles: Array<string>
-  ) {
-    let crops = await this.findAllSowing(query)
+  public static async cropsOnlySeeRolesSowing(query: any) {
+    const crops = await this.findAllSowing(query)
     return crops
   }
 
@@ -255,11 +251,11 @@ class CropService extends ServiceBase {
           { path: 'files' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }],
+            populate: [{ path: 'lots' }, { path: 'files' }]
           },
           { path: 'lotsMade' },
-          { path: 'user' },
-        ],
+          { path: 'user' }
+        ]
       })
       .populate('members.user')
       .populate({
@@ -276,14 +272,14 @@ class CropService extends ServiceBase {
             populate: [
               { path: 'filePdf' },
               { path: 'fileOts' },
-              { path: 'activity' },
-            ],
+              { path: 'activity' }
+            ]
           },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }],
-          },
-        ],
+            populate: [{ path: 'lots' }, { path: 'files' }]
+          }
+        ]
       })
   }
 
@@ -307,8 +303,8 @@ class CropService extends ServiceBase {
           { path: 'lots' },
           { path: 'files' },
           { path: 'user' },
-          { path: 'unitType' },
-        ],
+          { path: 'unitType' }
+        ]
       })
       .populate({
         path: 'toMake',
@@ -319,8 +315,8 @@ class CropService extends ServiceBase {
           { path: 'lots' },
           { path: 'files' },
           { path: 'user' },
-          { path: 'unitType' },
-        ],
+          { path: 'unitType' }
+        ]
       })
       .populate({
         path: 'done',
@@ -335,13 +331,13 @@ class CropService extends ServiceBase {
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies', populate: [{ path: 'typeId' }] },
-            ],
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
           },
           { path: 'lotsMade' },
           { path: 'user' },
-          { path: 'unitType' },
-        ],
+          { path: 'unitType' }
+        ]
       })
       .populate('members.user')
       .populate({
@@ -359,18 +355,18 @@ class CropService extends ServiceBase {
             populate: [
               { path: 'filePdf' },
               { path: 'fileOts' },
-              { path: 'activity' },
-            ],
+              { path: 'activity' }
+            ]
           },
           {
             path: 'achievements',
             populate: [
               { path: 'lots' },
               { path: 'files' },
-              { path: 'supplies', populate: [{ path: 'typeId' }] },
-            ],
-          },
-        ],
+              { path: 'supplies', populate: [{ path: 'typeId' }] }
+            ]
+          }
+        ]
       })
   }
 
@@ -387,9 +383,9 @@ class CropService extends ServiceBase {
           { path: 'lots' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'supplies.typeId' }],
-          },
-        ],
+            populate: [{ path: 'lots' }, { path: 'supplies.typeId' }]
+          }
+        ]
       })
       .populate('members.user')
       .populate({
@@ -400,9 +396,9 @@ class CropService extends ServiceBase {
           { path: 'supplies.typeId' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'supplies.typeId' }],
-          },
-        ],
+            populate: [{ path: 'lots' }, { path: 'supplies.typeId' }]
+          }
+        ]
       })
       .where('_id')
       .in(ids)
@@ -421,7 +417,7 @@ class CropService extends ServiceBase {
       .populate('unitType')
       .populate({
         path: 'company',
-        populate: [{ path: 'files' }, { path: 'contacts.user' }],
+        populate: [{ path: 'files' }, { path: 'contacts.user' }]
       })
 
       .populate({
@@ -431,8 +427,8 @@ class CropService extends ServiceBase {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots', select: '-area -__v' },
-          { path: 'files' },
-        ],
+          { path: 'files' }
+        ]
       })
       .populate({
         path: 'toMake',
@@ -442,7 +438,11 @@ class CropService extends ServiceBase {
           { path: 'typeAgreement' },
           { path: 'lots', select: '-area -__v' },
           { path: 'files' },
-        ],
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }, { path: 'supply' }]
+          }
+        ]
       })
       .populate({
         path: 'done',
@@ -454,10 +454,21 @@ class CropService extends ServiceBase {
           { path: 'files' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }],
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              {
+                path: 'supplies',
+                populate: [{ path: 'typeId' }, { path: 'supply' }]
+              }
+            ]
           },
           { path: 'lotsMade' },
-        ],
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }, { path: 'supply' }]
+          }
+        ]
       })
       .populate({
         path: 'finished',
@@ -469,14 +480,25 @@ class CropService extends ServiceBase {
           { path: 'files' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }],
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              {
+                path: 'supplies',
+                populate: [{ path: 'typeId' }, { path: 'supply' }]
+              }
+            ]
           },
-        ],
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }, { path: 'supply' }]
+          }
+        ]
       })
       .populate('members.user')
       .populate('badges.badge')
       .populate('badges.typeAgreement')
-      .lean({ virtuals: true })
+      .lean()
   }
 
   /**
@@ -497,7 +519,7 @@ class CropService extends ServiceBase {
     const crop = await CropService.findOneCrop(cropId)
 
     const activityName: any = await ActivityType.findOne({
-      tag: 'ACT_MONITORING',
+      tag: 'ACT_MONITORING'
     })
 
     function filterActivity(item) {
@@ -522,7 +544,7 @@ class CropService extends ServiceBase {
       ...activitiesPending,
       ...activitiesFinished,
       ...activitiesToMake,
-      ...activitiesDone,
+      ...activitiesDone
     ]
 
     const activitiesSorted = activitiesMerged.sort((a, b) => {
@@ -558,9 +580,9 @@ class CropService extends ServiceBase {
           { path: 'files' },
           {
             path: 'approvalRegister',
-            populate: [{ path: 'file' }, { path: 'activity' }],
-          },
-        ],
+            populate: [{ path: 'file' }, { path: 'activity' }]
+          }
+        ]
       })
       .populate({
         path: 'toMake',
@@ -572,9 +594,9 @@ class CropService extends ServiceBase {
           { path: 'files' },
           {
             path: 'approvalRegister',
-            populate: [{ path: 'file' }, { path: 'activity' }],
-          },
-        ],
+            populate: [{ path: 'file' }, { path: 'activity' }]
+          }
+        ]
       })
       .populate({
         path: 'done',
@@ -586,14 +608,14 @@ class CropService extends ServiceBase {
           { path: 'files' },
           {
             path: 'approvalRegister',
-            populate: [{ path: 'file' }, { path: 'activity' }],
+            populate: [{ path: 'file' }, { path: 'activity' }]
           },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }],
+            populate: [{ path: 'lots' }, { path: 'files' }]
           },
-          { path: 'lotsMade' },
-        ],
+          { path: 'lotsMade' }
+        ]
       })
       .populate({
         path: 'finished',
@@ -605,13 +627,13 @@ class CropService extends ServiceBase {
           { path: 'files' },
           {
             path: 'approvalRegister',
-            populate: [{ path: 'file' }, { path: 'activity' }],
+            populate: [{ path: 'file' }, { path: 'activity' }]
           },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }],
-          },
-        ],
+            populate: [{ path: 'lots' }, { path: 'files' }]
+          }
+        ]
       })
       .populate('members.user')
   }
@@ -622,7 +644,10 @@ class CropService extends ServiceBase {
    * @param crop
    */
   public static async expiredActivities(crop: any) {
-    let activitiesToMake = await this.checkListActivitiesExpired(crop, 'toMake')
+    const activitiesToMake = await this.checkListActivitiesExpired(
+      crop,
+      'toMake'
+    )
 
     crop.toMake = await Promise.all(activitiesToMake)
 
@@ -691,7 +716,7 @@ class CropService extends ServiceBase {
         if (tagIndex !== item.tag) {
           lotsArray.push({
             tag: item.tag,
-            data: [lot._id],
+            data: [lot._id]
           })
           tagIndex = item.tag
         } else {
@@ -705,13 +730,13 @@ class CropService extends ServiceBase {
     data.company = company ? company._id : null
     data.pending = activities
 
-    let newCrop: any = await this.store(data)
+    const newCrop: any = await this.store(data)
 
     newCrop.members.push({
       user: members._id,
       producer: true,
       identifier: data.identifier,
-      country: company ? company.country : null,
+      country: company ? company.country : null
     })
 
     await newCrop.save()

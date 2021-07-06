@@ -18,7 +18,7 @@ import {
 const Crop = models.Crop
 
 const start = async () => {
-  let crops: Array<any> = await Crop.find()
+  const crops: Array<any> = await Crop.find()
 
   for (const crop of crops) {
     try {
@@ -121,7 +121,7 @@ const start = async () => {
       /*
       GET CROP EIQ
       */
-      const cropEiq: number = await calculateCropEiq(applicationActivities)
+      const cropEiq: number = calculateCropEiq(applicationActivities)
 
       /*
       GET BADGES TO ADD TO CROP

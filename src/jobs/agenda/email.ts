@@ -5,15 +5,10 @@ import { emailTemplates } from '../../types/common'
 const Activity = models.Activity
 
 module.exports = function (agenda) {
-  agenda.define('reminder-activity-email', async job => {
+  agenda.define('reminder-activity-email', async (job) => {
     try {
-      const {
-        url,
-        activityLabel,
-        cropName,
-        activity,
-        achievement
-      } = job.attrs.data
+      const { url, activityLabel, cropName, activity, achievement } =
+        job.attrs.data
 
       const result: any = await Activity.findOne({ _id: activity }).populate({
         path: 'achievements',
@@ -23,7 +18,7 @@ module.exports = function (agenda) {
       })
 
       if (result.achievements?.length > 0) {
-        for (let signer of result.achievements[0].signers) {
+        for (const signer of result.achievements[0].signers) {
           if (!signer.signed) {
             await NotificationService.email(
               emailTemplates.NOTIFICATION_ACTIVITY,

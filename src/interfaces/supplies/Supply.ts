@@ -7,10 +7,10 @@ export interface Supply {
   unit?: string
   brand?: string
   compositon?: string
-  quantity?: Number
+  quantity?: number
   activeIngredients?: Array<any>
   supply?: string | any
   icon?: string
-  total?: Number | number
-  eiqTotal?: Number | number
+  total?: number | number
+  eiqTotal?: number | number
 }

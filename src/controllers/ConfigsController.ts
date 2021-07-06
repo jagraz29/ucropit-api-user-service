@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import UserService from '../services/UserService'
 import UserConfigService from '../services/UserConfigService'
 import CollaboratorRequest from '../models/collaboratorRequest'
 
@@ -33,7 +32,11 @@ class ConfigsController {
     const { identifier } = req.query
     const user: any = req.user
 
-    const configUser: any = await UserConfigService.update(id, req.body, req.user)
+    const configUser: any = await UserConfigService.update(
+      id,
+      req.body,
+      req.user
+    )
 
     const indexCompany = configUser.companies.findIndex(
       (company) => company.identifier === identifier
@@ -46,7 +49,7 @@ class ConfigsController {
 
     const request = new CollaboratorRequest({
       user: user._id,
-      company: configUser.config.companySelected._id,
+      company: configUser.config.companySelected._id
     })
 
     // Update collaborator request array

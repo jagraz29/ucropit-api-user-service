@@ -22,10 +22,10 @@ export class PDFService {
   ): Promise<string> {
     const fileDocuments: Array<FileDocumentProps> | null =
       await FileDocumentRepository.getFiles(cropId)
-    const path: string = `public/uploads/${directory}/`
+    const path = `public/uploads/${directory}/`
     await makeDirIfNotExists(path)
-    const fullName: string = `${nameFile}-${uuidv4()}.pdf`
-    const pathFile: string = `${path}${fullName}`
+    const fullName = `${nameFile}-${uuidv4()}.pdf`
+    const pathFile = `${path}${fullName}`
 
     const hbs: string = readFile(`views/pdf/html/${nameTemplate}.hbs`)
     const handlebarsWithScript = setScriptPdf(Handlebars)
