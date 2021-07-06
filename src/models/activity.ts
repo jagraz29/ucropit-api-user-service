@@ -213,7 +213,7 @@ const ActivitySchema = new Schema({
   ]
 })
 
-ActivitySchema.pre('save', async function (next) {
+ActivitySchema.pre('save', function (next) {
   const activity: any = this
   /** Generate unique key */
   if (!activity.key) {
