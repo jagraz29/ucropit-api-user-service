@@ -13,4 +13,17 @@ export class AchievementRepository {
   ): Promise<IAchievementDocument | any> {
     return AchievementModel.updateOne({ _id: id }, { $set: update })
   }
+  /**
+   *
+   * @param query
+   * @param dataToUpdate
+   *
+   * @returns
+   */
+  public static async updateOneAchievement(
+    query: any,
+    dataToUpdate: Partial<IAchievement>
+  ): Promise<IAchievementDocument | any> {
+    return AchievementModel.updateOne(query, dataToUpdate)
+  }
 }

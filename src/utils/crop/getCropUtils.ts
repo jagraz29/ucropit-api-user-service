@@ -1,5 +1,5 @@
 import { Numbers } from '../Numbers'
-import { calculateCropVolumeUtils } from '.'
+import { calculateCropVolumeUtils, getEiqFromActivityWithEiq } from '.'
 import { getLots, getLotsGroupByTag } from '../lots'
 import { IEiqRangesDocument } from '../../interfaces'
 import { getEiqRange } from '..'
@@ -16,6 +16,7 @@ export const getCropUtils = (
     company,
     badges,
     unitType,
+    envImpactIndex,
     members,
     cropType: { key: cropTypeKey }
   },
@@ -25,8 +26,8 @@ export const getCropUtils = (
 ) => {
   const pay = payEntry ?? 0
   let eiq = 0
-  const { key: keyUnitType } = unitType || {}
-  eiq = Numbers.roundToTwo(activitiesWithEiq.reduce((a, b) => a + b.eiq, 0))
+  const { key: keyUnitType, name: nameUnitType } = unitType || {}
+  eiq = getEiqFromActivityWithEiq(activitiesWithEiq)
 
   return {
     surface,
@@ -48,6 +49,7 @@ export const getCropUtils = (
       quantity: eiq,
       range: getEiqRange(eiq, eiqRanges)
     },
+    envImpactIndex,
     cropTypeKey,
     company,
     activities,

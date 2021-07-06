@@ -76,6 +76,10 @@ const LotSchema = new Schema(
       require: true,
       default: 1
     },
+    envImpactIndex: {
+      type: Schema.Types.ObjectId,
+      ref: 'EnvImpactIndex'
+    },
     surface: {
       type: Number,
       require: true
