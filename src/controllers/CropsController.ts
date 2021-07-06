@@ -245,8 +245,6 @@ class CropsController {
       eiqRanges
     )
 
-    console.log(dataCrop)
-
     const dataPdf = {
       crop: dataCrop,
       activities,
