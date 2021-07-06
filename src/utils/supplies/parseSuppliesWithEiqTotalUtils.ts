@@ -5,7 +5,7 @@ const sumEIQ = (current, { eiq }) => current + (eiq || 0)
 export const sumEIQInActiveIngredients = (activeIngredients) =>
   activeIngredients.reduce(sumEIQ, 0)
 
-export const parseSuppliesWithEiqTotal = (supplies, isPlanning) => {
+export const parseSuppliesWithEiqTotal = (supplies, isPlanning?) => {
   return supplies.map((supplyObject) => {
     const {
       supply,
@@ -37,6 +37,7 @@ export const parseSuppliesWithEiqTotal = (supplies, isPlanning) => {
           ? eiqTotal
           : sumEIQInActiveIngredients(activeIngredients)
       supplyObject = {
+        ...supplyObject,
         eiqTotal: Numbers.roundToTwo(currentEiqTotal)
       }
     }
