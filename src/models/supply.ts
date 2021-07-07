@@ -2,7 +2,7 @@
  * @swagger
  *  components:
  *    schemas:
- *       Input:
+ *       Supply:
  *         type: object
  *         properties:
  *           name:
@@ -11,6 +11,39 @@
  *             type: string
  *           code:
  *             type: string
+ *           typeId:
+ *             type: string
+ *             format: uuid
+ *           unit:
+ *            type: string
+ *           brand:
+ *            type: string
+ *           compositon:
+ *            type: string
+ *           eiqTotal:
+ *              type: number
+ *              format: double
+ *           activeIngredients:
+ *            type: array
+ *            items:
+ *              type: object
+ *              properties:
+ *                _id:
+ *                  type: string
+ *                  format: uuid
+ *                activeIngredient:
+ *                  type: string
+ *                  format: uuid
+ *                eiqActiveIngredient:
+ *                  type: number
+ *                  format: integer
+ *                compositon:
+ *                  type: number
+ *                  format: double
+ *                eiq:
+ *                  type: number
+ *                  format: double
+ *
  */
 import mongoose from 'mongoose'
 import mongooseLeanVirtuals from 'mongoose-lean-virtuals'

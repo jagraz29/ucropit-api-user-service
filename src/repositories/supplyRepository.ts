@@ -10,6 +10,22 @@ class SupplyRepository {
   public static async getSupply(query): Promise<any> {
     return Supply.findOne(query)
   }
+
+  /**
+   * @function getSuppliesPaginated
+   * @param query
+   * @param limit
+   * @param skip
+   * @returns
+   */
+  public static async getSuppliesPaginated(query, limit, skip): Promise<any> {
+    return Supply.find(query)
+      .populate('typeId')
+      .populate('activesPrinciples.activePrinciple')
+      .limit(limit)
+      .skip(skip)
+      .lean({ virtuals: true })
+  }
   /**
    *
    * @param String[] idsSupplyTypes
@@ -30,6 +46,7 @@ class SupplyRepository {
 
   /**
    *
+   * @param id
    * @param queryUpdate
    */
   public static async updateOne(id: string, queryUpdate): Promise<void> {

@@ -1,8 +1,9 @@
 import { Numbers } from '../Numbers'
-import { calculateCropVolumeUtils } from '.'
+import { calculateCropVolumeUtils, getEiqFromActivityWithEiq } from '.'
 import { getLots, getLotsGroupByTag } from '../lots'
 import { IEiqRangesDocument } from '../../interfaces'
 import { getEiqRange } from '..'
+import { formatDate } from '..'
 
 export const getCropUtils = (
   {
@@ -16,8 +17,9 @@ export const getCropUtils = (
     company,
     badges,
     unitType,
+    envImpactIndex,
     members,
-    cropType: { key: cropTypeKey }
+    cropType: { key: cropTypeKey, name: cropTypeName }
   },
   activitiesWithEiq,
   theoriticalPotential,
@@ -25,8 +27,8 @@ export const getCropUtils = (
 ) => {
   const pay = payEntry ?? 0
   let eiq = 0
-  const { key: keyUnitType } = unitType || {}
-  eiq = Numbers.roundToTwo(activitiesWithEiq.reduce((a, b) => a + b.eiq, 0))
+  const { key: keyUnitType, name: nameUnitType } = unitType || {}
+  eiq = getEiqFromActivityWithEiq(activitiesWithEiq)
 
   return {
     surface,
@@ -36,6 +38,9 @@ export const getCropUtils = (
     pay,
     dateCrop,
     dateHarvest,
+    dateSowingFormat: formatDate(dateCrop, 'MMMM yy'),
+    dateHarvestFormat: formatDate(dateHarvest, 'MMMM yy'),
+    cropTypeName,
     commercialContact: company
       ? getCommercialContact(company, theoriticalPotential)
       : null,
@@ -48,6 +53,7 @@ export const getCropUtils = (
       quantity: eiq,
       range: getEiqRange(eiq, eiqRanges)
     },
+    envImpactIndex,
     cropTypeKey,
     company,
     activities,

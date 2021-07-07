@@ -3,7 +3,7 @@ import shortid from 'shortid'
 import { IAchievementDocument } from '../interfaces'
 import { AchievementSchema } from '../schemas'
 
-AchievementSchema.pre('save', (next: Function) => {
+AchievementSchema.pre('save', function (next) {
   const achievement: any = this
 
   /** Generate unique key */

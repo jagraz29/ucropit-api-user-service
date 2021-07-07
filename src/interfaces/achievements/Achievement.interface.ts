@@ -1,4 +1,4 @@
-import { Signer } from './Signer'
+import { Signer } from '../Signer'
 import { Document } from 'mongoose'
 
 export interface ISupplies {
@@ -8,6 +8,7 @@ export interface ISupplies {
   typeId?: string
   icon?: string
   total?: number
+  eiqTotal?: number
   supply?: any
 }
 
@@ -22,6 +23,7 @@ export interface IDestination {
 
 export interface IAchievement {
   // _id: string
+  envImpactIndex: string
   key: string
   dateAchievement?: Date
   surface?: number | number
@@ -34,6 +36,4 @@ export interface IAchievement {
   eiqSurface?: number | number
 }
 
-// export interface IAchievementDocument extends IAchievement, Document {}
-// export interface IAchievementModel extends Model<IAchievementDocument> {}
 export type IAchievementDocument = IAchievement & Document

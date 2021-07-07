@@ -1,4 +1,7 @@
 import { Request, Response } from 'express'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { errors } from '../types/common'
+
 import {
   validateAchievement,
   validateSignAchievement,
@@ -19,6 +22,8 @@ import NotificationService from '../services/NotificationService'
 import { emailTemplates } from '../types/common'
 import { typesSupplies } from '../utils/Constants'
 import agenda from '../jobs'
+import { IEnvImpactIndexDocument } from '../interfaces'
+import { setEiqInEnvImpactIndex, setEnvImpactIndexInEntities } from '../core'
 
 const Crop = models.Crop
 
@@ -72,6 +77,7 @@ class AchievementsController {
    * @return Response
    */
   public async create(req: Request, res: Response) {
+    req.setTimeout(0)
     const user: any = req.user
     const data = JSON.parse(req.body.data)
 
@@ -105,6 +111,17 @@ class AchievementsController {
       await ActivityService.changeStatus(activity, 'DONE')
       await CropService.removeActivities(activity, crop, 'toMake')
       await CropService.addActivities(activity, crop)
+    }
+
+    try {
+      const envImpactIndexIds: IEnvImpactIndexDocument[] =
+        await setEiqInEnvImpactIndex(data, achievement)
+      await setEnvImpactIndexInEntities(envImpactIndexIds)
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: ReasonPhrases.INTERNAL_SERVER_ERROR,
+        description: errors.find((error) => error.key === '008').code
+      })
     }
 
     if (req.files) {
@@ -179,7 +196,7 @@ class AchievementsController {
       console.log(error)
     }
 
-    res.status(201).json(achievement)
+    res.status(StatusCodes.CREATED).json(achievement)
   }
 
   /**

@@ -437,7 +437,11 @@ class CropService extends ServiceBase {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'lots', select: '-area -__v' },
-          { path: 'files' }
+          { path: 'files' },
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }, { path: 'supply' }]
+          }
         ]
       })
       .populate({
@@ -450,9 +454,20 @@ class CropService extends ServiceBase {
           { path: 'files' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              {
+                path: 'supplies',
+                populate: [{ path: 'typeId' }, { path: 'supply' }]
+              }
+            ]
           },
-          { path: 'lotsMade' }
+          { path: 'lotsMade' },
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }, { path: 'supply' }]
+          }
         ]
       })
       .populate({
@@ -465,14 +480,25 @@ class CropService extends ServiceBase {
           { path: 'files' },
           {
             path: 'achievements',
-            populate: [{ path: 'lots' }, { path: 'files' }]
+            populate: [
+              { path: 'lots' },
+              { path: 'files' },
+              {
+                path: 'supplies',
+                populate: [{ path: 'typeId' }, { path: 'supply' }]
+              }
+            ]
+          },
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }, { path: 'supply' }]
           }
         ]
       })
       .populate('members.user')
       .populate('badges.badge')
       .populate('badges.typeAgreement')
-      .lean({ virtuals: true })
+      .lean()
   }
 
   /**

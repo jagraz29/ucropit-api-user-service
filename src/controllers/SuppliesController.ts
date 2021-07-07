@@ -3,6 +3,8 @@
 import { Request, Response } from 'express'
 import models from '../models'
 import { typesSupplies } from '../utils/Constants'
+import SupplyRepository from '../repositories/supplyRepository'
+import { parseSuppliesWithEiqTotal } from '../utils'
 
 const Supply = models.Supply
 
@@ -10,18 +12,16 @@ class SuppliesController {
   public async index(req, res: Response) {
     let type = null
     let filter: any = {}
-    if (req.query.tag) {
-      type = typesSupplies.find((item) => item.tag === req.query.tag)
+    const { q, tag, skip, limit } = req.query
+    if (tag) {
+      type = typesSupplies.find((item) => item.tag === tag)
     }
 
-    const skip =
-      req.query.skip && /^\d+$/.test(req.query.skip)
-        ? Number(req.query.skip)
-        : 0
+    const skipSide = skip && /^\d+$/.test(skip) ? Number(skip) : 0
 
-    if (req.query.q) {
+    if (q) {
       filter = {
-        $text: { $search: req.query.q }
+        $text: { $search: q }
       }
     }
 
@@ -29,17 +29,16 @@ class SuppliesController {
       filter.typeId = { $in: type.types }
     }
 
-    const supplies = await Supply.find(filter, undefined, {
-      skip,
-      limit: req.query.limit >= 0 ? Number(req.query.limit) : 15
-    })
-      .populate('typeId')
-      .populate('activesPrinciples.activePrinciple')
-      .lean({ virtuals: true })
+    const limitSide = limit >= 0 ? Number(limit) : 15
 
-    console.log(supplies)
+    const supplies = await SupplyRepository.getSuppliesPaginated(
+      filter,
+      limitSide,
+      skipSide
+    )
 
-    res.status(200).json(supplies)
+    const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies)
+    res.status(200).json(suppliesWithEiqTotal)
   }
 
   public async quantity(req: Request, res: Response) {

@@ -47,6 +47,7 @@
  */
 import mongoose from 'mongoose'
 import shortid from 'shortid'
+import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
 
 const { Schema } = mongoose
 
@@ -88,6 +89,10 @@ const ActivitySchema = new Schema({
   unitType: {
     type: Schema.Types.ObjectId,
     ref: 'UnitType'
+  },
+  envImpactIndex: {
+    type: Schema.Types.ObjectId,
+    ref: 'EnvImpactIndex'
   },
   pay: {
     type: Number
@@ -208,7 +213,7 @@ const ActivitySchema = new Schema({
   ]
 })
 
-ActivitySchema.pre('save', async function (next) {
+ActivitySchema.pre('save', function (next) {
   const activity: any = this
   /** Generate unique key */
   if (!activity.key) {
@@ -227,5 +232,7 @@ ActivitySchema.methods.setExpired = function () {
   activity.status[0].name.en = 'EXPIRED'
   activity.status[0].name.es = 'VENCIDA'
 }
+
+ActivitySchema.plugin(mongooseLeanVirtuals)
 
 export default mongoose.model('Activity', ActivitySchema)
