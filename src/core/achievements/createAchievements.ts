@@ -1,7 +1,7 @@
 import {
   IEiqRangesDocument,
   IEntity,
-  IEnvImpactIndexOfAchievement,
+  IEnvImpactIndex,
   IEnvImpactIndexDocument,
   TEntryEnvImpactIndex
 } from '../../interfaces'
@@ -42,8 +42,8 @@ export const setEiqInEnvImpactIndex = async (
 
   const activities = getActivitiesOrderedByDateUtils(crop)
 
-  const envImpactIndexArray: IEnvImpactIndexOfAchievement[] = lots
-    .map((id): IEnvImpactIndexOfAchievement => {
+  const envImpactIndexArray: IEnvImpactIndex[] = lots
+    .map((id): IEnvImpactIndex => {
       const { eiq } = getEiqOfAchievementsByLot(id, activities) || {}
       if (eiq) {
         return null
@@ -73,28 +73,15 @@ export const setEiqInEnvImpactIndex = async (
     achievements,
     envImpactIndex
   } = activities.find(({ _id }) => _id.toString() === activityId.toString())
-  if (envImpactIndex) {
-    await envImpactIndexRepository.updateOneEnvImpactIndex(
-      { _id: activityId },
-      {
-        achievement: achievementId,
-        eiq: {
-          value: activityEiq,
-          planned: envImpactIndex.eiq.planned,
-          range: getEiqRange(activityEiq, eiqRanges)
-        }
-      }
-    )
-  } else {
-    envImpactIndexArray.push({
-      ...entryEnvImpactIndex,
-      entity: IEntity.ACTIVITY,
-      eiq: {
-        value: activityEiq,
-        range: getEiqRange(activityEiq, eiqRanges)
-      }
-    })
-  }
+  envImpactIndexArray.push({
+    ...entryEnvImpactIndex,
+    entity: IEntity.ACTIVITY,
+    eiq: {
+      value: activityEiq,
+      planned: envImpactIndex?.eiq.planned ?? 0,
+      range: getEiqRange(activityEiq, eiqRanges)
+    }
+  })
   const { eiq: achievementEiq } = achievements.find(
     ({ _id }) => _id.toString() === achievementId.toString()
   )
