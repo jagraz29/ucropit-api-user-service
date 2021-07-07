@@ -41,19 +41,25 @@ export const calculateEIQSurfaceInAchievements = (achievements) => {
 
 export const parseSuppliesWithEiqTotalInAchievements = (achievements = []) => {
   return achievements.map((achievement) => {
-    const { supplies } = achievement
-    const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies, false)
-    const eiq = Numbers.roundToTwo(sumEIQInSupplies(suppliesWithEiqTotal))
+    const { supplies, surface, eiq } = achievement
+    const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(
+      supplies,
+      false,
+      surface
+    )
+    const eiqApplied = Numbers.roundToTwo(
+      sumEIQInSupplies(suppliesWithEiqTotal)
+    )
     return {
       ...achievement,
       supplies: suppliesWithEiqTotal,
-      eiq
+      eiq: eiq ? eiq : eiqApplied ? eiqApplied : null
     }
   })
 }
 
-export const calculateEIQApplied = (quantity, unit, eiqTotal) => {
-  return quantity * eiqTotal //Todo: determinar calculo segun unit
+export const calculateEIQApplied = (quantity, surface, eiqTotal) => {
+  return (quantity * eiqTotal) / surface
 }
 
 const reduceSumEIQ = (current, { eiq }) => current + (eiq || 0)

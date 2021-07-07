@@ -5,48 +5,57 @@ const sumEIQ = (current, { eiq }) => current + (eiq || 0)
 export const sumEIQInActiveIngredients = (activeIngredients) =>
   activeIngredients.reduce(sumEIQ, 0)
 
-export const parseSuppliesWithEiqTotal = (supplies, isPlanning?) => {
+export const parseSuppliesWithEiqTotal = (supplies, isPlanning?, surface?) => {
   return supplies.map((supplyObject) => {
     const {
       supply,
       activeIngredients = [],
+      eiq,
       eiqTotal,
       quantity,
-      total,
-      unit
+      total
     } = supplyObject
-    let currentEiqTotal = eiqTotal || 0
+    let currentEiqTotal = eiqTotal || eiq || null
     if (supply) {
       const supplyJSON = supply.toJSON ? supply.toJSON() : supply
       const { eiqTotal, activeIngredients = [] } = supplyJSON
-      currentEiqTotal =
-        eiqTotal !== undefined
-          ? Numbers.roundToTwo(eiqTotal)
-          : sumEIQInActiveIngredients(activeIngredients)
+      currentEiqTotal = eiqTotal
+        ? Numbers.roundToTwo(eiqTotal)
+        : sumEIQInActiveIngredients(activeIngredients)
       supplyObject = {
         ...supplyObject,
         supply: {
           ...supplyJSON,
-          eiqTotal: Numbers.roundToTwo(currentEiqTotal)
+          eiqTotal: activeIngredients.length
+            ? Numbers.roundToTwo(currentEiqTotal)
+            : null
         }
       }
     }
     if (activeIngredients.length) {
-      currentEiqTotal =
-        eiqTotal !== undefined
-          ? Numbers.roundToTwo(eiqTotal)
-          : sumEIQInActiveIngredients(activeIngredients)
+      currentEiqTotal = eiqTotal
+        ? Numbers.roundToTwo(eiqTotal)
+        : sumEIQInActiveIngredients(activeIngredients)
       supplyObject = {
         ...supplyObject,
         eiqTotal: Numbers.roundToTwo(currentEiqTotal)
       }
     }
-    if (quantity) {
+    if (quantity && surface && currentEiqTotal) {
       const quantityOrTotal = isPlanning ? quantity : total
-      const eiq = calculateEIQApplied(quantityOrTotal, unit, currentEiqTotal)
+      const eiqApplied = calculateEIQApplied(
+        quantityOrTotal,
+        surface,
+        currentEiqTotal
+      )
       supplyObject = {
         ...supplyObject,
-        eiq: Numbers.roundToTwo(eiq)
+        eiq: eiq ? eiq : Numbers.roundToTwo(eiqApplied)
+      }
+    } else {
+      supplyObject = {
+        ...supplyObject,
+        eiq: null
       }
     }
     return supplyObject

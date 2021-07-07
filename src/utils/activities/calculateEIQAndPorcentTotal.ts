@@ -24,9 +24,7 @@ export const calculateEiqOfActivity = (activity) => {
     achievements: achievementsWithEiq,
     supplies: suppliesWithEiqTotal,
     percentTotal,
-    eiqApplied,
-    eiqPlanned,
-    eiq: eiqApplied || eiqPlanned
+    eiq: eiqApplied ? eiqApplied : eiqPlanned ? eiqPlanned : null
   }
 }
 
