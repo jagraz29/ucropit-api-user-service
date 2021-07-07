@@ -116,13 +116,14 @@ class AchievementsController {
 
     try {
       const { tag: TypeActivity } =
-        await activityTypeRepository.getActivityTypeById(data.type)
+        (await activityTypeRepository.getActivityTypeById(data.type)) || {}
       if (TypeActivity === TypeActivities.ACT_APPLICATION) {
         const envImpactIndexIds: IEnvImpactIndexDocument[] =
           await setEiqInEnvImpactIndex(data, achievement)
         await setEnvImpactIndexInEntities(envImpactIndexIds)
       }
     } catch (error) {
+      console.log(error)
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: ReasonPhrases.INTERNAL_SERVER_ERROR,
         description: errors.find((error) => error.key === '008').code
