@@ -53,7 +53,7 @@ export const parseSuppliesWithEiqTotalInAchievements = (achievements = []) => {
     return {
       ...achievement,
       supplies: suppliesWithEiqTotal,
-      eiq: eiq ? eiq : eiqApplied ? eiqApplied : null
+      eiq: eiq > 0 ? eiq : eiqApplied
     }
   })
 }

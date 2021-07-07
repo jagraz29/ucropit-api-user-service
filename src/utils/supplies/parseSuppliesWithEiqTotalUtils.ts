@@ -15,7 +15,7 @@ export const parseSuppliesWithEiqTotal = (supplies, isPlanning?, surface?) => {
       quantity,
       total
     } = supplyObject
-    let currentEiqTotal = eiqTotal || eiq || null
+    let currentEiqTotal = eiqTotal || eiq || 0
     if (supply) {
       const supplyJSON = supply.toJSON ? supply.toJSON() : supply
       const { eiqTotal, activeIngredients = [] } = supplyJSON
@@ -26,9 +26,7 @@ export const parseSuppliesWithEiqTotal = (supplies, isPlanning?, surface?) => {
         ...supplyObject,
         supply: {
           ...supplyJSON,
-          eiqTotal: activeIngredients.length
-            ? Numbers.roundToTwo(currentEiqTotal)
-            : null
+          eiqTotal: Numbers.roundToTwo(currentEiqTotal)
         }
       }
     }
@@ -55,7 +53,7 @@ export const parseSuppliesWithEiqTotal = (supplies, isPlanning?, surface?) => {
     } else {
       supplyObject = {
         ...supplyObject,
-        eiq: null
+        eiq: 0
       }
     }
     return supplyObject
