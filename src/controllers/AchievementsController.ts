@@ -22,8 +22,9 @@ import NotificationService from '../services/NotificationService'
 import { emailTemplates } from '../types/common'
 import { typesSupplies } from '../utils/Constants'
 import agenda from '../jobs'
-import { IEnvImpactIndexDocument } from '../interfaces'
+import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
 import { setEiqInEnvImpactIndex, setEnvImpactIndexInEntities } from '../core'
+import { activityTypeRepository } from '../repositories'
 
 const Crop = models.Crop
 
@@ -114,9 +115,13 @@ class AchievementsController {
     }
 
     try {
-      const envImpactIndexIds: IEnvImpactIndexDocument[] =
-        await setEiqInEnvImpactIndex(data, achievement)
-      await setEnvImpactIndexInEntities(envImpactIndexIds)
+      const { tag: TypeActivity } =
+        await activityTypeRepository.getActivityTypeById(data.type)
+      if (TypeActivity === TypeActivities.ACT_APPLICATION) {
+        const envImpactIndexIds: IEnvImpactIndexDocument[] =
+          await setEiqInEnvImpactIndex(data, achievement)
+        await setEnvImpactIndexInEntities(envImpactIndexIds)
+      }
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: ReasonPhrases.INTERNAL_SERVER_ERROR,
