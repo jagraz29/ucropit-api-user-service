@@ -117,6 +117,13 @@ class AchievementsController {
     try {
       const { tag: TypeActivity } =
         (await activityTypeRepository.getActivityTypeById(data.type)) || {}
+
+      if (!TypeActivity) {
+        res.status(StatusCodes.NOT_FOUND).json({
+          error: ReasonPhrases.NOT_FOUND,
+          description: errors.find((error) => error.key === '009').code
+        })
+      }
       if (TypeActivity === TypeActivities.ACT_APPLICATION) {
         const envImpactIndexIds: IEnvImpactIndexDocument[] =
           await setEiqInEnvImpactIndex(data, achievement)
