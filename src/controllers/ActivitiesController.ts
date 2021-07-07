@@ -4,7 +4,8 @@ import {
   ActivityRepository,
   TypeAgreementRepository,
   BadgeRepository,
-  CropRepository
+  CropRepository,
+  activityTypeRepository
 } from '../repositories'
 import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
 import {
@@ -136,9 +137,13 @@ class ActivitiesController {
     await CropService.addActivities(activity, crop)
 
     try {
-      const envImpactIndexId: IEnvImpactIndexDocument =
-        await setEiqInEnvImpactIndexActivity({ ...data, activity })
-      await setEnvImpactIndexInActivity(envImpactIndexId)
+      const { tag: TypeActivity } =
+        await activityTypeRepository.getActivityTypeById(data.type)
+      if (TypeActivity === TypeActivities.ACT_APPLICATION) {
+        const envImpactIndexId: IEnvImpactIndexDocument =
+          await setEiqInEnvImpactIndexActivity({ ...data, activity })
+        await setEnvImpactIndexInActivity(envImpactIndexId)
+      }
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: ReasonPhrases.INTERNAL_SERVER_ERROR,
