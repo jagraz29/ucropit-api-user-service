@@ -8,6 +8,7 @@ export interface ISupplies {
   typeId?: string
   icon?: string
   total?: number
+  eiqTotal?: number
   supply?: any
 }
 

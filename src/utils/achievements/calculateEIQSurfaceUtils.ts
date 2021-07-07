@@ -15,12 +15,15 @@ export function calculateEIQSurfaceAchievement({
   supplies,
   surface
 }: IAchievement) {
-  const eiqTotalSupplies = supplies.reduce((a, { supply, total }) => {
-    if (supply) return a + (supply.eiqTotal || 0) * Number(total)
+  const eiqTotalSupplies = supplies.reduce((a, { supply, total, eiqTotal }) => {
+    if (supply) {
+      const eiqSupply = supply?.eiqTotal ?? eiqTotal
+      return a + (eiqSupply || 0) * Number(total)
+    }
     return 0
   }, 0)
   const eiqTotal = eiqTotalSupplies / Number(surface)
-  return !Number.isNaN(eiqTotal) ? eiqTotal : 0
+  return Numbers.roundToTwo(!Number.isNaN(eiqTotal) ? eiqTotal : 0)
 }
 
 export const calculateEIQSurfaceInAchievements = (achievements) => {

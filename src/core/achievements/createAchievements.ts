@@ -39,11 +39,15 @@ export const setEiqInEnvImpactIndex = async (
   }
   const eiqRanges: IEiqRangesDocument[] = await EiqRangesRepository.getAllEiq()
   const crop = await CropRepository.getCropWithActivities(cropId)
+
   const activities = getActivitiesOrderedByDateUtils(crop)
 
-  const envImpactIndexArray: IEnvImpactIndexOfAchievement[] = lots.map(
-    (id): IEnvImpactIndexOfAchievement => {
-      const { eiq } = getEiqOfAchievementsByLot(id, activities)
+  const envImpactIndexArray: IEnvImpactIndexOfAchievement[] = lots
+    .map((id): IEnvImpactIndexOfAchievement => {
+      const { eiq } = getEiqOfAchievementsByLot(id, activities) || {}
+      if (eiq) {
+        return null
+      }
       return {
         ...entryEnvImpactIndex,
         lot: id,
@@ -53,8 +57,8 @@ export const setEiqInEnvImpactIndex = async (
           range: getEiqRange(eiq, eiqRanges)
         }
       }
-    }
-  )
+    })
+    .filter((envImpactIndex) => envImpactIndex)
   const cropEiq: number = getEiqFromActivityWithEiq(activities)
   envImpactIndexArray.push({
     ...entryEnvImpactIndex,

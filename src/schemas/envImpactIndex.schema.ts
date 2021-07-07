@@ -71,8 +71,7 @@ export const EnvImpactIndexSchema: Schema = new Schema(
       },
       range: {
         type: String,
-        enum: Object.values(TEiqRanges),
-        required: true
+        enum: Object.values(TEiqRanges)
       }
     }
   },
