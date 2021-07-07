@@ -21,7 +21,7 @@ export const parseSuppliesWithEiqTotal = (supplies, isPlanning?) => {
       const { eiqTotal, activeIngredients = [] } = supplyJSON
       currentEiqTotal =
         eiqTotal !== undefined
-          ? eiqTotal
+          ? Numbers.roundToTwo(eiqTotal)
           : sumEIQInActiveIngredients(activeIngredients)
       supplyObject = {
         ...supplyObject,
@@ -34,7 +34,7 @@ export const parseSuppliesWithEiqTotal = (supplies, isPlanning?) => {
     if (activeIngredients.length) {
       currentEiqTotal =
         eiqTotal !== undefined
-          ? eiqTotal
+          ? Numbers.roundToTwo(eiqTotal)
           : sumEIQInActiveIngredients(activeIngredients)
       supplyObject = {
         ...supplyObject,

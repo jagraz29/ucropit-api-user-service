@@ -1,3 +1,4 @@
+import moment from 'moment'
 export function isNowGreaterThan(date: Date): boolean {
   const dateCompare = new Date()
   const now = new Date(
@@ -13,4 +14,10 @@ export function isNowGreaterThan(date: Date): boolean {
 
 export function compareDate(dateFirst: Date, dateLast: Date): boolean {
   return dateFirst > dateLast
+}
+
+export function formatDate(date: Date, format: string, lang?) {
+  return moment(date)
+    .locale(lang || 'es')
+    .format(format)
 }
