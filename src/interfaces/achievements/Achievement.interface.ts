@@ -1,4 +1,4 @@
-import { Signer } from './Signer'
+import { Signer } from '../Signer'
 import { Document } from 'mongoose'
 
 export interface ISupplies {

@@ -1,12 +1,12 @@
 import { Request, Response } from 'express'
-import { StatusCodes } from 'http-status-codes'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import {
   ActivityRepository,
   TypeAgreementRepository,
   BadgeRepository,
   CropRepository
 } from '../repositories'
-import { TypeActivities } from '../interfaces'
+import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
 import {
   validateActivityStore,
   validateActivityUpdate,
@@ -37,6 +37,11 @@ import {
 } from '../utils/Files'
 
 import { ACTIVITY_HARVEST } from '../utils/Constants'
+import { errors } from '../types'
+import {
+  setEiqInEnvImpactIndexActivity,
+  setEnvImpactIndexInActivity
+} from '../core'
 
 const Activity = models.Activity
 const FileDocument = models.FileDocument
@@ -130,6 +135,17 @@ class ActivitiesController {
 
     await CropService.addActivities(activity, crop)
 
+    try {
+      const envImpactIndexId: IEnvImpactIndexDocument =
+        await setEiqInEnvImpactIndexActivity({ ...data, activity })
+      await setEnvImpactIndexInActivity(envImpactIndexId)
+    } catch (error) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: ReasonPhrases.INTERNAL_SERVER_ERROR,
+        description: errors.find((error) => error.key === '008').code
+      })
+    }
+
     if (activity.isDone() && activity.type.tag === ACTIVITY_HARVEST) {
       await SatelliteImageService.createPayload(activity).send()
 
@@ -144,7 +160,7 @@ class ActivitiesController {
       )
     }
 
-    res.status(201).json(activity)
+    res.status(StatusCodes.CREATED).json(activity)
   }
 
   /**
