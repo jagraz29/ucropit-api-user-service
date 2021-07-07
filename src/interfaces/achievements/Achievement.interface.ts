@@ -1,4 +1,4 @@
-import { Signer } from './Signer'
+import { Signer } from '../Signer'
 import { Document } from 'mongoose'
 
 export interface ISupplies {
@@ -8,6 +8,7 @@ export interface ISupplies {
   typeId?: string
   icon?: string
   total?: number
+  eiqTotal?: number
   supply?: any
 }
 

@@ -196,7 +196,7 @@ class AchievementsController {
       console.log(error)
     }
 
-    res.status(201).json(achievement)
+    res.status(StatusCodes.CREATED).json(achievement)
   }
 
   /**

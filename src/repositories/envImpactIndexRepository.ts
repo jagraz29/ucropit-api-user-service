@@ -15,6 +15,19 @@ export class envImpactIndexRepository {
 
   /**
    *
+   * @param query
+   * @param populate
+   *
+   * @returns
+   */
+  public static async getEnvImpactIndexById(
+    id: string
+  ): Promise<IEnvImpactIndexDocument> {
+    return EnvImpactIndexModel.findById(id)
+  }
+
+  /**
+   *
    * @param envImpactIndex
    *
    */
@@ -22,5 +35,29 @@ export class envImpactIndexRepository {
     envImpactIndex: IEnvImpactIndex[]
   ): Promise<IEnvImpactIndexDocument[]> {
     return EnvImpactIndexModel.insertMany(envImpactIndex)
+  }
+
+  /**
+   *
+   * @param envImpactIndex
+   *
+   */
+  public static async createEnvImpactIndex(
+    envImpactIndex: IEnvImpactIndex
+  ): Promise<IEnvImpactIndexDocument> {
+    return EnvImpactIndexModel.create(envImpactIndex)
+  }
+  /**
+   *
+   * @param query
+   * @param dataToUpdate
+   *
+   * @returns
+   */
+  public static async updateOneEnvImpactIndex(
+    query: any,
+    dataToUpdate: any
+  ): Promise<any> {
+    return EnvImpactIndexModel.updateOne(query, dataToUpdate)
   }
 }
