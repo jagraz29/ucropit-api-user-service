@@ -117,7 +117,7 @@ class ActivitiesController {
     )
 
     if (validationFiles.error) {
-      res.status(400).json(validationFiles)
+      return res.status(400).json(validationFiles)
     }
 
     let activity = await ActivityService.store(data, user)
