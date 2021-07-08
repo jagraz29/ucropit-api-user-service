@@ -38,11 +38,6 @@ export const parseSuppliesWithEiqTotal = (supplies) => {
         ...supplyObject,
         eiq: Numbers.roundToTwo(eiqApplied)
       }
-    } else {
-      supplyObject = {
-        ...supplyObject,
-        eiq: 0
-      }
     }
     return supplyObject
   })
