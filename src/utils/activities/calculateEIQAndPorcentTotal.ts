@@ -10,12 +10,8 @@ export const calculateEIQAndPorcentTotal = (activities) =>
   activities.map(calculateEiqOfActivity)
 
 export const calculateEiqOfActivity = (activity) => {
-  const { achievements, supplies, surface } = activity
-  const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(
-    supplies,
-    true,
-    surface
-  )
+  const { achievements, supplies } = activity
+  const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies)
   const achievementsWithEiq =
     parseSuppliesWithEiqTotalInAchievements(achievements)
   const percentTotal = sumPercentInAchievements(achievementsWithEiq)

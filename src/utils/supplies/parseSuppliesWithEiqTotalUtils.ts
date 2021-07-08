@@ -5,17 +5,10 @@ const sumEIQ = (current, { eiq }) => current + (eiq || 0)
 export const sumEIQInActiveIngredients = (activeIngredients) =>
   activeIngredients.reduce(sumEIQ, 0)
 
-export const parseSuppliesWithEiqTotal = (supplies, isPlanning?, surface?) => {
+export const parseSuppliesWithEiqTotal = (supplies) => {
   return supplies.map((supplyObject) => {
-    const {
-      supply,
-      activeIngredients = [],
-      eiq,
-      eiqTotal,
-      quantity,
-      total
-    } = supplyObject
-    let currentEiqTotal = eiqTotal || eiq || 0
+    const { supply, activeIngredients = [], eiqTotal, quantity } = supplyObject
+    let currentEiqTotal = eiqTotal || 0
     if (supply) {
       const supplyJSON = supply.toJSON ? supply.toJSON() : supply
       const { eiqTotal, activeIngredients = [] } = supplyJSON
@@ -39,16 +32,11 @@ export const parseSuppliesWithEiqTotal = (supplies, isPlanning?, surface?) => {
         eiqTotal: Numbers.roundToTwo(currentEiqTotal)
       }
     }
-    if (quantity && surface && currentEiqTotal) {
-      const quantityOrTotal = isPlanning ? quantity : total
-      const eiqApplied = calculateEIQApplied(
-        quantityOrTotal,
-        surface,
-        currentEiqTotal
-      )
+    if (quantity && currentEiqTotal) {
+      const eiqApplied = calculateEIQApplied(quantity, currentEiqTotal)
       supplyObject = {
         ...supplyObject,
-        eiq: eiq ? eiq : Numbers.roundToTwo(eiqApplied)
+        eiq: Numbers.roundToTwo(eiqApplied)
       }
     } else {
       supplyObject = {
