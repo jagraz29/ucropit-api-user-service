@@ -2,8 +2,8 @@ import { Numbers } from '../Numbers'
 import { calculateCropVolumeUtils } from '.'
 import { getLots, getLotsGroupByTag } from '../lots'
 import { IEiqRangesDocument } from '../../interfaces'
-import { getEiqRange } from '..'
-import { formatDate } from '..'
+import { getEiqRange, formatDate } from '..'
+import moment from 'moment'
 
 export const getCropUtils = (
   {
@@ -38,6 +38,8 @@ export const getCropUtils = (
     pay,
     dateCrop,
     dateHarvest,
+    dateSowingFormatTemporal: moment(dateCrop).format('DD/MM/YYYY'),
+    dateHarvestFormatTemporal: moment(dateHarvest).format('DD/MM/YYYY'),
     dateSowingFormat: formatDate(dateCrop, 'MMMM yy'),
     dateHarvestFormat: formatDate(dateHarvest, 'MMMM yy'),
     cropTypeName,
