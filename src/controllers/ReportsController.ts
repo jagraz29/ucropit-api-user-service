@@ -11,6 +11,7 @@ import {
   ReportsSignersByCompaniesHeaderXls,
   ReportsEiqHeaderXls,
   ReportsDmHeaderXls,
+  ReportsXlsForEiqHeaderXls,
   reportHeaderBillingXls
 } from '../types/'
 
@@ -20,6 +21,7 @@ import {
   getCropPipelineEiqReportUtils,
   filterDataCropsByCompanies,
   getCropPipelineDmReportUtils,
+  getCropPipelineXlsForEiqReportUtils,
   getDataCropsForBilling,
   validateTypeActivity
 } from '../utils'
@@ -28,6 +30,7 @@ import {
   ReportSignersByCompany,
   ReportEiq,
   ReportDm,
+  ReportXlsForEiq,
   ReportBilling
 } from '../interfaces'
 
@@ -251,6 +254,47 @@ class ReportsController {
     })
 
     return res.status(200).json('Ok')
+  }
+
+  /**
+   * Send export file xls to eiq report in email.
+   *
+   * @param req
+   * @param res
+   */
+  public async reportsXlsForEiq(req: Request, res: Response) {
+    const email: string = req.query.email as string
+
+    const cropPipeline: any = getCropPipelineXlsForEiqReportUtils()
+
+    const report: Array<ReportXlsForEiq> = await CropRepository.findCrops(
+      cropPipeline
+    )
+
+    if (!report) {
+      const error = errors.find((error) => error.key === '005')
+      return res.status(StatusCodes.BAD_REQUEST).json(error.code)
+    }
+
+    const pathFile = ExportFile.exportXls(
+      report,
+      ReportsXlsForEiqHeaderXls,
+      'XLSForEiq.xlsx'
+    )
+
+    await EmailService.sendWithAttach({
+      template: 'export-file',
+      to: email,
+      data: {},
+      files: [
+        {
+          filename: 'XLSForEiq.xlsx',
+          content: fs.readFileSync(pathFile)
+        }
+      ]
+    })
+
+    return res.status(StatusCodes.OK).json('Reporte enviado con éxito')
   }
 
   /**

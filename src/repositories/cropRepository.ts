@@ -340,7 +340,7 @@ export class CropRepository {
    * @param object pipeline
    */
   public static async findCrops(pipeline: any) {
-    const cropsInstance = await Crop.aggregate(pipeline)
+    const cropsInstance = await Crop.aggregate(pipeline).allowDiskUse(true)
 
     return cropsInstance.length ? cropsInstance : null
   }
