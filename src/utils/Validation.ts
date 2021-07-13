@@ -88,13 +88,15 @@ export const validateActivityStore = async (activity) => {
       .optional(),
     evidences: Joi.array()
       .items(
-        Joi.object().keys({
-          name: Joi.string().optional(),
-          description: Joi.string().required(),
-          date: Joi.date().required(),
-          settings: Joi.optional(),
-          meta: Joi.optional()
-        })
+        Joi.object()
+          .keys({
+            name: Joi.string().optional(),
+            description: Joi.string().required(),
+            date: Joi.date().required(),
+            settings: Joi.optional(),
+            meta: Joi.optional()
+          })
+          .unknown()
       )
       .optional(),
     storages: Joi.array()
@@ -157,13 +159,15 @@ export const validateActivityUpdate = async (activity) => {
       .optional(),
     evidences: Joi.array()
       .items(
-        Joi.object().keys({
-          name: Joi.string().optional(),
-          description: Joi.string().required(),
-          date: Joi.date().required(),
-          settings: Joi.optional(),
-          meta: Joi.optional()
-        })
+        Joi.object()
+          .keys({
+            name: Joi.string().optional(),
+            description: Joi.string().required(),
+            date: Joi.date().required(),
+            settings: Joi.optional(),
+            meta: Joi.optional()
+          })
+          .unknown()
       )
       .optional(),
     storages: Joi.array()
@@ -272,13 +276,15 @@ export const validateAchievement = async (achievement) => {
       .optional(),
     evidences: Joi.array()
       .items(
-        Joi.object().keys({
-          name: Joi.string().optional(),
-          description: Joi.string().required(),
-          date: Joi.date().required(),
-          settings: Joi.optional(),
-          meta: Joi.optional()
-        })
+        Joi.object()
+          .keys({
+            name: Joi.string().optional(),
+            description: Joi.string().required(),
+            date: Joi.date().required(),
+            settings: Joi.optional(),
+            meta: Joi.optional()
+          })
+          .unknown()
       )
       .optional(),
     signers: Joi.array()
