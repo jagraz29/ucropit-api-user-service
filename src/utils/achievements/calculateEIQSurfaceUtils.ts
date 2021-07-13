@@ -15,15 +15,14 @@ export function calculateEIQSurfaceAchievement({
   supplies,
   surface
 }: IAchievement) {
-  const eiqTotalSupplies = supplies.reduce((a, { supply, total, eiqTotal }) => {
+  const eiq = supplies.reduce((a, { supply, quantity, eiqTotal }) => {
     if (supply) {
       const eiqSupply = supply?.eiqTotal ?? eiqTotal
-      return a + (eiqSupply || 0) * Number(total)
+      return a + (eiqSupply || 0) * Number(quantity)
     }
     return 0
   }, 0)
-  const eiqTotal = eiqTotalSupplies / Number(surface)
-  return Numbers.roundToTwo(!Number.isNaN(eiqTotal) ? eiqTotal : 0)
+  return Numbers.roundToTwo(eiq)
 }
 
 export const calculateEIQSurfaceInAchievements = (achievements) => {
@@ -42,19 +41,19 @@ export const calculateEIQSurfaceInAchievements = (achievements) => {
 export const parseSuppliesWithEiqTotalInAchievements = (achievements = []) => {
   return achievements.map((achievement) => {
     const { supplies } = achievement
-    const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies, false)
-    const eiq = Numbers.roundToTwo(sumEIQInSupplies(suppliesWithEiqTotal))
+    const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies)
+    const eiqApplied = Numbers.roundToTwo(
+      sumEIQInSupplies(suppliesWithEiqTotal)
+    )
     return {
       ...achievement,
       supplies: suppliesWithEiqTotal,
-      eiq
+      eiq: eiqApplied
     }
   })
 }
 
-export const calculateEIQApplied = (quantity, unit, eiqTotal) => {
-  return quantity * eiqTotal //Todo: determinar calculo segun unit
-}
+export const calculateEIQApplied = (quantity, eiqTotal) => quantity * eiqTotal
 
 const reduceSumEIQ = (current, { eiq }) => current + (eiq || 0)
 export const sumEIQInAchievements = (list) => list.reduce(reduceSumEIQ, 0)

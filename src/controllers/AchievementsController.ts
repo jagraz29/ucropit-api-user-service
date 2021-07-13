@@ -22,8 +22,9 @@ import NotificationService from '../services/NotificationService'
 import { emailTemplates } from '../types/common'
 import { typesSupplies } from '../utils/Constants'
 import agenda from '../jobs'
-import { IEnvImpactIndexDocument } from '../interfaces'
+import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
 import { setEiqInEnvImpactIndex, setEnvImpactIndexInEntities } from '../core'
+import { activityTypeRepository } from '../repositories'
 
 const Crop = models.Crop
 
@@ -114,10 +115,22 @@ class AchievementsController {
     }
 
     try {
-      const envImpactIndexIds: IEnvImpactIndexDocument[] =
-        await setEiqInEnvImpactIndex(data, achievement)
-      await setEnvImpactIndexInEntities(envImpactIndexIds)
+      const { tag: TypeActivity } =
+        (await activityTypeRepository.getActivityTypeById(data.type)) || {}
+
+      if (!TypeActivity) {
+        res.status(StatusCodes.NOT_FOUND).json({
+          error: ReasonPhrases.NOT_FOUND,
+          description: errors.find((error) => error.key === '009').code
+        })
+      }
+      if (TypeActivity === TypeActivities.ACT_APPLICATION) {
+        const envImpactIndexIds: IEnvImpactIndexDocument[] =
+          await setEiqInEnvImpactIndex(data, achievement)
+        await setEnvImpactIndexInEntities(envImpactIndexIds)
+      }
     } catch (error) {
+      console.log(error)
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: ReasonPhrases.INTERNAL_SERVER_ERROR,
         description: errors.find((error) => error.key === '008').code

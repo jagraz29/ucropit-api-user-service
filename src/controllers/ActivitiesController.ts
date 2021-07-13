@@ -4,7 +4,8 @@ import {
   ActivityRepository,
   TypeAgreementRepository,
   BadgeRepository,
-  CropRepository
+  CropRepository,
+  activityTypeRepository
 } from '../repositories'
 import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
 import {
@@ -116,7 +117,7 @@ class ActivitiesController {
     )
 
     if (validationFiles.error) {
-      res.status(400).json(validationFiles)
+      return res.status(400).json(validationFiles)
     }
 
     let activity = await ActivityService.store(data, user)
@@ -136,9 +137,21 @@ class ActivitiesController {
     await CropService.addActivities(activity, crop)
 
     try {
-      const envImpactIndexId: IEnvImpactIndexDocument =
-        await setEiqInEnvImpactIndexActivity({ ...data, activity })
-      await setEnvImpactIndexInActivity(envImpactIndexId)
+      const { tag: TypeActivity } =
+        (await activityTypeRepository.getActivityTypeById(data.type)) || {}
+
+      if (!TypeActivity) {
+        res.status(StatusCodes.NOT_FOUND).json({
+          error: ReasonPhrases.NOT_FOUND,
+          description: errors.find((error) => error.key === '009').code
+        })
+      }
+
+      if (TypeActivity === TypeActivities.ACT_APPLICATION) {
+        const envImpactIndexId: IEnvImpactIndexDocument =
+          await setEiqInEnvImpactIndexActivity({ ...data, activity })
+        await setEnvImpactIndexInActivity(envImpactIndexId)
+      }
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: ReasonPhrases.INTERNAL_SERVER_ERROR,

@@ -241,6 +241,7 @@ export const validateAchievement = async (achievement) => {
     surface: Joi.number().required(),
     lots: Joi.array().items(Joi.string()).required(),
     activity: Joi.string().required(),
+    type: Joi.string().required(),
     crop: Joi.string().required(),
     erpAgent: Joi.string().optional(),
     supplies: Joi.array()
