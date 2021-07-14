@@ -115,7 +115,7 @@ class AchievementsController {
     }
 
     try {
-      if (data.type === TypeActivities.ACT_APPLICATION) {
+      if (data.tag === TypeActivities.ACT_APPLICATION) {
         const envImpactIndexIds: IEnvImpactIndexDocument[] =
           await setEiqInEnvImpactIndex(data, achievement)
         await setEnvImpactIndexInEntities(envImpactIndexIds)
