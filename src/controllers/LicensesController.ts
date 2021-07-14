@@ -14,9 +14,14 @@ export class LicensesController {
    */
   public static async licenseById(req: Request | any, res: Response) {
     const userId = req.user._id.toString()
-    const { id } = req.params
+    const { id, companyNameInCrop, identifierInCrop } = req.params
     try {
-      const license = await LicenseService.licenseById({ userId, id })
+      const license = await LicenseService.licenseById({
+        userId,
+        id,
+        companyNameInCrop,
+        identifierInCrop
+      })
       res.status(StatusCodes.OK).json(license)
     } catch (error) {
       const {
