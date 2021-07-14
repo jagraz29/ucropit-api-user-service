@@ -1,4 +1,5 @@
 export * from './FilterDataCropsByCompaniesUtils'
 export * from './getCropPipelineEiqReportUtils'
 export * from './getCropPipelineDmReportUtils'
+export * from './getCropPipelineXlsForEiqReportUtils'
 export * from './getDataCropsForBillingUtils'
