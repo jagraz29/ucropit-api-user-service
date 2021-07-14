@@ -62,7 +62,7 @@ export const validateActivityStore = async (activity) => {
     dateHarvest: Joi.date().optional(),
     dateEstimatedHarvest: Joi.date().optional(),
     surface: Joi.number().optional(),
-    type: Joi.string().required(),
+    type: Joi.string().optional(),
     typeAgreement: Joi.string().optional(),
     status: Joi.string().optional(),
     lots: Joi.array().items(Joi.string()).optional(),
@@ -119,7 +119,7 @@ export const validateActivityStore = async (activity) => {
         signed: Joi.boolean().optional()
       })
     )
-  })
+  }).unknown()
 
   return schema.validateAsync(activity)
 }
@@ -190,7 +190,7 @@ export const validateActivityUpdate = async (activity) => {
         signed: Joi.boolean().optional()
       })
     )
-  })
+  }).unknown()
 
   return schema.validateAsync(activity)
 }
@@ -245,7 +245,7 @@ export const validateAchievement = async (achievement) => {
     surface: Joi.number().required(),
     lots: Joi.array().items(Joi.string()).required(),
     activity: Joi.string().required(),
-    type: Joi.string().required(),
+    tag: Joi.string().required(),
     crop: Joi.string().required(),
     erpAgent: Joi.string().optional(),
     supplies: Joi.array()

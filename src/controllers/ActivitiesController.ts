@@ -137,23 +137,14 @@ class ActivitiesController {
     await CropService.addActivities(activity, crop)
 
     try {
-      const { tag: TypeActivity } =
-        (await activityTypeRepository.getActivityTypeById(data.type)) || {}
-
-      if (!TypeActivity) {
-        res.status(StatusCodes.NOT_FOUND).json({
-          error: ReasonPhrases.NOT_FOUND,
-          description: errors.find((error) => error.key === '009').code
-        })
-      }
-
+      const { tag: TypeActivity } = data
       if (TypeActivity === TypeActivities.ACT_APPLICATION) {
         const envImpactIndexId: IEnvImpactIndexDocument =
           await setEiqInEnvImpactIndexActivity({ ...data, activity })
         await setEnvImpactIndexInActivity(envImpactIndexId)
       }
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: ReasonPhrases.INTERNAL_SERVER_ERROR,
         description: errors.find((error) => error.key === '008').code
       })
@@ -197,7 +188,9 @@ class ActivitiesController {
     const validationExtensionFile = validateExtensionFile(req.files)
 
     if (validationExtensionFile.error) {
-      return res.status(400).json(validationExtensionFile.code)
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json(validationExtensionFile.code)
     }
 
     const validationFiles = validateFilesWithEvidences(
@@ -206,7 +199,7 @@ class ActivitiesController {
     )
 
     if (validationFiles.error) {
-      res.status(400).json(validationFiles)
+      return res.status(StatusCodes.BAD_REQUEST).json(validationFiles)
     }
 
     let activity = await ActivityService.findActivityById(id)
@@ -251,7 +244,7 @@ class ActivitiesController {
       )
     }
 
-    res.status(200).json(activity)
+    res.status(StatusCodes.CREATED).json(activity)
   }
 
   /**
