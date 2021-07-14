@@ -137,7 +137,8 @@ class ActivitiesController {
     await CropService.addActivities(activity, crop)
 
     try {
-      if (data.tag === TypeActivities.ACT_APPLICATION) {
+      const { tag: TypeActivity } = data
+      if (TypeActivity === TypeActivities.ACT_APPLICATION) {
         const envImpactIndexId: IEnvImpactIndexDocument =
           await setEiqInEnvImpactIndexActivity({ ...data, activity })
         await setEnvImpactIndexInActivity(envImpactIndexId)
