@@ -14,7 +14,8 @@ export class LicensesController {
    */
   public static async licenseById(req: Request | any, res: Response) {
     const userId = req.user._id.toString()
-    const { id, companyNameInCrop, identifierInCrop } = req.params
+    const { id } = req.params
+    const { companyNameInCrop, identifierInCrop } = req.query
     try {
       const license = await LicenseService.licenseById({
         userId,
