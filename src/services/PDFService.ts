@@ -35,6 +35,7 @@ export class PDFService {
 
     const browser = await Puppeteer.launch()
     const page = await browser.newPage()
+    await page.setDefaultNavigationTimeout(0)
     await page.setContent(html)
     await page.addStyleTag({ path: `views/pdf/css/${nameTemplate}.css` })
     await page.emulateMediaType('screen')
