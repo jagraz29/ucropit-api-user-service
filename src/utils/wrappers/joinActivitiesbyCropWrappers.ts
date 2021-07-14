@@ -1,6 +1,6 @@
 import { flatten } from 'lodash'
 export const joinActivitiesByCrop = (crop) => {
-  const { done, finished, toMake, pending } = crop
+  const { done, finished } = crop
   delete crop.done
   delete crop.finished
   delete crop.toMake

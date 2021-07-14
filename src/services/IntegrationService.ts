@@ -10,22 +10,22 @@ import ActivityService from './ActivityService'
 const IntegrationLog = models.IntegrationLog
 
 interface IExportCrop {
-  identifier: String | string
-  erpAgent: String | string
-  crops?: Array<String | string | any>
-  token?: String | string | any
-  cropId?: String | string | any
-  achievementId?: String | string | any
-  activityId?: String | string | any
+  identifier: string | string
+  erpAgent: string | string
+  crops?: Array<string | string | any>
+  token?: string | string | any
+  cropId?: string | string | any
+  achievementId?: string | string | any
+  activityId?: string | string | any
   user?: any
 }
 
 interface IExportIntegration {
-  ucropitCompanyId: String | string
-  identifier: String | string
-  erpAgent: String | string
-  user?: String | string
-  password?: String | string
+  ucropitCompanyId: string | string
+  identifier: string | string
+  erpAgent: string | string
+  user?: string | string
+  password?: string | string
 }
 
 interface IExportIntegrationLog {
@@ -127,9 +127,11 @@ class IntegrationService extends ServiceBase {
     crop: string,
     logAchievement: IExportIntegrationLog
   ) {
-    const integrationsLogFind: any = await integrationLog.findOne({ crop: crop })
+    const integrationsLogFind: any = await integrationLog.findOne({
+      crop: crop
+    })
 
-    let res = await integrationsLogFind.logAchievement.push(logAchievement)
+    await integrationsLogFind.logAchievement.push(logAchievement)
     await integrationsLogFind.save()
 
     return integrationLog.findOne({ crop: crop })
@@ -170,7 +172,7 @@ class IntegrationService extends ServiceBase {
     activityId?: string,
     achievementId?: string
   ): Promise<any> {
-    let dataLog = {
+    const dataLog = {
       log: data,
       crop: cropId,
       activity: activityId,
@@ -205,7 +207,7 @@ class IntegrationService extends ServiceBase {
 
   public static async isEnabledExportData(
     dataExport: IExportCrop
-  ): Promise<Boolean> {
+  ): Promise<boolean> {
     const crop = await CropService.findOneCrop(dataExport.cropId)
 
     const isServiceCompany = await CompanyService.isAdderService(
@@ -228,7 +230,7 @@ class IntegrationService extends ServiceBase {
    * @param Request req
    */
   public static async exportAchievement(dataExport: IExportCrop, req: Request) {
-    const isEnabledExportData: Boolean = await this.isEnabledExportData(
+    const isEnabledExportData: boolean = await this.isEnabledExportData(
       dataExport
     )
 
@@ -266,7 +268,7 @@ class IntegrationService extends ServiceBase {
   }
 
   public static async exportActivity(dataExport: IExportCrop, req: Request) {
-    const isEnabledExportData: Boolean = await this.isEnabledExportData(
+    const isEnabledExportData: boolean = await this.isEnabledExportData(
       dataExport
     )
 

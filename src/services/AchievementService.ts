@@ -2,19 +2,8 @@ import ServiceBase from './common/ServiceBase'
 import { AchievementModel } from '../models'
 import PDF from '../utils/pdf/PDF'
 import mongoose from 'mongoose'
-import { basePath, fileExist, makeDirIfNotExists } from '../utils'
+import { basePath, makeDirIfNotExists } from '../utils'
 import { Signer } from '../interfaces'
-
-interface IAchievement {
-  _id?: String
-  dateAchievement?: String
-  surface?: number
-  lots?: Array<string>
-  supplies?: Array<any>
-  evidences?: Array<any>
-  signers?: Array<any>
-  percent?: Number
-}
 
 class AchievementService extends ServiceBase {
   public static async find(query): Promise<any> {

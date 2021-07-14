@@ -2,14 +2,17 @@
  * @swagger
  *  components:
  *    schemas:
- *       Input:
+ *       SupplyTypes:
  *         type: object
  *         properties:
+ *           _id:
+ *              type: string
+ *              format: uuid
  *           name:
  *             type: string
- *           company:
- *             type: string
  *           code:
+ *             type: string
+ *           icon:
  *             type: string
  */
 import mongoose from 'mongoose'

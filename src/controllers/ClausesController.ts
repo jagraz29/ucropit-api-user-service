@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { ClauseService } from '../services'
-import { errors } from '../types/common'
 
 export class ClausesController {
   /**
@@ -14,7 +13,6 @@ export class ClausesController {
    * @return Response
    */
   public static async index(req: Request | any, res: Response) {
-
     const clauses = await ClauseService.createClause(req.body)
 
     res.status(StatusCodes.OK).json(clauses)

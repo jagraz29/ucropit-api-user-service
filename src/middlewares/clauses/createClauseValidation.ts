@@ -7,7 +7,6 @@ export const createClauseValidation = (
   res: Response,
   next: NextFunction
 ) => {
-
   const { error } = joiSchemaClause.validate({ ...req.params, ...req.body })
 
   if (error) {

@@ -10,7 +10,8 @@ import {
 } from '../../utils/Validation'
 import { CropRepository } from '../../repositories'
 import {
-  exitsLotsReusableInCollectionLots, lotsReusableNotExistInDB,
+  exitsLotsReusableInCollectionLots,
+  lotsReusableNotExistInDB,
   responseReusableLotsMessageError,
   validateLotsReusable
 } from '../../utils/lots'
@@ -20,9 +21,7 @@ export const cropStorePolicy = async (
   res: Response,
   next: NextFunction
 ) => {
-
   try {
-
     const { data } = req.body
     if (!data) {
       return res.status(StatusCodes.BAD_REQUEST).json({
@@ -37,11 +36,16 @@ export const cropStorePolicy = async (
     const { error } = await validateCropStore(dataInJSON)
 
     if (error) {
-
-      return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponseInstance.parseError(ErrorResponse.REQUIRED_FIELDS, 'Uno o/y mas campos son requeridos', {
-        description: ReasonPhrases.BAD_REQUEST,
-        error
-      }))
+      return res.status(StatusCodes.BAD_REQUEST).json(
+        ErrorResponseInstance.parseError(
+          ErrorResponse.REQUIRED_FIELDS,
+          'Uno o/y mas campos son requeridos',
+          {
+            description: ReasonPhrases.BAD_REQUEST,
+            error
+          }
+        )
+      )
     }
 
     req.body.data = {
@@ -49,11 +53,9 @@ export const cropStorePolicy = async (
     }
 
     return next()
-
   } catch (err) {
     return ErrorResponseInstance.internalServer(err.toString(), res)
   }
-
 }
 
 export const validateDateCropAndDateHarvestInData = async (
@@ -61,7 +63,6 @@ export const validateDateCropAndDateHarvestInData = async (
   res: Response,
   next: NextFunction
 ) => {
-
   try {
     const { data } = req.body
 
@@ -80,7 +81,6 @@ export const validateDateCropAndDateHarvestInData = async (
   } catch (err) {
     return ErrorResponseInstance.internalServer(err.toString(), res)
   }
-
 }
 
 export const hasLotsInDataPolicy = async (
@@ -88,7 +88,6 @@ export const hasLotsInDataPolicy = async (
   res: Response,
   next: NextFunction
 ) => {
-
   try {
     const { data } = req.body
     let validationDuplicateName = { error: false }
@@ -114,7 +113,6 @@ export const hasLotsInDataPolicy = async (
   } catch (err) {
     return ErrorResponseInstance.internalServer(err.toString(), res)
   }
-
 }
 
 export const hasLotsReusableInDataPolicy = async (
@@ -122,7 +120,6 @@ export const hasLotsReusableInDataPolicy = async (
   res: Response,
   next: NextFunction
 ) => {
-
   try {
     const { data } = req.body
     const { identifier, dateCrop } = data
@@ -130,7 +127,7 @@ export const hasLotsReusableInDataPolicy = async (
     if (data.reusableLots) {
       let responseError
       const reusableLots: string[] = flatten(map(data.reusableLots, 'lotIds'))
-      let query = {
+      const query = {
         identifier,
         dateHarvest: { $gt: new Date(dateCrop.toString()) },
         $where: function () {
@@ -172,7 +169,6 @@ export const hasLotsReusableInDataPolicy = async (
   } catch (err) {
     return ErrorResponseInstance.internalServer(err.toString(), res)
   }
-
 }
 
 export const hasKmzInFilesPolicy = async (
@@ -180,9 +176,7 @@ export const hasKmzInFilesPolicy = async (
   res: Response,
   next: NextFunction
 ) => {
-
   try {
-
     const { data } = req.body
     let validationKmz = { error: false }
 
@@ -205,7 +199,6 @@ export const hasKmzInFilesPolicy = async (
     }
 
     return next()
-
   } catch (err) {
     return ErrorResponseInstance.internalServer(err.toString(), res)
   }

@@ -4,10 +4,10 @@ export const sumActivitiesSurfacesByTypeAgreement = (
   activities,
   { cropType }
 ) => {
-  let exploActivitiesSurfaces: number = 0
-  let sustainActivitiesSurfaces: number = 0
-  let seedUseActivitiesSurfaces: number = 0
-  let responsibleUseActivitiesSurfaces: number = 0
+  let exploActivitiesSurfaces = 0
+  let sustainActivitiesSurfaces = 0
+  let seedUseActivitiesSurfaces = 0
+  let responsibleUseActivitiesSurfaces = 0
 
   activities.map((activity) => {
     if (activity.typeAgreement.key === TypeAgreement.EXPLO) {

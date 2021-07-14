@@ -68,7 +68,7 @@ class IntegrationServiceController {
   public async create(req: Request, res: Response) {
     const data = req.body
 
-    const response = await IntegrationService.create(
+    await IntegrationService.create(
       data,
       `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_INTEGRATION_USER}`
     )
@@ -121,7 +121,7 @@ class IntegrationServiceController {
   public async unlink(req: Request, res: Response) {
     const { id, service, identifier } = req.params
 
-    const response = await IntegrationService.delete(
+    await IntegrationService.delete(
       `${process.env.ADAPTER_URL}/${process.env.ENDPOINT_INTEGRATION_USER}/${service}/${identifier}`
     )
 
@@ -224,7 +224,7 @@ class IntegrationServiceController {
    */
   public async getCropSyncAchievements(req: Request, res: Response) {
     const { ids } = req.query
-    const crop = await CropService.findOneCrop(ids.toString())
+    await CropService.findOneCrop(ids.toString())
     const achievement = await AchievementService.find(ids)
 
     res.status(200).json(achievement)

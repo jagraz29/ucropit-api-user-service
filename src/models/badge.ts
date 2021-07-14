@@ -39,46 +39,51 @@ import { IBadge, BadgeTypes } from '../interfaces'
 
 const { Schema } = mongoose
 
-const BadgeSchema = new Schema({
-  type: {
-    type: String,
-    enum: Object.values(BadgeTypes),
-    required: true,
-    unique: true,
-  },
-  name: {
-    en: {
+const BadgeSchema = new Schema(
+  {
+    type: {
       type: String,
+      enum: Object.values(BadgeTypes),
       required: true,
+      unique: true
     },
-    es: {
-      type: String,
-      required: true,
+    name: {
+      en: {
+        type: String,
+        required: true
+      },
+      es: {
+        type: String,
+        required: true
+      },
+      pt: {
+        type: String,
+        required: true
+      }
     },
-    pt: {
+    goalReach: {
+      type: Number,
+      required: true
+    },
+    image: {
       type: String,
-      required: true,
+      required: true
     }
   },
-  goalReach: {
-    type: Number,
-    required: true,
-  },
-  image: {
-    type: String,
-    required: true,
+  {
+    toJSON: {
+      virtuals: true
+    },
+    toObject: {
+      virtuals: true
+    }
   }
-},{
-  toJSON: {
-    virtuals: true
-  },
-  toObject: {
-    virtuals: true
-  }
-})
+)
 
 BadgeSchema.virtual('imagePath').get(function () {
-  return `${process.env.BASE_URL}${process.env.DIR_FOLDER_BADGES.replace('public', '')}/${this.image}`
+  return `${
+    process.env.BASE_URL
+  }${process.env.DIR_FOLDER_BADGES.replace('public', '')}/${this.image}`
 })
 
 BadgeSchema.plugin(mongooseLeanVirtuals)

@@ -144,11 +144,7 @@ router.post(
  *        "500":
  *          description: Server error
  */
-router.post(
-  '/eiq',
-  // authMiddleware,
-  reportsController.reportsEiq
-)
+router.post('/eiq', reportsController.reportsEiq)
 
 /**
  * @swagger
@@ -176,11 +172,30 @@ router.post(
  *        "500":
  *          description: Server error
  */
-router.post(
-  '/dm',
-  // authMiddleware,
-  reportsController.reportsDm
-)
+router.post('/dm', reportsController.reportsDm)
+
+/**
+ * @swagger
+ * path:
+ *  /v1/reports/xls-for-eiq:
+ *    post:
+ *      summary: Request send email with xls for eiq report.
+ *      tags: [Reports]
+ *      parameters:
+ *        - in: query
+ *          name: email
+ *          required: true
+ *          schema:
+ *            type: string
+ *      responses:
+ *        "200":
+ *          description: ok
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.post('/xls-for-eiq', reportsController.reportsXlsForEiq)
 
 /**
  * @swagger

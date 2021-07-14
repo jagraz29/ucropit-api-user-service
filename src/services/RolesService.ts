@@ -4,7 +4,7 @@ import models from '../models'
 const Roles = models.Roles
 
 class RoleService {
-  static async findOne (query: IRoles): Promise<any> {
+  static async findOne(query: IRoles): Promise<any> {
     return Roles.findOne(query)
   }
 }

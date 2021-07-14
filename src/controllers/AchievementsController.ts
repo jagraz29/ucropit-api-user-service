@@ -1,4 +1,7 @@
 import { Request, Response } from 'express'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { errors } from '../types/common'
+
 import {
   validateAchievement,
   validateSignAchievement,
@@ -19,6 +22,9 @@ import NotificationService from '../services/NotificationService'
 import { emailTemplates } from '../types/common'
 import { typesSupplies } from '../utils/Constants'
 import agenda from '../jobs'
+import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
+import { setEiqInEnvImpactIndex, setEnvImpactIndexInEntities } from '../core'
+import { activityTypeRepository } from '../repositories'
 
 const Crop = models.Crop
 
@@ -72,8 +78,10 @@ class AchievementsController {
    * @return Response
    */
   public async create(req: Request, res: Response) {
+    req.setTimeout(0)
     const user: any = req.user
     const data = JSON.parse(req.body.data)
+
     const crop: any = await Crop.findById(data.crop)
     const userConfig = await UserConfigService.findById(user.config)
 
@@ -106,6 +114,20 @@ class AchievementsController {
       await CropService.addActivities(activity, crop)
     }
 
+    try {
+      const { tag: TypeActivity } = data
+      if (TypeActivity === TypeActivities.ACT_APPLICATION) {
+        const envImpactIndexIds: IEnvImpactIndexDocument[] =
+          await setEiqInEnvImpactIndex(data, achievement)
+        await setEnvImpactIndexInEntities(envImpactIndexIds)
+      }
+    } catch (error) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: ReasonPhrases.INTERNAL_SERVER_ERROR,
+        description: errors.find((error) => error.key === '008').code
+      })
+    }
+
     if (req.files) {
       achievement = await AchievementService.addFiles(
         achievement,
@@ -123,7 +145,7 @@ class AchievementsController {
     const type = typesSupplies.find((el) => activity.type.tag === el.tag).value
     const url = `${process.env.BASE_URL}/${process.env.FAST_LINK_URL}?url=activities/${crop._id}/${type}/common/detail/${achievement._id}/${activity._id}/true?tag=${activity.type.tag}`
 
-    for (let signer of signers) {
+    for (const signer of signers) {
       await NotificationService.email(
         emailTemplates.NOTIFICATION_ACTIVITY,
         signer,
@@ -178,7 +200,7 @@ class AchievementsController {
       console.log(error)
     }
 
-    res.status(201).json(achievement)
+    res.status(StatusCodes.CREATED).json(achievement)
   }
 
   /**

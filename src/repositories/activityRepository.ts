@@ -27,6 +27,48 @@ export class ActivityRepository {
    *
    * @returns
    */
+  public static findActivityByIdWithPopulateAndVirtuals(id: string) {
+    return Activity.findById(id)
+      .populate('type')
+      .populate('typeAgreement')
+      .populate({
+        path: 'crop',
+        populate: [
+          { path: 'cropType' },
+          { path: 'unitType' },
+          { path: 'company' },
+          { path: 'owner' }
+        ]
+      })
+      .populate('lots')
+      .populate('lotsMade')
+      .populate('files')
+      .populate({
+        path: 'achievements',
+        populate: [
+          { path: 'lots' },
+          { path: 'files' },
+          {
+            path: 'supplies',
+            populate: [{ path: 'typeId' }, { path: 'supply' }]
+          }
+        ]
+      })
+      .populate('approvalRegister')
+      .populate('user')
+      .populate({
+        path: 'supplies',
+        populate: [{ path: 'typeId' }, { path: 'supply' }]
+      })
+      .lean({ virtuals: true })
+  }
+
+  /**
+   *
+   * @param string lotId
+   *
+   * @returns
+   */
   public static findById(lotId: string) {
     return Activity.findById(lotId)
   }
@@ -87,5 +129,18 @@ export class ActivityRepository {
    */
   static async updateActivity<T>(update: T, id: string) {
     return Activity.updateOne({ _id: id }, { $set: update })
+  }
+  /**
+   *
+   * @param query
+   * @param dataToUpdate
+   *
+   * @returns
+   */
+  public static async updateOneActivity(
+    query: any,
+    dataToUpdate: any
+  ): Promise<any> {
+    return Activity.updateOne(query, dataToUpdate)
   }
 }
