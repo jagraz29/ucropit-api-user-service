@@ -8,10 +8,9 @@ export interface ILicenseSearch {
 }
 
 export interface ILicenseById {
-  userId: string
   id: string
-  companyNameInCrop: string
-  identifierInCrop: string
+  userId: string
+  cropId: string
 }
 
 export class LicenseService extends ServiceBase {
@@ -20,17 +19,11 @@ export class LicenseService extends ServiceBase {
    *
    * @param licenseById
    */
-  public static async licenseById({
-    userId,
-    id,
-    companyNameInCrop,
-    identifierInCrop
-  }: ILicenseById) {
+  public static async licenseById({ id, userId, cropId }: ILicenseById) {
     return new Promise((resolve, reject) => {
       const params = {
         userId,
-        companyNameInCrop,
-        identifierInCrop
+        cropId
       }
       this.makeRequest(
         'get',

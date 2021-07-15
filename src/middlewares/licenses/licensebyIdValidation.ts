@@ -11,8 +11,7 @@ export const licensebyIdValidation = (
 ) => {
   const Schema = Joi.object({
     id: Joi.objectId().required(),
-    companyNameInCrop: Joi.string().optional(),
-    identifierInCrop: Joi.string().optional()
+    cropId: Joi.objectId().required()
   })
 
   const { error } = Schema.validate({
