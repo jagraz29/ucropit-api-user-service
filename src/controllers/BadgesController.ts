@@ -131,8 +131,6 @@ class BadgesController {
   public async delete(req: Request | any, res: Response) {
     const { badgeId } = req.params
 
-    const { type, nameEs, nameEn, namePt, goalReach, image } = req.body
-
     const dataToFind: any = {
       query: {
         _id: badgeId

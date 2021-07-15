@@ -33,6 +33,12 @@ const router: express.Router = express.Router()
  *   responses:
  *    '200':
  *      description: Get all Supplies
+ *      content:
+ *       application/json:
+ *        schema:
+ *          type: array
+ *          items:
+ *            $ref: '#/definitions/supplyObject'
  */
 router.get('/', suppliesController.index)
 

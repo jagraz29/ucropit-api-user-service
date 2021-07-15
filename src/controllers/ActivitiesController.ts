@@ -1,12 +1,13 @@
 import { Request, Response } from 'express'
-import { StatusCodes } from 'http-status-codes'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import {
   ActivityRepository,
   TypeAgreementRepository,
   BadgeRepository,
-  CropRepository
+  CropRepository,
+  activityTypeRepository
 } from '../repositories'
-import { TypeActivities } from '../interfaces'
+import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
 import {
   validateActivityStore,
   validateActivityUpdate,
@@ -16,7 +17,8 @@ import {
 import {
   sumActivitiesSurfacesByTypeAgreement,
   getCropBadgesReached,
-  calculateCropEiq
+  calculateCropEiq,
+  calculateEiqOfActivity
 } from '../utils'
 
 import ActivityService from '../services/ActivityService'
@@ -36,12 +38,15 @@ import {
 } from '../utils/Files'
 
 import { ACTIVITY_HARVEST } from '../utils/Constants'
+import { errors } from '../types'
+import {
+  setEiqInEnvImpactIndexActivity,
+  setEnvImpactIndexInActivity
+} from '../core'
 
 const Activity = models.Activity
 const FileDocument = models.FileDocument
 const Crop = models.Crop
-
-import { UserSchema } from '../models/user'
 
 class ActivitiesController {
   /**
@@ -75,9 +80,13 @@ class ActivitiesController {
    * @return Response
    */
   public async show(req: Request, res: Response) {
-    const activity = await ActivityService.findActivityById(req.params.id)
+    const activity =
+      await ActivityRepository.findActivityByIdWithPopulateAndVirtuals(
+        req.params.id
+      )
 
-    res.status(200).json(activity)
+    const activityWithEIQ = calculateEiqOfActivity(activity)
+    res.status(200).json(activityWithEIQ)
   }
 
   /**
@@ -108,7 +117,7 @@ class ActivitiesController {
     )
 
     if (validationFiles.error) {
-      res.status(400).json(validationFiles)
+      return res.status(400).json(validationFiles)
     }
 
     let activity = await ActivityService.store(data, user)
@@ -127,6 +136,20 @@ class ActivitiesController {
 
     await CropService.addActivities(activity, crop)
 
+    try {
+      const { tag: TypeActivity } = data
+      if (TypeActivity === TypeActivities.ACT_APPLICATION) {
+        const envImpactIndexId: IEnvImpactIndexDocument =
+          await setEiqInEnvImpactIndexActivity({ ...data, activity })
+        await setEnvImpactIndexInActivity(envImpactIndexId)
+      }
+    } catch (error) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: ReasonPhrases.INTERNAL_SERVER_ERROR,
+        description: errors.find((error) => error.key === '008').code
+      })
+    }
+
     if (activity.isDone() && activity.type.tag === ACTIVITY_HARVEST) {
       await SatelliteImageService.createPayload(activity).send()
 
@@ -141,7 +164,7 @@ class ActivitiesController {
       )
     }
 
-    res.status(201).json(activity)
+    res.status(StatusCodes.CREATED).json(activity)
   }
 
   /**
@@ -165,7 +188,9 @@ class ActivitiesController {
     const validationExtensionFile = validateExtensionFile(req.files)
 
     if (validationExtensionFile.error) {
-      return res.status(400).json(validationExtensionFile.code)
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json(validationExtensionFile.code)
     }
 
     const validationFiles = validateFilesWithEvidences(
@@ -174,7 +199,7 @@ class ActivitiesController {
     )
 
     if (validationFiles.error) {
-      res.status(400).json(validationFiles)
+      return res.status(StatusCodes.BAD_REQUEST).json(validationFiles)
     }
 
     let activity = await ActivityService.findActivityById(id)
@@ -219,7 +244,7 @@ class ActivitiesController {
       )
     }
 
-    res.status(200).json(activity)
+    res.status(StatusCodes.CREATED).json(activity)
   }
 
   /**
@@ -366,7 +391,7 @@ class ActivitiesController {
       /*
        * GET CROP EIQ
        */
-      const cropEiq: number = await calculateCropEiq(applicationActivities)
+      const cropEiq: number = calculateCropEiq(applicationActivities)
 
       /*
        * GET BADGES TO ADD TO CROP
@@ -437,7 +462,7 @@ class ActivitiesController {
    * @return Response
    */
   public async delete(req: Request, res: Response) {
-    const activity = await Activity.findByIdAndDelete(req.params.id)
+    await Activity.findByIdAndDelete(req.params.id)
 
     res.status(200).json({
       message: 'deleted successfully'
@@ -505,8 +530,6 @@ class ActivitiesController {
         const fileRemove = await FileDocument.findByIdAndDelete(document._id)
 
         if (fileRemove) {
-          const documentFiles = activity.toJSON().files
-
           files = files.filter(
             (item) => item.toString() !== document._id.toString()
           )

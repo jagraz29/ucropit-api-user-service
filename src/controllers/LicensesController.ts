@@ -1,22 +1,8 @@
 import { Request, Response } from 'express'
-import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 import { LicenseService } from '../services'
 
 export class LicensesController {
-  /**
-   *
-   * Get all licenses.
-   *
-   * @param Request req
-   * @param Response res
-   *
-   * @return Response
-   */
-  public static async index(req: Request | any, res: Response) {
-    const licenses = await LicenseService.createLicense(req.body)
-
-    res.status(StatusCodes.OK).json(licenses)
-  }
   /**
    *
    * Get licenses By Crop Type.
@@ -26,15 +12,19 @@ export class LicensesController {
    *
    * @return Response
    */
-  public static async licensebyId(req: Request | any, res: Response) {
+  public static async licenseById(req: Request | any, res: Response) {
     const userId = req.user._id.toString()
     const { id } = req.params
     try {
-      const licenses = await LicenseService.licensebyId({ userId, id })
-      res.status(StatusCodes.OK).json(licenses)
+      const license = await LicenseService.licenseById({ userId, id })
+      res.status(StatusCodes.OK).json(license)
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        error: ReasonPhrases.INTERNAL_SERVER_ERROR
+      const {
+        response: { status, data }
+      } = error
+      res.status(status).json({
+        error: data.message,
+        code: data.code
       })
     }
   }
@@ -61,26 +51,6 @@ export class LicensesController {
       res.status(status).json({
         error: data.message,
         code: data.code
-      })
-    }
-  }
-
-  /**
-   *
-   * Create License.
-   *
-   * @param Request req
-   * @param Response res
-   *
-   * @return Response
-   */
-  public static async create(req: Request | any, res: Response) {
-    try {
-      const licenses = await LicenseService.createLicense(req.body)
-      res.status(StatusCodes.CREATED).json(licenses)
-    } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        error: ReasonPhrases.INTERNAL_SERVER_ERROR
       })
     }
   }

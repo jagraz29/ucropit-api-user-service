@@ -8,6 +8,7 @@ import {
   hasLotsReusableInDataPolicy,
   validateDateCropAndDateHarvestInData
 } from '../../utils'
+import { getCropByIdMiddleware } from '../../middlewares'
 
 const router: express.Router = express.Router()
 
@@ -62,7 +63,7 @@ router.get('/lastMonitoring/:id', cropsController.showLastMonitoring)
  *        "500":
  *          description: Server error
  */
-router.get('/:id', cropsController.show)
+router.get('/:id', [getCropByIdMiddleware], cropsController.show)
 
 /**
  * @swagger
@@ -226,8 +227,6 @@ router.get('/:id/activities', cropsController.getCropWithActivities)
  *                            type: string
  *                         addressFloor:
  *                            type: string
- *
- *
  *      responses:
  *       '201':
  *         description: Create success a crop.
@@ -277,7 +276,6 @@ router.post(
  *            application/json:
  *             schema:
  *                $ref: '#/components/schemas/Crop'
- *
  *       '500':
  *         description: Error to Server.
  *
@@ -328,8 +326,6 @@ router.put('/offline/:id', cropsController.enableOffline)
  *                              type: string
  *                         tag:
  *                           type: string
- *
- *
  *      responses:
  *       '201':
  *         description: Create success a crop.

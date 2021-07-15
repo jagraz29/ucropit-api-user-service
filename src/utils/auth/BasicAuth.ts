@@ -1,7 +1,7 @@
 import auth from 'basic-auth'
 
 export const checkAuth = (req, res, next) => {
-  let user = auth(req)
+  const user = auth(req)
 
   if (
     !req.headers.authorization ||

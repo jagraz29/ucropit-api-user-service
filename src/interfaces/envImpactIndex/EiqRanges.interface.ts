@@ -10,4 +10,4 @@ export interface IEiqRanges {
 }
 
 export interface IEiqRangesDocument extends IEiqRanges, Document {}
-export interface IEiqRangesModel extends Model<IEiqRangesDocument> {}
+export type IEiqRangesModel = Model<IEiqRangesDocument>

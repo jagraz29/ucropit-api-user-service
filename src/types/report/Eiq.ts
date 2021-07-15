@@ -26,7 +26,7 @@ export const ReportsEiqHeaderXls = {
     'supplieTotal',
     'achievementSurface',
     'eiqAchievement',
-    'evidences',
+    'evidences'
   ],
   fieldNames: [
     'CROP ID',
@@ -55,6 +55,6 @@ export const ReportsEiqHeaderXls = {
     'Unidades Realizadas',
     'Ha Realizadas',
     'EIQ Realización',
-    'Evidencias',
-  ],
+    'Evidencias'
+  ]
 }

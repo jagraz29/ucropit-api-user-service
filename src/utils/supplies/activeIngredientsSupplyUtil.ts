@@ -11,7 +11,7 @@ export function createListSimpleActiveIngredients(
   supply: Supply,
   activeIngredient: ActiveIngredient
 ): ActiveIngredientsSupply[] {
-  let list = []
+  const list = []
   const composition: string = supply.compositon.replace(/,/g, '.')
 
   if (!isCompositionNotNumber(composition)) {

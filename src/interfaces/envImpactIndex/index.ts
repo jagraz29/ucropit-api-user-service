@@ -1,3 +1,6 @@
 export * from './EiqRanges.interface'
 export * from './EiqRanges.enum'
 export * from './EiqActivitiesTypes.enum'
+export * from './EnvImpactIndex.interface'
+export * from './Entity.enum'
+export * from './Eiq.interface'

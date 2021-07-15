@@ -22,10 +22,10 @@ export class PDFService {
   ): Promise<string> {
     const fileDocuments: Array<FileDocumentProps> | null =
       await FileDocumentRepository.getFiles(cropId)
-    const path: string = `public/uploads/${directory}/`
+    const path = `public/uploads/${directory}/`
     await makeDirIfNotExists(path)
-    const fullName: string = `${nameFile}-${uuidv4()}.pdf`
-    const pathFile: string = `${path}${fullName}`
+    const fullName = `${nameFile}-${uuidv4()}.pdf`
+    const pathFile = `${path}${fullName}`
 
     const hbs: string = readFile(`views/pdf/html/${nameTemplate}.hbs`)
     const handlebarsWithScript = setScriptPdf(Handlebars)
@@ -35,6 +35,7 @@ export class PDFService {
 
     const browser = await Puppeteer.launch()
     const page = await browser.newPage()
+    await page.setDefaultNavigationTimeout(0)
     await page.setContent(html)
     await page.addStyleTag({ path: `views/pdf/css/${nameTemplate}.css` })
     await page.emulateMediaType('screen')
