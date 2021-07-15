@@ -139,7 +139,9 @@ class ReportService {
   }
 
   public static async generateLotReports(crops) {
-    console.log(crops[0].lots[0].data, 'crops')
+    // console.log(crops[0].lots[0].data, 'crops')
+    const language = 'es'
+    const region = 'AR'
     const reports = crops.map((crop) => {
       const reportByCrop = crop.lots.map(async (item) => {
         const reportByLot = item.data.map(async (lot) => {
@@ -160,8 +162,8 @@ class ReportService {
             date_created_crop: moment(crop._id.getTimestamp()).format(
               'DD/MM/YYYY'
             ),
-            city: await this.getLocaleAddress(lot, 2),
-            province: await this.getLocaleAddress(lot, 1),
+            city: await this.getLocaleAddress(lot, 2, language, region),
+            province: await this.getLocaleAddress(lot, 1, language, region),
             kmz_links: this.linkKmzLot(lot),
             tags_lots: this.getListTagLots(crop.lots),
             name_lot: lot.name,
@@ -994,9 +996,11 @@ class ReportService {
   public static async listAddressLots(lots, pos: number) {
     let listAddressLot = ''
     let result = ''
+    const language = 'es'
+    const region = 'AR'
     for (const lot of lots) {
       for (const data of lot.data) {
-        result = await this.getLocaleAddress(data, pos)
+        result = await this.getLocaleAddress(data, pos, language, region)
         listAddressLot += `
           ${result},
         `
@@ -1008,7 +1012,9 @@ class ReportService {
 
   private static async getLocaleAddress(
     lot: any,
-    pos: number
+    pos: number,
+    lang: string,
+    region: string
   ): Promise<string> {
     let listAddressLot = ''
     let result = ''
@@ -1016,7 +1022,12 @@ class ReportService {
       const { latitude, longitude } = lot.centerBound
 
       const resultAddress: any =
-        await GeoLocationService.getLocationByCoordinates(latitude, longitude)
+        await GeoLocationService.getLocationByCoordinates(
+          latitude,
+          longitude,
+          lang,
+          region
+        )
 
       if (
         resultAddress.length > 0 &&
@@ -1027,6 +1038,7 @@ class ReportService {
         )
 
         result = address.length > 0 ? address[0].short_name : ''
+        console.log({ result })
       }
     }
 

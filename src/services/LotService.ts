@@ -280,9 +280,14 @@ class LotService extends ServiceBase {
    * @param latitude
    * @param longitude
    */
-  public static async getLocationData(latitude, longitude) {
+  public static async getLocationData(latitude, longitude, language?, region?) {
     const responseReverseGeocoding: any =
-      await GeoLocationService.getLocationByCoordinates(latitude, longitude)
+      await GeoLocationService.getLocationByCoordinates(
+        latitude,
+        longitude,
+        language,
+        region
+      )
 
     const locationData: any = {
       country: '',
