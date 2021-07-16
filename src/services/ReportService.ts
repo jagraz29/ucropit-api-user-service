@@ -8,9 +8,12 @@ import {
   tagsTypeAgreement,
   responsibleRoles,
   supplyTypesSeedGen,
-  rolesAdvisorPromoter
+  rolesAdvisorPromoter,
 } from '../utils/Constants'
 import Activity from '../models/activity'
+
+const LANGUAGE_DEFAULT = 'es'
+const REGION_DEFAULT = 'AR'
 
 const Company = models.Company
 
@@ -139,9 +142,6 @@ class ReportService {
   }
 
   public static async generateLotReports(crops) {
-    // console.log(crops[0].lots[0].data, 'crops')
-    const language = 'es'
-    const region = 'AR'
     const reports = crops.map((crop) => {
       const reportByCrop = crop.lots.map(async (item) => {
         const reportByLot = item.data.map(async (lot) => {
@@ -162,8 +162,8 @@ class ReportService {
             date_created_crop: moment(crop._id.getTimestamp()).format(
               'DD/MM/YYYY'
             ),
-            city: await this.getLocaleAddress(lot, 2, language, region),
-            province: await this.getLocaleAddress(lot, 1, language, region),
+            city: await this.getLocaleAddress(lot, 2, LANGUAGE_DEFAULT, REGION_DEFAULT),
+            province: await this.getLocaleAddress(lot, 1, LANGUAGE_DEFAULT, REGION_DEFAULT),
             kmz_links: this.linkKmzLot(lot),
             tags_lots: this.getListTagLots(crop.lots),
             name_lot: lot.name,
@@ -1038,7 +1038,6 @@ class ReportService {
         )
 
         result = address.length > 0 ? address[0].short_name : ''
-        console.log({ result })
       }
     }
 

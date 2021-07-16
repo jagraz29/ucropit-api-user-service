@@ -20,6 +20,9 @@ interface ILot {
   tag?: string
 }
 
+const LANGUAGE_DEFAULT = 'es'
+const REGION_DEFAULT = 'AR'
+
 class LotService extends ServiceBase {
   public static async search(query) {
     const lots = await Lot.find(query)
@@ -285,8 +288,8 @@ class LotService extends ServiceBase {
       await GeoLocationService.getLocationByCoordinates(
         latitude,
         longitude,
-        language,
-        region
+        language || LANGUAGE_DEFAULT,
+        region || REGION_DEFAULT
       )
 
     const locationData: any = {
