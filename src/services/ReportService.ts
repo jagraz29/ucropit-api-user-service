@@ -8,7 +8,7 @@ import {
   tagsTypeAgreement,
   responsibleRoles,
   supplyTypesSeedGen,
-  rolesAdvisorPromoter,
+  rolesAdvisorPromoter
 } from '../utils/Constants'
 import Activity from '../models/activity'
 
@@ -162,8 +162,18 @@ class ReportService {
             date_created_crop: moment(crop._id.getTimestamp()).format(
               'DD/MM/YYYY'
             ),
-            city: await this.getLocaleAddress(lot, 2, LANGUAGE_DEFAULT, REGION_DEFAULT),
-            province: await this.getLocaleAddress(lot, 1, LANGUAGE_DEFAULT, REGION_DEFAULT),
+            city: await this.getLocaleAddress(
+              lot,
+              2,
+              LANGUAGE_DEFAULT,
+              REGION_DEFAULT
+            ),
+            province: await this.getLocaleAddress(
+              lot,
+              1,
+              LANGUAGE_DEFAULT,
+              REGION_DEFAULT
+            ),
             kmz_links: this.linkKmzLot(lot),
             tags_lots: this.getListTagLots(crop.lots),
             name_lot: lot.name,
