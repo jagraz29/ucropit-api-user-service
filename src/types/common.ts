@@ -11,7 +11,8 @@ export const errors = [
   { key: '006', code: 'BADGE_TYPE_DUPLICATED' },
   { key: '007', code: 'DATA_NOT_FOUND' },
   { key: '008', code: 'SAVE_FAILED' },
-  { key: '009', code: 'TYPE_ACTIVITY_NOT_FOUND' }
+  { key: '009', code: 'TYPE_ACTIVITY_NOT_FOUND' },
+  { key: '010', code: 'TOKEN_IS_NOT_VALID' }
 ]
 
 export enum emailTemplates {
