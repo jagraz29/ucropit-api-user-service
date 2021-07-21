@@ -1,3 +1,52 @@
+/* Styles tessst */
+
+.page-header,
+.page-header-space {
+  height: 50px;
+}
+
+/* .page-footer,
+.page-footer-space {
+  height: 50px;
+} */
+/* 
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+} */
+
+.page-header {
+  position: fixed;
+  top: 0mm;
+  width: 100%;
+}
+
+.page {
+  page-break-after: always;
+}
+
+@page {
+  margin: 20mm;
+}
+
+@media print {
+  thead {
+    display: table-header-group;
+  }
+  tfoot {
+    display: table-footer-group;
+  }
+
+  button {
+    display: none;
+  }
+
+  body {
+    margin: 0;
+  }
+}
+
 @page {
   size: A4;
 }
@@ -440,17 +489,17 @@
 /* FIXME: Desde aca se controla el paginado */
 .activity-header {
   page-break-inside: avoid;
-  /* page-break-after: always !important;
-  page-break-before: always !important; */
+  /* page-break-after: always !important; */
+  /* page-break-before: always !important;  */
 }
 
 .activity-header-lots-under {
-  page-break-before: always;
+  page-break-before: avoid;
 }
 
 .activity-header-val {
   /* page-break-after: always !important; */
-  /* page-break-inside: avoid; */
+  page-break-inside: avoid;
   /* page-break-before: always !important; */
   /* margin-top: 50px; */
 }
@@ -507,6 +556,7 @@
 
 .activities {
   background-color: #ffffff;
+  page-break-before: always;
 }
 
 .activities-with-achievements {
@@ -516,9 +566,10 @@
 .activity-frame-actividades-validaciones {
   border-radius: 2px;
   margin-bottom: 20px;
+  margin-top: 50px;
   box-shadow: 0px 0px 0px 2px rgb(0, 0, 0, 0.1);
   background-color: #f8f8f8;
-  page-break-inside: avoid !important;
+  page-break-inside: always !important;
   position: static;
   width: 100%;
 }
