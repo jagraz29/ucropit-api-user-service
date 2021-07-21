@@ -8,7 +8,7 @@ export const sumEIQInActiveIngredients = (activeIngredients) =>
 export const parseSuppliesWithEiqTotal = (supplies) => {
   return supplies.map((supplyObject) => {
     const { supply, activeIngredients = [], eiqTotal, quantity } = supplyObject
-    let currentEiqTotal = eiqTotal || 0
+    let currentEiqTotal = eiqTotal || null
     if (supply) {
       const supplyJSON = supply.toJSON ? supply.toJSON() : supply
       const { eiqTotal, activeIngredients = [] } = supplyJSON
@@ -19,7 +19,9 @@ export const parseSuppliesWithEiqTotal = (supplies) => {
         ...supplyObject,
         supply: {
           ...supplyJSON,
-          eiqTotal: Numbers.roundToTwo(currentEiqTotal)
+          eiqTotal: currentEiqTotal
+            ? Numbers.roundToTwo(currentEiqTotal)
+            : undefined
         }
       }
     }
@@ -29,7 +31,9 @@ export const parseSuppliesWithEiqTotal = (supplies) => {
         : sumEIQInActiveIngredients(activeIngredients)
       supplyObject = {
         ...supplyObject,
-        eiqTotal: Numbers.roundToTwo(currentEiqTotal)
+        eiqTotal: currentEiqTotal
+          ? Numbers.roundToTwo(currentEiqTotal)
+          : undefined
       }
     }
     if (quantity && currentEiqTotal) {
