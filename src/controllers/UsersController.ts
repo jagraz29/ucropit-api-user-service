@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
 import models from '../models'
+import { generateAuthTokenPin } from '../utils'
+import { UserSchema } from '../models/user'
 import UserService from '../services/UserService'
 
 const User = models.User
@@ -52,7 +54,8 @@ class UsersController {
         if (err) res.status(500).json({ error: err.message })
 
         if (isMatch) {
-          return res.json({ user, validate: true })
+          const tokenPin = generateAuthTokenPin(req.user._id)
+          return res.json({ user, validate: true, tokenPin })
         }
 
         return res.json({ validate: false })
