@@ -15,17 +15,15 @@ export const calculateEiqOfActivity = (activity) => {
   const achievementsWithEiq =
     parseSuppliesWithEiqTotalInAchievements(achievements)
   const percentTotal = sumPercentInAchievements(achievementsWithEiq)
-  const eiqPlanned = Numbers.roundToTwo(sumEIQInSupplies(suppliesWithEiqTotal))
-  const eiqApplied = Numbers.roundToTwo(
-    sumEIQInAchievements(achievementsWithEiq)
-  )
+  const eiqPlanned = sumEIQInSupplies(suppliesWithEiqTotal)
+  const eiqApplied = sumEIQInAchievements(achievementsWithEiq)
   const currentEiq = eiqApplied ? eiqApplied : eiqPlanned
   return {
     ...activity,
     achievements: achievementsWithEiq,
     supplies: suppliesWithEiqTotal,
     percentTotal,
-    eiq: currentEiq ? currentEiq : undefined
+    eiq: currentEiq !== undefined ? Numbers.roundToTwo(currentEiq) : undefined
   }
 }
 
