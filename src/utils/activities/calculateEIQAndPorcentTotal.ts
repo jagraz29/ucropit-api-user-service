@@ -19,12 +19,13 @@ export const calculateEiqOfActivity = (activity) => {
   const eiqApplied = Numbers.roundToTwo(
     sumEIQInAchievements(achievementsWithEiq)
   )
+  const currentEiq = eiqApplied ? eiqApplied : eiqPlanned
   return {
     ...activity,
     achievements: achievementsWithEiq,
     supplies: suppliesWithEiqTotal,
     percentTotal,
-    eiq: eiqApplied > 0 ? eiqApplied : eiqPlanned
+    eiq: currentEiq ? currentEiq : undefined
   }
 }
 

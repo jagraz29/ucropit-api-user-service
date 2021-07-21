@@ -48,7 +48,7 @@ export const parseSuppliesWithEiqTotalInAchievements = (achievements = []) => {
     return {
       ...achievement,
       supplies: suppliesWithEiqTotal,
-      eiq: eiqApplied
+      eiq: eiqApplied > 0 ? eiqApplied : undefined
     }
   })
 }

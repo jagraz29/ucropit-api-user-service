@@ -1,4 +1,5 @@
 import moment from 'moment'
+
 export function isNowGreaterThan(date: Date): boolean {
   const dateCompare = new Date()
   const now = new Date(

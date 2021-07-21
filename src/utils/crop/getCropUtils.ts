@@ -2,8 +2,7 @@ import { Numbers } from '../Numbers'
 import { calculateCropVolumeUtils, getEiqFromActivityWithEiq } from '.'
 import { getLots, getLotsGroupByTag } from '../lots'
 import { IEiqRangesDocument } from '../../interfaces'
-import { getEiqRange } from '..'
-import { formatDate } from '..'
+import { getEiqRange, formatDate } from '..'
 
 export const getCropUtils = (
   {
