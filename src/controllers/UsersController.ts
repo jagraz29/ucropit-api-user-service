@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import models from '../models'
 import { generateAuthTokenPin } from '../utils'
-import { UserSchema } from '../models/user'
 import UserService from '../services/UserService'
 
 const User = models.User
