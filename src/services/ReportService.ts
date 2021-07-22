@@ -12,6 +12,9 @@ import {
 } from '../utils/Constants'
 import Activity from '../models/activity'
 
+const LANGUAGE_DEFAULT = 'es'
+const REGION_DEFAULT = 'AR'
+
 const Company = models.Company
 
 class ReportService {
@@ -160,8 +163,18 @@ class ReportService {
             date_created_crop: moment(crop._id.getTimestamp()).format(
               'DD/MM/YYYY'
             ),
-            city: await this.getLocaleAddress(lot, 2),
-            province: await this.getLocaleAddress(lot, 1),
+            city: await this.getLocaleAddress(
+              lot,
+              2,
+              LANGUAGE_DEFAULT,
+              REGION_DEFAULT
+            ),
+            province: await this.getLocaleAddress(
+              lot,
+              1,
+              LANGUAGE_DEFAULT,
+              REGION_DEFAULT
+            ),
             kmz_links: this.linkKmzLot(lot),
             tags_lots: this.getListTagLots(crop.lots),
             name_lot: lot.name,
@@ -994,9 +1007,11 @@ class ReportService {
   public static async listAddressLots(lots, pos: number) {
     let listAddressLot = ''
     let result = ''
+    const language = 'es'
+    const region = 'AR'
     for (const lot of lots) {
       for (const data of lot.data) {
-        result = await this.getLocaleAddress(data, pos)
+        result = await this.getLocaleAddress(data, pos, language, region)
         listAddressLot += `
           ${result},
         `
@@ -1008,7 +1023,9 @@ class ReportService {
 
   private static async getLocaleAddress(
     lot: any,
-    pos: number
+    pos: number,
+    lang: string,
+    region: string
   ): Promise<string> {
     let listAddressLot = ''
     let result = ''
@@ -1016,7 +1033,12 @@ class ReportService {
       const { latitude, longitude } = lot.centerBound
 
       const resultAddress: any =
-        await GeoLocationService.getLocationByCoordinates(latitude, longitude)
+        await GeoLocationService.getLocationByCoordinates(
+          latitude,
+          longitude,
+          lang,
+          region
+        )
 
       if (
         resultAddress.length > 0 &&

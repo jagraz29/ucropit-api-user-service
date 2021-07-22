@@ -3,6 +3,8 @@ export const tagsTypeAgreement = {
   EXPLO: 'EXPLO'
 }
 
+export const defaultLanguageConfig = { language: 'es', region: 'AR' }
+
 export const VALID_FORMATS_FILES_IMAGES_PNG = 'png'
 export const VALID_FORMATS_FILES_IMAGES_JPG = 'jpg|jpeg'
 export const VALID_FORMATS_FILES_DOCUMENTS = 'pdf'
