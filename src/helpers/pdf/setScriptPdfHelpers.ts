@@ -33,5 +33,9 @@ export const setScriptPdf = (handlebars) => {
     return handlebars
   })
 
+  handlebars.registerHelper('isDistinct', (value1, value2) => {
+    return value1 != value2
+  })
+
   return handlebars
 }
