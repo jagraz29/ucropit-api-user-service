@@ -12,7 +12,7 @@ export const checkTokenPinValidation = (
   const check = checkTokenPin(tokenPin)
 
   if (!check) {
-    const error = errors.find((error) => error.key === '005')
+    const error = errors.find((error) => error.key === '010')
     return res.status(StatusCodes.BAD_REQUEST).json({
       error: ReasonPhrases.BAD_REQUEST,
       description: error.code
