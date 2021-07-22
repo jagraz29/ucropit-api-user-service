@@ -55,6 +55,30 @@ class SupplyRepository {
 
   /**
    *
+   * @param typeId
+   * @param queryUpdate
+   */
+  public static async updateOneByTypeId(
+    typeId: string,
+    queryUpdate
+  ): Promise<void> {
+    await Supply.updateOne({ typeId: typeId }, queryUpdate)
+  }
+
+  /**
+   *
+   * @param typeIds
+   * @param queryUpdate
+   */
+  public static async updateManyByTypeId(
+    typeIds: string[],
+    queryUpdate
+  ): Promise<void> {
+    await Supply.updateMany({ typeId: { $in: typeIds } }, queryUpdate)
+  }
+
+  /**
+   *
    * @param query
    *
    * @returns
