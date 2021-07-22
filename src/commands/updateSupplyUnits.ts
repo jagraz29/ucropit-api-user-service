@@ -1,28 +1,27 @@
 require('dotenv').config()
 import { connectDb } from '../models'
 import chalk from 'chalk'
-import { Command } from 'commander'
+import { Command, OptionValues } from 'commander'
 import { unitsByTypeId } from './supplies/unitsByTypeId'
 
-// const { Supply } = models
 import SupplyRepository from '../repositories/supplyRepository'
 
 const program = new Command()
 
-program.description('Use command for update suplies units by typeId')
+program
+  .description('Use command for update suplies units by typeId')
+  .option('-u, --updated', 'Update all supplies unit by typeId')
 
 program.parse(process.argv)
 
 async function execUpdateSupplyByTypeId() {
   for (const item of unitsByTypeId) {
+    const { ids, unit } = item
     try {
-      await SupplyRepository.updateManyByTypeId(item.ids, { unit: item.unit })
+      await SupplyRepository.updateManyByTypeId(ids, { unit: unit })
     } catch (error) {
       console.log(
-        `${chalk.green(
-          `Error updating supplies for unit: ${item.unit}`,
-          error
-        )}`
+        `${chalk.green(`Error updating supplies for unit: ${unit}`, error)}`
       )
     }
   }
@@ -33,7 +32,11 @@ async function execUpdateSupplyByTypeId() {
     const connected = await connectDb()
 
     if (connected) {
-      await execUpdateSupplyByTypeId()
+      const options: OptionValues = program.opts()
+
+      if (options.updated) {
+        await execUpdateSupplyByTypeId()
+      }
     }
   } catch (error) {
     console.log(error)
