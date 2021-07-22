@@ -14,7 +14,7 @@ export const getEiqOfAchievementsByLot = (
             const lot = lots.find(
               ({ _id }) => lotId.toString() === _id.toString()
             )
-            if (lot) return { eiq: a.eiq + eiq, count: a.count + 1 }
+            if (lot) return { eiq: a.eiq + (eiq || 0), count: a.count + 1 }
             return { eiq: 0, count: 0 }
           },
           { eiq: 0, count: 0 }

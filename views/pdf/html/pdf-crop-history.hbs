@@ -463,23 +463,31 @@
                                                                         <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
                                                                             height="15" />
                                                                         </div>
+                                                                    {{#if eiq }}
                                                                         <div class="center-activity">
                                                                             EIQ: {{eiq}}
                                                                         </div>
+                                                                    {{else}}
+                                                                        <div class="center-activity">
+                                                                            EIQ: 0
+                                                                        </div>
+                                                                    {{/if}}
                                                                 </div>
                                                             </div>
                                                             {{#each (unique supplies.supplies)}}
                                                                 <div style="display: flex;margin-top: 7px;">
                                                                     <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
-                                                                    <div class="eiq-activity">
-                                                                        <div class="icon-eiq-activity">
-                                                                        <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
-                                                                            height="15" />
+                                                                    {{#if eiq }}
+                                                                        <div class="eiq-activity">
+                                                                            <div class="icon-eiq-activity">
+                                                                            <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
+                                                                                height="15" />
+                                                                            </div>
+                                                                            <div class="center-activity">
+                                                                                EIQ: {{eiq}}
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="center-activity">
-                                                                            EIQ: {{eiq}}
-                                                                        </div>
-                                                                    </div>
+                                                                    {{/if}}
                                                                 </div>
                                                                 
                                                             {{/each}}
