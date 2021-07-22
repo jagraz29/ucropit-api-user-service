@@ -2,7 +2,8 @@ import express from 'express'
 import { LicensesController } from '../../controllers'
 import {
   listLicenseByCropTypeValidation,
-  licenseByIdValidation
+  licenseByIdValidation,
+  checkTokenPinValidation
 } from '../../middlewares'
 
 const router: express.Router = express.Router()
@@ -51,5 +52,45 @@ router.get(
  *          description: Server error
  */
 router.get('/:id', [licenseByIdValidation], LicensesController.licenseById)
+
+/**
+ * @swagger
+ *  /v1/licenses/{id}:
+ *    get:
+ *      summary: Get License by id
+ *      tags: [License]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  cropId:
+ *                    type: string
+ *                    required: true
+ *                    description:  crop Id
+ *                  userId:
+ *                    type: string
+ *                    required: true
+ *                    description:  user Id
+ *                  tokenPin:
+ *                    type: string
+ *                    required: true
+ *                    description:  token Pin
+ *      responses:
+ *        "200":
+ *          description: sign license success
+ *          produces:
+ *            - application/json
+ *        "404":
+ *          description: Not Found license
+ *        "500":
+ *          description: Server error
+ */
+router.post('/:id/sign', [checkTokenPinValidation], LicensesController.sign)
 
 export default router

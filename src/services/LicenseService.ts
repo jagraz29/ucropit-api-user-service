@@ -38,6 +38,27 @@ export class LicenseService extends ServiceBase {
       )
     })
   }
+
+  /**
+   *  sign license.
+   *
+   * @param licenseById
+   */
+  public static async sign({ id, cropId, userId }) {
+    return new Promise((resolve, reject) => {
+      this.makeRequest(
+        'post',
+        `${BASE_URL}/${id}/sign`,
+        { cropId, userId },
+        (result) => {
+          resolve(result.data)
+        },
+        (err) => {
+          reject(err)
+        }
+      )
+    })
+  }
   /**
    *  create new license.
    *
