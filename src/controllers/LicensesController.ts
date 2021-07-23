@@ -44,8 +44,9 @@ export class LicensesController {
    * @return Response
    */
   public static async sign(req: Request | any, res: Response) {
+    const userId = req.user._id.toString()
     const { id } = req.params
-    const { cropId, userId } = req.body
+    const { cropId } = req.body
     try {
       const license = await LicenseService.sign({
         id,
