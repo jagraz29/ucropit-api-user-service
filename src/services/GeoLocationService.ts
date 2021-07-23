@@ -1,5 +1,5 @@
 import ServiceBase from './common/ServiceBase'
-import { defaultLanguageConfig } from '../utils/constants'
+import { defaultLanguageConfig } from '../utils'
 const geocodingApi = process.env.GOOGLE_API_GEOCODING
 const apiKey = process.env.GOOGLE_API_KEY
 
