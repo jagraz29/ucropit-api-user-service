@@ -86,7 +86,6 @@ router.put('/:id', usersController.update)
 
 /**
  * @swagger
- * path:
  *  /v1/users/validate/pin:
  *    post:
  *      summary: Validate PIN user.
@@ -101,7 +100,7 @@ router.put('/:id', usersController.update)
  *                  pin:
  *                    type: string
  *                    required: true
- *                    description: PIN del usuario
+ *                    description: PIN User
  *      responses:
  *        "200":
  *          description: A user schema
