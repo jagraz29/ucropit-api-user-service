@@ -57,9 +57,9 @@ router.get('/:id', [licenseByIdValidation], LicensesController.licenseById)
 
 /**
  * @swagger
- *  /v1/licenses/{id}:
+ *  /v1/licenses/{id}/sign:
  *    post:
- *      summary: Get License by id
+ *      summary: Sign License by id
  *      tags: [License]
  *      parameters:
  *        - in: path
