@@ -1,33 +1,39 @@
-/* Styles tessst */
-
-.page-header,
-.page-header-space {
-  height: 50px;
+:root {
+  --eiq-very-low: #e8f5e9;
+  --eiq-low: #f1f8e9;
+  --eiq-moderate: #f9fbe7;
+  --eiq-high: #fff3e0;
+  --eiq-very-high: #fff3e0;
+  --first-page-background: #ffffff;
+  --green-primary: #4caf50;
+  --black: #333333;
 }
 
-/* .page-footer,
-.page-footer-space {
-  height: 50px;
-} */
-/* 
-.page-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-} */
+/* Styles tessst */
 
+/* .page-header,
+.page-header-space {
+  height: 50px;
+  margin-bottom: 100px;
+}
 .page-header {
   position: fixed;
   top: 0mm;
   width: 100%;
+} */
+/* .page-footer,
+.page-footer-space {
+  height: 50px;
 }
+ 
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}*/
 
 .page {
   page-break-after: always;
-}
-
-@page {
-  margin: 20mm;
 }
 
 @media print {
@@ -49,7 +55,9 @@
 
 @page {
   size: A4;
+  margin: 20mm;
 }
+
 @media print and (orientation: portrait) {
   .end-page {
     page-break-inside: always;
@@ -71,6 +79,10 @@
     url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
     url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
     url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.font-bold {
+  font-weight: bold;
 }
 
 .material-icons {
@@ -103,8 +115,16 @@
 }
 
 .fill {
-  background-color: #4caf50;
+  background-color: var(--first-page-background);
   height: 670px;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .fill-header {
@@ -139,7 +159,7 @@
   font-weight: normal;
   font-size: 14px;
   text-align: left;
-  color: #ffffff;
+  color: var(--black);
   line-height: 14.32px;
   letter-spacing: 0.15px;
 }
@@ -148,11 +168,11 @@
   margin-bottom: 5px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-style: normal;
-  font-weight: bold;
+  /* font-weight: bold; */
   font-size: 22px;
   line-height: 24px;
   text-align: left;
-  color: #ffffff;
+  color: var(--black);
 }
 
 .dataMeasures {
@@ -205,6 +225,7 @@
   margin-left: 5px;
   font-size: 12px;
   margin-bottom: -20px;
+  color: var(--green-primary);
 }
 
 /* TODO: no borrar estos estilos */
@@ -266,7 +287,7 @@
 }
 
 .binnacle {
-  color: #ffffff;
+  color: var(--black);
   margin-left: 60px;
   font-size: 12px;
   top: 50px;
@@ -390,9 +411,8 @@
 .crop-leaders {
   background: linear-gradient(
     to bottom,
-    #4caf50 0%,
-    #4caf50 40%,
-    #ffffff 41%,
+    /* #4caf50 0%,
+    #4caf50 40%, */ #ffffff 41%,
     #ffffff 100%
   );
   display: flex;
@@ -1032,14 +1052,6 @@
 .eiq-content {
   display: flex;
   justify-content: center;
-}
-
-:root {
-  --eiq-very-low: #e8f5e9;
-  --eiq-low: #f1f8e9;
-  --eiq-moderate: #f9fbe7;
-  --eiq-high: #fff3e0;
-  --eiq-very-high: #fff3e0;
 }
 
 .eiq-very-low {

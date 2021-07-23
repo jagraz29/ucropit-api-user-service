@@ -18,25 +18,21 @@
     />
   </head>
   <body>
-    {{!-- header content --}}
-    <div class="page-header" style="text-align: right">
+    {{! header content }}
+    {{! <div class="page-header" style="text-align: right">
       <img
         src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/ucropit-logo.png"
         alt="logo-ucropit"
       />
-      <br />
-    </div>
-    {{!-- end header content  --}}
-
-    {{!-- footer content --}}
-    {{!-- <div class="page-footer">
+      <br /> 
+    </div> }}
+    {{! footer content }}
+    {{! <div class="page-footer">
       
-    </div> --}}
-    {{!-- end footer content --}}
-    
-    
+    </div> }}
+    {{! end footer content }}
     <table>
-      {{!-- zona header --}}
+      {{! zona header }}
       <thead>
         <tr>
           <td>
@@ -45,9 +41,8 @@
           </td>
         </tr>
       </thead>
-      {{!-- end zona header --}}
-      
-      {{!-- contenido --}}
+      {{! end zona header }}
+      {{! contenido }}
       <tbody>
         <tr>
           <td>
@@ -134,12 +129,12 @@
                 </div>
                 <div class="dataContainer">
                   <div
-                    class="dataValue"
+                    class="dataValue font-bold"
                     style="width: 300; margin-bottom:10px;"
                   >
                     {{crop.company.name}}
                   </div>
-                  <div class="dataValue">
+                  <div class="dataValue font-bold">
                     {{crop.cropTypeName.es}}
                   </div>
                   <div class="dataNames">
@@ -423,26 +418,36 @@
                   {{#if (or (is tag "ACT_HARVEST") (is tag "ACT_MONITORING"))}}
                     <div class="activities">
                       <div class="activity-header">
-                        {{#switch tag}}
-                          {{#case "ACT_MONITORING"}}
+                        <div class="header-container">
+                          <div>
+                            {{#switch tag}}
+                              {{#case "ACT_MONITORING"}}
+                                <img
+                                  class="activity-type-img"
+                                  src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/monitoring.svg"
+                                  width="26"
+                                  height="26"
+                                />
+                              {{/case}}
+                              {{#case "ACT_HARVEST"}}
+                                <img
+                                  class="activity-type-img"
+                                  src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/harvest.svg"
+                                  width="26"
+                                  height="26"
+                                />
+                              {{/case}}
+                            {{/switch}}
+                            <div class="activity-title">
+                              {{name}}
+                            </div>
+                          </div>
+                          <div>
                             <img
-                              class="activity-type-img"
-                              src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/monitoring.svg"
-                              width="26"
-                              height="26"
+                              src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/ucropit-logo.png"
+                              alt="logo-ucropit"
                             />
-                          {{/case}}
-                          {{#case "ACT_HARVEST"}}
-                            <img
-                              class="activity-type-img"
-                              src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/harvest.svg"
-                              width="26"
-                              height="26"
-                            />
-                          {{/case}}
-                        {{/switch}}
-                        <div class="activity-title">
-                          {{name}}
+                          </div>
                         </div>
                         <div class="activity-frame">
                           {{#is tag "ACT_HARVEST"}}
@@ -574,42 +579,52 @@
                         {{moment dateEnd format="DD/MM/YYYY"}}
                       </div>
                       <div class="activity-header">
-                        {{#switch tag}}
-                          {{#case "ACT_SOWING"}}
+                        <div class="header-container">
+                          <div>
+                            {{#switch tag}}
+                              {{#case "ACT_SOWING"}}
+                                <img
+                                  class="activity-type-img"
+                                  src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/sowing.svg"
+                                  width="26"
+                                  height="26"
+                                />
+                              {{/case}}
+                              {{#case "ACT_APPLICATION"}}
+                                <img
+                                  class="activity-type-img"
+                                  src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg"
+                                  width="26"
+                                  height="26"
+                                />
+                              {{/case}}
+                              {{#case "ACT_FERTILIZATION"}}
+                                <img
+                                  class="activity-type-img"
+                                  src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/fertilization.svg"
+                                  width="26"
+                                  height="26"
+                                />
+                              {{/case}}
+                              {{#case "ACT_TILLAGE"}}
+                                <img
+                                  class="activity-type-img"
+                                  src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/tillage.svg"
+                                  width="26"
+                                  height="26"
+                                />
+                              {{/case}}
+                            {{/switch}}
+                            <div class="activity-title">
+                              {{name}}
+                            </div>
+                          </div>
+                          <div>
                             <img
-                              class="activity-type-img"
-                              src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/sowing.svg"
-                              width="26"
-                              height="26"
+                              src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/ucropit-logo.png"
+                              alt="logo-ucropit"
                             />
-                          {{/case}}
-                          {{#case "ACT_APPLICATION"}}
-                            <img
-                              class="activity-type-img"
-                              src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg"
-                              width="26"
-                              height="26"
-                            />
-                          {{/case}}
-                          {{#case "ACT_FERTILIZATION"}}
-                            <img
-                              class="activity-type-img"
-                              src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/fertilization.svg"
-                              width="26"
-                              height="26"
-                            />
-                          {{/case}}
-                          {{#case "ACT_TILLAGE"}}
-                            <img
-                              class="activity-type-img"
-                              src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/tillage.svg"
-                              width="26"
-                              height="26"
-                            />
-                          {{/case}}
-                        {{/switch}}
-                        <div class="activity-title">
-                          {{name}}
+                          </div>
                         </div>
                         {{!-- {{#each achievements}}
                                     {{#if suppliesList }}
@@ -880,20 +895,28 @@
               {{#each crop.lotsGroupByTag}}
                 <div class="activity-header-lots-under">
                   <div class="fill-header">
-                    <div>
-                      <img
-                        class="activity-type-img"
-                        src="https://www.pngrepo.com/png/111305/180/tryptic-brochure.png"
-                        width="15"
-                        height="15"
-                      />
-                      <div class="activity-title">
-                        {{tag}}
-                        Lotes -
-                        {{lotsQuantity}}
-                        (
-                        {{surface}}
-                        has.)
+                    <div class="header-container">
+                      <div>
+                        <img
+                          class="activity-type-img"
+                          src="https://www.pngrepo.com/png/111305/180/tryptic-brochure.png"
+                          width="15"
+                          height="15"
+                        />
+                        <div class="activity-title">
+                          {{tag}}
+                          Lotes -
+                          {{lotsQuantity}}
+                          (
+                          {{surface}}
+                          has.)
+                        </div>
+                      </div>
+                      <div>
+                        <img
+                          src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/ucropit-logo.png"
+                          alt="logo-ucropit"
+                        />
                       </div>
                     </div>
                   </div>
@@ -1033,18 +1056,17 @@
           </td>
         </tr>
       </tbody>
-      {{!-- end contenido --}}
-
-      {{!-- zona footer --}}
-      {{!-- <tfoot>
+      {{! end contenido }}
+      {{! zona footer }}
+      {{! <tfoot>
         <tr>
           <td>
             <!--place holder for the fixed-position footer-->
             <div class="page-footer-space"></div>
           </td>
         </tr>
-      </tfoot> --}}
-      {{!-- end zona footer --}}
+      </tfoot> }}
+      {{! end zona footer }}
     </table>
   </body>
 </html>
