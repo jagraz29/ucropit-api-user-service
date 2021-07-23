@@ -10,7 +10,6 @@ const router: express.Router = express.Router()
 
 /**
  * @swagger
- * path:
  *  /v1/licenses/search-by-crop:
  *    get:
  *      summary: Get all License grouped by crop Type
@@ -36,11 +35,14 @@ router.get(
 
 /**
  * @swagger
- * path:
  *  /v1/licenses/{id}:
  *    get:
  *      summary: Get License by id
  *      tags: [License]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
  *      responses:
  *        "200":
  *          description: Show success
@@ -56,12 +58,13 @@ router.get('/:id', [licenseByIdValidation], LicensesController.licenseById)
 /**
  * @swagger
  *  /v1/licenses/{id}:
- *    get:
+ *    post:
  *      summary: Get License by id
  *      tags: [License]
  *      parameters:
  *        - in: path
  *          name: id
+ *          required: true
  *      requestBody:
  *        required: true
  *        content:
