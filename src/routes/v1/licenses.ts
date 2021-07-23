@@ -76,10 +76,6 @@ router.get('/:id', [licenseByIdValidation], LicensesController.licenseById)
  *                    type: string
  *                    required: true
  *                    description:  crop Id
- *                  userId:
- *                    type: string
- *                    required: true
- *                    description:  user Id
  *                  tokenPin:
  *                    type: string
  *                    required: true
