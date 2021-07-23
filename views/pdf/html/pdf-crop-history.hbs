@@ -477,7 +477,7 @@
                                                             {{#each (unique supplies.supplies)}}
                                                                 <div style="display: flex;margin-top: 7px;">
                                                                     <h3 class="applications-supply-validation"><b>{{name}}- {{total}}{{unit}}</b> </h3>
-                                                                    {{#if eiq }}
+                                                                    {{#if (isDistinct eiq undefined)}}
                                                                         <div class="eiq-activity">
                                                                             <div class="icon-eiq-activity">
                                                                             <img class="img-eiq-activity" src="https://ucropsatelliteimagery.s3.amazonaws.com/stage/application.svg" width="15"
