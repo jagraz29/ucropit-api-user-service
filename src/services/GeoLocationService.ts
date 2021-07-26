@@ -12,7 +12,9 @@ class GeoLocationService extends ServiceBase {
           language || defaultLanguageConfig.language
         }&region=${region || defaultLanguageConfig.region}&key=${apiKey}`,
         {},
-        (result) => resolve(result.data.results),
+        (result) => {
+          resolve(result.data.results)
+        },
         (error) => reject(error)
       )
     })
