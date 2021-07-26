@@ -49,7 +49,7 @@ export const getActivitiesOrderedByDateUtils = ({ activities, members }) => {
         }
         achievements = getAchievements(achievementsParams, members)
         eiq = achievements.length
-          ? achievements.reduce((a, b) => a + b.eiq, 0)
+          ? achievements.reduce((a, b) => a + (b.eiq || 0), 0)
           : 0
 
         if (TypeActivitiesWithAchievements[TypeActivity]) {
