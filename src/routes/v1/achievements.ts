@@ -25,7 +25,6 @@ router.get('/', achievementsController.index)
 
 /**
  * @swagger
- * path:
  *  /v1/achievements/{id}:
  *    get:
  *      summary: Show a achievement
@@ -49,7 +48,6 @@ router.get('/:id', achievementsController.show)
 
 /**
  * @swagger
- * path:
  *  /v1/achievements:
  *    post:
  *      summary: Create a new Achievement
@@ -86,7 +84,6 @@ router.post('/', achievementsController.create)
 
 /**
  * @swagger
- * path:
  *  /v1/achievements/{id}/signs:
  *    post:
  *      summary: Sign Achievement
@@ -123,7 +120,6 @@ router.post('/:id/signs', achievementsController.signAchievement)
 
 /**
  * @swagger
- * path:
  *  /v1/achievements/activities/{activityId}/crops/{cropId}/pdf:
  *    get:
  *      summary: Download PDF achievements

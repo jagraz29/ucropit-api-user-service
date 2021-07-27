@@ -42,13 +42,11 @@ export const parseSuppliesWithEiqTotalInAchievements = (achievements = []) => {
   return achievements.map((achievement) => {
     const { supplies } = achievement
     const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies)
-    const eiqApplied = Numbers.roundToTwo(
-      sumEIQInSupplies(suppliesWithEiqTotal)
-    )
+    const eiqApplied = sumEIQInSupplies(suppliesWithEiqTotal)
     return {
       ...achievement,
       supplies: suppliesWithEiqTotal,
-      eiq: eiqApplied > 0 ? eiqApplied : undefined
+      eiq: eiqApplied !== undefined ? Numbers.roundToTwo(eiqApplied) : undefined
     }
   })
 }

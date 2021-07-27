@@ -6,7 +6,6 @@ const router: express.Router = express.Router()
 
 /**
  * @swagger
- * path:
  *  /v1/offline/crops?identifier={identifier}:
  *    post:
  *      summary: Reset sync of crop

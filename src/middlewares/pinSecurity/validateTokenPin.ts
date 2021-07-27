@@ -7,9 +7,9 @@ export const checkTokenPinValidation = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { tokenPin } = req.body || {}
+  const validateTokenPin = req.headers['validate-token-pin'] || {}
 
-  const check = await checkTokenPin(tokenPin)
+  const check = await checkTokenPin(validateTokenPin)
 
   if (!check) {
     const error = errors.find((error) => error.key === '010')

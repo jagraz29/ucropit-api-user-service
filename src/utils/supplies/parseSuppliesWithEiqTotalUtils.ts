@@ -3,40 +3,38 @@ import { Numbers } from '../Numbers'
 
 const sumEIQ = (current, { eiq }) => current + (eiq || 0)
 export const sumEIQInActiveIngredients = (activeIngredients) =>
-  activeIngredients.reduce(sumEIQ, 0)
+  activeIngredients.length ? activeIngredients.reduce(sumEIQ, 0) : undefined
 
 export const parseSuppliesWithEiqTotal = (supplies) => {
   return supplies.map((supplyObject) => {
     const { supply, activeIngredients = [], eiqTotal, quantity } = supplyObject
-    let currentEiqTotal = eiqTotal || null
+    let currentEiqTotal = eiqTotal || undefined
     if (supply) {
       const supplyJSON = supply.toJSON ? supply.toJSON() : supply
       const { eiqTotal, activeIngredients = [] } = supplyJSON
-      currentEiqTotal = eiqTotal
-        ? Numbers.roundToTwo(eiqTotal)
-        : sumEIQInActiveIngredients(activeIngredients)
+      currentEiqTotal = eiqTotal || sumEIQInActiveIngredients(activeIngredients)
       supplyObject = {
         ...supplyObject,
         supply: {
           ...supplyJSON,
-          eiqTotal: currentEiqTotal
-            ? Numbers.roundToTwo(currentEiqTotal)
-            : undefined
+          eiqTotal:
+            currentEiqTotal !== undefined
+              ? Numbers.roundToTwo(currentEiqTotal)
+              : undefined
         }
       }
     }
     if (activeIngredients.length) {
-      currentEiqTotal = eiqTotal
-        ? Numbers.roundToTwo(eiqTotal)
-        : sumEIQInActiveIngredients(activeIngredients)
+      currentEiqTotal = eiqTotal || sumEIQInActiveIngredients(activeIngredients)
       supplyObject = {
         ...supplyObject,
-        eiqTotal: currentEiqTotal
-          ? Numbers.roundToTwo(currentEiqTotal)
-          : undefined
+        eiqTotal:
+          currentEiqTotal !== undefined
+            ? Numbers.roundToTwo(currentEiqTotal)
+            : undefined
       }
     }
-    if (quantity && currentEiqTotal) {
+    if (quantity && currentEiqTotal !== undefined) {
       const eiqApplied = calculateEIQApplied(quantity, currentEiqTotal)
       supplyObject = {
         ...supplyObject,

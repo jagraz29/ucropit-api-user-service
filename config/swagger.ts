@@ -8,9 +8,13 @@ const swaggerOptions = {
       description: 'UCROP.IT main API information',
       contact: {
         name: 'Lucas Michailian'
-      },
-      servers: ['https://localhost:3000']
+      }
     },
+    servers: [
+      { url: 'https://aws-apidev.ucrop.it' },
+      { url: 'https://aws-apiqa.ucrop.it' },
+      { url: 'https://aws-apipreprod.ucrop.it' }
+    ],
     basePath: '/',
     components: {
       securitySchemes: {

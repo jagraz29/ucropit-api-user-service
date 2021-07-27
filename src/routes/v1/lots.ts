@@ -24,7 +24,6 @@ router.get('/', lotsController.index)
 
 /**
  * @swagger
- * path:
  *  /v1/lots/search-by-identifier:
  *    get:
  *      summary: Get all lots grouped by tag
@@ -51,7 +50,6 @@ router.get(
 )
 /**
  * @swagger
- * path:
  *  /v1/lots/{id}:
  *    get:
  *      summary: Show a lot
@@ -75,7 +73,6 @@ router.get('/:id', lotsController.show)
 
 /**
  * @swagger
- * path:
  *  /v1/lots:
  *    post:
  *      summary: Store Lot
@@ -117,7 +114,6 @@ router.post('/', lotsController.create)
 
 /**
  * @swagger
- * path:
  *  /v1/lots/surfaces:
  *    post:
  *      summary: Get names of areas by given kmz/kml file
@@ -159,7 +155,6 @@ router.post('/surfaces', lotsController.surfaces)
 
 /**
  * @swagger
- * path:
  *  /v1/lots/{id}:
  *    put:
  *      summary: Update a lot
@@ -196,7 +191,6 @@ router.put('/:id', lotsController.update)
 
 /**
  * @swagger
- * path:
  *  /v1/lots/{id}:
  *    delete:
  *      summary: Delete a lot

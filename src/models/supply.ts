@@ -88,7 +88,7 @@ SupplySchema.virtual('eiqTotal').get(function () {
       0
     )
   }
-  return 0
+  return undefined
 })
 
 SupplySchema.plugin(mongooseLeanVirtuals)

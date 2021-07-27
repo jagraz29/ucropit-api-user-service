@@ -53,6 +53,10 @@ app.use(
   swaggerUI.setup(swaggerDocs, { explorer: true })
 )
 
+app.use('/api/v1/swagger-json', (req, res) => {
+  res.json(swaggerDocs)
+})
+
 app.use(express.static('public'))
 
 app.set('view engine', 'pug')
