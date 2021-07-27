@@ -80,31 +80,31 @@ export const supplyTypesData = [
     icon: 'spa'
   },
   {
-    _id: mongoose.Types.ObjectId('4edd40c86438'),
+    _id: mongoose.Types.ObjectId('60eed6e405d460bdb6dd8d38'),
     name: 'Semilla de Avena',
     code: 'SeAv',
     icon: 'spa'
   },
   {
-    _id: mongoose.Types.ObjectId('4edd40c86439'),
+    _id: mongoose.Types.ObjectId('60eed66c05d460bdb6dd8cc3'),
     name: 'Semilla de Sorgo',
     code: 'SeSo',
     icon: 'spa'
   },
   {
-    _id: mongoose.Types.ObjectId('4edd40c86441'),
+    _id: mongoose.Types.ObjectId('60eed6c105d460bdb6dd8d1a'),
     name: 'Semilla de Raigrás',
     code: 'SeRa',
     icon: 'spa'
   },
   {
-    _id: mongoose.Types.ObjectId('4edd40c864342'),
+    _id: mongoose.Types.ObjectId('60eed79c05d460bdb6dd8e24'),
     name: 'Semilla de Arveja',
     code: 'SeAr',
     icon: 'spa'
   },
   {
-    _id: mongoose.Types.ObjectId('4edd40c86443'),
+    _id: mongoose.Types.ObjectId('60f9951b05d460bdb6e9c3b5'),
     name: 'Semilla de Maní',
     code: 'SeMn',
     icon: 'spa'
