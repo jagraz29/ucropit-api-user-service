@@ -2,8 +2,9 @@ import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import models from '../models'
 import { CountryRepository } from '../repositories'
+import { getCropTypesUseCase } from '../cropTypes/useCase'
+import { CropTypeDocument } from '../models/cropType'
 
-const CropType = models.CropType
 const UnitType = models.UnitType
 const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
@@ -23,7 +24,14 @@ class CommonController {
    * @return Response
    */
   public async cropTypes(req: Request, res: Response) {
-    const cropTypes = await CropType.find({})
+    const cropTypesLocales = req.__('crop_types')
+    const results = await getCropTypesUseCase.execute({})
+    const cropTypes = results.map((cropType: CropTypeDocument) => {
+      return {
+        ...cropType,
+        nameText: cropTypesLocales[cropType.key.toLowerCase()]
+      }
+    })
 
     res.status(200).json(cropTypes)
   }

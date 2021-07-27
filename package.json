@@ -4,7 +4,7 @@
   "description": "UCROPIT CORE",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc",
+    "tsc": "rimraf ./dist && tsc",
     "dev": "DEBUG=email-templates tsc -w & nodemon -q -w dist dist/server.js",
     "dev:windows": "cross-env DEBUG=email-templates tsc -w & nodemon -q -w dist dist/server.js",
     "start": "nodemon -q -w dist dist/server.js",
@@ -138,6 +138,7 @@
     "lint-staged": "^11.0.0",
     "nodemon": "^2.0.4",
     "prettier": "^2.2.1",
+    "rimraf": "^2.6.3",
     "standard": "^14.3.4",
     "supertest": "^4.0.2",
     "swagger-jsdoc": "^4.0.0",

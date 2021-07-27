@@ -14,6 +14,10 @@ const swaggerOptions = {
     basePath: '/',
     components: {
       securitySchemes: {
+        'Accept-Language': {
+          type: 'http',
+          bearerFormat: 'JWT'
+        },
         bearerAuth: {
           type: 'http',
           scheme: 'bearer',

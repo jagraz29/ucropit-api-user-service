@@ -18,9 +18,10 @@
  *           key:
  *             type: string
  */
-import mongoose from 'mongoose'
+import mongoose, { Schema, Document } from 'mongoose'
+import { ICropTypeProps } from '../cropTypes/interfaces'
 
-const { Schema } = mongoose
+export type CropTypeDocument = Document & ICropTypeProps
 
 export const CropTypeSchema = new Schema({
   name: {
@@ -36,4 +37,7 @@ export const CropTypeSchema = new Schema({
   }
 })
 
-export const CropType = mongoose.model('CropType', CropTypeSchema)
+export const CropType = mongoose.model<CropTypeDocument>(
+  'CropType',
+  CropTypeSchema
+)
