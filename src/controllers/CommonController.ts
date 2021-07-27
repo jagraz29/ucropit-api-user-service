@@ -4,6 +4,7 @@ import models from '../models'
 import { CountryRepository } from '../repositories'
 import { getCropTypesUseCase } from '../cropTypes/useCase'
 import { CropTypeDocument } from '../models/cropType'
+import { parseLangLocal } from '../utils/Locales'
 
 const UnitType = models.UnitType
 const ActivityType = models.ActivityType
@@ -24,12 +25,12 @@ class CommonController {
    * @return Response
    */
   public async cropTypes(req: Request, res: Response) {
-    const cropTypesLocales = req.__('crop_types')
+    const cropTypesLocales = req.__('crop_types') as unknown as object
     const results = await getCropTypesUseCase.execute({})
     const cropTypes = results.map((cropType: CropTypeDocument) => {
       return {
         ...cropType,
-        nameText: cropTypesLocales[cropType.key.toLowerCase()]
+        nameText: parseLangLocal(cropTypesLocales, cropType.key)
       }
     })
 
