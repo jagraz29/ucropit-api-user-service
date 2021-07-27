@@ -5,6 +5,8 @@ import { CountryRepository } from '../repositories'
 import { getCropTypesUseCase } from '../core/cropTypes/useCase'
 import { CropTypeDocument } from '../models/cropType'
 import { parseLangLocal } from '../utils/Locales'
+import { getStorageTypesUseCase } from '../core/typeStorages/useCase'
+import { TypeStorageDocument } from '../models/typeStorage'
 
 const UnitType = models.UnitType
 const ActivityType = models.ActivityType
@@ -12,7 +14,6 @@ const TypeAgreement = models.TypeAgreement
 const EvidenceConcepts = models.EvidenceConcept
 const Roles = models.Roles
 const ServiceIntegrations = models.ServiceIntegration
-const TypeStorage = models.TypeStorage
 
 class CommonController {
   /**
@@ -140,9 +141,9 @@ class CommonController {
    * @param Response res
    */
   public async storageTypes(req: Request, res: Response) {
-    const results = await TypeStorage.find({}).lean()
+    const results = await getStorageTypesUseCase.execute({})
     const storageTypeKeys = req.__('type_storages.keys') as unknown as object
-    const storageTypes = results.map((storageType) => {
+    const storageTypes = results.map((storageType: TypeStorageDocument) => {
       const altLabel = storageType?.name?.es || storageType.key
       return {
         ...storageType,
