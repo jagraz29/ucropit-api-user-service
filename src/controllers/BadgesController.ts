@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { BadgeRepository } from '../repositories'
 import { errors } from '../types/common'
+import { parseLangLocal } from '../utils/Locales'
 
 class BadgesController {
   /**
@@ -22,7 +23,15 @@ class BadgesController {
       sort: {}
     }
 
-    const badges = await BadgeRepository.getBadges(dataToFind)
+    const results = await BadgeRepository.getBadges(dataToFind)
+    const badgesTypes = req.__('badges.types') as unknown as object
+    const badges = results.map((badge) => {
+      const altLabel = badge.name?.es || badge.type
+      return {
+        ...badge,
+        label: parseLangLocal(badgesTypes, badge.type, altLabel)
+      }
+    })
 
     res.status(StatusCodes.OK).json(badges)
   }

@@ -25,12 +25,13 @@ class CommonController {
    * @return Response
    */
   public async cropTypes(req: Request, res: Response) {
-    const cropTypesKeys = req.__('crop_types.keys') as unknown as object
     const results = await getCropTypesUseCase.execute({})
+    const cropTypesKeys = req.__('crop_types.keys') as unknown as object
     const cropTypes = results.map((cropType: CropTypeDocument) => {
+      const altLabel = cropType?.name?.es || cropType.key
       return {
         ...cropType,
-        nameText: parseLangLocal(cropTypesKeys, cropType.key)
+        label: parseLangLocal(cropTypesKeys, cropType.key, altLabel)
       }
     })
 
@@ -46,7 +47,15 @@ class CommonController {
    *  @return Response
    */
   public async unitTypes(req: Request, res: Response) {
-    const unitTypes = await UnitType.find({})
+    const results = await UnitType.find({}).lean()
+    const unitTypesKeys = req.__('unit_types.keys') as unknown as object
+    const unitTypes = results.map((unitType) => {
+      const altLabel = unitType?.name?.es || unitType.key
+      return {
+        ...unitType,
+        label: parseLangLocal(unitTypesKeys, unitType.key, altLabel)
+      }
+    })
 
     res.status(200).json(unitTypes)
   }
@@ -131,7 +140,15 @@ class CommonController {
    * @param Response res
    */
   public async storageTypes(req: Request, res: Response) {
-    const storageTypes = await TypeStorage.find({})
+    const results = await TypeStorage.find({}).lean()
+    const storageTypeKeys = req.__('type_storages.keys') as unknown as object
+    const storageTypes = results.map((storageType) => {
+      const altLabel = storageType?.name?.es || storageType.key
+      return {
+        ...storageType,
+        label: parseLangLocal(storageTypeKeys, storageType.key, altLabel)
+      }
+    })
 
     res.status(200).json(storageTypes)
   }
