@@ -1,5 +1,5 @@
 import { capitalize } from 'lodash'
-
-export function parseLangLocal(locales: object, key): string {
-  return locales[key.toLowerCase()] || capitalize(key.replace('_', ''))
+export function parseLangLocal(locales: object, key: string, alt?): string {
+  alt = alt || key
+  return locales[key.toLowerCase()] || capitalize(alt.replace('_', ' '))
 }

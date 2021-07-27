@@ -1,11 +1,57 @@
 {
   "api_v1_ready": "Api v1 ready!",
   "crop_types":{
-    "soy": "Soy",
-    "sunflower": "Sunflower",
-    "corn": "Corn",
-    "cotton": "Cotton",
-    "wheat": "Wheat",
-    "carinata": "Carinata"
+    "keys": {
+      "soy": "Soy",
+      "sunflower": "Sunflower",
+      "corn": "Corn",
+      "cotton": "Cotton",
+      "wheat": "Wheat",
+      "carinata": "Carinata"
+    }
+  },
+  "unit_types":{
+    "keys": {
+      "kg": "Quilogramas/ha",
+      "t": "Toneladas/ha",
+      "bls": "Sacos/ha",
+      "fds": "Fardos/ha",
+      "q": "Quintales/ha"
+    }
+  },
+  "supply_types":{
+    "codes": {
+      "otros": "Others",
+      "fe": "agrochemical fertilizers",
+      "fu": "agrochemical fungicides",
+      "he": "Agrochemical herbicides",
+      "in": "Agrochemical insecticides",
+      "sepi": "Seed of Pisingallo",
+      "sema": "Corn Seed",
+      "segi": "Sunflower Seed",
+      "setr": "Wheat Seed",
+      "seso": "Soya Seed",
+      "dry": "Rapeseed",
+      "sece": "Barley Seed",
+      "seal": "Cotton Seed"
+    }
+  },
+  "type_storages":{
+    "keys": {
+      "silo_bag": "Silobags",
+      "silo": "Silo",
+      "delivery_out_of_program": "Out of program delivery",
+      "delivery_within_of_program": "Delivery within the program"
+    }
+  },
+  "badges":{
+    "types": {
+      "legal_land_use": "Legal land use",
+      "no_deforestation": "No deforestation",
+      "sustainable_principles": "Sustainable Principles",
+      "legal_seed_use_soy": "Legal use of seeds",
+      "legal_seed_use_cotton": "Legal use of seeds",
+      "resposible_use_phytosanitary": "Responsible use of phytosanitary products"
+    }
   }
 }

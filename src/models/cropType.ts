@@ -19,7 +19,7 @@
  *             type: string
  */
 import mongoose, { Schema, Document } from 'mongoose'
-import { ICropTypeProps } from '../cropTypes/interfaces'
+import { ICropTypeProps } from '../core/cropTypes/interfaces'
 
 export type CropTypeDocument = Document & ICropTypeProps
 

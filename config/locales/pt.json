@@ -1,11 +1,57 @@
 {
   "api_v1_ready": "Api v1 pronto!",
   "crop_types": {
-    "soy": "Soja",
-    "sunflower": "Girassol",
-    "corn": "Milho",
-    "cotton": "Algodão",
-    "wheat": "Trigo",
-    "carinata": "Carinata"
+    "keys": {
+      "soy": "Soja",
+      "sunflower": "Girassol",
+      "corn": "Milho",
+      "cotton": "Algodão",
+      "wheat": "Trigo",
+      "carinata": "Carinata"
+    }
+  },
+  "unit_types":{
+    "keys": {
+      "kg": "Kilograms/ha",
+      "t": "Tons/ha",
+      "bls": "Bags/ha",
+      "fds": "Bales/ha",
+      "q": "Quintales/ha"
+    }
+  },
+  "supply_types":{
+    "codes": {
+      "otros": "Outros",
+      "fe": "fertilizantes agroquímicos",
+      "fu": "fungicidas agroquímicos",
+      "he": "Herbicidas agroquímicos",
+      "in": "Inseticidas agroquímicos",
+      "sepi": "Semente de Pisingallo",
+      "sema": "Semente de Milho",
+      "segi": "Semente de Girassol",
+      "setr": "Semente de Trigo",
+      "seso": "Semente de soja",
+      "seco": "Colza",
+      "sece": "Semente de Cevada",
+      "seal": "Semente de Algodão"
+    }
+  },
+  "type_storages":{
+    "keys": {
+      "silo_bag": "Silobags",
+      "silo": "Silo",
+      "delivery_out_of_program": "Fora da entrega do programa",
+      "delivery_within_of_program": "Entrega dentro do programa"
+    }
+  },
+  "badges":{
+    "types": {
+      "legal_land_use": "Uso legal da terra",
+      "no_deforestation": "Sem desmatamento",
+      "sustainable_principles": "Princípios Sustentáveis",
+      "legal_seed_use_soy": "Uso legal de sementes",
+      "legal_seed_use_cotton": "Uso legal de sementes",
+      "resposible_use_phytosanitary": "Uso responsável de produtos fitossanitários"
+    }
   }
 }

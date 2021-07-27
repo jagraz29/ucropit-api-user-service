@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import models from '../models'
 import { CountryRepository } from '../repositories'
-import { getCropTypesUseCase } from '../cropTypes/useCase'
+import { getCropTypesUseCase } from '../core/cropTypes/useCase'
 import { CropTypeDocument } from '../models/cropType'
 import { parseLangLocal } from '../utils/Locales'
 
@@ -25,12 +25,12 @@ class CommonController {
    * @return Response
    */
   public async cropTypes(req: Request, res: Response) {
-    const cropTypesLocales = req.__('crop_types') as unknown as object
+    const cropTypesKeys = req.__('crop_types.keys') as unknown as object
     const results = await getCropTypesUseCase.execute({})
     const cropTypes = results.map((cropType: CropTypeDocument) => {
       return {
         ...cropType,
-        nameText: parseLangLocal(cropTypesLocales, cropType.key)
+        nameText: parseLangLocal(cropTypesKeys, cropType.key)
       }
     })
 
