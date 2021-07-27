@@ -51,12 +51,24 @@ import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
 const { Schema } = mongoose
 
 const SupplySchema = new Schema({
+  alphaCode: {
+    type: String,
+    default: 'AR',
+    index: true,
+    require: true
+  },
+  typeId: {
+    type: Schema.Types.ObjectId,
+    ref: 'SupplyType',
+    index: true,
+    require: true
+  },
   name: String,
   company: String,
   code: String,
-  typeId: {
+  countryId: {
     type: Schema.Types.ObjectId,
-    ref: 'SupplyType'
+    ref: 'Country'
   },
   unit: String,
   brand: String,
@@ -79,6 +91,8 @@ const SupplySchema = new Schema({
     }
   ]
 })
+SupplySchema.index({ alphaCode: 1 }, { background: true })
+SupplySchema.index({ supplyType: 1 }, { background: true })
 SupplySchema.index({ name: 'text', brand: 'text', company: 'text' })
 
 SupplySchema.virtual('eiqTotal').get(function () {
