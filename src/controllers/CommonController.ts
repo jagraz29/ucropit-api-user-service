@@ -3,12 +3,13 @@ import { StatusCodes } from 'http-status-codes'
 import models from '../models'
 import { CountryRepository } from '../repositories'
 import { getCropTypesUseCase } from '../core/cropTypes/useCase'
-import { CropTypeDocument } from '../models/cropType'
-import { parseLangLocal } from '../utils/Locales'
 import { getStorageTypesUseCase } from '../core/typeStorages/useCase'
+import { getUnitTypesUseCase } from '../core/unitTypes/useCase'
+import { CropTypeDocument } from '../models/cropType'
 import { TypeStorageDocument } from '../models/typeStorage'
+import { UnitTypeDocument } from '../models/unitType'
+import { parseLangLocal } from '../utils/Locales'
 
-const UnitType = models.UnitType
 const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
 const EvidenceConcepts = models.EvidenceConcept
@@ -48,9 +49,9 @@ class CommonController {
    *  @return Response
    */
   public async unitTypes(req: Request, res: Response) {
-    const results = await UnitType.find({}).lean()
+    const results = await getUnitTypesUseCase.execute({})
     const unitTypesKeys = req.__('unit_types.keys') as unknown as object
-    const unitTypes = results.map((unitType) => {
+    const unitTypes = results.map((unitType: UnitTypeDocument) => {
       const altLabel = unitType?.name?.es || unitType.key
       return {
         ...unitType,

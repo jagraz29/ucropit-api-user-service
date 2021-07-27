@@ -1,6 +1,6 @@
-import CropTypeRepo from '../repo/cropTypeRepo'
+import UnitTypeRepo from '../repo/unitTypeRepo'
 import models from '../../../models'
 
-const cropTypeRepo = new CropTypeRepo(models.CropType)
+const unitTypeRepo = new UnitTypeRepo(models.CropType)
 
-export default cropTypeRepo
+export default unitTypeRepo

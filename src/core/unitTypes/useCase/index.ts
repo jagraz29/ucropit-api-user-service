@@ -1,6 +1,6 @@
-import cropTypeRepo from '../repo'
-import GetCropTypesUseCase from './getCropType/getCropTypesUseCase'
+import unitTypeRepo from '../repo'
+import GetUnitTypesUseCase from '../useCase/getUnitTypes/getUnitTypesUseCase'
 
-const getCropTypesUseCase = new GetCropTypesUseCase(cropTypeRepo)
+const getUnitTypesUseCase = new GetUnitTypesUseCase(unitTypeRepo)
 
-export { getCropTypesUseCase }
+export { getUnitTypesUseCase }

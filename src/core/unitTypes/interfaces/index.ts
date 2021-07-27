@@ -1,3 +1,3 @@
-import { ICropTypeProps, ICropTypeRepo } from './cropTypeInterface'
+import { IUnitTypeProps, IUnitTypeRepo } from './unitTypeInterface'
 
-export { ICropTypeProps, ICropTypeRepo }
+export { IUnitTypeProps, IUnitTypeRepo }
