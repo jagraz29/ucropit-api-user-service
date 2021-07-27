@@ -8,11 +8,13 @@ class GeoLocationService extends ServiceBase {
     return new Promise((resolve, reject) => {
       this.makeRequest(
         'get',
-        `${geocodingApi}?latlng=${lat},${long}&key=${apiKey}&language=${
+        `${geocodingApi}?latlng=${lat},${long}&language=${
           language || defaultLanguageConfig.language
         }&region=${region || defaultLanguageConfig.region}&key=${apiKey}`,
         {},
-        (result) => resolve(result.data.results),
+        (result) => {
+          resolve(result.data.results)
+        },
         (error) => reject(error)
       )
     })

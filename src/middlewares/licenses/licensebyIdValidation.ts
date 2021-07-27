@@ -4,13 +4,14 @@ import Joi from '@hapi/joi'
 import JoiObjectId from 'joi-objectid'
 Joi.objectId = JoiObjectId(Joi)
 
-export const licensebyIdValidation = (
+export const licenseByIdValidation = (
   req: Request | any,
   res: Response,
   next: NextFunction
 ) => {
   const Schema = Joi.object({
-    id: Joi.objectId().required()
+    id: Joi.objectId().required(),
+    cropId: Joi.objectId().required()
   })
 
   const { error } = Schema.validate({

@@ -167,6 +167,7 @@ const seedersSupply = async (flag?) => {
     (item) => !supplies.find((element) => item.name === element.name)
   )
 
+  console.log(supplySeed)
   for (const supply of supplySeed) {
     await Supply.create(supply)
   }

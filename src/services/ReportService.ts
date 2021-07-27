@@ -142,7 +142,6 @@ class ReportService {
   }
 
   public static async generateLotReports(crops) {
-    console.log(crops[0].lots[0].data, 'crops')
     const reports = crops.map((crop) => {
       const reportByCrop = crop.lots.map(async (item) => {
         const reportByLot = item.data.map(async (lot) => {

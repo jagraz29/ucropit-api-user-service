@@ -4,7 +4,7 @@ import Joi from '@hapi/joi'
 import JoiObjectId from 'joi-objectid'
 Joi.objectId = JoiObjectId(Joi)
 
-export const listLicensebyCrptypeValidation = (
+export const listLicenseByCropTypeValidation = (
   req: Request | any,
   res: Response,
   next: NextFunction

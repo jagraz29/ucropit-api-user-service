@@ -11,3 +11,4 @@ export const hashPassword = (token, saltFact) =>
       })
     })
   })
+export * from './managementTokenJwtPin'
