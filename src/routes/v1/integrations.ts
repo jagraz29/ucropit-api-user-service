@@ -40,7 +40,6 @@ router.get('/crops', integrationServiceController.cropData)
 
 /**
  * @swagger
- * path:
  *  /v1/exporters/exporters/logs/{id}/{service}:
  *    get:
  *      summary: Detail Log exporter
@@ -67,7 +66,6 @@ router.get(
 
 /**
  * @swagger
- * path:
  *  /v1/exporters/crops:
  *    post:
  *      summary: Exporter data crop in third party service
@@ -97,7 +95,6 @@ router.post('/crops', integrationServiceController.exporterCrops)
 
 /**
  * @swagger
- * path:
  *  /v1/exporters/crops/{cropId}/activities/{activityId}/achievements/{achievementId}:
  *    post:
  *      summary: Exporter data achievements to third party service

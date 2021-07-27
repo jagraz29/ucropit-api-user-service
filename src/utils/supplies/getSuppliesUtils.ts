@@ -19,11 +19,11 @@ export const getSupplies = (supplies): Object[] => {
         total,
         supply
       }) => {
-        let eiq = 0
+        let eiq
         const { typeId, unit, brand, eiqTotal } = supply || {}
         if (brand) {
           name = brand
-          eiq = Numbers.roundToTwo(eiqTotal)
+          eiq = eiqTotal != undefined ? Numbers.roundToTwo(eiqTotal) : undefined
           typeParam = typeId
           unitParam = unit
         }

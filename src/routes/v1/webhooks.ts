@@ -4,7 +4,6 @@ const router: express.Router = express.Router()
 
 /**
  * @swagger
- * path:
  *  /v1/webhooks/sensing/callback:
  *    post:
  *      summary: Reset sync of crop

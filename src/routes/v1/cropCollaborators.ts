@@ -4,7 +4,6 @@ const router: express.Router = express.Router()
 
 /**
  * @swagger
- * path:
  *  /v1/crops/{id}/collaborators:
  *    post:
  *      summary: Create crop collaborator

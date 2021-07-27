@@ -17,8 +17,7 @@ const app: Application = express()
 
 if (process.env.NODE_ENV !== 'local') {
   Sentry.init({
-    dsn:
-      'https://07781985e6084c509ea11ab221afe082@o617969.ingest.sentry.io/5751081'
+    dsn: 'https://07781985e6084c509ea11ab221afe082@o617969.ingest.sentry.io/5751081'
   })
 }
 
@@ -41,6 +40,10 @@ app.use(
   swaggerUI.serve,
   swaggerUI.setup(swaggerDocs, { explorer: true })
 )
+
+app.use('/api/v1/swagger-json', (req, res) => {
+  res.json(swaggerDocs)
+})
 
 app.use(express.static('public'))
 
