@@ -22,10 +22,10 @@
   "supply_types":{
     "codes": {
       "otros": "Otros",
-      "fe": "Fertilizantes agroquimicos",
-      "fu": "Fungicidas agroquimicos",
-      "he": "Herbicidas agroquimicos",
-      "in": "Insecticidas agroquimicos",
+      "fe": "Fertilizantes agroquímicos",
+      "fu": "Fungicidas agroquímicos",
+      "he": "Herbicidas agroquímicos",
+      "in": "Inseticidas agroquímicos",
       "sepi" : "Semilla de Pisingallo",
       "sema" : "Semilla de Maiz",
       "segi" : "Semilla de Girasol",

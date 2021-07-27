@@ -33,7 +33,7 @@ class CommonController {
       const altLabel = cropType?.name?.es || cropType.key
       return {
         ...cropType,
-        label: parseLangLocal(cropTypesKeys, cropType.key, altLabel)
+        keyLabel: parseLangLocal(cropTypesKeys, cropType.key, altLabel)
       }
     })
 
@@ -55,7 +55,7 @@ class CommonController {
       const altLabel = unitType?.name?.es || unitType.key
       return {
         ...unitType,
-        label: parseLangLocal(unitTypesKeys, unitType.key, altLabel)
+        keyLabel: parseLangLocal(unitTypesKeys, unitType.key, altLabel)
       }
     })
 
@@ -148,7 +148,7 @@ class CommonController {
       const altLabel = storageType?.name?.es || storageType.key
       return {
         ...storageType,
-        label: parseLangLocal(storageTypeKeys, storageType.key, altLabel)
+        keyLabel: parseLangLocal(storageTypeKeys, storageType.key, altLabel)
       }
     })
 

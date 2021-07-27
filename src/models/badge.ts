@@ -31,6 +31,9 @@
  *           image:
  *             type: string
  *             required: true
+ *           typeLabel:
+ *            type: string
+ *            description: Type translated according to local language
  */
 
 import mongoose from 'mongoose'

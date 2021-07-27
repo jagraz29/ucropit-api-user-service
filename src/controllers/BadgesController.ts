@@ -29,7 +29,7 @@ class BadgesController {
       const altLabel = badge.name?.es || badge.type
       return {
         ...badge,
-        label: parseLangLocal(badgesTypes, badge.type, altLabel)
+        typeLabel: parseLangLocal(badgesTypes, badge.type, altLabel)
       }
     })
 
@@ -75,6 +75,9 @@ class BadgesController {
     }
 
     const badge = await BadgeRepository.createBadge(dataToCreate)
+    const badgesTypes = req.__('badges.types') as unknown as object
+    const altLabel = badge.name?.es || badge.type
+    badge.typeLabel = parseLangLocal(badgesTypes, badge.type, altLabel)
 
     res.status(StatusCodes.OK).json(badge)
   }
