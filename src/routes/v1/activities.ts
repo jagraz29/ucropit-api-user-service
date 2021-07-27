@@ -41,7 +41,6 @@ router.get('/', activitiesController.index)
 
 /**
  * @swagger
- * path:
  *  /v1/activities/{id}:
  *    get:
  *      summary: Show a activity
@@ -65,7 +64,6 @@ router.get('/:id', activitiesController.show)
 
 /**
  * @swagger
- * path:
  *  /v1/activities:
  *    post:
  *      summary: Create a new Activity
@@ -102,7 +100,6 @@ router.post('/', activitiesController.create)
 
 /**
  * @swagger
- * path:
  *  /v1/activities/{id}:
  *    put:
  *      summary: Update a Activity
@@ -142,7 +139,6 @@ router.put('/:id', activitiesController.update)
 
 /**
  * @swagger
- * path:
  *  /v1/activities/{id}/crops/{cropId}:
  *    put:
  *      summary: Update status Done in Activity
@@ -178,7 +174,6 @@ router.put('/:id/crops/:cropId', activitiesController.validate)
 
 /**
  * @swagger
- * path:
  *  /v1/activities/{id}/crops/{cropId}/signed:
  *    put:
  *      summary: Sign User in Activity
@@ -204,7 +199,6 @@ router.put('/:id/crops/:cropId/signed', activitiesController.sign)
 
 /**
  * @swagger
- * path:
  *  /v1/activities/{id}:
  *    delete:
  *      summary: Delete activity
@@ -224,7 +218,6 @@ router.delete('/:id', activitiesController.delete)
 
 /**
  * @swagger
- * path:
  *  /v1/activities/{id}/files/{fileId}:
  *    delete:
  *      summary: Delete file to activity
@@ -246,7 +239,6 @@ router.delete('/:id/files/:fileId', activitiesController.removeFile)
 
 /**
  * @swagger
- * path:
  *  /v1/activities/{id}/files:
  *    delete:
  *      summary: Delete many files of activity

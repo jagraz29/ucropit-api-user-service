@@ -6,7 +6,6 @@ const router: express.Router = express.Router()
 
 /**
  * @swagger
- * path:
  *  /v1/auth/me:
  *    get:
  *      summary: Show authenticated user

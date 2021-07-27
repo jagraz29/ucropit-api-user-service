@@ -6,7 +6,6 @@ const router: express.Router = express.Router()
 
 /**
  * @swagger
- * path:
  *  /v1/profile/{id}/image:
  *    post:
  *      summary: Store a image

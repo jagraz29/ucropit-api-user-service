@@ -21,7 +21,6 @@ router.get('/', usersController.index)
 
 /**
  * @swagger
- * path:
  *  /v1/users/{id}:
  *    get:
  *      summary: Show a user
@@ -37,7 +36,6 @@ router.get('/:id', usersController.show)
 
 /**
  * @swagger
- * path:
  *  /v1/users:
  *    post:
  *      summary: Create a new user
@@ -60,7 +58,6 @@ router.post('/', usersController.create)
 
 /**
  * @swagger
- * path:
  *  /v1/users/{id}:
  *    put:
  *      summary: Update a user
@@ -113,7 +110,6 @@ router.post('/validate/pin', usersController.validatePin)
 
 /**
  * @swagger
- * path:
  *  /v1/users/{id}:
  *    delete:
  *      summary: Delete a user

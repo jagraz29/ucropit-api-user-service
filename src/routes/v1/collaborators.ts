@@ -25,7 +25,6 @@ router.get('/', collaboratorRequestController.index)
 
 /**
  * @swagger
- * path:
  *  /v1/collaborators/{id}:
  *    put:
  *      summary: Update a collaborator request
