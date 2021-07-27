@@ -1,0 +1,11 @@
+{
+  "api_v1_ready": "Api v1 ready!",
+  "crop_types":{
+    "soy": "Soy",
+    "sunflower": "Sunflower",
+    "corn": "Corn",
+    "cotton": "Cotton",
+    "wheat": "Wheat",
+    "carinata": "Carinata"
+  }
+}
