@@ -5,5 +5,13 @@
   "useTabs": false,
   "tabWidth": 2,
   "printWidth": 80,
-  "trailingComma": "none"
+  "trailingComma": "none",
+  "overrides": [
+    {
+      "files": "*.hbs",
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ]
 }
