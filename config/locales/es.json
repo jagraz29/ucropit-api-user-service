@@ -1,26 +1,26 @@
 {
   "api_v1_ready": "Api v1 lista!",
   "commons": {
-    "deleted_success": "deleted successfuly",
-    "deletion_not_allowed": "deleted not allowed",
+    "deleted_success": "eliminado exitosamente",
+    "deletion_not_allowed": "eliminado no permitido",
     "not_found": "Recurso no encontrado"
   },
   "achievements": {
-    "not_async": "not achievement async"
+    "not_async": "no logró sincronizar"
   },
   "reports": {
     "show_map": {
       "title": "Localización Lote KMZ",
-      "error": "MUST PASS ID LOT"
+      "error": "Debe pasar el id del lote"
     },
     "send_mail_success": "Reporte enviado con éxito",
     "errors": {
-      "not_allowed_mode": "{{mode}} NOT ALLOWED export file mode"
+      "not_allowed_mode": "El modo: {{modo}} de archivo no es permitido para exportar"
     }
   },
   "companies": {
     "errors": {
-      "not_found": "NOT FOUND COMPANY"
+      "not_found": "Empresa no encontrada"
     }
   },
   "crop_types":{
@@ -81,23 +81,23 @@
     "achievements": {
       "signature_reminder": {
         "title": "Recordatorio para firmar",
-        "content": "Tenes realizaciones sin firmar"
+        "content": "Tienes realizaciones sin firmar"
       }
     }
   },
   "crops": {
     "errors": {
       "file_evidence_incomplete": "Evidencias no completas",
-      "file_evidence_invalid_length" : "Length files and evidences must equal",
-      "name_lot_duplicated" : "KMZ names lot duplicate",
-      "error_invalid_format_kmz" : "KMZ names lot duplicate",
-      "error_file_extension" : "Any File extension not allowed",
+      "file_evidence_invalid_length" : "El total archivos y las evidencias deben ser iguales",
+      "name_lot_duplicated" : "Nombres de Lote del KMZ duplicados",
+      "error_invalid_format_kmz" : "Inválido formato del KMZ",
+      "error_file_extension" : "Extensión de archivo no permitida",
       "invalid_date_harvest" : "La fecha de cosecha deber ser posterior a la del cultivo",
       "invalid_field_data" : "El campo data es requerido",
       "invalid_fields" : "Uno o/y mas campos son requeridos",
       "invalid_array_lots" : "Debe seleccionar al menos un lote",
-      "lots_not_available" : "Algunos lotes reutilizables no estan disponibles",
-      "lots_not_exist" : "Algunos lotes no san validos o no existen",
+      "lots_not_available" : "Algunos lotes reutilizables no están disponibles",
+      "lots_not_exist" : "Algunos lotes no son válidos o no existen",
       "invalid_array_files" : "Debe enviar el KMZ asociado a los lotes nuevos"
     }
   },
