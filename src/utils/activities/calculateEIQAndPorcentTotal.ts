@@ -6,26 +6,26 @@ import {
 import { parseSuppliesWithEiqTotal } from '../supplies'
 import { Numbers } from '../Numbers'
 
-export const calculateEIQAndPorcentTotal = (activities) =>
-  activities.map(calculateEiqOfActivity)
+export const calculateEIQAndPorcentTotal = (activities, lang) =>
+  activities.map((activity) => calculateEiqOfActivity(activity, lang))
 
-export const calculateEiqOfActivity = (activity) => {
+export const calculateEiqOfActivity = (activity, lang) => {
   const { achievements, supplies } = activity
-  const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies)
-  const achievementsWithEiq =
-    parseSuppliesWithEiqTotalInAchievements(achievements)
-  const percentTotal = sumPercentInAchievements(achievementsWithEiq)
-  const eiqPlanned = Numbers.roundToTwo(sumEIQInSupplies(suppliesWithEiqTotal))
-  const eiqApplied = Numbers.roundToTwo(
-    sumEIQInAchievements(achievementsWithEiq)
+  const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies, lang)
+  const achievementsWithEiq = parseSuppliesWithEiqTotalInAchievements(
+    achievements,
+    lang
   )
+  const percentTotal = sumPercentInAchievements(achievementsWithEiq)
+  const eiqPlanned = sumEIQInSupplies(suppliesWithEiqTotal)
+  const eiqApplied = sumEIQInAchievements(achievementsWithEiq)
   const currentEiq = eiqApplied ? eiqApplied : eiqPlanned
   return {
     ...activity,
     achievements: achievementsWithEiq,
     supplies: suppliesWithEiqTotal,
     percentTotal,
-    eiq: currentEiq ? currentEiq : undefined
+    eiq: currentEiq !== undefined ? Numbers.roundToTwo(currentEiq) : undefined
   }
 }
 

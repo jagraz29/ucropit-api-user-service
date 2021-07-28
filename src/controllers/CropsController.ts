@@ -131,10 +131,10 @@ class CropsController {
       startDate,
       endDate
     )
-
-    const toMake = calculateEIQAndPorcentTotal(toMakeFilterDates)
-    const done = calculateEIQAndPorcentTotal(crop.done)
-    const finished = calculateEIQAndPorcentTotal(crop.finished)
+    const lang = res.getLocale() as string
+    const toMake = calculateEIQAndPorcentTotal(toMakeFilterDates, lang)
+    const done = calculateEIQAndPorcentTotal(crop.done, lang)
+    const finished = calculateEIQAndPorcentTotal(crop.finished, lang)
 
     const newCrop = {
       ...crop,

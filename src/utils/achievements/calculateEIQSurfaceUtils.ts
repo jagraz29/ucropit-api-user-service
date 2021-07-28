@@ -38,17 +38,18 @@ export const calculateEIQSurfaceInAchievements = (achievements) => {
   return eiqTotal
 }
 
-export const parseSuppliesWithEiqTotalInAchievements = (achievements = []) => {
+export const parseSuppliesWithEiqTotalInAchievements = (
+  achievements = [],
+  lang
+) => {
   return achievements.map((achievement) => {
     const { supplies } = achievement
-    const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies)
-    const eiqApplied = Numbers.roundToTwo(
-      sumEIQInSupplies(suppliesWithEiqTotal)
-    )
+    const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies, lang)
+    const eiqApplied = sumEIQInSupplies(suppliesWithEiqTotal)
     return {
       ...achievement,
       supplies: suppliesWithEiqTotal,
-      eiq: eiqApplied > 0 ? eiqApplied : undefined
+      eiq: eiqApplied !== undefined ? Numbers.roundToTwo(eiqApplied) : undefined
     }
   })
 }

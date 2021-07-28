@@ -9,7 +9,6 @@ const authMiddleware = passport.authenticate('jwt', { session: false })
 
 /**
  * @swagger
- * path:
  *  /v1/reports/crops:
  *    get:
  *      summary: Download reports
@@ -30,7 +29,6 @@ router.get('/crops', checkAuth, reportsController.generateCrops)
 
 /**
  * @swagger
- * path:
  *  /v1/reports/datasets/crops:
  *    get:
  *      summary: Download dataset to Json file.
@@ -88,7 +86,6 @@ router.post(
 
 /**
  * @swagger
- * path:
  *  /v1/reports/validations/companies:
  *    post:
  *      summary: Request send email with report the crops of company.
@@ -120,7 +117,6 @@ router.post(
 
 /**
  * @swagger
- * path:
  *  /v1/reports/eiq:
  *    post:
  *      summary: Request send email with report with the eiq of supplies.
@@ -148,7 +144,6 @@ router.post('/eiq', reportsController.reportsEiq)
 
 /**
  * @swagger
- * path:
  *  /v1/reports/dm:
  *    post:
  *      summary: Request send email with DM report.
@@ -176,7 +171,6 @@ router.post('/dm', reportsController.reportsDm)
 
 /**
  * @swagger
- * path:
  *  /v1/reports/xls-for-eiq:
  *    post:
  *      summary: Request send email with xls for eiq report.
@@ -199,7 +193,6 @@ router.post('/xls-for-eiq', reportsController.reportsXlsForEiq)
 
 /**
  * @swagger
- * path:
  *  /v1/reports/billing:
  *    post:
  *      summary: Request send email with DM report.

@@ -22,7 +22,6 @@ router.get('/', ClausesController.index)
 
 /**
  * @swagger
- * path:
  *  /v1/clauses:
  *    post:
  *      summary: Create a new Clause

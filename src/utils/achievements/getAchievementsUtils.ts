@@ -39,7 +39,7 @@ export const getAchievements = (achievements, members?): IAchievement[] => {
         surface,
         supplies: getSuppliesAndTotalTypes(supplies),
         suppliesList: supplies,
-        eiq: Numbers.roundToTwo(eiq),
+        eiq: eiq ? Numbers.roundToTwo(eiq) : undefined,
         envImpactIndex,
         signed: signers.length,
         signedIf: signers.filter(({ signed }) => signed).length,

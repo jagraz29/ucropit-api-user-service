@@ -50,6 +50,8 @@ export class PDFService {
       }
     })
 
+    await browser.close()
+
     if (!fileDocuments) {
       saveFile(pathFile, pdfNewBuffer)
       await FileDocumentRepository.createFile({

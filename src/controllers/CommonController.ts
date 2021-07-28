@@ -2,15 +2,19 @@ import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import models from '../models'
 import { CountryRepository } from '../repositories'
+import { getCropTypesUseCase } from '../core/cropTypes/useCase'
+import { getStorageTypesUseCase } from '../core/typeStorages/useCase'
+import { getUnitTypesUseCase } from '../core/unitTypes/useCase'
+import { CropTypeDocument } from '../models/cropType'
+import { TypeStorageDocument } from '../models/typeStorage'
+import { UnitTypeDocument } from '../models/unitType'
+import { parseLangLocal } from '../utils/Locales'
 
-const CropType = models.CropType
-const UnitType = models.UnitType
 const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
 const EvidenceConcepts = models.EvidenceConcept
 const Roles = models.Roles
 const ServiceIntegrations = models.ServiceIntegration
-const TypeStorage = models.TypeStorage
 
 class CommonController {
   /**
@@ -23,7 +27,15 @@ class CommonController {
    * @return Response
    */
   public async cropTypes(req: Request, res: Response) {
-    const cropTypes = await CropType.find({})
+    const results = await getCropTypesUseCase.execute({})
+    const cropTypesKeys = req.__('crop_types.keys') as unknown as object
+    const cropTypes = results.map((cropType: CropTypeDocument) => {
+      const altLabel = cropType?.name?.es || cropType.key
+      return {
+        ...cropType,
+        keyLabel: parseLangLocal(cropTypesKeys, cropType.key, altLabel)
+      }
+    })
 
     res.status(200).json(cropTypes)
   }
@@ -37,7 +49,15 @@ class CommonController {
    *  @return Response
    */
   public async unitTypes(req: Request, res: Response) {
-    const unitTypes = await UnitType.find({})
+    const results = await getUnitTypesUseCase.execute({})
+    const unitTypesKeys = req.__('unit_types.keys') as unknown as object
+    const unitTypes = results.map((unitType: UnitTypeDocument) => {
+      const altLabel = unitType?.name?.es || unitType.key
+      return {
+        ...unitType,
+        keyLabel: parseLangLocal(unitTypesKeys, unitType.key, altLabel)
+      }
+    })
 
     res.status(200).json(unitTypes)
   }
@@ -122,7 +142,15 @@ class CommonController {
    * @param Response res
    */
   public async storageTypes(req: Request, res: Response) {
-    const storageTypes = await TypeStorage.find({})
+    const results = await getStorageTypesUseCase.execute({})
+    const storageTypeKeys = req.__('type_storages.keys') as unknown as object
+    const storageTypes = results.map((storageType: TypeStorageDocument) => {
+      const altLabel = storageType?.name?.es || storageType.key
+      return {
+        ...storageType,
+        keyLabel: parseLangLocal(storageTypeKeys, storageType.key, altLabel)
+      }
+    })
 
     res.status(200).json(storageTypes)
   }

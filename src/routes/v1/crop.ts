@@ -30,7 +30,6 @@ router.get('/', cropsController.index)
 
 /**
  * @swagger
- * path:
  *  /v1/crops/lastMonitoring/{id}:
  *    get:
  *      summary: Show lastMonitoring
@@ -43,7 +42,6 @@ router.get('/lastMonitoring/:id', cropsController.showLastMonitoring)
 
 /**
  * @swagger
- * path:
  *  /v1/crops/{id}:
  *    get:
  *      summary: Show a crop
@@ -67,7 +65,6 @@ router.get('/:id', [getCropByIdMiddleware], cropsController.show)
 
 /**
  * @swagger
- * path:
  *  /v1/crops/{id}/v2:
  *    get:
  *      summary: Show a crop and Lots
@@ -91,7 +88,6 @@ router.get('/:id/v2', cropsController.getCropWithLots)
 
 /**
  * @swagger
- * path:
  *  /v1/crops/{id}/evidences:
  *    get:
  *      summary: Show a crop's evidences
@@ -117,7 +113,6 @@ router.get('/:nameFile/pdf-history-crop', cropsController.pdfHistoryCrop)
 
 /**
  * @swagger
- * path:
  *  /v1/crops/{id}/crop-history/pdf:
  *    post:
  *      summary: Show a crop
@@ -141,7 +136,6 @@ router.post('/:id/crop-history/pdf', cropsController.generatePdfHistoryCrop)
 
 /**
  * @swagger
- * path:
  *  /v1/crops/{id}/activities:
  *    get:
  *      summary: Show a crop
@@ -165,7 +159,6 @@ router.get('/:id/activities', cropsController.getCropWithActivities)
 
 /**
  * @swagger
- * path:
  *  /v1/crops:
  *    post:
  *      summary: Create a crop
@@ -253,7 +246,6 @@ router.post(
 
 /**
  * @swagger
- * path:
  *  /v1/crops/offline/{id}:
  *    put:
  *      summary: Update a crop
@@ -284,7 +276,6 @@ router.put('/offline/:id', cropsController.enableOffline)
 
 /**
  * @swagger
- * path:
  *  /v1/crops/{id}:
  *    put:
  *      summary: Update a crop
@@ -342,7 +333,6 @@ router.put('/:id', cropsController.update)
 
 /**
  * @swagger
- * path:
  *  /v1/crops/{id}/integrations:
  *    put:
  *      summary: Update a crop add integration service
@@ -374,7 +364,6 @@ router.put('/:id/integrations', cropsController.addIntegrationService)
 
 /**
  * @swagger
- * path:
  *  /v1/crops/{id}:
  *    delete:
  *      summary: Delete a crop
