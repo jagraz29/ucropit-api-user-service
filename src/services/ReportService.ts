@@ -1,3 +1,4 @@
+import { setLocale, __ } from 'i18n'
 import _ from 'lodash'
 import moment from 'moment'
 import models, { AchievementModel } from '../models'
@@ -10,6 +11,7 @@ import {
   supplyTypesSeedGen,
   tagsTypeAgreement
 } from '../utils/Constants'
+import { parseLangLocal } from '../utils/Locales'
 
 const LANGUAGE_DEFAULT = 'es'
 const REGION_DEFAULT = 'AR'
@@ -140,7 +142,7 @@ class ReportService {
     return Promise.all(reports)
   }
 
-  private static formatByLanguage(date: any, language: string) {
+  private static formatDateByLanguage(date: any, language: string) {
     let dateFormat: string
     switch (language) {
       case 'es':
@@ -157,9 +159,12 @@ class ReportService {
   }
 
   public static async generateLotReports(crops, language: string) {
+    setLocale(language)
+    const unitTypesKeys = __('unit_types.keys') as unknown as object
     const reports = crops.map((crop) => {
       const reportByCrop = crop.lots.map(async (item) => {
         const reportByLot = item.data.map(async (lot) => {
+          const altLabel = crop.unitType?.name?.es || crop.unitType.key
           return {
             cuit: crop.company?.identifier,
             business_name: (await this.getCompany(crop.company?.identifier))
@@ -170,11 +175,16 @@ class ReportService {
               this.calVolume(crop.unitType.key, crop.pay, crop.lots)
             ),
             surface: crop.surface,
-            pay: `${crop.pay} ${crop.unitType.name.es}`,
+            pay: `${crop.pay} ${parseLangLocal(
+              unitTypesKeys,
+              crop.unitType.key,
+              altLabel
+            )}`,
+            // pay: `${crop.pay} ${crop.key.en}`,
             responsible: this.getMembersWithIdentifier(crop),
-            date_sowing: this.formatByLanguage(crop.dateCrop, language),
-            date_harvest: this.formatByLanguage(crop.dateHarvest, language),
-            date_created_crop: this.formatByLanguage(
+            date_sowing: this.formatDateByLanguage(crop.dateCrop, language),
+            date_harvest: this.formatDateByLanguage(crop.dateHarvest, language),
+            date_created_crop: this.formatDateByLanguage(
               crop._id.getTimestamp(),
               language
             ),
@@ -1232,7 +1242,7 @@ class ReportService {
       mergedList.length > 0 ? datesDone.concat(datesFinished).pop() : null
 
     if (lastDate && language)
-      lastDate = this.formatByLanguage(lastDate, language)
+      lastDate = this.formatDateByLanguage(lastDate, language)
     else if (lastDate) lastDate = moment(lastDate).format('DD/MM/YYYY')
     else lastDate = ''
 

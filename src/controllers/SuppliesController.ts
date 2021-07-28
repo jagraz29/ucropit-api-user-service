@@ -2,9 +2,9 @@
 
 import { Request, Response } from 'express'
 import models from '../models'
-import { typesSupplies } from '../utils/Constants'
 import SupplyRepository from '../repositories/supplyRepository'
 import { parseSuppliesWithEiqTotal } from '../utils'
+import { typesSupplies } from '../utils/Constants'
 
 const Supply = models.Supply
 
@@ -37,7 +37,7 @@ class SuppliesController {
       skipSide
     )
 
-    const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies)
+    const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies,res.getLocale())
     res.status(200).json(suppliesWithEiqTotal)
   }
 
