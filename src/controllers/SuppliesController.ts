@@ -37,10 +37,8 @@ class SuppliesController {
       skipSide
     )
 
-    const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(
-      supplies,
-      res.getLocale()
-    )
+    const lang = res.getLocale() as string
+    const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies, lang)
     res.status(200).json(suppliesWithEiqTotal)
   }
 

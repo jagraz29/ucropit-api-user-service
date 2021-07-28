@@ -50,12 +50,13 @@ class ReportsController {
 
     const company = await Company.search({ identifier: cuit })
 
-    if (!company[0]) return res.status(404).json({ err: 'NOT FOUND COMPANY' })
+    if (!company[0])
+      return res.status(404).json({ err: req.__('companies.errors.not_found') })
 
     if (!(mode === 'csv' || mode === 'xls')) {
       return res
         .status(400)
-        .json({ err: `${mode} NOT ALLOWED export file mode` })
+        .json({ err: req.__('reports.errors.not_allowed_mode', { mode }) })
     }
 
     let crops = await CropService.getAll()
@@ -292,7 +293,7 @@ class ReportsController {
       ]
     })
 
-    return res.status(StatusCodes.OK).json('Reporte enviado con éxito')
+    return res.status(StatusCodes.OK).json(req.__('reports.send_mail_success'))
   }
 
   /**
@@ -352,14 +353,14 @@ class ReportsController {
   public async showMap(req: Request, res: Response) {
     const { id } = req.query
 
-    if (!id) res.status(403).json({ error: 'MUST PASS ID LOT' })
+    if (!id) res.status(403).json({ error: req.__('reports.show_map.error') })
     const lot: any = await Lot.findById(id)
 
     res.render('index', {
       api_key: process.env.GOOGLE_API_KEY,
       flightPlanCoordinates: lot.coordinateForGoogle,
       center: lot.centerBoundGoogle,
-      title: 'Localización Lote KMZ'
+      title: req.__('reports.show_map.title')
     })
   }
 }

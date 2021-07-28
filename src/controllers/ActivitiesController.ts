@@ -85,7 +85,8 @@ class ActivitiesController {
         req.params.id
       )
 
-    const activityWithEIQ = calculateEiqOfActivity(activity, res.getLocale())
+    const lang = req.getLocale() as string
+    const activityWithEIQ = calculateEiqOfActivity(activity, lang)
     res.status(200).json(activityWithEIQ)
   }
 
@@ -494,11 +495,11 @@ class ActivitiesController {
     if (!fileRemove) {
       return res
         .status(404)
-        .json({ error: true, message: 'Not Found File to delete' })
+        .json({ error: true, message: req.__('commons.not_found') })
     }
 
     res.status(200).json({
-      message: 'deleted file successfully'
+      message: req.__('commons.deleted_success')
     })
   }
 
@@ -544,7 +545,7 @@ class ActivitiesController {
     await activity.save()
 
     res.status(200).json({
-      message: 'deleted file successfully'
+      message: req.__('commons.deleted_success')
     })
   }
 }

@@ -103,7 +103,7 @@ class LotsController {
     console.log(lot)
 
     res.status(200).json({
-      message: 'deleted successfully'
+      message: req.__('commons.deleted_success')
     })
   }
 
