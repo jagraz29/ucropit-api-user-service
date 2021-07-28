@@ -53,5 +53,13 @@
       "legal_seed_use_cotton": "Uso legal de sementes",
       "resposible_use_phytosanitary": "Uso responsável de produtos fitossanitários"
     }
+  },
+  "emails": {
+    "achievements": {
+      "signature_reminder": {
+        "title": "Lembrete para assinar",
+        "content": "Você tem realizações não assinadas"
+      }
+    }
   }
 }

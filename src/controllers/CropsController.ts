@@ -408,12 +408,12 @@ class CropsController {
     if (!isCancelled) {
       return res.status(400).json({
         error: true,
-        message: 'deleted not allowd'
+        message: req.__('commons.deletion_not_allowed')
       })
     }
 
     res.status(200).json({
-      message: 'deleted successfuly'
+      message: req.__('commons.deleted_success')
     })
   }
 

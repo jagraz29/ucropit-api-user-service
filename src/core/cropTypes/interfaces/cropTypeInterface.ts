@@ -1,7 +1,7 @@
 import { GetCropTypesDTO } from '../useCase/getCropType/getCropTypesDTO'
 
 export interface ICropTypeProps {
-  name: string[]
+  name: object
   key: string
 }
 

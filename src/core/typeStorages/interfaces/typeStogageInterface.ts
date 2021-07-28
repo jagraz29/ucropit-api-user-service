@@ -1,7 +1,7 @@
 import { GetTypeStoragesDTO } from '../useCase/getTypeStorages/getTypeStoragesDTO'
 
 export interface ITypeStorageProps {
-  name: string[]
+  name: object
   type: string
   goalReach: number
   image: string

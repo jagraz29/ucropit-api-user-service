@@ -53,5 +53,13 @@
       "legal_seed_use_cotton": "Legal use of seeds",
       "resposible_use_phytosanitary": "Responsible use of phytosanitary products"
     }
+  },
+  "emails": {
+    "achievements": {
+      "signature_reminder": {
+        "title": "Reminder to sign",
+        "content": "You have unsigned realizations"
+      }
+    }
   }
 }

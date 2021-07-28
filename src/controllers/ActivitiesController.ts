@@ -85,7 +85,8 @@ class ActivitiesController {
         req.params.id
       )
 
-    const activityWithEIQ = calculateEiqOfActivity(activity, res.getLocale())
+    const lang = req.getLocale() as string
+    const activityWithEIQ = calculateEiqOfActivity(activity, lang)
     res.status(200).json(activityWithEIQ)
   }
 

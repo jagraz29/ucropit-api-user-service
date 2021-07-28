@@ -23,9 +23,11 @@ class UsersController {
 
   public async update(req: Request, res: Response) {
     const { email, firstName, lastName, phone, pin } = req.body
-    let user: any = await User.findOne({ email: email })
+    let user: any = await User.findOne({ email })
 
-    if (!user) return res.status(404).json({ error: 'ERR_NOT_FOUND' })
+    if (!user) {
+      return res.status(404).json({ error: req.__('commons.not_found') })
+    }
 
     user.firstName = firstName
     user.lastName = lastName
@@ -60,14 +62,14 @@ class UsersController {
         return res.json({ validate: false })
       })
     } else {
-      res.status(404).json({ error: 'ERR_NOT_FOUND' })
+      res.status(404).json({ error: req.__('commons.not_found') })
     }
   }
 
   public async destroy(req: Request, res: Response) {
     await User.findByIdAndDelete(req.params.id)
     res.json({
-      message: 'deleted successfully'
+      message: req.__('commons.deleted_success')
     })
   }
 }

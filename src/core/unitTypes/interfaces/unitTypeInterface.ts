@@ -1,7 +1,7 @@
 import { GetUnitTypesDTO } from '../useCase/getUnitTypes/getUnitTypesDTO'
 
 export interface IUnitTypeProps {
-  name: string[]
+  name: object
   key: string
 }
 
