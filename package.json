@@ -26,6 +26,7 @@
     "update:lots:image": "node dist/src/commands/updateImageInLots.js",
     "add:countries": "node dist/src/commands/addCountries.js",
     "add:countryToCompanies": "node dist/src/commands/addCountryToCompanies.js",
+    "add:defaultCountryToSupplies": "node dist/src/commands/addDefaultCountryToSupplies.js",
     "add:countryToMembers": "node dist/src/commands/addCountryToMembers.js",
     "update:surfaceActivities": "node dist/src/commands/updateSurfaceActivity.js",
     "test:imageheci": "jest tests/unit/image_heci_conver.test.js"

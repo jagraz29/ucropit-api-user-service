@@ -63,13 +63,14 @@ const SupplySchema = new Schema({
     index: true,
     require: true
   },
+  countryId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Country',
+    require: true
+  },
   name: String,
   company: String,
   code: String,
-  countryId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Country'
-  },
   unit: String,
   brand: String,
   compositon: String,
@@ -92,7 +93,8 @@ const SupplySchema = new Schema({
   ]
 })
 SupplySchema.index({ alphaCode: 1 }, { background: true })
-SupplySchema.index({ supplyType: 1 }, { background: true })
+SupplySchema.index({ typeId: 1 }, { background: true })
+SupplySchema.index({ CountryId: 1 })
 SupplySchema.index({ name: 'text', brand: 'text', company: 'text' })
 
 SupplySchema.virtual('eiqTotal').get(function () {
