@@ -21,7 +21,6 @@ router.get('/', usersController.index)
 
 /**
  * @swagger
- * path:
  *  /v1/users/{id}:
  *    get:
  *      summary: Show a user
@@ -37,7 +36,6 @@ router.get('/:id', usersController.show)
 
 /**
  * @swagger
- * path:
  *  /v1/users:
  *    post:
  *      summary: Create a new user
@@ -60,7 +58,6 @@ router.post('/', usersController.create)
 
 /**
  * @swagger
- * path:
  *  /v1/users/{id}:
  *    put:
  *      summary: Update a user
@@ -86,7 +83,6 @@ router.put('/:id', usersController.update)
 
 /**
  * @swagger
- * path:
  *  /v1/users/validate/pin:
  *    post:
  *      summary: Validate PIN user.
@@ -101,7 +97,7 @@ router.put('/:id', usersController.update)
  *                  pin:
  *                    type: string
  *                    required: true
- *                    description: PIN del usuario
+ *                    description: PIN User
  *      responses:
  *        "200":
  *          description: A user schema
@@ -114,7 +110,6 @@ router.post('/validate/pin', usersController.validatePin)
 
 /**
  * @swagger
- * path:
  *  /v1/users/{id}:
  *    delete:
  *      summary: Delete a user

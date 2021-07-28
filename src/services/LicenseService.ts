@@ -1,6 +1,6 @@
 import ServiceBase from './common/ServiceBase'
 import { ms_license_url } from '../types'
-const BASE_URL = `${ms_license_url}/licenses`
+const MS_LICENSE_URL = `${ms_license_url}/licenses`
 
 export interface ILicenseSearch {
   userId: string
@@ -27,8 +27,29 @@ export class LicenseService extends ServiceBase {
       }
       this.makeRequest(
         'get',
-        `${BASE_URL}/${id}`,
+        `${MS_LICENSE_URL}/${id}`,
         { params },
+        (result) => {
+          resolve(result.data)
+        },
+        (err) => {
+          reject(err)
+        }
+      )
+    })
+  }
+
+  /**
+   *  sign license.
+   *
+   * @param licenseById
+   */
+  public static async sign({ id, cropId, userId }) {
+    return new Promise((resolve, reject) => {
+      this.makeRequest(
+        'post',
+        `${MS_LICENSE_URL}/${id}/sign`,
+        { cropId, userId },
         (result) => {
           resolve(result.data)
         },
@@ -47,7 +68,7 @@ export class LicenseService extends ServiceBase {
     return new Promise((resolve, reject) => {
       this.makeRequest(
         'get',
-        `${BASE_URL}/search-by-crop`,
+        `${MS_LICENSE_URL}/search-by-crop`,
         { params: licenseSearch },
         (result) => {
           resolve(result.data)

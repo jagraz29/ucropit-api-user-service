@@ -4,7 +4,6 @@ const router: express.Router = express.Router()
 
 /**
  * @swagger
- * path:
  *  /v1/configurations/{id}:
  *    put:
  *      summary: Update configuration
@@ -40,7 +39,6 @@ router.put('/:id', configsController.update)
 
 /**
  * @swagger
- * path:
  *  /v1/configurations/{id}/companies:
  *    put:
  *      summary: Update configuration and selected company into companies user.

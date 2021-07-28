@@ -26,7 +26,6 @@ router.get('/', badgesController.index)
 
 /**
  * @swagger
- * path:
  *  /v1/badges:
  *    post:
  *      summary: Create a new Badge
@@ -78,7 +77,6 @@ router.post('/', [createBadgeValidationPolicy], badgesController.create)
 
 /**
  * @swagger
- * path:
  *  /v1/badges/{badgeId}:
  *    put:
  *      summary: Update a Badge
@@ -127,7 +125,6 @@ router.put('/:badgeId', [updateBadgeValidationPolicy], badgesController.update)
 
 /**
  * @swagger
- * path:
  *  /v1/badges/{badgeId}:
  *    delete:
  *      summary: Delete a Badge

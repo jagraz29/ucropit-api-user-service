@@ -25,7 +25,6 @@ router.get('/', companiesController.index)
 
 /**
  * @swagger
- * path:
  *  /v1/companies/{id}:
  *    get:
  *      summary: Get all company's lots
@@ -49,7 +48,6 @@ router.get('/:id', companiesController.show)
 
 /**
  * @swagger
- * path:
  *  /v1/companies/integrations/{id}:
  *    get:
  *      summary: Show a services integration company's
@@ -73,7 +71,6 @@ router.get('/integrations/:id', companiesController.showIntegrations)
 
 /**
  * @swagger
- * path:
  *  /v1/companies:
  *    post:
  *      summary: Create a company
@@ -114,7 +111,6 @@ router.post('/', companiesController.create)
 
 /**
  * @swagger
- * path:
  *  /v1/companies/{id}:
  *    put:
  *      summary: Update a crop
@@ -158,7 +154,6 @@ router.put('/:id', companiesController.update)
 
 /**
  * @swagger
- * path:
  *  /v1/companies/{id}:
  *    delete:
  *      summary: Delete a company
@@ -178,7 +173,6 @@ router.delete('/:id', companiesController.delete)
 
 /**
  * @swagger
- * path:
  *  /v1/companies/{id}/files/{fileId}:
  *    delete:
  *      summary: Delete file to company

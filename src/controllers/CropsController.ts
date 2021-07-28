@@ -248,7 +248,7 @@ class CropsController {
     const dataPdf = {
       crop: dataCrop,
       activities,
-      dateCreatePdf: moment().format('DD/MM/YYYY')
+      dateCreatePdf: moment().locale('es').format('DD/MM/YYYY')
     }
 
     const nameFile = await PDFService.generatePdf(
