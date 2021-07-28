@@ -1,15 +1,15 @@
-import json2xlsx from 'node-json-xlsx'
-import { Parser } from 'json2csv'
 import fs from 'fs'
+import { Parser } from 'json2csv'
 import moment from 'moment'
-import { getFullPath } from '../../utils/Files'
-import {
-  reportHeaderXls,
-  fieldsCSV,
-  reportHeaderXlsSowingBilling,
-  reportHeaderXlsAplicationBilling
-} from '../../types/reports'
+import json2xlsx from 'node-json-xlsx'
 import { dataSetFieldsCSV } from '../../types/dataset'
+import {
+  fieldsCSV,
+  reportHeaderXls,
+  reportHeaderXlsAplicationBilling,
+  reportHeaderXlsSowingBilling
+} from '../../types/reports'
+import { getFullPath } from '../../utils/Files'
 
 export interface OptionsXls {
   fields?: Object | Array<string>
@@ -26,13 +26,18 @@ class ExportFileService {
    *
    * @param data
    * @param mode
+   * @param language
    */
-  public static modeExport(data: Array<any>, mode: string | any) {
+  public static modeExport(
+    data: Array<any>,
+    mode: string | any,
+    language?: string
+  ) {
     const today = moment()
     if (mode === 'xls') {
       return this.exportXls(
         data,
-        reportHeaderXls,
+        language ? this.searchXlsByLanguage(language) : reportHeaderXls,
         `dashboard_soja_sustentable_${today.format('DD-MM-YYYY')}.xlsx`
       )
     }
@@ -40,6 +45,22 @@ class ExportFileService {
     if (mode === 'csv') {
       return this.exportCsv(data, fieldsCSV)
     }
+  }
+
+  private static searchXlsByLanguage(language: string) {
+    let xlsByLanguage: OptionsXls
+    switch (language) {
+      case 'es':
+        xlsByLanguage = { fieldNames: reportHeaderXls.fieldNamesEs }
+        break
+      case 'en':
+        xlsByLanguage = { fieldNames: reportHeaderXls.fieldNamesEn }
+        break
+      case 'pt':
+        xlsByLanguage = { fieldNames: reportHeaderXls.fieldNamesPt }
+        break
+    }
+    return xlsByLanguage
   }
 
   /**
