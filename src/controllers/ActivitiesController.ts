@@ -495,11 +495,11 @@ class ActivitiesController {
     if (!fileRemove) {
       return res
         .status(404)
-        .json({ error: true, message: 'Not Found File to delete' })
+        .json({ error: true, message: req.__('commons.not_found') })
     }
 
     res.status(200).json({
-      message: 'deleted file successfully'
+      message: req.__('commons.deleted_success')
     })
   }
 
@@ -545,7 +545,7 @@ class ActivitiesController {
     await activity.save()
 
     res.status(200).json({
-      message: 'deleted file successfully'
+      message: req.__('commons.deleted_success')
     })
   }
 }
