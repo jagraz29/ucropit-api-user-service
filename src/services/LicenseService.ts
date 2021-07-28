@@ -19,6 +19,14 @@ export interface ISearchAppliedLicensesByCrop {
   cropId: string
 }
 
+export interface IApply {
+  id: string
+  userId: string
+  cropId: string
+  lots: string[]
+  companyIdentifier: string
+}
+
 export class LicenseService extends ServiceBase {
   /**
    *  create new license.
@@ -106,6 +114,33 @@ export class LicenseService extends ServiceBase {
         'get',
         `${MS_LICENSE_URL}/${id}/applied-by-crop`,
         { params },
+        (result) => {
+          resolve(result.data)
+        },
+        (err) => {
+          reject(err)
+        }
+      )
+    })
+  }
+
+  /**
+   *  get applied licenses by crop.
+   *
+   * @param apply
+   */
+  public static async apply({
+    id,
+    userId,
+    cropId,
+    companyIdentifier,
+    lots
+  }: IApply) {
+    return new Promise((resolve, reject) => {
+      this.makeRequest(
+        'post',
+        `${MS_LICENSE_URL}/${id}/apply`,
+        { userId, cropId, companyIdentifier, lots },
         (result) => {
           resolve(result.data)
         },

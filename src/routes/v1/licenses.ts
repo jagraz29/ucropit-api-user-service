@@ -4,6 +4,7 @@ import {
   listLicenseByCropTypeValidation,
   licenseByIdValidation,
   appliedLicensesByCropValidation,
+  applyLicenseValidation,
   checkTokenPinValidation
 } from '../../middlewares'
 
@@ -123,5 +124,47 @@ router.get(
   [appliedLicensesByCropValidation],
   LicensesController.searchAppliedLicensesByCrop
 )
+
+/**
+ * @swagger
+ *  /v1/licenses/{id}/apply:
+ *    post:
+ *      summary: Apply License
+ *      tags: [License]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  cropId:
+ *                    type: string
+ *                    required: true
+ *                    description:  crop Id
+ *                  companyIdentifier:
+ *                    type: string
+ *                    required: true
+ *                    description:  company identifier
+ *                  lots:
+ *                    type: object
+ *                    required: true
+ *      responses:
+ *        "200":
+ *          description: apply license success
+ *          produces:
+ *            - application/json
+ *        "400":
+ *          description: Bad Request
+ *        "404":
+ *          description: Not Found license
+ *        "500":
+ *          description: Server error
+ */
+router.post('/:id/apply', [applyLicenseValidation], LicensesController.apply)
 
 export default router
