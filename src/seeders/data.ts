@@ -78,6 +78,36 @@ export const supplyTypesData = [
     name: 'Semilla de Algodon',
     code: 'SeAl',
     icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('60eed6e405d460bdb6dd8d38'),
+    name: 'Semilla de Avena',
+    code: 'SeAv',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('60eed66c05d460bdb6dd8cc3'),
+    name: 'Semilla de Sorgo',
+    code: 'SeSo',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('60eed6c105d460bdb6dd8d1a'),
+    name: 'Semilla de Raigrás',
+    code: 'SeRa',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('60eed79c05d460bdb6dd8e24'),
+    name: 'Semilla de Arveja',
+    code: 'SeAr',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('60f9951b05d460bdb6e9c3b5'),
+    name: 'Semilla de Maní',
+    code: 'SeMn',
+    icon: 'spa'
   }
 ]
 
@@ -116,6 +146,41 @@ export const cropTypesData = [
       es: 'Trigo'
     },
     key: 'wheat'
+  },
+  {
+    name: {
+      en: 'Oatmeal',
+      es: 'Avena'
+    },
+    key: 'oatmeal'
+  },
+  {
+    name: {
+      en: 'Sorghum',
+      es: 'Sorgo'
+    },
+    key: 'sorghum'
+  },
+  {
+    name: {
+      en: 'Ryegrass',
+      es: 'Raigrás'
+    },
+    key: 'ryegrass'
+  },
+  {
+    name: {
+      en: 'Vetch',
+      es: 'Arveja'
+    },
+    key: 'vetch'
+  },
+  {
+    name: {
+      en: 'Peanut',
+      es: 'Maní'
+    },
+    key: 'peanut'
   }
 ]
 
