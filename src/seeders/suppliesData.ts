@@ -1,5 +1,12185 @@
 export const suppliesData = [
   {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 15170,
+    name: 'BONAERENSE INTA AIKEN',
+    company: 'M. DE AS. AGR - INTA (BARROW)'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 8055,
+    name: 'BONAERENSE INTA CANAI',
+    company: 'CHACRA EXP.INT.BARROW-MAA INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: '12286',
+    name: 'BONAERENSE INTA MANA',
+    company: 'CHACRA EXP.INT.BARROW-MAA INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 15197,
+    name: 'BONAERENSE INTA SUREÃ‘A',
+    company: 'M. DE AS. AGR - INTA (BARROW)'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 15198,
+    name: 'BONARENSE INTA YAPA',
+    company: 'M. DE AS. AGR - INTA (BARROW)'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 12526,
+    name: 'CARLOTA INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 13048,
+    name: 'CAUTIVA',
+    company: 'COMPAÃ‘IA ARG.DE SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 11329,
+    name: 'DOÃ‘A CECILIA',
+    company: 'DOBAL CARLOS RAMON'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 5271,
+    name: 'INIA POLARIS',
+    company: 'INST.NAC.DE INV.AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 15745,
+    name: 'JULIETA INTA',
+    company: 'INST. NAC.TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 16370,
+    name: 'LA ESTANZUELA 1095 A',
+    company: 'URUSEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 17284,
+    name: 'LA PLATA FA',
+    company: 'UNIV. NAC. DE LA PLATA-FCAYF'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 17285,
+    name: 'LOS HORNOS FA',
+    company: 'UNIV. NAC. DE LA PLATA-FCAYF'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 16369,
+    name: 'RLE 115',
+    company: 'URUSEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 6275,
+    name: 'U 16',
+    company: 'ASOCIADOS DON MARIO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 805,
+    name: 'AMARILLA TOME',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 7139,
+    name: 'AURORA INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 240,
+    name: 'BUCK 152',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 617,
+    name: 'BUCK EPECUEN',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 7642,
+    name: 'MILAGROS INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 1757,
+    name: 'MILLAUQUEN INTA',
+    company: 'INTA E.E.A.BORDENAVE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 7138,
+    name: 'ROCIO INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 1755,
+    name: 'TAMBERA F.A.',
+    company: 'UNIV.NAC.LA PLATA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 5827,
+    name: 'BONAERENSE INTA CALEN',
+    company: 'CHACRA EXP.INT.BARROW-MAA INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 5826,
+    name: 'BONAERENSE INTA MAJA',
+    company: 'CHACRA EXP.INT.BARROW-MAA INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 2459,
+    name: 'BONAERENSE PAYE',
+    company: 'CHACRA EXPERIMENTAL BARROW'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 3043,
+    name: 'BOYERA F.A.',
+    company: 'UNIV.NAC.LA PLATA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 6274,
+    name: 'CALPROSE SOBERANA',
+    company: 'CALPROSE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 2375,
+    name: 'CRISTAL INTA',
+    company: 'INTA E.E.A.BORDENAVE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 1174,
+    name: 'DON VICTOR INTA',
+    company: 'INTA E.E.A.ANGUIL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 16293,
+    name: 'ELIZABET INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 16292,
+    name: 'FLORENCIA INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 2806,
+    name: 'FOOT HILL',
+    company: 'DELUCCHI Y CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 8835,
+    name: 'GRACIELA INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 3409,
+    name: 'INIA LE TUCANA',
+    company: 'INST.NAC.DE INV.AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 16339,
+    name: 'JUANA INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 16269,
+    name: 'LUCIA INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 478,
+    name: 'MAGNIF CATEDRAL SAG',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 12934,
+    name: 'MARITA INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 3805,
+    name: 'MAXIMA INTA',
+    company: 'INTA E.E.A.BORDENAVE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 801,
+    name: 'MOREGRAIN',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 18136,
+    name: 'PALOMA INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 5737,
+    name: 'PILAR INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 910,
+    name: 'PINCEN INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 6042,
+    name: 'PIONERA F.A',
+    company: 'FACULT C. AGR FOREST LA PLATA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 19644,
+    name: 'SOFIA INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 1247,
+    name: 'STORMKING',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 603,
+    name: 'SUREGRAIN',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 8979,
+    name: 'VIOLETA INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 14488,
+    name: 'FU 15',
+    company: 'FORRATEC ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16690,
+    name: 'AGRI-002 E',
+    company: 'TROPICORN S.R.L'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18793,
+    name: 'GEN 23 SL - T',
+    company: 'GENESIS SEEDS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18655,
+    name: 'SUDAN FRISKU BMR INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1477,
+    name: '2DA 53',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18718,
+    name: '42891IG',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18756,
+    name: '441 IG',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14780,
+    name: 481,
+    company: 'SURSEM S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18157,
+    name: '61S',
+    company: 'MONSANTO ARGENTINA S.R.L'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15384,
+    name: '70 GR',
+    company: 'LERNER HECTOR HORACIO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10452,
+    name: '7200 G',
+    company: 'FERIAS DEL NORTE S.A.C.I.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10270,
+    name: '7600 PLUS',
+    company: 'FERIAS DEL NORTE S.A.C.I.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15385,
+    name: '77 DP',
+    company: 'LERNER HECTOR HORACIO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14026,
+    name: '80T25DP',
+    company: 'PIONEER ARGENTINA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2992,
+    name: '8118 MARCA PIONEER',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5769,
+    name: '81G29',
+    company: 'PIONEER ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10012,
+    name: '81G67',
+    company: 'PIONEER ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15423,
+    name: '81P14',
+    company: 'PIONEER HI BRED INTERNATIONAL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10897,
+    name: '81T35',
+    company: 'PIONEER ARGENTINA S.R.L'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12577,
+    name: '82 G 10',
+    company: 'PIONEER ARGENTINA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5832,
+    name: 8232,
+    company: 'PIONEER ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1588,
+    name: '8262 MARCA PIONEER',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1814,
+    name: '8271 MARCA PIONEER',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1815,
+    name: '8318 MARCA PIONEER',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1816,
+    name: '8321 MARCA PIONEER',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2993,
+    name: '8334 MARCA PIONEER',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1817,
+    name: '8343 MARCA PIONEER',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1589,
+    name: '8355 MARCA PIONEER',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12578,
+    name: '83G19',
+    company: 'PIONEER ARGENTINA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6936,
+    name: '83G66',
+    company: 'PIONEER ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3887,
+    name: 8419,
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1590,
+    name: '8447 MARCA PIONEER',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2145,
+    name: '8457 MARCA PIONEER',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1818,
+    name: '8493 MARCA PIONEER',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7833,
+    name: '84G62',
+    company: 'PIONEER ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17534,
+    name: '84P21',
+    company: 'PIONEER ARGENTINA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3886,
+    name: 8586,
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2146,
+    name: '8587 MARCA PIONEER',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16242,
+    name: '85P20',
+    company: 'PIONEER ARGENTINA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4864,
+    name: 'A 425',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1534,
+    name: 'A 9703',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2022,
+    name: 'A 9705',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2724,
+    name: 'A 9707',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1535,
+    name: 'A 9802',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1490,
+    name: 'A 9803',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1831,
+    name: 'A 9805',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4153,
+    name: 'A 9806',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2023,
+    name: 'A 9807',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4152,
+    name: 'A 9809',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2539,
+    name: 'A 9817 (OSAGE)',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1491,
+    name: 'A 9902',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2578,
+    name: 'A 9904',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4154,
+    name: 'A 9906',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5281,
+    name: 'A 9908',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4865,
+    name: 'A531',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5904,
+    name: 'A9819',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5322,
+    name: 'AC202',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5280,
+    name: 'AC406',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14374,
+    name: 'ACA 544',
+    company: 'ASOC.COOP.ARGENTINAS COOP.LTDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10449,
+    name: 'ACA 545',
+    company: 'ASOC.COOP.ARGENTINAS C.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9804,
+    name: 'ACA 546',
+    company: 'ASOC.COOP.ARGENTINAS C.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14103,
+    name: 'ACA 548',
+    company: 'ASOC.COOP.ARGENTINAS COOP.LTDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1846,
+    name: 'ACA 550',
+    company: 'ASOC.COOP.ARGENTINAS C.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1996,
+    name: 'ACA 552',
+    company: 'ASOC.COOP.ARGENTINAS C.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7938,
+    name: 'ACA 554',
+    company: 'ASOC.COOP.ARGENTINAS C.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1997,
+    name: 'ACA 557',
+    company: 'ASOC.COOP.ARGENTINAS C.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5975,
+    name: 'ACA 558',
+    company: 'CRIADERO DE SEMILLAS HIB. ACA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7580,
+    name: 'ACA 559',
+    company: 'CRIAD.DE SEMILLAS HIBRIDAS ACA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10448,
+    name: 'ACA 561',
+    company: 'ASOC.COOP.ARGENTINAS C.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11268,
+    name: 'ACA 562',
+    company: 'ASOC.DE COOP.ARG.COOP.LTDA.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17570,
+    name: 'ACA 563',
+    company: 'ASOC.COOP.ARGENTINAS COOP.LTDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13091,
+    name: 'ACONCAGUA',
+    company: 'PANOJA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14698,
+    name: 'AD 75 STA',
+    company: 'AGROSEMILLAS DEL SUR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14699,
+    name: 'AD 76 SA',
+    company: 'AGROSEMILLAS DEL SUR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13323,
+    name: 'AD64STA',
+    company: 'AGROSEMILLAS DEL SUR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13326,
+    name: 'AD70STA',
+    company: 'AGROSEMILLAS DEL SUR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11082,
+    name: 'AD73STA',
+    company: 'SCHEILD GUILLERMO HERIBERTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11081,
+    name: 'AD80STA',
+    company: 'SCHEILD GUILLERMO HERIBERTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17874,
+    name: 'ADV 1114',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12726,
+    name: 'ADV 114',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15110,
+    name: 'ADV 1200',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14139,
+    name: 'ADV 1201',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16870,
+    name: 'ADV 1250',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16415,
+    name: 'ADV 1302',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20629,
+    name: 'ADV 1304',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16414,
+    name: 'ADV 1305',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16972,
+    name: 'ADV 1350',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19067,
+    name: 'ADV 2420',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18582,
+    name: 'ADV 2450 IG',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14138,
+    name: 'ADV 2499',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15370,
+    name: 'ADV1100',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13252,
+    name: 'ADV123',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11006,
+    name: 'ADVANTA VDH 305',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17698,
+    name: 'AER-282',
+    company: 'ARNALDA DANIEL E.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14847,
+    name: 'AES 198 ST',
+    company: 'AGROEMPRESA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6574,
+    name: 'AG 1808',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8382,
+    name: 'AG 1809',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8381,
+    name: 'AG 1810',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8805,
+    name: 'AG 1811',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12672,
+    name: 'AG 1812',
+    company: 'AGRISEED S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14394,
+    name: 'AG 1814',
+    company: 'AGRISEED S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14395,
+    name: 'AG 1815',
+    company: 'AGRISEED S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14396,
+    name: 'AG 1816',
+    company: 'AGRISEED S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14393,
+    name: 'AG 1817',
+    company: 'AGRISEED S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6618,
+    name: 'AGROBEL C 60',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6620,
+    name: 'AGROBEL L 85',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6619,
+    name: 'AGROBEL M 65',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14193,
+    name: 'AGRUM 201 BT',
+    company: 'TRILI SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14194,
+    name: 'AGRUM 301 AT',
+    company: 'TRILI SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17143,
+    name: 'AKY DP',
+    company: 'ARGENSEEDS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12679,
+    name: 'AL PAMPERO 4004',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15948,
+    name: 'ALBO',
+    company: 'SEMILLAS HIBRIDAS GAIMAN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2985,
+    name: 'ALFA',
+    company: 'SURSEM SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14639,
+    name: 'ALM-815',
+    company: 'ALBERTO L. MARCHIONNI S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10777,
+    name: 'ANP GR-1',
+    company: 'AGRONEGOCIOS PERGAMINO SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11875,
+    name: 'ANP GR-3',
+    company: 'AGRONEGOCIOS PERGAMINO SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15188,
+    name: 'APACHE 72 M',
+    company: 'CRIADERO Y SEMILLERO DON PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16440,
+    name: 'APB SG 7600',
+    company: 'AGROZULKAS LINCOLN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13508,
+    name: 'APOLO',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15185,
+    name: 'ARAUCANO 60 M',
+    company: 'CRIADERO Y SEMILLERO DON PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19002,
+    name: 'ARES',
+    company: 'SEED EXPORT ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14184,
+    name: 'ARGENSIL 163-D',
+    company: 'MARANESSI JOSE PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13412,
+    name: 'ARGENSOR 110 T',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18103,
+    name: 'ARGENSOR 115',
+    company: 'MARANESSI PEDRO JOSE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11806,
+    name: 'ARGENSOR 121',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14106,
+    name: 'ARGENSOR 125 B',
+    company: 'MARANESSI JOSE PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13614,
+    name: 'ARGENSOR 130 T',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15428,
+    name: 'ARGENSOR 134 T',
+    company: 'MARANESSI JOSE PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16181,
+    name: 'ARGENSOR 135 T',
+    company: 'MARANESSI PEDRO JOSE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12817,
+    name: 'ARGENSOR 141 T',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11805,
+    name: 'ARGENSOR 151DP',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1927,
+    name: 'ARRIERO',
+    company: 'DRUETTO, JACINTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14782,
+    name: 'ARV 300',
+    company: 'PIONEER HI BRED INTERNATIONAL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13300,
+    name: 'ARV 390',
+    company: 'PIONEER ARGENTINA S.R.L'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15500,
+    name: 'AS SG 301 AT',
+    company: 'AGROSERVICIOS PAMPEANOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15187,
+    name: 'ATACAMA 70 M',
+    company: 'CRIADERO Y SEMILLERO DON PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8765,
+    name: 'ATAR 9538',
+    company: 'ATAR SEMILLAS HIBRIDAS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8763,
+    name: 'ATAR 9746',
+    company: 'ATAR SEMILLAS HIBRIDAS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10325,
+    name: 'ATAR 9748',
+    company: 'ATAR SEMILLAS HIBRIDAS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12520,
+    name: 'ATAR 9750 DP',
+    company: 'ATAR SEMILLAS HIBRIDAS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18264,
+    name: 'AU-81',
+    company: 'ARGENUR SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18265,
+    name: 'AU-85A00',
+    company: 'ARGENUR SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12703,
+    name: 'AYERZA MONUMENTAL 128',
+    company: 'AYERZA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12702,
+    name: 'AYERZA RENDIDOR 124',
+    company: 'AYERZA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12834,
+    name: 'AYMARA 31',
+    company: 'PANOJA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12719,
+    name: 'BABOR',
+    company: 'ALIANZA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4746,
+    name: 'BAGUAL',
+    company: 'LOS PRADOS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11758,
+    name: 'BAHIA',
+    company: 'CRIADERO MANATIALES O.CALDERO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1460,
+    name: 'BAQUEANO',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15923,
+    name: 'BARDOBLE',
+    company: 'PALAVERSICH Y CIA. S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12029,
+    name: 'BAYO',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2386,
+    name: 'BERMEJO G 140',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2984,
+    name: 'BETA',
+    company: 'SURSEM SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11866,
+    name: 'BIOSORGO 201',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12711,
+    name: 'BIOSORGO 202',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13457,
+    name: 'BIOSORGO 402',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1475,
+    name: 'BR 64R+',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1446,
+    name: 'BRAVO',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4637,
+    name: 'BUSTER',
+    company: 'ZENECA SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7069,
+    name: 'BUSTER PLUS',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8806,
+    name: 'BZ 428',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12673,
+    name: 'BZ CAMPO DORADO',
+    company: 'PLUSAGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11961,
+    name: 'C&M 620',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11971,
+    name: 'C&M 810',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14023,
+    name: 'CA 3100',
+    company: 'COOP AGR GANAD LTDA DE ACEVEDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13515,
+    name: 'CALCHAQUI DP',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4745,
+    name: 'CALEUFU',
+    company: 'LOS PRADOS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9404,
+    name: 'CARANDA',
+    company: 'AGRISEED S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14145,
+    name: 'CARAYA',
+    company: 'GRUPO AGROS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12031,
+    name: 'CARHUE',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12899,
+    name: 'CAS PILAR 134',
+    company: 'COMPAÃ‘IA ARGENTINA DE SEMILLAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11943,
+    name: 'CAS PILAR 311',
+    company: 'COMPAÃ‘IA ARGENTINA DE SEMILLAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11944,
+    name: 'CAS PILAR 315',
+    company: 'COMPAÃ‘IA ARGENTINA DE SEMILLAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1810,
+    name: 'CASTAÃ‘O',
+    company: 'PALAVERSICH Y CIA S.A.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13514,
+    name: 'CATRIEL DP',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1113,
+    name: 'CHALCO INTA',
+    company: 'INTA E.E.A.BORDENAVE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14143,
+    name: 'CHALTEN',
+    company: 'JOSE R.PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11119,
+    name: 'CHARRUA DP',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11547,
+    name: 'CHOIQUE',
+    company: 'PALO VERDE S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15007,
+    name: 'CICLON',
+    company: 'JOSE R.PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1811,
+    name: 'CIMARRON',
+    company: 'PALAVERSICH Y CIA.S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19062,
+    name: 'CIMBRONAZO',
+    company: 'MAMBORETA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1272,
+    name: 'CINCUENTA INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13357,
+    name: 'CKP 3300',
+    company: 'SATUS AGER SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13358,
+    name: 'CKP 3401',
+    company: 'SATUS AGER S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13359,
+    name: 'CKP 3402',
+    company: 'SATUS AGER S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16974,
+    name: 'COPRO',
+    company: 'NATAL AGRO S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1273,
+    name: 'CORRACOR INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1371,
+    name: 'CQ 0501',
+    company: 'COMPAÃ‘IA QUIMICA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1728,
+    name: 'CRISOL 106',
+    company: 'ARNALDA DANIEL Y CARLOS CILIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9056,
+    name: 'CW SILO BMR',
+    company: 'CAL/WEST SEEDS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1469,
+    name: 'DA 41',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1468,
+    name: 'DA 47',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1984,
+    name: 'DA 47+',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1467,
+    name: 'DA 48',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1470,
+    name: 'DA 48+',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1476,
+    name: 'DA 49',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1471,
+    name: 'DA 50',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1472,
+    name: 'DA 51',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1430,
+    name: 'DA 52',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1474,
+    name: 'DA X 178',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5126,
+    name: 'DA35',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5127,
+    name: 'DA38',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3495,
+    name: 'DA50',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10244,
+    name: 'DAS 5000',
+    company: 'DOW AGROSCIENCES ARGENTINA SA.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2141,
+    name: 'DEKALB DA 40',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2083,
+    name: 'DEKALB DA 44',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9762,
+    name: 'DK 37',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2670,
+    name: 'DK 56',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7625,
+    name: 'DK39T (ARG)',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7623,
+    name: 'DK51 (ARG)',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7165,
+    name: 'DK52 ARG',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14383,
+    name: 'DK53',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4832,
+    name: 'DK54',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4831,
+    name: 'DK55',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4834,
+    name: 'DK60',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7624,
+    name: 'DK61T (ARG)',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13640,
+    name: 'DK64T',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7166,
+    name: 'DK68T ARG',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15855,
+    name: 'DK69T',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4934,
+    name: 'DOUGLASS KING 713',
+    company: 'CAVERZASI ORTIN & CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4849,
+    name: 'DOUGLASS KING 760',
+    company: 'DAHER Y MIRANDA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4936,
+    name: 'DOUGLASS KING 760A',
+    company: 'CAVERZASI ORTIN & CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4885,
+    name: 'DOUGLASS KING 762',
+    company: 'PEREIRA Y ASOCIADOS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4935,
+    name: 'DOUGLASS KING 762A',
+    company: 'CAVERZASI ORTIN & CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4850,
+    name: 'DOUGLASS KING 775',
+    company: 'DAHER Y MIRANDA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4886,
+    name: 'DOUGLASS KING 776',
+    company: 'PEREIRA Y ASOCIADOS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4884,
+    name: 'DOUGLASS KING 780',
+    company: 'PEREIRA Y ASOCIADOS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1465,
+    name: 'DP 420',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2728,
+    name: 'DS 318',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13183,
+    name: 'DUO LP-2',
+    company: 'LOS PRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1536,
+    name: 'DUPLA R',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12032,
+    name: 'EL SORGAL BERMEJO',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12030,
+    name: 'EL SORGAL DORADO',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15690,
+    name: 'EL SORGAL LIHUEL',
+    company: 'CRIADERO EL SORGAL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20747,
+    name: 'ENFORCER',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6934,
+    name: 'EPECUEN',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13461,
+    name: 'ESTRIBOR',
+    company: 'ALIANZA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13285,
+    name: 'EXPRESO DP-636',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13284,
+    name: 'EXPRESO GR-131',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11916,
+    name: 'F 2486',
+    company: 'FORRATEC ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11910,
+    name: 'F 3005',
+    company: 'FORRATEC ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11917,
+    name: 'F 3026',
+    company: 'FORRATEC ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11909,
+    name: 'F 3528',
+    company: 'FORRATEC ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11915,
+    name: 'F 3585',
+    company: 'FORRATEC ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14757,
+    name: 'F2490',
+    company: 'FORRATEC ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14758,
+    name: 'F3590',
+    company: 'FORRATEC ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15970,
+    name: 'FAA 48',
+    company: 'FEDERACION AGRARIA ARGENTINA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17576,
+    name: 'FAN 172 AT',
+    company: 'FAN SEEDS ARGENTINA SRL.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17575,
+    name: 'FAN 274 DP',
+    company: 'FAN SEEDS ARGENTINA SRL.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15367,
+    name: 'FEDERADO 2',
+    company: 'FEDERACION AGRARIA ARGENTINA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11970,
+    name: 'FEDERADO1',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15897,
+    name: 'FLASH',
+    company: 'SEMILLAS HIBRIDAS GAIMAN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13280,
+    name: 'FN 6300',
+    company: 'FN SEMILLAS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9779,
+    name: 'FN 6700 T',
+    company: 'FERIAS DEL NORTE S.A.C.I.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13259,
+    name: 'FN 6800',
+    company: 'FN SEMILLAS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14710,
+    name: 'FN 7400',
+    company: 'FN SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12754,
+    name: 'FN 7650 GS',
+    company: 'FERIAS DEL NORTE S.A.C.I.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20748,
+    name: 'FOX',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2574,
+    name: 'FRONTERIZO',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5983,
+    name: 'FRONTIER 200 E',
+    company: 'PANOJA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1529,
+    name: 'FRONTIER 4000 R',
+    company: 'PANOJA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1530,
+    name: 'FRONTIER 4002',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1482,
+    name: "FUNK'S G 134 AP",
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1480,
+    name: "FUNK'S G 135",
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1479,
+    name: "FUNK'S G 136 RPD",
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1478,
+    name: "FUNK'S G 137 TM",
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1432,
+    name: "FUNK'S G 138",
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1640,
+    name: "FUNK'S G 139",
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1486,
+    name: "FUNK'S GA 405",
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1481,
+    name: "FUNK'S GA 430 RP",
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1526,
+    name: 'G 2100',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13090,
+    name: 'GALILEO',
+    company: 'AGROPECUARIA FAL S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14983,
+    name: 'GEN 10',
+    company: 'WALTER GERARDO AMICI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14984,
+    name: 'GEN 11-T',
+    company: 'WALTER GERARDO AMICI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11879,
+    name: 'GEN 21-T',
+    company: 'GENESIS SEEDS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12744,
+    name: 'GEN 210',
+    company: 'WALTER GERARDO AMICI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11878,
+    name: 'GEN 311-T',
+    company: 'GENESIS SEEDS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15009,
+    name: 'GG 403',
+    company: 'GAPP SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14633,
+    name: 'GG 409',
+    company: 'GAPP SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17377,
+    name: 'GGLORY',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16975,
+    name: 'GILGAMESH',
+    company: 'NATAL AGRO S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11959,
+    name: 'GP 406',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1461,
+    name: 'GR 11',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1433,
+    name: 'GR 112',
+    company: 'ZENECA SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1487,
+    name: 'GR 113 RP',
+    company: 'ZENECA SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1488,
+    name: 'GR 114',
+    company: 'ZENECA SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1464,
+    name: 'GR 121 RP',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1462,
+    name: 'GR 130',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1435,
+    name: 'GR 200 RP',
+    company: 'ZENECA SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1459,
+    name: 'GR 80',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9759,
+    name: 'GRANARIO RIESTRA 98',
+    company: 'RIESTRA SEMILLAS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16454,
+    name: 'GUARANI 77 M',
+    company: 'CRIADERO Y SEMILLERO DON PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11963,
+    name: 'GUATI 165',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12027,
+    name: 'GUATOCON',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9653,
+    name: 'GUAYACO',
+    company: 'TECNOSORGO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15856,
+    name: 'H 420 DP',
+    company: 'HORUS CO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16299,
+    name: 'H 820 R',
+    company: 'HORUS CO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14133,
+    name: 'H 830R',
+    company: 'HORUS CO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15857,
+    name: 'H 900 T',
+    company: 'HORUS CO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14134,
+    name: 'H 910T',
+    company: 'HORUS CO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15896,
+    name: 'HI-TON',
+    company: 'SEMILLAS HIBRIDAS GAIMAN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14146,
+    name: 'HORNERO',
+    company: 'GRUPO AGROS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15875,
+    name: 'HS-26 CT',
+    company: 'BROGLIA, NAZARENO JAVIER'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15874,
+    name: 'HS-419 DP',
+    company: 'BROGLIA, NAZARENO JAVIER'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16588,
+    name: 'HS-BANTU',
+    company: 'JAVIER NAZARENO BROGLIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17439,
+    name: 'HS-HAMER',
+    company: 'JAVIER NAZARENO BROGLIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14681,
+    name: 'HUARPE 68 B',
+    company: 'CRIADERO Y SEMILLERO DON PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13344,
+    name: 'HUINCA',
+    company: 'SEEDAR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4902,
+    name: 'I.F.S. 1707',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12827,
+    name: 'INCA 60 W',
+    company: 'CRIADERO Y SEMILLERO DON PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1965,
+    name: 'INSU AP 100',
+    company: 'LA INSULA DE BRAVINO, ITALO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3040,
+    name: 'INSU AP-20',
+    company: 'LA INSULA DE BRAVINO, ITALO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1447,
+    name: 'INSU MAIPU',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1448,
+    name: 'INSU YAPEYU',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8717,
+    name: 'INTABLANCO',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5961,
+    name: 'ITIN',
+    company: 'TECNOSORGO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15980,
+    name: 'JAGUAR',
+    company: 'CAVERZASI ORTIN & CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5137,
+    name: 'JAGÃœEL',
+    company: 'CRIADERO AYERZA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18279,
+    name: 'JL DP 3101',
+    company: 'J. L. DRUETTO S.A.S.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7401,
+    name: 'JOWAR FOOD',
+    company: 'CRIADERO Y SEMILLERO DRUETTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14733,
+    name: 'JOWAR FOOD II',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9581,
+    name: 'JOWAR SHORT',
+    company: 'CRIADERO Y SEMILLERO DRUETTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16863,
+    name: 'KIGGGAN',
+    company: 'RAGT SEMILLAS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13460,
+    name: 'KOLLA 50R',
+    company: 'CRIAD.Y SEMILL.DON PEDRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14708,
+    name: 'KSGR 20',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14707,
+    name: 'KSGR 28',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15116,
+    name: 'KSGR 42',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11060,
+    name: 'KURU',
+    company: 'CAGLIERI F. Y SEBASTIAN S.H.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1183,
+    name: 'LA VICTORIA 1',
+    company: 'CARDINAL HAROLDO NORBERTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1184,
+    name: 'LA VICTORIA 2',
+    company: 'CARDINAL HAROLDO NORBERTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1186,
+    name: 'LA VICTORIA 4 BR',
+    company: 'CARDINAL HAROLDO NORBERTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1187,
+    name: 'LA VICTORIA 5 MR',
+    company: 'CARDINAL HAROLDO NORBERTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1188,
+    name: 'LA VICTORIA 6',
+    company: 'CARDINAL HAROLDO NORBERTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1411,
+    name: 'LE 2000',
+    company: 'AGRO URANGA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1412,
+    name: 'LE 2000 RP',
+    company: 'AGRO URANGA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11053,
+    name: 'LEON',
+    company: 'CAVERZASI ORTIN & CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11903,
+    name: 'LIDER 100',
+    company: 'CLASIFICACIONES MURPHY SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9598,
+    name: 'LIDER 110',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10241,
+    name: 'LIDER 111',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2122,
+    name: 'LIDER 120',
+    company: 'LAZZARI, ATILIO MIGUEL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9245,
+    name: 'LIDER 125',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7813,
+    name: 'LIDER 130',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15992,
+    name: 'LIDER 132',
+    company: 'CLASIFICACIONES MURPHY SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2199,
+    name: 'LIDER 140',
+    company: 'LAZZARI, ATILIO MIGUEL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9364,
+    name: 'LIDER 145',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5749,
+    name: 'LIDER 150',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9246,
+    name: 'LIDER 155',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15592,
+    name: 'LIDER 240',
+    company: 'CLASIFICACIONES MURPHY SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15571,
+    name: 'LIDER 320',
+    company: 'CLASIFICACIONES MURPHY SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14925,
+    name: 'LIDER 340',
+    company: 'CLASIFICACIONES MURPHY SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6935,
+    name: 'LIMAY',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13950,
+    name: 'LINCE',
+    company: 'CAVERZASI, ORTIN Y CIA SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14142,
+    name: 'LINDOR',
+    company: 'JOSE R.PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14711,
+    name: 'LITIO',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1773,
+    name: 'LITORAL 10 R',
+    company: 'CARGILL S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1546,
+    name: 'LITORAL 4',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1537,
+    name: 'LITORAL 5',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1420,
+    name: 'M 811',
+    company: 'SANTA URSULA S.A.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1898,
+    name: 'M 812',
+    company: 'SANTA URSULA S.A.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1899,
+    name: 'M 813',
+    company: 'SANTA URSULA S.A.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2722,
+    name: 'M 814',
+    company: 'SANTA URSULA S.A.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1421,
+    name: 'M 851',
+    company: 'SANTA URSULA S.A.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1422,
+    name: 'M 852',
+    company: 'SANTA URSULA S.A.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1423,
+    name: 'M 854',
+    company: 'SANTA URSULA S.A.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1900,
+    name: 'M 855',
+    company: 'SANTA URSULA S.A.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1901,
+    name: 'M 856',
+    company: 'SANTA URSULA S.A.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2507,
+    name: 'M 858',
+    company: 'SANTA URSULA S.A.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2723,
+    name: 'M 859',
+    company: 'SANTA URSULA S.A.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4005,
+    name: 'M-816',
+    company: 'CRIADERO Y SEMILLERO MORGAN'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5959,
+    name: 'MAITEN',
+    company: 'TECNOSORGO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5136,
+    name: 'MALACATE',
+    company: 'CRIADERO AYERZA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8781,
+    name: 'MALON',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9460,
+    name: 'MANA',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1878,
+    name: 'MANCOR 279 INTA',
+    company: 'INTA E.E.A.MANFREDI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1879,
+    name: 'MANCOR 382 INTA',
+    company: 'INTA E.E.A.MANFREDI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11689,
+    name: 'MASTIL',
+    company: 'ALIANZA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1438,
+    name: 'MAXIMO',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3607,
+    name: 'MELINCUE',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14141,
+    name: 'MESTIZO',
+    company: 'JOSE R.PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14701,
+    name: 'MGS 76',
+    company: 'DOW AGROSCIENCES ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14702,
+    name: 'MGS 85',
+    company: 'DOW AGROSCIENCES ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12852,
+    name: 'MISTRAL CT 120',
+    company: 'SEMILLERA GUASCH SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11121,
+    name: 'MOCOVI',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1374,
+    name: 'MONITOR',
+    company: 'ATAR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11765,
+    name: 'MORADO',
+    company: 'CRIADERO MANATIALES O.CALDERO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8243,
+    name: 'MS 104',
+    company: 'DOW AGROSCIENCES ARGENTINA SA.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15276,
+    name: 'MS 106',
+    company: 'DOW AGROSCIENCES ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14018,
+    name: 'MS 107',
+    company: 'DOW AGROSCIENCES ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7890,
+    name: 'MS 108',
+    company: 'DOW AGROSCIENCES ARGENTINA SA.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9244,
+    name: 'MS 109',
+    company: 'DOW AGROSCIENCES ARGENTINA SA.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14712,
+    name: 'MS 112',
+    company: 'DOW AGROSCIENCES ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5275,
+    name: 'MS-1',
+    company: 'MYCOYEN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9689,
+    name: 'MS-102',
+    company: 'DOW AGROSCIENCES ARGENTINA SA.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12772,
+    name: 'MS-105',
+    company: 'DOW AGROSCIENCES ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8775,
+    name: 'MS-110',
+    company: 'DOW AGROSCIENCES ARGENTINA SA.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5276,
+    name: 'MS-2',
+    company: 'MYCOYEN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6010,
+    name: 'MS-3',
+    company: 'MYCOYEN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5967,
+    name: 'MS-4',
+    company: 'MYCOYEN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15371,
+    name: 'MS100',
+    company: 'DOW AGROSCIENCES ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17592,
+    name: 'MSG 4.20',
+    company: 'LDC SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2398,
+    name: 'NAHUEL G 141',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2575,
+    name: 'NATIVO',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8716,
+    name: 'NEHUEN INTA PEMAN',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11969,
+    name: 'NEO 120 ST',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13495,
+    name: 'NEO 610 ST',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12599,
+    name: 'NIAGRAIN BLANCO',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10319,
+    name: 'NIDERA A 9719 W',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10196,
+    name: 'NIDERA A 9721 R',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10320,
+    name: 'NIDERA A 9941 W',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13274,
+    name: 'NIDERA A9711RC',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7964,
+    name: 'NIDERA A9735R',
+    company: 'NIDERA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9583,
+    name: 'NIDERA A9737W',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7966,
+    name: 'NIDERA A9738M',
+    company: 'NIDERA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9110,
+    name: 'NIDERA A9758M',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15356,
+    name: 'NIDERA A9770M',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9784,
+    name: 'NIDERA A9815 RC',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9584,
+    name: 'NIDERA A9829R',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7965,
+    name: 'NIDERA A9937R',
+    company: 'NIDERA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7963,
+    name: 'NIDERA A9939W',
+    company: 'NIDERA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13273,
+    name: 'NIDERA A9947W',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12028,
+    name: 'NIEVE',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11697,
+    name: 'NIHUIL',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16973,
+    name: 'NIPPUR',
+    company: 'NATAL AGRO S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1547,
+    name: 'NK 180',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1548,
+    name: 'NK 188',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1549,
+    name: 'NK 233',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2048,
+    name: 'NK 238',
+    company: 'ENEKA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10499,
+    name: 'NK 240',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10827,
+    name: 'NK 255 T',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1550,
+    name: 'NK 266',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1553,
+    name: 'NK 2670',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1551,
+    name: 'NK 300',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1552,
+    name: 'NK 308',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2003,
+    name: 'NK 404',
+    company: 'ENEKA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2049,
+    name: 'NK 412',
+    company: 'ENEKA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12745,
+    name: 'NOGOYA',
+    company: 'CLASIFICACIONES MURPHY SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1985,
+    name: 'NORTEÃ‘O 2 R',
+    company: 'CARGILL S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1495,
+    name: 'NORTEÃ‘O R',
+    company: 'CARGILL S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18029,
+    name: 'NUGRAIN 202 T',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18030,
+    name: 'NUGRAIN 300',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17036,
+    name: 'NUGRAIN 440 T',
+    company: 'NUSEED S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8020,
+    name: 'NVS 1010',
+    company: 'LIDIA LEONOR FELDHAMER'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8082,
+    name: 'NVS 2010',
+    company: 'FELDHAMER LIDIA LEONOR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8083,
+    name: 'NVS 3010',
+    company: 'FELDHAMER LIDIA LEONOR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8019,
+    name: 'NVS 3011',
+    company: 'LIDIA LEONOR FELDHAMER'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10216,
+    name: 'NVS 3014',
+    company: 'FELDHAMER LIDIA LEONOR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1594,
+    name: 'ONGI ETORRI G 500',
+    company: 'AMEZTOY Y HERNANDEZ S.C.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1980,
+    name: 'ONGI ETORRI GA 600',
+    company: 'AMEZTOY Y HERNANDEZ S.C.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17376,
+    name: 'OREGGON',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19883,
+    name: 'ORI-77.1',
+    company: 'RURALCO SOLUCIONES S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20653,
+    name: 'ORIGRAN 260',
+    company: 'RURALCO SOLUCIONES S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9461,
+    name: 'ORO BLANCO',
+    company: 'CAVERZASI ORTIN & CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1775,
+    name: 'ORO XTRA',
+    company: 'ROSSI SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1463,
+    name: 'OVERO',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1489,
+    name: 'OVERO RP',
+    company: 'ZENECA SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8255,
+    name: 'OZONO',
+    company: 'CRIADERO MAISUR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1381,
+    name: 'P 8210',
+    company: 'PIONEER ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1382,
+    name: 'P 8222',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1454,
+    name: 'P 8239',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1455,
+    name: 'P 8311',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1383,
+    name: 'P 8333',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1456,
+    name: 'P 8577',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1657,
+    name: 'PACU',
+    company: 'ARGENTINA CRIADERO DE SEMILLAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1450,
+    name: 'PAISANITO',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11002,
+    name: 'PAISANITO 0T',
+    company: 'DRUETTO JACINTO M.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9930,
+    name: 'PAISANO',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13599,
+    name: 'PAKARI INTA PEMAN',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13516,
+    name: 'PAMPA',
+    company: 'PRODUSEM S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15002,
+    name: 'PAMPA II',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14538,
+    name: 'PAMPERO 6006',
+    company: 'ALBERT S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14278,
+    name: 'PAMPERO 8008',
+    company: 'ALBERT S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10893,
+    name: 'PAN 8006T',
+    company: 'PANNAR RSA (PROP) LTED SUC ARG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9680,
+    name: 'PAN 8434',
+    company: 'PANNAR RSA (PROP) LTED SUC ARG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11952,
+    name: 'PAN 8609',
+    company: 'PANNAR INTERNATIONAL (PROP)LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10891,
+    name: 'PAN 8648W',
+    company: 'PANNAR RSA (PROP) LTED SUC ARG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9681,
+    name: 'PAN 8706',
+    company: 'PANNAR RSA (PROP) LTED SUC ARG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10894,
+    name: 'PAN 8806',
+    company: 'PANNAR RSA (PROP) LTED SUC ARG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9126,
+    name: 'PAN 8816',
+    company: 'PANNAR RSA(PROP)LIMITED SUCARG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10895,
+    name: 'PAN 8966',
+    company: 'PANNAR RSA (PROP) LTED SUC ARG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10896,
+    name: 'PAN 8979',
+    company: 'PANNAR RSA (PROP) LTED SUC ARG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13170,
+    name: 'PAN8907T',
+    company: 'PANNAR SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14647,
+    name: 'PAN8934T',
+    company: 'PANNAR SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14648,
+    name: 'PAN8935T',
+    company: 'PANNAR SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15186,
+    name: 'PATAGONES 58 R',
+    company: 'CRIADERO Y SEMILLERO DON PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1453,
+    name: 'PB 815',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8195,
+    name: 'PEHUEN',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2729,
+    name: 'PERCHERON INTA',
+    company: 'INTA E.E.A.BORDENAVE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17770,
+    name: 'PERLE INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13327,
+    name: 'PGR584T',
+    company: 'SCHEILD GUILLERMO HERIBERTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14680,
+    name: 'PILAGA 71 M',
+    company: 'CRIADERO Y SEMILLERO DON PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9310,
+    name: 'PILAR 211',
+    company: 'LIDIA LEONOR FELDHAMER'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4636,
+    name: 'PINTO',
+    company: 'ZENECA SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15876,
+    name: 'PITAVA',
+    company: 'OSCAR PEMAN Y ASOCIADOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13266,
+    name: 'PREMIUM 4065 ST',
+    company: 'SEMILLAS & CONCENTRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13267,
+    name: 'PREMIUM 7086 DP',
+    company: 'SEMILLAS & CONCENTRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12940,
+    name: 'PREMIUM-100',
+    company: 'SEMILLAS & CONCENTRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18966,
+    name: 'PRO-570 G',
+    company: 'PROSAPIA SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11688,
+    name: 'PROA',
+    company: 'ALIANZA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5312,
+    name: 'PROINTA 341',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13509,
+    name: 'PS 1000',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9742,
+    name: 'PS 101',
+    company: 'CRIADERO GAIMAN D. E. WILLIAMS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13496,
+    name: 'PS 55',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9226,
+    name: 'PUELCHE 57',
+    company: 'PAESANI RUBEN DARIO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14664,
+    name: 'QC 7023',
+    company: 'QUALITY CROPS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12819,
+    name: 'QC 7236',
+    company: 'QUALITY CROPS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15595,
+    name: 'QC 7462',
+    company: 'QUALITY CROPS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14665,
+    name: 'QC 7758',
+    company: 'QUALITY CROPS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11962,
+    name: 'QC7140',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11954,
+    name: 'QC7381',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16550,
+    name: 'QUIMASOR 180',
+    company: 'QUIMARSEM S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16554,
+    name: 'QUIMASOR 185 DP',
+    company: 'QUIMARSEM S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19786,
+    name: 'RA300.1',
+    company: 'LA RAMADA SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18967,
+    name: 'RA75.01',
+    company: 'LA RAMADA SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9225,
+    name: 'RANQUEL 67',
+    company: 'PAESANI RUBEN DARIO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14765,
+    name: 'RAS 3114 BT',
+    company: 'ROTAM DE ARGENTINA AGROQUIMICA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14766,
+    name: 'RAS 3214 AT',
+    company: 'ROTAM DE ARGENTINA AGROQUIMICA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1539,
+    name: 'RELAMPAGO 20 R',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1540,
+    name: 'RELAMPAGO 50 R',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2725,
+    name: 'RELAMPAGO 55 R',
+    company: 'CARGILL S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1538,
+    name: 'RELAMPAGO R',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1434,
+    name: 'RENDIDOR',
+    company: 'ZENECA SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11052,
+    name: 'REYUNO',
+    company: 'CAVERZASI ORTIN & CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9357,
+    name: 'RUMBOS GR 314',
+    company: 'PLUSAGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10203,
+    name: 'S 5050',
+    company: 'SPS ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9722,
+    name: 'SAC 100',
+    company: 'CRIADERO GAIMAN D. E. WILLIAMS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18354,
+    name: 'SANFE 312',
+    company: 'FASAN, MARCELO O.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1554,
+    name: 'SAVANNA 5',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1555,
+    name: 'SAVANNA 6',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11039,
+    name: 'SB-434',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12600,
+    name: 'SB-535',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16441,
+    name: 'SDP 2300 ORO',
+    company: 'AGROZULKAS LINCOLN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14437,
+    name: 'SEMASOR 145',
+    company: 'SEMARA SEMILLAS DE D.MARANESI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14438,
+    name: 'SEMASOR 181',
+    company: 'SEMARA SEMILLAS DE D.MARANESI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14439,
+    name: 'SEMASOR 191 DP',
+    company: 'SEMARA SEMILLAS DE D.MARANESI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6530,
+    name: 'SERRANO',
+    company: 'TECNOSORGO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2036,
+    name: 'SGL 245',
+    company: 'AGRI-TRADE SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2035,
+    name: 'SGM 146',
+    company: 'AGRI-TRADE SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1372,
+    name: 'SGR 550',
+    company: 'COMEGA CIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15541,
+    name: 'SHG 225 RS',
+    company: 'RED SURCOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8316,
+    name: 'SLG 150',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8317,
+    name: 'SLG 160',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1494,
+    name: 'SORGAL 2R',
+    company: 'CARGILL S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1544,
+    name: 'SORGAL R',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12612,
+    name: 'SPRING T 60',
+    company: 'SEMILLAS DE LOS SUNCHOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11783,
+    name: 'SPS 6441',
+    company: 'SPS ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9309,
+    name: 'SPS 7070',
+    company: 'SPS ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11960,
+    name: 'SPS 7122',
+    company: 'SPS ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7179,
+    name: 'SPS 9322',
+    company: 'CRIADERO SPS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9296,
+    name: 'SRM 445',
+    company: 'SURSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9295,
+    name: 'SRM 474',
+    company: 'SURSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11260,
+    name: 'SRM 480',
+    company: 'SURSEM S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12619,
+    name: 'SRS SUNDAY',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16417,
+    name: 'SUMMER II',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12611,
+    name: 'SUMMER T70',
+    company: 'SEMILLAS DE LOS SUNCHOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17047,
+    name: 'SUMMUM 7430 T',
+    company: 'SUMMUM GENETICA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17046,
+    name: 'SUMMUM 7852 T',
+    company: 'SUMMUM GENETICA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12354,
+    name: 'SURCOS SG-215',
+    company: 'MAISUR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11752,
+    name: 'SURCOS SG-311',
+    company: 'MAISUR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13960,
+    name: 'SURCOS SG-354',
+    company: 'MAISUR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14767,
+    name: 'SW6129W',
+    company: 'SEM WEST SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14768,
+    name: 'SW6143W',
+    company: 'SEM WEST SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14769,
+    name: 'SW6215R',
+    company: 'SEM WEST SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14770,
+    name: 'SW6237W',
+    company: 'SEM WEST SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14771,
+    name: 'SW6242R',
+    company: 'SEM WEST SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13929,
+    name: 'SWB-6350',
+    company: 'SEM WEST SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13926,
+    name: 'SWT-6880',
+    company: 'SEM WEST SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13244,
+    name: 'SY 7171 T',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13243,
+    name: 'SY 7322 TDP',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18965,
+    name: 'SYT-70-50 GR',
+    company: 'SOYTECH S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17101,
+    name: 'TAKURI',
+    company: 'OSCAR PEMAN Y ASOCIADOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14159,
+    name: 'TALKEM DP',
+    company: 'FLAVIA MARINA RAMAYAL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11083,
+    name: 'TAMAR 2 GR',
+    company: 'SCHEILD GUILLERMO HERIBERTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15429,
+    name: 'TAURO DUAL',
+    company: 'ELIAS SEMILLAS E INSUMOS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11120,
+    name: 'TEHUELCHE',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3631,
+    name: 'TELEN',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8731,
+    name: 'TERRAL ST 110',
+    company: 'SEMILLERIA GUASCH S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16380,
+    name: 'TFI 121503 P',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20662,
+    name: 'TFI 1832',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18717,
+    name: 'TFI 1858',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18099,
+    name: 'TFI 2817',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15316,
+    name: 'TFI 401417 DP',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16439,
+    name: 'TFI 581525',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19004,
+    name: 'TIGRE',
+    company: 'CAVERZASI ORTIN & CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12720,
+    name: 'TIMON',
+    company: 'ALIANZA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11918,
+    name: 'TOB 30 T',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13352,
+    name: 'TOB 40 T',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9473,
+    name: 'TOB 48 W',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9675,
+    name: 'TOB 50',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10970,
+    name: 'TOB 51',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10279,
+    name: 'TOB 52 T',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9674,
+    name: 'TOB 60 T',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13354,
+    name: 'TOB 62 T',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10971,
+    name: 'TOB 70 DP',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13353,
+    name: 'TOB 71 DP',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10278,
+    name: 'TOB CHANE',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1543,
+    name: 'TOBA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1451,
+    name: 'TOSTADO',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1812,
+    name: 'TOSTADO RP',
+    company: 'PALAVERSICH Y CIA S.A.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5728,
+    name: 'TR 46',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5727,
+    name: 'TR 56 Y G',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1545,
+    name: 'TRAFUL 2 R',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1995,
+    name: 'TRESUR X 106',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1206,
+    name: 'TRIUMPH TWO 54 YG',
+    company: 'CRAWFORD KEEN & CIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5022,
+    name: 'TRIUMPH TWO 64 YG',
+    company: 'PEREIRA Y ASOCIADOS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1207,
+    name: 'TRIUMPH TWO 78 D',
+    company: 'CRAWFORD KEEN & CIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13220,
+    name: 'TRONADOR',
+    company: 'ELIAS SEMILLAS E INSUMOS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5726,
+    name: 'TRX 7334',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8840,
+    name: 'TS 265',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8841,
+    name: 'TS 280',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13012,
+    name: 'TS 283',
+    company: 'SEMINIUM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14384,
+    name: 'TS267',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9767,
+    name: 'TS281',
+    company: 'SEMINIUM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17303,
+    name: 'TS286',
+    company: 'MONSANTO ARGENTINA S.R.L'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14682,
+    name: 'TUPI 63 M',
+    company: 'CRIADERO Y SEMILLERO DON PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6621,
+    name: 'UCRA 199',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15886,
+    name: 'URU 130 AT',
+    company: 'URUSEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16042,
+    name: 'URU 130 B',
+    company: 'URUSEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15887,
+    name: 'URU 130 BT',
+    company: 'URUSEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16013,
+    name: 'URU 170 BT',
+    company: 'URUSEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15888,
+    name: 'URU 190 AT',
+    company: 'URUSEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16014,
+    name: 'URU 230 AT',
+    company: 'URUSEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11864,
+    name: 'VDH 205',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10283,
+    name: 'VDH 206',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8194,
+    name: 'VDH 303',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11865,
+    name: 'VDH 306',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8193,
+    name: 'VDH 422',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7070,
+    name: 'VDH-203',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5884,
+    name: 'VDH-302',
+    company: 'ZENECA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8596,
+    name: 'VDH-314',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15490,
+    name: 'VT-1616',
+    company: 'SEMILLAS HIBRIDAS GAIMAN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15849,
+    name: 'VT-1818',
+    company: 'VTGEN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16050,
+    name: 'W-638W',
+    company: 'WARNER SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16018,
+    name: 'W-9501 HT',
+    company: 'WARNER SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16049,
+    name: 'W-9506',
+    company: 'WARNER SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1441,
+    name: 'WAC 652',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2358,
+    name: 'WAC 680-BR',
+    company: 'HIBRIDOS WAC SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2359,
+    name: 'WAC 686',
+    company: 'HIBRIDOS WAC SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1442,
+    name: 'WAC 692 R',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1440,
+    name: 'WAC 694 G',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7048,
+    name: 'WAC 715',
+    company: 'HIBRIDOS WAC S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13459,
+    name: 'WICHI 70R',
+    company: 'CRIAD.Y SEMILL.DON PEDRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12613,
+    name: 'WINTER T50',
+    company: 'SEMILLAS DE LOS SUNCHOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9756,
+    name: 'WTF 693',
+    company: 'CRIADERO MANATIALES O.CALDERO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8719,
+    name: 'YACARE',
+    company: 'CIAGRO SANTA FE SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17771,
+    name: 'YAVU INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14697,
+    name: 'YURAX',
+    company: 'PANOJA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20665,
+    name: 'Z 2491 DP',
+    company: 'ZINMA ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20664,
+    name: 'Z 3591 GR',
+    company: 'ZINMA ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14652,
+    name: 'ZT 707',
+    company: 'ZETA SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15364,
+    name: 'ZT 709',
+    company: 'ZETA SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17699,
+    name: 'ZT 718',
+    company: 'ZETA SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17700,
+    name: 'ZT 719',
+    company: 'ZETA SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17772,
+    name: 'NACRÃ‰E INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17773,
+    name: 'PUKA INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2056,
+    name: 'CABURE INTA',
+    company: 'INTA E.E.A.SAN PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8721,
+    name: 'ESCOBERO INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13844,
+    name: 'PETACO INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1516,
+    name: 'TONELERO INTA',
+    company: 'INTA E.E.A.SAN PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 15204,
+    name: 'FARAONA',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 7164,
+    name: 'CALPROSE AZABACHE',
+    company: 'CALPROSE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 1013,
+    name: 'EL SOCORRITO NÂº1',
+    company: 'CRIADERO EL SOCORRITO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 17319,
+    name: 'ITACUA',
+    company: 'AGROALPHA LTDA.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 17974,
+    name: 'LM 2214',
+    company: 'LOS PRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 15203,
+    name: 'MORA',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6e405d460bdb6dd8d38',
+    code: 19471,
+    name: 'MULATA',
+    company: 'AGROPICK SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7156,
+    name: 'ABUNDANT',
+    company: 'JENK SEEDS CONNECTION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13008,
+    name: 'ALAMO',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 15213,
+    name: 'ALAZAN',
+    company: 'FORRATEC ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 19472,
+    name: 'ALBERTO',
+    company: 'DSV SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11504,
+    name: 'ANGUS 1',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 18850,
+    name: 'ANGUSTA',
+    company: 'GAPP SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 18826,
+    name: 'APPROACH',
+    company: 'PGG WRIGHTSON SEEDS LTD.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16505,
+    name: 'ARNOLDO',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6001,
+    name: 'ATLANTIS',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7167,
+    name: 'ATLAS',
+    company: 'BAREN BRUG USA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 12356,
+    name: 'ATTAIN',
+    company: 'JOSE R.PICASSO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6720,
+    name: 'ATTILA',
+    company: 'LOS PRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 9052,
+    name: 'BAQUEANO',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10954,
+    name: 'BAR-HQ',
+    company: 'PALAVERSICH Y CIA S.A.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16349,
+    name: 'BARBARO',
+    company: 'GAPP SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 12206,
+    name: 'BARBERIA',
+    company: 'BARENBRUG HOLLAND B.V.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 2281,
+    name: 'BARSPECTRA',
+    company: 'PRODUSEM S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7207,
+    name: 'BARSPIRIT - (BAR LW 6ABD)',
+    company: 'BARENBRUG HOLANDA B V'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7208,
+    name: 'BARTURBO',
+    company: 'BARENBRUG HOLANDA B V'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 12346,
+    name: 'BEEFBUILDER III',
+    company: 'GAPP SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13374,
+    name: 'BIG BOSS',
+    company: 'FLORIDA FOUNDATION SEED PRODUC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11644,
+    name: 'BIG DADDY',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7837,
+    name: 'BILL',
+    company: 'GENTOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11423,
+    name: 'BILL MAX',
+    company: 'GENTOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7030,
+    name: 'BISONTE',
+    company: "J.JOORDENS'ZAADHANDEL B.V."
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 12253,
+    name: 'BOLT',
+    company: 'GENTOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 14263,
+    name: 'BRIXIA',
+    company: 'CONTINENTAL SEMENCES S.P.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11548,
+    name: 'CALEUFU PV-INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16317,
+    name: 'CAMPERO',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 18641,
+    name: 'CANDIDAME',
+    company: 'JOSE R. PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13029,
+    name: 'CARAMBA',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 1734,
+    name: 'CARAMBA',
+    company: 'CRIADERO SPS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 15159,
+    name: 'CATUS',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13041,
+    name: 'CIPOLLINI',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10841,
+    name: 'COLOSO',
+    company: 'CIAGRO SANTA FE SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 3655,
+    name: 'COMET',
+    company: 'PALAVERSICH Y CIA S.A.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 2095,
+    name: 'CONCORD',
+    company: 'CHALLENGE SEEDS LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5516,
+    name: 'CONKER',
+    company: 'CARRERAS JUAN JOSE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 9529,
+    name: 'CONQUISTADOR',
+    company: 'CEREAGRO S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5515,
+    name: 'CORDURA',
+    company: 'CARRERAS JUAN JOSE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13169,
+    name: 'DANKE',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6721,
+    name: 'DEVIS',
+    company: 'LOS PRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13049,
+    name: 'DIAMOND T',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7262,
+    name: 'DOMINO',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11975,
+    name: 'DON DINO',
+    company: 'LOS PRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11974,
+    name: 'DON GIANNI',
+    company: 'LOS PRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 14518,
+    name: 'DON RAUL',
+    company: 'ELIAS SEMILLAS E INSUMOS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16506,
+    name: 'DORIKE',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11585,
+    name: 'DUCADO',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 15255,
+    name: 'DURANGO',
+    company: 'JOSE R. PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7735,
+    name: 'ECLIPSE',
+    company: 'VALLEY SEEDS PTY LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 12804,
+    name: 'FEDERAL INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13067,
+    name: 'FILO',
+    company: 'MEDITERRANEA SEMENTI S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 4930,
+    name: 'FLANKER',
+    company: 'CAMPOTENCIA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13040,
+    name: 'FLORIDA 4 N',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 12345,
+    name: 'FLORIDA 98',
+    company: 'GAPP SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13051,
+    name: 'FLYING A',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 8116,
+    name: 'FST II',
+    company: 'JUAN JOSE CARRERAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16504,
+    name: 'GEPETTO',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13042,
+    name: 'GOLDONI',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 3503,
+    name: 'GRANDESA',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 1253,
+    name: 'GRASSLANDS PAROA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 1252,
+    name: 'GRASSLANDS TAMA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13010,
+    name: 'GRAZER',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16503,
+    name: 'HUNTER',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6314,
+    name: 'INIA CETUS',
+    company: 'INST. NAC. DE INVESTIG. AGROP.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5634,
+    name: 'INIA TITAN',
+    company: 'INST.NAC.DE INV.AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10824,
+    name: 'ISIS INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13038,
+    name: 'ITAKA',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13037,
+    name: 'ITARZI',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10704,
+    name: 'JACK',
+    company: 'GENTOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6851,
+    name: 'JEANNE',
+    company: 'AGAR CROSS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13009,
+    name: 'JIVET',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 8519,
+    name: 'JUMBO',
+    company: 'PALAVERSICH Y CIA S.A.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13011,
+    name: 'JUMPER',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13043,
+    name: 'KIGEZI 1',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16040,
+    name: 'KNIGHT',
+    company: 'GRASSLANS INNOVATION LIMITED'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13039,
+    name: 'KURI 1',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10794,
+    name: 'KWS KRUSA PLUS',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13030,
+    name: 'LABELLE',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11542,
+    name: 'LAZO',
+    company: 'GENTOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11491,
+    name: 'LE 19-45A',
+    company: 'INST. NAC. DE INVESTIG. AGROP.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11490,
+    name: 'LE 19-55',
+    company: 'INST. NAC. DE INVESTIG. AGROP.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11489,
+    name: 'LE 19-63',
+    company: 'INST. NAC. DE INVESTIG. AGROP.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 3985,
+    name: 'LE 284',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16579,
+    name: 'LEAL',
+    company: 'CRIADERO EL CENCERRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7275,
+    name: 'LIBUENO',
+    company: 'DEUTSCHE SAATVEREDELUNG LIP.BR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10840,
+    name: 'LIDER',
+    company: 'CIAGRO SANTA FE SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7276,
+    name: 'LIGRACIA',
+    company: 'DEUTSCHE SAATVEREDELUNG LIP.BR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16502,
+    name: 'LIKOLOSS',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 14513,
+    name: 'LIQUATTRO',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 12329,
+    name: 'LONESTAR',
+    company: 'JOSE R.PICASSO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6912,
+    name: 'MACHO',
+    company: 'SEMILLERIA GUASCH S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11913,
+    name: 'MAGNO',
+    company: 'PGG WRIGHTSON SEEDS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 3654,
+    name: 'MAX',
+    company: 'PALAVERSICH Y CIA S.A.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13092,
+    name: 'MAXIMUS',
+    company: 'BARENBRUG USA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13068,
+    name: 'MEDOACUS',
+    company: 'MEDITERRANEA SEMENTI S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 12684,
+    name: 'MELMONDO',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 12685,
+    name: 'MENDOZA',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 4222,
+    name: 'MONTBLANC',
+    company: 'VANDERHAVE ARG.RESEARCH S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13847,
+    name: 'MORO',
+    company: 'GENTOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16308,
+    name: 'NERVION',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 1735,
+    name: 'NINAK',
+    company: 'CRIADERO SPS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 8696,
+    name: 'OSIRIS INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 9264,
+    name: 'PAISANO',
+    company: 'CIAGRO SANTA FE SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 15156,
+    name: 'PAMPA INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11537,
+    name: 'PASSEREL PLUS',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 8468,
+    name: 'PASTIZAL',
+    company: 'AGROPECUARIA LYS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 903,
+    name: 'PERGAMINO EL RESERO MAG',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 14512,
+    name: 'POLLANUM',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7278,
+    name: 'POLLANUM II',
+    company: 'DEUTSCHE SAATVEREDELUNG LIP.BR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 2366,
+    name: 'PROGROW',
+    company: 'PYNE GOULD GUINNESS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11424,
+    name: 'PROMOTOR D',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10709,
+    name: 'PRONTO',
+    company: 'PGG WRIGHTSON SEEDS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10442,
+    name: 'PUCARA',
+    company: 'FORRATEC ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 18637,
+    name: 'PULSE',
+    company: 'CULLEN TOMAS RAFAEL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 18642,
+    name: 'QUICKSTON',
+    company: 'JOSE R. PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 20729,
+    name: 'RALLY',
+    company: 'GENTOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 17962,
+    name: 'RAPIDO INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 8520,
+    name: 'RIBEYE',
+    company: 'PALAVERSICH Y CIA S.A.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13135,
+    name: 'ROCKIN R',
+    company: 'COLLAZO Y ASOCIADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 9545,
+    name: 'SANCHO',
+    company: 'CRIADERO EL CENCERRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 9928,
+    name: 'SELVA',
+    company: 'GENTOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10483,
+    name: 'SJ BOCADO',
+    company: 'SEMILLERIA JAUREGUI S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10482,
+    name: 'SJ JAGUEL',
+    company: 'SEMILLERIA JAUREGUI S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 4914,
+    name: 'SPEEDYL',
+    company: 'SOCIETE R.A.G.T.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13683,
+    name: 'STRIKER',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 8937,
+    name: 'SUNGRAZER',
+    company: 'OREGRO SEEDS, INC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 9016,
+    name: 'SUPER G',
+    company: 'JOSE PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13031,
+    name: 'SURREY',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13032,
+    name: 'SURREY NOVA/SURREY II',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 15127,
+    name: 'SUXYL',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 15214,
+    name: 'TALERO',
+    company: 'FORRATEC ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13132,
+    name: 'TAMTBO',
+    company: 'COLLAZO Y ASOCIADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 15256,
+    name: 'TIBET',
+    company: 'JOSE R. PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13898,
+    name: 'TIENTO',
+    company: 'GENTOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 4912,
+    name: 'TONYL',
+    company: 'SOCIETE R.A.G.T.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 19337,
+    name: 'VELOZ',
+    company: 'GENTOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11908,
+    name: 'VERDURE',
+    company: 'WILLAMETTE VALLEY PLANT...INC.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 17980,
+    name: 'VITTORIA INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 8115,
+    name: 'WINTER STAR',
+    company: 'JUAN JOSE CARRERAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 17988,
+    name: 'WINTER STAR 3',
+    company: 'INIA/GRASSLANDS INNOVATION LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10707,
+    name: 'WINTER STAR II',
+    company: 'PGG WRIGHTSON SEEDS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13054,
+    name: 'WINTERHAWK',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 9069,
+    name: 'WONDERER GRASS',
+    company: 'ZAMBRUNI Y CIA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10504,
+    name: 'YAPA',
+    company: 'CRIADERO EL CENCERRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7263,
+    name: 'ZORRO',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 9265,
+    name: 'ZORZAL',
+    company: 'CIAGRO SANTA FE SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7031,
+    name: 'BOXER',
+    company: "J.JOORDENS'ZAADHANDEL B.V."
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10784,
+    name: 'BQT II',
+    company: 'WRIGHTSON SEEDS LTD.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16323,
+    name: 'CRUCIAL',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6968,
+    name: 'DELICIAL',
+    company: 'SOCIETE R.A.G.T.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 8795,
+    name: 'FLEURIAL',
+    company: 'R2N'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 1254,
+    name: 'GRASSLANDS ARIKI',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6654,
+    name: 'GRASSLANDS GREENSTONE',
+    company: 'GENTOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16827,
+    name: 'KIRIAL',
+    company: 'CULLEN TOMAS RAFAEL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5444,
+    name: 'MAVERICK GOLD',
+    company: 'WRIGHTSON SEEDS LTD.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6850,
+    name: 'RIGA',
+    company: 'AGAR CROSS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 18830,
+    name: 'LOWBOY',
+    company: 'CULLEN TOMAS RAFAEL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16499,
+    name: 'MAJESTY',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 18857,
+    name: 'SWEETMARYNA',
+    company: 'CULLEN TOMAS RAFAEL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 1388,
+    name: 'AMASAL',
+    company: 'DUCOS ENRIQUE OSCAR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 18352,
+    name: 'ARENA',
+    company: 'PGG WRIGHTSON SEEDS LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5537,
+    name: 'ARIES HD',
+    company: 'WRIGHTSON SEEDS LTD.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11535,
+    name: 'ARVICOLA',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16507,
+    name: 'ASTONENERGY',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 19155,
+    name: 'BANFIELD',
+    company: 'JOSE R. PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5361,
+    name: 'BANKS',
+    company: 'WRIGHTSON SEEDS LTD.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7305,
+    name: 'BARBALL',
+    company: 'BARENBRUG HOLANDA B V'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7311,
+    name: 'BARCREDO',
+    company: 'BARENBRUG HOLANDA B V'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7295,
+    name: 'BARLENNIUM',
+    company: 'BARENBRUG HOLANDA B V'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16496,
+    name: 'BECKHAM',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 4247,
+    name: 'BELIDA',
+    company: 'PALAVERSICH Y CIA. S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13134,
+    name: 'BOOST',
+    company: 'COLLAZO Y ASOCIADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 17499,
+    name: 'BREAKOUT',
+    company: 'JOSE R.PICASSO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5157,
+    name: 'BRIGHTSTAR',
+    company: 'CRIAD.Y SEMILLERO EL CENCERRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5998,
+    name: 'BRONSYN',
+    company: 'AGRISEED LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13623,
+    name: 'CADDIESHACK II',
+    company: 'PROFIELD SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7005,
+    name: 'CAPRI',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 17334,
+    name: 'CARLY',
+    company: 'JOSE R. PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 18009,
+    name: 'CENTURION',
+    company: 'PGG WRIGHTSON SEEDS LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6226,
+    name: 'CERES KINGSTON',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 9014,
+    name: 'CHARGER II',
+    company: 'ARANOVICH EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 4232,
+    name: 'CITATION II',
+    company: 'CRIAD.Y SEMILLERO EL CENCERRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5517,
+    name: 'COBBER',
+    company: 'CARRERAS JUAN JOSE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16268,
+    name: 'COLOSSEUM',
+    company: 'PGG WRIGHTSON SEEDS LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6808,
+    name: 'CORDOBA',
+    company: 'SEMILLERIA GUASCH S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10934,
+    name: 'COSACO',
+    company: 'CRIADERO EL CENCERRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6933,
+    name: 'COUNTRY',
+    company: 'ENRIQUE O. DUCOS E HIJOS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 4338,
+    name: 'DERBY',
+    company: 'SEMILLAS BASSO SACIAIF'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 4236,
+    name: 'DOBSON',
+    company: 'CAMPOTENCIA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 2096,
+    name: 'DROUGHTMASTER',
+    company: 'CHALLENGE SEEDS LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16498,
+    name: 'EG RESISTUS',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 999,
+    name: 'EL CENCERRO',
+    company: 'DUCOS ENRIQUE OSCAR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 4426,
+    name: 'ELEGANCE',
+    company: 'PAIER CESAR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16322,
+    name: 'ELITAL',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 4315,
+    name: 'EMBASSY',
+    company: 'CALVELO ANTONIO JOSE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13671,
+    name: 'ESQUIRE',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16500,
+    name: 'EURODIAMOND',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16497,
+    name: 'EUROSPORT',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10783,
+    name: 'EXTREME',
+    company: 'WRIGHTSON SEEDS LTD.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11033,
+    name: 'FUSTA',
+    company: 'CRIADERO EL CENCERRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6215,
+    name: 'GALAXY',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13668,
+    name: 'GARIBALDI',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13672,
+    name: 'GATOR 3',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13594,
+    name: 'GIOVANNI',
+    company: 'LOS PRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13622,
+    name: 'GOALKEEPER II',
+    company: 'PROFIELD SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 1249,
+    name: 'GRASSLANDS NUI',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5024,
+    name: 'GRASSLANDS PACIFIC',
+    company: 'AGRESEARCH GRASSLANDS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 1248,
+    name: 'GRASSLANDS RUANUI',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6060,
+    name: 'GRASSLANDS SAMSON',
+    company: 'GENTOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 19593,
+    name: 'GRAY FOX',
+    company: 'JOSE R. PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 15375,
+    name: 'HALO',
+    company: 'PGG WRIGHTSON SEEDS LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16510,
+    name: 'HAMAC',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6227,
+    name: 'HORIZON',
+    company: 'PYNE GOULD GUINNESS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 14015,
+    name: 'INDY',
+    company: 'JOSE R.PICASSO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 14013,
+    name: 'INDY D',
+    company: 'JOSE PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 15346,
+    name: 'INFINITY',
+    company: 'GENTOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5363,
+    name: 'JOUST',
+    company: 'WRIGHTSON SEEDS LTD.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 1251,
+    name: 'KANGAROO VALLEY',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 19156,
+    name: 'KARMA',
+    company: 'JOSE R. PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13669,
+    name: 'KEYSTONE 2',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10440,
+    name: 'KRESTA',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 8008,
+    name: 'LA LUNA',
+    company: 'GENTOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13624,
+    name: 'LA QUINTA',
+    company: 'PROFIELD SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13083,
+    name: 'LACTAL',
+    company: 'CULLEN, TOMAS RAFAEL MARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6809,
+    name: 'LEON',
+    company: 'SEMILLERIA GUASCH S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 1362,
+    name: 'LINDOR',
+    company: 'DUCOS ENRIQUE OSCAR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 8050,
+    name: 'LINDOR II',
+    company: 'ENRIQUE O. DUCOS E HIJOS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 19806,
+    name: 'LOLIUS',
+    company: 'DSV SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 2367,
+    name: 'MARATHON',
+    company: 'PYNE GOULD GUINNESS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 15056,
+    name: 'MATHILDE',
+    company: 'DLF-TRIFOLIUM AS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6000,
+    name: 'MERIDIAN',
+    company: 'AGRISEED LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 14700,
+    name: 'METEORO',
+    company: 'CRIADERO EL CENCERRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16501,
+    name: 'MIRTELLO',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7265,
+    name: 'NAPOLEON',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5999,
+    name: 'NEVIS',
+    company: 'AGRISEED LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 17901,
+    name: 'NEW SEALAND',
+    company: 'JOSE R. PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13385,
+    name: 'ONE50',
+    company: 'PGG WRIGHTSON SEEDS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16511,
+    name: 'PASCAL',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7277,
+    name: 'PASTORAL',
+    company: 'SOCIETE RAGT'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 11425,
+    name: 'PERMANENT',
+    company: 'ZAMBRUNI Y CIA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13900,
+    name: 'PF TETRAGRAS',
+    company: 'ELIAS SEMILLAS E INSUMOS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7297,
+    name: 'PIROUETTE',
+    company: 'BARENBRUG HOLANDA B V'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16509,
+    name: 'POLLEN',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6914,
+    name: 'PRANA',
+    company: 'SEMILLERIA GUASCH S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5847,
+    name: 'PREMIER',
+    company: 'SEMILLERIA GUASCH S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7296,
+    name: 'PREMIER II',
+    company: 'BARENBRUG HOLANDA B V'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 20716,
+    name: 'QUATRO MAX',
+    company: 'GENTOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 1727,
+    name: 'QUICHUA',
+    company: 'INTERSEM S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5996,
+    name: 'QUICKSTART',
+    company: 'TURF SEED, INC.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 8620,
+    name: 'QUIJOTE',
+    company: 'CRIADERO EL CENCERRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13670,
+    name: 'REGAL 5',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5745,
+    name: 'ROADRUNNER',
+    company: 'TURF SEED, INC.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 14014,
+    name: 'ROADSTER',
+    company: 'JOSE PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7003,
+    name: 'SCORE',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 18841,
+    name: 'SHIELD',
+    company: 'CULLEN TOMAS RAFAEL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 19157,
+    name: 'SIDEWAYS',
+    company: 'JOSE R. PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 18828,
+    name: 'SIGNET',
+    company: 'CULLEN TOMAS RAFAEL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 10733,
+    name: 'SJ PEGUAL',
+    company: 'SEMILLERIA JAUREGUI S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 18095,
+    name: 'SOPRANO',
+    company: 'PGG WRIGHTSON SEEDS LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 18008,
+    name: 'SPARTACUS',
+    company: 'PGG WRIGHTSON SEEDS LTD'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 19151,
+    name: 'SR 4650',
+    company: 'JOSE R. PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 15178,
+    name: 'TEMPRANO',
+    company: 'SEMILLERA GUASCH SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7264,
+    name: 'TETRAMAX',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 4246,
+    name: 'TONGA',
+    company: 'PALAVERSICH Y CIA. S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13625,
+    name: 'TOP GUN',
+    company: 'PROFIELD SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 13626,
+    name: 'TOP GUN II',
+    company: 'PROFIELD SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 7004,
+    name: 'TOVE',
+    company: 'DLF-TRIFOLIUM A/S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16559,
+    name: 'TRANSATE',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 19739,
+    name: 'TUCAN',
+    company: 'CRIADERO EL CENCERRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16495,
+    name: 'TURFGOLD',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16512,
+    name: 'TURFSUN',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 6932,
+    name: 'ULTRA',
+    company: 'ENRIQUE O. DUCOS E HIJOS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 4237,
+    name: 'VEDETTE',
+    company: 'CAMPOTENCIA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 1250,
+    name: 'VICTORIAN',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 5505,
+    name: 'VITAL',
+    company: 'SOCIETE R.A.G.T.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 16508,
+    name: 'VULCANUS',
+    company: 'DEUTSCHE SAATVEREDELUNG AG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed6c105d460bdb6dd8d1a',
+    code: 4238,
+    name: 'YATSYN 1',
+    company: 'CAMPOTENCIA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20659,
+    name: 'A 765',
+    company: 'ZINMA ARGENTINA S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13415,
+    name: 'ACA 710 BMR',
+    company: 'ASOC.COOP.ARGENTINAS C.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14764,
+    name: 'ACA 711 BMR',
+    company: 'ASOC.COOP.ARGENTINAS COOP.LTDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17567,
+    name: 'ACA 712 BMR',
+    company: 'ASOC.COOP.ARGENTINAS COOP.LTDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16244,
+    name: 'ACA 717 BMR',
+    company: 'ASOC.DE COOP.ARG.COOP.LTDA.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18126,
+    name: 'ACA 721 BMR',
+    company: 'ASOC.COOP.ARGENTINAS COOP.LTDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17568,
+    name: 'ACA 764',
+    company: 'ASOC.COOP.ARGENTINAS COOP.LTDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19604,
+    name: 'ACA 785 FT BMR',
+    company: 'ASOC.COOP.ARGENTINAS COOP.LTDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20631,
+    name: 'ADV2650IG',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19651,
+    name: 'ADV2701ULTRA',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12892,
+    name: 'ANTEL INTA PEMAN',
+    company: 'INST. NAC.TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13800,
+    name: 'ARELAUQUEN',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18092,
+    name: 'ARGENFOR 195FB',
+    company: 'MARANESSI PEDRO JOSE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17174,
+    name: 'BMH PIUDOLCE',
+    company: 'PABLO ANDRES BANCHERO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17173,
+    name: 'BMH PIUREBA',
+    company: 'PABLO ANDRES BANCHERO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16359,
+    name: 'BRISTOL',
+    company: 'CLASIFICACIONES MURPHY SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20613,
+    name: 'CACIQUE FOTO BMR',
+    company: 'SOYTECH S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18802,
+    name: 'CACIQUE FS',
+    company: 'SOYTECH S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17776,
+    name: 'CALU INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12678,
+    name: 'CANDY GRAZE 2MT',
+    company: 'SEMILLAS DE LOS SUNCHOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13294,
+    name: 'CANDY GRAZE MT',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17707,
+    name: 'CH 506 F BMR',
+    company: 'CHROMATIN SEMILLAS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17722,
+    name: 'CH 508 F',
+    company: 'CHROMATIN SEMILLAS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17726,
+    name: 'CH 546',
+    company: 'CHROMATIN SEMILLAS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17724,
+    name: 'CH 548 BMR',
+    company: 'CHROMATIN SEMILLAS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17723,
+    name: 'CH 708 F',
+    company: 'CHROMATIN SEMILLAS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17725,
+    name: 'CH 744',
+    company: 'CHROMATIN SEMILLAS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11776,
+    name: 'CHAMAME',
+    company: 'ELBA BEATRIZ ALESSANDRINI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17774,
+    name: 'COREL BMR INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11775,
+    name: 'DOMINO',
+    company: 'ELBA BEATRIZ ALESSANDRINI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7738,
+    name: 'DON EMILIO',
+    company: 'AGRO SEMILLERA VILLA NUEVA SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12589,
+    name: 'DON JACINTO',
+    company: 'SEMILLAS DE LOS SUNCHOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11610,
+    name: 'DON VERDEO 50',
+    company: 'CLASIFICACIONES MURPHY SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18697,
+    name: 'DONFELIPE BL',
+    company: 'AGRONEGOCIOS PERGAMINO S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13379,
+    name: 'FAA MQ',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19057,
+    name: 'FAN 475 BMR',
+    company: 'FAN SEEDS ARGENTINA SRL.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17775,
+    name: 'FOGLIOSO BMR INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16207,
+    name: 'FOTO MAX',
+    company: 'TRILI SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19796,
+    name: 'FOTON BMR',
+    company: 'GENESIS SEEDS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12273,
+    name: 'GEN 417 SL-T',
+    company: 'GENESIS SEEDS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16047,
+    name: 'GSC 622',
+    company: 'GAPP SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10182,
+    name: 'KOCHI INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18135,
+    name: 'LEÃ‘OSO',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16437,
+    name: 'LOS ALGARROBOS',
+    company: 'SALA S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20663,
+    name: 'MATRERO PLUS',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15737,
+    name: 'MISKILU',
+    company: 'AGRONEGOCIOS PERGAMINO S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17764,
+    name: 'N31L5010',
+    company: 'NEXSTEPPE SEMENTES DO BRASIL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16152,
+    name: 'N52K1009',
+    company: 'SGS ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18185,
+    name: 'NIAGARA III',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19737,
+    name: 'NIÃGARA IV',
+    company: 'SEMILLAS BISCAYART S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16208,
+    name: 'NITROPLUS BMR',
+    company: 'TRILI SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17291,
+    name: 'NUGRASS 800 BMR',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17292,
+    name: 'NUGRASS 900 F',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18093,
+    name: 'NUGRASS 910 F BMR',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18236,
+    name: 'PARU BMR INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13411,
+    name: 'PASTORAL',
+    company: 'TRILI SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16358,
+    name: 'PATRIOT',
+    company: 'CLASIFICACIONES MURPHY SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18576,
+    name: 'PILCOMAYO III',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18821,
+    name: 'PRISMA',
+    company: 'CRIADERO EL CENCERRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18839,
+    name: 'RA170.01',
+    company: 'LA RAMADA SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18838,
+    name: 'RA270.01 BMR',
+    company: 'LA RAMADA SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14797,
+    name: 'RAS 1000 FT',
+    company: 'ROTAM DE ARGENTINA AGROQUIMICA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14796,
+    name: 'RAS 500 BMR',
+    company: 'ROTAM DE ARGENTINA AGROQUIMICA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3946,
+    name: 'RENDIDOR 6',
+    company: 'CRIADERO Y SEMILLERO MORGAN'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3849,
+    name: 'RODEO 77',
+    company: 'CRIADERO EL SORGAL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18355,
+    name: 'SANFE 381',
+    company: 'FASAN, MARCELO ORESTE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14606,
+    name: 'SEMAFOR 201 FS',
+    company: 'SEMARA SEMILLAS DE D.MARANESI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13699,
+    name: 'SUGARGRAZE-AR',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16360,
+    name: 'SURCOMAX',
+    company: 'CLASIFICACIONES MURPHY SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18719,
+    name: 'TFI 73334',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17355,
+    name: 'TOB FACA BMR',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10972,
+    name: 'TOB MATRERO',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3732,
+    name: 'TROPA',
+    company: 'EL SORGAL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20645,
+    name: 'Z 1220 BMR',
+    company: 'ZINMA ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20647,
+    name: 'Z 1301 PPS',
+    company: 'ZINMA ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20646,
+    name: 'Z 1310 BMR PPS',
+    company: 'ZINMA ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18082,
+    name: 'ZORZAL',
+    company: 'NICOLAS BRUNO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16457,
+    name: 'ZULU',
+    company: 'DRUETTO JULIAN DARIO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16470,
+    name: 'ZULU BMR',
+    company: 'DRUETTO JULIAN DARIO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19767,
+    name: 2.125,
+    company: 'GENTOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5964,
+    name: '4 EVERGREEN',
+    company: 'MYCOYEN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5219,
+    name: '600 D',
+    company: 'PANOJA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9679,
+    name: '80 FS',
+    company: 'MONTEGUIAGA JORGE A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1591,
+    name: '911 MARCA PIONEER',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13416,
+    name: 'ACA 715 BMR',
+    company: 'ASOC.COOP.ARGENTINAS C.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1847,
+    name: 'ACA 720 SP',
+    company: 'ASOC.COOP.ARGENTINAS C.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1998,
+    name: 'ACA 725 SE',
+    company: 'ASOC.COOP.ARGENTINAS C.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7150,
+    name: 'ACA 727',
+    company: 'CRIADERO DE SEMILLAS HIB. ACA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15438,
+    name: 'ACA 729',
+    company: 'ASOC.DE COOP.ARG.COOP.LTDA.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13013,
+    name: 'ACA 730',
+    company: 'ASOC.COOP.ARGENTINAS C.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15981,
+    name: 'ACA 740',
+    company: 'ASOC.DE COOP.ARG.COOP.LTDA.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10135,
+    name: 'AD 86 SA',
+    company: 'AGROSEMILLAS DEL SUR SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11946,
+    name: 'AD87SBICOLOR',
+    company: 'AGROSEMILLAS DEL SUR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12653,
+    name: 'AD91SUCROL',
+    company: 'AGROSEMILLAS DEL SUR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14804,
+    name: 'ADV 2010',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17702,
+    name: 'ADV 2701',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14137,
+    name: 'ADV 2800',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13219,
+    name: 'ADV 2900',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6747,
+    name: 'AFRICANO',
+    company: 'CRIADERO MAISUR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8751,
+    name: 'AFRICANO IIBR',
+    company: 'CRIADERO MAISUR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1611,
+    name: 'AG 1397',
+    company: 'AGROSERVICIOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6874,
+    name: 'AG SILO 200',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8373,
+    name: 'AG SILO 202',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12649,
+    name: 'AG SILO 204',
+    company: 'AGRISEED S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10736,
+    name: 'AGAPE',
+    company: 'ZEUS RESEARCH DE D.E.ARNALDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15418,
+    name: 'AGRI-001E',
+    company: 'TROPICORN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14209,
+    name: 'AGRUM FORRAJERO BMR',
+    company: 'TRILI SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4780,
+    name: 'AGUARIBAY',
+    company: 'INGENIERIA AGROPECUARIA SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2423,
+    name: 'ALTO VERDE FT',
+    company: 'AMEZTOY Y HERNANDEZ S.C.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12810,
+    name: 'APARCERO',
+    company: 'GENESIS SEEDS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15417,
+    name: 'AQUARIUS',
+    company: 'ELIAS SEMILLAS E INSUMOS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14105,
+    name: 'ARGENFOR 180 FS',
+    company: 'MARANESSI JOSE PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11877,
+    name: 'ARGENSIL 160 T',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11876,
+    name: 'ARGENSIL 162',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14783,
+    name: 'ARGENSOR 155 DP',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6310,
+    name: 'ARROYITO AD',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18181,
+    name: 'ARSE 01',
+    company: 'RISING SEEDS S.A.S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18180,
+    name: 'ARSE 02',
+    company: 'RISING SEEDS S.A.S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18175,
+    name: 'ARSE 122',
+    company: 'RISING SEEDS S.A.S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18172,
+    name: 'ARSE 1500',
+    company: 'RISING SEEDS S.A.S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18179,
+    name: 'ARSE 19',
+    company: 'RISING SEEDS S.A.S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18178,
+    name: 'ARSE 25',
+    company: 'RISING SEEDS S.A.S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18184,
+    name: 'ARSE 30',
+    company: 'RISING SEEDS S.A.S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18183,
+    name: 'ARSE 39',
+    company: 'RISING SEEDS S.A.S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18182,
+    name: 'ARSE 42',
+    company: 'RISING SEEDS S.A.S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18174,
+    name: 'ARSE 450',
+    company: 'RISING SEEDS S.A.S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18173,
+    name: 'ARSE 505',
+    company: 'RISING SEEDS S.A.S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18177,
+    name: 'ARSE 770',
+    company: 'RISING SEEDS S.A.S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18176,
+    name: 'ARSE 84',
+    company: 'RISING SEEDS S.A.S'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8732,
+    name: 'AT 1',
+    company: 'CRIADERO GAIMAN D. E. WILLIAMS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9817,
+    name: 'AT2',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9399,
+    name: 'ATAMISQUI',
+    company: 'AGRISEED S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20038,
+    name: 'ATIPAY',
+    company: 'OSCAR PEMAN Y ASOCIADOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11068,
+    name: 'ATUEL',
+    company: 'PALO VERDE S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18261,
+    name: 'AU 155A01 BMR',
+    company: 'ARGENUR SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18262,
+    name: 'AU 75A02',
+    company: 'ARGENUR SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2413,
+    name: 'AUSTER ST 91',
+    company: 'SEMILLERIA GUASCH S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15412,
+    name: 'BARKILOS',
+    company: 'PALAVERSICH Y CIA. S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15413,
+    name: 'BARLUZ',
+    company: 'PALAVERSICH Y CIA. S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15411,
+    name: 'BARPLUS',
+    company: 'PALAVERSICH Y CIA. S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1160,
+    name: 'BATITU INTA',
+    company: 'INTA E.E.A.PERGAMINO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2527,
+    name: 'BEEFBUILDER R',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13172,
+    name: 'BEST CHOICE BMR',
+    company: 'SEMILLAS & CONCENTRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14190,
+    name: 'BIG DOG',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10163,
+    name: 'BIO IDEAL BMR',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12889,
+    name: 'BIOSILERO INTA PEMAN',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14694,
+    name: 'BMR PF 668',
+    company: 'ELIAS SEMILLAS E INSUMOS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11647,
+    name: 'BRIOSO',
+    company: 'JOSE R.PICASSO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10166,
+    name: 'BRONCE BMR',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9242,
+    name: 'BZ MAXIMIEL',
+    company: 'CRIADERO Y SEMILLERO ZACCARDI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13491,
+    name: 'BZ MAXIMIEL G',
+    company: 'PLUSAGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13942,
+    name: 'CA 1001',
+    company: 'COOP AGR GANAD LTDA DE ACEVEDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18007,
+    name: 'CACIQUE',
+    company: 'SOYTECH S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18006,
+    name: 'CACIQUE BMR',
+    company: 'SOYTECH S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1220,
+    name: 'CAHJA INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7985,
+    name: 'CANDY GRAZE',
+    company: 'CRIADERO Y SEMILLERO DRUETTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13221,
+    name: 'CAPRICORNIO',
+    company: 'ELIAS SEMILLAS E INSUMOS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8192,
+    name: 'CARILAUQUEN',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19626,
+    name: 'CARILO FS',
+    company: 'CRIAD. Y SEM. DON SAUL SAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19736,
+    name: 'CARILO MIEL BMR',
+    company: 'CRIAD. Y SEM. DON SAUL SAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11930,
+    name: 'CAS PILAR 330',
+    company: 'COMPAÃ‘IA ARGENTINA DE SEMILLAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11942,
+    name: 'CAS PILAR 611',
+    company: 'COMPAÃ‘IA ARGENTINA DE SEMILLAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11872,
+    name: 'CAS RODEO',
+    company: 'COMPAÃ‘IA ARGENTINA DE SEMILLAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10604,
+    name: 'CATRILO',
+    company: 'PALO VERDE S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1622,
+    name: 'CENTELLA',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14574,
+    name: 'CENTELLA PLUS',
+    company: 'AGRISEED S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5554,
+    name: 'CERES',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8486,
+    name: 'CHAMPAQUI BMR',
+    company: 'CRIADERO EL SORGAL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2546,
+    name: 'CHANGO INTA',
+    company: 'INTA E.E.A.PERGAMINO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8012,
+    name: 'CHIVILCO',
+    company: 'CRIADERO Y SEMILLERO ZACCARDI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10109,
+    name: 'CIPRES',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11714,
+    name: 'COBRIZO',
+    company: 'JOSE PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11648,
+    name: 'COLOSO',
+    company: 'JOSE R.PICASSO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5053,
+    name: 'COMAX 2001',
+    company: 'CAVERZASI ORTIN & CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20788,
+    name: 'CONSUS DOMINANTE',
+    company: 'ALVAREZ GUSTAVO D.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15453,
+    name: 'COW VITTLES II',
+    company: 'WARNER SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4147,
+    name: 'CRIOLLO 40',
+    company: 'CRIADERO AYERZA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2490,
+    name: 'CRUCERO',
+    company: 'CALDERO, OSVALDO RICARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3903,
+    name: 'CSA FORRAJERO',
+    company: 'CRIADERO Y SEMILLERO DRUETTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9055,
+    name: 'CW PASTOREO BMR',
+    company: 'CAL/WEST SEEDS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15853,
+    name: 'CW SILO PLUS',
+    company: 'CALWEST SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18680,
+    name: 'CW SILO PLUS2',
+    company: 'CALWEST SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15852,
+    name: 'CW SUGAR PLUS',
+    company: 'CALWEST SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18679,
+    name: 'CW SUGAR PLUS2',
+    company: 'CALWEST SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10097,
+    name: 'DA ESPERANZA',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7362,
+    name: 'DAIRY MASTER',
+    company: 'CRIADERO Y SEMILLERO DRUETTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2549,
+    name: 'DEKALB DA 49',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2325,
+    name: 'DEKALB SX 132',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2346,
+    name: 'DEKALB SX 16',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3006,
+    name: 'DEKALB SX-133',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3016,
+    name: 'DEKALB SX-17',
+    company: 'DEKALB ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12837,
+    name: 'DELICIAL BMR',
+    company: 'TRILI SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14775,
+    name: 'DERBY',
+    company: 'MARIA PAULA DINARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10746,
+    name: 'DESAFIO',
+    company: 'JOSE R.PICASSO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2371,
+    name: 'DINE-A-MITE',
+    company: 'PRODUSEM S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14843,
+    name: 'DINGO',
+    company: 'JOSE R.PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18234,
+    name: 'DLF 705 PPS',
+    company: 'GAPP SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14844,
+    name: 'DOMINUS ALFA BMR',
+    company: 'JOSE R.PICASSO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4883,
+    name: 'DON FACUNDO',
+    company: 'SEMILLERO GUERRICO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19043,
+    name: 'DON HUGO',
+    company: 'SEEDAR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11941,
+    name: 'DON MANUEL',
+    company: 'AGRONEGOCIOS PERGAMINO S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2468,
+    name: 'DON MARIO',
+    company: 'ASOCIADOS DON MARIO SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11686,
+    name: 'DON VERDEO 33',
+    company: 'CLASIFICACIONES MURPHY SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2120,
+    name: 'DON VERDEO 45',
+    company: 'LAZZARI, ATILIO MIGUEL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5555,
+    name: 'DON VERDEO 46',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9595,
+    name: 'DON VERDEO 47',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5073,
+    name: 'DON VERDEO 65',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2561,
+    name: 'DP 991',
+    company: 'DON PEDRO S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15898,
+    name: 'DULSORGO',
+    company: 'TECNOSORGO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2121,
+    name: 'DULZON 299',
+    company: 'LAZZARI, ATILIO MIGUEL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10046,
+    name: 'DÂ´PASTEJO',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10047,
+    name: 'DÂ´SILAGEM',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9720,
+    name: 'ECHELEN',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1770,
+    name: 'EL SURGENTE',
+    company: 'ALBERT S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10224,
+    name: 'ENERGIA',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15396,
+    name: 'ESPINILLO',
+    company: 'MORE TRAC S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15397,
+    name: 'ESPINILLO HQ',
+    company: 'MORE TRAC S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15395,
+    name: 'ESPINILLO MAX',
+    company: 'MORE TRAC S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2238,
+    name: 'ESTANZUELA ABUCU',
+    company: 'LA FANEGA S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14047,
+    name: 'ETERNO',
+    company: 'GRUPO AGROS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3159,
+    name: 'EXHUBERANTE 1',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12460,
+    name: 'EXTRA VALUE',
+    company: 'NUFARM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11010,
+    name: 'F 1200',
+    company: 'FORRATEC ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13174,
+    name: 'F 1300 FS',
+    company: 'FORRATEC ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14789,
+    name: 'F 1307',
+    company: 'FORRATEC ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11186,
+    name: 'F 1400',
+    company: 'FORRATEC ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14790,
+    name: 'F 1405',
+    company: 'FORRATEC ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11914,
+    name: 'F 1479',
+    company: 'FORRATEC ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14791,
+    name: 'F 1497',
+    company: 'FORRATEC ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1527,
+    name: 'F 3000',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2942,
+    name: 'F 411',
+    company: 'AGRIGENETICS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3863,
+    name: 'F-500',
+    company: 'FORRATEC S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4428,
+    name: 'F-700',
+    company: 'FORRATEC S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15341,
+    name: 'F750 PLUS',
+    company: 'FORRATEC ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11042,
+    name: 'FA 50',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2547,
+    name: 'FACON G-194 F',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17577,
+    name: 'FAN 470',
+    company: 'FAN SEEDS ARGENTINA SRL.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10738,
+    name: 'FARALLON',
+    company: 'ZEUS RESEARCH DE D.E.ARNALDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10167,
+    name: 'FEDERAL',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14592,
+    name: 'FLECHA',
+    company: 'CAVERZASI ORTIN & CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12749,
+    name: 'FN OMBU MAX',
+    company: 'FERIAS DEL NORTE S.A.C.I.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13275,
+    name: 'FN OMBU ORO',
+    company: 'FN SEMILLAS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3467,
+    name: 'FORRACOR 201 INTA',
+    company: 'INTA E.E.A.MANFREDI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1466,
+    name: 'FORRAJERO MORGAN',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8969,
+    name: 'FORRATEC F 750',
+    company: 'FORRATEC ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18675,
+    name: 'FORTACHON BMR INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7108,
+    name: 'FORTIN COLON',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20039,
+    name: 'FOTO BMR SUMAC',
+    company: 'OSCAR PEMAN Y ASOCIADOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10889,
+    name: 'FOTON',
+    company: 'GENESIS SEEDS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1531,
+    name: 'FRONTIER HYDA 35',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1528,
+    name: 'FRONTIER S 214',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1484,
+    name: "FUNK'G 192 F",
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1485,
+    name: "FUNK'S G 191 F",
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1641,
+    name: "FUNK'S G 192 RP",
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2025,
+    name: "FUNK'S G 192 SUREÃ‘O",
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1483,
+    name: "FUNK'S GA 480",
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3384,
+    name: 'FUTURO',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13184,
+    name: 'GANADERO PAN 895',
+    company: 'PANNAR SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4536,
+    name: 'GANADOR',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8306,
+    name: 'GAPP 202',
+    company: 'AGROINVEST S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9625,
+    name: 'GAPP 305',
+    company: 'AGROINVEST S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1449,
+    name: 'GAUCHAZO',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4172,
+    name: 'GAUCHAZO SILERO',
+    company: 'CRIADERO Y SEMILLERO DRUETTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11660,
+    name: 'GEN 315 SL',
+    company: 'GENESIS SEEDS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11659,
+    name: 'GEN NIVEO 310 SL',
+    company: 'GENESIS SEEDS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11019,
+    name: 'GENTOS 125',
+    company: 'GENTOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15470,
+    name: 'GENTOS 130AA',
+    company: 'GENTOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14776,
+    name: 'GENTOS 135 BMR',
+    company: 'GENTOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19862,
+    name: 'GENTOS 2.85BMR',
+    company: 'GENTOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11020,
+    name: 'GENTOS 75 BMR',
+    company: 'GENTOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11021,
+    name: 'GENTOS 95 BMR',
+    company: 'GENTOS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15055,
+    name: 'GEPAZ',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13851,
+    name: 'GP 307',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12485,
+    name: 'GP 702 BMR',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14519,
+    name: 'GPF 203 BMR',
+    company: 'GAPP SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2384,
+    name: 'GRAN RODEO',
+    company: 'SEMILLAS ARGENTINAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8472,
+    name: 'GRAN SILO',
+    company: 'DRUETTO JACINTO M.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6976,
+    name: 'GRAN TROPERO',
+    company: 'SEMILLERA SAN BASILIO FALCO OS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12033,
+    name: 'GRAN TROPERO PLUS FS',
+    company: 'FALCO OSCAR AGUSTIN'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20026,
+    name: 'GRAN TROPERO SILERO',
+    company: 'FALCO OSCAR AGUSTIN'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1532,
+    name: 'GRAZER M 2',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1889,
+    name: 'GRAZER M3',
+    company: 'NIDERA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1533,
+    name: 'GRAZER N 3',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9228,
+    name: 'GREEN FEED',
+    company: 'PAESANI RUBEN DARIO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10741,
+    name: 'GREEN GRAIN BMR',
+    company: 'CRIAD.Y SEMILL.DON PEDRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10742,
+    name: 'GREEN SUGAR BOWL',
+    company: 'CRIAD.Y SEMILL.DON PEDRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7041,
+    name: 'GREEN SUPREMO',
+    company: 'DON PEDRO SEMILLAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12828,
+    name: 'GREEN SUPREMO MAX',
+    company: 'CRIADERO Y SEMILLERO DON PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1444,
+    name: 'GUAIRA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14000,
+    name: 'GUAPO',
+    company: 'CIANCIO ERNESTO GUSTAVO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19815,
+    name: 'GUAPO FS',
+    company: 'CIANCIO ERNESTO GUSTAVO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8154,
+    name: 'GW-916F',
+    company: 'AGRO INVEST S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8153,
+    name: 'GW-9511G',
+    company: 'AGRO INVEST S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2368,
+    name: 'HAY DAY',
+    company: 'BELLOTTI KENNY ASOCIADOS S.R.L'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12456,
+    name: 'HAYMAKER',
+    company: 'NUFARM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2365,
+    name: 'HAYSMAK',
+    company: 'AGROLIT S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10210,
+    name: 'HUAYCO',
+    company: 'BOIERO SEMILLAS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14210,
+    name: 'HULK',
+    company: 'CRIADERO Y SEMILLERO DON PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3521,
+    name: 'HURACAN SG 94',
+    company: 'SEMILLERIA GUASCH S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15454,
+    name: 'HUSKY',
+    company: 'WARNER SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8491,
+    name: 'IBERA',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11140,
+    name: 'IBERA 2',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17671,
+    name: 'INFINITO 125',
+    company: 'SALA S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3041,
+    name: 'INSU SAN MARTIN',
+    company: 'LA INSULA DE BRAVINO, ITALO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1905,
+    name: 'INVERNADOR',
+    company: 'SUCESORES DE CONRADO AGUERRE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2037,
+    name: 'IPB 55 F',
+    company: 'CRIADERO MANANTIALES'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2551,
+    name: 'JC 358',
+    company: 'LAS DOS HERMANAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18239,
+    name: 'JL BMR 12-01',
+    company: 'J. L. DRUETTO S.A.S.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18237,
+    name: 'JL F 10-01',
+    company: 'J. L. DRUETTO S.A.S.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18238,
+    name: 'JL FS 11-01',
+    company: 'J. L. DRUETTO S.A.S.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2542,
+    name: 'JUMBO +',
+    company: 'ZENECA SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12458,
+    name: 'JUST LEAF',
+    company: 'NUFARM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4490,
+    name: 'KABIR DS 101',
+    company: 'CERES AGROPECUARIA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1774,
+    name: 'KOW KANDY',
+    company: 'ROSSI SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18998,
+    name: 'KRONOS MAX',
+    company: 'SEED EXPORT ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10920,
+    name: 'KSF 31',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14706,
+    name: 'KSF 50',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12450,
+    name: 'KSG 22',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12505,
+    name: 'KSG22',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10919,
+    name: 'KSG41',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8715,
+    name: 'KUNTUR INTA PEMAN',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9106,
+    name: 'KWS ALIANZA',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9644,
+    name: 'KYLOS',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1185,
+    name: 'LA VICTORIA 3',
+    company: 'CARDINAL HAROLDO NORBERTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7490,
+    name: 'LABRADOR 120',
+    company: 'ZEUS RESEARCH DE D.E.ARNALDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12785,
+    name: 'LACAR',
+    company: 'CLASIFICACIONES MURPHY SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2435,
+    name: 'LASER',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5797,
+    name: 'LAUREL',
+    company: 'INGENIERIA AGROPECUARIA SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1413,
+    name: 'LE 5000',
+    company: 'AGRO URANGA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1436,
+    name: 'LECHERO SF 700',
+    company: 'ZENECA SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13171,
+    name: 'LONG CHOICE',
+    company: 'SEMILLAS & CONCENTRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2393,
+    name: 'LP 100',
+    company: 'LOS PRADOS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2741,
+    name: 'LP 200',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2676,
+    name: 'LR 92',
+    company: 'ICONA S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5328,
+    name: 'LUCERO',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6549,
+    name: 'LUCERO AZUCARADO',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9555,
+    name: 'LUCERO BMR',
+    company: 'SEMINIUM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2400,
+    name: 'LUXOR',
+    company: 'SURSEM SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2534,
+    name: 'MANCOR-F-5 INTA',
+    company: 'INTA E.E.A.MANFREDI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2475,
+    name: 'MANCOSEM 7791',
+    company: 'MANFREDI COOP.DE SEMILLAS LTD.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3162,
+    name: 'MAPUCHE',
+    company: 'LOS PRADOS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2245,
+    name: 'MAPUCHE CACHU CADME',
+    company: 'COLIQUEO Y REY SC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2243,
+    name: 'MAPUCHE COCHIN',
+    company: 'COLIQUEO Y REY SC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2244,
+    name: 'MAPUCHE FT 120',
+    company: 'COLIQUEO Y REY SC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3161,
+    name: 'MATACO',
+    company: 'LOS PRADOS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9116,
+    name: 'MAXIFORRAJERO 500 D',
+    company: 'ZEUS RESEARCH DE D.E.ARNALDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7839,
+    name: 'MAXIVERDE 500 GAIMAN',
+    company: 'CRIADERO GAIMAN D. E. WILLIAMS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5963,
+    name: 'MEGA GREEN',
+    company: 'MYCOYEN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8478,
+    name: 'MINUE',
+    company: 'DESAB SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9398,
+    name: 'MISTOL',
+    company: 'AGRISEED S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6112,
+    name: 'MONTARAZ',
+    company: 'TECNOSORGO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9597,
+    name: 'MORTEROS',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15955,
+    name: 'MURSI',
+    company: 'BROGLIA, NAZARENO JAVIER'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17765,
+    name: 'N31K2168',
+    company: 'NEXSTEPPE SEMENTES DO BRASIL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18005,
+    name: 'NAVAJO',
+    company: 'CAVERZASI ORTIN & CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14685,
+    name: 'NEO 650 S',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12660,
+    name: 'NEO S 810 BMR',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9721,
+    name: 'NEWENKELEN',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12459,
+    name: 'NF 8001 (BMR)',
+    company: 'NUFARM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12461,
+    name: 'NF 8202 (BMR)',
+    company: 'NUFARM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11141,
+    name: 'NIAGA-SIL',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3028,
+    name: 'NIAGARA',
+    company: 'ZEUS RESEARCH DE D.E., ARNALDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6417,
+    name: 'NIAGARA 2',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11258,
+    name: 'NIAGARA BL',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10164,
+    name: 'NOGAL',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1457,
+    name: 'NOVILLERO',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6978,
+    name: 'NOVILLERO PLUS',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1458,
+    name: 'NOVILLERO SF 600',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16046,
+    name: 'NUBA',
+    company: 'BROGLIA, NAZARENO JAVIER'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2385,
+    name: 'NUEVO RODEO',
+    company: 'SEMILLAS ARGENTINAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6977,
+    name: 'NUTRIFEED',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13113,
+    name: 'NUTRIGEN BMR',
+    company: 'GENESIS SEEDS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9654,
+    name: 'NUTRIGRAIN',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3689,
+    name: 'NUTRITOP',
+    company: 'ZENECA SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9251,
+    name: 'NUTRITOP PLUS',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10023,
+    name: 'NVS 3015-S',
+    company: 'FELDHAMER LIDIA LEONOR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11110,
+    name: 'NVS PASTOREO',
+    company: 'FELDHAMER LIDIA LEONOR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10944,
+    name: 'NVS3300',
+    company: 'FELDHAMER LIDIA LEONOR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14397,
+    name: 'Ã‘ANDU',
+    company: 'GRANAR S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9019,
+    name: 'OMBU',
+    company: 'MINTEGUIAGA JORGE A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1592,
+    name: 'ONGI ETORRI F 100',
+    company: 'AMEZTOY Y HERNANDEZ S.C.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1981,
+    name: 'ONGI ETORRI F 101',
+    company: 'AMEZTOY Y HERNANDEZ S.C.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1593,
+    name: 'ONGI ETORRI FA 200',
+    company: 'AMEZTOY Y HERNANDEZ S.C.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1982,
+    name: 'ONGI ETORRI FA 201',
+    company: 'AMEZTOY Y HERNANDEZ S.C.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1983,
+    name: 'ONGI ETORRI FS 300',
+    company: 'AMEZTOY Y HERNANDEZ S.C.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9070,
+    name: 'OPTIMO',
+    company: 'JOSE R.PICASSO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14048,
+    name: 'ORFEO',
+    company: 'GRUPO AGROS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19882,
+    name: 'ORI-120.1 BMR FS',
+    company: 'RURALCO SOLUCIONES S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19881,
+    name: 'ORI-125.1 FS',
+    company: 'RURALCO SOLUCIONES S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12704,
+    name: 'ORLY',
+    company: 'CLASIFICACIONES MURPHY SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10165,
+    name: 'ORO VERDE',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1380,
+    name: 'P 855 F',
+    company: 'PIONEER ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2420,
+    name: 'P 935',
+    company: 'PALAVERSICH Y CIA S.A.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11428,
+    name: 'PAC F8381',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9723,
+    name: 'PACESTTER',
+    company: 'DRUETTO JACINTO M.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9009,
+    name: 'PADRILLO',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10880,
+    name: 'PALATABLE 10BMR',
+    company: 'ALIANZA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14230,
+    name: 'PALATABLE MAX',
+    company: 'ALIANZA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8487,
+    name: 'PALMAR',
+    company: 'CRIADERO EL SORGAL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2582,
+    name: 'PAMPER KING',
+    company: 'SIMIAN RICARDO LUIS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6507,
+    name: 'PAMPERO 2000',
+    company: 'ALBERT S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2399,
+    name: 'PAMPERO X 100',
+    company: 'ALBERT S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8713,
+    name: 'PAN 841',
+    company: 'PANNAR RSA(PROP)LIMITED SUCARG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10892,
+    name: 'PAN 868',
+    company: 'PANNAR RSA (PROP) LTED SUC ARG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8293,
+    name: 'PAN 888',
+    company: 'PANNAR RSA(PROP)LIMITED SUCARG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9337,
+    name: 'PAN 900',
+    company: 'PANNAR RSA (PROP.) LIMIT ARG.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5023,
+    name: 'PANGARE',
+    company: 'TECNOSORGO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10881,
+    name: 'PARASILO 10BMR',
+    company: 'ALIANZA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1962,
+    name: 'PASTIZAL',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6355,
+    name: 'PASTIZAL PLUS INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9719,
+    name: 'PASTIZAL SUPER',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20217,
+    name: 'PASTIZAL SUPER BMR',
+    company: 'PRODUSEM S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1941,
+    name: 'PASTOR',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1623,
+    name: 'PASTOREO 2000',
+    company: 'MASTER SEM SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7896,
+    name: 'PASTORIL',
+    company: 'BRESUR SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1705,
+    name: 'PATAGON',
+    company: 'PALAVERSICH Y CIA S.A.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9783,
+    name: 'PEGUAL',
+    company: 'GENESIS SEEDS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9091,
+    name: 'PILCOMAYO',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11139,
+    name: 'PILCOMAYO 2',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15558,
+    name: 'PIPON BMR',
+    company: 'HIBRIDOS WAC S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8714,
+    name: 'PODEROSO INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9243,
+    name: 'PORTO',
+    company: 'CRIADERO MANANTIALES'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10737,
+    name: 'POSEIDON',
+    company: 'ZEUS RESEARCH DE D.E.ARNALDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11051,
+    name: 'POTRO',
+    company: 'CAVERZASI ORTIN & CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1729,
+    name: 'PREFERIDO 22 F',
+    company: 'ARNALDA DANIEL Y CARLOS CILIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17459,
+    name: 'PRO-617 SDX',
+    company: 'PROSAPIA SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9045,
+    name: 'PRODUCTOR 401',
+    company: 'ZEUS RESEARCH DE D.E.ARNALDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9046,
+    name: 'PRODUCTOR 402',
+    company: 'ZEUS RESEARCH DE D.E.ARNALDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16648,
+    name: 'PRODUCTOR161BL',
+    company: 'AGROSEMILLAS DEL SUR SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16647,
+    name: 'PRODUCTOR162FS',
+    company: 'AGROSEMILLAS DEL SUR SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18263,
+    name: 'PROGRASS 18-10 FS',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12127,
+    name: 'PS 400',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15415,
+    name: 'PS 500',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14684,
+    name: 'PUMA',
+    company: 'CAVERZASI ORTIN & CIA. S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2306,
+    name: 'PUNTAL',
+    company: 'CALDERO, OSVALDO RICARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16552,
+    name: 'QUIMAFOR 260',
+    company: 'QUIMARSEM S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9635,
+    name: 'RANCUL',
+    company: 'PALO VERDE S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2345,
+    name: 'RAYO',
+    company: 'ARGENTINA CRIADERO DE SEMILLAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 4537,
+    name: 'REBENQUE',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1793,
+    name: 'RENDIDOR 2',
+    company: 'SANTA URSULA S.A.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1794,
+    name: 'RENDIDOR 4',
+    company: 'SANTA URSULA S.A.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5043,
+    name: 'RESERO',
+    company: 'RELMO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2492,
+    name: 'RETADOR',
+    company: 'SERVICIOS Y SEMILLAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8739,
+    name: 'RETOZO',
+    company: 'CRIADERO Y SEMILLERO AIASSA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3027,
+    name: 'RF 0193',
+    company: 'CALIGARIS RAUL F.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8987,
+    name: 'RI 10',
+    company: 'BOIERO SEMILLAS SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14191,
+    name: 'RIGHT ON',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1437,
+    name: 'RODEO',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8985,
+    name: 'RUMBOS DE PASTAJE',
+    company: 'CRIADERO Y SEMILLERO RUMBOS SC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8984,
+    name: 'RUMBOS DE SILAJE',
+    company: 'CRIADERO Y SEMILLERO RUMBOS SC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11077,
+    name: 'SAC 110',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7417,
+    name: 'SAC 400',
+    company: 'CRIADERO GAIMAN D. E. WILLIAMS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6518,
+    name: 'SAC 500',
+    company: 'CRIADERO GAIMAN D. E. WILLIAMS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11041,
+    name: 'SAC 600',
+    company: 'WILLIAMS, DANIEL EDUARDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8709,
+    name: 'SAC 700',
+    company: 'CRIADERO GAIMAN D. E. WILLIAMS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9258,
+    name: 'SAC 710',
+    company: 'CRIADERO GAIMAN D. E. WILLIAMS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3902,
+    name: 'SAGITARIO',
+    company: 'CRIADERO Y SEMILLERO DRUETTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12808,
+    name: 'SANSON',
+    company: 'SEEDAR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15507,
+    name: 'SANSON BMR',
+    company: 'SEEDAR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1046,
+    name: 'SE 1000',
+    company: 'CASA ALFALFA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2632,
+    name: 'SELVA',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14774,
+    name: 'SEMAFOR 230',
+    company: 'SEMARA SEMILLAS DE D.MARANESI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11800,
+    name: 'SEMENTAL',
+    company: 'GENESIS SEEDS S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6214,
+    name: 'SEMSEED SF-40',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6917,
+    name: 'SF-30',
+    company: 'ZEUS RESEARCH DE D.E.ARNALDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1971,
+    name: 'SIEMPREVERDE',
+    company: 'ZENECA SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1844,
+    name: 'SIL 811 F',
+    company: 'PIONEER OVERSEAS CORPORATION'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7832,
+    name: 'SILAGE KING',
+    company: 'PANNAR RSA(PROP)LIMITED SUCARG'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9336,
+    name: 'SILAGE TOP',
+    company: 'PANNAR RSA (PROP.) LIMIT ARG.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10019,
+    name: 'SILERO INTA PEMAN',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12888,
+    name: 'SILEROBLANCO INTA PEMAN',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15795,
+    name: 'SILVER',
+    company: 'HIBRIDOS WAC S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8245,
+    name: 'SLG 100',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8246,
+    name: 'SLG 110',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9999,
+    name: 'SLG 111',
+    company: 'AGRISEED S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1556,
+    name: 'SORDAN 79',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2033,
+    name: 'SPF 727',
+    company: 'AGRI-TRADE SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2034,
+    name: 'SPF 747',
+    company: 'AGRI-TRADE SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10142,
+    name: 'SPS SILOTOP BMR',
+    company: 'SPS ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12561,
+    name: 'SRM 989',
+    company: 'SURSEM S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1452,
+    name: 'SS 11',
+    company: 'PALAVERSICH Y CIA S.A.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2601,
+    name: 'SS 3000',
+    company: 'AGRIPRO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10020,
+    name: 'SSP 345 INTA PEMAN',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20222,
+    name: 'SUCRE',
+    company: 'PRODUSEM S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2197,
+    name: 'SUCROSORGO 405',
+    company: 'ENEKA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2476,
+    name: 'SUGAR',
+    company: 'ZENECA SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11427,
+    name: 'SUGARGRAZE',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6309,
+    name: 'SUNCHALES NR',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1541,
+    name: 'SUNDANCROSS 3',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1542,
+    name: 'SUNDANCROSS 5',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2643,
+    name: 'SUNDANCROSS 7',
+    company: 'CARGILL S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1928,
+    name: 'SUPER GAUCHAZO',
+    company: 'DRUETTO, JACINTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9580,
+    name: 'SUPER GAUCHAZO MT',
+    company: 'ADVANTA SEEDS B.V.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5443,
+    name: 'SUPER SILE 20',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15452,
+    name: 'SUPER SU 22',
+    company: 'WARNER SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2372,
+    name: 'SUPER SU 22',
+    company: 'PRODUSEM S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11694,
+    name: 'SUPREMO',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20640,
+    name: 'SUPREMO DUO',
+    company: 'CEREAGRO S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7875,
+    name: 'SUQUERO',
+    company: 'ZEUS RESEARCH DE D.E.ARNALDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15954,
+    name: 'SURMA BMR',
+    company: 'BROGLIA, NAZARENO JAVIER'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2996,
+    name: 'SW 13',
+    company: 'DRUETTO, JACINTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2997,
+    name: 'SW 21',
+    company: 'BOIERO ELMO Y OTROS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12781,
+    name: 'SWEET CHOICE',
+    company: 'SEMILLAS & CONCENTRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6488,
+    name: 'SWEET GREEN',
+    company: 'MYCOYEN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12457,
+    name: 'SWEET MATILDA',
+    company: 'NUFARM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2389,
+    name: 'SWEET SIOUX 5',
+    company: 'CARGILL S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13400,
+    name: 'SWEETGREEN',
+    company: 'SEMILLAS BISCAYART S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1473,
+    name: 'SX 121',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5834,
+    name: 'TALAMPAYA',
+    company: 'PyP S.H.(PEROTTI y POLIDORO)'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2548,
+    name: 'TALERO G-193 F',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7042,
+    name: 'TALISMAN',
+    company: 'DON PEDRO SEMILLAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9724,
+    name: 'TALISMAN BL 813',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10743,
+    name: 'TALISMAN BL 818',
+    company: 'CRIAD.Y SEMILL.DON PEDRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10732,
+    name: 'TALISMAN BMR',
+    company: 'CRIAD.Y SEMILL.DON PEDRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2047,
+    name: 'TAMBERO',
+    company: 'SUCESORES DE CONRADO AGUERRE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5118,
+    name: 'TAPE',
+    company: 'CRIADERO Y SEMILLERO DRUETTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2637,
+    name: 'TARQUINO',
+    company: 'ZEUS RESEARCH DE D.E., ARNALDA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13175,
+    name: 'TEUCO',
+    company: 'FLAVIA MARINA RAMAYAL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15322,
+    name: 'TFI 1416 BMR',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7370,
+    name: 'TIMBO',
+    company: 'TECNOSORGO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15895,
+    name: 'TIMBO PLUS',
+    company: 'TECNOSORGO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12809,
+    name: 'TITAN',
+    company: 'SEEDAR S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9490,
+    name: 'TOB 121 S',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13355,
+    name: 'TOB 171 BMR',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9489,
+    name: 'TOB 171 F',
+    company: 'TOBIN VICTOR TADEO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12657,
+    name: 'TOB 80 SIL',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15572,
+    name: 'TOB PADRILLO MAX',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15573,
+    name: 'TOB PADRILLO PLUS',
+    company: 'TOBIN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2493,
+    name: 'TOBIANO',
+    company: 'EL MANDIL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14189,
+    name: 'TOP GUN',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15455,
+    name: 'TOP KANDY',
+    company: 'WARNER SEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9171,
+    name: 'TORNADO',
+    company: 'SEMILLERA GUASCH SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9596,
+    name: 'TRAPICHE',
+    company: 'CLASIFICACIONES MURPHY S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1953,
+    name: 'TRESUR AMANECER',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1994,
+    name: 'TRESUR BACHICHA',
+    company: 'KWS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3119,
+    name: 'TRIUMPH SSII',
+    company: 'JORGE WALTER ERRO S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1208,
+    name: 'TRIUMPH TAURO',
+    company: 'CRAWFORD KEEN & CIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11693,
+    name: 'TRIUNFADOR',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6577,
+    name: 'TRIUNFO',
+    company: 'CRIADERO EL SORGAL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9256,
+    name: 'TRONCAL',
+    company: 'BESANA HUGO OMAR'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9316,
+    name: 'TROPERO DEL SUR',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1557,
+    name: 'TRUDAN 8',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2004,
+    name: 'TRUDAN 9',
+    company: 'ENEKA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6606,
+    name: 'UCRA SUPER SILO',
+    company: 'AGROSERVICIOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 7984,
+    name: 'ULTRA FINE',
+    company: 'CRIADERO Y SEMILLERO DRUETTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15717,
+    name: 'URU FOTO',
+    company: 'URUSEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15719,
+    name: 'URU LERO',
+    company: 'URUSEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15718,
+    name: 'URU LERO BMR',
+    company: 'URUSEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15716,
+    name: 'URU MORO',
+    company: 'URUSEEDS S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13943,
+    name: 'VALIENTE',
+    company: 'CIANCIO ERNESTO GUSTAVO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19820,
+    name: 'VALIENTE BMR',
+    company: 'CIANCIO ERNESTO GUSTAVO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 8676,
+    name: 'VAQUERO',
+    company: 'CIAGRO SANTA FE SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9655,
+    name: 'VDH 702',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5854,
+    name: 'VDH-601',
+    company: 'ZENECA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5855,
+    name: 'VDH-701',
+    company: 'ZENECA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6979,
+    name: 'VDH-801 BMR',
+    company: 'ADVANTA SEMILLAS SAIC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13226,
+    name: 'VENTO N M',
+    company: 'SEMILLERIA GUASCH S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3465,
+    name: 'VERDECLARO INTA',
+    company: 'INTA E.E.A.BORDENAVE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15508,
+    name: 'VT 1010',
+    company: 'SEMILLAS HIBRIDAS GAIMAN SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15788,
+    name: 'VT 1212',
+    company: 'VTGEN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15787,
+    name: 'VT 1414',
+    company: 'VTGEN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19890,
+    name: 'VULCANO',
+    company: 'SEED EXPORT ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1443,
+    name: 'WAC F 99',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1439,
+    name: 'WAC LIC UM',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2693,
+    name: 'WAC SS 1000',
+    company: 'HIBRIDOS WAC SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 6991,
+    name: 'YAPA',
+    company: 'TECNOSORGO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1445,
+    name: 'YATAY',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2005,
+    name: 'YATAY 3',
+    company: 'ALESSANDRINI, ELBA BEATRIZ'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 2672,
+    name: 'YATAY SL',
+    company: 'PRADERAS ARGENTINAS SCC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 5485,
+    name: 'YUNTA',
+    company: 'TECNOSORGO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 20688,
+    name: 'ZT 55T20 AZ',
+    company: 'ZETA SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10252,
+    name: 'ZT 703',
+    company: 'ZETA SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 12530,
+    name: 'ZT-1000',
+    company: 'ZETA SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 9802,
+    name: 'ZUCUM',
+    company: 'AGRICOLA SUR S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1164,
+    name: '1240 A Y B INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1165,
+    name: '3026 A Y B INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1221,
+    name: 'BIGUA INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3468,
+    name: 'CANELO INTA',
+    company: 'INTA E.E.A.MANFREDI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1222,
+    name: 'DON ROBERTO INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1166,
+    name: 'DON SALVADOR INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1161,
+    name: 'FRONDOSO INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1162,
+    name: 'HUERIN INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1163,
+    name: 'LEOTI RED SEL PERGAMINO',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1223,
+    name: 'LEOTI SEL BORDENAVE',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 11009,
+    name: 'MINU II INTA PEMAN',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1224,
+    name: 'MINU INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 10181,
+    name: 'MISHKI INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 3469,
+    name: 'PALMITO INTA',
+    company: 'INTA E.E.A.MANFREDI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1587,
+    name: 'PASTURACENTRO MACOLLADOR',
+    company: 'FAHRION BENITZ Y CIA SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 1821,
+    name: 'SE 2000',
+    company: 'MUHLENKAMP Y CIA. S.C.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16319,
+    name: 'DON CHACHO',
+    company: 'AGRONEGOCIOS PERGAMINO S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16724,
+    name: 'SG-7854 BMR',
+    company: 'SUMMUM GENETICA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16723,
+    name: 'SG-7856 F',
+    company: 'SUMMUM GENETICA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 15697,
+    name: 'NOWEL BMR',
+    company: 'PRODUSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13340,
+    name: 'ARGENSIL 165 BIO',
+    company: 'PEDRO JOSE MARANESSI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14678,
+    name: 'GREE INFINIT BMR',
+    company: 'CRIADERO Y SEMILLERO DON PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14679,
+    name: 'GREEN SNACK',
+    company: 'CRIADERO Y SEMILLERO DON PEDRO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18003,
+    name: 'GREEN SUGAR KING',
+    company: 'CRIAD.Y SEMILLERO DON PEDRO SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16449,
+    name: 'HS HIMBA',
+    company: 'JAVIER NAZARENO BROGLIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13182,
+    name: 'JOKER',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17417,
+    name: 'NUSIL 484',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17293,
+    name: 'NUSIL 500 BMR',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 17290,
+    name: 'NUSIL 600 BMR',
+    company: 'NUSEED S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18999,
+    name: 'OSIRIS',
+    company: 'SEED EXPORT ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 13883,
+    name: 'PREMIUM 7010',
+    company: 'SEMILLAS & CONCENTRADOS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16553,
+    name: 'QUIMASIL 275 BIO',
+    company: 'QUIMARSEM S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19036,
+    name: 'RAIMI INTA SILERO',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18235,
+    name: 'RUSTICO DP SILERO INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 14773,
+    name: 'SEMASIL 220 BIO',
+    company: 'SEMARA SEMILLAS DE D.MARANESI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 16725,
+    name: 'SG-7858 BIO',
+    company: 'SUMMUM GENETICA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19863,
+    name: 'SN 13-01 SL',
+    company: 'SEMILLAS DEL NORTE S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 19864,
+    name: 'SN 13-02 SL',
+    company: 'SEMILLAS DEL NORTE S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed66c05d460bdb6dd8cc3',
+    code: 18004,
+    name: 'TILCARA',
+    company: 'SOYTECH S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4499,
+    name: 'ALDERMAN SELECCION FALCHETTO',
+    company: 'GARDE GIUSTI Y CHUCHUY S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4978,
+    name: 'ALFETTA',
+    company: 'CEBECO ZADEN B.V.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 19637,
+    name: 'ARAGORN',
+    company: 'LIHUE TUE S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 20438,
+    name: 'ASTRONAUTE',
+    company: 'RAGT ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 18649,
+    name: 'AVENGER',
+    company: 'LIMAGRAIN EUROPE S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 15962,
+    name: 'AVIRON',
+    company: 'SAS FLORIMOND DESPREZ V. ET F.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 15956,
+    name: 'BALLTRAP',
+    company: 'SAS FLORIMOND DESPREZ V. ET F.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 17210,
+    name: 'BIATHLON',
+    company: 'SAS FLORIMOND DESPREZ V. ET F.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 13206,
+    name: 'BICENTENARIO',
+    company: 'LAUREANO BRAMBILLA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 13345,
+    name: 'BLUESTAR',
+    company: 'INVERSORA SUIPACHENSE SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 2934,
+    name: 'BOLERO',
+    company: 'PRODESA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4417,
+    name: 'BONIROY',
+    company: 'SEMILLERIA FLORENSA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 14615,
+    name: 'CDC MEADOW',
+    company: 'AGRICULTORES FEDERADOS ARG SCL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 1392,
+    name: 'COBRI',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4670,
+    name: 'COLUMBIAN',
+    company: 'CONAGRA ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 15963,
+    name: 'CURLING',
+    company: 'SAS FLORIMOND DESPREZ V. ET F.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 1748,
+    name: 'DARK SKIN PERFECTION',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4981,
+    name: 'DELTA',
+    company: 'CEBECO ZADEN B.V.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 7280,
+    name: 'DOUCE PROVENCE',
+    company: 'LAGRA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 15219,
+    name: 'DUNDALE',
+    company: 'CALS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 10994,
+    name: 'DURANGO',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4494,
+    name: 'DWARF GREY SUGAR',
+    company: 'GARDE GIUSTI Y CHUCHUY S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 3441,
+    name: 'EARLY FROSTY',
+    company: 'ENEKA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 1628,
+    name: 'EL REMATE',
+    company: 'MARTA M.ZUBERBUHLER DE LANUSSE'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 5106,
+    name: 'ENCORE',
+    company: 'PRODESA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4980,
+    name: 'ESPACE',
+    company: 'CEBECO ZADEN B.V.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 3493,
+    name: 'F3 BLUE PRUSSIANS',
+    company: 'GARAT CARLOS FEDERICO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 6873,
+    name: 'FACON',
+    company: 'SEMILLAS SEMINIS SUDAMERICA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 12245,
+    name: 'GALLANT',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 5031,
+    name: 'GIGANTE SVIZZERA',
+    company: 'GARDE GIUSTI Y CHUCHUY S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 3833,
+    name: 'GREENPICK',
+    company: 'SEMILLERIA FLORENSA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 5526,
+    name: 'INFANTA',
+    company: 'SEMILLERIA FLORENSA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 5806,
+    name: 'INTEGRA',
+    company: 'CEBECO ZADEN B.V.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 13168,
+    name: 'JAGUAR',
+    company: 'ALLIANCE SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 5030,
+    name: 'JUMBO',
+    company: 'SEMILLAS RAFFO SAIFIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 9738,
+    name: 'KASPA',
+    company: 'AGRICULTURE VICTORIA SERVICES'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 18631,
+    name: 'KINGFISHER',
+    company: 'LIMAGRAIN EUROPE S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4979,
+    name: 'LAGUNA',
+    company: 'CEBECO ZADEN B.V.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4480,
+    name: "LAXTON'S PROGRESS",
+    company: 'SEMILLAS BASSO SACIAIF'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 8006,
+    name: 'LINCOLN',
+    company: 'GARDE GIUSTI Y CHUCHUY S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 19548,
+    name: 'LIVIOLETTA',
+    company: 'DSV SEMILLAS SRL'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 952,
+    name: 'MAGNIF CUARENTONA INTA',
+    company: 'INSCRIPCION DE OFICIO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 13427,
+    name: 'MANANTIALES',
+    company: 'BRAMBILLA LAUREANO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 5132,
+    name: 'MARAVILLA',
+    company: 'SEMILLAS EMILIO S.R.L.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4214,
+    name: "MERAVIGLIA D'ITALIA SEL. S.G.",
+    company: 'GARDE GIUSTI Y CHUCHUY S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 3180,
+    name: 'MIKADO',
+    company: 'GARAT, CARLOS FEDERICO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 6836,
+    name: 'NAVONA',
+    company: 'GARDE GIUSTI Y CHUCHUY S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 13167,
+    name: 'OASIS',
+    company: 'ALLIANCE SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 3862,
+    name: 'ONWARD',
+    company: 'SEMILLERIA FLORENSA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 949,
+    name: 'ONWARD SEL LA CONSULTA INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4204,
+    name: 'OREGON SUGAR POD II',
+    company: 'GASTALDI ESTEBAN'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4996,
+    name: 'PALADIO',
+    company: 'PRODESA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 13122,
+    name: 'PAMPA',
+    company: 'LUCIANO BRAMBILLA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 12780,
+    name: 'PRELADO',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 19455,
+    name: 'PRIMOGENITA FCA INTA',
+    company: 'INTA/UNIV. NAC. DE ROSARIO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 6898,
+    name: 'PRINCESS',
+    company: 'GARDE GIUSTI Y CHUCHUY S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4801,
+    name: 'PROGRESS 9',
+    company: 'DANIEL DE LUCCA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 15771,
+    name: 'PROMETHEUS',
+    company: 'MONSANTO ARGENTINA S.A.I.C.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 7066,
+    name: 'PROTOR',
+    company: 'LAGRA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 14839,
+    name: 'REUSSITE',
+    company: 'SAS FLORIMOND DESPREZ V. ET F.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 3957,
+    name: 'RONDO',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 5015,
+    name: 'RONDO 95',
+    company: 'SEMILLERIA FLORENSA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 3741,
+    name: 'RONDO SELECCION ARGOS',
+    company: 'SEMILLAS RAFFO SAIFIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 13336,
+    name: 'RUTHLESS',
+    company: 'SYNGENTA AGRO S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 2433,
+    name: 'SELECTA COLMENAR',
+    company: 'INTA E.E.A.OBISPO COLOMBRES'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 5293,
+    name: 'SENADOR',
+    company: 'CAPS CIA.ARG.PROD.DE SEMILLAS'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 15991,
+    name: 'SHAMROCK',
+    company: 'LIMAGRAIN EUROPE S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 5198,
+    name: 'SMALL SIEVE ALASKA M-163',
+    company: 'CONAGRA ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 6671,
+    name: 'SP 110 1-1-2',
+    company: 'NOVARTIS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 6670,
+    name: 'SP 550 1-1-2',
+    company: 'NOVARTIS ARGENTINA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 1394,
+    name: 'SPIKET',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 13166,
+    name: 'STARLIGHT',
+    company: 'ALLIANCE SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 13346,
+    name: 'STARTER',
+    company: 'INVERSORA SUIPACHENSE SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 4203,
+    name: 'SUGAR DADDY',
+    company: 'GASTALDI ESTEBAN'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 5805,
+    name: 'SWING',
+    company: 'CEBECO ZADEN B.V.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 10183,
+    name: 'TALBOT',
+    company: 'SEMILLAS SEMINIS SUDAMERICA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 5680,
+    name: 'TARMA',
+    company: 'GARDE GIUSTI Y CHUCHUY S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 3860,
+    name: 'TELEFONO ALTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 3861,
+    name: 'TELEFONO ENANA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 3541,
+    name: 'TELEVISION',
+    company: 'SEMILLERIA FLORENSA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 3627,
+    name: 'TOP POD',
+    company: 'ENEKA SEMILLAS S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 2935,
+    name: 'UTRILLO',
+    company: 'PRODESA S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 5804,
+    name: 'VIPER',
+    company: 'CEBECO ZADEN B.V.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 19537,
+    name: 'VOLT',
+    company: 'RAGT ARGENTINA SA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60eed79c05d460bdb6dd8e24',
+    code: 14726,
+    name: 'YAMS',
+    company: 'SAS FLORIMOND DESPREZ V. ET F.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 4933,
+    name: 458,
+    company: 'MYCOYEN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 12003,
+    name: 48,
+    company: 'PROSEM S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 7778,
+    name: 'AGRATECH 1-1',
+    company: 'GOLDEN PEANUT COMPANY LLC'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 17123,
+    name: 'ASCASUBI HISPANO',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 20074,
+    name: 'ASEM 353 INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 14799,
+    name: 'ASEM 400 INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 5594,
+    name: 'ASEM 447 INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 20075,
+    name: 'ASEM 450-RS INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 8054,
+    name: 'ASEM 484 INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 6617,
+    name: 'ASEM 485 INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 8053,
+    name: 'ASEM 505 INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 573,
+    name: 'BLANCO DE RIO SEGUNDO SEL',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 570,
+    name: 'BLANCO MANFREDI 1',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 571,
+    name: 'BLANCO MANFREDI 68 INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 572,
+    name: 'BLANCO PRUDENTE INTA SEL',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 574,
+    name: 'BLANCO SANTA FE SEL MANFREDI',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 702,
+    name: 'COLORADO CORRENTINO INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 701,
+    name: 'COLORADO IRRADIADO INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 575,
+    name: 'COLORADO MANFREDI',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 18866,
+    name: 'EC - 191 RC (AO)',
+    company: 'EL CARMEN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 18383,
+    name: 'EC - 214 (AO)',
+    company: 'EL CARMEN S.A.'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 8874,
+    name: 'EC-12',
+    company: 'SOAVE JUAN HAROLDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 8837,
+    name: 'EC-48 (A0)',
+    company: 'SOAVE JUAN HAROLDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 14641,
+    name: 'EC-98 (AO)',
+    company: 'SOAVE JUAN HAROLDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 1276,
+    name: 'FLORMAN INTA',
+    company: 'INTA E.E.A.MANFREDI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 1321,
+    name: 'FLORUNNER',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 7907,
+    name: 'GRANOLEICO',
+    company: 'SOAVE JUAN HAROLDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 11189,
+    name: 'GUASU',
+    company: 'SOAVE JUAN HAROLDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 14642,
+    name: 'GUASU (AO)',
+    company: 'SOAVE JUAN HAROLDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 17238,
+    name: 'MA-02',
+    company: 'MANIAGRO S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 17237,
+    name: 'MA-121',
+    company: 'MANIAGRO S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 17241,
+    name: 'MA-500',
+    company: 'MANIAGRO S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 17240,
+    name: 'MA-757',
+    company: 'MANIAGRO S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 17234,
+    name: 'MA-767',
+    company: 'MANIAGRO S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 17235,
+    name: 'MA-88',
+    company: 'MANIAGRO S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 17236,
+    name: 'MA-90',
+    company: 'MANIAGRO S.A'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 3208,
+    name: 'MANFREDI 393 INTA',
+    company: 'INTA E.E.A.MANFREDI'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 835,
+    name: 'MANFREDI VIRGINIA 5 INTA',
+    company: ''
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 7544,
+    name: 'MANIGRAN',
+    company: 'SOAVE JUAN HAROLDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 9536,
+    name: 'MAPU UNRC',
+    company: 'UNIVERSIDAD NAC. DE RIO CUARTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 3774,
+    name: 'NAHUEL',
+    company: 'SOAVE JUAN HAROLDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 9992,
+    name: 'PEPE ASEM-INTA',
+    company: 'INST. NAC. TEC. AGROPECUARIA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 11190,
+    name: 'PRONTO (AO)',
+    company: 'SOAVE JUAN HAROLDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 2684,
+    name: 'TEGUA',
+    company: 'SOAVE, JUAN HAROLDO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 9534,
+    name: 'UCHAIMA UNRC',
+    company: 'UNIVERSIDAD NAC. DE RIO CUARTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 9535,
+    name: 'UTRE UNRC',
+    company: 'UNIVERSIDAD NAC. DE RIO CUARTO'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 13703,
+    name: 'VICTOR ASEM-INTA',
+    company: 'INTA'
+  },
+  {
+    unit: 'Kgs',
+    typeId: '60f9951b05d460bdb6e9c3b5',
+    code: 7780,
+    name: 'VIRUGARD',
+    company: 'GOLDEN PEANUT COMPANY LLC'
+  },
+  {
     unit: 'Bls',
     typeId: '346564643430633836343337',
     code: 'AL001',
