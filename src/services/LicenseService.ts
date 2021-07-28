@@ -13,6 +13,12 @@ export interface ILicenseById {
   cropId: string
 }
 
+export interface ISearchAppliedLicensesByCrop {
+  id: string
+  userId: string
+  cropId: string
+}
+
 export class LicenseService extends ServiceBase {
   /**
    *  create new license.
@@ -70,6 +76,36 @@ export class LicenseService extends ServiceBase {
         'get',
         `${MS_LICENSE_URL}/search-by-crop`,
         { params: licenseSearch },
+        (result) => {
+          resolve(result.data)
+        },
+        (err) => {
+          reject(err)
+        }
+      )
+    })
+  }
+
+  /**
+   *  get applied licenses by crop.
+   *
+   * @param searchAppliedLicensesByCrop
+   */
+  public static async searchAppliedLicensesByCrop({
+    id,
+    userId,
+    cropId
+  }: ISearchAppliedLicensesByCrop) {
+    return new Promise((resolve, reject) => {
+      const params = {
+        userId,
+        cropId
+      }
+
+      this.makeRequest(
+        'get',
+        `${MS_LICENSE_URL}/${id}/applied-by-crop`,
+        { params },
         (result) => {
           resolve(result.data)
         },

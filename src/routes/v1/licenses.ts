@@ -3,6 +3,7 @@ import { LicensesController } from '../../controllers'
 import {
   listLicenseByCropTypeValidation,
   licenseByIdValidation,
+  appliedLicensesByCropValidation,
   checkTokenPinValidation
 } from '../../middlewares'
 
@@ -91,5 +92,36 @@ router.get('/:id', [licenseByIdValidation], LicensesController.licenseById)
  *          description: Server error
  */
 router.post('/:id/sign', [checkTokenPinValidation], LicensesController.sign)
+
+/**
+ * @swagger
+ *  /v1/licenses/{id}/applied-by-crop:
+ *    get:
+ *      summary: Get Applied licenses by crop
+ *      tags: [License]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *        - in: query
+ *          name: cropId
+ *          required: true
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          produces:
+ *            - application/json
+ *        "400":
+ *          description: Bad Request
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.get(
+  '/:id/applied-by-crop',
+  [appliedLicensesByCropValidation],
+  LicensesController.searchAppliedLicensesByCrop
+)
 
 export default router

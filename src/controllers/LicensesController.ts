@@ -92,4 +92,41 @@ export class LicensesController {
       })
     }
   }
+
+  /**
+   *
+   * Get Applied licenses By Crop.
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public static async searchAppliedLicensesByCrop(
+    req: Request | any,
+    res: Response
+  ) {
+    const { cropId } = req.query
+    const { id } = req.params
+    const userId = req.user._id.toString()
+
+    try {
+      const license = await LicenseService.searchAppliedLicensesByCrop({
+        id,
+        userId,
+        cropId
+      })
+
+      res.status(StatusCodes.OK).json(license)
+    } catch (error) {
+      console.log(error)
+      const {
+        response: { status, data }
+      } = error
+      res.status(status).json({
+        error: data.message,
+        code: data.code
+      })
+    }
+  }
 }
