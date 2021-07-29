@@ -53,15 +53,16 @@ const { Schema } = mongoose
 const SupplySchema = new Schema({
   alphaCode: {
     type: String,
-    default: 'AR',
-    index: true,
+    default: 'ARG',
+    require: true
+  },
+  supplyType: {
+    type: String,
     require: true
   },
   typeId: {
     type: Schema.Types.ObjectId,
-    ref: 'SupplyType',
-    index: true,
-    require: true
+    ref: 'SupplyType'
   },
   countryId: {
     type: Schema.Types.ObjectId,
@@ -93,8 +94,7 @@ const SupplySchema = new Schema({
   ]
 })
 SupplySchema.index({ alphaCode: 1 }, { background: true })
-SupplySchema.index({ typeId: 1 }, { background: true })
-SupplySchema.index({ countryId: 1 })
+SupplySchema.index({ supplyType: 1 }, { background: true })
 SupplySchema.index({ name: 'text', brand: 'text', company: 'text' })
 
 SupplySchema.virtual('eiqTotal').get(function () {
