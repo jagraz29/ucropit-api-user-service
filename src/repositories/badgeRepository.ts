@@ -25,6 +25,7 @@ export class BadgeRepository {
       .limit(limit ?? 0)
       .skip(skip ?? 0)
       .sort(sort ?? {})
+      .lean()
   }
 
   /**

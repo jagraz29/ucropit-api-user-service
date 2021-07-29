@@ -27,7 +27,7 @@ export const cropStorePolicy = async (
       return res.status(StatusCodes.BAD_REQUEST).json({
         error: true,
         code: ErrorResponse.INVALID_DATA_FIELD,
-        message: 'El campo data es requerido'
+        message: req.__('crops.errors.invalid_field_data')
       })
     }
 
@@ -39,7 +39,7 @@ export const cropStorePolicy = async (
       return res.status(StatusCodes.BAD_REQUEST).json(
         ErrorResponseInstance.parseError(
           ErrorResponse.REQUIRED_FIELDS,
-          'Uno o/y mas campos son requeridos',
+          req.__('crops.errors.invalid_fields'),
           {
             description: ReasonPhrases.BAD_REQUEST,
             error
@@ -72,8 +72,10 @@ export const validateDateCropAndDateHarvestInData = async (
     )
 
     if (validateDatesCropAndHarvest.error) {
+      const message = res.__(validateDatesCropAndHarvest.localKey)
       return res.status(StatusCodes.BAD_REQUEST).json({
-        ...validateDatesCropAndHarvest
+        ...validateDatesCropAndHarvest,
+        message
       })
     }
 
@@ -96,7 +98,7 @@ export const hasLotsInDataPolicy = async (
       return res.status(StatusCodes.BAD_REQUEST).json({
         error: true,
         code: ErrorResponse.INVALID_ARRAY_LOTS,
-        message: 'Debe seleccionar al menos un lote'
+        message: req.__('crops.errors.invalid_array_lots')
       })
     }
 
@@ -139,7 +141,7 @@ export const hasLotsReusableInDataPolicy = async (
       const lotsNotAvailable = validateLotsReusable(reusableLots, cropsList)
       responseError = responseReusableLotsMessageError(
         lotsNotAvailable,
-        'Algunos lotes reutilizables no estan disponibles'
+        req.__('crops.errors.lots_not_available')
       )
 
       if (responseError.error) {
@@ -151,7 +153,7 @@ export const hasLotsReusableInDataPolicy = async (
       const existLots = await CropRepository.findCrops(
         exitsLotsReusableInCollectionLots(identifier, reusableLots)
       )
-      const message = 'Algunos lotes no san validos o no existen'
+      const message = req.__('crops.errors.lots_not_exist')
       if (existLots) {
         const notExistLots = lotsReusableNotExistInDB(existLots, reusableLots)
         responseError = responseReusableLotsMessageError(notExistLots, message)
@@ -184,7 +186,7 @@ export const hasKmzInFilesPolicy = async (
       return res.status(StatusCodes.BAD_REQUEST).json({
         error: true,
         code: ErrorResponse.INVALID_ARRAY_FILES,
-        message: 'Debe enviar el KMZ asociado a los lotes nuevos'
+        message: req.__('crops.errors.invalid_array_files')
       })
     }
 

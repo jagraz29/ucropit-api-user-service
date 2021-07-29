@@ -1,0 +1,110 @@
+{
+  "api_v1_ready": "Api v1 ready!",
+  "commons": {
+    "deleted_success": "successfully removed",
+    "deletion_not_allowed": "removed not allowed",
+    "not_found": "removed not allowed"
+  },
+  "achievements": {
+    "not_async": "failed to sync"
+  },
+  "reports": {
+    "show_map": {
+      "title": "KMZ Lot Location",
+      "error": "Must pass id lot"
+    },
+    "send_mail_success": "Report sent successfully",
+    "errors": {
+      "not_allowed_mode": "File mode: {{mode}} is not allowed for export"
+    }
+  },
+  "companies": {
+    "errors": {
+      "not_found": "Company not found"
+    }
+  },
+  "crop_types":{
+    "keys": {
+      "soy": "Soy",
+      "sunflower": "Sunflower",
+      "corn": "Corn",
+      "cotton": "Cotton",
+      "wheat": "Wheat",
+      "carinata": "Carinata"
+    }
+  },
+  "unit_types":{
+    "keys": {
+      "kg": "Quilogramas/ha",
+      "t": "Toneladas/ha",
+      "bls": "Sacos/ha",
+      "fds": "Fardos/ha",
+      "q": "Quintales/ha"
+    }
+  },
+  "supply_types":{
+    "codes": {
+      "otros": "Others",
+      "fe": "agrochemical fertilizers",
+      "fu": "agrochemical fungicides",
+      "he": "Agrochemical herbicides",
+      "in": "Agrochemical insecticides",
+      "sepi": "Seed of Pisingallo",
+      "sema": "Corn Seed",
+      "segi": "Sunflower Seed",
+      "setr": "Wheat Seed",
+      "seso": "Soya Seed",
+      "dry": "Rapeseed",
+      "sece": "Barley Seed",
+      "seal": "Cotton Seed"
+    }
+  },
+  "type_storages":{
+    "keys": {
+      "silo_bag": "Silobags",
+      "silo": "Silo",
+      "delivery_out_of_program": "Out of program delivery",
+      "delivery_within_of_program": "Delivery within the program"
+    }
+  },
+  "badges":{
+    "types": {
+      "legal_land_use": "Legal land use",
+      "no_deforestation": "No deforestation",
+      "sustainable_principles": "Sustainable Principles",
+      "legal_seed_use_soy": "Legal use of seeds",
+      "legal_seed_use_cotton": "Legal use of seeds",
+      "resposible_use_phytosanitary": "Responsible use of phytosanitary products"
+    }
+  },
+  "emails": {
+    "achievements": {
+      "signature_reminder": {
+        "title": "Reminder to sign",
+        "content": "You have unsigned realizations"
+      }
+    }
+  },
+  "crops": {
+    "errors": {
+      "file_evidence_incomplete": "Evidence not complete",
+      "file_evidence_invalid_length" : "The total files and evidences must be the same",
+      "name_lot_duplicated" : "Duplicate KMZ Lot Names",
+      "error_invalid_format_kmz" : "Invalid KMZ format",
+      "error_file_extension" : "File extension not allowed",
+      "invalid_date_harvest" : "The harvest date must be after the cultivation date",
+      "invalid_field_data" : "The data field is required",
+      "invalid_fields" : "One or/and more fields are required",
+      "invalid_array_lots" : "You must select at least one lot",
+      "lots_not_available" : "Some reusable lots are not available",
+      "lots_not_exist" : "Some lots are invalid or do not exist",
+      "invalid_array_files" : "You must send the KMZ associated with the new lots"
+    }
+  },
+  "lots": {
+    "errors": {
+      "invalid_identifier": "The CUIT is required to continue with the operation",
+      "date_crop": "You must enter a date in the value 'Cultivation date'."
+    }
+  }
+}

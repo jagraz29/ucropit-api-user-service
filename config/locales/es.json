@@ -1,0 +1,110 @@
+{
+  "api_v1_ready": "Api v1 lista!",
+  "commons": {
+    "deleted_success": "eliminado exitosamente",
+    "deletion_not_allowed": "eliminado no permitido",
+    "not_found": "Recurso no encontrado"
+  },
+  "achievements": {
+    "not_async": "no logró sincronizar"
+  },
+  "reports": {
+    "show_map": {
+      "title": "Localización Lote KMZ",
+      "error": "Debe pasar el id del lote"
+    },
+    "send_mail_success": "Reporte enviado con éxito",
+    "errors": {
+      "not_allowed_mode": "El modo: {{modo}} de archivo no es permitido para exportar"
+    }
+  },
+  "companies": {
+    "errors": {
+      "not_found": "Empresa no encontrada"
+    }
+  },
+  "crop_types":{
+    "keys": {
+      "soy": "Soja",
+      "sunflower": "Girasol",
+      "corn": "Maiz",
+      "cotton": "Algodon",
+      "wheat": "Trigo",
+      "carinata": "Carinata"
+    }
+  },
+  "unit_types":{
+    "keys": {
+      "kg": "Kilogramos/ha",
+      "t": "Toneladas/ha",
+      "bls": "Bolsas/ha",
+      "fds": "Fardos/ha",
+      "q": "Quintales/ha"
+    }
+  },
+  "supply_types":{
+    "codes": {
+      "otros": "Otros",
+      "fe": "Fertilizantes agroquímicos",
+      "fu": "Fungicidas agroquímicos",
+      "he": "Herbicidas agroquímicos",
+      "in": "Inseticidas agroquímicos",
+      "sepi" : "Semilla de Pisingallo",
+      "sema" : "Semilla de Maiz",
+      "segi" : "Semilla de Girasol",
+      "setr" : "Semilla de Trigo",
+      "seso" : "Semilla de Soja",
+      "seco" : "Semilla de Colza",
+      "sece" : "Semilla de Cebada",
+      "seal" : "Semilla de Algodon"
+    }
+  },
+  "type_storages":{
+    "keys": {
+      "silo_bag": "Silobolsas",
+      "silo": "Silo",
+      "delivery_out_of_program": "Entrega fuera de programa",
+      "delivery_within_of_program": "Entrega dentro de programa"
+    }
+  },
+  "badges":{
+    "types": {
+      "legal_land_use": "Uso legal de la tierra",
+      "no_deforestation": "No deforestación",
+      "sustainable_principles": "Principios Sustentables",
+      "legal_seed_use_soy": "Uso legal de semillas",
+      "legal_seed_use_cotton": "Uso legal de semillas",
+      "resposible_use_phytosanitary": "Uso responsable de fitosanitarios"
+    }
+  },
+  "emails": {
+    "achievements": {
+      "signature_reminder": {
+        "title": "Recordatorio para firmar",
+        "content": "Tienes realizaciones sin firmar"
+      }
+    }
+  },
+  "crops": {
+    "errors": {
+      "file_evidence_incomplete": "Evidencias no completas",
+      "file_evidence_invalid_length" : "El total archivos y las evidencias deben ser iguales",
+      "name_lot_duplicated" : "Nombres de Lote del KMZ duplicados",
+      "error_invalid_format_kmz" : "Inválido formato del KMZ",
+      "error_file_extension" : "Extensión de archivo no permitida",
+      "invalid_date_harvest" : "La fecha de cosecha deber ser posterior a la del cultivo",
+      "invalid_field_data" : "El campo data es requerido",
+      "invalid_fields" : "Uno o/y mas campos son requeridos",
+      "invalid_array_lots" : "Debe seleccionar al menos un lote",
+      "lots_not_available" : "Algunos lotes reutilizables no están disponibles",
+      "lots_not_exist" : "Algunos lotes no son válidos o no existen",
+      "invalid_array_files" : "Debe enviar el KMZ asociado a los lotes nuevos"
+    }
+  },
+  "lots": {
+    "errors": {
+      "invalid_identifier": "El CUIT es requerido para continuar con la operación",
+      "date_crop": "Debe ingresar una fecha en el valor ‘Fecha de cultivo’."
+    }
+  }
+}

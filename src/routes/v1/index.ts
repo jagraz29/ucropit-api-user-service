@@ -1,5 +1,6 @@
-import express, { Response } from 'express'
+import express, { Response, Request } from 'express'
 import 'express-async-errors'
+
 import users from './users'
 import profile from './profile'
 import auth from './auth'
@@ -27,8 +28,8 @@ import webhooks from './webhooks'
 
 const router: express.Router = express.Router()
 
-router.get('/', (req, res) => {
-  res.send('v1 APP OK')
+router.get('/', (req: Request, res: Response) => {
+  res.send(req.__('api_v1_ready'))
 })
 
 const authMiddleware = passport.authenticate('jwt', { session: false })
