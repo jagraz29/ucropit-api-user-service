@@ -1,7 +1,8 @@
 import { GetTypeStoragesDTO } from '../useCase/getTypeStorages/getTypeStoragesDTO'
+import { INameLanguageProps } from '../../commons/interfaces'
 
 export interface ITypeStorageProps {
-  name: object
+  name: INameLanguageProps
   type: string
   goalReach: number
   image: string

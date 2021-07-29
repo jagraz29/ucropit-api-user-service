@@ -1,7 +1,8 @@
 import { GetCropTypesDTO } from '../useCase/getCropType/getCropTypesDTO'
+import { INameLanguageProps } from '../../commons/interfaces'
 
 export interface ICropTypeProps {
-  name: object
+  name: INameLanguageProps
   key: string
 }
 
