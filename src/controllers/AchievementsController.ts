@@ -24,7 +24,6 @@ import { typesSupplies } from '../utils/Constants'
 import agenda from '../jobs'
 import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
 import { setEiqInEnvImpactIndex, setEnvImpactIndexInEntities } from '../core'
-import { activityTypeRepository } from '../repositories'
 
 const Crop = models.Crop
 
@@ -156,8 +155,8 @@ class AchievementsController {
           activity: activity.type.name.es
         },
         {
-          title: 'Recordatorio para firmar',
-          content: 'Tenes realizaciones sin firmar'
+          title: req.__('emails.achievements.signature_reminder.title'),
+          content: req.__('emails.achievements.signature_reminder.content')
         }
       )
     }

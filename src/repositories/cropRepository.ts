@@ -295,7 +295,9 @@ export class CropRepository {
       cancelled: false,
       cropType,
       company
-    }).populate('unitType')
+    })
+      .populate('unitType')
+      .lean()
 
     return cropsInstance.length ? cropsInstance : null
   }

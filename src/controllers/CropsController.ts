@@ -131,10 +131,10 @@ class CropsController {
       startDate,
       endDate
     )
-
-    const toMake = calculateEIQAndPorcentTotal(toMakeFilterDates)
-    const done = calculateEIQAndPorcentTotal(crop.done)
-    const finished = calculateEIQAndPorcentTotal(crop.finished)
+    const lang = res.getLocale() as string
+    const toMake = calculateEIQAndPorcentTotal(toMakeFilterDates, lang)
+    const done = calculateEIQAndPorcentTotal(crop.done, lang)
+    const finished = calculateEIQAndPorcentTotal(crop.finished, lang)
 
     const newCrop = {
       ...crop,
@@ -408,12 +408,12 @@ class CropsController {
     if (!isCancelled) {
       return res.status(400).json({
         error: true,
-        message: 'deleted not allowd'
+        message: req.__('commons.deletion_not_allowed')
       })
     }
 
     res.status(200).json({
-      message: 'deleted successfuly'
+      message: req.__('commons.deleted_success')
     })
   }
 

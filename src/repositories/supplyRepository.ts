@@ -86,6 +86,16 @@ class SupplyRepository {
   public static async getOneActiveIngredient(query): Promise<any> {
     return ActiveIngredient.findOne(query)
   }
+
+  /**
+   * get count of all supplies
+   * @param query
+   * @returns number
+   */
+  public static async count(query) {
+    const count = await Supply.countDocuments(query)
+    return count
+  }
 }
 
 export default SupplyRepository
