@@ -2,9 +2,9 @@
 
 import { Request, Response } from 'express'
 import models from '../models'
-import { typesSupplies } from '../utils/Constants'
 import SupplyRepository from '../repositories/supplyRepository'
 import { parseSuppliesWithEiqTotal } from '../utils'
+import { typesSupplies } from '../utils/Constants'
 
 const Supply = models.Supply
 

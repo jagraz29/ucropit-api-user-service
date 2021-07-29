@@ -3,6 +3,8 @@ import { LicensesController } from '../../controllers'
 import {
   listLicenseByCropTypeValidation,
   licenseByIdValidation,
+  appliedLicensesByCropValidation,
+  applyLicenseValidation,
   checkTokenPinValidation
 } from '../../middlewares'
 
@@ -91,5 +93,79 @@ router.get('/:id', [licenseByIdValidation], LicensesController.licenseById)
  *          description: Server error
  */
 router.post('/:id/sign', [checkTokenPinValidation], LicensesController.sign)
+
+/**
+ * @swagger
+ *  /v1/licenses/{id}/applied-by-crop:
+ *    get:
+ *      summary: Get Applied licenses by crop
+ *      tags: [License]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *        - in: query
+ *          name: cropId
+ *          required: true
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          produces:
+ *            - application/json
+ *        "400":
+ *          description: Bad Request
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.get(
+  '/:id/applied-by-crop',
+  [appliedLicensesByCropValidation],
+  LicensesController.searchAppliedLicensesByCrop
+)
+
+/**
+ * @swagger
+ *  /v1/licenses/{id}/apply:
+ *    post:
+ *      summary: Apply License
+ *      tags: [License]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  cropId:
+ *                    type: string
+ *                    required: true
+ *                    description:  crop Id
+ *                  companyIdentifier:
+ *                    type: string
+ *                    required: true
+ *                    description:  company identifier
+ *                  lots:
+ *                    items:
+ *                      type: string
+ *                    required: true
+ *      responses:
+ *        "200":
+ *          description: apply license success
+ *          produces:
+ *            - application/json
+ *        "400":
+ *          description: Bad Request
+ *        "404":
+ *          description: Not Found license
+ *        "500":
+ *          description: Server error
+ */
+router.post('/:id/apply', [applyLicenseValidation], LicensesController.apply)
 
 export default router

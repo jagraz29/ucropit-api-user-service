@@ -23,7 +23,7 @@
       "not_found": "Company not found"
     }
   },
-  "crop_types":{
+  "crop_types": {
     "keys": {
       "soy": "Soy",
       "sunflower": "Sunflower",
@@ -33,16 +33,16 @@
       "carinata": "Carinata"
     }
   },
-  "unit_types":{
+  "unit_types": {
     "keys": {
-      "kg": "Quilogramas/ha",
-      "t": "Toneladas/ha",
-      "bls": "Sacos/ha",
-      "fds": "Fardos/ha",
+      "kg": "Kilograms/ha",
+      "t": "Tons/ha",
+      "bls": "Sacks/ha",
+      "fds": "Bales/ha",
       "q": "Quintales/ha"
     }
   },
-  "supply_types":{
+  "supply_types": {
     "codes": {
       "otros": "Others",
       "fe": "agrochemical fertilizers",
@@ -59,7 +59,7 @@
       "seal": "Cotton Seed"
     }
   },
-  "type_storages":{
+  "type_storages": {
     "keys": {
       "silo_bag": "Silobags",
       "silo": "Silo",
@@ -67,7 +67,7 @@
       "delivery_within_of_program": "Delivery within the program"
     }
   },
-  "badges":{
+  "badges": {
     "types": {
       "legal_land_use": "Legal land use",
       "no_deforestation": "No deforestation",
@@ -88,17 +88,17 @@
   "crops": {
     "errors": {
       "file_evidence_incomplete": "Evidence not complete",
-      "file_evidence_invalid_length" : "The total files and evidences must be the same",
-      "name_lot_duplicated" : "Duplicate KMZ Lot Names",
-      "error_invalid_format_kmz" : "Invalid KMZ format",
-      "error_file_extension" : "File extension not allowed",
-      "invalid_date_harvest" : "The harvest date must be after the cultivation date",
-      "invalid_field_data" : "The data field is required",
-      "invalid_fields" : "One or/and more fields are required",
-      "invalid_array_lots" : "You must select at least one lot",
-      "lots_not_available" : "Some reusable lots are not available",
-      "lots_not_exist" : "Some lots are invalid or do not exist",
-      "invalid_array_files" : "You must send the KMZ associated with the new lots"
+      "file_evidence_invalid_length": "The total files and evidences must be the same",
+      "name_lot_duplicated": "Duplicate KMZ Lot Names",
+      "error_invalid_format_kmz": "Invalid KMZ format",
+      "error_file_extension": "File extension not allowed",
+      "invalid_date_harvest": "The harvest date must be after the cultivation date",
+      "invalid_field_data": "The data field is required",
+      "invalid_fields": "One or/and more fields are required",
+      "invalid_array_lots": "You must select at least one lot",
+      "lots_not_available": "Some reusable lots are not available",
+      "lots_not_exist": "Some lots are invalid or do not exist",
+      "invalid_array_files": "You must send the KMZ associated with the new lots"
     }
   },
   "lots": {
