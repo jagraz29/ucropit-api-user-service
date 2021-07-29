@@ -19,7 +19,7 @@ async function execAddDefaultCountryToSupplies() {
   let supply,
     cursor,
     count = 0,
-    countLots = 0
+    countSupplies = 0
 
   const maxLen = 50
   let porcentagesArray = generateArrayPercentage('.', maxLen)
@@ -32,25 +32,50 @@ async function execAddDefaultCountryToSupplies() {
   const country = await CountryRepository.getCountry(countryToFind)
 
   try {
-    countLots = await SupplyRepository.count({})
-    cursor = await Supplies.aggregate([]).cursor().exec()
+    countSupplies = await SupplyRepository.count({})
+    cursor = await Supplies.aggregate([
+      {
+        $lookup: {
+          from: 'supplytypes',
+          let: {
+            typeId: '$typeId'
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ['$_id', '$$typeId']
+                }
+              }
+            }
+          ],
+          as: 'supplyType'
+        }
+      },
+      {
+        $unwind: '$supplyType'
+      }
+    ])
+      .cursor()
+      .exec()
 
     while ((supply = await cursor.next())) {
       const supplyId = supply._id
       const updateData = {
         countryId: country._id,
-        alphaCode: country.alpha2Code
+        alphaCode: country.alpha3Code,
+        supplyType: supply.supplyType.code
       }
       await SupplyRepository.updateOne(supplyId, updateData)
       count++
-      const avg = (count * maxLen) / countLots
+      const avg = (count * maxLen) / countSupplies
       const avgPorcentage = (avg / maxLen) * 100
       porcentagesArray = generateArrayPercentage('#', avg + 1, porcentagesArray)
       console.log(
         new Date(),
         `[${porcentagesArray.join(
           ''
-        )}] supply ${count}/${countLots} (${avgPorcentage.toFixed(1)}%)`
+        )}] supply ${count}/${countSupplies} (${avgPorcentage.toFixed(1)}%)`
       )
     }
     console.log(`Total Supplies updated: ${count}`)
