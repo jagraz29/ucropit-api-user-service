@@ -6,6 +6,7 @@ export interface ITypeStorageProps {
   type: string
   goalReach: number
   image: string
+  key: string
 }
 
 export interface ITypeStorageRepo {
