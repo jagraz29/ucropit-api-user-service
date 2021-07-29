@@ -149,6 +149,20 @@ export const cropTypesData = [
   },
   {
     name: {
+      en: 'Carinata',
+      es: 'Carinata'
+    },
+    key: 'Carinata'
+  },
+  {
+    name: {
+      en: 'Barley',
+      es: 'Cebada'
+    },
+    key: 'Barley'
+  },
+  {
+    name: {
       en: 'Oatmeal',
       es: 'Avena'
     },
