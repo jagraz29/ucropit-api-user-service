@@ -78,6 +78,41 @@ router.get('/crops', checkAuth, reportsController.generateCrops)
  */
 router.get('/datasets/crops', reportsController.generateDataSet)
 
+/**
+ * @swagger
+ *  /v1/reports/crops/attachment:
+ *    get:
+ *      summary: Download report to xls file.
+ *      tags: [Reports]
+ *      parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  identifier:
+ *                    type: string
+ *                    required: true
+ *                    description: Identifier
+ *                  email:
+ *                    type: string
+ *                    required: true
+ *                    description: target to send report by email
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
 router.post(
   '/crops/attachment',
   authMiddleware,

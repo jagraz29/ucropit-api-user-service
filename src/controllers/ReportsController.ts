@@ -101,6 +101,9 @@ class ReportsController {
         : 'es'
     const user: any = req.user
 
+    console.log(language)
+    return
+
     const crops = await CropService.cropsOnlySeeRoles({
       cancelled: false,
       'members.user': user._id,
