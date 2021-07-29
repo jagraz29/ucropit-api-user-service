@@ -151,7 +151,8 @@ router.get(
  *                    required: true
  *                    description:  company identifier
  *                  lots:
- *                    type: object
+ *                    items:
+ *                      type: string
  *                    required: true
  *      responses:
  *        "200":
