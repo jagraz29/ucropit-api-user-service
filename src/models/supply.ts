@@ -94,7 +94,7 @@ const SupplySchema = new Schema({
 })
 SupplySchema.index({ alphaCode: 1 }, { background: true })
 SupplySchema.index({ typeId: 1 }, { background: true })
-SupplySchema.index({ CountryId: 1 })
+SupplySchema.index({ countryId: 1 })
 SupplySchema.index({ name: 'text', brand: 'text', company: 'text' })
 
 SupplySchema.virtual('eiqTotal').get(function () {
