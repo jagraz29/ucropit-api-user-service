@@ -208,11 +208,10 @@ class IntegrationServiceController {
         response.erpAgent
       )
 
-      console.log('respuesta', response)
       return res.status(200).json(response)
     }
 
-    return res.status(200).json('not achievement async')
+    return res.status(200).json(req.__('achievements.not_async'))
   }
   /**
    * query crop achievements

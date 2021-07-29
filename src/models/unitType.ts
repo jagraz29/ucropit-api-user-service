@@ -18,10 +18,9 @@
  *           key:
  *             type: string
  */
-import mongoose from 'mongoose'
-
-const { Schema } = mongoose
-
+import mongoose, { Schema, Document } from 'mongoose'
+import { IUnitTypeProps } from '../core/unitTypes/interfaces'
+export type UnitTypeDocument = Document & IUnitTypeProps
 export const UnitTypeSchema = new Schema({
   name: {
     en: {
@@ -39,4 +38,7 @@ export const UnitTypeSchema = new Schema({
   }
 })
 
-export const UnitType = mongoose.model('UnitType', UnitTypeSchema)
+export const UnitType = mongoose.model<UnitTypeDocument>(
+  'UnitType',
+  UnitTypeSchema
+)

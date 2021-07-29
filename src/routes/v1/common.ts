@@ -24,6 +24,12 @@ router.get('/roles', commonController.roles)
  * /v1/commons/croptypes:
  *  get:
  *   summary: Get all crops types
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Crops
@@ -40,6 +46,12 @@ router.get('/croptypes', commonController.cropTypes)
  * /v1/commons/unitypes:
  *  get:
  *   summary: Get all unit types
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Crops
@@ -120,6 +132,12 @@ router.get('/integrations', commonController.serviceIntegration)
  * /v1/commons/storagetypes:
  *  get:
  *   summary: Get all storages types
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Storage Types
