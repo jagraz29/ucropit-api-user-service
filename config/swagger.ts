@@ -1,5 +1,17 @@
 import swaggerJsDoc from 'swagger-jsdoc'
 
+const servers = [
+  { url: 'https://aws-apidev.ucrop.it' },
+  { url: 'https://aws-apiqa.ucrop.it' },
+  { url: 'https://aws-apipreprod.ucrop.it' }
+]
+
+if (process.env.NODE_ENV === 'local') {
+  servers.unshift({
+    url: process.env.BASE_URL
+  })
+}
+
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.1',
@@ -10,11 +22,7 @@ const swaggerOptions = {
         name: 'Lucas Michailian'
       }
     },
-    servers: [
-      { url: 'https://aws-apidev.ucrop.it' },
-      { url: 'https://aws-apiqa.ucrop.it' },
-      { url: 'https://aws-apipreprod.ucrop.it' }
-    ],
+    servers,
     basePath: '/',
     components: {
       securitySchemes: {
