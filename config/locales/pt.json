@@ -35,10 +35,10 @@
   },
   "unit_types":{
     "keys": {
-      "kg": "Kilograms/ha",
-      "t": "Tons/ha",
-      "bls": "Bags/ha",
-      "fds": "Bales/ha",
+      "kg": "Quilogramas/ha",
+      "t": "Toneladas/ha",
+      "bls": "Bolsas/ha",
+      "fds": "Fardos/ha",
       "q": "Quintales/ha"
     }
   },

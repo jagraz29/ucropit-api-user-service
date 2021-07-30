@@ -1,5 +1,5 @@
 export interface INameLanguageProps {
-  es: string
-  pt: string
-  en: string
+  es?: string
+  en?: string
+  pt?: string
 }
