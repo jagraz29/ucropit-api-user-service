@@ -1,5 +1,4 @@
 import express from 'express'
-
 import reportsController from '../../controllers/ReportsController'
 import { checkAuth } from '../../utils/auth/BasicAuth'
 import passport from '../../utils/auth/strategies/jwt'
@@ -81,7 +80,7 @@ router.get('/datasets/crops', reportsController.generateDataSet)
 /**
  * @swagger
  *  /v1/reports/crops/attachment:
- *    get:
+ *    post:
  *      summary: Download report to xls file.
  *      tags: [Reports]
  *      parameters:
