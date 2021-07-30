@@ -1,4 +1,5 @@
 import models from '../models'
+import { TypeActivities } from '../interfaces/activities/TypeActivities.enum'
 const { Supply, ActiveIngredient } = models
 
 class SupplyRepository {
@@ -16,15 +17,27 @@ class SupplyRepository {
    * @param query
    * @param limit
    * @param skip
+   * @param tag
    * @returns
    */
-  public static async getSuppliesPaginated(query, limit, skip): Promise<any> {
-    return Supply.find(query)
+  public static async getSuppliesPaginated(
+    query,
+    limit,
+    skip,
+    tag?
+  ): Promise<any> {
+    let suppliesPaginated = Supply.find(query)
       .populate('typeId')
       .populate('activesPrinciples.activePrinciple')
       .limit(limit)
       .skip(skip)
-      .lean({ virtuals: true })
+
+    if (tag === TypeActivities.ACT_SOWING) {
+      suppliesPaginated = suppliesPaginated.sort({ typeId: -1 })
+      return suppliesPaginated.lean({ virtuals: true })
+    }
+
+    return suppliesPaginated.lean({ virtuals: true })
   }
   /**
    *

@@ -34,7 +34,8 @@ class SuppliesController {
     const supplies = await SupplyRepository.getSuppliesPaginated(
       filter,
       limitSide,
-      skipSide
+      skipSide,
+      tag
     )
 
     const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies)
