@@ -29,6 +29,7 @@
     "add:defaultCountryToSupplies": "node dist/src/commands/addDefaultCountryToSupplies.js",
     "add:countryToMembers": "node dist/src/commands/addCountryToMembers.js",
     "update:surfaceActivities": "node dist/src/commands/updateSurfaceActivity.js",
+    "update:supplyTypes": "node dist/src/commands/updateActivityTypeInSupplyType.js",
     "test:imageheci": "jest tests/unit/image_heci_conver.test.js"
   },
   "resolutions": {
