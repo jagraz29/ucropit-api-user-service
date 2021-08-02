@@ -23,6 +23,11 @@ const router: express.Router = express.Router()
  *          schema:
  *            type: string
  *        - in: query
+ *          name: alphaCode
+ *          required: false
+ *          schema:
+ *            type: string
+ *        - in: query
  *          name: tag
  *          required: false
  *          schema:

@@ -9,6 +9,10 @@
  *             type: string
  *           company:
  *             type: string
+ *           alphaCode:
+ *             type: string
+ *           supplyType:
+ *             type: string
  *           code:
  *             type: string
  *           typeId:
