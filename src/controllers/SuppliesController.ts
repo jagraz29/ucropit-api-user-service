@@ -12,7 +12,7 @@ class SuppliesController {
   public async index(req, res: Response) {
     let type = null
     let filter: any = {}
-    const { q, tag, skip, limit } = req.query
+    const { q, tag, skip, limit, alphaCode } = req.query
     if (tag) {
       type = typesSupplies.find((item) => item.tag === tag)
     }
@@ -27,6 +27,10 @@ class SuppliesController {
 
     if (type) {
       filter.typeId = { $in: type.types }
+    }
+
+    if (alphaCode) {
+      filter.alphaCode = alphaCode
     }
 
     const limitSide = limit >= 0 ? Number(limit) : 15

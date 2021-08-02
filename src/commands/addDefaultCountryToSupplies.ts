@@ -4,6 +4,7 @@ import { Command, OptionValues } from 'commander'
 import SupplyRepository from '../repositories/supplyRepository'
 import { CountryRepository } from '../repositories/countryRepository'
 import { generateArrayPercentage } from '../utils/GenerateArrayPercentage'
+import ConfigsController from '../controllers/ConfigsController'
 
 const Supplies = models.Supply
 
@@ -31,56 +32,64 @@ async function execAddDefaultCountryToSupplies() {
   }
   const country = await CountryRepository.getCountry(countryToFind)
 
-  try {
-    countSupplies = await SupplyRepository.count({})
-    cursor = await Supplies.aggregate([
-      {
-        $lookup: {
-          from: 'supplytypes',
-          let: {
-            typeId: '$typeId'
-          },
-          pipeline: [
-            {
-              $match: {
-                $expr: {
-                  $eq: ['$_id', '$$typeId']
+  if (country) {
+    try {
+      countSupplies = await SupplyRepository.count({})
+      cursor = await Supplies.aggregate([
+        {
+          $lookup: {
+            from: 'supplytypes',
+            let: {
+              typeId: '$typeId'
+            },
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $eq: ['$_id', '$$typeId']
+                  }
                 }
               }
-            }
-          ],
-          as: 'supplyType'
+            ],
+            as: 'supplyType'
+          }
+        },
+        {
+          $unwind: '$supplyType'
         }
-      },
-      {
-        $unwind: '$supplyType'
-      }
-    ])
-      .cursor()
-      .exec()
+      ])
+        .cursor()
+        .exec()
 
-    while ((supply = await cursor.next())) {
-      const supplyId = supply._id
-      const updateData = {
-        countryId: country._id,
-        alphaCode: country.alpha3Code,
-        supplyType: supply.supplyType.code
+      while ((supply = await cursor.next())) {
+        const supplyId = supply._id
+        const updateData = {
+          countryId: country._id,
+          alphaCode: country.alpha3Code,
+          supplyType: supply.supplyType.code
+        }
+        await SupplyRepository.updateOne(supplyId, updateData)
+        count++
+        const avg = (count * maxLen) / countSupplies
+        const avgPorcentage = (avg / maxLen) * 100
+        porcentagesArray = generateArrayPercentage(
+          '#',
+          avg + 1,
+          porcentagesArray
+        )
+        console.log(
+          new Date(),
+          `[${porcentagesArray.join(
+            ''
+          )}] supply ${count}/${countSupplies} (${avgPorcentage.toFixed(1)}%)`
+        )
       }
-      await SupplyRepository.updateOne(supplyId, updateData)
-      count++
-      const avg = (count * maxLen) / countSupplies
-      const avgPorcentage = (avg / maxLen) * 100
-      porcentagesArray = generateArrayPercentage('#', avg + 1, porcentagesArray)
-      console.log(
-        new Date(),
-        `[${porcentagesArray.join(
-          ''
-        )}] supply ${count}/${countSupplies} (${avgPorcentage.toFixed(1)}%)`
-      )
+      console.log(`Total Supplies updated: ${count}`)
+    } catch (error) {
+      console.log('Error:::', { error })
     }
-    console.log(`Total Supplies updated: ${count}`)
-  } catch (error) {
-    console.log('Error:::', { error })
+  } else {
+    console.log('default country not found!')
   }
 }
 ;(async () => {
