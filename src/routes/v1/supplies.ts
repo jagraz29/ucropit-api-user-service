@@ -49,6 +49,12 @@ router.get('/', suppliesController.index)
  *   summary: Get total documents supplies
  *   tags:
  *      - Supply
+ *   parameters:
+ *        - in: query
+ *          name: alphaCode
+ *          required: false
+ *          schema:
+ *            type: string
  *   description: Supplies
  *   produces:
  *     - application/json

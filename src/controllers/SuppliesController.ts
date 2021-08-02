@@ -43,9 +43,17 @@ class SuppliesController {
   }
 
   public async quantity(req: Request, res: Response) {
+    const { alphaCode } = req.query
+    if (alphaCode) {
+      const totalFilterAlphaCode = await Supply.find({
+        alphaCode: alphaCode
+      }).countDocuments()
+
+      return res.status(200).json({ quantity: totalFilterAlphaCode })
+    }
     const total = await Supply.countDocuments()
 
-    res.status(200).json({ quantity: total })
+    return res.status(200).json({ quantity: total })
   }
 }
 

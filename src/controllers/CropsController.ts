@@ -90,7 +90,7 @@ class CropsController {
     }
 
     const crops = await Crop.find(query)
-      .populate('company')
+      .populate({ path: 'company', populate: [{ path: 'country' }] })
       .populate('cropType')
       .populate('unitType')
       .populate('pending')
