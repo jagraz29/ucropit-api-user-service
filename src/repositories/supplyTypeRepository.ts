@@ -4,6 +4,13 @@ const { SupplyType } = models
 
 class SupplyTypeRepository {
   /**
+   * Get all supply types
+   * @returns
+   */
+  public static async getAll(): Promise<SupplyTypeDocument[]> {
+    return SupplyType.find({})
+  }
+  /**
    * Get SupplyType by ids.
    *
    * @param ids
