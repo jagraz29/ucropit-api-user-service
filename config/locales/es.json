@@ -23,7 +23,7 @@
       "not_found": "Empresa no encontrada"
     }
   },
-  "crop_types":{
+  "crop_types": {
     "keys": {
       "soy": "Soja",
       "sunflower": "Girasol",
@@ -33,7 +33,7 @@
       "carinata": "Carinata"
     }
   },
-  "unit_types":{
+  "unit_types": {
     "keys": {
       "kg": "Kilogramos/ha",
       "t": "Toneladas/ha",
@@ -42,24 +42,24 @@
       "q": "Quintales/ha"
     }
   },
-  "supply_types":{
+  "supply_types": {
     "codes": {
       "otros": "Otros",
       "fe": "Fertilizantes agroquímicos",
       "fu": "Fungicidas agroquímicos",
       "he": "Herbicidas agroquímicos",
       "in": "Inseticidas agroquímicos",
-      "sepi" : "Semilla de Pisingallo",
-      "sema" : "Semilla de Maiz",
-      "segi" : "Semilla de Girasol",
-      "setr" : "Semilla de Trigo",
-      "seso" : "Semilla de Soja",
-      "seco" : "Semilla de Colza",
-      "sece" : "Semilla de Cebada",
-      "seal" : "Semilla de Algodon"
+      "sepi": "Semilla de Pisingallo",
+      "sema": "Semilla de Maiz",
+      "segi": "Semilla de Girasol",
+      "setr": "Semilla de Trigo",
+      "seso": "Semilla de Soja",
+      "seco": "Semilla de Colza",
+      "sece": "Semilla de Cebada",
+      "seal": "Semilla de Algodon"
     }
   },
-  "type_storages":{
+  "type_storages": {
     "keys": {
       "silo_bag": "Silobolsas",
       "silo": "Silo",
@@ -67,7 +67,7 @@
       "delivery_within_of_program": "Entrega dentro de programa"
     }
   },
-  "badges":{
+  "badges": {
     "types": {
       "legal_land_use": "Uso legal de la tierra",
       "no_deforestation": "No deforestación",
@@ -88,17 +88,17 @@
   "crops": {
     "errors": {
       "file_evidence_incomplete": "Evidencias no completas",
-      "file_evidence_invalid_length" : "El total archivos y las evidencias deben ser iguales",
-      "name_lot_duplicated" : "Nombres de Lote del KMZ duplicados",
-      "error_invalid_format_kmz" : "Inválido formato del KMZ",
-      "error_file_extension" : "Extensión de archivo no permitida",
-      "invalid_date_harvest" : "La fecha de cosecha deber ser posterior a la del cultivo",
-      "invalid_field_data" : "El campo data es requerido",
-      "invalid_fields" : "Uno o/y mas campos son requeridos",
-      "invalid_array_lots" : "Debe seleccionar al menos un lote",
-      "lots_not_available" : "Algunos lotes reutilizables no están disponibles",
-      "lots_not_exist" : "Algunos lotes no son válidos o no existen",
-      "invalid_array_files" : "Debe enviar el KMZ asociado a los lotes nuevos"
+      "file_evidence_invalid_length": "El total archivos y las evidencias deben ser iguales",
+      "name_lot_duplicated": "Nombres de Lote del KMZ duplicados",
+      "error_invalid_format_kmz": "Inválido formato del KMZ",
+      "error_file_extension": "Extensión de archivo no permitida",
+      "invalid_date_harvest": "La fecha de cosecha deber ser posterior a la del cultivo",
+      "invalid_field_data": "El campo data es requerido",
+      "invalid_fields": "Uno o/y mas campos son requeridos",
+      "invalid_array_lots": "Debe seleccionar al menos un lote",
+      "lots_not_available": "Algunos lotes reutilizables no están disponibles",
+      "lots_not_exist": "Algunos lotes no son válidos o no existen",
+      "invalid_array_files": "Debe enviar el KMZ asociado a los lotes nuevos"
     }
   },
   "lots": {
@@ -106,5 +106,34 @@
       "invalid_identifier": "El CUIT es requerido para continuar con la operación",
       "date_crop": "Debe ingresar una fecha en el valor ‘Fecha de cultivo’."
     }
+  },
+  "crop_story": {
+    "title": "Historia del Cultivo",
+    "printedAt": "impresa el",
+    "netSup": "Sup neta",
+    "has": "has",
+    "seedTime": "Fecha Siembra",
+    "harvestDate": "Fecha Cosecha",
+    "yield": "Rinde",
+    "volume": "Volumen",
+    "ton": "Ton",
+    "eiq": "EIQ:",
+    "veryLow": "Muy bajo",
+    "low": "Bajo",
+    "moderate": "Moderado",
+    "high": "Alto",
+    "veryHigh": "Muy alto",
+    "status": "Status:",
+    "cropResponsible": "Responsable del cultivo",
+    "commercial_contact": "Contacto Comercial",
+    "vol": "Vol:",
+    "validate_by": "Validado Por:",
+    "estimated_harvest": "Rinde Estimado:",
+    "lots": "lotes",
+    "evidences": "Evidencias",
+    "supporting_documentation": "documentación de respaldo",
+    "pending": "PENDIENTE",
+    "within_lot": "Dentro del lote",
+    "aplications": "Aplicaciones"
   }
 }
