@@ -36,6 +36,9 @@ export const UserConfigSchema = new Schema({
   companySelected: {
     type: Schema.Types.ObjectId,
     ref: 'Company'
+  },
+  languageSelected: {
+    type: String
   }
 })
 
