@@ -19,6 +19,10 @@ class SuppliesController {
 
     const skipSide = skip && /^\d+$/.test(skip) ? Number(skip) : 0
 
+    if (alphaCode) {
+      filter.alphaCode = alphaCode
+    }
+
     if (q) {
       filter = {
         $text: { $search: q }
@@ -27,10 +31,6 @@ class SuppliesController {
 
     if (type) {
       filter.typeId = { $in: type.types }
-    }
-
-    if (alphaCode) {
-      filter.alphaCode = alphaCode
     }
 
     const limitSide = limit >= 0 ? Number(limit) : 15

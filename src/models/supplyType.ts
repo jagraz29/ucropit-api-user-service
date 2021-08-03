@@ -26,7 +26,8 @@ const SupplyTypeSchema = new Schema({
   name: String,
   code: String,
   icon: String,
-  activities: Array
+  activities: Array,
+  cropTypes: Array
 })
 
 export default mongoose.model<SupplyTypeDocument>(

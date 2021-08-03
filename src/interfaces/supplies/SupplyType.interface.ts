@@ -4,4 +4,5 @@ export interface ISupplyType {
   code: string
   icon: string
   activities: Array<String>
+  cropTypes: Array<String>
 }
