@@ -30,7 +30,15 @@
       "corn": "Corn",
       "cotton": "Cotton",
       "wheat": "Wheat",
-      "carinata": "Carinata"
+      "carinata": "Carinata",
+      "oatmeal" : "Oatmeal",
+      "sorghum" : "Sorghum",
+      "rye-grass" : "Ryegrass",
+      "vetch" : "Vetch",
+      "barley" : "Barley",
+      "colza" : "Colza",
+      "rice" : "Rice",
+      "rye" : "Rye"
     }
   },
   "unit_types": {
