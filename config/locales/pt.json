@@ -41,7 +41,7 @@
       "rye" : "Centeio"
     }
   },
-  "unit_types":{
+  "unit_types": {
     "keys": {
       "kg": "Quilogramas/ha",
       "t": "Toneladas/ha",
@@ -50,7 +50,7 @@
       "q": "Quintales/ha"
     }
   },
-  "supply_types":{
+  "supply_types": {
     "codes": {
       "otros": "Outros",
       "fe": "Fertilizantes agroquímicos",
@@ -67,7 +67,7 @@
       "seal": "Semente de Algodão"
     }
   },
-  "type_storages":{
+  "type_storages": {
     "keys": {
       "silo_bag": "Silobags",
       "silo": "Silo",
@@ -75,7 +75,7 @@
       "delivery_within_of_program": "Entrega dentro do programa"
     }
   },
-  "badges":{
+  "badges": {
     "types": {
       "legal_land_use": "Uso legal da terra",
       "no_deforestation": "Sem desmatamento",
@@ -96,17 +96,17 @@
   "crops": {
     "errors": {
       "file_evidence_incomplete": "Evidência não completa",
-      "file_evidence_invalid_length" : "O total de arquivos e evidências deve ser o mesmo",
-      "name_lot_duplicated" : "Nomes de lote KMZ duplicados",
-      "error_invalid_format_kmz" : "Formato KMZ inválido",
-      "error_file_extension" : "Extensão de arquivo não permitida",
-      "invalid_date_harvest" : "A data de colheita deve ser posterior à data de cultivo",
-      "invalid_field_data" : "O campo de dados é obrigatório",
-      "invalid_fields" : "Um ou/e mais campos são obrigatórios",
-      "invalid_array_lots" : "Você deve selecionar pelo menos um lote",
-      "lots_not_available" : "Alguns lotes reutilizáveis não estão disponíveis",
-      "lots_not_exist" : "Alguns lotes são inválidos ou não existem",
-      "invalid_array_files" : "Você deve enviar o KMZ associado aos novos lotes"
+      "file_evidence_invalid_length": "O total de arquivos e evidências deve ser o mesmo",
+      "name_lot_duplicated": "Nomes de lote KMZ duplicados",
+      "error_invalid_format_kmz": "Formato KMZ inválido",
+      "error_file_extension": "Extensão de arquivo não permitida",
+      "invalid_date_harvest": "A data de colheita deve ser posterior à data de cultivo",
+      "invalid_field_data": "O campo de dados é obrigatório",
+      "invalid_fields": "Um ou/e mais campos são obrigatórios",
+      "invalid_array_lots": "Você deve selecionar pelo menos um lote",
+      "lots_not_available": "Alguns lotes reutilizáveis não estão disponíveis",
+      "lots_not_exist": "Alguns lotes são inválidos ou não existem",
+      "invalid_array_files": "Você deve enviar o KMZ associado aos novos lotes"
     }
   },
   "lots": {
@@ -114,5 +114,34 @@
       "invalid_identifier": "O CUIT é necessário para continuar com a operação",
       "date_crop": "Você deve inserir uma data no valor 'Data de cultivo'."
     }
+  },
+  "crop_story": {
+    "title": "história da colheita",
+    "printedAt": "impresso em",
+    "netSup": "sup líquido",
+    "has": "has",
+    "seedTime": "data de semeadura",
+    "harvestDate": "data de colheita",
+    "yield": "Rinde",
+    "volume": "Volume",
+    "ton": "Ton",
+    "eiq": "EIQ:",
+    "veryLow": "muito baixo",
+    "low": "baixo",
+    "moderate": "moderado",
+    "high": "alto",
+    "veryHigh": "muito alto",
+    "status": "Status:",
+    "cropResponsible": "colheita responsável",
+    "commercial_contact": "contato comercial",
+    "vol": "Vol:",
+    "validate_by": "validado por",
+    "estimated_harvest": "Estimado Rinde:",
+    "lots": "lotes",
+    "evidences": "evidências",
+    "supporting_documentation": "documentação de suporte",
+    "pending": "PENDENTE",
+    "within_lot": "dentro do lote",
+    "aplications": "aplicações"
   }
 }

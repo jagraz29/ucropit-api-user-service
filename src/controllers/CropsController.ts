@@ -23,7 +23,8 @@ import {
   getCropBadgesByUserType,
   parseLotsReusableAsData,
   filterActivitiesMakeByDates,
-  calculateEIQAndPorcentTotal
+  calculateEIQAndPorcentTotal,
+  defaultLanguageConfig
 } from '../utils'
 
 import { UserSchema } from '../models/user'
@@ -223,6 +224,9 @@ class CropsController {
     const {
       params: { id }
     } = req
+    const language =
+      req.header('Accept-Language') || defaultLanguageConfig.language
+
     const crop = await CropRepository.getCropWithActivities(id)
 
     if (!crop) {
@@ -258,7 +262,8 @@ class CropsController {
       dataPdf,
       'pdf-crop-history',
       'company',
-      crop
+      crop,
+      language
     )
 
     res.status(StatusCodes.OK).send({ nameFile })
