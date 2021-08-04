@@ -1,0 +1,9 @@
+export enum TypeActivities {
+  COMMER = 'COMMER',
+  FINAN = 'FINAN',
+  EXPLO = 'EXPLO',
+  SUSTAIN = 'SUSTAIN',
+  COTTON_BETS = 'COTTON_BETS',
+  SEED_USE = 'SEED_USE',
+  RESPONSIBLE_USE = 'RESPONSIBLE_USE'
+}
