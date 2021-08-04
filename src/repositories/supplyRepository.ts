@@ -28,6 +28,7 @@ class SupplyRepository {
   ): Promise<any> {
     let suppliesPaginated = Supply.find(query)
       .populate('typeId')
+      .populate('countryId')
       .populate('activesPrinciples.activePrinciple')
       .limit(limit)
       .skip(skip)
