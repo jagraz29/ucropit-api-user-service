@@ -19,9 +19,10 @@
  *             type: string
  */
 
-import mongoose from 'mongoose'
+import mongoose, { Schema, Document } from 'mongoose'
+import { IActivityType } from '../interfaces'
 
-const { Schema } = mongoose
+export type ActivityTypeDocument = Document & IActivityType
 
 const ActivityTypeSchema = new Schema({
   name: {
@@ -40,4 +41,7 @@ const ActivityTypeSchema = new Schema({
   }
 })
 
-export default mongoose.model('ActivityType', ActivityTypeSchema)
+export default mongoose.model<ActivityTypeDocument>(
+  'ActivityType',
+  ActivityTypeSchema
+)

@@ -31,17 +31,17 @@
       "cotton": "Algodão",
       "wheat": "Trigo",
       "carinata": "Carinata",
-      "oatmeal" : "Aveia",
-      "sorghum" : "Sorgo",
-      "rye-grass" : "Grama de centeio",
-      "vetch" : "Ervilhaca",
-      "barley" : "Cevada",
-      "colza" : "Colza",
-      "rice" : "Arroz",
-      "rye" : "Centeio"
+      "oatmeal": "Aveia",
+      "sorghum": "Sorgo",
+      "rye-grass": "Grama de centeio",
+      "vetch": "Ervilhaca",
+      "barley": "Cevada",
+      "colza": "Colza",
+      "rice": "Arroz",
+      "rye": "Centeio"
     }
   },
-  "unit_types":{
+  "unit_types": {
     "keys": {
       "kg": "Quilogramas/ha",
       "t": "Toneladas/ha",
@@ -50,7 +50,7 @@
       "q": "Quintales/ha"
     }
   },
-  "supply_types":{
+  "supply_types": {
     "codes": {
       "otros": "Outros",
       "fe": "Fertilizantes agroquímicos",
@@ -67,7 +67,7 @@
       "seal": "Semente de Algodão"
     }
   },
-  "type_storages":{
+  "type_storages": {
     "keys": {
       "silo_bag": "Silobags",
       "silo": "Silo",
@@ -75,7 +75,18 @@
       "delivery_within_of_program": "Entrega dentro do programa"
     }
   },
-  "badges":{
+  "activity_types": {
+    "tag": {
+      "ACT_TILLAGE": "Labranza",
+      "ACT_APPLICATION": "Aplicación",
+      "ACT_FERTILIZATION": "Fertilización",
+      "ACT_SOWING": "Siembra",
+      "ACT_HARVEST": "Cosecha",
+      "ACT_AGREEMENTS": "Acuerdos",
+      "ACT_MONITORING": "Monitoreo"
+    }
+  },
+  "badges": {
     "types": {
       "legal_land_use": "Uso legal da terra",
       "no_deforestation": "Sem desmatamento",
@@ -96,17 +107,17 @@
   "crops": {
     "errors": {
       "file_evidence_incomplete": "Evidência não completa",
-      "file_evidence_invalid_length" : "O total de arquivos e evidências deve ser o mesmo",
-      "name_lot_duplicated" : "Nomes de lote KMZ duplicados",
-      "error_invalid_format_kmz" : "Formato KMZ inválido",
-      "error_file_extension" : "Extensão de arquivo não permitida",
-      "invalid_date_harvest" : "A data de colheita deve ser posterior à data de cultivo",
-      "invalid_field_data" : "O campo de dados é obrigatório",
-      "invalid_fields" : "Um ou/e mais campos são obrigatórios",
-      "invalid_array_lots" : "Você deve selecionar pelo menos um lote",
-      "lots_not_available" : "Alguns lotes reutilizáveis não estão disponíveis",
-      "lots_not_exist" : "Alguns lotes são inválidos ou não existem",
-      "invalid_array_files" : "Você deve enviar o KMZ associado aos novos lotes"
+      "file_evidence_invalid_length": "O total de arquivos e evidências deve ser o mesmo",
+      "name_lot_duplicated": "Nomes de lote KMZ duplicados",
+      "error_invalid_format_kmz": "Formato KMZ inválido",
+      "error_file_extension": "Extensão de arquivo não permitida",
+      "invalid_date_harvest": "A data de colheita deve ser posterior à data de cultivo",
+      "invalid_field_data": "O campo de dados é obrigatório",
+      "invalid_fields": "Um ou/e mais campos são obrigatórios",
+      "invalid_array_lots": "Você deve selecionar pelo menos um lote",
+      "lots_not_available": "Alguns lotes reutilizáveis não estão disponíveis",
+      "lots_not_exist": "Alguns lotes são inválidos ou não existem",
+      "invalid_array_files": "Você deve enviar o KMZ associado aos novos lotes"
     }
   },
   "lots": {

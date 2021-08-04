@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import models from '../models'
+import { ActivityTypeDocument } from '../models/activityType'
 import { CountryRepository } from '../repositories'
 import { getCropTypesUseCase } from '../core/cropTypes/useCase'
 import { getStorageTypesUseCase } from '../core/typeStorages/useCase'
@@ -9,6 +10,7 @@ import { CropTypeDocument } from '../models/cropType'
 import { TypeStorageDocument } from '../models/typeStorage'
 import { UnitTypeDocument } from '../models/unitType'
 import { parseLangLocal } from '../utils/Locales'
+import { activityTypeRepository } from '../repositories'
 
 const ActivityType = models.ActivityType
 const TypeAgreement = models.TypeAgreement
@@ -72,7 +74,16 @@ class CommonController {
    * @return Response
    */
   public async activitiesTypes(req: Request, res: Response) {
-    const activitiesTypes = await ActivityType.find({})
+    const result: ActivityTypeDocument[] = await activityTypeRepository.getAll()
+    const activityTypesKeys = req.__('activity_types.tag') as unknown as object
+
+    const activitiesTypes = result.map((activityType: ActivityTypeDocument) => {
+      const altLabel = activityType?.name?.es || activityType?.tag
+      return {
+        ...activityType,
+        keyLabel: parseLangLocal(activityTypesKeys, activityType.tag, altLabel)
+      }
+    })
 
     res.status(200).json(activitiesTypes)
   }

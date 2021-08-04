@@ -31,14 +31,14 @@
       "cotton": "Cotton",
       "wheat": "Wheat",
       "carinata": "Carinata",
-      "oatmeal" : "Oatmeal",
-      "sorghum" : "Sorghum",
-      "rye-grass" : "Ryegrass",
-      "vetch" : "Vetch",
-      "barley" : "Barley",
-      "colza" : "Colza",
-      "rice" : "Rice",
-      "rye" : "Rye"
+      "oatmeal": "Oatmeal",
+      "sorghum": "Sorghum",
+      "rye-grass": "Ryegrass",
+      "vetch": "Vetch",
+      "barley": "Barley",
+      "colza": "Colza",
+      "rice": "Rice",
+      "rye": "Rye"
     }
   },
   "unit_types": {
@@ -73,6 +73,17 @@
       "silo": "Silo",
       "delivery_out_of_program": "Out of program delivery",
       "delivery_within_of_program": "Delivery within the program"
+    }
+  },
+  "activity_types": {
+    "tag": {
+      "act_tillage": "Tillage",
+      "act_application": "Application",
+      "act_fertilization": "Fertilization",
+      "act_sowing": "Sowing",
+      "act_harvest": "Harvest",
+      "act_agreements": "Agreements",
+      "act_monitoring": "Monitoring"
     }
   },
   "badges": {

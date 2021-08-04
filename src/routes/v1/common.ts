@@ -68,6 +68,12 @@ router.get('/unitypes', commonController.unitTypes)
  * /v1/commons/activities:
  *  get:
  *   summary: Get all activities types
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Activities types
