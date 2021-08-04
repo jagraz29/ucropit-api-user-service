@@ -13,9 +13,10 @@
  *           name:
  *             type: string
  */
-import mongoose from 'mongoose'
+import mongoose, { Schema, Document } from 'mongoose'
+import { IEvidenceConcept } from '../interfaces'
 
-const { Schema } = mongoose
+export type EvidenceConceptDocument = Document & IEvidenceConcept
 
 const EvidenceConcept = new Schema({
   code: {
@@ -33,4 +34,7 @@ const EvidenceConcept = new Schema({
   }
 })
 
-export default mongoose.model('EvidenceConcept', EvidenceConcept)
+export default mongoose.model<EvidenceConceptDocument>(
+  'EvidenceConcept',
+  EvidenceConcept
+)

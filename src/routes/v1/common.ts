@@ -8,6 +8,12 @@ const router: express.Router = express.Router()
  * /v1/commons/roles:
  *  get:
  *   summary: Get all collaborators roletypes
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Collaborator roletypes
@@ -90,6 +96,12 @@ router.get('/activities', commonController.activitiesTypes)
  * /v1/commons/agreements:
  *  get:
  *   summary: Get all agreement types
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Agreement Types
@@ -106,6 +118,12 @@ router.get('/agreements', commonController.agreementTypes)
  * /v1/commons/concepts:
  *  get:
  *   summary: Get all evidence concepts
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Evidence Concepts

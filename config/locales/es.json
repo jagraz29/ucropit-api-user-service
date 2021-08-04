@@ -75,6 +75,17 @@
       "delivery_within_of_program": "Entrega dentro de programa"
     }
   },
+  "type_agreement": {
+    "keys": {
+      "commer": "Comercialización",
+      "finan": "Financiación",
+      "explo": "Explotación",
+      "sustain": "Cultivo sustentable",
+      "cotton_bets": "Algodon Buenas Practicas",
+      "seed_use": "Acuerdo de Uso Legal de Semilla",
+      "responsible_use": "Proveedor"
+    }
+  },
   "activity_types": {
     "tag": {
       "act_tillage": "Labranza",
@@ -84,6 +95,30 @@
       "act_harvest": "Cosecha",
       "act_agreements": "Acuerdos",
       "act_monitoring": "Monitoreo"
+    }
+  },
+  "roles": {
+    "value": {
+      "producer_adviser": "Asesor",
+      "producer_adviser_encouraged": "Asesor promotor",
+      "producer": "Productor",
+      "provider": "Proveedor",
+      "marketer": "Comercializador",
+      "cam": "KAM",
+      "contact_representative": "Contacto Comercial"
+    }
+  },
+  "evidence_concepts": {
+    "code": {
+      "0001": "Carta de porte",
+      "0002": "Documentación de Respaldo",
+      "0003": "Factura",
+      "0004": "Foto dentro del Lote",
+      "0005": "Receta agropecuaria",
+      "0006": "Remito",
+      "0007": "Factura Semillas",
+      "0008": "Facturas Regalias",
+      "0009": "Imágen Satelital"
     }
   },
   "badges": {

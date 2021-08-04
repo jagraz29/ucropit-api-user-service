@@ -75,6 +75,17 @@
       "delivery_within_of_program": "Delivery within the program"
     }
   },
+  "type_agreement": {
+    "keys": {
+      "commer": "Commercialization",
+      "finan": "Financing",
+      "explo": "Exploitation",
+      "sustain": "Sustainable crop",
+      "cotton_bets": "Sustainable cotton farming",
+      "seed_use": "Agreement of Legal Seed Use",
+      "responsible_use": "Supplier"
+    }
+  },
   "activity_types": {
     "tag": {
       "act_tillage": "Tillage",
@@ -84,6 +95,30 @@
       "act_harvest": "Harvest",
       "act_agreements": "Agreements",
       "act_monitoring": "Monitoring"
+    }
+  },
+  "evidence_concepts": {
+    "code": {
+      "0001": "Consignment note",
+      "0002": "Backup Documentation",
+      "0003": "Bill",
+      "0004": "Photo inside the plot",
+      "0005": "Agricultural recipe",
+      "0006": "Dispatch Form",
+      "0007": "Seeds Bill",
+      "0008": "Seed Royalties",
+      "0009": "Satellite Image"
+    }
+  },
+  "roles": {
+    "value": {
+      "producer_adviser": "Advisor",
+      "producer_adviser_encouraged": "Advisor promoter",
+      "producer": "Farmer",
+      "provider": "Supplier",
+      "marketer": "Merchant",
+      "cam": "KAM",
+      "contact_representative": "Commercial Representative"
     }
   },
   "badges": {

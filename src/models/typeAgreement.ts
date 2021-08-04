@@ -18,9 +18,10 @@
  *           key:
  *             type: string
  */
-import mongoose from 'mongoose'
+import mongoose, { Schema, Document } from 'mongoose'
+import { IAgreementType } from '../interfaces'
 
-const { Schema } = mongoose
+export type TypeAgreementDocument = Document & IAgreementType
 
 const TypeAgreementSchema = new Schema({
   name: {
@@ -40,4 +41,7 @@ const TypeAgreementSchema = new Schema({
   visible: [String]
 })
 
-export default mongoose.model('TypeAgreement', TypeAgreementSchema)
+export default mongoose.model<TypeAgreementDocument>(
+  'TypeAgreement',
+  TypeAgreementSchema
+)
