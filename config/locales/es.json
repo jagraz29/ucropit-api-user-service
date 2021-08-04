@@ -77,13 +77,13 @@
   },
   "activity_types": {
     "tag": {
-      "ACT_TILLAGE": "Labranza",
-      "ACT_APPLICATION": "Aplicación",
-      "ACT_FERTILIZATION": "Fertilización",
-      "ACT_SOWING": "Siembra",
-      "ACT_HARVEST": "Cosecha",
-      "ACT_AGREEMENTS": "Acuerdos",
-      "ACT_MONITORING": "Monitoreo"
+      "act_tillage": "Labranza",
+      "act_application": "Aplicación",
+      "act_fertilization": "Fertilización",
+      "act_sowing": "Siembra",
+      "act_harvest": "Cosecha",
+      "act_agreements": "Acuerdos",
+      "act_monitoring": "Monitoreo"
     }
   },
   "badges": {
@@ -125,5 +125,34 @@
       "invalid_identifier": "El CUIT es requerido para continuar con la operación",
       "date_crop": "Debe ingresar una fecha en el valor ‘Fecha de cultivo’."
     }
+  },
+  "crop_story": {
+    "title": "Historia del Cultivo",
+    "printedAt": "impresa el",
+    "netSup": "Sup neta",
+    "has": "has",
+    "seedTime": "Fecha Siembra",
+    "harvestDate": "Fecha Cosecha",
+    "yield": "Rinde",
+    "volume": "Volumen",
+    "ton": "Ton",
+    "eiq": "EIQ:",
+    "veryLow": "Muy bajo",
+    "low": "Bajo",
+    "moderate": "Moderado",
+    "high": "Alto",
+    "veryHigh": "Muy alto",
+    "status": "Status:",
+    "cropResponsible": "Responsable del cultivo",
+    "commercial_contact": "Contacto Comercial",
+    "vol": "Vol:",
+    "validate_by": "Validado Por:",
+    "estimated_harvest": "Rinde Estimado:",
+    "lots": "lotes",
+    "evidences": "Evidencias",
+    "supporting_documentation": "documentación de respaldo",
+    "pending": "PENDIENTE",
+    "within_lot": "Dentro del lote",
+    "aplications": "Aplicaciones"
   }
 }

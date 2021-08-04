@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
+import { __, setLocale } from 'i18n'
 import Handlebars from 'handlebars'
 import pdfParse from 'pdf-parse'
 import Puppeteer from 'puppeteer'
@@ -11,6 +12,10 @@ import {
 import { FileDocumentRepository } from '../repositories'
 import { setScriptPdf } from '../helpers'
 import { FileDocumentProps } from '../interfaces'
+import { defaultLanguageConfig } from '../utils/Constants'
+Handlebars.registerHelper('I18n', function (str) {
+  return __ != undefined ? __(str) : str
+})
 
 export class PDFService {
   public static async generatePdf(
@@ -18,8 +23,10 @@ export class PDFService {
     context: object,
     directory: string,
     nameFile: string,
-    { _id: cropId }
+    { _id: cropId },
+    lang?: string
   ): Promise<string> {
+    setLocale(lang || defaultLanguageConfig.language)
     const fileDocuments: Array<FileDocumentProps> | null =
       await FileDocumentRepository.getFiles(cropId)
     const path = `public/uploads/${directory}/`

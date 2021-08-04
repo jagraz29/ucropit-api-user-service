@@ -178,9 +178,9 @@
                 {{/switch}}
                 <div class="fill-header">
                   <div class="binnacle">
-                    Historia del Cultivo
+                    {{I18n "crop_story.title"}}
                     <br />
-                    impresa el
+                    {{I18n "crop_story.printedAt"}}
                     {{dateCreatePdf}}
                   </div>
                   <div>
@@ -201,38 +201,38 @@
                     {{crop.cropTypeName.es}}
                   </div>
                   <div class="dataNames">
-                    Sup Neta
+                    {{I18n "crop_story.netSup"}}
                   </div>
                   <div class="dataValue">
                     {{crop.surface}}
-                    has
+                    {{I18n "crop_story.has"}}
                   </div>
                   <div class="dataNames">
-                    Fecha Siembra
+                    {{I18n "crop_story.seedTime"}}
                   </div>
                   <div class="dataValue">
                     {{crop.dateSowingFormat}}
                   </div>
                   <div class="dataNames">
-                    Fecha Cosecha
+                    {{I18n "crop_story.harvestDate"}}
                   </div>
                   <div class="dataValue">
                     {{crop.dateHarvestFormat}}
                   </div>
                   <div class="dataNames">
-                    Rinde
+                    {{I18n "crop_story.yield"}}
                   </div>
                   <div class="dataValue">
                     {{crop.pay}}
-                    Kgs/ha
+                    {{I18n "unit_types.keys.kg"}}
                   </div>
                   <div>
                     <div class="dataNames">
-                      Volumen
+                      {{I18n "crop_story.volume"}}
                     </div>
                     <div class="dataValue">
                       {{crop.volume}}
-                      Ton
+                      {{I18n "crop_story.ton"}}
                     </div>
                   </div>
                 </div>
@@ -247,7 +247,7 @@
                       />
                     </div>
                     <div class="center">
-                      EIQ:
+                      {{I18n "crop_story.eiq"}}
                       {{crop.eiq.quantity}}
                       <div class="star-eiq-header color-very-low">
                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -255,7 +255,7 @@
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <p class="label-eiq-severity">
-                          Muy Bajo
+                          {{I18n "crop_story.veryLow"}}
                         </p>
                       </div>
                     </div>
@@ -270,14 +270,14 @@
                       />
                     </div>
                     <div class="center">
-                      EIQ:
+                      {{I18n "crop_story.eiq"}}
                       {{crop.eiq.quantity}}
                       <div class="star-eiq-header color-low">
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <p class="label-eiq-severity">
-                          Bajo
+                          {{I18n "crop_story.low"}}
                         </p>
                       </div>
                     </div>
@@ -292,14 +292,14 @@
                       />
                     </div>
                     <div class="center">
-                      EIQ:
+                      {{I18n "crop_story.eiq"}}
                       {{crop.eiq.quantity}}
                       <div class="star-eiq-header color-moderate">
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <p class="label-eiq-severity">
-                          Moderado
+                          {{I18n "crop_story.moderate"}}
                         </p>
                       </div>
                     </div>
@@ -314,13 +314,13 @@
                       />
                     </div>
                     <div class="center">
-                      EIQ:
+                      {{I18n "crop_story.eiq"}}
                       {{crop.eiq.quantity}}
                       <div class="star-eiq-header color-height">
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <p class="label-eiq-severity">
-                          Alto
+                          {{I18n "crop_story.high"}}
                         </p>
                       </div>
                     </div>
@@ -335,12 +335,12 @@
                       />
                     </div>
                     <div class="center">
-                      EIQ:
+                      {{I18n "crop_story.eiq"}}
                       {{crop.eiq.quantity}}
                       <div class="star-eiq-header color-very-height">
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <p class="label-eiq-severity">
-                          Muy Alto
+                          {{I18n "crop_story.veryHigh"}}
                         </p>
                       </div>
                     </div>
@@ -351,7 +351,7 @@
                     <div class="lastActivity">
                       <div class="last-frame">
                         <div class="lastActivity-title dataValue no-bold">
-                          Status:
+                          {{I18n "crop_story.status"}}
                           {{name}}
                           {{status}}
                         </div>
@@ -371,7 +371,7 @@
                         {{#if surfaceTotal}}
                           <p>
                             {{surfaceTotal}}
-                            has
+                            {{I18n "crop_story.has"}}
                           </p>
                         {{/if}}
                       </div>
@@ -383,7 +383,7 @@
               <div class="crop-leaders">
                 <div class="res-contact-header">
                   <h5 class="res-contact-title">
-                    Responsable del cultivo
+                    {{I18n "crop_story.cropResponsible"}}
                   </h5>
                   <h3 class="name-header">
                     {{crop.cultivationManager.firstName}}
@@ -399,16 +399,16 @@
                 {{#if crop.commercialContact}}
                   <div class="res-contact-header">
                     <h5 class="res-contact-title">
-                      Contacto comercial
+                      {{I18n "crop_story.commercial_contact"}}
                     </h5>
                     <h3 class="name-header">
                       {{crop.commercialContact.firstName}}
                       {{crop.commercialContact.lastName}}
                     </h3>
                     <div class="data-header">
-                      Vol:
+                      {{I18n "crop_story.vol"}}
                       {{crop.commercialContact.theoriticalPotential}}
-                      ton
+                      {{I18n "crop_story.ton"}}
                     </div>
                     <div class="data-header">
                       {{crop.commercialContact.phone}}
@@ -518,7 +518,7 @@
                               <i class="fa fa-check"></i>
                               {{moment dateHarvest format="DD/MM/YYYY"}}
                               <span style="float: right;margin-right: 117px;">
-                                Validado Por:
+                                {{I18n "crop_story.validate_by"}}
                               </span>
                             </div>
                           {{/is}}
@@ -527,29 +527,29 @@
                               <i class="fa fa-check"></i>
                               {{moment dateObservation format="DD/MM/YYYY"}}
                               <span style="float: right;margin-right: 117px;">
-                                Validado Por:
+                                {{I18n "crop_story.validate_by"}}
                               </span>
                             </div>
                           {{/is}}
                           <div class="activity-description-content">
                             <div>
                               <h3 class="activity-framed-h1">
-                                Rinde Estimado:
+                                {{I18n "crop_story.estimated_harvest"}}
                                 {{pay}}
                                 {{unitType}}
                                 .
                               </h3>
                               <div class="activity-lots">
                                 {{lotsQuantity}}
-                                lotes (
+                                {{I18n "crop_story.lots"}} (
                                 {{surface}}
-                                has.)
+                                {{I18n "crop_story.has"}}.)
                               </div>
                               <div class="spokesman-data">
-                                Evidencias
+                                {{I18n "crop_story.evidences"}}
                               </div>
                               <div class="backup-docs">
-                                documentacion de respaldo
+                                {{I18n "crop_story.supporting_documentation"}}
                               </div>
                               {{#each evidencesPdf}}
                                 <div class="link-pdf">
@@ -587,7 +587,7 @@
                                         alt="signed-icon"
                                       />
                                       <span class="not-signed-validation-date">
-                                        PENDIENTE
+                                        {{I18n "crop_story.pending"}}
                                       </span>
                                     </div>
                                   {{/if}}
@@ -621,7 +621,7 @@
                                       </h4>
                                       {{#if isInLot}}
                                         <p class="type-pic-card">
-                                          Dentro del lote
+                                          {{I18n "crop_story.within_lot"}}
                                         </p>
                                       {{/if}}
                                     </div>
@@ -716,16 +716,16 @@
                                     <span
                                       style="float: right;margin-right: 117px;"
                                     >
-                                      Validado Por:
+                                      {{I18n "crop_story.validate_by"}}
                                     </span>
                                   </div>
                                   <div class="activity-description-content">
                                     <div>
                                       <div class="activity-lots-validation">
                                         {{lotsQuantity}}
-                                        lotes (
+                                        {{I18n "crop_story.lots"}} (
                                         {{surface}}
-                                        has)
+                                        {{I18n "crop_story.has"}})
                                       </div>
                                       {{#each (unique supplies.supplies)}}
                                         <div style="display: flex">
@@ -742,10 +742,10 @@
                                         </div>
                                       {{/each}}
                                       <div class="spokesman-data-validation">
-                                        Evidencias
+                                        {{I18n "crop_story.evidences"}}
                                       </div>
                                       <div class="backup-docs-validation">
-                                        documentacion de respaldo
+                                        {{I18n "crop_story.supporting_documentation"}}
                                       </div>
                                       {{#each evidencesPdf}}
                                         <div class="link-pdf-val">
@@ -786,7 +786,7 @@
                                               <span
                                                 class="not-signed-validation-date"
                                               >
-                                                PENDIENTE
+                                                {{I18n "crop_story.pending"}}
                                               </span>
                                             </div>
                                           {{/if}}
@@ -820,7 +820,7 @@
                                     <span
                                       style="float: right;margin-right: 117px;"
                                     >
-                                      Validado Por:
+                                      {{I18n "crop_story.validate_by"}}
                                     </span>
                                   </div>
                                   <div class="activity-description-content">
@@ -830,9 +830,9 @@
                                       >
                                         <div class="activity-lots-validation">
                                           {{lotsQuantity}}
-                                          lotes (
+                                          {{I18n "crop_story.lots"}} (
                                           {{surface}}
-                                          has)
+                                          {{I18n "crop_story.has"}})
                                         </div>
                                         <div class="eiq-activity">
                                           <div class="icon-eiq-activity">
@@ -844,7 +844,7 @@
                                             />
                                           </div>
                                           <div class="center-activity">
-                                            EIQ:
+                                            {{I18n "crop_story.eiq"}}
                                             {{eiq}}
                                           </div>
                                         </div>
@@ -873,17 +873,17 @@
                                               />
                                             </div>
                                             <div class="center-activity">
-                                              EIQ:
+                                              {{I18n "crop_story.eiq"}}
                                               {{eiq}}
                                             </div>
                                           </div>
                                         </div>
                                       {{/each}}
                                       <div class="spokesman-data-validation">
-                                        Evidencias
+                                        {{I18n "crop_story.evidences"}}
                                       </div>
                                       <div class="backup-docs-validation">
-                                        documentacion de respaldo
+                                        {{I18n "crop_story.supporting_documentation"}}
                                       </div>
                                       {{#each evidencesPdf}}
                                         <div class="link-pdf-val">
@@ -927,7 +927,7 @@
                                               <span
                                                 class="not-signed-validation-date"
                                               >
-                                                PENDIENTE
+                                                {{I18n "crop_story.pending"}}
                                               </span>
                                             </div>
                                           {{/if}}
@@ -968,11 +968,11 @@
                         />
                         <div class="activity-title">
                           {{tag}}
-                          Lotes -
+                          {{I18n "crop_story.lots"}} -
                           {{lotsQuantity}}
                           (
                           {{surface}}
-                          has.)
+                          {{I18n "crop_story.has"}}.)
                         </div>
                       </div>
                       <div>
@@ -1000,11 +1000,11 @@
                             </h3>
                             <p class="surface-lot-card">
                               {{surface}}
-                              has
+                              {{I18n "crop_story.has"}}
                             </p>
                             <p class="surface-lot-card">
                               {{countAchievement}}
-                              Aplicaciones
+                              {{I18n "crop_story.aplications"}}
                             </p>
                             <!-- TODO: EIQ EN LOTES AQUI VALIDO EL RANGO -->
                             {{#is eiq.range "VERY_LOW"}}
@@ -1020,7 +1020,7 @@
                                       />
                                     </div>
                                     <div class="center-activity color-very-low">
-                                      EIQ:
+                                      {{I18n "crop_story.eiq"}}
                                       {{eiq.quantity}}
                                     </div>
                                   </div>
@@ -1040,7 +1040,7 @@
                                       />
                                     </div>
                                     <div class="center-activity color-low">
-                                      EIQ:
+                                      {{I18n "crop_story.eiq"}}
                                       {{eiq.quantity}}
                                     </div>
                                   </div>
@@ -1060,7 +1060,7 @@
                                       />
                                     </div>
                                     <div class="center-activity color-moderate">
-                                      EIQ:
+                                      {{I18n "crop_story.eiq"}}
                                       {{eiq.quantity}}
                                     </div>
                                   </div>
@@ -1080,7 +1080,7 @@
                                       />
                                     </div>
                                     <div class="center-activity color-hight">
-                                      EIQ:
+                                      {{I18n "crop_story.eiq"}}
                                       {{eiq.quantity}}
                                     </div>
                                   </div>
@@ -1100,7 +1100,7 @@
                                       />
                                     </div>
                                     <div class="text-eiq-value color-very-high">
-                                      EIQ:
+                                      {{I18n "crop_story.eiq"}}
                                       {{eiq.quantity}}
                                     </div>
                                   </div>

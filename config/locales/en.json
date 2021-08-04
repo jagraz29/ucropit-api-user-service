@@ -125,5 +125,34 @@
       "invalid_identifier": "The CUIT is required to continue with the operation",
       "date_crop": "You must enter a date in the value 'Cultivation date'."
     }
+  },
+  "crop_story": {
+    "title": "Crop Story",
+    "printedAt": "printed at",
+    "netSup": "Net Sup",
+    "has": "has",
+    "seedTime": "Sowing Date",
+    "harvestDate": "Harvest Date",
+    "yield": "Rinde",
+    "volume": "Volume",
+    "ton": "Ton",
+    "eiq": "EIQ:",
+    "veryLow": "Very Low",
+    "low": "Low",
+    "moderate": "Moderate",
+    "high": "High",
+    "veryHigh": "Very High",
+    "status": "Status:",
+    "cropResponsible": "Crop Responsible",
+    "commercial_contact": "Commercial Contact",
+    "vol": "Vol:",
+    "validate_by": "Validate By:",
+    "estimated_harvest": "Estimated Rinde:",
+    "lots": "lots",
+    "evidences": "Evidences",
+    "supporting_documentation": "supporting documentation",
+    "pending": "PENDING",
+    "within_lot": "Within the lot",
+    "aplications": "Aplications"
   }
 }
