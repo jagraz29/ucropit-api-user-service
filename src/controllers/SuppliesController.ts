@@ -50,9 +50,6 @@ class SuppliesController {
   public async quantity(req: Request, res: Response) {
     const { alphaCode } = req.query
 
-    console.log('req.query')
-    console.log(req.query)
-
     const total = await Supply.find({
       alphaCode: alphaCode ?? undefined
     }).countDocuments()
