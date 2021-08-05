@@ -3,8 +3,11 @@
 import { Request, Response } from 'express'
 import models from '../models'
 import SupplyRepository from '../repositories/supplyRepository'
+import { CropRepository } from '../repositories/cropRepository'
 import { parseSuppliesWithEiqTotal } from '../utils'
 import { typesSupplies } from '../utils/Constants'
+import { SupplyTypeByCropType } from '../utils/Constants'
+import { TypeActivities } from '../interfaces/activities/TypeActivities.enum'
 
 const Supply = models.Supply
 
@@ -12,7 +15,7 @@ class SuppliesController {
   public async index(req, res: Response) {
     let type = null
     let filter: any = {}
-    const { q, tag, skip, limit, alphaCode } = req.query
+    const { q, tag, skip, limit, alphaCode, cropType } = req.query
     if (tag) {
       type = typesSupplies.find((item) => item.tag === tag)
     }
@@ -21,6 +24,15 @@ class SuppliesController {
 
     if (alphaCode) {
       filter.alphaCode = alphaCode
+    }
+
+    if (cropType && tag === TypeActivities.ACT_SOWING) {
+      const type = await CropRepository.findAllCropType(cropType)
+      const typeObject = type.find((item) => item._id == cropType)
+      const array = SupplyTypeByCropType.find(
+        (item) => item.key === typeObject.name.en.toLowerCase()
+      )
+      filter.typeId = { $in: array.types }
     }
 
     if (q) {
