@@ -23,7 +23,7 @@ import {
   getCropBadgesByUserType,
   parseLotsReusableAsData,
   filterActivitiesMakeByDates,
-  calculateEIQAndPorcentTotal,
+  calculateEIQAndPercentTotal,
   defaultLanguageConfig,
   translateCropActivities
 } from '../utils'
@@ -136,10 +136,10 @@ class CropsController {
       startDate,
       endDate
     )
-   
-    const toMake = calculateEIQAndPorcentTotal(toMakeFilterDates, language)
-    const done = calculateEIQAndPorcentTotal(translatedCrop.done, language)
-    const finished = calculateEIQAndPorcentTotal(
+
+    const toMake = calculateEIQAndPercentTotal(toMakeFilterDates, language)
+    const done = calculateEIQAndPercentTotal(translatedCrop.done, language)
+    const finished = calculateEIQAndPercentTotal(
       translatedCrop.finished,
       language
     )
@@ -215,6 +215,8 @@ class CropsController {
     }
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
+
+    console.log(activities)
 
     res.status(StatusCodes.OK).json(activities)
   }
