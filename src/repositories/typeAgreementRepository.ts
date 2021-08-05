@@ -1,8 +1,15 @@
 import models from '../models'
-
+import { TypeAgreementDocument } from '../models/typeAgreement'
 const { TypeAgreement } = models
 
 export class TypeAgreementRepository {
+  /**
+   * Get all TypeAgreement
+   * @returns
+   */
+  public static async getAll(): Promise<TypeAgreementDocument[]> {
+    return TypeAgreement.find({}).lean()
+  }
   /**
    *
    * @param query

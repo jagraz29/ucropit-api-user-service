@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import models from '../models'
 import { ActivityTypeDocument } from '../models/activityType'
+import { TypeAgreementDocument } from '../models/typeAgreement'
 import { CountryRepository } from '../repositories'
 import { getCropTypesUseCase } from '../core/cropTypes/useCase'
 import { getStorageTypesUseCase } from '../core/typeStorages/useCase'
@@ -9,13 +10,16 @@ import { getUnitTypesUseCase } from '../core/unitTypes/useCase'
 import { CropTypeDocument } from '../models/cropType'
 import { TypeStorageDocument } from '../models/typeStorage'
 import { UnitTypeDocument } from '../models/unitType'
+import { EvidenceConceptDocument } from '../models/evidenceConcept'
+import { RolesDocument } from '../models/Roles'
 import { parseLangLocal } from '../utils/Locales'
-import { activityTypeRepository } from '../repositories'
+import {
+  activityTypeRepository,
+  TypeAgreementRepository,
+  EvidenceConceptRepository,
+  RolesRepository
+} from '../repositories'
 
-const ActivityType = models.ActivityType
-const TypeAgreement = models.TypeAgreement
-const EvidenceConcepts = models.EvidenceConcept
-const Roles = models.Roles
 const ServiceIntegrations = models.ServiceIntegration
 
 class CommonController {
@@ -39,7 +43,7 @@ class CommonController {
       }
     })
 
-    res.status(200).json(cropTypes)
+    res.status(StatusCodes.OK).json(cropTypes)
   }
 
   /**
@@ -61,7 +65,7 @@ class CommonController {
       }
     })
 
-    res.status(200).json(unitTypes)
+    res.status(StatusCodes.OK).json(unitTypes)
   }
 
   /**
@@ -85,7 +89,7 @@ class CommonController {
       }
     })
 
-    res.status(200).json(activitiesTypes)
+    res.status(StatusCodes.OK).json(activitiesTypes)
   }
 
   /**
@@ -98,9 +102,26 @@ class CommonController {
    * @return Response
    */
   public async agreementTypes(req: Request, res: Response) {
-    const agreementTypes = await TypeAgreement.find({})
+    const result: TypeAgreementDocument[] =
+      await TypeAgreementRepository.getAll()
 
-    res.status(200).json(agreementTypes)
+    const agreementTypesKeys = req.__('type_agreement.key') as unknown as object
+
+    const agreementTypes = result.map(
+      (typeAgreement: TypeAgreementDocument) => {
+        const altLabel = typeAgreement?.name?.es || typeAgreement?.key
+        return {
+          ...typeAgreement,
+          keyLabel: parseLangLocal(
+            agreementTypesKeys,
+            typeAgreement.key,
+            altLabel
+          )
+        }
+      }
+    )
+
+    res.status(StatusCodes.OK).json(agreementTypes)
   }
 
   /**
@@ -112,12 +133,29 @@ class CommonController {
    * @return Response
    */
   public async evidenceConcepts(req: Request, res: Response) {
-    const evidenceConceptsinstance: any = await EvidenceConcepts.find({})
-    const evidenceConcepts = evidenceConceptsinstance.filter(
-      (evidence) => evidence.code !== '0009'
+    const result: EvidenceConceptDocument[] = (
+      await EvidenceConceptRepository.getAll()
+    ).filter((evidence) => evidence.code !== '0009')
+
+    const evidenceConceptKeys = req.__(
+      'evidence_concepts.code'
+    ) as unknown as object
+
+    const evidenceConcepts = result.map(
+      (evidenceConcept: EvidenceConceptDocument) => {
+        const altLabel = evidenceConcept?.name?.es || evidenceConcept?.code
+        return {
+          ...evidenceConcept,
+          keyLabel: parseLangLocal(
+            evidenceConceptKeys,
+            evidenceConcept.code,
+            altLabel
+          )
+        }
+      }
     )
 
-    res.status(200).json(evidenceConcepts)
+    res.status(StatusCodes.OK).json(evidenceConcepts)
   }
 
   /**
@@ -129,9 +167,19 @@ class CommonController {
    * @return Response
    */
   public async roles(req: Request, res: Response) {
-    const roles = await Roles.find({})
+    const result: RolesDocument[] = await RolesRepository.getAll()
 
-    res.status(200).json(roles)
+    const rolesKeys = req.__('roles.value') as unknown as object
+
+    const roles = result.map((role: RolesDocument) => {
+      const altLabel = role?.label?.es || role?.value
+      return {
+        ...role,
+        keyLabel: parseLangLocal(rolesKeys, role.value, altLabel)
+      }
+    })
+
+    res.status(StatusCodes.OK).json(roles)
   }
 
   /**
@@ -143,7 +191,7 @@ class CommonController {
   public async serviceIntegration(req: Request, res: Response) {
     const services = await ServiceIntegrations.find({})
 
-    res.status(200).json(services)
+    res.status(StatusCodes.OK).json(services)
   }
 
   /**
@@ -163,7 +211,7 @@ class CommonController {
       }
     })
 
-    res.status(200).json(storageTypes)
+    res.status(StatusCodes.OK).json(storageTypes)
   }
 
   /**
