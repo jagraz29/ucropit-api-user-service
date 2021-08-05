@@ -3,7 +3,6 @@
 import { Request, Response } from 'express'
 import models from '../models'
 import SupplyRepository from '../repositories/supplyRepository'
-import { CropRepository } from '../repositories/cropRepository'
 import { parseSuppliesWithEiqTotal } from '../utils'
 import { typesSupplies } from '../utils/Constants'
 import { SupplyTypeByCropType } from '../utils/Constants'
@@ -19,20 +18,10 @@ class SuppliesController {
     if (tag) {
       type = typesSupplies.find((item) => item.tag === tag)
     }
-
     const skipSide = skip && /^\d+$/.test(skip) ? Number(skip) : 0
 
     if (alphaCode) {
       filter.alphaCode = alphaCode
-    }
-
-    if (cropType && tag === TypeActivities.ACT_SOWING) {
-      const type = await CropRepository.findAllCropType(cropType)
-      const typeObject = type.find((item) => item._id == cropType)
-      const array = SupplyTypeByCropType.find(
-        (item) => item.key === typeObject.name.en.toLowerCase()
-      )
-      filter.typeId = { $in: array.types }
     }
 
     if (q) {
@@ -43,6 +32,11 @@ class SuppliesController {
 
     if (type) {
       filter.typeId = { $in: type.types }
+    }
+
+    if (cropType && tag === TypeActivities.ACT_SOWING) {
+      const key = SupplyTypeByCropType.find((item) => item.key === cropType)
+      filter.typeId = { $in: key.types }
     }
 
     const limitSide = limit >= 0 ? Number(limit) : 15
