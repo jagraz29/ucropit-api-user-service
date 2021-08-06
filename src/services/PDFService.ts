@@ -17,6 +17,10 @@ Handlebars.registerHelper('I18n', function (str) {
   return __ != undefined ? __(str) : str
 })
 
+Handlebars.registerHelper('toLower', function (str) {
+  return str != undefined ? str.toLowerCase() : str
+})
+
 export class PDFService {
   public static async generatePdf(
     nameTemplate: string,
