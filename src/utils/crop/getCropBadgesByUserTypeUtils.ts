@@ -7,12 +7,12 @@ export const getCropBadgesByUserType = (
   lang: string
 ) => {
   setLocale(lang)
-  const translatedBadges = badges.map((badge: IBadge) => {
-    const type: string = badge.type.toLocaleLowerCase()
+  const translatedBadges = badges.map((badge: any) => {
+    const type: string = badge.badge.type ? badge.badge.type.toLowerCase() : null
     return {
       ...badge,
-      translatedName: __(`type_badge.types.${type}`)
-    }
+      translatedName: type ? __(`type_badge.types.${type}`) : type
+    } 
   })
   /*
   GET MEMBER DATA OF USER IN CROP
