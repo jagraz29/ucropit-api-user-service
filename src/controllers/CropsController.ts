@@ -124,7 +124,7 @@ class CropsController {
     )
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
-    const badges = getCropBadgesByUserType(req.user, crop)
+    const badges = getCropBadgesByUserType(req.user, crop, language)
     const volume = calculateCropVolumeUtils(
       translatedCrop.unitType.key,
       translatedCrop.pay,

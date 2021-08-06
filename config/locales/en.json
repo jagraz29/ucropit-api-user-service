@@ -86,6 +86,16 @@
       "responsible_use": "Supplier"
     }
   },
+  "type_badge": {
+    "types": {
+      "legal_land_use": "Legal land use",
+      "no_deforestation": "No deforestation",
+      "sustainable_principles": "Sustainable Principles",
+      "legal_seed_use_soy": "Legal use of seeds",
+      "legal_seed_use_cotton": "Legal use of seeds",
+      "responsible_use_phytosanitary": "Responsible use of phytosanitary products"
+    }
+  },
   "activity_types": {
     "tag": {
       "act_tillage": "Tillage",

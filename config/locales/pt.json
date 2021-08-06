@@ -86,6 +86,16 @@
       "responsible_use": "Fornecedor"
     }
   },
+  "type_badge": {
+    "types": {
+      "legal_land_use": "Uso legal da terra",
+      "no_deforestation": "Sem desmatamento",
+      "sustainable_principles": "Princípios Sustentáveis",
+      "legal_seed_use_soy": "Uso legal de sementes",
+      "legal_seed_use_cotton": "Uso legal de sementes",
+      "responsible_use_phytosanitary": "Uso responsável de produtos fitossanitários"
+    }
+  },
   "activity_types": {
     "tag": {
       "act_tillage": "Labranza",
