@@ -2,23 +2,20 @@
 
 import { Request, Response } from 'express'
 import models from '../models'
-import SupplyRepository from '../repositories/supplyRepository'
-import { CropRepository } from '../repositories/cropRepository'
+import { SupplyTypeRepository, SupplyRepository } from '../repositories'
 import { parseSuppliesWithEiqTotal } from '../utils'
-import { typesSupplies } from '../utils/Constants'
-import { SupplyTypeByCropType } from '../utils/Constants'
 import { TypeActivities } from '../interfaces/activities/TypeActivities.enum'
+import { IQuerySupplyType } from '../interfaces'
 
 const Supply = models.Supply
 
 class SuppliesController {
   public async index(req, res: Response) {
-    let type = null
     let filter: any = {}
-    const { q, tag, skip, limit, alphaCode, cropType } = req.query
-    if (tag) {
-      type = typesSupplies.find((item) => item.tag === tag)
-    }
+    const filterSupplyType: IQuerySupplyType = {}
+    let supplyTypesFilter: String[] = []
+    const { queryFiltering, activityType, skip, limit, alphaCode, cropType } =
+      req.query
 
     const skipSide = skip && /^\d+$/.test(skip) ? Number(skip) : 0
 
@@ -26,23 +23,25 @@ class SuppliesController {
       filter.alphaCode = alphaCode
     }
 
-    if (cropType && tag === TypeActivities.ACT_SOWING) {
-      const type = await CropRepository.findAllCropType(cropType)
-      const typeObject = type.find((item) => item._id == cropType)
-      const array = SupplyTypeByCropType.find(
-        (item) => item.key === typeObject.name.en.toLowerCase()
-      )
-      filter.typeId = { $in: array.types }
+    if (activityType === TypeActivities.ACT_SOWING) {
+      filterSupplyType.activities = activityType
+      filterSupplyType.cropTypes = cropType
+    } else {
+      filterSupplyType.activities = activityType
     }
 
-    if (q) {
+    if (activityType || cropType) {
+      supplyTypesFilter = (
+        await SupplyTypeRepository.getAllByQuery(filterSupplyType)
+      ).map((supplyType) => supplyType._id)
+
+      filter.typeId = { $in: supplyTypesFilter }
+    }
+
+    if (queryFiltering) {
       filter = {
-        $text: { $search: q }
+        $text: { $search: queryFiltering }
       }
-    }
-
-    if (type) {
-      filter.typeId = { $in: type.types }
     }
 
     const limitSide = limit >= 0 ? Number(limit) : 15
@@ -51,7 +50,7 @@ class SuppliesController {
       filter,
       limitSide,
       skipSide,
-      tag
+      activityType
     )
 
     const lang = res.getLocale() as string

@@ -13,7 +13,7 @@ const router: express.Router = express.Router()
  *      - Supply
  *   parameters:
  *        - in: query
- *          name: q
+ *          name: queryFiltering
  *          required: false
  *          schema:
  *            type: string
@@ -28,7 +28,12 @@ const router: express.Router = express.Router()
  *          schema:
  *            type: string
  *        - in: query
- *          name: tag
+ *          name: activityType
+ *          required: false
+ *          schema:
+ *            type: string
+ *        - in: query
+ *          name: cropType
  *          required: false
  *          schema:
  *            type: string

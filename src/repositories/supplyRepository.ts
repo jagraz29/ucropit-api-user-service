@@ -2,7 +2,7 @@ import models from '../models'
 import { TypeActivities } from '../interfaces/activities/TypeActivities.enum'
 const { Supply, ActiveIngredient } = models
 
-class SupplyRepository {
+export class SupplyRepository {
   /**
    *
    * @param query
@@ -111,5 +111,3 @@ class SupplyRepository {
     return count
   }
 }
-
-export default SupplyRepository
