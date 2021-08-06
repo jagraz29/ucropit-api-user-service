@@ -217,8 +217,6 @@ class CropsController {
     const activities: Array<ReportSignersByCompany> =
       getActivitiesOrderedByDateUtils(crop)
 
-    console.log(activities)
-
     res.status(StatusCodes.OK).json(activities)
   }
 
