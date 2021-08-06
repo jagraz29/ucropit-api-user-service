@@ -53,7 +53,7 @@ export const getCropUtils = (
       range: getEiqRange(eiq, eiqRanges)
     },
     envImpactIndex,
-    cropTypeKey: cropTypeKey ? cropTypeKey.toLowerCase() : cropTypeKey,
+    cropTypeKey: cropTypeKey ? cropTypeKey.toLowerCase() : '',
     company,
     activities,
     lotsQuantity: lots.length ? lots[0].data.length : 0,
