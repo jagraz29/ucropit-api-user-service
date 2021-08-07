@@ -17,6 +17,8 @@ class SuppliesController {
     const { queryFiltering, activityType, skip, limit, alphaCode, cropType } =
       req.query
 
+    console.log(queryFiltering, activityType, skip, limit, alphaCode, cropType)
+
     const skipSide = skip && /^\d+$/.test(skip) ? Number(skip) : 0
 
     if (alphaCode) {
@@ -40,6 +42,7 @@ class SuppliesController {
 
     if (queryFiltering) {
       filter = {
+        ...filter,
         $text: { $search: queryFiltering }
       }
     }
