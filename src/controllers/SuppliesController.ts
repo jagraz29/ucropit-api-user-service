@@ -2,20 +2,22 @@
 
 import { Request, Response } from 'express'
 import models from '../models'
-import SupplyRepository from '../repositories/supplyRepository'
+import { SupplyTypeRepository, SupplyRepository } from '../repositories'
 import { parseSuppliesWithEiqTotal } from '../utils'
-import { typesSupplies } from '../utils/Constants'
+import { TypeActivities } from '../interfaces/activities/TypeActivities.enum'
+import { IQuerySupplyType } from '../interfaces'
 
 const Supply = models.Supply
 
 class SuppliesController {
   public async index(req, res: Response) {
-    let type = null
     let filter: any = {}
-    const { q, tag, skip, limit, alphaCode } = req.query
-    if (tag) {
-      type = typesSupplies.find((item) => item.tag === tag)
-    }
+    const filterSupplyType: IQuerySupplyType = {}
+    let supplyTypesFilter: String[] = []
+    const { queryFiltering, activityType, skip, limit, alphaCode, cropType } =
+      req.query
+
+    console.log(queryFiltering, activityType, skip, limit, alphaCode, cropType)
 
     const skipSide = skip && /^\d+$/.test(skip) ? Number(skip) : 0
 
@@ -23,14 +25,26 @@ class SuppliesController {
       filter.alphaCode = alphaCode
     }
 
-    if (q) {
-      filter = {
-        $text: { $search: q }
-      }
+    if (activityType === TypeActivities.ACT_SOWING) {
+      filterSupplyType.activities = activityType
+      filterSupplyType.cropTypes = cropType
+    } else {
+      filterSupplyType.activities = activityType
     }
 
-    if (type) {
-      filter.typeId = { $in: type.types }
+    if (activityType || cropType) {
+      supplyTypesFilter = (
+        await SupplyTypeRepository.getAllByQuery(filterSupplyType)
+      ).map((supplyType) => supplyType._id)
+
+      filter.typeId = { $in: supplyTypesFilter }
+    }
+
+    if (queryFiltering) {
+      filter = {
+        ...filter,
+        $text: { $search: queryFiltering }
+      }
     }
 
     const limitSide = limit >= 0 ? Number(limit) : 15
@@ -39,7 +53,7 @@ class SuppliesController {
       filter,
       limitSide,
       skipSide,
-      tag
+      activityType
     )
 
     const lang = res.getLocale() as string

@@ -1,7 +1,7 @@
 require('dotenv').config()
 import models, { connectDb } from '../models'
 import { Command, OptionValues } from 'commander'
-import SupplyRepository from '../repositories/supplyRepository'
+import { SupplyRepository } from '../repositories'
 import { CountryRepository } from '../repositories/countryRepository'
 import { generateArrayPercentage } from '../utils/GenerateArrayPercentage'
 import ConfigsController from '../controllers/ConfigsController'

@@ -5,7 +5,7 @@ import {
   ActiveIngredientUnified as ActiveIngredientStandard
 } from '../../interfaces/supplies'
 import { activeIngredientUnified } from '../../types/activeIngredients'
-import SupplyRepository from '../../repositories/supplyRepository'
+import { SupplyRepository } from '../../repositories'
 
 export function createListSimpleActiveIngredients(
   supply: Supply,

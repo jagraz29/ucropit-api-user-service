@@ -5,7 +5,7 @@ import chalk from 'chalk'
 import { Command, OptionValues } from 'commander'
 import { typesSupplies } from '../utils/Constants'
 
-import SupplyTypeRepository from '../repositories/supplyTypeRepository'
+import { SupplyTypeRepository } from '../repositories'
 
 const program = new Command()
 
