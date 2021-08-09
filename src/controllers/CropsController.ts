@@ -23,8 +23,9 @@ import {
   getCropBadgesByUserType,
   parseLotsReusableAsData,
   filterActivitiesMakeByDates,
-  calculateEIQAndPorcentTotal,
-  defaultLanguageConfig
+  calculateEIQAndPercentTotal,
+  defaultLanguageConfig,
+  translateCropActivities
 } from '../utils'
 
 import { UserSchema } from '../models/user'
@@ -112,37 +113,44 @@ class CropsController {
    * @return Response
    */
   public async show(req: Request, res: Response) {
+    const language =
+      req.header('Accept-Language') || defaultLanguageConfig.language
     const { id } = req.params
     const { startDate, endDate } = req.query
     const crop = await CropService.getCrop(id)
+    const translatedCrop = translateCropActivities(crop, language)
     const lots = await LotService.storeLotImagesAndCountriesWithPopulate(
-      crop.lots
+      translatedCrop.lots
     )
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
-    const badges = getCropBadgesByUserType(req.user, crop)
+    const badges = getCropBadgesByUserType(req.user, crop, language)
+
     const volume = calculateCropVolumeUtils(
-      crop.unitType.key,
-      crop.pay,
-      crop.surface
+      translatedCrop.unitType.key,
+      translatedCrop.pay,
+      translatedCrop.surface
     )
 
     const toMakeFilterDates = filterActivitiesMakeByDates(
-      crop.toMake,
+      translatedCrop.toMake,
       startDate,
       endDate
     )
-    const lang = res.getLocale() as string
-    const toMake = calculateEIQAndPorcentTotal(toMakeFilterDates, lang)
-    const done = calculateEIQAndPorcentTotal(crop.done, lang)
-    const finished = calculateEIQAndPorcentTotal(crop.finished, lang)
+
+    const toMake = calculateEIQAndPercentTotal(toMakeFilterDates, language)
+    const done = calculateEIQAndPercentTotal(translatedCrop.done, language)
+    const finished = calculateEIQAndPercentTotal(
+      translatedCrop.finished,
+      language
+    )
 
     const newCrop = {
-      ...crop,
+      ...translatedCrop,
       volume,
       lots,
       company: {
-        ...crop.company,
+        ...translatedCrop.company,
         theoriticalPotential
       },
       badges,
