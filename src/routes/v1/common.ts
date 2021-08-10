@@ -140,6 +140,12 @@ router.get('/concepts', commonController.evidenceConcepts)
  * /v1/commons/integrations:
  *  get:
  *   summary: Get all services integrations
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Services Integration
