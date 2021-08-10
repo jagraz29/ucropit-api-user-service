@@ -41,6 +41,32 @@ router.get('/', activitiesController.index)
 
 /**
  * @swagger
+ *  /v1/activities/{id}/grouped-lots-by-tags:
+ *    get:
+ *      summary: Show a activity
+ *      tags: [Activity]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          content:
+ *            application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Activity'
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.get(
+  '/:id/lots-grouped-by-tags',
+  activitiesController.showAndLotsGroupedByTags
+)
+
+/**
+ * @swagger
  *  /v1/activities/{id}:
  *    get:
  *      summary: Show a activity

@@ -38,8 +38,12 @@ export class CropRepository {
    * @param object query
    */
   public static async findCropsSample(query) {
-    const crops = await Crop.find(query)
+    const crops = await Crop.find(query).lean()
     return crops
+  }
+
+  public static async findOneSample(query) {
+    return Crop.findOne(query).lean()
   }
   /**
    *

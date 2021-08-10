@@ -18,7 +18,8 @@ import {
   sumActivitiesSurfacesByTypeAgreement,
   getCropBadgesReached,
   calculateCropEiq,
-  calculateEiqOfActivity
+  calculateEiqOfActivity,
+  groupedLotsByTagsInActivity
 } from '../utils'
 
 import ActivityService from '../services/ActivityService'
@@ -88,6 +89,32 @@ class ActivitiesController {
     const lang = req.getLocale() as string
     const activityWithEIQ = calculateEiqOfActivity(activity, lang)
     res.status(200).json(activityWithEIQ)
+  }
+
+  /**
+   * Show one activity grouped by Tags
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async showAndLotsGroupedByTags(req: Request, res: Response) {
+    const { id } = req.params
+    const { cropId } = req.query
+    const activity =
+      await ActivityRepository.findActivityByIdWithPopulateAndVirtuals(id)
+    const crop = await CropRepository.findOneSample({ _id: cropId })
+
+    console.log('Gets findOneGroupedByTags')
+
+    const lang = req.getLocale() as string
+    const activities = groupedLotsByTagsInActivity(
+      calculateEiqOfActivity(activity, lang),
+      crop,
+      lang
+    )
+    res.status(200).json(activities)
   }
 
   /**
