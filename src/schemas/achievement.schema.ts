@@ -33,6 +33,14 @@ export const AchievementSchema: Schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'EnvImpactIndex'
   },
+  subTypeActivity: {
+    type: Schema.Types.ObjectId,
+    ref: 'SubTypeActivity'
+  },
+  nameSubTypesActivity: {
+    type: String,
+    required: false
+  },
   key: {
     type: String,
     required: false
