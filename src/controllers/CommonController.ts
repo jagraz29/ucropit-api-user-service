@@ -12,12 +12,14 @@ import { TypeStorageDocument } from '../models/typeStorage'
 import { UnitTypeDocument } from '../models/unitType'
 import { EvidenceConceptDocument } from '../models/evidenceConcept'
 import { RolesDocument } from '../models/Roles'
+import { ServiceIntegrationDocument } from '../models/serviceIntegration'
 import { parseLangLocal } from '../utils/Locales'
 import {
   activityTypeRepository,
   TypeAgreementRepository,
   EvidenceConceptRepository,
-  RolesRepository
+  RolesRepository,
+  ServiceIntegrationRepository
 } from '../repositories'
 
 const ServiceIntegrations = models.ServiceIntegration
@@ -191,7 +193,25 @@ class CommonController {
    * @param Response res
    */
   public async serviceIntegration(req: Request, res: Response) {
-    const services = await ServiceIntegrations.find({})
+    const result: ServiceIntegrationDocument[] =
+      await ServiceIntegrationRepository.getAll()
+
+    const servicesIntegrationKeys = req.__(
+      'services_integration.code'
+    ) as unknown as object
+
+    const services = result.map((service: ServiceIntegrationDocument) => {
+      const altLabel = service?.code
+      const serviceTranslate = parseLangLocal(
+        servicesIntegrationKeys,
+        service?.code,
+        altLabel
+      )
+      return {
+        ...service,
+        ...serviceTranslate
+      }
+    })
 
     res.status(StatusCodes.OK).json(services)
   }

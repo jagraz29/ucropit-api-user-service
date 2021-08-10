@@ -16,9 +16,10 @@
  *           erpAgent:
  *             type: string
  */
-import mongoose from 'mongoose'
+import mongoose, { Schema, Document } from 'mongoose'
+import { IServiceIntegration } from '../interfaces'
 
-const { Schema } = mongoose
+export type ServiceIntegrationDocument = Document & IServiceIntegration
 
 const ServiceIntegrationSchema = new Schema({
   code: {
@@ -36,4 +37,7 @@ const ServiceIntegrationSchema = new Schema({
   }
 })
 
-export default mongoose.model('ServicesIntegrations', ServiceIntegrationSchema)
+export default mongoose.model<ServiceIntegrationDocument>(
+  'ServicesIntegrations',
+  ServiceIntegrationSchema
+)

@@ -203,13 +203,14 @@
   "services_integration": {
     "code": {
       "auravant": {
-        "description": "It is simple digital farming. It is technological innovation that enhances agronomic knowledge and maximizes results",
+        "description": "Es agricultura digital simple. Es innovación tecnológica que potencia el conocimiento agronómico y maximiza los resultados",
         "conditions": [
-          "specific updates on disease and insect risks to crops",
-          "important notifications about the growth phase of crops",
-          "notifications on available biomass maps",
-          "specific meteorological information for each field",
-          "hourly weather forecast"
+          "Actualizaciones específicas sobre los riesgos de enfermedades e insectos para los cultivos",
+          "Notificaciones importantes sobre la fase de crecimiento de los cultivos",
+          "Notificaciones sobre el momento óptimo de fumigación",
+          "Notificaciones sobre mapas de biomasa disponibles",
+          "información meteorológica específica para cada campo",
+          "predicción meteorológica por hora"
         ]
       }
     }
