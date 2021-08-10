@@ -105,7 +105,9 @@ class CommonController {
     const result: TypeAgreementDocument[] =
       await TypeAgreementRepository.getAll()
 
-    const agreementTypesKeys = req.__('type_agreement.key') as unknown as object
+    const agreementTypesKeys = req.__(
+      'type_agreement.keys'
+    ) as unknown as object
 
     const agreementTypes = result.map(
       (typeAgreement: TypeAgreementDocument) => {
