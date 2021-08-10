@@ -12,6 +12,6 @@ export interface Company {
 }
 
 export enum TypePersonEnum {
-  PHISICAL_PERSON =  'PHISICAL_PERSON',
-  LEGAL_PERSON =  'LEGAL_PERSON'
+  PHISICAL_PERSON = 'PHISICAL_PERSON',
+  LEGAL_PERSON = 'LEGAL_PERSON'
 }
