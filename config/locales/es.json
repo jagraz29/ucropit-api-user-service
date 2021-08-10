@@ -107,6 +107,14 @@
       "act_monitoring": "Monitoreo"
     }
   },
+  "activity_status": {
+    "status": {
+      "to_complete": "Completar",
+      "planned": "Planificada",
+      "done": "Realizada",
+      "finished": "Terminada"
+    }
+  },
   "roles": {
     "value": {
       "producer_adviser": "Asesor",

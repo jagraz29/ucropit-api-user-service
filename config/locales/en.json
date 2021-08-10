@@ -107,6 +107,14 @@
       "act_monitoring": "Monitoring"
     }
   },
+  "activity_status": {
+    "status": {
+      "to_complete": "To Complete",
+      "planned": "Planned",
+      "done": "Done",
+      "finished": "Finished"
+    }
+  },
   "evidence_concepts": {
     "code": {
       "0001": "Consignment note",
