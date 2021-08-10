@@ -199,5 +199,19 @@
     "pending": "PENDING",
     "within_lot": "Within the lot",
     "aplications": "Aplications"
+  },
+  "services_integration": {
+    "code": {
+      "auravant": {
+        "description": "It is simple digital farming. It is technological innovation that enhances agronomic knowledge and maximizes results",
+        "conditions": [
+          "specific updates on disease and insect risks to crops",
+          "important notifications about the growth phase of crops",
+          "notifications on available biomass maps",
+          "specific meteorological information for each field",
+          "hourly weather forecast"
+        ]
+      }
+    }
   }
 }
