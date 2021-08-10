@@ -5,7 +5,8 @@ import {
   TypeAgreementRepository,
   BadgeRepository,
   CropRepository,
-  activityTypeRepository
+  activityTypeRepository,
+  SubTypeActivityRepository
 } from '../repositories'
 import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
 import {
@@ -88,6 +89,21 @@ class ActivitiesController {
     const lang = req.getLocale() as string
     const activityWithEIQ = calculateEiqOfActivity(activity, lang)
     res.status(200).json(activityWithEIQ)
+  }
+
+  /**
+   * Show all subtypes of activities
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async getAllSubtypes(req: Request, res: Response) {
+    console.log('hola')
+
+    const subTypeActivity = await SubTypeActivityRepository.getAll()
+    res.status(StatusCodes.OK).json(subTypeActivity)
   }
 
   /**

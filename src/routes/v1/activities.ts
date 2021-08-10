@@ -281,4 +281,24 @@ router.delete('/:id/files', activitiesController.removeFiles)
  */
 router.post('/notify', ActivitiesNotificationsController.notify)
 
+/**
+ * @swagger
+ *  /v1/activities/sub-type:
+ *    get:
+ *      summary: Show all subTypes of activities
+ *      tags: [Activity]
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          content:
+ *            application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/SubTypeActivity'
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.get('/sub-type', activitiesController.getAllSubtypes)
+
 export default router

@@ -37,6 +37,7 @@ const connectDb = function () {
 export * from './eiqRanges'
 export * from './achievement'
 export * from './envImpactIndex'
+export * from './subTypeActivity'
 
 const models = {
   User,
