@@ -203,26 +203,26 @@
                   <div class="dataNames">
                     {{I18n "crop_story.netSup"}}
                   </div>
-                  <div class="dataValue">
+                  <div class="dataValue font-bold">
                     {{crop.surface}}
                     {{I18n "crop_story.has"}}
                   </div>
                   <div class="dataNames">
                     {{I18n "crop_story.seedTime"}}
                   </div>
-                  <div class="dataValue">
+                  <div class="dataValue font-bold">
                     {{crop.dateSowingFormat}}
                   </div>
                   <div class="dataNames">
                     {{I18n "crop_story.harvestDate"}}
                   </div>
-                  <div class="dataValue">
+                  <div class="dataValue font-bold">
                     {{crop.dateHarvestFormat}}
                   </div>
                   <div class="dataNames">
                     {{I18n "crop_story.yield"}}
                   </div>
-                  <div class="dataValue">
+                  <div class="dataValue font-bold">
                     {{crop.pay}}
                     {{I18n "unit_types.keys.kg"}}
                   </div>
@@ -230,7 +230,7 @@
                     <div class="dataNames">
                       {{I18n "crop_story.volume"}}
                     </div>
-                    <div class="dataValue">
+                    <div class="dataValue font-bold">
                       {{crop.volume}}
                       {{I18n "crop_story.ton"}}
                     </div>
@@ -352,8 +352,8 @@
                       <div class="last-frame">
                         <div class="lastActivity-title dataValue no-bold">
                           {{I18n "crop_story.status"}}
-                          {{name}}
-                          {{status}}
+                          {{toLower name}}
+                          {{toLower status}}
                         </div>
                       </div>
                     </div>
@@ -381,7 +381,7 @@
               </div>
               {{! TODO: aqui cierra el fill }}
               <div class="crop-leaders">
-                <div class="res-contact-header">
+                <div class="res-contact-header" style="margin-right: 16px;">
                   <h5 class="res-contact-title">
                     {{I18n "crop_story.cropResponsible"}}
                   </h5>
@@ -397,7 +397,7 @@
                   </div>
                 </div>
                 {{#if crop.commercialContact}}
-                  <div class="res-contact-header">
+                  <div class="res-contact-header" style="margin-left: 16px;">
                     <h5 class="res-contact-title">
                       {{I18n "crop_story.commercial_contact"}}
                     </h5>
