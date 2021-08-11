@@ -2,7 +2,7 @@ import models from '../models'
 import { TypeActivities } from '../interfaces/activities/TypeActivities.enum'
 const { Supply, ActiveIngredient } = models
 
-class SupplyRepository {
+export class SupplyRepository {
   /**
    *
    * @param query
@@ -28,6 +28,7 @@ class SupplyRepository {
   ): Promise<any> {
     let suppliesPaginated = Supply.find(query)
       .populate('typeId')
+      .populate('countryId')
       .populate('activesPrinciples.activePrinciple')
       .limit(limit)
       .skip(skip)
@@ -99,6 +100,14 @@ class SupplyRepository {
   public static async getOneActiveIngredient(query): Promise<any> {
     return ActiveIngredient.findOne(query)
   }
-}
 
-export default SupplyRepository
+  /**
+   * get count of all supplies
+   * @param query
+   * @returns number
+   */
+  public static async count(query) {
+    const count = await Supply.countDocuments(query)
+    return count
+  }
+}

@@ -1,16 +1,17 @@
-import models, { AchievementModel } from '../models'
+import { setLocale, __ } from 'i18n'
 import _ from 'lodash'
 import moment from 'moment'
+import models, { AchievementModel } from '../models'
+import Activity from '../models/activity'
 import GeoLocationService from '../services/GeoLocationService'
 import { Numbers } from '../utils'
-
 import {
-  tagsTypeAgreement,
   responsibleRoles,
+  rolesAdvisorPromoter,
   supplyTypesSeedGen,
-  rolesAdvisorPromoter
+  tagsTypeAgreement
 } from '../utils/Constants'
-import Activity from '../models/activity'
+import { parseLangLocal } from '../utils/Locales'
 
 const LANGUAGE_DEFAULT = 'es'
 const REGION_DEFAULT = 'AR'
@@ -141,10 +142,29 @@ class ReportService {
     return Promise.all(reports)
   }
 
-  public static async generateLotReports(crops) {
+  private static formatDateByLanguage(date: any, language: string) {
+    let dateFormat: string
+    switch (language) {
+      case 'es':
+        dateFormat = moment(date).format('DD/MM/YYYY')
+        break
+      case 'en':
+        dateFormat = moment(date).format('MM/DD/YYYY')
+        break
+      case 'pt':
+        dateFormat = moment(date).format('DD/MM/YYYY')
+        break
+    }
+    return dateFormat
+  }
+
+  public static async generateLotReports(crops, language: string) {
+    setLocale(language)
+    const unitTypesKeys = __('unit_types.keys') as unknown as object
     const reports = crops.map((crop) => {
       const reportByCrop = crop.lots.map(async (item) => {
         const reportByLot = item.data.map(async (lot) => {
+          const altLabel = crop.unitType?.name?.es || crop.unitType.key
           return {
             cuit: crop.company?.identifier,
             business_name: (await this.getCompany(crop.company?.identifier))
@@ -155,12 +175,18 @@ class ReportService {
               this.calVolume(crop.unitType.key, crop.pay, crop.lots)
             ),
             surface: crop.surface,
-            pay: `${crop.pay} ${crop.unitType.name.es}`,
+            pay: `${crop.pay} ${parseLangLocal(
+              unitTypesKeys,
+              crop.unitType.key,
+              altLabel
+            )}`,
+            // pay: `${crop.pay} ${crop.key.en}`,
             responsible: this.getMembersWithIdentifier(crop),
-            date_sowing: moment(crop.dateCrop).format('DD/MM/YYYY'),
-            date_harvest: moment(crop.dateHarvest).format('DD/MM/YYYY'),
-            date_created_crop: moment(crop._id.getTimestamp()).format(
-              'DD/MM/YYYY'
+            date_sowing: this.formatDateByLanguage(crop.dateCrop, language),
+            date_harvest: this.formatDateByLanguage(crop.dateHarvest, language),
+            date_created_crop: this.formatDateByLanguage(
+              crop._id.getTimestamp(),
+              language
             ),
             city: await this.getLocaleAddress(
               lot,
@@ -236,7 +262,7 @@ class ReportService {
               lot,
               tagsTypeAgreement.EXPLO
             ),
-            date_sign_achievement_by_lot_explo:
+            date_sign_achievement_by_lot_explo1:
               await this.lastDateSignAchievementByLotAgreement(
                 crop,
                 lot,
@@ -368,7 +394,8 @@ class ReportService {
             date_achievement_fertilization: this.lastDateAchievementByLot(
               crop,
               lot,
-              'ACT_FERTILIZATION'
+              'ACT_FERTILIZATION',
+              language
             ),
             surface_achievement_fertilization: this.surfaceAchievementsActivity(
               crop,
@@ -1193,7 +1220,12 @@ class ReportService {
     return sum
   }
 
-  private static lastDateAchievementByLot(crop, lot, typeActivity) {
+  private static lastDateAchievementByLot(
+    crop,
+    lot,
+    typeActivity,
+    language?: string
+  ) {
     const datesDone = this.getDateLastAchievement(
       crop.done.filter((activity) => activity.type.tag === typeActivity),
       lot
@@ -1206,10 +1238,17 @@ class ReportService {
 
     const mergedList = datesDone.concat(datesFinished)
 
-    const lastDate =
+    let lastDate =
       mergedList.length > 0 ? datesDone.concat(datesFinished).pop() : null
 
-    return lastDate ? moment(lastDate).format('DD/MM/YYYY') : ''
+    if (lastDate && language)
+      lastDate = this.formatDateByLanguage(lastDate, language)
+    else if (lastDate) lastDate = moment(lastDate).format('DD/MM/YYYY')
+    else lastDate = ''
+
+    //  return lastDate ? moment(lastDate).format('DD/MM/YYYY') : ''
+
+    return lastDate
   }
 
   private static async lastDateSignAchievementByLotAgreement(

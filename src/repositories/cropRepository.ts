@@ -1,5 +1,5 @@
 import models from '../models'
-const { Crop } = models
+const { Crop, CropType } = models
 
 import {
   joinActivitiesByCrop,
@@ -295,9 +295,22 @@ export class CropRepository {
       cancelled: false,
       cropType,
       company
-    }).populate('unitType')
+    })
+      .populate('unitType')
+      .lean()
 
     return cropsInstance.length ? cropsInstance : null
+  }
+
+  /**
+   *  Get All crops by identifier and type.
+   *
+   * @param string id
+   */
+  public static async findAllCropType({ id }) {
+    const cropTypeInstance = await CropType.find({ id }).populate('name').lean()
+
+    return cropTypeInstance.length ? cropTypeInstance : null
   }
 
   public static async findCropsWithLotsPopulateData(query) {

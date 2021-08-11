@@ -13,9 +13,10 @@
  *           value:
  *             type: string
  */
-import mongoose from 'mongoose'
+import mongoose, { Schema, Document } from 'mongoose'
+import { IRoles } from '../interfaces'
 
-const { Schema } = mongoose
+export type RolesDocument = Document & IRoles
 
 const Roles = new Schema({
   label: {
@@ -38,4 +39,4 @@ const Roles = new Schema({
   }
 })
 
-export default mongoose.model('roles', Roles)
+export default mongoose.model<RolesDocument>('roles', Roles)

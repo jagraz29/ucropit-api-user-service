@@ -13,7 +13,7 @@ const router: express.Router = express.Router()
  *      - Supply
  *   parameters:
  *        - in: query
- *          name: q
+ *          name: queryFiltering
  *          required: false
  *          schema:
  *            type: string
@@ -23,7 +23,17 @@ const router: express.Router = express.Router()
  *          schema:
  *            type: string
  *        - in: query
- *          name: tag
+ *          name: alphaCode
+ *          required: false
+ *          schema:
+ *            type: string
+ *        - in: query
+ *          name: activityType
+ *          required: false
+ *          schema:
+ *            type: string
+ *        - in: query
+ *          name: cropType
  *          required: false
  *          schema:
  *            type: string
@@ -49,6 +59,12 @@ router.get('/', suppliesController.index)
  *   summary: Get total documents supplies
  *   tags:
  *      - Supply
+ *   parameters:
+ *        - in: query
+ *          name: alphaCode
+ *          required: false
+ *          schema:
+ *            type: string
  *   description: Supplies
  *   produces:
  *     - application/json

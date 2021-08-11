@@ -9,6 +9,10 @@
  *             type: string
  *           company:
  *             type: string
+ *           alphaCode:
+ *             type: string
+ *           supplyType:
+ *             type: string
  *           code:
  *             type: string
  *           typeId:
@@ -51,13 +55,27 @@ import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
 const { Schema } = mongoose
 
 const SupplySchema = new Schema({
-  name: String,
-  company: String,
-  code: String,
+  alphaCode: {
+    type: String,
+    default: 'ARG',
+    require: true
+  },
+  supplyType: {
+    type: String,
+    require: true
+  },
   typeId: {
     type: Schema.Types.ObjectId,
     ref: 'SupplyType'
   },
+  countryId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Country',
+    require: true
+  },
+  name: String,
+  company: String,
+  code: String,
   unit: String,
   brand: String,
   compositon: String,
@@ -79,6 +97,8 @@ const SupplySchema = new Schema({
     }
   ]
 })
+SupplySchema.index({ alphaCode: 1 }, { background: true })
+SupplySchema.index({ supplyType: 1 }, { background: true })
 SupplySchema.index({ name: 'text', brand: 'text', company: 'text' })
 
 SupplySchema.virtual('eiqTotal').get(function () {

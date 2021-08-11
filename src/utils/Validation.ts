@@ -346,7 +346,11 @@ export const validateFilesWithEvidences = (files, evidences) => {
   }
 
   if ((files && !evidences) || (!files && evidences)) {
-    return { error: true, message: 'Not complete evidences' }
+    return {
+      error: true,
+      message: 'Not complete evidences',
+      localKey: 'crops.errors.file_evidence_incomplete'
+    }
   }
 
   if (!Array.isArray(files.files)) {
@@ -354,7 +358,11 @@ export const validateFilesWithEvidences = (files, evidences) => {
   }
 
   if (files.files.length !== evidences.length) {
-    return { error: true, message: 'Length files and evidences must equal' }
+    return {
+      error: true,
+      message: 'Length files and evidences must equal',
+      localKey: 'crops.errors.file_evidence_invalid_length'
+    }
   }
 
   return { error: false }
@@ -370,6 +378,7 @@ export const validateNotEqualNameLot = (lotNames) => {
     return {
       error: true,
       message: 'KMZ names lot duplicate',
+      localKey: 'crops.errors.name_lot_duplicated',
       code:
         errors.find((error) => error.key === '004')?.code ||
         'NAME_LOT_DUPLICATED'
@@ -387,11 +396,14 @@ export const validateNotEqualNameLot = (lotNames) => {
 export const validateFormatKmz = async (files: FileArray) => {
   const result = await handleFileConvertJSON(files)
 
+  console.log(result[0].features[0].geometry)
+
   for (const feature of result[0].features) {
     if (feature.geometry.type !== 'Polygon') {
       return {
         error: true,
         message: 'KMZ format not allowed',
+        localKey: 'crops.errors.error_invalid_format_kmz',
         code:
           errors.find((error) => error.key === '002')?.code ||
           'ERROR_INVALID_FORMAT_KMZ'
@@ -437,6 +449,7 @@ export const validateExtensionFile = (files) => {
     return {
       error: true,
       message: 'Any File extension not allowed',
+      localKey: 'crops.errors.error_file_extension',
       code:
         errors.find((error) => error.key === '003')?.code ||
         'ERROR_FILE_EXTENSION'
@@ -457,6 +470,7 @@ export const validateDateCropAndDateHarvest = (
     return {
       error: true,
       message: 'La fecha de cosecha deber ser posterior a la del cultivo',
+      localKey: 'crops.errors.invalid_date_harvest',
       code: ErrorResponse.INVALID_DATE_HARVEST
     }
   }

@@ -3,10 +3,6 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import * as Joi from 'joi'
 import ErrorResponse, { ErrorResponseInstance } from '../ErrorResponse'
 
-const messages = {
-  identifier: 'El CUIT es requerido para continuar con la operación',
-  dateCrop: 'Debe ingresar una fecha en el valor ‘Fecha de cultivo’.'
-}
 export const getLotsPolicy = (
   req: Request | any,
   res: Response,
@@ -18,6 +14,11 @@ export const getLotsPolicy = (
   })
 
   const { error } = schema.validate(req.query)
+
+  const messages = {
+    identifier: req.__('lots.erros.invalid_identifier'),
+    dateCrop: req.__('lots.erros.date_crop')
+  }
 
   if (error) {
     const field = error.details[0].path[0]

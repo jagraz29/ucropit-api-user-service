@@ -43,13 +43,18 @@ router.get('/lastMonitoring/:id', cropsController.showLastMonitoring)
 /**
  * @swagger
  *  /v1/crops/{id}:
- *    get:
- *      summary: Show a crop
- *      tags: [Crops]
- *      parameters:
- *        - in: path
- *          name: id
- *      responses:
+ *   get:
+ *     summary: Show a crop
+ *     tags: [Crops]
+ *     parameters:
+ *     - in: path
+ *       name: id
+ *     - in: header
+ *       name: Accept-Language
+ *       type: string
+ *       require: true
+ *       enum: ['es', 'en', 'pt']
+ *     responses:
  *        "200":
  *          description: Show success
  *          content:
