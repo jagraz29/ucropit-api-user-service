@@ -42,7 +42,7 @@ router.get('/', activitiesController.index)
 
 /**
  * @swagger
- *  /v1/activities/{id}/lots-grouped-by-tags:
+ *  /v1/activities/{id}/lots/grouped-by-tags:
  *    get:
  *      summary: Show a activity with lots grouped by tags
  *      tags: [Activity]
@@ -66,7 +66,7 @@ router.get('/', activitiesController.index)
  *          description: Server error
  */
 router.get(
-  '/:id/lots-grouped-by-tags',
+  '/:id/lots/grouped-by-tags',
   [getActivitiesLotsGroupedByTagsMiddleware],
   activitiesController.showAndLotsGroupedByTags
 )

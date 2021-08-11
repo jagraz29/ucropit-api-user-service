@@ -112,7 +112,7 @@ class ActivitiesController {
       crop,
       lang
     )
-    res.status(200).json(activities)
+    res.status(StatusCodes.OK).json(activities)
   }
 
   /**
