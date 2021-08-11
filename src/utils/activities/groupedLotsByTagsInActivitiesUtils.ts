@@ -64,7 +64,7 @@ export const activityLotsGroupedByTags = (
 }
 
 export const findTagInCrop = (lotsInCropData, lot) => {
-  lot = lot.lot ? lot.lot : lot
+  lot = lot.lot ?? lot
   const tagInCrop = lotsInCropData.find((lotInCrop) => {
     const data = lotInCrop.data.map((id) => id.toString())
     return data.includes(lot._id.toString())
