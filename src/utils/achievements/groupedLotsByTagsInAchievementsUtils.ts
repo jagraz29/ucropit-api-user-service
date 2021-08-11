@@ -1,13 +1,14 @@
-import i18n from 'i18n'
+import { __, setLocale } from 'i18n'
 import { addLotInTagsArray, findTagInCrop } from '../activities'
+import { IAchievement } from '../../interfaces/achievements'
 
 export const groupedLotsByTagsInAchievements = (
-  achievements,
+  achievements: IAchievement[],
   lotsPlanned,
   lotsInCropData,
-  lang
+  lang: string
 ) =>
-  achievements.map((achievement) => {
+  achievements.map((achievement: IAchievement) => {
     const { lots, lotsWithSurface = [], surface } = achievement
     const lotsAchievement = achievementLotsGroupedByTags(
       lots,
@@ -27,10 +28,10 @@ export const groupedLotsByTagsInAchievements = (
 export const achievementLotsGroupedByTags = (
   lots,
   lotsWithSurface = [],
-  lotsInCropData,
-  surface,
-  lotsPlanned,
-  lang
+  lotsInCropData: [],
+  surface: number,
+  lotsPlanned: [],
+  lang: string
 ) => {
   let surfaceAchievement = 0
   let tagsArray = []
@@ -40,11 +41,11 @@ export const achievementLotsGroupedByTags = (
   } else {
     surfaceAchievement = surface / lots.length
   }
-  i18n.setLocale(lang)
+  setLocale(lang)
   for (let lot of lotsList) {
     const tagInCrop = findTagInCrop(lotsInCropData, lot)
     const tagName =
-      lot.tag || (tagInCrop ? tagInCrop.tag : i18n.__('commons.tag_general'))
+      lot.tag || (tagInCrop ? tagInCrop.tag : __('commons.tag_general'))
     if (!lot.lot) {
       lot = {
         lot,
@@ -59,7 +60,7 @@ export const achievementLotsGroupedByTags = (
 }
 
 const findSurfacePlanned = (tagName, lot, lotsPlanned) => {
-  lot = lot.lot ? lot.lot : lot
+  lot = lot.lot ?? lot
   let surfacePlanned = 0
   const lotInPlanned = lotsPlanned.find(
     (lotInPlanned) => lotInPlanned.tag === tagName

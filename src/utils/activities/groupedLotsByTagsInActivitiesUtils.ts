@@ -1,12 +1,22 @@
-import i18n from 'i18n'
+import { __, setLocale } from 'i18n'
 import { groupedLotsByTagsInAchievements } from '../achievements'
+import { Crop } from '../../interfaces/crops'
+import { Activity } from '../../interfaces/activities'
 
-export const groupedLotsByTagsInActivities = (activities, crop, lang) =>
+export const groupedLotsByTagsInActivities = (
+  activities: Activity[],
+  crop: Crop,
+  lang: string
+) =>
   activities.map((activity) =>
     groupedLotsByTagsInActivity(activity, crop, lang)
   )
 
-export const groupedLotsByTagsInActivity = (activity, crop, lang) => {
+export const groupedLotsByTagsInActivity = (
+  activity: Activity,
+  crop: Crop,
+  lang: string
+) => {
   const { achievements, lots, lotsWithSurface = [], surface } = activity
   const lotsInCropData = crop.lots
   delete activity.lotsMade
@@ -34,8 +44,8 @@ export const activityLotsGroupedByTags = (
   lots,
   lotsWithSurface = [],
   lotsInCropData,
-  surface,
-  lang
+  surface: number,
+  lang: string
 ) => {
   let surfacePlanned = 0
   let tagsArray = []
@@ -45,12 +55,12 @@ export const activityLotsGroupedByTags = (
   } else {
     surfacePlanned = surface / lots.length
   }
-  i18n.setLocale(lang)
+  setLocale(lang)
 
   for (let lot of lotsList) {
     const tagInCrop = findTagInCrop(lotsInCropData, lot)
     const tagName =
-      lot.tag || (tagInCrop ? tagInCrop.tag : i18n.__('commons.tag_general'))
+      lot.tag || (tagInCrop ? tagInCrop.tag : __('commons.tag_general'))
     if (!lot.lot) {
       lot = {
         lot,
@@ -72,7 +82,7 @@ export const findTagInCrop = (lotsInCropData, lot) => {
   return tagInCrop
 }
 export const addLotInTagsArray = (tagName, lot, tagsArray) => {
-  const index = tagsArray.findIndex((x) => x.tag === tagName)
+  const index = tagsArray.findIndex((item) => item.tag === tagName)
   if (index !== -1) {
     tagsArray[index].lots.push(lot)
   } else {
