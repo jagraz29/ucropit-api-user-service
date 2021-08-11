@@ -41,12 +41,20 @@ export class ActivityRepository {
         ]
       })
       .populate('lots')
+      .populate({
+        path: 'lotsWithSurface',
+        populate: [{ path: 'lot' }]
+      })
       .populate('lotsMade')
       .populate('files')
       .populate({
         path: 'achievements',
         populate: [
           { path: 'lots' },
+          {
+            path: 'lotsWithSurface',
+            populate: [{ path: 'lot' }]
+          },
           { path: 'files' },
           {
             path: 'supplies',
