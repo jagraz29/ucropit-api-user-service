@@ -83,7 +83,7 @@
       "sustain": "Sustainable crop",
       "cotton_bets": "Sustainable cotton farming",
       "seed_use": "Agreement of Legal Seed Use",
-      "responsible_use": "Supplier"
+      "responsible_use": "Responsible use of phytosanitary products"
     }
   },
   "type_badge": {
@@ -120,7 +120,7 @@
       "0001": "Consignment note",
       "0002": "Backup Documentation",
       "0003": "Bill",
-      "0004": "Photo inside the plot",
+      "0004": "Photo inside the lot",
       "0005": "Agricultural recipe",
       "0006": "Dispatch Form",
       "0007": "Seeds Bill",
