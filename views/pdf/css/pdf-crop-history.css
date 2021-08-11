@@ -7,6 +7,7 @@
   --first-page-background: #ffffff;
   --green-primary: #4caf50;
   --black: #333333;
+  --bg-eiq: #f8f8f8;
 }
 
 /* Styles tessst */
@@ -81,7 +82,7 @@
 }
 
 .font-bold {
-  font-weight: bold;
+  font-weight: bold !important;
 }
 
 .material-icons {
@@ -168,7 +169,7 @@
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-style: normal;
   /* font-weight: bold; */
-  font-size: 22px;
+  font-size: 20px;
   line-height: 24px;
   text-align: left;
   color: var(--black);
@@ -202,8 +203,8 @@
 }
 
 .badges-image {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   margin-left: -20px;
 }
 
@@ -225,6 +226,7 @@
   font-size: 12px;
   margin-bottom: -20px;
   color: var(--green-primary);
+  width: 160px;
 }
 
 /* TODO: no borrar estos estilos */
@@ -376,6 +378,7 @@
   margin-bottom: 10px;
   font-weight: 400;
   font-size: 20px;
+  text-transform: capitalize;
 }
 
 .no-bold {
@@ -415,9 +418,8 @@
     #ffffff 100%
   );
   display: flex;
-  justify-content: space-evenly;
   height: 400px;
-  margin-top: -100;
+  margin: -100px 0px 0px 60px;
 }
 
 .spokesman {
@@ -894,15 +896,16 @@
   height: 47px;
   width: 244px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background: rgba(255, 255, 255, 0.54);
+  background: var(--bg-eiq);
   display: flex;
+  border-radius: 2px;
   position: absolute;
   margin-left: 70px;
   margin-top: 382px;
   opacity: 0.5;
   align-items: center;
   padding: 3px;
-  box-shadow: 0px 1px 3px rgb(0 0 0 / 20%);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .center {
