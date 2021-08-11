@@ -1,6 +1,7 @@
 import { __, setLocale } from 'i18n'
 import { Crop } from '../../interfaces'
 import { translateActivities } from '../activities'
+import { translateCropType } from './'
 
 export const translateCropActivities = (crop: Crop, lang: string) => {
   setLocale(lang)
@@ -8,6 +9,8 @@ export const translateCropActivities = (crop: Crop, lang: string) => {
   const toMake = translateActivities(crop.toMake, lang)
   const done = translateActivities(crop.done, lang)
   const finished = translateActivities(crop.finished, lang)
+  crop.cropType = translateCropType(crop, lang)
+
   return {
     ...crop,
     toMake,
