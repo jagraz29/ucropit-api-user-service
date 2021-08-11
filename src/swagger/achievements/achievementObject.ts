@@ -1,17 +1,12 @@
 /**
  * @swagger
  *  definitions:
- *    activitiesLotsGroupedByTagsObject:
+ *    achievementObject :
  *      properties:
  *        _id:
  *          type: string
  *          format: uuid
- *        name:
- *          type: string
- *        dateStart:
- *          type: string
- *          format: date
- *        dateEnd:
+ *        dateAchievement:
  *          type: string
  *          format: date
  *        surface:
@@ -21,26 +16,14 @@
  *        envImpactIndex:
  *          type: string
  *          format: uuid
- *        percentTotal:
+ *        percent:
  *          type: number
  *        eiq:
  *          type: number
- *        type:
- *          $ref: '#/definitions/activityTypeObject'
- *        unitType:
- *          $ref: '#/definitions/unitTypeObject'
- *        status:
- *          type: array
- *          items:
- *            $ref: '#/definitions/statusInActivityObject'
  *        lots:
  *          type: array
  *          items:
  *            $ref: '#/definitions/lotsGroupedByTagsInActivityObject'
- *        achievements:
- *          type: array
- *          items:
- *            $ref: '#/definitions/achievementObject'
  *        supplies:
  *         type: array
  *         items:
@@ -49,12 +32,10 @@
  *         type: array
  *         items:
  *            $ref: '#/definitions/signersInActivityObject'
- *        user:
- *          $ref: '#/definitions/userObject'
- *        storages:
+ *        destination:
  *         type: array
  *         items:
- *          $ref: '#/definitions/storagesObject'
+ *          $ref: '#/definitions/destinationObject'
  *        synchronizedList:
  *         type: array
  *         items:
