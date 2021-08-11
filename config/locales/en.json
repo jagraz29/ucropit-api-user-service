@@ -3,7 +3,8 @@
   "commons": {
     "deleted_success": "successfully removed",
     "deletion_not_allowed": "removed not allowed",
-    "not_found": "removed not allowed"
+    "not_found": "removed not allowed",
+    "tag_general": "General"
   },
   "achievements": {
     "not_async": "failed to sync"
@@ -83,7 +84,7 @@
       "sustain": "Sustainable crop",
       "cotton_bets": "Sustainable cotton farming",
       "seed_use": "Agreement of Legal Seed Use",
-      "responsible_use": "Supplier"
+      "responsible_use": "Responsible use of phytosanitary products"
     }
   },
   "type_badge": {
@@ -107,12 +108,20 @@
       "act_monitoring": "Monitoring"
     }
   },
+  "activity_status": {
+    "status": {
+      "to_complete": "To Complete",
+      "planned": "Planned",
+      "done": "Done",
+      "finished": "Finished"
+    }
+  },
   "evidence_concepts": {
     "code": {
       "0001": "Consignment note",
       "0002": "Backup Documentation",
       "0003": "Bill",
-      "0004": "Photo inside the plot",
+      "0004": "Photo inside the lot",
       "0005": "Agricultural recipe",
       "0006": "Dispatch Form",
       "0007": "Seeds Bill",
@@ -199,5 +208,20 @@
     "pending": "PENDING",
     "within_lot": "Within the lot",
     "aplications": "Aplications"
+  },
+  "services_integration": {
+    "code": {
+      "auravant": {
+        "description": "It is simple digital farming. It is technological innovation that enhances agronomic knowledge and maximizes results",
+        "conditions": [
+          "specific updates on disease and insect risks to crops",
+          "important notifications about the growth phase of crops",
+          "Notifications about optimal fumigation time",
+          "notifications on available biomass maps",
+          "specific meteorological information for each field",
+          "hourly weather forecast"
+        ]
+      }
+    }
   }
 }

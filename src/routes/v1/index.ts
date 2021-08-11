@@ -42,6 +42,10 @@ router.get('/fast-links', (req, res: Response) => {
   res.render('fast-links', { url: process.env.SCHEMA_URL })
 })
 
+router.get('/ping', (req: Request, res: Response) => {
+  res.send('pong')
+})
+
 // AUTH
 router.use('/auth', auth)
 

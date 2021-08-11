@@ -21,19 +21,30 @@ export interface IDestination {
   total?: number
 }
 
+export interface ILots {}
+
+export interface LotsWithSurface {
+  tag?: string
+  lot?: object
+  surfacePlanned?: number
+  surfaceAchievement?: number
+}
+
 export interface IAchievement {
   // _id: string
   envImpactIndex: string
   key: string
   dateAchievement?: Date
-  surface?: number | number
+  surface?: number
   percent?: number
   eiq?: number
   supplies?: Array<ISupplies>
   destination?: Array<IDestination>
   signers?: Array<Signer>
   synchronizedList?: Array<{ service: string; isSynchronized: boolean }>
-  eiqSurface?: number | number
+  eiqSurface?: number
+  lots?: ILots[]
+  lotsWithSurface?: LotsWithSurface[]
 }
 
 export type IAchievementDocument = IAchievement & Document

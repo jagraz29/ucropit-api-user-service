@@ -105,6 +105,14 @@ const ActivitySchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'EnvImpactIndex'
   },
+  subTypeActivity: {
+    type: Schema.Types.ObjectId,
+    ref: 'SubTypeActivity'
+  },
+  nameSubTypesActivity: {
+    type: String,
+    required: false
+  },
   pay: {
     type: Number
   },
