@@ -12,7 +12,7 @@ export interface Crop {
   volume: number
   cancelled: boolean
   downloaded: boolean
-  croptype: CropType
+  cropType: CropType
   envImpactIndex: any
   unitType: UnitType
   member: any[]

@@ -32,6 +32,10 @@ router.get('/', (req: Request, res: Response) => {
   res.send(req.__('api_v1_ready'))
 })
 
+router.get('/ping', (req: Request, res: Response) => {
+  res.send('pong')
+})
+
 const authMiddleware = passport.authenticate('jwt', { session: false })
 
 router.get('/fast-links', (req, res: Response) => {
