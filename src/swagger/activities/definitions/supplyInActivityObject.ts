@@ -1,7 +1,7 @@
 /**
  * @swagger
  *  definitions:
- *    supplyObject:
+ *    supplyInActivityObject:
  *      properties:
  *        _id:
  *          type: string
@@ -13,7 +13,8 @@
  *        code:
  *          type: string
  *        typeId:
- *          $ref: '#/components/schemas/SupplyTypes'
+ *          type: string
+ *          format: uuid
  *        brand:
  *         type: string
  *        compositon:

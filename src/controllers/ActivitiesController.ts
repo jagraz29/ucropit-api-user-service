@@ -106,8 +106,6 @@ class ActivitiesController {
       await ActivityRepository.findActivityByIdWithPopulateAndVirtuals(id)
     const crop = await CropRepository.findOneSample({ _id: cropId })
 
-    console.log('Gets findOneGroupedByTags')
-
     const lang = req.getLocale() as string
     const activities = groupedLotsByTagsInActivity(
       calculateEiqOfActivity(activity, lang),
