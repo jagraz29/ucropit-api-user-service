@@ -3,6 +3,6 @@ import { ISubTypeActivity } from '../interfaces'
 import { SubTypeActivitySchema } from '../schemas'
 
 export const SubTypeActivityModel = model<ISubTypeActivity>(
-  'EiqRanges',
+  'SubTypeActivity',
   SubTypeActivitySchema
 )
