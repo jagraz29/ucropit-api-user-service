@@ -98,7 +98,7 @@ const ActivitySchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'SubTypeActivity'
   },
-  nameSubTypesActivity: {
+  keySubTypesActivity: {
     type: String,
     required: false
   },
