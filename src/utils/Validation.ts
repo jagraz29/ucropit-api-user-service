@@ -75,7 +75,6 @@ export const validateActivityStore = async (activity) => {
           .unknown()
       )
       .optional(),
-    //lotsWithSurface: Joi.array().items(Joi.string()).optional(),
     crop: Joi.string().optional(),
     dateObservation: Joi.date().optional(),
     unitType: Joi.string().optional(),
