@@ -108,6 +108,14 @@
       "act_monitoring": "Monitoreo"
     }
   },
+  "activity_status": {
+    "status": {
+      "to_complete": "Completar",
+      "planned": "Planejado",
+      "done": "Feito",
+      "finished": "Finalizado"
+    }
+  },
   "roles": {
     "value": {
       "producer_adviser": "Assesor",
@@ -200,5 +208,20 @@
     "pending": "PENDENTE",
     "within_lot": "dentro do lote",
     "aplications": "aplicações"
+  },
+  "services_integration": {
+    "code": {
+      "auravant": {
+        "description": "É uma agricultura digital simples. É a inovação tecnológica que aprimora o conhecimento agronômico e maximiza os resultados",
+        "conditions": [
+          "Atualizações específicas sobre riscos de doenças e insetos para as plantações",
+          "Notificações importantes sobre a fase de crescimento das lavouras",
+          "Notificações sobre o tempo ideal de fumigação",
+          "Notificações sobre mapas de biomassa disponíveis",
+          "informações meteorológicas específicas para cada campo",
+          "Previsão do tempo de hora em hora"
+        ]
+      }
+    }
   }
 }
