@@ -25,11 +25,9 @@ export interface ILots {}
 
 export interface LotsWithSurface {
   tag?: string
-  unit?: string
-  quantity?: number
-  typeId?: string
-  icon?: string
-  total?: number
+  lot?: object
+  surfacePlanned?: number
+  surfaceAchievement?: number
 }
 
 export interface IAchievement {
