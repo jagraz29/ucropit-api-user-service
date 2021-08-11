@@ -1,4 +1,4 @@
-import { IBadge, UserAuth, UserTypes } from '../../interfaces'
+import { UserAuth, UserTypes } from '../../interfaces'
 import { __, setLocale } from 'i18n'
 
 export const getCropBadgesByUserType = (
