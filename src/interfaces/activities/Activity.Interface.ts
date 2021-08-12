@@ -21,6 +21,7 @@ export interface Activity {
   type: any
   typeAgreement: any
   lots: any[]
+  lotsWithSurface?: any[]
   lotsMade: any[]
   supplies: any[]
   storages: any[]

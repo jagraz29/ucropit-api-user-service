@@ -3,7 +3,8 @@
   "commons": {
     "deleted_success": "removido com sucesso",
     "deletion_not_allowed": "removido não permitido",
-    "not_found": "Recurso não encontrado"
+    "not_found": "Recurso não encontrado",
+    "tag_general": "Geral"
   },
   "achievements": {
     "not_async": "falhou ao sincronizar"
@@ -83,7 +84,7 @@
       "sustain": "Cultivo sustentável",
       "cotton_bets": "Algodão boas práticas",
       "seed_use": "Acordo de utilização legal de sementes",
-      "responsible_use": "Fornecedor"
+      "responsible_use": "Uso responsável de produtos fitossanitários"
     }
   },
   "type_badge": {
