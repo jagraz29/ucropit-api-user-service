@@ -7,14 +7,7 @@
  *          type: string
  *          format: uuid
  *        name:
- *          type: object
- *          properties:
- *            es:
- *              type: string
- *            en:
- *              type: string
- *            pt:
- *              type: string
+ *          $ref: '#/definitions/nameObject'
  *        key:
  *          type: string
  *        keyLabel:
