@@ -25,8 +25,9 @@ import {
 import { activesPrinciples } from './activesPrinciplesData'
 
 import { badgesData } from './badgesData'
-import { EiqRangesRepository } from '../repositories'
+import { EiqRangesRepository, SubTypeActivityRepository } from '../repositories'
 import { eiqRangesData } from './eiqRangesData'
+import { subTypeActivityData } from './subTypeActivityData'
 
 const Badge = models.Badge
 const CropType = models.CropType
@@ -43,6 +44,18 @@ const TypeStorage = models.TypeStorage
 const ActiveIngredient = models.ActiveIngredient
 
 const ForeignCredential = models.ForeignCredential
+
+/**
+ * Seeders Badges
+ */
+const seedersSubTypeActivity = async (flag?) => {
+  if (flag && flag !== '--subTypeActivity') return
+  console.log(`${chalk.green('=====Registering Sub Type Activity====')}`)
+
+  await SubTypeActivityRepository.createAll(subTypeActivityData)
+  console.log(`${chalk.green('=====Registered Sub Type Activity====')}`)
+  return true
+}
 
 /**
  * Seeders Badges
@@ -388,6 +401,7 @@ const seedersForeignCredentials = async (flag?) => {
       await seedersActivePrinciples(flag)
       await seedersForeignCredentials(flag)
       await seedersEiqRanges(flag)
+      await seedersSubTypeActivity(flag)
     } catch (e) {
       console.log(e)
     }

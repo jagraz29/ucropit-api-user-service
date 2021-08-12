@@ -227,8 +227,8 @@
     "keys": {
       "direct_sowing": "Directa",
       "conventional_sowing": "Convencional",
-      "direct_re-sowing": "Resiembra Directa",
-      "conventional_re-sowing": "Resiembra Convencional",
+      "direct_re_sowing": "Resiembra Directa",
+      "conventional_re_sowing": "Resiembra Convencional",
       "inter_cropping": "Intersiembra",
       "articulated_discovered_disc_harrows": "Rastras de Disco Desencontradas articuladas",
       "eccentric_harrow_or_offset_draft_harrows": "Rastra Excéntricas o de tiro desplazado",

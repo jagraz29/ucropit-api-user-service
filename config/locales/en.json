@@ -227,8 +227,8 @@
     "keys": {
       "direct_sowing": "Direct sowing",
       "conventional_sowing": "Conventional sowing",
-      "direct_re-sowing": "Direct re-sowing",
-      "conventional_re-sowing": "Conventional re-sowing",
+      "direct_re_sowing": "Direct re-sowing",
+      "conventional_re_sowing": "Conventional re-sowing",
       "inter_cropping": "inter-cropping",
       "articulated_discovered_disc_harrows": "Articulated discovered disc harrows",
       "eccentric_harrow_or_offset_draft_harrows": "Eccentric harrow or offset draft harrows",
