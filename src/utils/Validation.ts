@@ -64,11 +64,12 @@ export const validateActivityStore = async (activity) => {
     type: Joi.string().optional(),
     typeAgreement: Joi.string().optional(),
     status: Joi.string().optional(),
+    lots: Joi.array().items(Joi.string()).optional(),
     lotsWithSurface: Joi.array()
       .items(
         Joi.object()
           .keys({
-            lots: Joi.string().required(),
+            lot: Joi.string().required(),
             surfacePlanned: Joi.number().optional(),
             tag: Joi.string().optional()
           })
@@ -257,7 +258,7 @@ export const validateAchievement = async (achievement) => {
       .items(
         Joi.object()
           .keys({
-            lots: Joi.string().required(),
+            lot: Joi.string().required(),
             surfacePlanned: Joi.number().optional(),
             surfaceAchievement: Joi.number().optional(),
             tag: Joi.string().optional()
