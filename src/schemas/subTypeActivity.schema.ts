@@ -28,6 +28,9 @@ export const SubTypeActivitySchema: Schema = new Schema(
     key: {
       type: String,
       required: true
+    },
+    codeLabel: {
+      type: String
     }
   },
   { timestamps: true }

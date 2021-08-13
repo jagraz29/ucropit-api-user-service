@@ -104,21 +104,17 @@ class ActivitiesController {
    * @return Response
    */
   public async getAllSubtypes(req: Request, res: Response) {
-
     const lang = req.getLocale() as string
     const subTypeActivityCodes = __('SubTypeActivity.keys') as unknown as object
-    setLocale(lang || 'es')  
+    setLocale(lang || 'es')
 
     const subTypeActivities = await SubTypeActivityRepository.getAll()
-    subTypeActivities.map((subTypeActivity)=>{
-      // const codeLabel = subTypeActivityCodes[subTypeActivity.key.toLowerCase()] || capitalize(subTypeActivity.key.replace('_', ' '))
-      // return subTypeActivity
-      return {
-        ...subTypeActivity,
-        codeLabel: subTypeActivityCodes[subTypeActivity.key.toLowerCase()] || capitalize(subTypeActivity.key.replace('_', ' '))
-      }
-      // return subTypeActivity
-    })
+    subTypeActivities.map(
+      (subTypeActivity) =>
+        (subTypeActivity.codeLabel =
+          subTypeActivityCodes[subTypeActivity.key.toLowerCase()] ||
+          capitalize(subTypeActivity.key.replace('_', ' ')))
+    )
     res.status(StatusCodes.OK).json(subTypeActivities)
   }
 
