@@ -18,7 +18,6 @@ import reports from './reports'
 import charts from './charts'
 import badges from './badges'
 import countries from './countries'
-import clauses from './clauses'
 import licenses from './licenses'
 import files from './files'
 import supplies from './supplies'
@@ -90,8 +89,6 @@ router.use('/badges', authMiddleware, badges)
 
 // COUNTRIES
 router.use('/countries', authMiddleware, countries)
-// CALUSES
-router.use('/clauses', authMiddleware, clauses)
 
 // LICENSES
 router.use('/licenses', authMiddleware, licenses)
