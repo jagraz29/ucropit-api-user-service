@@ -3,7 +3,8 @@
   "commons": {
     "deleted_success": "removido com sucesso",
     "deletion_not_allowed": "removido não permitido",
-    "not_found": "Recurso não encontrado"
+    "not_found": "Recurso não encontrado",
+    "tag_general": "Geral"
   },
   "achievements": {
     "not_async": "falhou ao sincronizar"

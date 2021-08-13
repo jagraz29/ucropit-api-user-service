@@ -35,11 +35,11 @@ const cleanAllSupplyRepeat = async (): Promise<void> => {
     console.log('=======================')
   })
 
-  let activities = await Activity.find({
+  const activities = await Activity.find({
     supplies: { $elemMatch: { supply: { $in: duplicates } } }
   })
 
-  let achievement = await AchievementModel.find({
+  const achievement = await AchievementModel.find({
     supplies: { $elemMatch: { supply: { $in: duplicates } } }
   })
 

@@ -38,6 +38,17 @@
  *                $ref: '#/components/schemas/Crop'
  *           lots:
  *              type: array
+ *           lotsWithSurface:
+ *              type: object
+ *              properties:
+ *                lot:
+ *                  type: object
+ *                  schema:
+ *                    $ref: '#/components/schemas/Lot'
+ *                surfacePlanned:
+ *                  type: number
+ *                tag:
+ *                  type: string
  *           supplies:
  *              type: array
  *           evidence:
@@ -46,8 +57,8 @@
  *              type: array
  */
 import mongoose from 'mongoose'
-import shortid from 'shortid'
 import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
+import shortid from 'shortid'
 
 const { Schema } = mongoose
 
@@ -93,6 +104,14 @@ const ActivitySchema = new Schema({
   envImpactIndex: {
     type: Schema.Types.ObjectId,
     ref: 'EnvImpactIndex'
+  },
+  subTypeActivity: {
+    type: Schema.Types.ObjectId,
+    ref: 'SubTypeActivity'
+  },
+  nameSubTypesActivity: {
+    type: String,
+    required: false
   },
   pay: {
     type: Number
@@ -151,6 +170,17 @@ const ActivitySchema = new Schema({
     ref: 'TypeAgreement'
   },
   lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
+  lotsWithSurface: [
+    {
+      lot: { type: Schema.Types.ObjectId, ref: 'Lot' },
+      surfacePlanned: {
+        type: Number
+      },
+      tag: {
+        type: String
+      }
+    }
+  ],
   lotsMade: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
   supplies: [
     {

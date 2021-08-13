@@ -2,7 +2,7 @@
  * @swagger
  *  components:
  *    schemas:
- *       Activity:
+ *       Approval:
  *         type: object
  *         required:
  *           - name

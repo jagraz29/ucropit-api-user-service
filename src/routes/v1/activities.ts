@@ -2,6 +2,7 @@ import express from 'express'
 
 import activitiesController from '../../controllers/ActivitiesController'
 import ActivitiesNotificationsController from '../../controllers/ActivitiesNotificationsController'
+import { getActivitiesLotsGroupedByTagsMiddleware } from '../../middlewares/activities'
 
 const router: express.Router = express.Router()
 
@@ -38,6 +39,37 @@ const router: express.Router = express.Router()
  *      description: Get all Activities
  */
 router.get('/', activitiesController.index)
+
+/**
+ * @swagger
+ *  /v1/activities/{id}/lots/grouped-by-tags:
+ *    get:
+ *      summary: Show a activity with lots grouped by tags
+ *      tags: [Activity]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *        - in: query
+ *          name: cropId
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *          content:
+ *            application/json:
+ *             schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/definitions/activitiesLotsGroupedByTagsObject'
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.get(
+  '/:id/lots/grouped-by-tags',
+  [getActivitiesLotsGroupedByTagsMiddleware],
+  activitiesController.showLotsGroupedByTags
+)
 
 /**
  * @swagger

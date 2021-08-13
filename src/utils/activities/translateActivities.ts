@@ -1,5 +1,5 @@
 import { __, setLocale } from 'i18n'
-import { Activity } from '../../interfaces/activities/Activity.Interface'
+import { Activity } from '../../interfaces/activities/Activity.interface'
 
 export const translateActivities = (activities: Activity[], lang: string) => {
   setLocale(lang)
