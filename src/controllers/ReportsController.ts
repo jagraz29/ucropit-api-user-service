@@ -1,44 +1,38 @@
 import { Request, Response } from 'express'
+import fs from 'fs'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import moment from 'moment'
-
-import CropService from '../services/CropService'
-import ReportService from '../services/ReportService'
+import {
+  ReportBilling,
+  ReportDm,
+  ReportEiq,
+  ReportSignersByCompany,
+  ReportXlsForEiq
+} from '../interfaces'
+import models from '../models'
+import { CropRepository, TypeActivity } from '../repositories'
 import ExportFile from '../services/common/ExportFileService'
 import Company from '../services/CompanyService'
+import CropService from '../services/CropService'
 import EmailService from '../services/EmailService'
+import ReportService from '../services/ReportService'
 import {
-  ReportsSignersByCompaniesHeaderXls,
-  ReportsEiqHeaderXls,
+  reportHeaderBillingXls,
   ReportsDmHeaderXls,
-  ReportsXlsForEiqHeaderXls,
-  reportHeaderBillingXls
+  ReportsEiqHeaderXls,
+  ReportsSignersByCompaniesHeaderXls,
+  ReportsXlsForEiqHeaderXls
 } from '../types/'
-
-import { CropRepository, TypeActivity } from '../repositories'
+import { errors, typeActivityMap } from '../types/common'
 import {
-  structJsonForXls,
-  getCropPipelineEiqReportUtils,
   filterDataCropsByCompanies,
   getCropPipelineDmReportUtils,
+  getCropPipelineEiqReportUtils,
   getCropPipelineXlsForEiqReportUtils,
   getDataCropsForBilling,
+  structJsonForXls,
   validateTypeActivity
 } from '../utils'
-
-import {
-  ReportSignersByCompany,
-  ReportEiq,
-  ReportDm,
-  ReportXlsForEiq,
-  ReportBilling
-} from '../interfaces'
-
-import { errors, typeActivityMap } from '../types/common'
-
-import fs from 'fs'
-
-import models from '../models'
 
 const Lot = models.Lot
 
@@ -56,12 +50,13 @@ class ReportsController {
 
     const company = await Company.search({ identifier: cuit })
 
-    if (!company[0]) return res.status(404).json({ err: 'NOT FOUND COMPANY' })
+    if (!company[0])
+      return res.status(404).json({ err: req.__('companies.errors.not_found') })
 
     if (!(mode === 'csv' || mode === 'xls')) {
       return res
         .status(400)
-        .json({ err: `${mode} NOT ALLOWED export file mode` })
+        .json({ err: req.__('reports.errors.not_allowed_mode', { mode }) })
     }
 
     let crops = await CropService.getAll()
@@ -100,6 +95,10 @@ class ReportsController {
    */
   public async sendFileReport(req: Request, res: Response) {
     const { email, identifier } = req.body
+    const language =
+      req.header('Accept-Language') !== undefined
+        ? req.header('Accept-Language')
+        : 'es'
     const user: any = req.user
 
     const crops = await CropService.cropsOnlySeeRoles({
@@ -113,9 +112,9 @@ class ReportsController {
       return res.status(400).json(error.code)
     }
 
-    const reports = await ReportService.generateLotReports(crops)
+    const reports = await ReportService.generateLotReports(crops, language)
 
-    const pathFile = ExportFile.modeExport(reports, 'xls')
+    const pathFile = ExportFile.modeExport(reports, 'xls', language)
 
     const today = moment()
 
@@ -294,7 +293,7 @@ class ReportsController {
       ]
     })
 
-    return res.status(StatusCodes.OK).json('Reporte enviado con éxito')
+    return res.status(StatusCodes.OK).json(req.__('reports.send_mail_success'))
   }
 
   /**
@@ -354,14 +353,14 @@ class ReportsController {
   public async showMap(req: Request, res: Response) {
     const { id } = req.query
 
-    if (!id) res.status(403).json({ error: 'MUST PASS ID LOT' })
+    if (!id) res.status(403).json({ error: req.__('reports.show_map.error') })
     const lot: any = await Lot.findById(id)
 
     res.render('index', {
       api_key: process.env.GOOGLE_API_KEY,
       flightPlanCoordinates: lot.coordinateForGoogle,
       center: lot.centerBoundGoogle,
-      title: 'Localización Lote KMZ'
+      title: req.__('reports.show_map.title')
     })
   }
 }

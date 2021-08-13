@@ -1,6 +1,63 @@
+:root {
+  --eiq-very-low: #e8f5e9;
+  --eiq-low: #f1f8e9;
+  --eiq-moderate: #f9fbe7;
+  --eiq-high: #fff3e0;
+  --eiq-very-high: #fff3e0;
+  --first-page-background: #ffffff;
+  --green-primary: #4caf50;
+  --black: #333333;
+  --bg-eiq: #f8f8f8;
+}
+
+/* Styles tessst */
+
+/* .page-header,
+.page-header-space {
+  height: 50px;
+  margin-bottom: 100px;
+}
+.page-header {
+  position: fixed;
+  top: 0mm;
+  width: 100%;
+} */
+/* .page-footer,
+.page-footer-space {
+  height: 50px;
+}
+ 
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}*/
+
+.page {
+  page-break-after: always;
+}
+
+@media print {
+  thead {
+    display: table-header-group;
+  }
+  tfoot {
+    display: table-footer-group;
+  }
+
+  button {
+    display: none;
+  }
+
+  body {
+    margin: 0;
+  }
+}
+
 @page {
   size: A4;
 }
+
 @media print and (orientation: portrait) {
   .end-page {
     page-break-inside: always;
@@ -22,6 +79,10 @@
     url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
     url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
     url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.font-bold {
+  font-weight: bold !important;
 }
 
 .material-icons {
@@ -54,8 +115,16 @@
 }
 
 .fill {
-  background-color: #4caf50;
+  background-color: var(--first-page-background);
   height: 670px;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .fill-header {
@@ -90,7 +159,7 @@
   font-weight: normal;
   font-size: 14px;
   text-align: left;
-  color: #ffffff;
+  color: var(--black);
   line-height: 14.32px;
   letter-spacing: 0.15px;
 }
@@ -99,11 +168,11 @@
   margin-bottom: 5px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-style: normal;
-  font-weight: bold;
-  font-size: 22px;
+  /* font-weight: bold; */
+  font-size: 20px;
   line-height: 24px;
   text-align: left;
-  color: #ffffff;
+  color: var(--black);
 }
 
 .dataMeasures {
@@ -134,8 +203,8 @@
 }
 
 .badges-image {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   margin-left: -20px;
 }
 
@@ -156,6 +225,8 @@
   margin-left: 5px;
   font-size: 12px;
   margin-bottom: -20px;
+  color: var(--green-primary);
+  width: 160px;
 }
 
 /* TODO: no borrar estos estilos */
@@ -217,7 +288,7 @@
 }
 
 .binnacle {
-  color: #ffffff;
+  color: var(--black);
   margin-left: 60px;
   font-size: 12px;
   top: 50px;
@@ -307,6 +378,7 @@
   margin-bottom: 10px;
   font-weight: 400;
   font-size: 20px;
+  text-transform: capitalize;
 }
 
 .no-bold {
@@ -341,15 +413,13 @@
 .crop-leaders {
   background: linear-gradient(
     to bottom,
-    #4caf50 0%,
-    #4caf50 40%,
-    #ffffff 41%,
+    /* #4caf50 0%,
+    #4caf50 40%, */ #ffffff 41%,
     #ffffff 100%
   );
   display: flex;
-  justify-content: space-evenly;
   height: 400px;
-  margin-top: -100;
+  margin: -100px 0px 0px 60px;
 }
 
 .spokesman {
@@ -440,17 +510,17 @@
 /* FIXME: Desde aca se controla el paginado */
 .activity-header {
   page-break-inside: avoid;
-  /* page-break-after: always !important;
-  page-break-before: always !important; */
+  /* page-break-after: always !important; */
+  /* page-break-before: always !important;  */
 }
 
 .activity-header-lots-under {
-  page-break-before: always;
+  page-break-before: avoid;
 }
 
 .activity-header-val {
   /* page-break-after: always !important; */
-  /* page-break-inside: avoid; */
+  page-break-inside: avoid;
   /* page-break-before: always !important; */
   /* margin-top: 50px; */
 }
@@ -507,6 +577,7 @@
 
 .activities {
   background-color: #ffffff;
+  page-break-before: always;
 }
 
 .activities-with-achievements {
@@ -516,9 +587,10 @@
 .activity-frame-actividades-validaciones {
   border-radius: 2px;
   margin-bottom: 20px;
+  margin-top: 50px;
   box-shadow: 0px 0px 0px 2px rgb(0, 0, 0, 0.1);
   background-color: #f8f8f8;
-  page-break-inside: avoid !important;
+  page-break-inside: always !important;
   position: static;
   width: 100%;
 }
@@ -824,15 +896,16 @@
   height: 47px;
   width: 244px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background: rgba(255, 255, 255, 0.54);
+  background: var(--bg-eiq);
   display: flex;
+  border-radius: 2px;
   position: absolute;
   margin-left: 70px;
   margin-top: 382px;
   opacity: 0.5;
   align-items: center;
   padding: 3px;
-  box-shadow: 0px 1px 3px rgb(0 0 0 / 20%);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .center {
@@ -981,14 +1054,6 @@
 .eiq-content {
   display: flex;
   justify-content: center;
-}
-
-:root {
-  --eiq-very-low: #e8f5e9;
-  --eiq-low: #f1f8e9;
-  --eiq-moderate: #f9fbe7;
-  --eiq-high: #fff3e0;
-  --eiq-very-high: #fff3e0;
 }
 
 .eiq-very-low {

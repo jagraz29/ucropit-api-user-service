@@ -23,7 +23,9 @@ import {
   getCropBadgesByUserType,
   parseLotsReusableAsData,
   filterActivitiesMakeByDates,
-  calculateEIQAndPorcentTotal
+  calculateEIQAndPercentTotal,
+  defaultLanguageConfig,
+  translateCropActivities
 } from '../utils'
 
 import { UserSchema } from '../models/user'
@@ -90,7 +92,7 @@ class CropsController {
     }
 
     const crops = await Crop.find(query)
-      .populate('company')
+      .populate({ path: 'company', populate: [{ path: 'country' }] })
       .populate('cropType')
       .populate('unitType')
       .populate('pending')
@@ -111,37 +113,44 @@ class CropsController {
    * @return Response
    */
   public async show(req: Request, res: Response) {
+    const language =
+      req.header('Accept-Language') || defaultLanguageConfig.language
     const { id } = req.params
     const { startDate, endDate } = req.query
     const crop = await CropService.getCrop(id)
+    const translatedCrop = translateCropActivities(crop, language)
     const lots = await LotService.storeLotImagesAndCountriesWithPopulate(
-      crop.lots
+      translatedCrop.lots
     )
     const crops = await CropRepository.findAllCropsByCompanyAndCropType(crop)
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
-    const badges = getCropBadgesByUserType(req.user, crop)
+    const badges = getCropBadgesByUserType(req.user, crop, language)
+
     const volume = calculateCropVolumeUtils(
-      crop.unitType.key,
-      crop.pay,
-      crop.surface
+      translatedCrop.unitType.key,
+      translatedCrop.pay,
+      translatedCrop.surface
     )
 
     const toMakeFilterDates = filterActivitiesMakeByDates(
-      crop.toMake,
+      translatedCrop.toMake,
       startDate,
       endDate
     )
 
-    const toMake = calculateEIQAndPorcentTotal(toMakeFilterDates)
-    const done = calculateEIQAndPorcentTotal(crop.done)
-    const finished = calculateEIQAndPorcentTotal(crop.finished)
+    const toMake = calculateEIQAndPercentTotal(toMakeFilterDates, language)
+    const done = calculateEIQAndPercentTotal(translatedCrop.done, language)
+    const finished = calculateEIQAndPercentTotal(
+      translatedCrop.finished,
+      language
+    )
 
     const newCrop = {
-      ...crop,
+      ...translatedCrop,
       volume,
       lots,
       company: {
-        ...crop.company,
+        ...translatedCrop.company,
         theoriticalPotential
       },
       badges,
@@ -223,6 +232,9 @@ class CropsController {
     const {
       params: { id }
     } = req
+    const language =
+      req.header('Accept-Language') || defaultLanguageConfig.language
+
     const crop = await CropRepository.getCropWithActivities(id)
 
     if (!crop) {
@@ -248,7 +260,9 @@ class CropsController {
     const dataPdf = {
       crop: dataCrop,
       activities,
-      dateCreatePdf: moment().locale('es').format('DD/MM/YYYY')
+      dateCreatePdf: moment().locale('es').format('DD/MM/YYYY'),
+      bucketUrl: process.env.CROP_STORY_BUCKET_URL,
+      bucketUrlNew: process.env.CROP_STORY_BUCKET_NEW_URL
     }
 
     const nameFile = await PDFService.generatePdf(
@@ -256,7 +270,8 @@ class CropsController {
       dataPdf,
       'pdf-crop-history',
       'company',
-      crop
+      crop,
+      language
     )
 
     res.status(StatusCodes.OK).send({ nameFile })
@@ -408,12 +423,12 @@ class CropsController {
     if (!isCancelled) {
       return res.status(400).json({
         error: true,
-        message: 'deleted not allowd'
+        message: req.__('commons.deletion_not_allowed')
       })
     }
 
     res.status(200).json({
-      message: 'deleted successfuly'
+      message: req.__('commons.deleted_success')
     })
   }
 

@@ -1,0 +1,226 @@
+{
+  "api_v1_ready": "Api v1 pronto!",
+  "commons": {
+    "deleted_success": "removido com sucesso",
+    "deletion_not_allowed": "removido não permitido",
+    "not_found": "Recurso não encontrado"
+  },
+  "achievements": {
+    "not_async": "falhou ao sincronizar"
+  },
+  "reports": {
+    "show_map": {
+      "title": "Localização do lote KMZ",
+      "error": "Você deve passar a id do lote"
+    },
+    "send_mail_success": "Relatório enviado com sucesso",
+    "errors": {
+      "not_allowed_mode": "Modo de arquivo: {{mode}} não é permitido para exportação"
+    }
+  },
+  "companies": {
+    "errors": {
+      "not_found": "Empresa não encontrada"
+    }
+  },
+  "crop_types": {
+    "keys": {
+      "soy": "Soja",
+      "sunflower": "Girassol",
+      "corn": "Milho",
+      "cotton": "Algodão",
+      "wheat": "Trigo",
+      "carinata": "Carinata",
+      "oatmeal": "Aveia",
+      "sorghum": "Sorgo",
+      "rye-grass": "Grama de centeio",
+      "vetch": "Ervilhaca",
+      "barley": "Cevada",
+      "colza": "Colza",
+      "rice": "Arroz",
+      "rye": "Centeio"
+    }
+  },
+  "unit_types": {
+    "keys": {
+      "kg": "Quilogramas/ha",
+      "t": "Toneladas/ha",
+      "bls": "Bolsas/ha",
+      "fds": "Fardos/ha",
+      "q": "Quintales/ha"
+    }
+  },
+  "supply_types": {
+    "codes": {
+      "otros": "Outros",
+      "fe": "Fertilizantes agroquímicos",
+      "fu": "Fungicidas agroquímicos",
+      "he": "Herbicidas agroquímicos",
+      "in": "Inseticidas agroquímicos",
+      "sepi": "Semente Pisingallo",
+      "sema": "Semente de Milho",
+      "segi": "Semente de Girassol",
+      "setr": "Semente de Trigo",
+      "seso": "Semente de soja",
+      "seco": "Colza",
+      "sece": "Semente de Cevada",
+      "seal": "Semente de Algodão"
+    }
+  },
+  "type_storages": {
+    "keys": {
+      "silo_bag": "Silobags",
+      "silo": "Silo",
+      "delivery_out_of_program": "Fora da entrega do programa",
+      "delivery_within_of_program": "Entrega dentro do programa"
+    }
+  },
+  "type_agreement": {
+    "keys": {
+      "commer": "Comercialização",
+      "finan": "Financiação",
+      "explo": "Explotação",
+      "sustain": "Cultivo sustentável",
+      "cotton_bets": "Algodão boas práticas",
+      "seed_use": "Acordo de utilização legal de sementes",
+      "responsible_use": "Uso responsável de produtos fitossanitários"
+    }
+  },
+  "type_badge": {
+    "types": {
+      "legal_land_use": "Uso legal da terra",
+      "no_deforestation": "Sem desmatamento",
+      "sustainable_principles": "Princípios Sustentáveis",
+      "legal_seed_use_soy": "Uso legal de sementes",
+      "legal_seed_use_cotton": "Uso legal de sementes",
+      "resposible_use_phytosanitary": "Uso responsável de produtos fitossanitários"
+    }
+  },
+  "activity_types": {
+    "tag": {
+      "act_tillage": "Labranza",
+      "act_application": "Aplicación",
+      "act_fertilization": "Fertilización",
+      "act_sowing": "Siembra",
+      "act_harvest": "Cosecha",
+      "act_agreements": "Acuerdos",
+      "act_monitoring": "Monitoreo"
+    }
+  },
+  "activity_status": {
+    "status": {
+      "to_complete": "Completar",
+      "planned": "Planejado",
+      "done": "Feito",
+      "finished": "Finalizado"
+    }
+  },
+  "roles": {
+    "value": {
+      "producer_adviser": "Assesor",
+      "producer_adviser_encouraged": "Assesor promotor",
+      "producer": "Produtor",
+      "provider": "Fornecedor",
+      "marketer": "Comerciante",
+      "cam": "KAM",
+      "contact_representative": "Responsável comercial"
+    }
+  },
+  "evidence_concepts": {
+    "code": {
+      "0001": "Conhecimento de carga",
+      "0002": "Documentação de suporte",
+      "0003": "Fatura",
+      "0004": "Fotografía dentro do lote",
+      "0005": "Receita agronômica",
+      "0006": "Recibo",
+      "0007": "Fatura de sementes",
+      "0008": "Fatura regalías",
+      "0009": "Imagem de satélite"
+    }
+  },
+  "badges": {
+    "types": {
+      "legal_land_use": "Uso legal da terra",
+      "no_deforestation": "Sem desmatamento",
+      "sustainable_principles": "Princípios Sustentáveis",
+      "legal_seed_use_soy": "Uso legal de sementes",
+      "legal_seed_use_cotton": "Uso legal de sementes",
+      "resposible_use_phytosanitary": "Uso responsável de produtos fitossanitários"
+    }
+  },
+  "emails": {
+    "achievements": {
+      "signature_reminder": {
+        "title": "Lembrete para assinar",
+        "content": "Você tem realizações não assinadas"
+      }
+    }
+  },
+  "crops": {
+    "errors": {
+      "file_evidence_incomplete": "Evidência não completa",
+      "file_evidence_invalid_length": "O total de arquivos e evidências deve ser o mesmo",
+      "name_lot_duplicated": "Nomes de lote KMZ duplicados",
+      "error_invalid_format_kmz": "Formato KMZ inválido",
+      "error_file_extension": "Extensão de arquivo não permitida",
+      "invalid_date_harvest": "A data de colheita deve ser posterior à data de cultivo",
+      "invalid_field_data": "O campo de dados é obrigatório",
+      "invalid_fields": "Um ou/e mais campos são obrigatórios",
+      "invalid_array_lots": "Você deve selecionar pelo menos um lote",
+      "lots_not_available": "Alguns lotes reutilizáveis não estão disponíveis",
+      "lots_not_exist": "Alguns lotes são inválidos ou não existem",
+      "invalid_array_files": "Você deve enviar o KMZ associado aos novos lotes"
+    }
+  },
+  "lots": {
+    "errors": {
+      "invalid_identifier": "O CUIT é necessário para continuar com a operação",
+      "date_crop": "Você deve inserir uma data no valor 'Data de cultivo'."
+    }
+  },
+  "crop_story": {
+    "title": "história da colheita",
+    "printedAt": "impresso em",
+    "netSup": "sup líquido",
+    "has": "has",
+    "seedTime": "data de semeadura",
+    "harvestDate": "data de colheita",
+    "yield": "Rinde",
+    "volume": "Volume",
+    "ton": "Ton",
+    "eiq": "EIQ:",
+    "veryLow": "muito baixo",
+    "low": "baixo",
+    "moderate": "moderado",
+    "high": "alto",
+    "veryHigh": "muito alto",
+    "status": "Status:",
+    "cropResponsible": "colheita responsável",
+    "commercial_contact": "contato comercial",
+    "vol": "Vol:",
+    "validate_by": "validado por",
+    "estimated_harvest": "Estimado Rinde:",
+    "lots": "lotes",
+    "evidences": "evidências",
+    "supporting_documentation": "documentação de suporte",
+    "pending": "PENDENTE",
+    "within_lot": "dentro do lote",
+    "aplications": "aplicações"
+  },
+  "services_integration": {
+    "code": {
+      "auravant": {
+        "description": "É uma agricultura digital simples. É a inovação tecnológica que aprimora o conhecimento agronômico e maximiza os resultados",
+        "conditions": [
+          "Atualizações específicas sobre riscos de doenças e insetos para as plantações",
+          "Notificações importantes sobre a fase de crescimento das lavouras",
+          "Notificações sobre o tempo ideal de fumigação",
+          "Notificações sobre mapas de biomassa disponíveis",
+          "informações meteorológicas específicas para cada campo",
+          "Previsão do tempo de hora em hora"
+        ]
+      }
+    }
+  }
+}

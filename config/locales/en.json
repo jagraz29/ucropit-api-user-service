@@ -1,0 +1,226 @@
+{
+  "api_v1_ready": "Api v1 ready!",
+  "commons": {
+    "deleted_success": "successfully removed",
+    "deletion_not_allowed": "removed not allowed",
+    "not_found": "removed not allowed"
+  },
+  "achievements": {
+    "not_async": "failed to sync"
+  },
+  "reports": {
+    "show_map": {
+      "title": "KMZ Lot Location",
+      "error": "Must pass id lot"
+    },
+    "send_mail_success": "Report sent successfully",
+    "errors": {
+      "not_allowed_mode": "File mode: {{mode}} is not allowed for export"
+    }
+  },
+  "companies": {
+    "errors": {
+      "not_found": "Company not found"
+    }
+  },
+  "crop_types": {
+    "keys": {
+      "soy": "Soy",
+      "sunflower": "Sunflower",
+      "corn": "Corn",
+      "cotton": "Cotton",
+      "wheat": "Wheat",
+      "carinata": "Carinata",
+      "oatmeal": "Oatmeal",
+      "sorghum": "Sorghum",
+      "rye-grass": "Ryegrass",
+      "vetch": "Vetch",
+      "barley": "Barley",
+      "colza": "Colza",
+      "rice": "Rice",
+      "rye": "Rye"
+    }
+  },
+  "unit_types": {
+    "keys": {
+      "kg": "Kilograms/ha",
+      "t": "Tons/ha",
+      "bls": "Sacks/ha",
+      "fds": "Bales/ha",
+      "q": "Quintales/ha"
+    }
+  },
+  "supply_types": {
+    "codes": {
+      "otros": "Others",
+      "fe": "agrochemical fertilizers",
+      "fu": "agrochemical fungicides",
+      "he": "Agrochemical herbicides",
+      "in": "Agrochemical insecticides",
+      "sepi": "Seed of Pisingallo",
+      "sema": "Corn Seed",
+      "segi": "Sunflower Seed",
+      "setr": "Wheat Seed",
+      "seso": "Soya Seed",
+      "dry": "Rapeseed",
+      "sece": "Barley Seed",
+      "seal": "Cotton Seed"
+    }
+  },
+  "type_storages": {
+    "keys": {
+      "silo_bag": "Silobags",
+      "silo": "Silo",
+      "delivery_out_of_program": "Out of program delivery",
+      "delivery_within_of_program": "Delivery within the program"
+    }
+  },
+  "type_agreement": {
+    "keys": {
+      "commer": "Commercialization",
+      "finan": "Financing",
+      "explo": "Exploitation",
+      "sustain": "Sustainable crop",
+      "cotton_bets": "Sustainable cotton farming",
+      "seed_use": "Agreement of Legal Seed Use",
+      "responsible_use": "Responsible use of phytosanitary products"
+    }
+  },
+  "type_badge": {
+    "types": {
+      "legal_land_use": "Legal land use",
+      "no_deforestation": "No deforestation",
+      "sustainable_principles": "Sustainable Principles",
+      "legal_seed_use_soy": "Legal use of seeds",
+      "legal_seed_use_cotton": "Legal use of seeds",
+      "resposible_use_phytosanitary": "Responsible use of phytosanitary products"
+    }
+  },
+  "activity_types": {
+    "tag": {
+      "act_tillage": "Tillage",
+      "act_application": "Application",
+      "act_fertilization": "Fertilization",
+      "act_sowing": "Sowing",
+      "act_harvest": "Harvest",
+      "act_agreements": "Agreements",
+      "act_monitoring": "Monitoring"
+    }
+  },
+  "activity_status": {
+    "status": {
+      "to_complete": "To Complete",
+      "planned": "Planned",
+      "done": "Done",
+      "finished": "Finished"
+    }
+  },
+  "evidence_concepts": {
+    "code": {
+      "0001": "Consignment note",
+      "0002": "Backup Documentation",
+      "0003": "Bill",
+      "0004": "Photo inside lot",
+      "0005": "Agricultural recipe",
+      "0006": "Dispatch Form",
+      "0007": "Seeds Bill",
+      "0008": "Seed Royalties",
+      "0009": "Satellite Image"
+    }
+  },
+  "roles": {
+    "value": {
+      "producer_adviser": "Advisor",
+      "producer_adviser_encouraged": "Advisor promoter",
+      "producer": "Farmer",
+      "provider": "Supplier",
+      "marketer": "Merchant",
+      "cam": "KAM",
+      "contact_representative": "Commercial Representative"
+    }
+  },
+  "badges": {
+    "types": {
+      "legal_land_use": "Legal land use",
+      "no_deforestation": "No deforestation",
+      "sustainable_principles": "Sustainable Principles",
+      "legal_seed_use_soy": "Legal use of seeds",
+      "legal_seed_use_cotton": "Legal use of seeds",
+      "resposible_use_phytosanitary": "Responsible use of phytosanitary products"
+    }
+  },
+  "emails": {
+    "achievements": {
+      "signature_reminder": {
+        "title": "Reminder to sign",
+        "content": "You have unsigned realizations"
+      }
+    }
+  },
+  "crops": {
+    "errors": {
+      "file_evidence_incomplete": "Evidence not complete",
+      "file_evidence_invalid_length": "The total files and evidences must be the same",
+      "name_lot_duplicated": "Duplicate KMZ Lot Names",
+      "error_invalid_format_kmz": "Invalid KMZ format",
+      "error_file_extension": "File extension not allowed",
+      "invalid_date_harvest": "The harvest date must be after the cultivation date",
+      "invalid_field_data": "The data field is required",
+      "invalid_fields": "One or/and more fields are required",
+      "invalid_array_lots": "You must select at least one lot",
+      "lots_not_available": "Some reusable lots are not available",
+      "lots_not_exist": "Some lots are invalid or do not exist",
+      "invalid_array_files": "You must send the KMZ associated with the new lots"
+    }
+  },
+  "lots": {
+    "errors": {
+      "invalid_identifier": "The CUIT is required to continue with the operation",
+      "date_crop": "You must enter a date in the value 'Cultivation date'."
+    }
+  },
+  "crop_story": {
+    "title": "Crop Story",
+    "printedAt": "printed at",
+    "netSup": "Net Sup",
+    "has": "has",
+    "seedTime": "Sowing Date",
+    "harvestDate": "Harvest Date",
+    "yield": "Rinde",
+    "volume": "Volume",
+    "ton": "Ton",
+    "eiq": "EIQ:",
+    "veryLow": "Very Low",
+    "low": "Low",
+    "moderate": "Moderate",
+    "high": "High",
+    "veryHigh": "Very High",
+    "status": "Status:",
+    "cropResponsible": "Crop Responsible",
+    "commercial_contact": "Commercial Contact",
+    "vol": "Vol:",
+    "validate_by": "Validate By:",
+    "estimated_harvest": "Estimated Rinde:",
+    "lots": "lots",
+    "evidences": "Evidences",
+    "supporting_documentation": "supporting documentation",
+    "pending": "PENDING",
+    "within_lot": "Within the lot",
+    "aplications": "Aplications"
+  },
+  "services_integration": {
+    "code": {
+      "auravant": {
+        "description": "It is simple digital farming. It is technological innovation that enhances agronomic knowledge and maximizes results",
+        "conditions": [
+          "specific updates on disease and insect risks to crops",
+          "important notifications about the growth phase of crops",
+          "Notifications about optimal fumigation time",
+          "notifications on available biomass maps",
+          "specific meteorological information for each field",
+          "hourly weather forecast"
+        ]
+      }
+    }
+  }
+}

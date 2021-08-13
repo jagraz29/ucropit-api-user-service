@@ -1,5 +1,6 @@
-import express, { Response } from 'express'
+import express, { Response, Request } from 'express'
 import 'express-async-errors'
+
 import users from './users'
 import profile from './profile'
 import auth from './auth'
@@ -27,14 +28,22 @@ import webhooks from './webhooks'
 
 const router: express.Router = express.Router()
 
-router.get('/', (req, res) => {
-  res.send('v1 APP OK')
+router.get('/', (req: Request, res: Response) => {
+  res.send(req.__('api_v1_ready'))
+})
+
+router.get('/ping', (req: Request, res: Response) => {
+  res.send('pong')
 })
 
 const authMiddleware = passport.authenticate('jwt', { session: false })
 
 router.get('/fast-links', (req, res: Response) => {
   res.render('fast-links', { url: process.env.SCHEMA_URL })
+})
+
+router.get('/ping', (req: Request, res: Response) => {
+  res.send('pong')
 })
 
 // AUTH

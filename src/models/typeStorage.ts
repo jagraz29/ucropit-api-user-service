@@ -18,10 +18,9 @@
  *           key:
  *             type: string
  */
-import mongoose from 'mongoose'
-
-const { Schema } = mongoose
-
+import mongoose, { Schema, Document } from 'mongoose'
+import { ITypeStorageProps } from '../core/typeStorages/interfaces'
+export type TypeStorageDocument = Document & ITypeStorageProps
 const TypeStorageSchema = new Schema({
   name: {
     en: {
@@ -39,4 +38,7 @@ const TypeStorageSchema = new Schema({
   }
 })
 
-export default mongoose.model('TypeStorage', TypeStorageSchema)
+export default mongoose.model<TypeStorageDocument>(
+  'TypeStorage',
+  TypeStorageSchema
+)

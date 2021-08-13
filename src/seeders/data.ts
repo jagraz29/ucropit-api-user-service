@@ -108,6 +108,18 @@ export const supplyTypesData = [
     name: 'Semilla de Maní',
     code: 'SeMn',
     icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('6103f3c005d460bdb6f65448'),
+    name: 'Semilla de Centeno',
+    code: 'SeCen',
+    icon: 'spa'
+  },
+  {
+    _id: mongoose.Types.ObjectId('6103f3dd05d460bdb6f65462'),
+    name: 'Semilla Arroz',
+    code: 'SeArr',
+    icon: 'spa'
   }
 ]
 
@@ -149,6 +161,27 @@ export const cropTypesData = [
   },
   {
     name: {
+      en: 'Carinata',
+      es: 'Carinata'
+    },
+    key: 'Carinata'
+  },
+  {
+    name: {
+      en: 'Barley',
+      es: 'Cebada'
+    },
+    key: 'Barley'
+  },
+  {
+    name: {
+      en: 'Colza',
+      es: 'Colza'
+    },
+    key: 'Colza'
+  },
+  {
+    name: {
       en: 'Oatmeal',
       es: 'Avena'
     },
@@ -177,10 +210,17 @@ export const cropTypesData = [
   },
   {
     name: {
-      en: 'Peanut',
-      es: 'Maní'
+      en: 'Rice',
+      es: 'Arroz'
     },
-    key: 'peanut'
+    key: 'Rice'
+  },
+  {
+    name: {
+      en: 'Rye',
+      es: 'Centeno'
+    },
+    key: 'Rye'
   }
 ]
 

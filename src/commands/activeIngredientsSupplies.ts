@@ -8,7 +8,7 @@ import {
   ActiveIngredientUnified as ActiveIngredientStandard
 } from '../interfaces/supplies'
 import { supplyTypesEIQ } from '../utils/Constants'
-import SupplyRepository from '../repositories/supplyRepository'
+import { SupplyRepository } from '../repositories'
 import {
   isSupplyCompoundIngredient,
   createListSimpleActiveIngredients,

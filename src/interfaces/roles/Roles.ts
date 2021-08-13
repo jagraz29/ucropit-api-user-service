@@ -1,9 +1,9 @@
+import { INameLanguageProps } from '../../core/commons/interfaces'
+
 export interface IRoles {
+  _id?: string
   value?: string
-  label?: {
-    en?: string
-    es?: string
-  }
+  label?: INameLanguageProps
 }
 
 export enum roles {

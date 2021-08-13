@@ -2,31 +2,49 @@
 
 import { Request, Response } from 'express'
 import models from '../models'
-import { typesSupplies } from '../utils/Constants'
-import SupplyRepository from '../repositories/supplyRepository'
+import { SupplyTypeRepository, SupplyRepository } from '../repositories'
 import { parseSuppliesWithEiqTotal } from '../utils'
+import { TypeActivities } from '../interfaces/activities/TypeActivities.enum'
+import { IQuerySupplyType } from '../interfaces'
 
 const Supply = models.Supply
 
 class SuppliesController {
   public async index(req, res: Response) {
-    let type = null
     let filter: any = {}
-    const { q, tag, skip, limit } = req.query
-    if (tag) {
-      type = typesSupplies.find((item) => item.tag === tag)
-    }
+    const filterSupplyType: IQuerySupplyType = {}
+    let supplyTypesFilter: String[] = []
+    const { queryFiltering, activityType, skip, limit, alphaCode, cropType } =
+      req.query
+
+    console.log(queryFiltering, activityType, skip, limit, alphaCode, cropType)
 
     const skipSide = skip && /^\d+$/.test(skip) ? Number(skip) : 0
 
-    if (q) {
-      filter = {
-        $text: { $search: q }
-      }
+    if (alphaCode) {
+      filter.alphaCode = alphaCode
     }
 
-    if (type) {
-      filter.typeId = { $in: type.types }
+    if (activityType === TypeActivities.ACT_SOWING) {
+      filterSupplyType.activities = activityType
+      filterSupplyType.cropTypes = cropType
+    } else {
+      filterSupplyType.activities = activityType
+    }
+
+    if (activityType || cropType) {
+      supplyTypesFilter = (
+        await SupplyTypeRepository.getAllByQuery(filterSupplyType)
+      ).map((supplyType) => supplyType._id)
+
+      filter.typeId = { $in: supplyTypesFilter }
+    }
+
+    if (queryFiltering) {
+      filter = {
+        ...filter,
+        $text: { $search: queryFiltering }
+      }
     }
 
     const limitSide = limit >= 0 ? Number(limit) : 15
@@ -35,17 +53,22 @@ class SuppliesController {
       filter,
       limitSide,
       skipSide,
-      tag
+      activityType
     )
 
-    const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies)
+    const lang = res.getLocale() as string
+    const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies, lang)
     res.status(200).json(suppliesWithEiqTotal)
   }
 
   public async quantity(req: Request, res: Response) {
-    const total = await Supply.countDocuments()
+    const { alphaCode } = req.query
 
-    res.status(200).json({ quantity: total })
+    const total = await Supply.find({
+      alphaCode: alphaCode ?? undefined
+    }).countDocuments()
+
+    return res.status(200).json({ quantity: total })
   }
 }
 

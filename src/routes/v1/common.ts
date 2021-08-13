@@ -8,6 +8,12 @@ const router: express.Router = express.Router()
  * /v1/commons/roles:
  *  get:
  *   summary: Get all collaborators roletypes
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Collaborator roletypes
@@ -24,6 +30,12 @@ router.get('/roles', commonController.roles)
  * /v1/commons/croptypes:
  *  get:
  *   summary: Get all crops types
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Crops
@@ -40,6 +52,12 @@ router.get('/croptypes', commonController.cropTypes)
  * /v1/commons/unitypes:
  *  get:
  *   summary: Get all unit types
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Crops
@@ -56,6 +74,12 @@ router.get('/unitypes', commonController.unitTypes)
  * /v1/commons/activities:
  *  get:
  *   summary: Get all activities types
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Activities types
@@ -72,6 +96,12 @@ router.get('/activities', commonController.activitiesTypes)
  * /v1/commons/agreements:
  *  get:
  *   summary: Get all agreement types
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Agreement Types
@@ -88,6 +118,12 @@ router.get('/agreements', commonController.agreementTypes)
  * /v1/commons/concepts:
  *  get:
  *   summary: Get all evidence concepts
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Evidence Concepts
@@ -104,6 +140,12 @@ router.get('/concepts', commonController.evidenceConcepts)
  * /v1/commons/integrations:
  *  get:
  *   summary: Get all services integrations
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Services Integration
@@ -120,6 +162,12 @@ router.get('/integrations', commonController.serviceIntegration)
  * /v1/commons/storagetypes:
  *  get:
  *   summary: Get all storages types
+ *   parameters:
+ *      - in: header
+ *        name: Accept-Language
+ *        type: string
+ *        require: true
+ *        enum: ['es', 'en', 'pt']
  *   tags:
  *      - Common
  *   description: Storage Types

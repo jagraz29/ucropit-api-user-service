@@ -2,16 +2,18 @@ require('dotenv').config()
 require('./src/jobs')
 
 import express, { Application, Request, Response, NextFunction } from 'express'
-import { basePath } from './src/utils/Files'
 import swaggerUI from 'swagger-ui-express'
-import { swaggerDocs } from './config/swagger'
-import { errorHandler } from './src/loggin/error-handler'
-import morgan from 'morgan'
-import cors from 'cors'
-import routes from './src/routes/v1'
 import fileUpload from 'express-fileupload'
 import * as Sentry from '@sentry/node'
+import cors from 'cors'
+import morgan from 'morgan'
 import path from 'path'
+import * as i18n from 'i18n'
+
+import { basePath } from './src/utils/Files'
+import { swaggerDocs } from './config/swagger'
+import { errorHandler } from './src/loggin/error-handler'
+import routes from './src/routes/v1'
 
 const app: Application = express()
 
@@ -23,6 +25,14 @@ if (process.env.NODE_ENV !== 'local') {
 
 import jwt from './src/utils/auth/strategies/jwt'
 
+i18n.configure({
+  defaultLocale: 'es',
+  locales: ['es', 'en', 'pt'],
+  directory: path.join(__dirname, 'config', 'locales'),
+  objectNotation: true,
+  updateFiles: false,
+  register: global
+})
 app.use(Sentry.Handlers.requestHandler() as express.RequestHandler)
 app.use(jwt.initialize())
 app.use(cors())
@@ -34,6 +44,8 @@ app.use(
     createParentPath: true
   })
 )
+
+app.use(i18n.init)
 
 app.use(
   '/api-docs',
