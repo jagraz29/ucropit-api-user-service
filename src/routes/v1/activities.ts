@@ -20,7 +20,7 @@ const router: express.Router = express.Router()
  *        "500":
  *          description: Server error
  */
- router.get('/subType', activitiesController.getAllSubtypes)
+router.get('/subType', activitiesController.getAllSubtypes)
 
 /**
  * @swagger
@@ -109,8 +109,6 @@ router.get(
  *          description: Server error
  */
 router.get('/:id', activitiesController.show)
-
-
 
 /**
  * @swagger
