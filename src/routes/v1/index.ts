@@ -67,7 +67,7 @@ router.use('/crops', authMiddleware, crop)
 router.use('/crops', authMiddleware, cropCollaborators)
 
 // ACTIVITIES
-router.use('/activities', authMiddleware, activities)
+router.use('/activities', /* authMiddleware, */ activities)
 
 // COMPANIES
 router.use('/companies', authMiddleware, company)

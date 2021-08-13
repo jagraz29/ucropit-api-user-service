@@ -8,6 +8,22 @@ const router: express.Router = express.Router()
 
 /**
  * @swagger
+ *  /v1/activities/subType:
+ *    get:
+ *      summary: Show all subTypes of activities
+ *      tags: [Activity]
+ *      responses:
+ *        "200":
+ *          description: Show success
+ *        "404":
+ *          description: Not Found Resources
+ *        "500":
+ *          description: Server error
+ */
+router.get('/subType', activitiesController.getAllSubtypes)
+
+/**
+ * @swagger
  * /v1/activities:
  *  get:
  *   summary: Get all activities

@@ -1,11 +1,14 @@
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { capitalize } from 'lodash'
+
 import {
   ActivityRepository,
   TypeAgreementRepository,
   BadgeRepository,
   CropRepository,
-  activityTypeRepository
+  activityTypeRepository,
+  SubTypeActivityRepository
 } from '../repositories'
 import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
 import {
@@ -44,6 +47,7 @@ import {
   setEiqInEnvImpactIndexActivity,
   setEnvImpactIndexInActivity
 } from '../core'
+import { setLocale, __ } from 'i18n'
 
 const Activity = models.Activity
 const FileDocument = models.FileDocument
@@ -92,13 +96,28 @@ class ActivitiesController {
   }
 
   /**
-   * Show one activity grouped by Tags
+   * Show all subtypes of activities
    *
    * @param Request req
    * @param Response res
    *
    * @return Response
    */
+  public async getAllSubtypes(req: Request, res: Response) {
+    const lang = req.getLocale() as string
+    const subTypeActivityCodes = __('SubTypeActivity.keys') as unknown as object
+    setLocale(lang || 'es')
+
+    const subTypeActivities = await SubTypeActivityRepository.getAll()
+    subTypeActivities.map(
+      (subTypeActivity) =>
+        (subTypeActivity.codeLabel =
+          subTypeActivityCodes[subTypeActivity.key.toLowerCase()] ||
+          capitalize(subTypeActivity.key.replace('_', ' ')))
+    )
+    res.status(StatusCodes.OK).json(subTypeActivities)
+  }
+
   public async showLotsGroupedByTags(req: Request, res: Response) {
     const { id } = req.params
     const { cropId } = req.query

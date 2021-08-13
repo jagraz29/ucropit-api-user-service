@@ -25,9 +25,12 @@ export const SubTypeActivitySchema: Schema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'ActivityType'
     },
-    name: {
+    key: {
       type: String,
       required: true
+    },
+    codeLabel: {
+      type: String
     }
   },
   { timestamps: true }
