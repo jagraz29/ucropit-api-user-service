@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { capitalize } from 'lodash'
+
 import {
   ActivityRepository,
   TypeAgreementRepository,
@@ -45,6 +47,7 @@ import {
   setEiqInEnvImpactIndexActivity,
   setEnvImpactIndexInActivity
 } from '../core'
+import { setLocale, __ } from 'i18n'
 
 const Activity = models.Activity
 const FileDocument = models.FileDocument
@@ -101,10 +104,22 @@ class ActivitiesController {
    * @return Response
    */
   public async getAllSubtypes(req: Request, res: Response) {
-    console.log('hola')
 
-    const subTypeActivity = await SubTypeActivityRepository.getAll()
-    res.status(StatusCodes.OK).json(subTypeActivity)
+    const lang = req.getLocale() as string
+    const subTypeActivityCodes = __('SubTypeActivity.keys') as unknown as object
+    setLocale(lang || 'es')  
+
+    const subTypeActivities = await SubTypeActivityRepository.getAll()
+    subTypeActivities.map((subTypeActivity)=>{
+      // const codeLabel = subTypeActivityCodes[subTypeActivity.key.toLowerCase()] || capitalize(subTypeActivity.key.replace('_', ' '))
+      // return subTypeActivity
+      return {
+        ...subTypeActivity,
+        codeLabel: subTypeActivityCodes[subTypeActivity.key.toLowerCase()] || capitalize(subTypeActivity.key.replace('_', ' '))
+      }
+      // return subTypeActivity
+    })
+    res.status(StatusCodes.OK).json(subTypeActivities)
   }
 
   public async showAndLotsGroupedByTags(req: Request, res: Response) {
