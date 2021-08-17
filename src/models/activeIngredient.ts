@@ -23,6 +23,6 @@ const ActivePrincipleSchema: Schema = new Schema({
 })
 
 export default mongoose.model<ActiveIngredient>(
-  'ActiveIngredient',
+  'ActiveIngredients',
   ActivePrincipleSchema
 )

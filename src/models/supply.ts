@@ -83,7 +83,7 @@ const SupplySchema = new Schema({
     {
       activeIngredient: {
         type: Schema.Types.ObjectId,
-        ref: 'ActiveIngredient'
+        ref: 'ActiveIngredients'
       },
       eiqActiveIngredient: {
         type: Number
@@ -99,7 +99,7 @@ const SupplySchema = new Schema({
 })
 SupplySchema.index({ alphaCode: 1 }, { background: true })
 SupplySchema.index({ supplyType: 1 }, { background: true })
-SupplySchema.index({ name: 'text', brand: 'text', company: 'text' })
+SupplySchema.index({ alphaCode: 'text', brand: 'text', company: 'text' })
 
 SupplySchema.virtual('eiqTotal').get(function () {
   if (this.activeIngredients) {
