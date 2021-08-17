@@ -14,7 +14,7 @@ export const groupedLotsByTagsInActivities = (
 
 export const groupedLotsByTagsInActivity = (
   activity: Activity,
-  crop: Crop,
+  crop: Crop | any,
   lang: string
 ) => {
   const { achievements, lots, lotsWithSurface = [], surface } = activity

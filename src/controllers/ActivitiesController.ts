@@ -118,7 +118,7 @@ class ActivitiesController {
     res.status(StatusCodes.OK).json(subTypeActivities)
   }
 
-  public async showAndLotsGroupedByTags(req: Request, res: Response) {
+  public async showLotsGroupedByTags(req: Request, res: Response) {
     const { id } = req.params
     const { cropId } = req.query
     const activity =

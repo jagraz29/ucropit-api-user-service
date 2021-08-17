@@ -9,7 +9,8 @@
 ## Versions
 
 - NodeJS version 14.8 or more
-- Typescript version 3.9.7
+- Typescript version 3.9.7 o more
+- npm lastest version
 
 ## 👨‍💻 Install project Development
 

@@ -20,6 +20,19 @@
  *              type: array
  *           lots:
  *              type: array
+ *           lotsWithSurface:
+ *              type: object
+ *              properties:
+ *                lot:
+ *                  type: object
+ *                  schema:
+ *                    $ref: '#/components/schemas/Lot'
+ *                surfacePlanned:
+ *                  type: number
+ *                surfaceAchievement:
+ *                  type: number
+ *                tag:
+ *                  type: string
  *           supplies:
  *              type: array
  *           files:
@@ -61,6 +74,20 @@ export const AchievementSchema: Schema = new Schema({
     type: Number
   },
   lots: [{ type: Schema.Types.ObjectId, ref: 'Lot' }],
+  lotsWithSurface: [
+    {
+      lot: { type: Schema.Types.ObjectId, ref: 'Lot' },
+      surfacePlanned: {
+        type: Number
+      },
+      surfaceAchievement: {
+        type: Number
+      },
+      tag: {
+        type: String
+      }
+    }
+  ],
   supplies: [
     {
       name: {

@@ -5,6 +5,7 @@ import { UnitType } from '../unitType'
 
 export interface Crop {
   name: string
+  _id: string
   pay: number
   dateCrop: Date
   dateHarvest: Date

@@ -84,7 +84,7 @@ router.get('/', activitiesController.index)
 router.get(
   '/:id/lots/grouped-by-tags',
   [getActivitiesLotsGroupedByTagsMiddleware],
-  activitiesController.showAndLotsGroupedByTags
+  activitiesController.showLotsGroupedByTags
 )
 
 /**
