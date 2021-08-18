@@ -83,7 +83,7 @@ const SupplySchema = new Schema({
     {
       activeIngredient: {
         type: Schema.Types.ObjectId,
-        ref: 'ActiveIngredients'
+        ref: 'ActiveIngredient'
       },
       eiqActiveIngredient: {
         type: Number
