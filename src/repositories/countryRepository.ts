@@ -35,7 +35,10 @@ export class CountryRepository {
    * @returns
    */
   public static async getCountry({ query, populate }: any): Promise<any> {
-    return Country.findOne(query ?? {}).populate(populate ?? [])
+    if (Object.keys(query).length) {
+      return Country.findOne(query).populate(populate ?? [])
+    }
+    return null
   }
 
   /**

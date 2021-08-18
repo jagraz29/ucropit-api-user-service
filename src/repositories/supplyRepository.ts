@@ -24,21 +24,17 @@ export class SupplyRepository {
     query,
     limit,
     skip,
-    tag?
+    tag?,
+    sort?
   ): Promise<any> {
-    let suppliesPaginated = Supply.find(query)
+    return Supply.find(query)
       .populate('typeId')
       .populate('countryId')
-      .populate('activesPrinciples.activePrinciple')
+      .populate('activeIngredients.activeIngredient')
       .limit(limit)
       .skip(skip)
-
-    if (tag === TypeActivities.ACT_SOWING) {
-      suppliesPaginated = suppliesPaginated.sort({ typeId: -1 })
-      return suppliesPaginated.lean({ virtuals: true })
-    }
-
-    return suppliesPaginated.lean({ virtuals: true })
+      .sort(sort || {})
+      .lean({ virtuals: true })
   }
   /**
    *
@@ -53,7 +49,7 @@ export class SupplyRepository {
       }
     })
       .populate('typeId')
-      .populate('activesPrinciples.activePrinciple')
+      .populate('activeIngredients.activeIngredient')
 
     return supplies.length ? supplies : null
   }
