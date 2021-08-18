@@ -26,12 +26,14 @@ class SuppliesController {
       filter.alphaCode = alphaCode
     }
 
-    if (activityType) {
+    if (
+      activityType &&
+      cropType &&
+      activityType === TypeActivities.ACT_SOWING
+    ) {
       filterSupplyType.activities = activityType
-      if (activityType === TypeActivities.ACT_SOWING && cropType) {
-        filterSupplyType.cropTypes = cropType
-        sort = { supplyType: -1 }
-      }
+      filterSupplyType.cropTypes = cropType
+      sort = { supplyType: -1 }
     }
 
     if (Object.keys(filterSupplyType).length) {
