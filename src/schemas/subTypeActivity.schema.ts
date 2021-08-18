@@ -27,7 +27,8 @@ export const SubTypeActivitySchema: Schema = new Schema(
     },
     key: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     codeLabel: {
       type: String
