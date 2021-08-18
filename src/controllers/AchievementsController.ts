@@ -88,6 +88,16 @@ class AchievementsController {
       return res.status(400).json(validationExtensionFile.code)
     }
 
+    if (
+      (await ActivityService.getSubTypeActivityByID(data.subTypeActivity)) ===
+      null
+    ) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: 'SubTypeActivity not found',
+        sub: ActivityService.getSubTypeActivityByID(data.subTypeActivity)
+      })
+    }
+
     const validationFiles = validateFilesWithEvidences(
       req.files,
       data.evidences

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { Signer } from '../interfaces'
-import models from '../models'
+import models, { SubTypeActivityModel } from '../models'
 import { statusActivities } from '../utils/Status'
 import ServiceBase from './common/ServiceBase'
 
@@ -23,6 +23,7 @@ interface IActivity {
   evidences?: Array<any>
   status?: string | Array<any>
   user?: string
+  subTypeActivity?: string
 }
 
 class ActivityService extends ServiceBase {
@@ -341,6 +342,10 @@ class ActivityService extends ServiceBase {
     }
 
     return false
+  }
+
+  public static async getSubTypeActivityByID(id: string) {
+    return await SubTypeActivityModel.findById(id)
   }
 
   /* Add services integration.
