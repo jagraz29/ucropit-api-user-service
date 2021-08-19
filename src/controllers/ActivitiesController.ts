@@ -171,7 +171,7 @@ class ActivitiesController {
       )
 
     if (!subTypeActivity) {
-      return res.status(404).json({
+      return res.status(StatusCodes.NOT_FOUND).json({
         error: 'SubTypeActivity not found'
       })
     }

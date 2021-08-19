@@ -95,7 +95,7 @@ class AchievementsController {
       )
 
     if (!subTypeActivity) {
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      return res.status(StatusCodes.NOT_FOUND).json({
         error: 'SubTypeActivity not found'
       })
     }
