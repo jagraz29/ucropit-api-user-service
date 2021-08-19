@@ -20,6 +20,7 @@ import {
   validateSignAchievement
 } from '../utils'
 import { typesSupplies } from '../utils/Constants'
+import { SubTypeActivityRepository } from '../repositories'
 
 const Crop = models.Crop
 
@@ -86,6 +87,17 @@ class AchievementsController {
 
     if (validationExtensionFile.error) {
       return res.status(400).json(validationExtensionFile.code)
+    }
+
+    const subTypeActivity =
+      await SubTypeActivityRepository.getSubTypeActivityByID(
+        data.subTypeActivity
+      )
+
+    if (!subTypeActivity) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: 'SubTypeActivity not found'
+      })
     }
 
     const validationFiles = validateFilesWithEvidences(

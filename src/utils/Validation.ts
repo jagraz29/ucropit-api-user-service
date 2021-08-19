@@ -128,7 +128,8 @@ export const validateActivityStore = async (activity) => {
         type: Joi.string().required(),
         signed: Joi.boolean().optional()
       })
-    )
+    ),
+    subTypeActivity: Joi.string().optional()
   }).unknown()
 
   return schema.validateAsync(activity)
@@ -254,6 +255,8 @@ export const validateAchievement = async (achievement) => {
     dateAchievement: Joi.date().required(),
     surface: Joi.number().required(),
     lots: Joi.array().items(Joi.string()).optional(),
+    subTypeActivity: Joi.string().optional(),
+    keySubTypesActivity: Joi.string().optional(),
     lotsWithSurface: Joi.array()
       .items(
         Joi.object()

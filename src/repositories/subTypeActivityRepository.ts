@@ -17,4 +17,14 @@ export class SubTypeActivityRepository {
   ): Promise<ISubTypeActivityDocument[]> {
     return SubTypeActivityModel.insertMany(subTypeActivities)
   }
+
+  /**
+   *
+   * @param id
+   *
+   * @returns
+   */
+  public static async getSubTypeActivityByID(id: string) {
+    return await SubTypeActivityModel.findById(id)
+  }
 }

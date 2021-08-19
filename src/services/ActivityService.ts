@@ -3,6 +3,7 @@ import { Signer } from '../interfaces'
 import models from '../models'
 import { statusActivities } from '../utils/Status'
 import ServiceBase from './common/ServiceBase'
+import { ActivityRepository } from '../repositories'
 
 const Activity = models.Activity
 const ActivityType = models.ActivityType
@@ -23,6 +24,7 @@ interface IActivity {
   evidences?: Array<any>
   status?: string | Array<any>
   user?: string
+  subTypeActivity?: string
 }
 
 class ActivityService extends ServiceBase {
