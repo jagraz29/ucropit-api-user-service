@@ -164,15 +164,16 @@ class ActivitiesController {
       return res.status(400).json(validationFiles)
     }
 
-    const subTypeActivity =
-      await SubTypeActivityRepository.getSubTypeActivityByID(
-        data.subTypeActivity
-      )
-
-    if (!subTypeActivity) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: 'SubTypeActivity not found'
-      })
+    if (data.subTypeActivity) {
+      const subTypeActivity =
+        await SubTypeActivityRepository.getSubTypeActivityByID(
+          data.subTypeActivity
+        )
+      if (!subTypeActivity) {
+        return res.status(StatusCodes.NOT_FOUND).json({
+          error: 'SubTypeActivity not found'
+        })
+      }
     }
 
     let activity = await ActivityService.store(data, user)
