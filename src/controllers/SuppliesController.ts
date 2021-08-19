@@ -67,7 +67,7 @@ class SuppliesController {
 
     const lang = res.getLocale() as string
     const suppliesWithEiqTotal = parseSuppliesWithEiqTotal(supplies, lang)
-    if (suppliesWithEiqTotal.leading) {
+    if (suppliesWithEiqTotal.length) {
       // here you can define period in second, this one is 5 minutes
       const period = 1000 * 5
       res.set('Cache-Control', `public, max-age=${period}`)
