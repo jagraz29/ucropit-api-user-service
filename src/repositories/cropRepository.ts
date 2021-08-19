@@ -57,7 +57,14 @@ export class CropRepository {
       .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
-      .populate({ path: 'company', populate: [{ path: 'files' }] })
+      .populate({
+        path: 'company',
+        populate: [
+          { path: 'files' },
+          { path: 'contacts.user' },
+          { path: 'country' }
+        ]
+      })
       .populate({
         path: 'pending',
         populate: [
@@ -169,10 +176,6 @@ export class CropRepository {
       .populate('unitType')
       .populate('envImpactIndex', 'eiq')
       .populate('badges.badge')
-      .populate({
-        path: 'company',
-        populate: [{ path: 'files' }, { path: 'contacts.user' }]
-      })
       .populate({
         path: 'pending',
         populate: [
@@ -337,6 +340,14 @@ export class CropRepository {
       })
       .populate('members.user')
       .populate({
+        path: 'company',
+        populate: [
+          { path: 'files' },
+          { path: 'contacts.user' },
+          { path: 'country' }
+        ]
+      })
+      .populate({
         path: 'finished',
         populate: [
           { path: 'files' },
@@ -402,8 +413,14 @@ export class CropRepository {
       .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
-      .populate('company')
-      .populate({ path: 'company', populate: [{ path: 'files' }] })
+      .populate({
+        path: 'company',
+        populate: [
+          { path: 'files' },
+          { path: 'contacts.user' },
+          { path: 'country' }
+        ]
+      })
       .populate({
         path: 'pending',
         populate: [
