@@ -68,6 +68,7 @@ export class ActivityRepository {
         path: 'supplies',
         populate: [{ path: 'typeId' }, { path: 'supply' }]
       })
+      .populate('subTypeActivity')
       .lean({ virtuals: true })
   }
 
