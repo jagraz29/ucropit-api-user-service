@@ -89,15 +89,16 @@ class AchievementsController {
       return res.status(400).json(validationExtensionFile.code)
     }
 
-    const subTypeActivity =
-      await SubTypeActivityRepository.getSubTypeActivityByID(
-        data.subTypeActivity
-      )
-
-    if (!subTypeActivity) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: 'SubTypeActivity not found'
-      })
+    if (data.subTypeActivity) {
+      const subTypeActivity =
+        await SubTypeActivityRepository.getSubTypeActivityByID(
+          data.subTypeActivity
+        )
+      if (!subTypeActivity) {
+        return res.status(StatusCodes.NOT_FOUND).json({
+          error: 'SubTypeActivity not found'
+        })
+      }
     }
 
     const validationFiles = validateFilesWithEvidences(
