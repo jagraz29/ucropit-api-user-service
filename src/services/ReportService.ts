@@ -188,18 +188,8 @@ class ReportService {
               crop._id.getTimestamp(),
               language
             ),
-            city: await this.getLocaleAddress(
-              lot,
-              2,
-              LANGUAGE_DEFAULT,
-              REGION_DEFAULT
-            ),
-            province: await this.getLocaleAddress(
-              lot,
-              1,
-              LANGUAGE_DEFAULT,
-              REGION_DEFAULT
-            ),
+            city: await this.getLocaleAddress(lot, 'city'),
+            province: await this.getLocaleAddress(lot, 'province'),
             kmz_links: this.linkKmzLot(lot),
             tags_lots: this.getListTagLots(crop.lots),
             name_lot: lot.name,
@@ -1037,7 +1027,7 @@ class ReportService {
     const region = 'AR'
     for (const lot of lots) {
       for (const data of lot.data) {
-        result = await this.getLocaleAddress(data, pos, language, region)
+        result = await this.getLocaleAddress(data, 'city')
         listAddressLot += `
           ${result},
         `
@@ -1049,40 +1039,9 @@ class ReportService {
 
   private static async getLocaleAddress(
     lot: any,
-    pos: number,
-    lang: string,
-    region: string
+    tag: string
   ): Promise<string> {
-    let listAddressLot = ''
-    let result = ''
-    if (lot.centerBound) {
-      const { latitude, longitude } = lot.centerBound
-
-      const resultAddress: any =
-        await GeoLocationService.getLocationByCoordinates(
-          latitude,
-          longitude,
-          lang,
-          region
-        )
-
-      if (
-        resultAddress.length > 0 &&
-        resultAddress[0].address_components.length > 0
-      ) {
-        const address = resultAddress[0].address_components.filter((item) =>
-          item.types.includes(`administrative_area_level_${pos}`)
-        )
-
-        result = address.length > 0 ? address[0].short_name : ''
-      }
-    }
-
-    listAddressLot += `
-    ${result},
-  `
-
-    return listAddressLot
+    return lot[tag] ?? ''
   }
 
   private static generateLinkShowLotKmz(lots) {
