@@ -99,10 +99,10 @@
   },
   "activity_types": {
     "tag": {
-      "act_tillage": "Cultivo",
-      "act_application": "Aplicativo",
+      "act_tillage": "Labrança",
+      "act_application": "Aplicação",
       "act_fertilization": "Fertilização",
-      "act_sowing": "Semeando",
+      "act_sowing": "Semeadura",
       "act_harvest": "Colheita",
       "act_agreements": "Acordos",
       "act_monitoring": "Monitoramento"
