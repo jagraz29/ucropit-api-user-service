@@ -99,13 +99,13 @@
   },
   "activity_types": {
     "tag": {
-      "act_tillage": "Labranza",
-      "act_application": "Aplicación",
-      "act_fertilization": "Fertilización",
-      "act_sowing": "Siembra",
-      "act_harvest": "Cosecha",
-      "act_agreements": "Acuerdos",
-      "act_monitoring": "Monitoreo"
+      "act_tillage": "Cultivo",
+      "act_application": "Aplicativo",
+      "act_fertilization": "Fertilização",
+      "act_sowing": "Semeando",
+      "act_harvest": "Colheita",
+      "act_agreements": "Acordos",
+      "act_monitoring": "Monitoramento"
     }
   },
   "activity_status": {
