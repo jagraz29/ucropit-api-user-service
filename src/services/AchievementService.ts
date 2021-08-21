@@ -23,6 +23,7 @@ class AchievementService extends ServiceBase {
       .populate('files')
       .populate('signers')
       .populate('destination')
+      .populate('subTypeActivity')
       .populate('supplies.typeId')
   }
 
