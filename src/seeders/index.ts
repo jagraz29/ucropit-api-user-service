@@ -51,6 +51,14 @@ const ForeignCredential = models.ForeignCredential
 const seedersSubTypeActivity = async (flag?) => {
   if (flag && flag !== '--subTypeActivity') return
   console.log(`${chalk.green('=====Registering Sub Type Activity====')}`)
+  const activityTypes: any = await ActivityType.find({}).lean()
+
+  subTypeActivityData.forEach((subTypeActivity) => {
+    const activityType = activityTypes.find(
+      (activityType) => activityType.tag === subTypeActivity.activityType
+    )
+    subTypeActivity.activityType = activityType._id
+  })
 
   await SubTypeActivityRepository.createAll(subTypeActivityData)
   console.log(`${chalk.green('=====Registered Sub Type Activity====')}`)

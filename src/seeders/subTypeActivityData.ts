@@ -2,127 +2,127 @@ import { ISubTypeActivity } from '../interfaces'
 
 export const subTypeActivityData: ISubTypeActivity[] = [
   {
-    activityType: '5fa01d56d109e6791d233c65',
+    activityType: 'ACT_SOWING',
     key: 'direct_sowing'
   },
   {
-    activityType: '5fa01d56d109e6791d233c65',
+    activityType: 'ACT_SOWING',
     key: 'conventional_sowing'
   },
   {
-    activityType: '5fa01d56d109e6791d233c65',
+    activityType: 'ACT_SOWING',
     key: 'direct_re_sowing'
   },
   {
-    activityType: '5fa01d56d109e6791d233c65',
+    activityType: 'ACT_SOWING',
     key: 'conventional_re_sowing'
   },
   {
-    activityType: '5fa01d56d109e6791d233c65',
+    activityType: 'ACT_SOWING',
     key: 'inter_cropping'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'articulated_discovered_disc_harrows'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'eccentric_harrow_or_offset_draft_harrows'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'diamond_harrow'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'light_combination_harrows'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'multipurpose_harrow'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'leveling_harrow'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'soil_conditioner'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'floor_aerator'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'rastron_leveler'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'robastro'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'rastron'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'rastron_desterronador'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'rotovator'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'plough_multiple_discs'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'plough_discs'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'chisel_plough'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'subsoiler_plough'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'scarifier'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'rolo'
   },
   {
-    activityType: '5fa01d56d109e6791d233c62',
+    activityType: 'ACT_TILLAGE',
     key: 'lumpy_roller'
   },
   {
-    activityType: '5fa01d56d109e6791d233c64',
+    activityType: 'ACT_FERTILIZATION',
     key: 'solid_broadcast'
   },
   {
-    activityType: '5fa01d56d109e6791d233c64',
+    activityType: 'ACT_FERTILIZATION',
     key: 'solid_incorporated'
   },
   {
-    activityType: '5fa01d56d109e6791d233c64',
+    activityType: 'ACT_FERTILIZATION',
     key: 'foliar_liquid'
   },
   {
-    activityType: '5fa01d56d109e6791d233c64',
+    activityType: 'ACT_FERTILIZATION',
     key: 'squirted_liquid'
   },
   {
-    activityType: '5fa01d56d109e6791d233c63',
+    activityType: 'ACT_APPLICATION',
     key: 'terrestrial'
   },
   {
-    activityType: '5fa01d56d109e6791d233c63',
+    activityType: 'ACT_APPLICATION',
     key: 'aerial'
   }
 ]
