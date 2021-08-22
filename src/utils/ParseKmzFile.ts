@@ -1,7 +1,6 @@
 import { FileArray } from 'express-fileupload'
 import parseKMZ from 'parse-kmz'
 import parseKML from 'parse-kml'
-import * as geolib from 'geolib'
 import * as turf from '@turf/turf'
 import _ from 'lodash'
 import path from 'path'
