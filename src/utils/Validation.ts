@@ -421,8 +421,6 @@ export const validateNotEqualNameLot = (lotNames) => {
 export const validateFormatKmz = async (files: FileArray) => {
   const result = await handleFileConvertJSON(files)
 
-  console.log(result[0].features[0].geometry)
-
   for (const feature of result[0].features) {
     if (feature.geometry.type !== 'Polygon') {
       return {
