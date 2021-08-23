@@ -6,18 +6,21 @@ import * as geolib from 'geolib'
 import _ from 'lodash'
 import axios from 'axios'
 import moment from 'moment'
-
+import * as turf from '@turf/turf'
+import WKT from 'terraformer-wkt-parser'
 import ServiceBase from './common/ServiceBase'
 import { handleFileConvertJSON } from '../utils/ParseKmzFile'
 import GeoLocationService from '../services/GeoLocationService'
 import StaticMapService from '../services/StaticMapService'
-import { parseImageUrlDefault } from '../utils'
+import { parseImageUrlDefault, Numbers } from '../utils'
 
 interface ILot {
   name: string
   area: Array<any>
   surface: number
   tag?: string
+  geometryData?: Object
+  wkt?: string
 }
 
 const LANGUAGE_DEFAULT = 'es'
@@ -79,7 +82,9 @@ class LotService extends ServiceBase {
         const lot: ILot = {
           name: lotItem.properties.name,
           area: this.getArrayAreas(lotItem.geometry.coordinates),
-          surface: Number(this.getSurface(lotItem.geometry.coordinates))
+          surface: Number(this.getSurface(lotItem.geometry)),
+          geometryData: lotItem.geometry,
+          wkt: this.convertWKT(lotItem.geometry)
         }
 
         const asyncLot = this.create(lot)
@@ -160,6 +165,10 @@ class LotService extends ServiceBase {
     return toCrop
   }
 
+  public static convertWKT(geometry) {
+    return WKT.convert(geometry)
+  }
+
   /**
    * Get areas to polygon.
    *
@@ -183,12 +192,11 @@ class LotService extends ServiceBase {
    *
    * @param coordinates
    */
-  private static getSurface(coordinates) {
-    const arrayAreas = this.getArrayAreas(coordinates)
+  private static getSurface(geometry) {
+    const areaSquare = turf.area(geometry)
+    const surface = Numbers.roundToTwo(areaSquare / 10000)
 
-    const areaSquare = this.getNumberAreaSquare(arrayAreas)
-
-    return geolib.convertArea(areaSquare, 'ha').toFixed(2)
+    return surface
   }
 
   /**
