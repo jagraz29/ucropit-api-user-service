@@ -1,13 +1,16 @@
 import { FileArray } from 'express-fileupload'
 import parseKMZ from 'parse-kmz'
 import parseKML from 'parse-kml'
-import * as geolib from 'geolib'
+import * as turf from '@turf/turf'
 import _ from 'lodash'
 import path from 'path'
 import fs from 'fs'
 
 import FileUpload from '../services/FileUpload'
 import { removeFiles } from '../utils/Files'
+import { Numbers } from '../utils/Numbers'
+
+const CONVERSION_SURFACE_FACTOR = 10000
 
 /**
  * File convert KMZ or KML to JSON.
@@ -96,9 +99,9 @@ export const kmlJsonToArrayNames = function (data) {
 export const mapArraySurfacesAndArea = function (kmzJsonParsers) {
   const listLots = kmzJsonParsers.map((item) => {
     return item.features.map((lot) => {
-      const flattenArr = _.flatten(lot.geometry.coordinates)
-      const areaSquare = geolib.getAreaOfPolygon(flattenArr)
-      const surface = geolib.convertArea(areaSquare, 'ha').toFixed(2)
+      const areaSquare = turf.area(lot.geometry)
+      const surface = Numbers.roundToTwo(areaSquare / CONVERSION_SURFACE_FACTOR)
+
       return {
         name: lot.properties.name,
         surface: surface,
