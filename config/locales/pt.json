@@ -223,5 +223,40 @@
         ]
       }
     }
+  },
+  "SubTypeActivity": {
+    "keys": {
+      "direct_sowing": "Direta",
+      "conventional_sowing": "Convencional",
+      "direct_re_sowing": "Ressemeadura Direta",
+      "conventional_re_sowing": "Ressemeadura Convencional",
+      "inter_cropping": "Cruzamento",
+      "articulated_discovered_disc_harrows": "Grade articulada de disco",
+      "eccentric_harrow_or_offset_draft_harrows": "Grade excêntrica ou deslocada de tração",
+      "diamond_harrow": "Draga Diamante",
+      "light_combination_harrows": "Dragas de combinação de luz",
+      "multipurpose_harrow": "Draga Multiuso",
+      "leveling_harrow": "Draga Niveladora",
+      "soil_conditioner": "Condicionador do solo",
+      "floor_aerator": "Aerador de chão",
+      "rastron_leveler": "Nivelador de Rastron",
+      "robastro": "Robastro",
+      "rastron": "Rastron",
+      "rastron_desterronador": "Rastron Lumpy",
+      "rotovator": "Rotovator",
+      "plough_multiple_discs": "Plow Multiple Discs",
+      "plough_discs": "Discos de arado",
+      "chisel_plough": "Arado de cinzel",
+      "subsoiler_plough": "Arado subsolador",
+      "scarifier": "Escarificador",
+      "rolo": "Rolo",
+      "lumpy_roller": "Rolo grumoso",
+      "solid_broadcast": "transmissão sólida",
+      "solid_incorporated": "Solido incorporado",
+      "foliar_liquid": "Líquido foliar",
+      "squirted_liquid": "Líquido chorreado",
+      "terrestrial": "Terra",
+      "aerial": "Aérea"
+    }
   }
 }
