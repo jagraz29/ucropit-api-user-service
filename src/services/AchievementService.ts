@@ -20,6 +20,7 @@ class AchievementService extends ServiceBase {
   public static async findById(id: string): Promise<any> {
     return AchievementModel.findById(id)
       .populate('lots')
+      .populate('lotsWithSurface.lot')
       .populate('files')
       .populate('signers')
       .populate('destination')
