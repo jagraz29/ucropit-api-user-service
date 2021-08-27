@@ -5,6 +5,7 @@ import { translateCropType } from './'
 
 export const translateCropActivities = (crop: Crop, lang: string) => {
   setLocale(lang)
+  console.log(crop)
   const pending = translateActivities(crop.pending, lang)
   const toMake = translateActivities(crop.toMake, lang)
   const done = translateActivities(crop.done, lang)
@@ -17,5 +18,14 @@ export const translateCropActivities = (crop: Crop, lang: string) => {
     pending,
     done,
     finished
+  }
+}
+
+export const translateCrop = (crop: Crop, lang: string) => {
+  const translated = translateActivities(crop.activities, lang)
+
+  return {
+    ...crop,
+    activities: translated
   }
 }
