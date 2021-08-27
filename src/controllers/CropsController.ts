@@ -25,7 +25,8 @@ import {
   filterActivitiesMakeByDates,
   calculateEIQAndPercentTotal,
   defaultLanguageConfig,
-  translateCropActivities
+  translateCropActivities,
+  translateCrop
 } from '../utils'
 
 import { UserSchema } from '../models/user'
@@ -234,6 +235,7 @@ class CropsController {
     } = req
     const language = req.getLocale()
     const crop = await CropRepository.getCropWithActivities(id)
+    const translatedCrop = translateCrop(crop, language)
 
     if (!crop) {
       return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
@@ -246,13 +248,14 @@ class CropsController {
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
 
     const activities: Array<ReportSignersByCompany> =
-      getActivitiesOrderedByDateUtils(crop)
+      getActivitiesOrderedByDateUtils(translatedCrop)
 
     const dataCrop = getCropUtils(
-      crop,
+      translatedCrop,
       activities,
       theoriticalPotential,
-      eiqRanges
+      eiqRanges,
+      language
     )
 
     const dataPdf = {

@@ -1,7 +1,7 @@
 import { Numbers } from '../Numbers'
 import { calculateCropVolumeUtils, getEiqFromActivityWithEiq } from '.'
 import { getLots, getLotsGroupByTag } from '../lots'
-import { IEiqRangesDocument } from '../../interfaces'
+import { IEiqRangesDocument, Crop } from '../../interfaces'
 import { getEiqRange, formatDate } from '..'
 
 export const getCropUtils = (
@@ -19,10 +19,11 @@ export const getCropUtils = (
     envImpactIndex,
     members,
     cropType: { key: cropTypeKey, name: cropTypeName }
-  },
+  }: Crop,
   activitiesWithEiq,
   theoriticalPotential,
-  eiqRanges: IEiqRangesDocument[]
+  eiqRanges: IEiqRangesDocument[],
+  lang?: string
 ) => {
   const pay = payEntry ?? 0
   let eiq = 0
@@ -37,8 +38,8 @@ export const getCropUtils = (
     pay,
     dateCrop,
     dateHarvest,
-    dateSowingFormat: formatDate(dateCrop, 'MMMM yy'),
-    dateHarvestFormat: formatDate(dateHarvest, 'MMMM yy'),
+    dateSowingFormat: formatDate(dateCrop, 'MMMM yy', lang),
+    dateHarvestFormat: formatDate(dateHarvest, 'MMMM yy', lang),
     cropTypeName,
     commercialContact: company
       ? getCommercialContact(company, theoriticalPotential)
