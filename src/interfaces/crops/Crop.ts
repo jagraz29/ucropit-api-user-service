@@ -16,7 +16,7 @@ export interface Crop {
   cropType?: CropType
   envImpactIndex?: any
   unitType?: UnitType
-  member?: any[]
+  members?: any[]
   lots?: any[]
   pending?: Activity[]
   toMake?: Activity[]

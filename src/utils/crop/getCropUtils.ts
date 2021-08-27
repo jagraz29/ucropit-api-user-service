@@ -1,7 +1,7 @@
 import { Numbers } from '../Numbers'
 import { calculateCropVolumeUtils, getEiqFromActivityWithEiq } from '.'
 import { getLots, getLotsGroupByTag } from '../lots'
-import { IEiqRangesDocument } from '../../interfaces'
+import { IEiqRangesDocument, Crop } from '../../interfaces'
 import { getEiqRange, formatDate } from '..'
 
 export const getCropUtils = (
@@ -19,7 +19,7 @@ export const getCropUtils = (
     envImpactIndex,
     members,
     cropType: { key: cropTypeKey, name: cropTypeName }
-  }: any,
+  }: Crop,
   activitiesWithEiq,
   theoriticalPotential,
   eiqRanges: IEiqRangesDocument[],
