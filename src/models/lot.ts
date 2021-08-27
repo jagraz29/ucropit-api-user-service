@@ -106,9 +106,6 @@ const LotSchema = new Schema(
     },
     geometryData: {
       type: Schema.Types.Mixed
-    },
-    wkt: {
-      type: String
     }
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }

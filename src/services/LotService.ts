@@ -83,8 +83,7 @@ class LotService extends ServiceBase {
           name: lotItem.properties.name,
           area: this.getArrayAreas(lotItem.geometry.coordinates),
           surface: Number(this.getSurface(lotItem.geometry)),
-          geometryData: lotItem.geometry,
-          wkt: this.convertWKT(lotItem.geometry)
+          geometryData: lotItem.geometry
         }
 
         const asyncLot = this.create(lot)
