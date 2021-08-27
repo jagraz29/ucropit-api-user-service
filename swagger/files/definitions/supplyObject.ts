@@ -1,7 +1,7 @@
 /**
  * @swagger
  *  definitions:
- *    acceptLanguage:
+ *    supplyObject:
  *      properties:
  *        _id:
  *          type: string
@@ -14,4 +14,15 @@
  *          type: string
  *        typeId:
  *          $ref: '#/components/schemas/SupplyTypes'
+ *        brand:
+ *         type: string
+ *        compositon:
+ *         type: string
+ *        eiqTotal:
+ *           type: number
+ *           format: double
+ *        activeIngredients:
+ *         type: array
+ *         items:
+ *          $ref: '#/definitions/activeIngredientsObject'
  */

@@ -102,6 +102,7 @@ class CropsController {
       .populate('members.user')
       .populate('finished')
       .lean()
+
     res.status(200).json(crops)
   }
 
@@ -114,8 +115,7 @@ class CropsController {
    * @return Response
    */
   public async show(req: Request, res: Response) {
-    const language =
-      req.header('Accept-Language') || defaultLanguageConfig.language
+    const language = req.getLocale()
     const { id } = req.params
     const { startDate, endDate } = req.query
     const crop = await CropService.getCrop(id)
@@ -233,9 +233,7 @@ class CropsController {
     const {
       params: { id }
     } = req
-    const language =
-      req.header('Accept-Language') || defaultLanguageConfig.language
-
+    const language = req.getLocale()
     const crop = await CropRepository.getCropWithActivities(id)
     const translatedCrop = translateCrop(crop, language)
 

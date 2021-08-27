@@ -3,7 +3,8 @@
   "commons": {
     "deleted_success": "removido com sucesso",
     "deletion_not_allowed": "removido não permitido",
-    "not_found": "Recurso não encontrado"
+    "not_found": "Recurso não encontrado",
+    "tag_general": "Geral"
   },
   "achievements": {
     "not_async": "falhou ao sincronizar"
@@ -98,13 +99,13 @@
   },
   "activity_types": {
     "tag": {
-      "act_tillage": "Labranza",
-      "act_application": "Aplicación",
-      "act_fertilization": "Fertilización",
-      "act_sowing": "Siembra",
-      "act_harvest": "Cosecha",
-      "act_agreements": "Acuerdos",
-      "act_monitoring": "Monitoreo"
+      "act_tillage": "Labrança",
+      "act_application": "Aplicação",
+      "act_fertilization": "Fertilização",
+      "act_sowing": "Semeadura",
+      "act_harvest": "Colheita",
+      "act_agreements": "Acordos",
+      "act_monitoring": "Monitoramento"
     }
   },
   "activity_status": {
@@ -131,7 +132,7 @@
       "0001": "Conhecimento de carga",
       "0002": "Documentação de suporte",
       "0003": "Fatura",
-      "0004": "Fotografía dentro do lote",
+      "0004": "Foto dentro do lote",
       "0005": "Receita agronômica",
       "0006": "Recibo",
       "0007": "Fatura de sementes",
@@ -221,6 +222,41 @@
           "Previsão do tempo de hora em hora"
         ]
       }
+    }
+  },
+  "SubTypeActivity": {
+    "keys": {
+      "direct_sowing": "Semeadura direta",
+      "conventional_sowing": "Semeadura convencional",
+      "direct_re_sowing": "Resemeadura Direta",
+      "conventional_re_sowing": "Resemeadura convencional",
+      "inter_cropping": "Intersemeadura",
+      "articulated_discovered_disc_harrows": "Grade articulada de disco",
+      "eccentric_harrow_or_offset_draft_harrows": "Grade excêntrica ou deslocada de tração",
+      "diamond_harrow": "Draga Diamante",
+      "light_combination_harrows": "Dragas de combinação de luz",
+      "multipurpose_harrow": "Draga Multiuso",
+      "leveling_harrow": "Draga Niveladora",
+      "soil_conditioner": "Condicionador do solo",
+      "floor_aerator": "Aerador de chão",
+      "rastron_leveler": "Nivelador de Rastron",
+      "robastro": "Robastro",
+      "rastron": "Rastron",
+      "rastron_desterronador": "Rastron Lumpy",
+      "rotovator": "Rotovator",
+      "plough_multiple_discs": "Plow Multiple Discs",
+      "plough_discs": "Discos de arado",
+      "chisel_plough": "Arado de cinzel",
+      "subsoiler_plough": "Arado subsolador",
+      "scarifier": "Escarificador",
+      "rolo": "Rolo",
+      "lumpy_roller": "Rolo grumoso",
+      "solid_broadcast": "Sólido a lanço",
+      "solid_incorporated": "Sólido incorporado",
+      "foliar_liquid": "Líquido foliar",
+      "squirted_liquid": "Líquido jateado",
+      "terrestrial": "Terrestre",
+      "aerial": "Aérea"
     }
   }
 }

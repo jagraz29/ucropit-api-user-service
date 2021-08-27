@@ -1,11 +1,14 @@
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { capitalize } from 'lodash'
+
 import {
   ActivityRepository,
   TypeAgreementRepository,
   BadgeRepository,
   CropRepository,
-  activityTypeRepository
+  activityTypeRepository,
+  SubTypeActivityRepository
 } from '../repositories'
 import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
 import {
@@ -18,7 +21,8 @@ import {
   sumActivitiesSurfacesByTypeAgreement,
   getCropBadgesReached,
   calculateCropEiq,
-  calculateEiqOfActivity
+  calculateEiqOfActivity,
+  groupedLotsByTagsInActivity
 } from '../utils'
 
 import ActivityService from '../services/ActivityService'
@@ -43,6 +47,7 @@ import {
   setEiqInEnvImpactIndexActivity,
   setEnvImpactIndexInActivity
 } from '../core'
+import { setLocale, __ } from 'i18n'
 
 const Activity = models.Activity
 const FileDocument = models.FileDocument
@@ -91,6 +96,44 @@ class ActivitiesController {
   }
 
   /**
+   * Show all subtypes of activities
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async getAllSubtypes(req: Request, res: Response) {
+    const subTypeActivityCodes = req.__(
+      'SubTypeActivity.keys'
+    ) as unknown as object
+
+    const subTypeActivities = await SubTypeActivityRepository.getAll()
+    subTypeActivities.map((subTypeActivity) => {
+      subTypeActivity.codeLabel =
+        subTypeActivityCodes[subTypeActivity.key.toLowerCase()] ||
+        capitalize(subTypeActivity.key.replace('_', ' '))
+    })
+    res.status(StatusCodes.OK).json(subTypeActivities)
+  }
+
+  public async showLotsGroupedByTags(req: Request, res: Response) {
+    const { id } = req.params
+    const { cropId } = req.query
+    const activity =
+      await ActivityRepository.findActivityByIdWithPopulateAndVirtuals(id)
+    const crop = await CropRepository.findOneSample({ _id: cropId })
+
+    const lang = req.getLocale() as string
+    const activities = groupedLotsByTagsInActivity(
+      calculateEiqOfActivity(activity, lang),
+      crop,
+      lang
+    )
+    res.status(StatusCodes.OK).json(activities)
+  }
+
+  /**
    * Store one activity.
    *
    * @param Request req
@@ -119,6 +162,18 @@ class ActivitiesController {
 
     if (validationFiles.error) {
       return res.status(400).json(validationFiles)
+    }
+
+    if (data.subTypeActivity) {
+      const subTypeActivity =
+        await SubTypeActivityRepository.getSubTypeActivityByID(
+          data.subTypeActivity
+        )
+      if (!subTypeActivity) {
+        return res.status(StatusCodes.NOT_FOUND).json({
+          error: 'SubTypeActivity not found'
+        })
+      }
     }
 
     let activity = await ActivityService.store(data, user)

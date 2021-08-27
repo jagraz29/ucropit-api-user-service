@@ -1,23 +1,3 @@
-/**
- * @swagger
- *  components:
- *    schemas:
- *       UnitType:
- *         type: object
- *         required:
- *           - name
- *           - key
- *         properties:
- *           name:
- *             type: object
- *             properties:
- *                  en:
- *                    type: string
- *                  es:
- *                    type: string
- *           key:
- *             type: string
- */
 import mongoose, { Schema, Document } from 'mongoose'
 import { IUnitTypeProps } from '../core/unitTypes/interfaces'
 export type UnitTypeDocument = Document & IUnitTypeProps
