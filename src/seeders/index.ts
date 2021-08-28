@@ -409,6 +409,7 @@ const seedersForeignCredentials = async (flag?) => {
       await seedersActivePrinciples(flag)
       await seedersForeignCredentials(flag)
       await seedersEiqRanges(flag)
+      await seedersSubTypeActivity(flag)
     } catch (e) {
       console.log(e)
     }

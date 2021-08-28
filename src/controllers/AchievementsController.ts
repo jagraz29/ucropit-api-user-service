@@ -24,6 +24,7 @@ import { typesSupplies } from '../utils/Constants'
 import agenda from '../jobs'
 import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
 import { setEiqInEnvImpactIndex, setEnvImpactIndexInEntities } from '../core'
+import { SubTypeActivityRepository } from '../repositories'
 
 const Crop = models.Crop
 
@@ -99,6 +100,20 @@ class AchievementsController {
 
     if (validationFiles.error) {
       return res.status(400).json(validationFiles)
+    }
+
+    if (data.subTypeActivity) {
+      const subTypeActivity =
+        await SubTypeActivityRepository.getSubTypeActivityByID(
+          data.subTypeActivity
+        )
+      if (!subTypeActivity) {
+        return res.status(StatusCodes.NOT_FOUND).json({
+          error: 'SubTypeActivity not found'
+        })
+      }
+
+      data.keySubTypesActivity = subTypeActivity.key
     }
 
     const activity: any = await ActivityService.findActivityById(data.activity)
