@@ -246,7 +246,7 @@ export const validateAchievement = async (achievement) => {
     lots: Joi.array().items(Joi.string()).required(),
     activity: Joi.string().required(),
     tag: Joi.string().required(),
-    subTypeActivity: Joi.string().required(),
+    subTypeActivity: Joi.string().optional(),
     crop: Joi.string().required(),
     erpAgent: Joi.string().optional(),
     supplies: Joi.array()
