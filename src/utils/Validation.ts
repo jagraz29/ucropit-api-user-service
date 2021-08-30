@@ -382,6 +382,14 @@ export const validateFilesWithEvidences = (files, evidences) => {
     files.files = [files.files]
   }
 
+  if (files.files.length !== evidences.length) {
+    return {
+      error: true,
+      message: 'Length files and evidences must equal',
+      localKey: 'crops.errors.file_evidence_invalid_length'
+    }
+  }
+
   return { error: false }
 }
 
