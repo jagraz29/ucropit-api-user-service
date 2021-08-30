@@ -40,8 +40,10 @@
  *             required: true
  */
 
-import mongoose from 'mongoose'
+import mongoose, { Document } from 'mongoose'
 import { ICountry } from '../interfaces'
+
+export type CountryDocument = Document & ICountry
 
 const { Schema } = mongoose
 
@@ -120,4 +122,4 @@ const CountrySchema = new Schema({
   }
 })
 
-export default mongoose.model<ICountry>('Country', CountrySchema)
+export default mongoose.model<CountryDocument>('Country', CountrySchema)

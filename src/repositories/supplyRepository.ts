@@ -1,6 +1,6 @@
 import models from '../models'
-import { TypeActivities } from '../interfaces/activities/TypeActivities.enum'
-const { Supply, ActiveIngredient } = models
+import { CountryDocument } from '../models/country'
+const { Supply, SupplyType, ActiveIngredient, Country } = models
 
 export class SupplyRepository {
   /**
@@ -105,5 +105,23 @@ export class SupplyRepository {
   public static async count(query) {
     const count = await Supply.countDocuments(query)
     return count
+  }
+
+  /**
+   *
+   * @param item
+   */
+  public static async addSuppliesSeed(item): Promise<void> {
+    const country: any = await Country.find({
+      alpha3Code: item.alphacode
+    }).lean()
+
+    const supply = {
+      ...item,
+      alphaCode: country[0].alpha3Code,
+      countryId: country[0]._id
+    }
+
+    return Supply.create(supply)
   }
 }
