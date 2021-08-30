@@ -19,7 +19,8 @@ import {
   suppliesData,
   fertilizers,
   pesticides,
-  phytotherapeutic
+  phytotherapeutic,
+  suppliesPry
 } from './suppliesData'
 
 import { activesPrinciples } from './activesPrinciplesData'
@@ -44,6 +45,7 @@ const TypeStorage = models.TypeStorage
 const ActiveIngredient = models.ActiveIngredient
 
 const ForeignCredential = models.ForeignCredential
+const Country = models.Country
 
 /**
  * Seeders SubType Activity
@@ -176,6 +178,32 @@ const seedersTypeAgreement = async (flag) => {
 
 const dropAllDatabase = (connected) => {
   return connected.connection.db.dropDatabase()
+}
+
+const seedersSupplyPRY = async (flag?) => {
+  if (flag && flag !== '--suppply-pry') return
+  console.log(`${chalk.green('=====Registering Supply====')}`)
+
+  for (const supply of suppliesPry) {
+    const country: any = await Country.findOne({
+      alpha3Code: supply.alphacode
+    }).lean()
+
+    const supplyData = {
+      ...supply,
+      typeId: supply.typeId.trim(),
+      alphaCode: country.alpha3Code,
+      countryId: country._id,
+      supplyType: supply.supplytype
+    }
+
+    const result = await Supply.create(supplyData)
+    console.log('SUPPLY DATA INSERT')
+    console.log(result)
+  }
+
+  console.log(`${chalk.green('=====Registered Supply====')}`)
+  return true
 }
 
 const seedersSupply = async (flag?) => {
@@ -410,6 +438,7 @@ const seedersForeignCredentials = async (flag?) => {
       await seedersForeignCredentials(flag)
       await seedersEiqRanges(flag)
       await seedersSubTypeActivity(flag)
+      await seedersSupplyPRY(flag)
     } catch (e) {
       console.log(e)
     }
