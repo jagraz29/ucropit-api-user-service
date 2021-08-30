@@ -3,6 +3,7 @@ import { connectDb } from '../models'
 import chalk from 'chalk'
 import { Command, OptionValues } from 'commander'
 import { suppliesSeeds } from './supplies/suppliesSeeds'
+import { suppliesPhytosanitary } from './supplies/suppliesPhytosanitary'
 
 import { SupplyRepository } from '../repositories'
 
@@ -19,9 +20,22 @@ program
 program.parse(process.argv)
 
 async function execAddSuppliesSeed() {
-  for (const item of suppliesSeeds) {
+  for (const item of suppliesPhytosanitary) {
     try {
       await SupplyRepository.addSuppliesSeed(item)
+    } catch (error) {
+      console.log(
+        `${chalk.green(`Error updating supplies for unit: ${item}`, error)}`
+      )
+    }
+  }
+  console.log(`${chalk.green(`SUPPLIES ADD SUCCESSFULLY`)}`)
+}
+
+async function execAddSuppliesPhytosanitary() {
+  for (const item of suppliesSeeds) {
+    try {
+      await SupplyRepository.addddSuppliesPhytosanitary(item)
     } catch (error) {
       console.log(
         `${chalk.green(`Error updating supplies for unit: ${item}`, error)}`
@@ -40,6 +54,10 @@ async function execAddSuppliesSeed() {
 
       if (options.addSeed) {
         await execAddSuppliesSeed()
+      }
+
+      if (options.addPhytosanitary) {
+        await execAddSuppliesPhytosanitary()
       }
     }
   } catch (error) {

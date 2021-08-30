@@ -124,4 +124,22 @@ export class SupplyRepository {
 
     return Supply.create(supply)
   }
+
+  /**
+   *
+   * @param item
+   */
+  public static async addddSuppliesPhytosanitary(item): Promise<void> {
+    const country: any = await Country.find({
+      alpha3Code: item.alphacode
+    }).lean()
+
+    const supply = {
+      ...item,
+      alphaCode: country[0].alpha3Code,
+      countryId: country[0]._id
+    }
+
+    return Supply.create(supply)
+  }
 }
