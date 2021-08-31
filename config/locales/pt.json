@@ -3,7 +3,8 @@
   "commons": {
     "deleted_success": "removido com sucesso",
     "deletion_not_allowed": "removido não permitido",
-    "not_found": "Recurso não encontrado"
+    "not_found": "Recurso não encontrado",
+    "tag_general": "Geral"
   },
   "achievements": {
     "not_async": "falhou ao sincronizar"
@@ -98,13 +99,13 @@
   },
   "activity_types": {
     "tag": {
-      "act_tillage": "Labranza",
-      "act_application": "Aplicación",
-      "act_fertilization": "Fertilización",
-      "act_sowing": "Siembra",
-      "act_harvest": "Cosecha",
-      "act_agreements": "Acuerdos",
-      "act_monitoring": "Monitoreo"
+      "act_tillage": "Labrança",
+      "act_application": "Aplicação",
+      "act_fertilization": "Fertilização",
+      "act_sowing": "Semeadura",
+      "act_harvest": "Colheita",
+      "act_agreements": "Acordos",
+      "act_monitoring": "Monitoramento"
     }
   },
   "activity_status": {
@@ -131,7 +132,7 @@
       "0001": "Conhecimento de carga",
       "0002": "Documentação de suporte",
       "0003": "Fatura",
-      "0004": "Fotografía dentro do lote",
+      "0004": "Foto dentro do lote",
       "0005": "Receita agronômica",
       "0006": "Recibo",
       "0007": "Fatura de sementes",

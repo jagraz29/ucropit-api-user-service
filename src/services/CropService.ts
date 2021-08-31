@@ -240,7 +240,14 @@ class CropService extends ServiceBase {
       .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
-      .populate('company')
+      .populate({
+        path: 'company',
+        populate: [
+          { path: 'files' },
+          { path: 'contacts.user' },
+          { path: 'country' }
+        ]
+      })
       .populate({
         path: 'done',
         populate: [
@@ -293,7 +300,14 @@ class CropService extends ServiceBase {
       .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
-      .populate('company')
+      .populate({
+        path: 'company',
+        populate: [
+          { path: 'files' },
+          { path: 'contacts.user' },
+          { path: 'country' }
+        ]
+      })
       .populate({
         path: 'pending',
         populate: [
@@ -376,6 +390,14 @@ class CropService extends ServiceBase {
       .populate('cropType')
       .populate('unitType')
       .populate({
+        path: 'company',
+        populate: [
+          { path: 'files' },
+          { path: 'contacts.user' },
+          { path: 'country' }
+        ]
+      })
+      .populate({
         path: 'done',
         populate: [
           { path: 'type' },
@@ -417,7 +439,11 @@ class CropService extends ServiceBase {
       .populate('unitType')
       .populate({
         path: 'company',
-        populate: [{ path: 'files' }, { path: 'contacts.user' }]
+        populate: [
+          { path: 'files' },
+          { path: 'contacts.user' },
+          { path: 'country' }
+        ]
       })
 
       .populate({
@@ -569,7 +595,14 @@ class CropService extends ServiceBase {
       .populate('lots.data')
       .populate('cropType')
       .populate('unitType')
-      .populate({ path: 'company', populate: [{ path: 'files' }] })
+      .populate({
+        path: 'company',
+        populate: [
+          { path: 'files' },
+          { path: 'contacts.user' },
+          { path: 'country' }
+        ]
+      })
       .populate({
         path: 'pending',
         populate: [

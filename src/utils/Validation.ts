@@ -1,15 +1,14 @@
-import * as Joi from 'joi'
+import JoiDate from '@hapi/joi-date'
 import { FileArray } from 'express-fileupload'
-import { handleFileConvertJSON } from '../utils/ParseKmzFile'
-import { errors } from '../types/common'
-import { VALID_FORMATS_DOCUMENTS } from './Files'
+import * as Joi from 'joi'
+import _ from 'lodash'
+import moment from 'moment'
 import { ResponseOkProps } from '../interfaces/SatelliteImageRequest'
 import { TypeActivity } from '../repositories'
-import _ from 'lodash'
-
-import JoiDate from '@hapi/joi-date'
-import moment from 'moment'
+import { errors } from '../types/common'
 import ErrorResponse from '../utils/ErrorResponse'
+import { handleFileConvertJSON } from '../utils/ParseKmzFile'
+import { VALID_FORMATS_DOCUMENTS } from './Files'
 
 const JoiValidation = Joi.extend(JoiDate)
 
@@ -66,6 +65,17 @@ export const validateActivityStore = async (activity) => {
     typeAgreement: Joi.string().optional(),
     status: Joi.string().optional(),
     lots: Joi.array().items(Joi.string()).optional(),
+    lotsWithSurface: Joi.array()
+      .items(
+        Joi.object()
+          .keys({
+            lot: Joi.string().required(),
+            surfacePlanned: Joi.number().optional(),
+            tag: Joi.string().optional()
+          })
+          .unknown()
+      )
+      .optional(),
     crop: Joi.string().optional(),
     dateObservation: Joi.date().optional(),
     unitType: Joi.string().optional(),
@@ -118,7 +128,8 @@ export const validateActivityStore = async (activity) => {
         type: Joi.string().required(),
         signed: Joi.boolean().optional()
       })
-    )
+    ),
+    subTypeActivity: Joi.string().optional()
   }).unknown()
 
   return schema.validateAsync(activity)
@@ -243,7 +254,21 @@ export const validateAchievement = async (achievement) => {
     _id: Joi.string().optional(),
     dateAchievement: Joi.date().required(),
     surface: Joi.number().required(),
-    lots: Joi.array().items(Joi.string()).required(),
+    lots: Joi.array().items(Joi.string()).optional(),
+    subTypeActivity: Joi.string().required(),
+    keySubTypesActivity: Joi.string().optional(),
+    lotsWithSurface: Joi.array()
+      .items(
+        Joi.object()
+          .keys({
+            lot: Joi.string().required(),
+            surfacePlanned: Joi.number().optional(),
+            surfaceAchievement: Joi.number().optional(),
+            tag: Joi.string().optional()
+          })
+          .unknown()
+      )
+      .optional(),
     activity: Joi.string().required(),
     tag: Joi.string().required(),
     subTypeActivity: Joi.string().optional(),

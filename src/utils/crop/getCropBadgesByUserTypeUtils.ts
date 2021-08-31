@@ -21,14 +21,15 @@ export const getCropBadgesByUserType = (
   /*
   GET MEMBER DATA OF USER IN CROP
   */
-  const memberData = members.filter(
+  const memberData = members.find(
     (member) => _id.toString() === member.user._id.toString()
-  )[0]
+  )
 
   /*
   VALIDATE USER TYPE
   */
   if (
+    memberData &&
     memberData.type !== UserTypes.MARKETER &&
     memberData.type !== UserTypes.PROVIDER
   ) {
