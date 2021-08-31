@@ -17,7 +17,7 @@ export class SupplyRepository {
    * @param query
    * @returns
    */
-  public static async getSupply(query): Promise<any> {
+  public static async getSupply(query) {
     return Supply.findOne(query)
   }
 
@@ -120,7 +120,7 @@ export class SupplyRepository {
    *
    * @param item
    */
-  public static async addSuppliesSeed(item): Promise<void> {
+  public static async addSuppliesSeed(item) {
     const country: any = await Country.find({
       alpha3Code: item.alphaCode
     }).lean()
@@ -138,7 +138,7 @@ export class SupplyRepository {
    *
    * @param item
    */
-  public static async addddSuppliesPhytosanitary(item): Promise<void> {
+  public static async addddSuppliesPhytosanitary(item) {
     const country: any = await Country.find({
       alpha3Code: item.alphaCode
     }).lean()
