@@ -426,7 +426,7 @@ class CropService extends ServiceBase {
           { path: 'collaborators' },
           { path: 'type' },
           { path: 'typeAgreement' },
-          { path: 'lots', select: '-area -__v' },
+          { path: 'lots', select: '-area -__v -geometryData' },
           { path: 'files' }
         ]
       })
@@ -436,7 +436,7 @@ class CropService extends ServiceBase {
           { path: 'collaborators' },
           { path: 'type' },
           { path: 'typeAgreement' },
-          { path: 'lots', select: '-area -__v' },
+          { path: 'lots', select: '-area -__v -geometryData' },
           { path: 'files' },
           {
             path: 'supplies',
@@ -450,7 +450,7 @@ class CropService extends ServiceBase {
           { path: 'collaborators' },
           { path: 'type' },
           { path: 'typeAgreement' },
-          { path: 'lots', select: '-area -__v' },
+          { path: 'lots', select: '-area -__v -geometryData' },
           { path: 'files' },
           {
             path: 'achievements',
@@ -476,7 +476,7 @@ class CropService extends ServiceBase {
           { path: 'collaborators' },
           { path: 'type' },
           { path: 'typeAgreement' },
-          { path: 'lots', select: '-area -__v' },
+          { path: 'lots', select: '-area -__v -geometryData' },
           { path: 'files' },
           {
             path: 'achievements',

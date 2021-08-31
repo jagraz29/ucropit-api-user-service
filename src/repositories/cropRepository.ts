@@ -178,7 +178,7 @@ export class CropRepository {
           { path: 'type' },
           { path: 'typeAgreement' },
           { path: 'files' },
-          { path: 'lots', select: '-area -__v' },
+          { path: 'lots', select: '-area -__v -geometryData' },
           {
             path: 'supplies',
             populate: [{ path: 'typeId' }]
@@ -197,7 +197,7 @@ export class CropRepository {
           { path: 'unitType' },
           { path: 'type' },
           { path: 'typeAgreement' },
-          { path: 'lots', select: '-area -__v' },
+          { path: 'lots', select: '-area -__v -geometryData' },
           { path: 'files' },
           {
             path: 'supplies',
@@ -219,7 +219,7 @@ export class CropRepository {
           { path: 'typeAgreement' },
           {
             path: 'lots',
-            select: '-area -__v',
+            select: '-area -__v -geometryData',
             populate: [{ path: 'envImpactIndex', select: 'eiq' }]
           },
           { path: 'files' },
@@ -255,7 +255,7 @@ export class CropRepository {
           { path: 'typeAgreement' },
           {
             path: 'lots',
-            select: '-area -__v',
+            select: '-area -__v -geometryData',
             populate: [{ path: 'envImpactIndex', select: 'eiq' }]
           },
           { path: 'files' },

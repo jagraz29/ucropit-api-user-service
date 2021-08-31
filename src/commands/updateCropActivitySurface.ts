@@ -9,8 +9,6 @@ import {
 } from '../repositories'
 import { StatusActivities } from '../interfaces'
 import { Numbers } from '../utils'
-import { UserSchema } from '../models/user'
-import activityType from '../models/activityType'
 
 const program = new Command()
 
