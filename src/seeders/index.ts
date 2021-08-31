@@ -19,14 +19,16 @@ import {
   suppliesData,
   fertilizers,
   pesticides,
-  phytotherapeutic
+  phytotherapeutic,
+  suppliesPry
 } from './suppliesData'
 
 import { activesPrinciples } from './activesPrinciplesData'
 
 import { badgesData } from './badgesData'
-import { EiqRangesRepository } from '../repositories'
+import { EiqRangesRepository, SubTypeActivityRepository } from '../repositories'
 import { eiqRangesData } from './eiqRangesData'
+import { subTypeActivityData } from './subTypeActivityData'
 
 const Badge = models.Badge
 const CropType = models.CropType
@@ -43,6 +45,27 @@ const TypeStorage = models.TypeStorage
 const ActiveIngredient = models.ActiveIngredient
 
 const ForeignCredential = models.ForeignCredential
+const Country = models.Country
+
+/**
+ * Seeders SubType Activity
+ */
+const seedersSubTypeActivity = async (flag?) => {
+  if (flag && flag !== '--subTypeActivity') return
+  console.log(`${chalk.green('=====Registering Sub Type Activity====')}`)
+  const activityTypes: any = await ActivityType.find({}).lean()
+
+  subTypeActivityData.forEach((subTypeActivity) => {
+    const activityType = activityTypes.find(
+      (activityType) => activityType.tag === subTypeActivity.activityType
+    )
+    subTypeActivity.activityType = activityType._id
+  })
+
+  await SubTypeActivityRepository.createAll(subTypeActivityData)
+  console.log(`${chalk.green('=====Registered Sub Type Activity====')}`)
+  return true
+}
 
 /**
  * Seeders Badges
@@ -155,6 +178,32 @@ const seedersTypeAgreement = async (flag) => {
 
 const dropAllDatabase = (connected) => {
   return connected.connection.db.dropDatabase()
+}
+
+const seedersSupplyPRY = async (flag?) => {
+  if (flag && flag !== '--suppply-pry') return
+  console.log(`${chalk.green('=====Registering Supply====')}`)
+
+  for (const supply of suppliesPry) {
+    const country: any = await Country.findOne({
+      alpha3Code: supply.alphacode
+    }).lean()
+
+    const supplyData = {
+      ...supply,
+      typeId: supply.typeId.trim(),
+      alphaCode: country.alpha3Code,
+      countryId: country._id,
+      supplyType: supply.supplytype
+    }
+
+    const result = await Supply.create(supplyData)
+    console.log('SUPPLY DATA INSERT')
+    console.log(result)
+  }
+
+  console.log(`${chalk.green('=====Registered Supply====')}`)
+  return true
 }
 
 const seedersSupply = async (flag?) => {
@@ -388,6 +437,8 @@ const seedersForeignCredentials = async (flag?) => {
       await seedersActivePrinciples(flag)
       await seedersForeignCredentials(flag)
       await seedersEiqRanges(flag)
+      await seedersSubTypeActivity(flag)
+      await seedersSupplyPRY(flag)
     } catch (e) {
       console.log(e)
     }

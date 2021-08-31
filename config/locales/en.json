@@ -222,5 +222,40 @@
         ]
       }
     }
+  },
+  "SubTypeActivity": {
+    "keys": {
+      "direct_sowing": "Direct sowing",
+      "conventional_sowing": "Conventional sowing",
+      "direct_re_sowing": "Direct re-sowing",
+      "conventional_re_sowing": "Conventional re-sowing",
+      "inter_cropping": "inter-cropping",
+      "articulated_discovered_disc_harrows": "Articulated discovered disc harrows",
+      "eccentric_harrow_or_offset_draft_harrows": "Eccentric harrow or offset draft harrows",
+      "diamond_harrow": "Diamond harrow",
+      "light_combination_harrows": "Light combination harrows",
+      "multipurpose_harrow": "Multipurpose harrow",
+      "leveling_harrow": "Leveling harrow",
+      "soil_conditioner": "Soil conditioner",
+      "floor_aerator": "Floor aerator",
+      "rastron_leveler": "Rastron Leveler",
+      "robastro": "Robastro",
+      "rastron": "Rastron",
+      "rastron_desterronador": "Rastron desterronador",
+      "rotovator": "Rotovator",
+      "plough_multiple_discs": "Plough Multiple discs",
+      "plough_discs": "Plough discs",
+      "chisel_plough": "Chisel Plough",
+      "subsoiler_plough": "Subsoiler Plough",
+      "scarifier": "Scarifier",
+      "rolo": "Rolo",
+      "lumpy_roller": "Lumpy Roller",
+      "solid_broadcast": "Solid broadcast",
+      "solid_incorporated": "Solid incorporated",
+      "foliar_liquid": "Foliar liquid",
+      "squirted_liquid": "Squirted liquid",
+      "terrestrial": "Terrestrial",
+      "aerial": "Aerial"
+    }
   }
 }

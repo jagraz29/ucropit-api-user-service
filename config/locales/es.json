@@ -222,5 +222,40 @@
         ]
       }
     }
+  },
+  "SubTypeActivity": {
+    "keys": {
+      "direct_sowing": "Directa",
+      "conventional_sowing": "Convencional",
+      "direct_re_sowing": "Resiembra Directa",
+      "conventional_re_sowing": "Resiembra Convencional",
+      "inter_cropping": "Intersiembra",
+      "articulated_discovered_disc_harrows": "Rastras de Disco Desencontradas articuladas",
+      "eccentric_harrow_or_offset_draft_harrows": "Rastra Excéntricas o de tiro desplazado",
+      "diamond_harrow": "Rastra Diamante",
+      "light_combination_harrows": "Rastras combinadas ligeras",
+      "multipurpose_harrow": "Rastra Multiproposito",
+      "leveling_harrow": "Rastra Niveladara",
+      "soil_conditioner": "Acondicionador de suelos",
+      "floor_aerator": "Aireador de suelos",
+      "rastron_leveler": "Rastron Nivelador",
+      "robastro": "Robastro",
+      "rastron": "Rastron",
+      "rastron_desterronador": "Rastron desterronador",
+      "rotovator": "Rotovator",
+      "plough_multiple_discs": "Arado Discos multiples",
+      "plough_discs": "Arado discos",
+      "chisel_plough": "Arado Cincel",
+      "subsoiler_plough": "Arado subsolador",
+      "scarifier": "Escarificador",
+      "rolo": "Rolo",
+      "lumpy_roller": "Rolo desterronador",
+      "solid_broadcast": "Solido al voleo",
+      "solid_incorporated": "Solido incorporado",
+      "foliar_liquid": "Líquido foliar",
+      "squirted_liquid": "Líquido chorreado",
+      "terrestrial": "Terrestre",
+      "aerial": "Aérea"
+    }
   }
 }

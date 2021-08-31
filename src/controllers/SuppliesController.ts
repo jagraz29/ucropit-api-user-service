@@ -72,6 +72,7 @@ class SuppliesController {
       const period = 1000 * 5
       res.set('Cache-Control', `public, max-age=${period}`)
     }
+
     res.status(StatusCodes.OK).json(suppliesWithEiqTotal)
   }
 

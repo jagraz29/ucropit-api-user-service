@@ -37,6 +37,14 @@ export const AchievementSchema: Schema = new Schema({
     type: String,
     required: false
   },
+  subTypeActivity: {
+    type: Schema.Types.ObjectId,
+    ref: 'SubTypeActivity'
+  },
+  keySubTypesActivity: {
+    type: String,
+    required: false
+  },
   dateAchievement: {
     type: Date,
     required: false
