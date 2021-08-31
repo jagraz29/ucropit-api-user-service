@@ -20,7 +20,7 @@ program
 program.parse(process.argv)
 
 async function execAddSuppliesSeed() {
-  for (const item of suppliesPhytosanitary) {
+  for (const item of suppliesSeeds) {
     try {
       await SupplyRepository.addSuppliesSeed(item)
     } catch (error) {
@@ -33,7 +33,7 @@ async function execAddSuppliesSeed() {
 }
 
 async function execAddSuppliesPhytosanitary() {
-  for (const item of suppliesSeeds) {
+  for (const item of suppliesPhytosanitary) {
     try {
       await SupplyRepository.addddSuppliesPhytosanitary(item)
     } catch (error) {

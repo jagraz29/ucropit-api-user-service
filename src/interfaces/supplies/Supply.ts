@@ -1,5 +1,5 @@
 export interface Supply {
-  _id: string
+  _id?: string
   name: string
   company: string
   code: string
