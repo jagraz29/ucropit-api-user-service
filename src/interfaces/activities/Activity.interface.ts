@@ -1,9 +1,12 @@
+import { ObjectId } from 'mongoose'
 import { UnitType } from '../unitType'
 import { UserAuth } from '../users'
 
 export interface Activity {
+  _id?: string | ObjectId | any
   id: string
   key: string
+  name?: string
   dateStart: Date
   dateEnd: Date
   dateHarvest: Date
@@ -21,6 +24,7 @@ export interface Activity {
   type: any
   typeAgreement: any
   lots: any[]
+  lotsWithSurface?: any[]
   lotsMade: any[]
   supplies: any[]
   storages: any[]

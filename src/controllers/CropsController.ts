@@ -25,7 +25,8 @@ import {
   filterActivitiesMakeByDates,
   calculateEIQAndPercentTotal,
   defaultLanguageConfig,
-  translateCropActivities
+  translateCropActivities,
+  translateCrop
 } from '../utils'
 
 import { UserSchema } from '../models/user'
@@ -101,6 +102,7 @@ class CropsController {
       .populate('members.user')
       .populate('finished')
       .lean()
+
     res.status(200).json(crops)
   }
 
@@ -113,8 +115,7 @@ class CropsController {
    * @return Response
    */
   public async show(req: Request, res: Response) {
-    const language =
-      req.header('Accept-Language') || defaultLanguageConfig.language
+    const language = req.getLocale()
     const { id } = req.params
     const { startDate, endDate } = req.query
     const crop = await CropService.getCrop(id)
@@ -232,10 +233,9 @@ class CropsController {
     const {
       params: { id }
     } = req
-    const language =
-      req.header('Accept-Language') || defaultLanguageConfig.language
-
+    const language = req.getLocale()
     const crop = await CropRepository.getCropWithActivities(id)
+    const translatedCrop = translateCrop(crop, language)
 
     if (!crop) {
       return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND)
@@ -248,13 +248,14 @@ class CropsController {
     const theoriticalPotential = calculateTheoreticalPotentialUtils(crops)
 
     const activities: Array<ReportSignersByCompany> =
-      getActivitiesOrderedByDateUtils(crop)
+      getActivitiesOrderedByDateUtils(translatedCrop)
 
     const dataCrop = getCropUtils(
-      crop,
+      translatedCrop,
       activities,
       theoriticalPotential,
-      eiqRanges
+      eiqRanges,
+      language
     )
 
     const dataPdf = {

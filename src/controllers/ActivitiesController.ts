@@ -19,7 +19,8 @@ import {
   sumActivitiesSurfacesByTypeAgreement,
   getCropBadgesReached,
   calculateCropEiq,
-  calculateEiqOfActivity
+  calculateEiqOfActivity,
+  groupedLotsByTagsInActivity
 } from '../utils'
 
 import ActivityService from '../services/ActivityService'
@@ -114,6 +115,30 @@ class ActivitiesController {
   }
 
   /**
+   * Show Lots Grouped by tags
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async showLotsGroupedByTags(req: Request, res: Response) {
+    const { id } = req.params
+    const { cropId } = req.query
+    const activity =
+      await ActivityRepository.findActivityByIdWithPopulateAndVirtuals(id)
+    const crop = await CropRepository.findOneSample({ _id: cropId })
+
+    const lang = req.getLocale() as string
+    const activities = groupedLotsByTagsInActivity(
+      calculateEiqOfActivity(activity, lang),
+      crop,
+      lang
+    )
+    res.status(StatusCodes.OK).json(activities)
+  }
+
+  /**
    * Store one activity.
    *
    * @param Request req
@@ -154,7 +179,6 @@ class ActivitiesController {
           error: 'SubTypeActivity not found'
         })
       }
-
       data.keySubTypesActivity = subTypeActivity.key
     }
 
