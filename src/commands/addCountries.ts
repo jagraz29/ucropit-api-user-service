@@ -26,14 +26,14 @@ const addCountries = async () => {
 
   const countries = await CountryRepository.getCountries(dataToFind)
 
+  if (countries.length) {
+    console.log(`${chalk.green(`Successfully: COUNTRIES EXISTS`)}`)
+    return
+  }
+
   const response: any = await CountriesService.getCountries()
 
-  const CountriesSeed = response.filter(
-    (item) =>
-      !countries.find((element) => item.alpha3Code === element.alpha3Code)
-  )
-
-  for (const country of CountriesSeed) {
+  for (const country of response) {
     const newCountry = {
       name: country.name,
       phoneCode: country.callingCodes[0],

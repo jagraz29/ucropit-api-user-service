@@ -19,15 +19,15 @@ const addCountryToMembers = async () => {
 
   const crops: Array<any> = await CropRepository.getCrops(dataToFindCrops)
 
-  for (const crop of crops) {
-    const dataToFind: any = {
-      query: {
-        alpha3Code: 'ARG'
-      }
+  const dataToFind: any = {
+    query: {
+      alpha3Code: 'ARG'
     }
+  }
 
-    const country = await CountryRepository.getCountry(dataToFind)
+  const country = await CountryRepository.getCountry(dataToFind)
 
+  for (const crop of crops) {
     crop.members.map((member) => (member.country = country._id))
 
     await crop.save()

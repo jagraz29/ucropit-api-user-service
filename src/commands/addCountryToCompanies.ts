@@ -19,15 +19,15 @@ const Company = models.Company
 const addCountryToCompanies = async () => {
   const companies: Array<any> = await Company.find()
 
-  for (const company of companies) {
-    const dataToFind: any = {
-      query: {
-        alpha3Code: 'ARG'
-      }
+  const dataToFind: any = {
+    query: {
+      alpha3Code: 'ARG'
     }
+  }
 
-    const country = await CountryRepository.getCountry(dataToFind)
+  const country = await CountryRepository.getCountry(dataToFind)
 
+  for (const company of companies) {
     company.country = country._id
 
     await company.save()
