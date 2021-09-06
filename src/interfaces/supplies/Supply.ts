@@ -13,4 +13,5 @@ export interface Supply {
   icon?: string
   total?: number | number
   eiqTotal?: number | number
+  supplyType?: string
 }
