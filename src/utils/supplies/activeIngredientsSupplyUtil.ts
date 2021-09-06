@@ -44,10 +44,29 @@ export async function createCompoundActiveIngredients(
         activeIngredientUnified.find(
           (ingredient) => name.trim() === ingredient.active_principle.trim()
         )
+
       if (activeIngredientStandard) {
         const activeIngredient = await SupplyRepository.getOneActiveIngredient({
           'name.es': activeIngredientStandard.active_ingredient_unified
         })
+
+        const composition = compoundComposition[index].replace(/,/g, '.')
+
+        if (activeIngredient && !isCompositionNotNumber(composition)) {
+          return {
+            activeIngredient: activeIngredient._id,
+            eiqActiveIngredient: activeIngredient.eiq,
+            composition: Number(composition),
+            eiq: (activeIngredient.eiq * Number(composition)) / 100
+          }
+        }
+      }
+
+      if (!activeIngredientStandard) {
+        const activeIngredient = await SupplyRepository.getOneActiveIngredient({
+          'name.es': name.trim()
+        })
+
         const composition = compoundComposition[index].replace(/,/g, '.')
 
         if (activeIngredient && !isCompositionNotNumber(composition)) {
