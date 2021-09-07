@@ -39,7 +39,9 @@
       "barley": "Cebada",
       "colza": "Colza",
       "rice": "Arroz",
-      "rye": "Centeno"
+      "rye": "Centeno",
+      "potato": "Papa",
+      "peanut": "Maní"
     }
   },
   "unit_types": {

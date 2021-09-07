@@ -39,7 +39,9 @@
       "barley": "Cevada",
       "colza": "Colza",
       "rice": "Arroz",
-      "rye": "Centeio"
+      "rye": "Centeio",
+      "potato": "Batata",
+      "peanut": "Amendoim"
     }
   },
   "unit_types": {

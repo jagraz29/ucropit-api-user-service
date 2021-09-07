@@ -39,7 +39,9 @@
       "barley": "Barley",
       "colza": "Colza",
       "rice": "Rice",
-      "rye": "Rye"
+      "rye": "Rye",
+      "potato": "Potato",
+      "peanut": "Peanut"
     }
   },
   "unit_types": {
