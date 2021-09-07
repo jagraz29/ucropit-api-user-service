@@ -1,8 +1,5 @@
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { setEiqInEnvImpactIndex, setEnvImpactIndexInEntities } from '../core'
-import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
-import agenda from '../jobs'
 import models from '../models'
 import AchievementService from '../services/AchievementService'
 import ActivityService from '../services/ActivityService'

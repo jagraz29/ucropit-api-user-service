@@ -255,7 +255,6 @@ export const validateAchievement = async (achievement) => {
     dateAchievement: Joi.date().required(),
     surface: Joi.number().required(),
     lots: Joi.array().items(Joi.string()).optional(),
-    subTypeActivity: Joi.string().required(),
     keySubTypesActivity: Joi.string().optional(),
     lotsWithSurface: Joi.array()
       .items(
