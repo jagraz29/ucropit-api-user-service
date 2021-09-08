@@ -34,6 +34,7 @@
     "update:cropActivitiesSurface": "node dist/src/commands/updateCropActivitySurface.js",
     "update:supplyTypes": "node dist/src/commands/updateActivityTypeInSupplyType.js",
     "update:supplyTypes:cropType": "node dist/src/commands/updateSupplyTypeWithCropType.js",
+    "delete:companies:byIds": "node dist/src/commands/deleteCompanies.js",
     "test:imageheci": "jest tests/unit/image_heci_conver.test.js"
   },
   "resolutions": {
