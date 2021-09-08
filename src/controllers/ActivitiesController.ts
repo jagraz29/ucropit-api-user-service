@@ -87,9 +87,14 @@ class ActivitiesController {
         req.params.id
       )
 
+    if (!activity) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: true, description: 'not found resources' })
+    }
     const lang = req.getLocale() as string
     const activityWithEIQ = calculateEiqOfActivity(activity, lang)
-    res.status(200).json(activityWithEIQ)
+    return res.status(StatusCodes.OK).json(activityWithEIQ)
   }
 
   /**
