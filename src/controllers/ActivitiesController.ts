@@ -19,7 +19,8 @@ import {
   sumActivitiesSurfacesByTypeAgreement,
   getCropBadgesReached,
   calculateCropEiq,
-  calculateEiqOfActivity
+  calculateEiqOfActivity,
+  groupedLotsByTagsInActivity
 } from '../utils'
 
 import ActivityService from '../services/ActivityService'
@@ -86,9 +87,14 @@ class ActivitiesController {
         req.params.id
       )
 
+    if (!activity) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: true, description: 'not found resources' })
+    }
     const lang = req.getLocale() as string
     const activityWithEIQ = calculateEiqOfActivity(activity, lang)
-    res.status(200).json(activityWithEIQ)
+    return res.status(StatusCodes.OK).json(activityWithEIQ)
   }
 
   /**
@@ -111,6 +117,30 @@ class ActivitiesController {
         capitalize(subTypeActivity.key.replace('_', ' '))
     })
     res.status(StatusCodes.OK).json(subTypeActivities)
+  }
+
+  /**
+   * Show Lots Grouped by tags
+   *
+   * @param Request req
+   * @param Response res
+   *
+   * @return Response
+   */
+  public async showLotsGroupedByTags(req: Request, res: Response) {
+    const { id } = req.params
+    const { cropId } = req.query
+    const activity =
+      await ActivityRepository.findActivityByIdWithPopulateAndVirtuals(id)
+    const crop = await CropRepository.findOneSample({ _id: cropId })
+
+    const lang = req.getLocale() as string
+    const activities = groupedLotsByTagsInActivity(
+      calculateEiqOfActivity(activity, lang),
+      crop,
+      lang
+    )
+    res.status(StatusCodes.OK).json(activities)
   }
 
   /**
@@ -154,7 +184,6 @@ class ActivitiesController {
           error: 'SubTypeActivity not found'
         })
       }
-
       data.keySubTypesActivity = subTypeActivity.key
     }
 

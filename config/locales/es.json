@@ -3,7 +3,8 @@
   "commons": {
     "deleted_success": "eliminado exitosamente",
     "deletion_not_allowed": "eliminado no permitido",
-    "not_found": "Recurso no encontrado"
+    "not_found": "Recurso no encontrado",
+    "tag_general": "General"
   },
   "achievements": {
     "not_async": "no logró sincronizar"
@@ -38,7 +39,9 @@
       "barley": "Cebada",
       "colza": "Colza",
       "rice": "Arroz",
-      "rye": "Centeno"
+      "rye": "Centeno",
+      "potato": "Papa",
+      "peanut": "Maní"
     }
   },
   "unit_types": {

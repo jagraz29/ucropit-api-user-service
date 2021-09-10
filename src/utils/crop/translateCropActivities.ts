@@ -19,3 +19,12 @@ export const translateCropActivities = (crop: Crop, lang: string) => {
     finished
   }
 }
+
+export const translateCrop = (crop: Crop, lang: string) => {
+  const translated = translateActivities(crop.activities, lang)
+
+  return {
+    ...crop,
+    activities: translated
+  }
+}

@@ -15,7 +15,10 @@ import {
   TypeActivities
 } from '../../interfaces'
 
-export const getActivitiesOrderedByDateUtils = ({ activities, members }) => {
+export const getActivitiesOrderedByDateUtils = ({
+  activities,
+  members
+}: any) => {
   const activitiesRes = activities
     .map(
       ({

@@ -3,7 +3,8 @@
   "commons": {
     "deleted_success": "successfully removed",
     "deletion_not_allowed": "removed not allowed",
-    "not_found": "removed not allowed"
+    "not_found": "removed not allowed",
+    "tag_general": "General"
   },
   "achievements": {
     "not_async": "failed to sync"
@@ -38,7 +39,9 @@
       "barley": "Barley",
       "colza": "Colza",
       "rice": "Rice",
-      "rye": "Rye"
+      "rye": "Rye",
+      "potato": "Potato",
+      "peanut": "Peanut"
     }
   },
   "unit_types": {
@@ -182,7 +185,7 @@
   "crop_story": {
     "title": "Crop Story",
     "printedAt": "printed at",
-    "netSup": "Net Sup",
+    "netSup": "Net Area",
     "has": "has",
     "seedTime": "Sowing Date",
     "harvestDate": "Harvest Date",

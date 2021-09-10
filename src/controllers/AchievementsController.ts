@@ -1,25 +1,21 @@
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { errors } from '../types/common'
-
-import {
-  validateAchievement,
-  validateSignAchievement,
-  validateFilesWithEvidences,
-  validateExtensionFile
-} from '../utils'
-
+import models from '../models'
 import AchievementService from '../services/AchievementService'
 import ActivityService from '../services/ActivityService'
-import CropService from '../services/CropService'
-import BlockChainServices from '../services/BlockChainService'
 import ApprovalRegisterSingService from '../services/ApprovalRegisterSignService'
-import UserConfigService from '../services/UserConfigService'
+import BlockChainServices from '../services/BlockChainService'
+import CropService from '../services/CropService'
 import IntegrationService from '../services/IntegrationService'
-
-import models from '../models'
 import NotificationService from '../services/NotificationService'
-import { emailTemplates } from '../types/common'
+import UserConfigService from '../services/UserConfigService'
+import { emailTemplates, errors } from '../types/common'
+import {
+  validateAchievement,
+  validateExtensionFile,
+  validateFilesWithEvidences,
+  validateSignAchievement
+} from '../utils'
 import { typesSupplies } from '../utils/Constants'
 import agenda from '../jobs'
 import { IEnvImpactIndexDocument, TypeActivities } from '../interfaces'
@@ -91,6 +87,18 @@ class AchievementsController {
 
     if (validationExtensionFile.error) {
       return res.status(400).json(validationExtensionFile.code)
+    }
+
+    if (data.subTypeActivity) {
+      const subTypeActivity =
+        await SubTypeActivityRepository.getSubTypeActivityByID(
+          data.subTypeActivity
+        )
+      if (!subTypeActivity) {
+        return res.status(StatusCodes.NOT_FOUND).json({
+          error: 'SubTypeActivity not found'
+        })
+      }
     }
 
     const validationFiles = validateFilesWithEvidences(
