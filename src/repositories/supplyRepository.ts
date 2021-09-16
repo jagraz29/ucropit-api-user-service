@@ -94,7 +94,7 @@ export class SupplyRepository {
    * @param codes
    * @param queryUpdate
    */
-  public static async updateManyByCodeNum(
+  public static async updateManyByCodes(
     codeNum: string[],
     queryUpdate
   ): Promise<void> {

@@ -18,7 +18,7 @@ async function execUpdateSupplyByCodeNum() {
   for (const item of supplyUnit) {
     const { code, unit } = item
     try {
-      await SupplyRepository.updateManyByCodeNum(code, { unit: unit })
+      await SupplyRepository.updateManyByCodes(code, { unit: unit })
     } catch (error) {
       console.log(
         `${chalk.green(
