@@ -9,7 +9,7 @@ import { SupplyRepository } from '../repositories'
 const program = new Command()
 
 program
-  .description('Use command for update suplies units by code number')
+  .description('Use command for update supplies units by code number')
   .option('-u, --update', 'Update all supplies unit by code number')
 
 program.parse(process.argv)

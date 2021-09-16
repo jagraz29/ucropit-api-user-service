@@ -91,11 +91,11 @@ export class SupplyRepository {
 
   /**
    *
-   * @param codes
+   * @param codeNum
    * @param queryUpdate
    */
   public static async updateManyByCodes(
-    codeNum: string[],
+    codeNum: string,
     queryUpdate
   ): Promise<void> {
     await Supply.updateMany({ code: { $in: codeNum } }, queryUpdate)
